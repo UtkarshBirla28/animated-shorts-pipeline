@@ -1,0 +1,110 @@
+[
+ {
+  "file": "v4_James.mp3",
+  "score": 8.99,
+  "scores": {
+   "clarity": 7.4,
+   "pace": 6.5,
+   "pitch": 10.0,
+   "range": 10.0,
+   "question_rise": 10.0,
+   "excitement": 9.8,
+   "whisper": 10.0,
+   "punch": 10.0,
+   "hook_energy": 10.0,
+   "tone": 10.0,
+   "distinct": 10.0
+  },
+  "m": {
+   "dur": 22.1,
+   "wps": 2.98,
+   "full_script_est_s": 75.3,
+   "f0_med": 174,
+   "range_st": 14.9,
+   "q_rise_st": 8.8,
+   "excited_st": 7.1,
+   "excited_db": 3.5,
+   "whisper_db": -8.4,
+   "whisper_voiced": 0.01,
+   "punch_st": -5.7,
+   "hook_db": -1.2,
+   "tilt_db": -25.7,
+   "acc": 0.947,
+   "leaked": [],
+   "extra": 0,
+   "heard": "She'd never even kept a borrowed paper clip. Then she read one sign and wanted to steal. She leaned over to her fiance and whispered, We'd better get ours now. But why would a warning make an honest person want to steal? With many past visitors, almost 8%, the sign didn't stop thieves, it gave them permission."
+  }
+ },
+ {
+  "file": "v4_DesignedBright.mp3",
+  "score": 8.59,
+  "scores": {
+   "clarity": 7.4,
+   "pace": 6.6,
+   "pitch": 5.6,
+   "range": 10.0,
+   "question_rise": 10.0,
+   "excitement": 10.0,
+   "whisper": 10.0,
+   "punch": 10.0,
+   "hook_energy": 10.0,
+   "tone": 10.0,
+   "distinct": 10.0
+  },
+  "m": {
+   "dur": 22.6,
+   "wps": 2.99,
+   "full_script_est_s": 75.1,
+   "f0_med": 237,
+   "range_st": 14.6,
+   "q_rise_st": 5.4,
+   "excited_st": 5.9,
+   "excited_db": 0.1,
+   "whisper_db": -11.9,
+   "whisper_voiced": 0.0,
+   "punch_st": -2.6,
+   "hook_db": -1.0,
+   "tilt_db": -26.2,
+   "acc": 0.947,
+   "leaked": [],
+   "extra": 1,
+   "heard": "She'd never even kept a borrowed paper clip. Then she read one sign and wanted to steal. She leaned over to her fianc\u00e9 and whispered, We'd better get ours now. But why would a warning make an honest person want to steal? With many past visitors, almost 8 %! The sign didn't stop thieves, it gave them permission."
+  }
+ },
+ {
+  "file": "v3s12_DesignedBright.mp3",
+  "score": 8.29,
+  "scores": {
+   "clarity": 8.2,
+   "pace": 10.0,
+   "pitch": 2.0,
+   "range": 10.0,
+   "question_rise": 10.0,
+   "excitement": 10.0,
+   "whisper": 6.8,
+   "punch": 5.0,
+   "hook_energy": 10.0,
+   "tone": 10.0,
+   "distinct": 10.0
+  },
+  "m": {
+   "dur": 17.4,
+   "wps": 3.59,
+   "full_script_est_s": 63.5,
+   "f0_med": 255,
+   "range_st": 13.6,
+   "q_rise_st": 4.3,
+   "excited_st": 5.1,
+   "excited_db": -0.7,
+   "whisper_db": -4.3,
+   "whisper_voiced": 0.7,
+   "punch_st": 1.5,
+   "hook_db": 0.7,
+   "tilt_db": -29.3,
+   "acc": 0.965,
+   "leaked": [],
+   "extra": 0,
+   "heard": "She'd never even kept a borrowed paperclip. Then she read one sign and wanted to steal. She leaned over to her fiance and whispered, We'd better get ours now. But why would a warning make an honest person want to steal? With many past visitors, almost 8 %! The sign didn't stop thieves, it gave them permission."
+  }
+ }
+]

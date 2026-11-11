@@ -1,0 +1,3212 @@
+[
+ {
+  "voice_id": "yl2ZDV1MzN4HbQJbMihG",
+  "public_owner_id": "a231663267efedf44629d1210c43f7045270e9dc6cf04a23c533dd75a567d5ba",
+  "name": "Alex - Upbeat, Energetic and Clear",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "entertainment_tv",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 1234460,
+  "usage_character_count_1y": 3716725298,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 90,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/custom/voices/yl2ZDV1MzN4HbQJbMihG/TxJIOexqYqCv1Dzexs6Y.mp3",
+  "queries": [
+   "youtube_shorts"
+  ]
+ },
+ {
+  "voice_id": "Dslrhjl3ZpzrctukrQSN",
+  "public_owner_id": "675db5c1a341e2f820aefb00825680aa042d958a4a3aef3200735c799210dcb4",
+  "name": "Hey Its Brad - Clear Narrator for Documentary",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "casual",
+  "cloned_by_count": 350260,
+  "usage_character_count_1y": 986949100,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/b2109416c7514449a5f06540d10f0e73/voices/Dslrhjl3ZpzrctukrQSN/eHPz2AP83vzRF9cixck1.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "VCgLBmBjldJmfphyB8sZ",
+  "public_owner_id": "e7a2b2ad2c8c0e84ff8898c27d67ced377371daf6f6b439cb0edc28c1fa8c3e6",
+  "name": "Liam - Viral Short-Form Storyteller",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "hyped",
+  "cloned_by_count": 202288,
+  "usage_character_count_1y": 473115618,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/VCgLBmBjldJmfphyB8sZ/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoidlZkVzVXaHZXMFlBMzVLUW1idjNYdlJuQUFnMiIsImZpbGVuYW1lIjoiTUdOek1CSFpJM0JJREFFOGN6MzgubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "youtube_shorts"
+  ]
+ },
+ {
+  "voice_id": "cCYjmrGZaI86GUJ7F2Nn",
+  "public_owner_id": "fd99b11504e8c1aac6e847ea61616cd450db4e2b1b8aaa196c35d58c85fd9f28",
+  "name": "David - Audiobook & Documentary",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "serious",
+  "cloned_by_count": 282477,
+  "usage_character_count_1y": 411907593,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/cCYjmrGZaI86GUJ7F2Nn/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJhMjY2ZjQ0ZDg1MDU0NDhkOGZmNzdmMjc1Mzc5M2I3YiIsImZpbGVuYW1lIjoiT2UyZFR5OVJRSDU2VHZZZ3R2WUoubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "ppLqTilh7rH7fbUVlXsf",
+  "public_owner_id": "9a902560beb5fb27b2231452c4c00c97b8f85f7c4d16635ad36eca2bd0557c7a",
+  "name": "David - Documentary ",
+  "gender": "male",
+  "age": "old",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "wise",
+  "cloned_by_count": 164865,
+  "usage_character_count_1y": 282847546,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/e7bdeaca6fbb4a6e929e6c98717040b9/voices/ppLqTilh7rH7fbUVlXsf/9bf0d787-305d-491b-aa57-a5a77ba0309c.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "UaYTS0wayjmO9KD1LR4R",
+  "public_owner_id": "bb2cf94b50b0c896a7379e353e0cbf14e27975948e820bb6e749f0013e238cc8",
+  "name": "Asher - Confident, Charismatic & Playful",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "social_media",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 113480,
+  "usage_character_count_1y": 189652354,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/f1affe425a5841d88b0c1f6aa4666fc0/voices/UaYTS0wayjmO9KD1LR4R/EKm8pgubX31EKqlrFvpE.mp3",
+  "queries": [
+   "playful"
+  ]
+ },
+ {
+  "voice_id": "QngvLQR8bsLR5bzoa6Vv",
+  "public_owner_id": "d396af315ee8681a2edbd4739b7c111101366f851614b6d67562a5f62a619e20",
+  "name": "Michael Dan - British Documentary Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "casual",
+  "cloned_by_count": 112679,
+  "usage_character_count_1y": 178074650,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/bfad24883ac04636b8b51cc683f75efb/voices/QngvLQR8bsLR5bzoa6Vv/TLvHT6NQi1KYXqgDKh9H.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "FSZ4QLofSALZxepAyq63",
+  "public_owner_id": "024c9393c6380665357f60b1062c863cd635d79791f13d6f0a834a319d5ff56c",
+  "name": "Liam - Energetic, Social Media Creator",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 10526,
+  "usage_character_count_1y": 167609498,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/f94e260200764678babc807b935bfb0b/voices/FSZ4QLofSALZxepAyq63/LEZGrv5FLgk0Jcvbx0us.mp3",
+  "queries": [
+   "energetic",
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "AGhk9wKpcIV2UvBus4CY",
+  "public_owner_id": "9a902560beb5fb27b2231452c4c00c97b8f85f7c4d16635ad36eca2bd0557c7a",
+  "name": "Bill - Social Media",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 31970,
+  "usage_character_count_1y": 149482103,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/e7bdeaca6fbb4a6e929e6c98717040b9/voices/AGhk9wKpcIV2UvBus4CY/FnnQxF5K83FE08YmqBVQ.mp3",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "z7i51AlFqQJ8JzM16o7e",
+  "public_owner_id": "7398804d9eaf2f463899a907587c33a390591775784f87857b6d0e1e4e3e66f6",
+  "name": "Nathaniel C - Documentary Narrator: Natural & Intense, yet Pleasant",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "entertainment_tv",
+  "category": "professional",
+  "descriptive": "classy",
+  "cloned_by_count": 40874,
+  "usage_character_count_1y": 110734223,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/z7i51AlFqQJ8JzM16o7e/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJlZDliMDVlNjMyNGM0NTc2ODU0OTAzNTJlOWExZWM5MCIsImZpbGVuYW1lIjoidlZibEVINWZCZnEzQXNBc2hKSXgubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "vLZJLcQMJCqxjrHGEVDO",
+  "public_owner_id": "7398804d9eaf2f463899a907587c33a390591775784f87857b6d0e1e4e3e66f6",
+  "name": "Connery - Deep & Immersive Documentary",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "entertainment_tv",
+  "category": "professional",
+  "descriptive": "deep",
+  "cloned_by_count": 25059,
+  "usage_character_count_1y": 99334494,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ed9b05e6324c457685490352e9a1ec90/voices/vLZJLcQMJCqxjrHGEVDO/eHwHEP3Bu8CkEcGmzjUL.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "8iDUAV5slUpRv30f3cyz",
+  "public_owner_id": "5794b6e0a58e60ded5c7a3be8bb3951c24ba88376dea919c218679df64d9dd7b",
+  "name": "Matt - Polished, Expressive and Animated",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 35356,
+  "usage_character_count_1y": 85197292,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 30,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/custom/voices/8iDUAV5slUpRv30f3cyz/2gz0vIJNlgYuir99WT88.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "cBTYF7NiJbR8Bvmdeuse",
+  "public_owner_id": "00976227c40f2d924bfbf79bd756231b0b131a1474bd7a5f4f55c1d494377ef8",
+  "name": "Mike - Animation, Explainers & Gaming",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "high_quality",
+  "descriptive": "casual",
+  "cloned_by_count": 31248,
+  "usage_character_count_1y": 83560939,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/952a79b204ae48fa8fd04afd7d73740f/voices/cBTYF7NiJbR8Bvmdeuse/VsrK9bKhp508MLp8jYXN.mp3",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "XTdzBt8oIEvodkwhxeA0",
+  "public_owner_id": "3bc23a05653898b03818042c86a4c2fd525b31de133125e117e1652b2ae4e284",
+  "name": "Bateman - Deep and Seductive",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "calm",
+  "cloned_by_count": 45254,
+  "usage_character_count_1y": 64440111,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/s8sNRAj3DjavgW13Zh8I1mmsbwz2/voices/XTdzBt8oIEvodkwhxeA0/h7QiU8fPoQDkdnZ0zsau.mp3",
+  "queries": [
+   "youtube_shorts"
+  ]
+ },
+ {
+  "voice_id": "AvUYKSeryCcU2BHSM8x7",
+  "public_owner_id": "3cdd22c6d78872afd601dc914ffcbf44a2f9ba2f0e4542b68a843b63aa6dd606",
+  "name": "Ryan - Explainer , Upbeat & Friendly",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 26284,
+  "usage_character_count_1y": 57844240,
+  "free_users_allowed": false,
+  "live_moderation_enabled": true,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/fad82f115b49402a96a175d13d8ce3c1/voices/AvUYKSeryCcU2BHSM8x7/19db65a8-f4a3-4c62-8c81-0317d45320f4.mp3",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "3IwIPyXc0WRkgKBE8KXP",
+  "public_owner_id": "675db5c1a341e2f820aefb00825680aa042d958a4a3aef3200735c799210dcb4",
+  "name": "Ed - Sarcastic Funny Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "high_quality",
+  "descriptive": "cute",
+  "cloned_by_count": 31683,
+  "usage_character_count_1y": 48774885,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/b2109416c7514449a5f06540d10f0e73/voices/3IwIPyXc0WRkgKBE8KXP/g5aGLkEk1s0BsuMzno8k.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "fBD19tfE58bkETeiwUoC",
+  "public_owner_id": "46bbce639ad696784c0633df82a9efadb5264b7a83c78753277b09777666051f",
+  "name": "Little Dude II - Cartoon Character",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 43816,
+  "usage_character_count_1y": 43868740,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/8f4e1ecd4b3740d1825d6efd97d39972/voices/fBD19tfE58bkETeiwUoC/yvNx9TNrpwXAv13uBKDp.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "RKtetyndWXI10Vd2VTCx",
+  "public_owner_id": "0b8fdd40404bfb9c02632fba2957fd2c53c1bbc5bcb1661b15b7c84c76e8a603",
+  "name": "Oliver - Playful, Vibrant and Optimistic",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 3767,
+  "usage_character_count_1y": 36756713,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 180,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/RKtetyndWXI10Vd2VTCx/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoiWmlSbjk5bUNDQVlDV2syRHVMSmExUjlGOEZtMSIsImZpbGVuYW1lIjoiYTU1MmJhMTYtNzU2ZC00ODJmLWEwNjMtZmFmMmEwMTFmOWYzLm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "playful"
+  ]
+ },
+ {
+  "voice_id": "qZkuFcRFTdS6vkYu5ABx",
+  "public_owner_id": "cafe304c4de57306f4e3fdbca4b97afb21be387b77b5d6f8bfc9760db3289934",
+  "name": "Deep Lax - Funny, Playful and Energetic",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "entertainment_tv",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 17022,
+  "usage_character_count_1y": 33471606,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/9BSPmhBJkheqxBPDvE6kddOa9rF3/voices/qZkuFcRFTdS6vkYu5ABx/yQzA3i4heml7TqvLQEgt.mp3",
+  "queries": [
+   "playful"
+  ]
+ },
+ {
+  "voice_id": "3H55HGnNE1XjYxigHSAS",
+  "public_owner_id": "04d328a06def177d0943b07160f62ef026eca26bf148e11f9b89724e6beea3a1",
+  "name": "Marcus K - Calm Documentary Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 3628,
+  "usage_character_count_1y": 24550151,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/d030584f93d045db876a9c5434c1374d/voices/3H55HGnNE1XjYxigHSAS/d2O5pWQ1lOGaPtvfMTMn.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "XjGYkUkzth8BPs29fmcV",
+  "public_owner_id": "119adcff6f9d8ee3d5194065d19fb9b473760336ad4a7227a6890226bc62167b",
+  "name": "Teddy Twinkle - Cute Cartoon",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "high_quality",
+  "descriptive": "cute",
+  "cloned_by_count": 33360,
+  "usage_character_count_1y": 22478027,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/5ffce2e982a34fc6bbcffb2ab8c84b98/voices/XjGYkUkzth8BPs29fmcV/FszPLYKsSOGlPcyE5hMf.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "VMCgCMbBs53ElBxVD4VB",
+  "public_owner_id": "7d47155ee7f3714496edfc589978b708b57113cad457e3b8f8f977703e08e817",
+  "name": "Steven - Deep Documentary Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 2750,
+  "usage_character_count_1y": 21848914,
+  "free_users_allowed": false,
+  "live_moderation_enabled": true,
+  "notice_period": 365,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/8c405f66c9904d3ab8842a6cfcb83627/voices/VMCgCMbBs53ElBxVD4VB/uLAAAcq9dVebuaMYSptO.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "IvUJKFyjVb5hItY9dJAT",
+  "public_owner_id": "b979c9ab9b836f7342de7db794468872e49e35a44c1f61cb6d4481d75c4215d7",
+  "name": "Stevie - The Living Cartoon",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "professional",
+  "descriptive": "excited",
+  "cloned_by_count": 15186,
+  "usage_character_count_1y": 18125704,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 180,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/user_3701kfnjjytne7bbdz3e4t7kvwm1/voices/IvUJKFyjVb5hItY9dJAT/u3E7UA9ZeiAipM8nZ7OQ.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "InRyolULHTXjegISsXuJ",
+  "public_owner_id": "7547a9e3692d5a0123a5caa0a1bf33a44d1ab030a899995d1e32304ad09fc4ac",
+  "name": "Alex - Clear Technical Explainer",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "neutral",
+  "cloned_by_count": 4975,
+  "usage_character_count_1y": 16874788,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/user_5101kgjn7r8se8ray546g278jt3d/voices/InRyolULHTXjegISsXuJ/cEH6nX0qhEZRcBP4w5pX.mp3",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "VvVVKaa2nHZpbZdtSRSX",
+  "public_owner_id": "7398804d9eaf2f463899a907587c33a390591775784f87857b6d0e1e4e3e66f6",
+  "name": "Cedric M \u2013 Engaging Documentary Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 4849,
+  "usage_character_count_1y": 16086068,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ed9b05e6324c457685490352e9a1ec90/voices/VvVVKaa2nHZpbZdtSRSX/9EUuLSYqLaObJ9PN2dvF.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "1aaKc4GWOfIKpc3svAJd",
+  "public_owner_id": "ccf98fc5a6a668d43b5743a0373cce7d82546a702b2ad0b62f5c28d4f2c9a49b",
+  "name": "Christian - Professional Explainer",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "professional",
+  "cloned_by_count": 4432,
+  "usage_character_count_1y": 15846906,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 365,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/1aaKc4GWOfIKpc3svAJd/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoiZnlRT2M1TENaS1c2MFRkVlNRQ1FmT1l3cmRvMiIsImZpbGVuYW1lIjoiNDU0YzI3YTAtZWZkOS00M2JlLWE4MTQtNGNkMjZmMjI5M2MzLm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "youtube_shorts"
+  ]
+ },
+ {
+  "voice_id": "oHB9Xhox1bqMl1Tvkmel",
+  "public_owner_id": "a39978ae1a3df0f45fdab1322b8c5a8723fa4e2909858fd3c6bb5ab836cc50de",
+  "name": "Jerry B. - Authoritative Explainer Voice",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "advertisement",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 9322,
+  "usage_character_count_1y": 15713017,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/oHB9Xhox1bqMl1Tvkmel/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiI1ZjcxNDgxYTNmMWU0NGQzOGE0YmI5ZmZkMjM1ZWE4YSIsImZpbGVuYW1lIjoibkcwc0trZ3pCeEhxN3RhbGZVQXkubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "loY1uopAz31XyhAEhNSa",
+  "public_owner_id": "edb29bf3ecacd3634096c4bc62c0537e04cbfb94cf27cd2babced5c1709800d6",
+  "name": "Valf - Young, Playful & Sarcastic",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "high_quality",
+  "descriptive": "cute",
+  "cloned_by_count": 23773,
+  "usage_character_count_1y": 14295303,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/10ab341b15a24f9aa118a90e43463bab/voices/loY1uopAz31XyhAEhNSa/ZPipDXt0PC09nhVJRVPU.mp3",
+  "queries": [
+   "cartoon",
+   "playful"
+  ]
+ },
+ {
+  "voice_id": "rNb3hdSf0n4ROIbYC8Bl",
+  "public_owner_id": "eac30351b278d85c0c10cd8f36ad4ad95a4c0655f5fdecb77e40e2d3a2b17f66",
+  "name": "Shahram - Natural Documentary Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "canadian",
+  "use_case": "entertainment_tv",
+  "category": "high_quality",
+  "descriptive": "neutral",
+  "cloned_by_count": 8214,
+  "usage_character_count_1y": 14099125,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/pDbugNdCWWWHqm3cmzGYSWM1mIT2/voices/rNb3hdSf0n4ROIbYC8Bl/ua1GDwj0CSAqdYo2FXkB.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "TUupbYgkrwMXwMB2cmVJ",
+  "public_owner_id": "918b6187dec90990a59934cb91859f324726eefc430b084f5ace3eb4fbe72cd6",
+  "name": "Robert - British Explainer Voice ",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "professional",
+  "cloned_by_count": 3341,
+  "usage_character_count_1y": 13555949,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 365,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/502d264ccfcc4609a647a17b2d12e11a/voices/TUupbYgkrwMXwMB2cmVJ/EeIEURcZDIr9X72gEI3h.mp3",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "KYpkPJwl1dpLc9QpMwnO",
+  "public_owner_id": "1586a3cc6537ac29a54a975a0f603cab68953a241b970ea61b8001807dbe7102",
+  "name": "Wyman - The Storyteller",
+  "gender": "male",
+  "age": "middle-aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "casual",
+  "cloned_by_count": 4410,
+  "usage_character_count_1y": 12855360,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/efb32bb22e854aa98ef435bb858abe95/voices/KYpkPJwl1dpLc9QpMwnO/DlLlAr4vArybmxGR4Z0B.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "BRruTxiLM2nszrcCIpz1",
+  "public_owner_id": "0554972bf2eea2cee9b6ccc9493be9ab1d74fe095af765c8e32813071e92f6d5",
+  "name": "Goofy - Nasal, Fast-Paced and Energetic",
+  "gender": "male",
+  "age": "young",
+  "accent": "canadian",
+  "use_case": "characters_animation",
+  "category": "professional",
+  "descriptive": "upbeat",
+  "cloned_by_count": 16249,
+  "usage_character_count_1y": 12486693,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/IRg5QTQNm6SfSozVvMmFieR8Q7m1/voices/BRruTxiLM2nszrcCIpz1/JqhbzTpefslqnP2tFdI2.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "aaHNjm7ksE1iw31dNOq5",
+  "public_owner_id": "9257664fd161a026f5599a44e9ec77426f2879d277f1857cf18040760979a408",
+  "name": "Phoenix - Smooth, Charming and Rich",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 4748,
+  "usage_character_count_1y": 11494946,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/643696e3634c49aea9edfe1f0b6c7d02/voices/aaHNjm7ksE1iw31dNOq5/a9991e8c-f585-40b5-bfae-e31fbb850484.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "OTMqA7lryJHXgAnPIQYt",
+  "public_owner_id": "f3f897a61160636d75727e7548be11b829432bc12cff72a7d1e12f837ad02604",
+  "name": "Crazy Eddie",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "high_quality",
+  "descriptive": "sassy",
+  "cloned_by_count": 13697,
+  "usage_character_count_1y": 11369227,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/906769ced56041d29cb30238e36a5dd1/voices/OTMqA7lryJHXgAnPIQYt/i2P4zAzoAoQAwzayTRMV.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "RDSy0QN68yhrjuOgqzQ4",
+  "public_owner_id": "1bdf478ac5e1a81b0b8423faadde277a29cb25195ed2c86adcb0622464c9b930",
+  "name": "Dr. Quibble - Nerdy Cartoon Scientist",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "high_quality",
+  "descriptive": "excited",
+  "cloned_by_count": 6109,
+  "usage_character_count_1y": 10599065,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/d309ea25683d4d97b92e44772a430c74/voices/RDSy0QN68yhrjuOgqzQ4/HJVqsrsGEbbYLwa5068R.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "6Qg2hzCqEpqk0bR3ckiw",
+  "public_owner_id": "a837e255081b71d6d3e980d6b95add64c4ebcd71abb7a8ab216d86bdb390999a",
+  "name": "Peter - British Narrator & Explainer",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 4431,
+  "usage_character_count_1y": 10315237,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/475055e2e0bb426e97fe9fc01a30a122/voices/6Qg2hzCqEpqk0bR3ckiw/ux80NGQG98vsTasy4BfR.mp3",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "1Mx54eW85zYpnx1WfIdU",
+  "public_owner_id": "8bed3a1e4622e34c888597a6dcd8f2aaef6a0606ab607dc4c26bbc33f72930a8",
+  "name": "Mason - Warm Documentary Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 1225,
+  "usage_character_count_1y": 10042822,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/3000452673714240ac1348185b72313e/voices/1Mx54eW85zYpnx1WfIdU/SszLLZnBsZPq2pn4iwdX.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "QhpsGjDKZmM9qRYdMhBD",
+  "public_owner_id": "3ba69fbeb8b75e6b7be7cf8477b03f90ba3c41fca37f628fd300e7a40896617d",
+  "name": "James - Conversational, Energetic, Punchy",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "excited",
+  "cloned_by_count": 3653,
+  "usage_character_count_1y": 7749606,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/c7ba0a937b1344a1afb163852b3ddea8/voices/QhpsGjDKZmM9qRYdMhBD/lI3Wkw2Vpjy0FKE6SA6S.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "8BNZXqdnYLBqxWWAuQYn",
+  "public_owner_id": "93080a3a2bce75d494c977acc8d3246707b8f61c9a15fe4af3fc5241b45a6f69",
+  "name": "Jason Abadi - Documentary Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 1192,
+  "usage_character_count_1y": 7583210,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/20064080b53d4ed3abb129b750e8be15/voices/8BNZXqdnYLBqxWWAuQYn/KIz0IU8g1QXQJ2tLk7ET.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "nuVIy6kn92EbEZwTlTnc",
+  "public_owner_id": "052b204870daca51da38fffd64e70d698536c31acf51f9f30db7db87e4e2711a",
+  "name": "Andrew Beta - Funny Cartoon Voice Talent",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "excited",
+  "cloned_by_count": 8810,
+  "usage_character_count_1y": 7446391,
+  "free_users_allowed": true,
+  "live_moderation_enabled": true,
+  "notice_period": 180,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/DQRI855iBZewRkS1iO1sDZxa80A2/voices/nuVIy6kn92EbEZwTlTnc/aaed4812-bcdb-4aaf-8518-d2b36d05ac5a.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "rLl4PSDTzX3VHL4wjSFI",
+  "public_owner_id": "65d7b86be5d7a13fc5755e2637cfdf96c7c6ff90b00cc7cb4f589aa441aa2209",
+  "name": "Jesse - Animation Character, Friendly",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "professional",
+  "descriptive": "upbeat",
+  "cloned_by_count": 3845,
+  "usage_character_count_1y": 7321875,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/768856e5aaeb4992bccdf206a1c78c28/voices/rLl4PSDTzX3VHL4wjSFI/qsCo5RFo2S1zc0pue1ZS.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "ScZQf6C8aVzMf60NZQVk",
+  "public_owner_id": "5241f95371737c05006a1734a73820f0a766e754dcfe468c13cfe7b229941032",
+  "name": "Jordan ",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 4896,
+  "usage_character_count_1y": 6639528,
+  "free_users_allowed": true,
+  "live_moderation_enabled": true,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/ScZQf6C8aVzMf60NZQVk/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoiYWNrWUMybTBkbWNvVXZXaFZHT095OGlzRnV2MiIsImZpbGVuYW1lIjoiekhqVU8xMk1kd1hsYTZ1bzN0bFYubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "youtube_shorts"
+  ]
+ },
+ {
+  "voice_id": "gnubPsZOpgr1NLITpRkA",
+  "public_owner_id": "28c2f90fc52eb6ebf34decd0faaabd0790acaabeff7e7a420fafc6e66f07102f",
+  "name": "Dylan - Course Explainer",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "professional",
+  "cloned_by_count": 2163,
+  "usage_character_count_1y": 6463082,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/GCIlgmBQslcUl0dB4UJd3iSRmFI2/voices/gnubPsZOpgr1NLITpRkA/ZmPhAnvNvWKyvpYM8jHI.mp3",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "wIVKcZbkr7yia2bPb1Hm",
+  "public_owner_id": "72c0b3f4b45e78687caab462092e0883f8afba2d34fff0f3a6dccc175b9ad557",
+  "name": "Chrisva - Animated and Vivacious",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 9882,
+  "usage_character_count_1y": 6338815,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/custom/voices/wIVKcZbkr7yia2bPb1Hm/mQo44LV1wwQOT4HbHOth.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "PXMcl9zGUnc9w7DofLWk",
+  "public_owner_id": "d226619e22c64c1b39468573c83b107866f2bc712ded617b4f7a49f76a11f4e7",
+  "name": "Mark Vale - Deep Storyteller",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "serious",
+  "cloned_by_count": 1063,
+  "usage_character_count_1y": 6176751,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 90,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/305444619ad34702a5796e6307d2f093/voices/PXMcl9zGUnc9w7DofLWk/ff98c7e7-4c3b-4d3f-ab81-be967b55be36.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "xGlGKBuNUZYW7Vx2RHol",
+  "public_owner_id": "22cc68716d5398c067bb3728bd1f9cb3c43eb388b054a6237bd59cb06ca57ddc",
+  "name": "Alex - eLearning Instructor",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "informative_educational",
+  "category": "high_quality",
+  "descriptive": "neutral",
+  "cloned_by_count": 2894,
+  "usage_character_count_1y": 6154410,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/e24f92d613f3459987d5e7019e90fbf0/voices/xGlGKBuNUZYW7Vx2RHol/Ja7DM46E8WGCSdLyvs0l.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "GoV1V2hQd1doxcYR2SuA",
+  "public_owner_id": "f82edac4551bde8f9def4a3a524c98828050e83fd8f3caf063565bdc63016598",
+  "name": "Victor - Halloween Horror Calm Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "neutral",
+  "cloned_by_count": 2880,
+  "usage_character_count_1y": 5865978,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/753e588bb3b442afbf6eb1d219acb885/voices/GoV1V2hQd1doxcYR2SuA/hAwbRr1RvXGwHrjQmV13.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "UQrkIy2mtQZrDVpbxQjj",
+  "public_owner_id": "c34fb3fb62beaecde19d1e987a34b954c23f030c4cdf7d9311a2e2be95393a51",
+  "name": "Kerim - English, Smooth, Social Media",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 3286,
+  "usage_character_count_1y": 5223303,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/UQrkIy2mtQZrDVpbxQjj/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJjYTRlNmQ2NjdhODU0ZjQ5OWNmZWZjMGNiNzZkYzAzYiIsImZpbGVuYW1lIjoiYzI1NGEwNzUtOWM2OS00ZThmLWJhYWMtMTdhNDZkYWI1ZjZhLm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "cOHUo8FosWk7BqQhx8nk",
+  "public_owner_id": "43beaf80ae7bf6a6ef91a0c02f6424757aaa8f21e92c74ca38e931e984d3a9fa",
+  "name": "Leo -  Documentary Narration & Commercial",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 1328,
+  "usage_character_count_1y": 4811225,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/cOHUo8FosWk7BqQhx8nk/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiIxYTRjMDkxZWQ3MWQ0NzA0OWU1N2FmZTFjZWRlYzBjOSIsImZpbGVuYW1lIjoiMTM3NjljMTctZmZiOS00MGM0LWE1ZGMtODFhODNiODc0ZmQ3Lm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "7zoixx2reelPHqsL6WsW",
+  "public_owner_id": "35e3a3bf366914b58a67a69fb12e5094aa15f236109735db888aaf8e8c07e2d3",
+  "name": "Odom - Upbeat, Energetic, Playful",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "entertainment_tv",
+  "category": "high_quality",
+  "descriptive": "upbeat",
+  "cloned_by_count": 3536,
+  "usage_character_count_1y": 4699173,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/2acbe644dc9144dc84ceaaba7734b4b2/voices/7zoixx2reelPHqsL6WsW/cduFDvfcGRYyiZbfMVuV.mp3",
+  "queries": [
+   "energetic",
+   "playful"
+  ]
+ },
+ {
+  "voice_id": "z9ihBMCAnrOeGUbPDiwi",
+  "public_owner_id": "13d14cd540595282cd2721f5c2c325fa7ef2b0cdc6b2e40bca3f46a3e1382d8e",
+  "name": "Andres - Documentary Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 595,
+  "usage_character_count_1y": 4427492,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/a6b76ff31b4f4dcb9bf8ca4acf7eac55/voices/z9ihBMCAnrOeGUbPDiwi/1791f8a4-5a40-4a5d-82c1-c45c12d3e5af.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "4NJLA7OQNVkeKe4jVdHw",
+  "public_owner_id": "c9c06184bd3a04cd6740738d9d8a5022fee00f26f37a7c69f4651fdd99c84f54",
+  "name": "Sean - Squeaky voice",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "professional",
+  "descriptive": "excited",
+  "cloned_by_count": 7435,
+  "usage_character_count_1y": 4386787,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/ITWRWd4dBvPPWe02UcHPXMhozfC2/voices/4NJLA7OQNVkeKe4jVdHw/PMtRqmsghTbJdqiwkP0F.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "G9mW0YfLl5FDeeGAfU3o",
+  "public_owner_id": "e31a86fac7b90cdeb2a8ea43d7cbe3fca05bb14ebea051e078056a77b6059054",
+  "name": "Obsidian - Animated, Gaming & Wily",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "professional",
+  "descriptive": "intense",
+  "cloned_by_count": 3755,
+  "usage_character_count_1y": 4331091,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/G9mW0YfLl5FDeeGAfU3o/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoiVU1yd25ob0NnQ2F3VUtXOURWMTNhMDZERW5VMiIsImZpbGVuYW1lIjoiaEVmTllBUmRPc1AwcktVSHZYbksubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "ihjS38tLVoYvbmXjwiEr",
+  "public_owner_id": "437ebc99a609ed5cadf2f23d8a14d56a3f9073e7d2daa0b0d3f7fad691619c00",
+  "name": "Greg - Broadcast Stories & Social Explainers",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "upbeat",
+  "cloned_by_count": 2423,
+  "usage_character_count_1y": 4304204,
+  "free_users_allowed": true,
+  "live_moderation_enabled": true,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/ihjS38tLVoYvbmXjwiEr/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiIxYjJkOWI4NDhlYWM0MTc5YjY2NDQyOTI1ODJmMzc2OSIsImZpbGVuYW1lIjoiYzhkOWJmOWUtZjNkOC00OTdiLTlmYWEtY2U2NzZiNTRlYWU1Lm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "TkBXFhNSp04NiWhhR7jP",
+  "public_owner_id": "15539652f47661956f4ae409751b1d6817626d73ad465af181d766e7c72fcc73",
+  "name": "Tom - Documentary",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "informative_educational",
+  "category": "high_quality",
+  "descriptive": "neutral",
+  "cloned_by_count": 740,
+  "usage_character_count_1y": 4240147,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/1206be050c3b4834b7e83ab80a5e3bc5/voices/TkBXFhNSp04NiWhhR7jP/dQr47ABo4j90vQc0ND1D.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "sTGkt0SQ2Dnwa8VqJlvj",
+  "public_owner_id": "7793e2ab1b0f0a2c90e3175a5152bfb706472cb704817e105386d518b50299cd",
+  "name": "Graham - The storyteller",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 823,
+  "usage_character_count_1y": 3938158,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/5f246c5e1b1f408c9867ebe1b815a72a/voices/sTGkt0SQ2Dnwa8VqJlvj/bbb1bd1e-f79e-403a-ba61-63812ff6dd04.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "r5Al4oLBZaQ3SY9ncbVG",
+  "public_owner_id": "ecbfb422926925452f74475daacba8f7308f387a564f5cb20033bc8ee73780cb",
+  "name": "Kass - Engaging, Active and Vibrant",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "high_quality",
+  "descriptive": "excited",
+  "cloned_by_count": 2772,
+  "usage_character_count_1y": 3879431,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 90,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/R51RaBhjNqbqLhP6cvEePomgTZX2/voices/r5Al4oLBZaQ3SY9ncbVG/18422b0c-f056-467c-997e-6a13854baea6.mp3",
+  "queries": [
+   "youtube_shorts"
+  ]
+ },
+ {
+  "voice_id": "R5WgLZ1iq28vajcXtks0",
+  "public_owner_id": "45138fd3309a3c5fcc6522f5db690119480cc9d682cc29acc54b489673638c9b",
+  "name": "Robert - Measured Thriller Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "serious",
+  "cloned_by_count": 1454,
+  "usage_character_count_1y": 3818587,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/R5WgLZ1iq28vajcXtks0/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiI0ZTNkOWY1NmZiOTY0YTkwODczMWU2OTliODYwMzIxZSIsImZpbGVuYW1lIjoiZDNiOWRlYjUtYjE4NS00NWMzLWJhYTgtYWVkODM1MjY4Mjg2Lm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "PA0fqZPUmpGCrlN6gePh",
+  "public_owner_id": "7398804d9eaf2f463899a907587c33a390591775784f87857b6d0e1e4e3e66f6",
+  "name": "Edmund - Dark Mystery Documentary",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "intense",
+  "cloned_by_count": 1468,
+  "usage_character_count_1y": 3814204,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ed9b05e6324c457685490352e9a1ec90/voices/PA0fqZPUmpGCrlN6gePh/tUh1gzj37QWe84olFwiI.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "4aVyGTKPpO0U5aIzRn5Y",
+  "public_owner_id": "c099e5d1bfe1f02836df9d0238d0f59b2258489a71bf8d5d025790bebc5381bf",
+  "name": "Isaac - Energetic, Warm, Confident",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 1071,
+  "usage_character_count_1y": 3674161,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/4aVyGTKPpO0U5aIzRn5Y/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJiNjE2MGIwODgwZWU0YWYyODA4NGQwNjM1NTQ1YmQ4NCIsImZpbGVuYW1lIjoiN1h6MmhZMnZSTE1VUjIyV0Y2ZngubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "aLyZxRoKf8CwWlGthFYB",
+  "public_owner_id": "88db64dbc62c0a75483d4055338f31540e451a9db5c46621f63ceb23bb3a296c",
+  "name": "Hal - Your Animated Social Media Buddy",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 2967,
+  "usage_character_count_1y": 3615054,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/66f9b58d5e8e4813973e29a2ab19ac58/voices/aLyZxRoKf8CwWlGthFYB/0nWQUDZtSVWZFRoghu4E.mp3",
+  "queries": [
+   "animated",
+   "cartoon",
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "6vSnVhLpoIkeQG0VPXOZ",
+  "public_owner_id": "7398804d9eaf2f463899a907587c33a390591775784f87857b6d0e1e4e3e66f6",
+  "name": "John Fernandes - Energetic & Clear",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "upbeat",
+  "cloned_by_count": 2161,
+  "usage_character_count_1y": 3586641,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ed9b05e6324c457685490352e9a1ec90/voices/6vSnVhLpoIkeQG0VPXOZ/SqPvWaKAWgtlWaEiXR2F.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "SDARFhQygpPvpLh7Ad1B",
+  "public_owner_id": "1c51ae02bb5bfe0d7670e024f4c6d9daab1cbbb6f1bd89582b6dc99e8a6accc9",
+  "name": "Odd Todd - Nerdy, Pompous Professor",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "high_quality",
+  "descriptive": "excited",
+  "cloned_by_count": 4161,
+  "usage_character_count_1y": 3504941,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/2677795c3ba64abebb1f7e4a37d169f5/voices/SDARFhQygpPvpLh7Ad1B/RDfumSh2u735WaMJnDMW.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "Nop7al81LlzhZRWb7j3W",
+  "public_owner_id": "62b8745cb5e51a666b91713cf93e08c7e0cef934830edd04b3079a437292a909",
+  "name": "BlackvieW - Documentary Narator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 2994,
+  "usage_character_count_1y": 3233649,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/Nop7al81LlzhZRWb7j3W/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoiYXlYVHRsSkg4NmJheTVWQWkxZWVSam56VmpMMiIsImZpbGVuYW1lIjoibnBwZ0d0Y21wcG1YTlNCNzdwcGwubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "L6s7ahP9mHOb2S1Qynng",
+  "public_owner_id": "7398804d9eaf2f463899a907587c33a390591775784f87857b6d0e1e4e3e66f6",
+  "name": "Jofra - Easy going, Friendly, Energetic",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "conversational",
+  "category": "high_quality",
+  "descriptive": "excited",
+  "cloned_by_count": 2344,
+  "usage_character_count_1y": 3038068,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ed9b05e6324c457685490352e9a1ec90/voices/L6s7ahP9mHOb2S1Qynng/da6NVC7JTFz9BsQPHmKS.mp3",
+  "queries": [
+   "animated",
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "dZcZzoYtieOVoeMG4prZ",
+  "public_owner_id": "2f4ca4ffcdb3c744949b06c231f4426a636975a67c460436a7522677888c73c9",
+  "name": "Adrian - Natural Conversations & Talking ",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 3220,
+  "usage_character_count_1y": 2979851,
+  "free_users_allowed": true,
+  "live_moderation_enabled": true,
+  "notice_period": 90,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/cja9G2PifoTyzhkmvkZESQOs6h73/voices/dZcZzoYtieOVoeMG4prZ/mx4eAQHJ2KUyQVXNMVt7.mp3",
+  "queries": [
+   "youtube_shorts"
+  ]
+ },
+ {
+  "voice_id": "Ovio1nb5Thj5cZeW3MPS",
+  "public_owner_id": "373659cc7ae92fa63ffb716522fa8d6f32bc7cbb386d7e7d47f38540aa0d7fb4",
+  "name": "Alec \u2013 Nature Documentary Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "canadian",
+  "use_case": "entertainment_tv",
+  "category": "professional",
+  "descriptive": "wise",
+  "cloned_by_count": 3145,
+  "usage_character_count_1y": 2923446,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/Q9h1xz9BFehCeaTRBX0Bj8vfxY72/voices/Ovio1nb5Thj5cZeW3MPS/7aSIAYsugY9TJKdQCCss.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "x8EpqJ1pKzP4vo35tTCm",
+  "public_owner_id": "5dd8ff09f6419f12d28b9dc0dcf280adae1c75bf1bcf881f8dcf845d7c227c3f",
+  "name": "David - Clear, Friendly Explainer",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "relaxed",
+  "cloned_by_count": 883,
+  "usage_character_count_1y": 2836566,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/x8EpqJ1pKzP4vo35tTCm/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiI1NWZhNDQwOWMyNWU0MTk2YjY5NzQ0YjQ4YjRiNDg4NyIsImZpbGVuYW1lIjoiNWFWcExGeEZraVJhREM5UThpNkIubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "0m1WGWVzxS7KbWobXtnw",
+  "public_owner_id": "20588439acc0b04cae4100d7911a3779be002df3d15d02dd5f5bb3b762ec26fe",
+  "name": "Olumide Gbenro - Sports Commentator/Narrator/NBA Voice Over/ Cash Cow Video/ Automation",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "excited",
+  "cloned_by_count": 2010,
+  "usage_character_count_1y": 2661964,
+  "free_users_allowed": false,
+  "live_moderation_enabled": true,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/M52lsMgZWWeshd3Vcrf4X0u1Fqr2/voices/0m1WGWVzxS7KbWobXtnw/5042b5b1-2b5d-4225-9acf-d49312342317.mp3",
+  "queries": [
+   "youtube_shorts"
+  ]
+ },
+ {
+  "voice_id": "74JBhfOHNPZlaH7OrVs9",
+  "public_owner_id": "d64e9acb1d1ad3f65127825cff467ce1f5788ca5ad073939593de2958c623c35",
+  "name": "PJ - Casual Young Storyteller",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 1320,
+  "usage_character_count_1y": 2578027,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 365,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/74JBhfOHNPZlaH7OrVs9/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiIxN2UwYzBjOGM0MzQ0YzM4OTJhMWZmYTYwZDMwODI5NiIsImZpbGVuYW1lIjoiblpCc09uckQ5Q3I4aWt3UFZZc0wubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "E8f8Zp0iARTamRzjNG4H",
+  "public_owner_id": "ee1b38b11ce8076b537c3516454f134f5e8f55eae4e38b907188a9176aaa9d8f",
+  "name": "Vector - Technical Explainer",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 717,
+  "usage_character_count_1y": 2554692,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/E8f8Zp0iARTamRzjNG4H/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJiOTdiM2U5MDdmM2E0ZTBiYTE2NmM4M2E5ZjY5NDY5ZiIsImZpbGVuYW1lIjoidTlRNUFJb0ZZcG9rRUc1WDdKbWYubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "467tX2b9Bky3cD6jXpNa",
+  "public_owner_id": "94cac854a846c60ea2c64da65bfa1970ab5caa5f1c8df41afb18ef56093e7774",
+  "name": "Max - USA Energetic Animated Cartoon",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "excited",
+  "cloned_by_count": 1504,
+  "usage_character_count_1y": 2525684,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/467tX2b9Bky3cD6jXpNa/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJjYjM2Y2ZlNjA3MmM0MTJjODcyMmU0NDg4NWRlZDY2YiIsImZpbGVuYW1lIjoiZGQwNmVhNVczY0tnSkwxRW9pQlcubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "animated",
+   "cartoon",
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "EgaoTKAPI20lafqnhSqN",
+  "public_owner_id": "56322ee54cf2b664f9511532f3f9b943d9eddcc4dbb8ab18d12774d27a821cc2",
+  "name": "Jack - Social Media Creator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 1118,
+  "usage_character_count_1y": 2248222,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/a3d11c1b9f2c414dbdb0d8bb1cbac581/voices/EgaoTKAPI20lafqnhSqN/pHErLWKGQynumpQa0SN5.mp3",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "FmtiHEcHpocK7YiZwa46",
+  "public_owner_id": "ab4d8e306fdc678d0f7f83045050e4fec8dc71888688af7464c7e67f6d16db9c",
+  "name": "Jason - Warm American Storyteller",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "relaxed",
+  "cloned_by_count": 961,
+  "usage_character_count_1y": 2238946,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/6387c0c57bd448c9b5a81d4c3161a125/voices/FmtiHEcHpocK7YiZwa46/YDmwF2rMMMOo9UmN9nqC.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "fewlHkMk5lyBZ3U5YdjD",
+  "public_owner_id": "22cc68716d5398c067bb3728bd1f9cb3c43eb388b054a6237bd59cb06ca57ddc",
+  "name": "Mark - Clear & Straightforward Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "formal",
+  "cloned_by_count": 645,
+  "usage_character_count_1y": 2227345,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/fewlHkMk5lyBZ3U5YdjD/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJlMjRmOTJkNjEzZjM0NTk5ODdkNWU3MDE5ZTkwZmJmMCIsImZpbGVuYW1lIjoiZ2EyM00ycDRieFpWUVJhQnVtSXcubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "BVPhWQykET1TSvfGzrUr",
+  "public_owner_id": "22fab49292c66762e92c60f17f1c3e5107b58fffd2acec78d4b2dc5b0798cd3e",
+  "name": "Jack - Deep Dark Horror Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "deep",
+  "cloned_by_count": 1596,
+  "usage_character_count_1y": 2153529,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/25e12361f0bc4c9098a8960f2cd785d6/voices/BVPhWQykET1TSvfGzrUr/b8OAhQmjnqaY0aMvAFWy.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "Cp4ilDy8q36L6pszGCNr",
+  "public_owner_id": "4c1990cb0b06e7015568fbfa2f4b4e1295e376130fa5318fc5d77ad716471068",
+  "name": "Jon - Warm smooth Storyteller",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 456,
+  "usage_character_count_1y": 2095512,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/21e33fc332ec46268179d3234b0fb4d3/voices/Cp4ilDy8q36L6pszGCNr/777a155d-1e9e-4de0-ad1a-dca9e5771825.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "9rDVEB1kFor5yQ8AOjMo",
+  "public_owner_id": "bef85035180d147ed68b0b075af2f6bb3480665493ac77bc571de37f7b8e975a",
+  "name": "Will - Neutral & Energetic ",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "high_quality",
+  "descriptive": "upbeat",
+  "cloned_by_count": 407,
+  "usage_character_count_1y": 1849080,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/bfe6343467324019bf490785aa5865f0/voices/9rDVEB1kFor5yQ8AOjMo/8oMP4PYHgeCHEBoTKraI.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "Mc6y9NqVzGpe1dPACUCy",
+  "public_owner_id": "c7a9806417ad04c2426ff8e365c5d8779bf6983b9318d2d7830c2f66f4468901",
+  "name": "Evan - Energetic & Positive",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "neutral",
+  "cloned_by_count": 409,
+  "usage_character_count_1y": 1790532,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/292a847012ec48d38489563a0eb21685/voices/Mc6y9NqVzGpe1dPACUCy/6604240b-9c03-42bb-b049-57caaed8cf8b.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "lFBWqzBMUNR1xG2cyvq0",
+  "public_owner_id": "a20eaed748db8e5f814dcbb3cc670ecaa999cde7b85e806c9bb077933ea82690",
+  "name": "Cliff - Warm, Authoritative Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 1030,
+  "usage_character_count_1y": 1760280,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/7a5f3eb5c40a4fcbb75d6d51051c7879/voices/lFBWqzBMUNR1xG2cyvq0/7c11378a-2c8c-4158-b5d7-7e3841ee7460.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "HOLINJYuuNipXUTD7z8k",
+  "public_owner_id": "a0a568330f41a893bcc663f8831c1a0136c543e608f98cb358d29b82b8506e2a",
+  "name": "Paul - Natural British Storyteller Educator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 717,
+  "usage_character_count_1y": 1755951,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 90,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/2b6418c95ca9474c8da421f4df85b14c/voices/HOLINJYuuNipXUTD7z8k/5c792dd4-a20c-4b08-9ce2-2c3ae103acaa.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "ZQThiZ7xFA5ev7NYKNsl",
+  "public_owner_id": "a81861db3ccc0e9c1d94d3cd3cf2b2a189a8537f5735e6dfeba14e4c97121c5f",
+  "name": "Andy - Deep, Confident, Energetic",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 235,
+  "usage_character_count_1y": 1635804,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/8c47c644d6b04fcbb5af5ca6193e8e95/voices/ZQThiZ7xFA5ev7NYKNsl/1d880de6-28e1-41a3-b436-07d268f41b7a.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "BycOlIr9Aytiubl0LIIY",
+  "public_owner_id": "564c02a4517d40f4abc672c9fe19c6baf509da329c9fabe7078bcba642880ad1",
+  "name": "Gxl - Documentary & Cinematic",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "deep",
+  "cloned_by_count": 458,
+  "usage_character_count_1y": 1625513,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/e48018884cc94a2aa058a77e33e9b0da/voices/BycOlIr9Aytiubl0LIIY/312b20e4-ee54-4c48-b0d9-d318f4e78720.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "DocU7Uj0kVTnVkg4D1PG",
+  "public_owner_id": "aafc9a2d0b330e095bf286bae8aa2e1695eb7d5b4d0d5af5b7c81eddb4d83a9a",
+  "name": "Dan - Energetic & Conversational",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 425,
+  "usage_character_count_1y": 1603811,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/138d85aa909240f0975162f1fa99b734/voices/DocU7Uj0kVTnVkg4D1PG/T1lx2Tnr7EtuT44YjYQc.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "AKZdDmutVRyxbrJTj2uF",
+  "public_owner_id": "583b6fa882d9fb72ab5beeb21b39021aa06ebdab5e6cbd2e11895728676781c1",
+  "name": "Yosef - Marketing, SEO & Explainer",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 1068,
+  "usage_character_count_1y": 1597608,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/AKZdDmutVRyxbrJTj2uF/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJkNzM4MmU5YjBhZjk0ZjMyYTA2ZDcwNDk2ZGQxNzMwNCIsImZpbGVuYW1lIjoiaEVZTTEzazRDWnlDY0hXZmoxY3gubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "6k8zpfvbtTRU46fQVRL5",
+  "public_owner_id": "19de45cfe867460aacf2e3d5fd08776139e5cdb24f6479d9213cbc311ce49faa",
+  "name": "T. Miles West - Intelligent Explainer",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "meditative",
+  "cloned_by_count": 324,
+  "usage_character_count_1y": 1589934,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/a417437c9b1641b190b284e5aee2bf29/voices/6k8zpfvbtTRU46fQVRL5/PsWnteWndU0DwxkFSCQB.mp3",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "S0ypc51SmsvcKXTWvjqJ",
+  "public_owner_id": "727a4db472b0ad6692a9b7d2ef08001e4cf5ef6c378fb278444fa1ca2dcb6e01",
+  "name": "Kai - Energetic Anime Hero",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "professional",
+  "descriptive": "hyped",
+  "cloned_by_count": 1242,
+  "usage_character_count_1y": 1586169,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/S0ypc51SmsvcKXTWvjqJ/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiI5YTllODZjNTgyYjc0NzE3OTRiYzA3NTU5MmU3NjE2MyIsImZpbGVuYW1lIjoiUVR3eFVmdDBYYWVhSExYYmZyQ28ubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "NnLrtIfdNChXJd9rCXm6",
+  "public_owner_id": "7398804d9eaf2f463899a907587c33a390591775784f87857b6d0e1e4e3e66f6",
+  "name": "Langston - Gripping TV Documentary Host",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "entertainment_tv",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 1021,
+  "usage_character_count_1y": 1574579,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ed9b05e6324c457685490352e9a1ec90/voices/NnLrtIfdNChXJd9rCXm6/MyzW5lMLRcmNmCnzZKge.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "PukfMNJEERXCYO1uNJbI",
+  "public_owner_id": "10f6565422e454740503dd1a1517224f10f194faecdb4d61097f698dbde94177",
+  "name": "Miles - Millenial Male",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "high_quality",
+  "descriptive": "serious",
+  "cloned_by_count": 1535,
+  "usage_character_count_1y": 1549248,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/dlrXfcY3xqTyGXIAqZjfLJUoUAL2/voices/PukfMNJEERXCYO1uNJbI/fXcBAKB5ddnNFuheNM4U.mp3",
+  "queries": [
+   "youtube_shorts"
+  ]
+ },
+ {
+  "voice_id": "wI49R6YUU5NNP1h0CECc",
+  "public_owner_id": "ceb6684214531dc3ed4ec480dbde374a7f58217752469d5c823e59b052ccee2c",
+  "name": "David - Experienced and Playful",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 6689,
+  "usage_character_count_1y": 1542433,
+  "free_users_allowed": true,
+  "live_moderation_enabled": true,
+  "notice_period": 30,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/eePKnp80Cve0Z0wKKcMMoi8KBZD3/voices/wI49R6YUU5NNP1h0CECc/b62f21b0-67c4-42a3-8a13-1f3f58219a19.mp3",
+  "queries": [
+   "playful"
+  ]
+ },
+ {
+  "voice_id": "VjSFSNiy9sK85Z9QRu3d",
+  "public_owner_id": "bffb2e1c01ed976dd2e838835650c62a1d9436999f76445b182f91ffbf42cb40",
+  "name": "Kenn Akomea - Calm & Friendly Explainer",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 918,
+  "usage_character_count_1y": 1538982,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 180,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/LhWGtl4439dyUAOheouBZwcCWKy2/voices/VjSFSNiy9sK85Z9QRu3d/1d8e348c-ac13-43c6-996d-80a32fc905f2.mp3",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "uthyNpAanNJt9o5FOEBC",
+  "public_owner_id": "23bbf36c1dfdd0caaa6dfbe07f76823c7f605350f74da2dd17f4e61d5ef48ab0",
+  "name": "Hamza Explainer South Asian",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 1767,
+  "usage_character_count_1y": 1520954,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 180,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/uthyNpAanNJt9o5FOEBC/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoidmxJWEd1UG9Dc2h3NVFud3lqaGhJNVphazFnMSIsImZpbGVuYW1lIjoiUFpmbEg5UjdMQVJMYzBnSVJLWkcubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "cIOaiiemAqOmrhA4l3E5",
+  "public_owner_id": "23ed9a9d40fe5b3b7f6126fb2ee4df4e865f7fcdf7a1212db8a667e0d9c5f7cd",
+  "name": "Eddie - Enthusiastic Expert",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 151,
+  "usage_character_count_1y": 1494247,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/e09da19fc2204700b023acfd1af6c1fc/voices/cIOaiiemAqOmrhA4l3E5/ykktUxVxJRBfip2qtC8Q.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "uznTibduhI714GjhEXrS",
+  "public_owner_id": "d5f14970a9d8673acf29adea2f086ab6ab4faad95d17db248aa4ab28f636ebd3",
+  "name": "Ade - Animated",
+  "gender": "male",
+  "age": "middle-aged",
+  "accent": "british",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "chill",
+  "cloned_by_count": 331,
+  "usage_character_count_1y": 1265129,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/uznTibduhI714GjhEXrS/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJjZTEwOTRkOGMwM2Q0YjE4YTY2OTQzOTIxMDRmOGQ3MSIsImZpbGVuYW1lIjoiZ1RScTJkOFE5RG9za2xpMGdjckgubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "1wH1EmwAyrkixqs2dwIi",
+  "public_owner_id": "c73655d849263a03082afffdf30369199b453a5f61e9a5e69261b0217ba967a3",
+  "name": "Jack - Natural Storyteller",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 283,
+  "usage_character_count_1y": 1258310,
+  "free_users_allowed": false,
+  "live_moderation_enabled": true,
+  "notice_period": 90,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/c8448c776e50416292b2ca20cc23cf79/voices/1wH1EmwAyrkixqs2dwIi/d1c43f27-5c34-42d4-a2bf-8a6c1a71e420.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "PCa5QtqUKnVu4yH3HxLp",
+  "public_owner_id": "03f974420bcc0744495b3e6fe10e0191160a0e98f55cb411030efddb48050973",
+  "name": "Aaron Gerard - Expressive",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "upbeat",
+  "cloned_by_count": 477,
+  "usage_character_count_1y": 1216190,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/bbc93d573acf4529aff7853117ea4964/voices/PCa5QtqUKnVu4yH3HxLp/9b2feb74-829e-4f4e-8d42-3e73fd6c7291.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "ruBC11gvnFsfA2dpiBh1",
+  "public_owner_id": "5865ee1b9d9d3885c2b8a85add85dac1ee8609ec94d313c8225d7f60552703e7",
+  "name": "William Gomes -Documentary, Storytelling",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 456,
+  "usage_character_count_1y": 1187582,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/cc6e0bde0602406db0e14a1c6b00c3a0/voices/ruBC11gvnFsfA2dpiBh1/3451715d-f538-4452-bfb0-ba652666d3ad.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "EtGAAwTx6aMveVbqUxuU",
+  "public_owner_id": "889f9cac000e27ec18cc50cd9226918949f71d065a07ed39f16cc669d359429b",
+  "name": "Joseph - Northern British Storyteller",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 367,
+  "usage_character_count_1y": 1139272,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/9aef0378ae144c7ca45c6c1f2c23c6a5/voices/EtGAAwTx6aMveVbqUxuU/552c5176-bb11-47b1-b985-3e989ee35d78.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "eh3mW70o6niXfNTuBPbY",
+  "public_owner_id": "3cffc638a198a148a8fcc1615b892170acba9b17feba79bf45ac54fb05b44f28",
+  "name": "Georgee - Cartoon Character",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "cute",
+  "cloned_by_count": 1411,
+  "usage_character_count_1y": 1111799,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/63238345a30b4416a508ffe0ce23ceee/voices/eh3mW70o6niXfNTuBPbY/g4GzMOIMQwlJhWkNsyY6.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "N3KdYXuAuQCEeNRC4lXJ",
+  "public_owner_id": "937e9726716027f68ee56a3d88b5a0adae85850db79b1da09e072b1d89f39060",
+  "name": "Rob - Narrator",
+  "gender": "male",
+  "age": "old",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 856,
+  "usage_character_count_1y": 1102466,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/7b02011c2a5a4a60a7abc94165cbd757/voices/N3KdYXuAuQCEeNRC4lXJ/f646b897-e653-434c-b039-f4b718e6291c.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "WXp4ESJtvKoewFgeArwB",
+  "public_owner_id": "89600e25df781582697965c8d5d225769a5b0a2336800aed36e879faf2ed5ae1",
+  "name": "Alex - Deep Commercial Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "advertisement",
+  "category": "professional",
+  "descriptive": "hyped",
+  "cloned_by_count": 1139,
+  "usage_character_count_1y": 1070982,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/2d40254237f043e7bc452c506408b0a6/voices/WXp4ESJtvKoewFgeArwB/eNjzL2kjVxJqpgzwhn9U.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "qE598pWTKNVcF4JNLrNs",
+  "public_owner_id": "a32cb52c963c536687052213b4a9b6cb350482beb32551367b9bfabdbceef88f",
+  "name": "Otis - Storyteller",
+  "gender": "male",
+  "age": "old",
+  "accent": "american",
+  "use_case": "entertainment_tv",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 719,
+  "usage_character_count_1y": 1027775,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/4f17d02d25e54053bd49b363384cd152/voices/qE598pWTKNVcF4JNLrNs/qO4wNOrDXUf14fxRxbhf.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "KcYifkkXnm0uVkvvr7rD",
+  "public_owner_id": "05e56c36787395469a8fd60d1b54b465b555bfea39a8d14c74c4b965ea067b78",
+  "name": "David - Expressive British Storyteller",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 1015,
+  "usage_character_count_1y": 996032,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/3f2fc801f0524b078f6d4a5eaef1a95b/voices/KcYifkkXnm0uVkvvr7rD/eeaaba30-c092-4e6f-88dd-c11a68ca2915.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "zauh4pbY6h1ZRErsRiAJ",
+  "public_owner_id": "66a58693387f713d0654057cf90581801dbe46ab3ad0e6c954b87c87a2400142",
+  "name": "Valf - Goblin, Raspy, Fantasy Monster",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "raspy",
+  "cloned_by_count": 1577,
+  "usage_character_count_1y": 961000,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/553e0172943049fd80d06c64cd8a1f73/voices/zauh4pbY6h1ZRErsRiAJ/AVFFmY5u8cjIfaSZTvxX.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "H8DglpTKljBPHb5j9pP8",
+  "public_owner_id": "4c8f9090dfacf05f2a53236bbc7c3f213f0ada981cee5213fc0b5265261a0a2e",
+  "name": "Alec Wilcock - Social Media Creator",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 238,
+  "usage_character_count_1y": 958277,
+  "free_users_allowed": false,
+  "live_moderation_enabled": true,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/H8DglpTKljBPHb5j9pP8/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJiZDdmOGFiZjA1Y2Y0YTAwYTE0MzIzODFmNGVkZDk0ZiIsImZpbGVuYW1lIjoiNjZiZDhiMjMtMGRmNC00OWM1LWFlM2YtZmE5MjM4ZTk5YTQ2Lm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "OLOI4oonuvD0YxxCCZy0",
+  "public_owner_id": "e5f72a4562dea0922f41f6b3b7592c47b050932732c26c0be3fc21486c9ed78d",
+  "name": "Jack - Relaxed Aussie Explainer",
+  "gender": "male",
+  "age": "young",
+  "accent": "australian",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "relaxed",
+  "cloned_by_count": 530,
+  "usage_character_count_1y": 948205,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/OLOI4oonuvD0YxxCCZy0/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJlZjVhOTRlMWMxMjM0ZDU2ODE3YjM0NTUwYmU3NTk1MyIsImZpbGVuYW1lIjoiM3BwOHpsNENWOHdQRWRHdEVYQjgubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "rSLmFOTRq9g87aTxSUr6",
+  "public_owner_id": "fd99b11504e8c1aac6e847ea61616cd450db4e2b1b8aaa196c35d58c85fd9f28",
+  "name": "David - Deep, Cinematic, Documentary",
+  "gender": "male",
+  "age": "old",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "mature",
+  "cloned_by_count": 539,
+  "usage_character_count_1y": 933557,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/rSLmFOTRq9g87aTxSUr6/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJhMjY2ZjQ0ZDg1MDU0NDhkOGZmNzdmMjc1Mzc5M2I3YiIsImZpbGVuYW1lIjoicDY5VFl5Z0NUcW9YUkpvWnYwb0QubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "LyRfUa6q11HRdIap0Vzu",
+  "public_owner_id": "d5533cfa76d083441927f262ff67f45ed448768ff3aece6edc41c031ae246d75",
+  "name": "Chris - Calm Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 652,
+  "usage_character_count_1y": 926886,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/d2f642f922d2418fb806adeab8239f25/voices/LyRfUa6q11HRdIap0Vzu/1fa5d2b8-c71e-4a40-a5aa-f7d772674432.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "2EBnrRne4qUmwi2XwSnN",
+  "public_owner_id": "fbb31be455e89bba290b3f79379d8190d3919909d7b0fc3bdc747033c8e193c9",
+  "name": "Mike - British RP, Northern Grit Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "serious",
+  "cloned_by_count": 565,
+  "usage_character_count_1y": 905847,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/2EBnrRne4qUmwi2XwSnN/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiI0NzkzMGMyZmU2MTU0YTBkODk2NTBkZjUzOTlkMWUyOSIsImZpbGVuYW1lIjoiYXRSaWduaVVHTnc3b2FZMXF2WksubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "1qz7q3ZW54FIyiWDvo33",
+  "public_owner_id": "4fe66377913156be7023db7ac0a0d67ae688eaa6685851bc906c6640cce4e025",
+  "name": "Edgar - Conversational Storyteller",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 293,
+  "usage_character_count_1y": 877761,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/1qz7q3ZW54FIyiWDvo33/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiI2YmYyMjUzMWEzMzM0NzkyYWY0ZjU4ZjgyODRkZThjZSIsImZpbGVuYW1lIjoibXBWTERUQmV3MExZTUQya3dwYVUubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "wd1TGiSajzmsdoRFw12Q",
+  "public_owner_id": "a50c4e20639839847d977d924156a2c5c554d6a3566b8267f2a5f034be0b3d78",
+  "name": "Jumah - Compelling Documentary Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 870,
+  "usage_character_count_1y": 856337,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 180,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/ZtEfaXMjrcb1BvvT7rfgAcCFWpT2/voices/wd1TGiSajzmsdoRFw12Q/a0c05647-c337-465e-b661-1a7771c928c2.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "5EdH7GIpwUE96RlwFeZJ",
+  "public_owner_id": "cd138f9222c4ab2be240d727dba6ac8c04df9fe8e2ff83eaf2dc36fc51e1de57",
+  "name": "Scott",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 315,
+  "usage_character_count_1y": 852225,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/5EdH7GIpwUE96RlwFeZJ/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJmYmRhYjNhNTUxYWQ0OTdjOWY4OGEzZmJkYWE2ZDJiOSIsImZpbGVuYW1lIjoiMzhmMTk3ZTMtMjZjZC00NTM2LWJjZmYtMjM5OGRmZjA2Yzg2Lm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "anewbHU5WrUjxBZgJstt",
+  "public_owner_id": "5e6f5fdd417d0b473b9889b85944c200940bc3681f2cec4c1cd6329e3608f095",
+  "name": "Jay - Upbeat & Conversational",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "upbeat",
+  "cloned_by_count": 427,
+  "usage_character_count_1y": 844859,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/4a3e879c0e9c4c65a78f082000b62790/voices/anewbHU5WrUjxBZgJstt/hYjTQomcnnOixa4FAglo.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "GQQpeRnV5mCWTgxKhGo5",
+  "public_owner_id": "89f0288ca246c516ad3e53f4fcbd15a74ce07e0f2a79f5f1b63bca21be694f45",
+  "name": "Ryan - American Documentary Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "professional",
+  "cloned_by_count": 372,
+  "usage_character_count_1y": 756717,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/dfd64a8ed73641a5977d3ee123bb48bc/voices/GQQpeRnV5mCWTgxKhGo5/3eVRJjzCzkaOk4sXKxkT.mp3",
+  "queries": [
+   "documentary",
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "2SszH5VRrjeTGigWx8wN",
+  "public_owner_id": "9fec8ef4301da168e739996d0bc72eb62b38a24b3f19ae4a946167a858538065",
+  "name": "Paul - Calm Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 606,
+  "usage_character_count_1y": 749272,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/2SszH5VRrjeTGigWx8wN/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJlOTlhYTkwN2U0N2E0YTFhYWRjOTM4YjI2YzZhYjE4YyIsImZpbGVuYW1lIjoiNjQ0ZDFjYjAtNmJhMS00MzJiLWE4NGUtZTJkZTgwYTFhZWVjLm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "weNdhGmYaizQlfiLlyJq",
+  "public_owner_id": "0bb51f3439b5333f339d940f87c227b45964302d05abcb1ec902fc9ebac230cc",
+  "name": "Pyle",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 441,
+  "usage_character_count_1y": 656972,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/9e84b9def1a444f7a2ad20551aef5df0/voices/weNdhGmYaizQlfiLlyJq/5c5db4c5-2b5e-4d93-b81d-616dc4f4b6a4.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "mHYwkV66AxBCZv6SghYb",
+  "public_owner_id": "23781a6aab1462f7ea8cee7ab668f413d17c57b430974c98c1c011fe439229aa",
+  "name": "Matt - Laid-back energetic",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 106,
+  "usage_character_count_1y": 628008,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/a26a1990586447a397c5f0b65bb4d476/voices/mHYwkV66AxBCZv6SghYb/935f6e9a-8014-43d6-bbe3-d15bd15a7ecf.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "qJasGs5XMUjDBjQvokt2",
+  "public_owner_id": "d883247c7aab25ccb9f12ee9cd44e49fc26e57607cd080ae9ad250da27e18891",
+  "name": "Robert Cummer - Studio Narrator",
+  "gender": "male",
+  "age": "middle-aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 181,
+  "usage_character_count_1y": 594129,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/76ea4e2ddd5248f8960b083d9ea511a1/voices/qJasGs5XMUjDBjQvokt2/SbE7kmojDTawoJpU20IM.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "iHiL14jSTiWXy4nzDtbq",
+  "public_owner_id": "618ca3642582f1a2342b56cea7d7d8d1568d3b676a1eaa9d124b229de54d92fe",
+  "name": "Mister Mouse",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 841,
+  "usage_character_count_1y": 554625,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/b364ec5351894e9b99cd088d0778f5fa/voices/iHiL14jSTiWXy4nzDtbq/JDV3EyeAG8L07fldTWNq.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "9hb1f7xQcMLB90qbYSY3",
+  "public_owner_id": "5098c4d1601006beb86c519c4b663780d04b5917db7e029310baedfbb5be2e74",
+  "name": "Noah - Confident Canadian Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "canadian",
+  "use_case": "advertisement",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 502,
+  "usage_character_count_1y": 547095,
+  "free_users_allowed": true,
+  "live_moderation_enabled": true,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/e39ddee164be43d3bd494125bb8bb14b/voices/9hb1f7xQcMLB90qbYSY3/CQRY6quKe2Y5pTIg1aNq.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "3qrDspkJ47LHgKaaF9hQ",
+  "public_owner_id": "c4a12a2539cd79f492b5033d7149c4d1b715045cfa787395215e93cd64a85b57",
+  "name": "Dave - Energetic, dynamic, smooth",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 598,
+  "usage_character_count_1y": 536703,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/6a87ac6764c9488ea7c98c1bb98f89c7/voices/3qrDspkJ47LHgKaaF9hQ/9893d2c7-2564-49f4-a9bd-59b8d42a3bf3.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "fmR785nA5jqTzoTNg3Jk",
+  "public_owner_id": "69cb76098594a5938e3183b725c54c9b7bd914b5c312eae6a0c99748937b8df9",
+  "name": "Bob - Silly, Playful and Exaggerated",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "casual",
+  "cloned_by_count": 1270,
+  "usage_character_count_1y": 509168,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": null,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/VJ3PZkF3HvhE5HRU1vjnW8dYMBm2/voices/fmR785nA5jqTzoTNg3Jk/K6OVN9ImLQq1yvmkgEFx.mp3",
+  "queries": [
+   "playful"
+  ]
+ },
+ {
+  "voice_id": "4gnXtzQIIeGuC5hxActn",
+  "public_owner_id": "7d36775b2baad841acfe423f2b68bbb29f37aa7a2df1f257b51de33c5d318dd2",
+  "name": "Tilly - Playful Educational Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "australian",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "excited",
+  "cloned_by_count": 416,
+  "usage_character_count_1y": 501257,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ca807adf5c724e0987657f8dafd5cd17/voices/4gnXtzQIIeGuC5hxActn/Q504sjTAdLNP3B8mKNOo.mp3",
+  "queries": [
+   "playful"
+  ]
+ },
+ {
+  "voice_id": "vTKWvlDCSXCLCrbWYgdc",
+  "public_owner_id": "70e23ee7eb0757b9fa3f62cc6c702fdd790f50e7fd0fbe510ea244a92cb537e5",
+  "name": "TJ Anderson - Storyteller",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "professional",
+  "cloned_by_count": 89,
+  "usage_character_count_1y": 413804,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/e659d6a6ea4f49cf8d3cf2364bf68fdf/voices/vTKWvlDCSXCLCrbWYgdc/fe61d6ba-2368-4b77-b902-b7789dcc5bc7.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "ORqRNkPpsaaMnLcOBTbu",
+  "public_owner_id": "15539652f47661956f4ae409751b1d6817626d73ad465af181d766e7c72fcc73",
+  "name": "Tom - Social Media",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "social_media",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 215,
+  "usage_character_count_1y": 392820,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/1206be050c3b4834b7e83ab80a5e3bc5/voices/ORqRNkPpsaaMnLcOBTbu/d95fea5a-d1ee-4d77-9736-fcf25292d23e.mp3",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "p0JgbJQDZvexVY4BnkBB",
+  "public_owner_id": "2612dcaae194057f0d4ab8655745361e20236a997b27c061bdf12380c3886963",
+  "name": "Chandler - Your Social Media Star",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "excited",
+  "cloned_by_count": 255,
+  "usage_character_count_1y": 351350,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ac4bc65562f9412a9ff8c19574a8e3ae/voices/p0JgbJQDZvexVY4BnkBB/9WZCnLzSmltQBgEaZSpz.mp3",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "GW5nDvYb4FgPxi9TXkc8",
+  "public_owner_id": "6bf2f11e1472af542429d8754c31191512508eba279710de6da7f51f3f3b994f",
+  "name": "Mike - Social media",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 285,
+  "usage_character_count_1y": 339247,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/124479dcce9645268bdf771529b54673/voices/GW5nDvYb4FgPxi9TXkc8/a9bcc2c0-4bfd-4ffc-af07-40d747dcb4e1.mp3",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "flyp4UeUiVSc0DghIDli",
+  "public_owner_id": "12bc0ea221885c8caa373fa2a4d5e6de6beb264eaf814b62751538a2f4ad82ad",
+  "name": "Rajab Natshah - Tech Explainer",
+  "gender": "male",
+  "age": "",
+  "accent": "british",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "professional",
+  "cloned_by_count": 136,
+  "usage_character_count_1y": 333002,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/bfd44019c0634a6186d2e9d0f6a5a82c/voices/flyp4UeUiVSc0DghIDli/36ad9678-7c19-4025-a461-01a93061edfe.mp3",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "U7avQyCd1y0dwS7pWNYu",
+  "public_owner_id": "844d8836b29f0f33fe3c7459e8b71b7519918a397a48d2688bc8ef5ed7657f58",
+  "name": "Nick Trigili - Social Media",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "deep",
+  "cloned_by_count": 120,
+  "usage_character_count_1y": 323411,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 180,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/U7avQyCd1y0dwS7pWNYu/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJmZWI1MDhmZWU5NDk0YmYzOTk4M2JlMGZiYTc3NDY2ZCIsImZpbGVuYW1lIjoiMTgxYjdmM2ItMTBjMi00NzYxLWJmZTAtM2M1MzhlNjZhMzQxLm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "3BdXWeYVbGOjlPyPNr0U",
+  "public_owner_id": "99f909268da653c20a02b85a87cfafb22be7dad624026fefeb3623d4cb33d783",
+  "name": "Auffy - Friendly Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 135,
+  "usage_character_count_1y": 310797,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/6acd5e4d414d439aad71879f9615baf7/voices/3BdXWeYVbGOjlPyPNr0U/KJjwfcRim3FEItfFEQJ0.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "vJAfZef7oDoAur7gbuo5",
+  "public_owner_id": "2293c3ce546cbf0c9bea2936f8c8d32996ec89df0d6ae3cc3bc6ab34718176bb",
+  "name": "G Aussie - Social Media",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "australian",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 250,
+  "usage_character_count_1y": 272428,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/vJAfZef7oDoAur7gbuo5/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiIwYzZiMjE4NmEyNWI0MDkwODkyMjQ1MGRiZTE0MThhZSIsImZpbGVuYW1lIjoiZjhhNjBhMzAtMTIxMy00MzgwLTkwMTYtNWUxYjZiZWI0OGYyLm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "qZD4lsr8kIiotITUSBmL",
+  "public_owner_id": "63722ce8eaa1403a3894f04549c83845bc901b5198fd7545f30c0d1ac68a39fc",
+  "name": "Tiguere - Dominican Confident Male",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "new york",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 250,
+  "usage_character_count_1y": 270057,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/1c4489451b014b779ab2108ace8b5a69/voices/qZD4lsr8kIiotITUSBmL/a6175eea-2056-4ff1-b4a0-505f3b6b6705.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "bnkqMLCB8HHkYK9Gd6Xj",
+  "public_owner_id": "26e8e180d32cb3c9d0d2ef2f77efc1bd864528d23389ce3baa0d8f4cf2716571",
+  "name": "Peter - Deep & Animated",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "australian",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "crisp",
+  "cloned_by_count": 91,
+  "usage_character_count_1y": 264794,
+  "free_users_allowed": false,
+  "live_moderation_enabled": true,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/e990b216eb3d4a29baf3f46f4039c4a7/voices/bnkqMLCB8HHkYK9Gd6Xj/b9165a5e-0133-4c9a-a681-c44361c5f96b.mp3",
+  "queries": [
+   "animated"
+  ]
+ },
+ {
+  "voice_id": "9fEeC7FrzKJWvKjl4Rrc",
+  "public_owner_id": "a446f88ab3ec88f3ca7e94b5b82829baf53b2a10b6ed09e0c97723417a52b593",
+  "name": "Alex - Documentary",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "canadian",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "professional",
+  "cloned_by_count": 223,
+  "usage_character_count_1y": 254069,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/e37042aeac314a0fa3d2384f17000ba7/voices/9fEeC7FrzKJWvKjl4Rrc/b0635f58-0584-4be8-ba21-d56dd36af28d.mp3",
+  "queries": [
+   "documentary"
+  ]
+ },
+ {
+  "voice_id": "qs7xY0GtfjxrWYDILEb7",
+  "public_owner_id": "79906be9e45c5d34855eb2a9d2328a3962d83d3d3cc41352440a9ff2203d4a5e",
+  "name": "Dre Way - Social media",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 209,
+  "usage_character_count_1y": 250585,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/fc1759fc9d8d41d1978ad7c0cbb04149/voices/qs7xY0GtfjxrWYDILEb7/92fb16f7-b23d-4ad5-a4da-9852027035fe.mp3",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "ehrDUwKJhHPRmVi5spUJ",
+  "public_owner_id": "cf8ef5253ecde8a76911a8015c266e89c1d666bdff94c41d0dc4ae53cfb75b29",
+  "name": "Robert Ellis - Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 74,
+  "usage_character_count_1y": 240958,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/75d5d3ae34e747ab90a57a80bc6f263a/voices/ehrDUwKJhHPRmVi5spUJ/275575a8-635a-4564-a2d5-a701cc0f57b7.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "o7bn7T3k6h58H9hn9j3y",
+  "public_owner_id": "e21da34db31d58704b7b2776dcf7db1c31b464e5bffd71727d5f1c4abafafa87",
+  "name": "\u00c1lfwyn - Excitable & Squeaky",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "characters_animation",
+  "category": "professional",
+  "descriptive": "excited",
+  "cloned_by_count": 498,
+  "usage_character_count_1y": 237519,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/631bf5a20c2d45ffacc1311eb5dec41f/voices/o7bn7T3k6h58H9hn9j3y/chIM4vkLSJ6rIEARqJjg.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "R83oOrMWOfRld3y7P2wj",
+  "public_owner_id": "f5195425338fd049fad7de1e22daf17af3d999db716355bbdb9da1ab232e5155",
+  "name": "Olin Richey - Energetic",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 86,
+  "usage_character_count_1y": 214061,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/2beb706cb9af494a81c8eeaa45a6e9e0/voices/R83oOrMWOfRld3y7P2wj/32d1aac3-a724-478b-a498-012ab2917fb5.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "kyb49F8KxAlH5K1B9LPo",
+  "public_owner_id": "2cfed58bf2886e16067f4ebda467400fc0015e40bb5d0a2a790bd80fb1a0e97b",
+  "name": "Tom - Friendly Explainer",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 191,
+  "usage_character_count_1y": 203267,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/43aa44160fe7473cbda725dca55d822a/voices/kyb49F8KxAlH5K1B9LPo/1ybRtGxpWiB42pHthosJ.mp3",
+  "queries": [
+   "explainer"
+  ]
+ },
+ {
+  "voice_id": "w1ovTGXs1yF9qRmr8AO9",
+  "public_owner_id": "3972c31d0a1c4fdafd4b2f9d4740f70267d485ccc6e24c2824edbba54b188992",
+  "name": "Jax - Bold, Confident, Gritty Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 148,
+  "usage_character_count_1y": 191852,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/3ceb9028fa4e42b0b8bf701f4038919d/voices/w1ovTGXs1yF9qRmr8AO9/muAPQ6R7rVO4ZXGZAXQJ.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "7JxQktePrzZL8mtvQqOy",
+  "public_owner_id": "6842f22b11caaf5bce37b906d5688734241c95fa4c3699f42f795a5bd01c4031",
+  "name": "Rocco - Energetic & Charming",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "professional",
+  "cloned_by_count": 87,
+  "usage_character_count_1y": 190061,
+  "free_users_allowed": false,
+  "live_moderation_enabled": true,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/7faa52895143444793dc96166854a58a/voices/7JxQktePrzZL8mtvQqOy/0d6ad3bc-adff-4158-8e79-98999f368175.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "svdcfLcTHlB4quGKO0X9",
+  "public_owner_id": "4975283aea66c927a5974f85a59cc76a6a6037c8050f675980d97caf9fc84efa",
+  "name": "JP Talan - Professional Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 59,
+  "usage_character_count_1y": 164839,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/svdcfLcTHlB4quGKO0X9/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiIzNmFmMzM1YzU2Zjc0ZTA5OWNkODA2YTA5NDE0YzMzNCIsImZpbGVuYW1lIjoiMmE4ZTYxZWUtOTJkMy00ZTk2LWI1ODYtODNlN2NhZThjZmJhLm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "RQirksf9cwYYdznttqcq",
+  "public_owner_id": "f73897174eaec9c826f22617cd26cc65c2ee4d81abb629877472fb43c27b251b",
+  "name": "Rowan - Calming British Storyteller",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "gentle",
+  "cloned_by_count": 155,
+  "usage_character_count_1y": 155907,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/46b81bb325574da19a285ceebbd71678/voices/RQirksf9cwYYdznttqcq/VmVHtjqAjGleM9QcFROi.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "PD1NqAiOM6TcgKL8zhGK",
+  "public_owner_id": "b12d75c79412191e01964a1a9ed447f8eac4df4a6a2cbb6ea136b5dbadbe8310",
+  "name": "Kevin - Authentic Social Media",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "professional",
+  "cloned_by_count": 172,
+  "usage_character_count_1y": 134587,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/PD1NqAiOM6TcgKL8zhGK/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiIyMzU1ZmUzM2I5ZWU0Y2JhYWFjM2I4NzQyZWIyMmQyYyIsImZpbGVuYW1lIjoiNDM1ZGE4OTQtYWU4Yi00ZWE4LWI4ZWUtMzU1ZGNmMzIxN2Q4Lm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "lr9R9XywXNmRjqlQKkgF",
+  "public_owner_id": "466b7e2d0461f85940591b20773921b9abfc20c088ddd23a1bd9b0ebb844990b",
+  "name": "Mosquito Freemen - Regal & Charismatic",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "characters_animation",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 178,
+  "usage_character_count_1y": 95503,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/7d4c129ffe4840e69ae172ec1e9e09b4/voices/lr9R9XywXNmRjqlQKkgF/bq5EBsczGKOr1mkoLwDW.mp3",
+  "queries": [
+   "cartoon"
+  ]
+ },
+ {
+  "voice_id": "CHO1EPlL4NlQL7EeyvYb",
+  "public_owner_id": "3972c31d0a1c4fdafd4b2f9d4740f70267d485ccc6e24c2824edbba54b188992",
+  "name": "Rafe - Romance Audiobook Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "high_quality",
+  "descriptive": "confident",
+  "cloned_by_count": 78,
+  "usage_character_count_1y": 84691,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/3ceb9028fa4e42b0b8bf701f4038919d/voices/CHO1EPlL4NlQL7EeyvYb/Ykd4QTMk3kdMrimvwesX.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "8UzDsZTAC9BqSl4ToU9I",
+  "public_owner_id": "0172d5f0deeb69303258885ec74f0455bfe1b88685d678726fec14bb5c17957f",
+  "name": "Aaron - Storyteller",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "confident",
+  "cloned_by_count": 31,
+  "usage_character_count_1y": 52408,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/7751d1a09e0a40939cf98f8ada4baff2/voices/8UzDsZTAC9BqSl4ToU9I/b05e2962-6ec3-4322-bc9a-06b1d372315c.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "Exv6tD1bSqqEOJlb8Ez7",
+  "public_owner_id": "88858829c666c8e5d4629f1682deafcdf5acc3cad0c67089a5dd0f4a2d36ad45",
+  "name": "Ben Chamsou - Narrator & Storyteller",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 24,
+  "usage_character_count_1y": 44530,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/554597097d2247a6b948589420a8295b/voices/Exv6tD1bSqqEOJlb8Ez7/uWrTNwAtHXAyes86B9kh.mp3",
+  "queries": [
+   "narrator",
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "11hGXEBeb0QRRup2lZaq",
+  "public_owner_id": "9200d384896eec872d864e40642b3cd18e3afdd0146414e6ca00e594aebb04a2",
+  "name": "Otis - Deep Historical Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "us southern",
+  "use_case": "informative_educational",
+  "category": "professional",
+  "descriptive": "calm",
+  "cloned_by_count": 38,
+  "usage_character_count_1y": 40791,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/6a120054074d449180132775ed63e6d0/voices/11hGXEBeb0QRRup2lZaq/ab172d8b-70f6-4083-a45e-6ae03a690556.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "JoUzH3pAmeGSSiUJSvF1",
+  "public_owner_id": "bf234295de1beb64abb8c1ee8ed5b450698710d707a0800a36a4100fb51a24c3",
+  "name": "Arthur - Narrator & Educator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "chill",
+  "cloned_by_count": 33,
+  "usage_character_count_1y": 33540,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/JoUzH3pAmeGSSiUJSvF1/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJiNTY4ODdkZDRlODE0ZDhhODkyMmM1MzhjODQzMDJhNyIsImZpbGVuYW1lIjoiZUp6b0kxNExhZmhoVHlOMEF6NloubXAzIiwidGltZXN0YW1wIjoxNzk0MzM3MjAwMDAwMDAwfQ%3D%3D",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "9Qapfs54ENAyR3s5T0ki",
+  "public_owner_id": "147d96b76aa8e789bc0b0ae50aa69dff06909c5abba9dc7bc15817c991e93579",
+  "name": "Julian - Deep & Professional Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "crisp",
+  "cloned_by_count": 25,
+  "usage_character_count_1y": 33526,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/a8fed30185bd42549c8a314f3a30089e/voices/9Qapfs54ENAyR3s5T0ki/NdGASp1v6nUKWgGsWcDz.mp3",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "iQYt7pNZi2Z2A9d1t4bL",
+  "public_owner_id": "0516c7c92c28b3280fdad088bfb388e247057b2763ebda7b3e378ddcd9ab78ba",
+  "name": "Razvick - Storyteller",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "pleasant",
+  "cloned_by_count": 27,
+  "usage_character_count_1y": 33287,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/b44c47efdc874bd7bd4af6664c86dbd1/voices/iQYt7pNZi2Z2A9d1t4bL/tslK0UwD7VR5Gue87XRc.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "VE8a9jimIFsqCK5zxxPk",
+  "public_owner_id": "6b096657159e457253b4cd5fddb345c39d01ede3a3a4c21d2efad88f9699763a",
+  "name": "Jacob L. - Cozy Bedtime Storyteller",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "pleasant",
+  "cloned_by_count": 48,
+  "usage_character_count_1y": 25981,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": null,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/dfc85ff9a8d641938ae0bcc9d59f4a11/voices/VE8a9jimIFsqCK5zxxPk/DXjIYHhMTKQC0GA7oxdo.mp3",
+  "queries": [
+   "storyteller"
+  ]
+ },
+ {
+  "voice_id": "8qMPvdfdYk6DE3J2bETN",
+  "public_owner_id": "bf99886ed21ad89620a84cb805e996d77529113be239600f2c95d305f47d5a9a",
+  "name": "Huzaifa - Social Media",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 37,
+  "usage_character_count_1y": 12672,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/c4d153981e824f46b32ef48d8aa94fd9/voices/8qMPvdfdYk6DE3J2bETN/91d450e8-6139-4d42-9b68-2b5861cee84f.mp3",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "sEdHFcQSpfwr8mKfovsB",
+  "public_owner_id": "a3f098426c4164a45bdcea10d2cf1910c03066f27cc47f7c7f31964084929a7f",
+  "name": "Idan - Social Media",
+  "gender": "male",
+  "age": "young",
+  "accent": "american",
+  "use_case": "social_media",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 30,
+  "usage_character_count_1y": 9181,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/sEdHFcQSpfwr8mKfovsB/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJiZWFiMTU3ZjdlOTc0NDEwOWIwMjczZDRlOGI1MTVlOCIsImZpbGVuYW1lIjoiOTZhZGFkMjAtYTdhYi00M2VlLTg4YzUtMGVmODYzMjYwODRkLm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "social_media"
+  ]
+ },
+ {
+  "voice_id": "4HQr1UkKXrxniR0Q2Dth",
+  "public_owner_id": "d5fedefe4f4471c4f4a405cb189fb39957c100b2a480d2ab5d8f2763f862c537",
+  "name": "FeriAmerican - Narrator",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "american",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "chill",
+  "cloned_by_count": 16,
+  "usage_character_count_1y": 1929,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://api.us.elevenlabs.io/v1/voices/4HQr1UkKXrxniR0Q2Dth/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiIzMWY3NDc4YzVkMTA0YWQ2OTcyZTk4MGEzYWU3MDE2OCIsImZpbGVuYW1lIjoiYWIzYjA3NDMtMTQ3Yi00YzE4LWI0ZDUtYzlmYjVkMTBhNzBmLm1wMyIsInRpbWVzdGFtcCI6MTc5NDMzNzIwMDAwMDAwMH0%3D",
+  "queries": [
+   "narrator"
+  ]
+ },
+ {
+  "voice_id": "VzXSM8CHnPntdQM3ySnI",
+  "public_owner_id": "2be97062f5a10e08dcae62dd91205144c5d7bedcac62985c1ac60b275eb57460",
+  "name": "Atuo - Energetic British, Multi language",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "conversational",
+  "category": "professional",
+  "descriptive": "upbeat",
+  "cloned_by_count": 11,
+  "usage_character_count_1y": 1727,
+  "free_users_allowed": false,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/b50c392fc69947b084b1adb1f9292190/voices/VzXSM8CHnPntdQM3ySnI/6jxyqSK9UOkteDaHFHTi.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "Qgg2Tb3UNSkQVZcrV4H0",
+  "public_owner_id": "64cbc624eb5aab4e95a968e1f41d75402277cca6e549036ed17e56ea33bbbc9e",
+  "name": "Kieran - Energetic and Dynamic",
+  "gender": "male",
+  "age": "young",
+  "accent": "british",
+  "use_case": "advertisement",
+  "category": "high_quality",
+  "descriptive": "excited",
+  "cloned_by_count": 1037,
+  "usage_character_count_1y": 0,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 4015,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/1da06ea679a54975ad96a2221fe6530d/voices/Qgg2Tb3UNSkQVZcrV4H0/57f4e5a8-cb5b-4677-900d-e4a64d005843.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "uGA0BTw0auurBhSTFN7g",
+  "public_owner_id": "64cbc624eb5aab4e95a968e1f41d75402277cca6e549036ed17e56ea33bbbc9e",
+  "name": "Archie - Energetic and Dynamic",
+  "gender": "male",
+  "age": "middle_aged",
+  "accent": "british",
+  "use_case": "advertisement",
+  "category": "high_quality",
+  "descriptive": "deep",
+  "cloned_by_count": 854,
+  "usage_character_count_1y": 0,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 4015,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/1da06ea679a54975ad96a2221fe6530d/voices/uGA0BTw0auurBhSTFN7g/c96c9a00-fa60-4122-83b4-2b236bcb8dd3.mp3",
+  "queries": [
+   "energetic"
+  ]
+ },
+ {
+  "voice_id": "K8yBxpXl0mvtjeLf9Wk8",
+  "public_owner_id": "d92dba3c1e5d894d16a54f5c132e42c78c718ca5634c958b23be8154b7dc8dc7",
+  "name": "Sia - Bipedia Narrator",
+  "gender": "male",
+  "age": "young",
+  "accent": "us southern",
+  "use_case": "narrative_story",
+  "category": "professional",
+  "descriptive": "casual",
+  "cloned_by_count": 0,
+  "usage_character_count_1y": 0,
+  "free_users_allowed": true,
+  "live_moderation_enabled": false,
+  "notice_period": 730,
+  "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/66f6df999be14309b17a6243218058c6/voices/K8yBxpXl0mvtjeLf9Wk8/a1db2f7d-09bb-4d37-9561-99a81cc68cac.mp3",
+  "queries": [
+   "narrator"
+  ]
+ }
+]

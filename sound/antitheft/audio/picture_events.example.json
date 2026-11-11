@@ -1,0 +1,20 @@
+{
+ "_doc": "NOT READ by the code. Copy the keys you need into picture_events.json (same folder) when a picture action lands on a different frame after the merge, then run `python mix.py`. Values: a frame (30 fps, may be fractional), a list of frames, the same dict shape as in picture_events_used.json, or null to drop that cue. Keys starting with '_' are ignored.",
+ "_flip_seqs_if_LEAD_P1_is_applied": "WORLD-EXT poseFlip ones FLAP_SEQ(4, tons14-2) + tens FLAP_SEQ(1, tons14+3): [target, start - tons14]",
+ "flip_seqs": [[1, 3], [4, -2]],
+ "_bubble_out_if_CHAR_pops_it_on_Then": "CHAR A1-P2 option: pop the hook bubble out at ~64 (2 f shrink) instead of 106",
+ "bubble_out": 62,
+ "_shutter_3_if_no_flash": "drop the shot-3 shutter if CHAR does not add the background photographer flash at ~234",
+ "shutter_3": null,
+ "_whistle_3_if_no_o_mouth": "drop the innocent whistle if CHAR does not key the 'whistle' o-mouth into the 234-241 gap",
+ "whistle_3": null,
+ "_raven_extras": "CHAR A1-ADD raven moments, if they are animated and in frame",
+ "raven_ruffle_1": [30],
+ "raven_9": [929],
+ "photo_13": [1598],
+ "_tumble_10_if_moved": "CHAR A1-P1 asked to move the shot-10 tumbleweed to 1115-1130 (WORLD-EXT's list keeps it at 1092-1112)",
+ "tumble_10": {"f0": 1085, "dur": 60, "x0": -10.0, "x1": 2.0, "on": [1113, 1137], "half_w": 2.5},
+ "_crowd_if_LEAD_keeps_the_round1_timing": "if the Sign B crowd still grabs at pct8-34 and pockets ~pct8-26",
+ "crowd_squat_10": 1157,
+ "crowd_pocket_10": 1165
+}

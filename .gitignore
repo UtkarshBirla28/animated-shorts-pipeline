@@ -1,0 +1,33 @@
+# deps / envs
+node_modules/
+tools/.venv/
+.venv/
+__pycache__/
+*.pyc
+# renders, temp, backups
+studio/out/
+studio/backup/
+_remotion-tmp*/
+studio/src/sandboxes/
+studio/src/videos/*_world_ext/
+studio/src/videos/*_world_int/
+studio/src/videos/*_char/
+studio/src/videos/*_post/
+studio/src/videos/*_cam/
+sound/*/audio/_cache/
+sound/*/audio/_bak*/
+# audio / video / models (never commit takes, mixes, reference media)
+*.wav
+*.mp3
+*.mp4
+*.m4a
+*.flac
+*.onnx
+studio/_downloads/kokoro/
+study/videos/
+study/voices/pool/
+study/voices/**/*.mp3
+upstream/
+# secrets
+.env
+*.key

@@ -1,0 +1,10 @@
+# tools/.venv (Python 3.12). Pinned to the versions the antitheft short was built with.
+numpy==2.5.4
+scipy==1.18.1
+matplotlib==3.11.2
+pillow==13.0.0
+opencv-python-headless==5.0.0.93
+soundfile==0.14.0
+faster-whisper==1.2.1
+# optional: local Kokoro TTS fallback (sound/<slug>/voice/voice_build.py); model files go in studio/_downloads/kokoro/
+# kokoro-onnx==0.6.1

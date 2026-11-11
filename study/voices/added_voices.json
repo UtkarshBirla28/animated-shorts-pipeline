@@ -1,0 +1,44 @@
+{
+ "Hal": {
+  "library_voice_id": "aLyZxRoKf8CwWlGthFYB",
+  "my_voice_id": "aLyZxRoKf8CwWlGthFYB",
+  "name": "Hal - Your Animated Social Media Buddy",
+  "resp": "ok"
+ },
+ "James": {
+  "library_voice_id": "QhpsGjDKZmM9qRYdMhBD",
+  "my_voice_id": "QhpsGjDKZmM9qRYdMhBD",
+  "name": "James - Conversational, Energetic, Punchy",
+  "resp": "ok"
+ },
+ "Alex": {
+  "library_voice_id": "yl2ZDV1MzN4HbQJbMihG",
+  "my_voice_id": "yl2ZDV1MzN4HbQJbMihG",
+  "name": "Alex - Upbeat, Energetic and Clear",
+  "resp": "ok"
+ },
+ "Mike": {
+  "library_voice_id": "cBTYF7NiJbR8Bvmdeuse",
+  "my_voice_id": "cBTYF7NiJbR8Bvmdeuse",
+  "name": "Mike - Animation, Explainers & Gaming",
+  "resp": "ok"
+ },
+ "Odom": {
+  "library_voice_id": "7zoixx2reelPHqsL6WsW",
+  "my_voice_id": "7zoixx2reelPHqsL6WsW",
+  "name": "Odom - Upbeat, Energetic, Playful",
+  "resp": "ok"
+ },
+ "Jesse": {
+  "library_voice_id": "rLl4PSDTzX3VHL4wjSFI",
+  "my_voice_id": "rLl4PSDTzX3VHL4wjSFI",
+  "name": "Jesse - Animation Character, Friendly",
+  "resp": "ok"
+ },
+ "Ed": {
+  "library_voice_id": "3IwIPyXc0WRkgKBE8KXP",
+  "my_voice_id": "3IwIPyXc0WRkgKBE8KXP",
+  "name": "Ed - Sarcastic Funny Narrator",
+  "resp": "ok"
+ }
+}

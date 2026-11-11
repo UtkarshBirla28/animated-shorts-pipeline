@@ -1,0 +1,242 @@
+[
+ {
+  "i": 0,
+  "beat": 1,
+  "s": 0.03,
+  "e": 2.049,
+  "markup": "She'd never even kept a borrowed paperclip.",
+  "style": null
+ },
+ {
+  "i": 1,
+  "beat": 1,
+  "s": 2.158,
+  "e": 3.248,
+  "markup": "Then she read one sign...",
+  "style": null
+ },
+ {
+  "i": 2,
+  "beat": 1,
+  "s": 3.548,
+  "e": 4.413,
+  "markup": "and wanted to steal.",
+  "style": null
+ },
+ {
+  "i": 3,
+  "beat": 2,
+  "s": 4.6,
+  "e": 6.121,
+  "markup": "Arizona's Petrified Forest.",
+  "style": null
+ },
+ {
+  "i": 5,
+  "beat": 2,
+  "s": 6.214,
+  "e": 7.935,
+  "markup": "Visitors kept pocketing little pieces.",
+  "style": null
+ },
+ {
+  "i": 6,
+  "beat": 2,
+  "s": 8.029,
+  "e": 9.312,
+  "markup": "So the park put up a warning:",
+  "style": null
+ },
+ {
+  "i": 7,
+  "beat": 3,
+  "s": 9.468,
+  "e": 11.769,
+  "markup": "\"Your heritage is being vandalized every day...",
+  "style": null
+ },
+ {
+  "i": 8,
+  "beat": 3,
+  "s": 11.956,
+  "e": 14.618,
+  "markup": "{14|fourteen} tons a year, mostly a small piece at a time.\"",
+  "style": null
+ },
+ {
+  "i": 9,
+  "beat": 4,
+  "s": 14.789,
+  "e": 17.241,
+  "markup": "She read it, leaned over to her {fianc\u00e9,|fee-ahn-say,} and whispered:",
+  "style": null
+ },
+ {
+  "i": 10,
+  "beat": 4,
+  "s": 17.366,
+  "e": 18.562,
+  "markup": "\"We'd better get ours now.\"",
+  "style": "whisper"
+ },
+ {
+  "i": 11,
+  "beat": 5,
+  "s": 18.765,
+  "e": 21.318,
+  "markup": "But why would a warning make an honest person want to steal?",
+  "style": null
+ },
+ {
+  "i": 12,
+  "beat": 6,
+  "s": 21.521,
+  "e": 25.296,
+  "markup": "Her {fianc\u00e9's|fee-ahn-say's} professor, psychologist Robert {Cialdini,|Chal-dee-nee,} tested it.",
+  "style": null
+ },
+ {
+  "i": 13,
+  "beat": 6,
+  "s": 25.39,
+  "e": 28.816,
+  "markup": "His team hid marked wood along the trails, and kept swapping the signs.",
+  "style": null
+ },
+ {
+  "i": 14,
+  "beat": 7,
+  "s": 28.956,
+  "e": 31.38,
+  "markup": "One said: \"Please don't remove the petrified wood.\"",
+  "style": null
+ },
+ {
+  "i": 15,
+  "beat": 7,
+  "s": 31.489,
+  "e": 34.837,
+  "markup": "Another said: \"Many past visitors have removed the petrified wood.\"",
+  "style": null
+ },
+ {
+  "i": 16,
+  "beat": 8,
+  "s": 34.978,
+  "e": 37.82,
+  "markup": "With \"please don't,\" fewer than {2%|two percent} of the pieces vanished.",
+  "style": null
+ },
+ {
+  "i": 17,
+  "beat": 8,
+  "s": 37.929,
+  "e": 39.131,
+  "markup": "With \"many past visitors\"...",
+  "style": null
+ },
+ {
+  "i": 18,
+  "beat": 8,
+  "s": 39.334,
+  "e": 40.238,
+  "markup": "almost {8%.|eight percent.}",
+  "style": null
+ },
+ {
+  "i": 20,
+  "beat": 9,
+  "s": 40.331,
+  "e": 41.728,
+  "markup": "You see, we don't copy rules.",
+  "style": null
+ },
+ {
+  "i": 21,
+  "beat": 9,
+  "s": 41.806,
+  "e": 42.754,
+  "markup": "We copy each other.",
+  "style": null
+ },
+ {
+  "i": 22,
+  "beat": 9,
+  "s": 42.878,
+  "e": 45.066,
+  "markup": "\"Many people steal\" doesn't sound like a warning.",
+  "style": null
+ },
+ {
+  "i": 23,
+  "beat": 9,
+  "s": 45.144,
+  "e": 46.541,
+  "markup": "It sounds like what everyone does.",
+  "style": null
+ },
+ {
+  "i": 24,
+  "beat": 10,
+  "s": 46.697,
+  "e": 48.718,
+  "markup": "Like a teacher saying, \"Half this class cheated.\"",
+  "style": null
+ },
+ {
+  "i": 25,
+  "beat": 10,
+  "s": 48.812,
+  "e": 50.592,
+  "markup": "The other half hears: everybody cheats.",
+  "style": null
+ },
+ {
+  "i": 26,
+  "beat": 11,
+  "s": 50.748,
+  "e": 52.205,
+  "markup": "The sign didn't stop thieves.",
+  "style": null
+ },
+ {
+  "i": 27,
+  "beat": 11,
+  "s": 52.283,
+  "e": 53.339,
+  "markup": "It gave them permission.",
+  "style": null
+ },
+ {
+  "i": 28,
+  "beat": 12,
+  "s": 53.542,
+  "e": 54.371,
+  "markup": "And the bait wood?",
+  "style": null
+ },
+ {
+  "i": 29,
+  "beat": 12,
+  "s": 54.496,
+  "e": 56.205,
+  "markup": "It came from the park's \"conscience pile\":",
+  "style": null
+ },
+ {
+  "i": 30,
+  "beat": 12,
+  "s": 56.299,
+  "e": 59.413,
+  "markup": "pieces people stole, then mailed back with apology letters.",
+  "style": null
+ },
+ {
+  "i": 31,
+  "beat": 12,
+  "s": 59.714,
+  "e": 61.491,
+  "markup": "So some of it got stolen twice.",
+  "style": null
+ }
+]

@@ -1,0 +1,14 @@
+{
+ "take": "v3:full_am_fenrir_1.20_v3",
+ "stats": {
+  "duration_s": 61.61,
+  "last_word_end_s": 61.39,
+  "n_words": 205,
+  "words_per_s": 3.34,
+  "est_full_217_s": 65.0,
+  "f0_med": 139.5,
+  "f0_p10": 102.9,
+  "f0_p90": 203.4,
+  "range_st": 11.8
+ }
+}
