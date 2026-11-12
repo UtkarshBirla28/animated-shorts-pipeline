@@ -35,6 +35,11 @@ export const TH = {
   trailDir: [0, 0, -1] as V3,
   /** dusk twist: the tourist pocketing the tagged chip stands here, right of the sign base */
   tourist: [-0.05, 0, 1.85] as V3,
+  /** A6 gag inserts in shot 4 (LEAD): a cartoon heap of rainbow chips ("how big is 14 tons") DROPS IN here on BEAT.tons14
+   *  and is gone after shot 4 (never on the loop frame); three tourists pocket chips at pock[] for the quick
+   *  'a small piece at a time' hand-to-pocket CUs. WORLD-EXT clears any clutter here; CHAR stages; CAM frames. */
+  heap14: [-3.4, 0, -1.6] as V3,
+  pock: [[1.9, 0, 0.9], [-1.9, 0, 1.2], [2.6, 0, -0.6]] as V3[],
 };
 
 /** VISTA (setting): painted badlands, sliced petrified logs along the trail, tourists on the paved path. */

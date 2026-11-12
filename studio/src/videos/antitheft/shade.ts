@@ -57,7 +57,7 @@ if (!LFB.includes("directLight.color *= sunVis")) throw new Error("shade.ts: thr
 // Positions are WORLD space and constant (sets_int.ts writes them once): the interiors sit 2 km from every other set,
 // so the same values are right for both canvases of a cross-dissolve (no per-World copy needed, see world.ts).
 // range / radius 0 = slot unused.
-export const POOL_N = 12, ZONE_N = 2; // round 3: 8 pools (storeroom lantern + pile spill + warm floor bounce); round 5: 12 (the storeroom's hanging work bulb + the three dusk practicals at the trailhead)
+export const POOL_N = 15, ZONE_N = 2; // round 3: 8 pools (storeroom lantern + pile spill + warm floor bounce); round 5: 12 (the storeroom's hanging work bulb + the three dusk practicals at the trailhead); round 7: 14 (the dusk board lamps' warm GROUND pools); round 8: 15 (the storeroom's slot night-light)
 export const POOL = {
   uPoolPos: { value: Array.from({ length: POOL_N }, () => new THREE.Vector3()) },
   uPoolCol: { value: Array.from({ length: POOL_N }, () => new THREE.Vector3()) },
@@ -130,6 +130,16 @@ const TWO_TONE = /* glsl */ `
   reflectedLight.directDiffuse += uRimCol * rimK * ( 0.35 + alb );
   #endif
   reflectedLight.directDiffuse += alb * uFill;                                // round 5: sky fill (dusk blue hour)
+  #ifdef HAZE_MUL
+  // round 6 (carry-over: the badland bands read flat): on the hazy terrain materials (sets_ext.ts hazy(): mounds, hero
+  // mounds, mesas, floor) the SLOPES take a two-tone: the key side +14 % warm, the far side -12 % violet; the flat
+  // floor (normal near up) is left as it is
+  {
+    float slope = 1.0 - smoothstep( 0.72, 0.93, dot( geometryNormal, upV ) );
+    vec3 two = mix( vec3( 0.88, 0.84, 0.95 ), vec3( 1.14, 1.08, 1.0 ), smoothstep( -0.25, 0.35, dot( geometryNormal, sunV ) ) ); // net brighter (A5 shot 2: the mounds already read too dark)
+    reflectedLight.directDiffuse *= mix( vec3( 1.0 ), two, slope );
+  }
+  #endif
   // cloud shadow band (soft, noisy edges)
   if ( uCloudTint.x + uCloudTint.y + uCloudTint.z < 2.999 ) {
     vec3 wP = transpose( mat3( viewMatrix ) ) * ( geometryPosition - viewMatrix[ 3 ].xyz );
@@ -138,7 +148,11 @@ const TWO_TONE = /* glsl */ `
     float nz2 = fract( sin( dot( floor( cp * 2.3 + 7.0 ), vec2( 39.3468, 11.135 ) ) ) * 24634.6345 );
     float sC = dot( wP.xz, uCloud.xy ) + ( 0.6 * nz + 0.4 * nz2 - 0.5 ) * uCloudW * 0.8;
     float cov = smoothstep( uCloud.w - uCloudW, uCloud.w + uCloudW, sC ) * ( 1.0 - smoothstep( uCloud.z - uCloudW, uCloud.z + uCloudW, sC ) );
-    reflectedLight.directDiffuse *= mix( vec3( 1.0 ), uCloudTint, cov );
+    // round 7 (A6 P2: the dim turned the brown posts / frame wine-maroon): on dark warm WOOD albedo the cloud shadow is a
+    // warm-neutral darkening (its mean value, r .04 over b), so wood stays brown; the floor / rocks keep the lavender tint
+    float wk2 = smoothstep( 0.5, 0.72, warmA ) * ( 1.0 - smoothstep( 0.16, 0.26, lumA ) );
+    vec3 cT = mix( uCloudTint, vec3( dot( uCloudTint, vec3( 0.3333 ) ) ) * vec3( 1.03, 1.0, 0.96 ), wk2 );
+    reflectedLight.directDiffuse *= mix( vec3( 1.0 ), cT, cov );
   }
   reflectedLight.indirectDiffuse = vec3( 0.0 );                               // hemisphere/fill no longer used here
 }
@@ -157,7 +171,7 @@ export function twoTone<T extends THREE.MeshLambertMaterial | THREE.MeshPhongMat
       .replace("#include <lights_fragment_begin>", "float sunVis = 1.0;\n" + LFB)
       .replace("#include <lights_fragment_end>", "#include <lights_fragment_end>\n" + TWO_TONE);
   };
-  m.customProgramCacheKey = () => "twoTone12_" + liftK.toFixed(3) + (noRim ? "_nr" : "");
+  m.customProgramCacheKey = () => "twoTone15_" + liftK.toFixed(3) + (noRim ? "_nr" : "");
   return m;
 }
 

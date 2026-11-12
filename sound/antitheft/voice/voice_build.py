@@ -31,24 +31,24 @@ START = 0.03  # first word at ~frame 1 (reference: first word at 0.00, full leve
 
 # (markup, gap after in s, beat, style)  style "whisper" = +4 st, softer
 P = [
-    ("She'd never even kept a borrowed paperclip.", 0.14, 1, None),
+    ("She'd never stolen anything. Not even a paperclip.", 0.14, 1, None),  # v2 script (user 2026-11-12: clearer + funnier)
     ("Then she read one sign...", 0.26, 1, None),
     ("and wanted to steal.", 0.24, 1, None),
     ("Arizona's Petrified Forest.", 0.12, 2, None),
     ("Trees over {200|two hundred} million years old, turned into rainbow-colored stone.", 0.12, 2, None),  # cut 1
     ("Visitors kept pocketing little pieces.", 0.12, 2, None),
     ("So the park put up a warning:", 0.2, 2, None),
-    ("\"Your heritage is being vandalized every day...", 0.24, 3, None),
-    ("{14|fourteen} tons a year, mostly a small piece at a time.\"", 0.22, 3, None),
+    ("It said... \"Warning!", 0.24, 3, None),  # v2: short board
+    ("{14|Fourteen} tons stolen every year... one small piece at a time.\"", 0.22, 3, None),  # v2
     ("She read it, leaned over to her {fiancé,|fee-ahn-say,} and whispered:", 0.16, 4, None),
     ("\"We'd better get ours now.\"", 0.26, 4, "whisper"),
     ("But why would a warning make an honest person want to steal?", 0.26, 5, None),
     ("Her {fiancé's|fee-ahn-say's} professor, psychologist Robert {Cialdini,|Chal-dee-nee,} tested it.", 0.12, 6, None),
     ("His team hid marked wood along the trails, and kept swapping the signs.", 0.18, 6, None),
-    ("One said: \"Please don't remove the petrified wood.\"", 0.14, 7, None),
-    ("Another said: \"Many past visitors have removed the petrified wood.\"", 0.18, 7, None),
-    ("With \"please don't,\" fewer than {2%|two percent} of the pieces vanished.", 0.14, 8, None),
-    ("With \"many past visitors\"...", 0.26, 8, None),
+    ("One sign said: \"Please don't take the wood.\"", 0.14, 7, None),  # v2: short signs
+    ("The other said: \"Many visitors take the wood.\"", 0.18, 7, None),  # v2
+    ("With \"please don't,\" only {2%|two percent} of the pieces vanished.", 0.14, 8, None),  # v2
+    ("With \"many visitors\"...", 0.26, 8, None),  # v2
     ("almost {8%.|eight percent.}", 0.12, 8, None),
     ("Nearly five times more.", 0.2, 8, None),  # cut 2
     ("You see, we don't copy rules.", 0.1, 9, None),
@@ -96,7 +96,7 @@ EXPR = {  # idx: (blend voice, weight, semitones)
     31: (CALM, 0.25, -0.5), # settled last line
 }
 GAIN_DB = {11: 1.0, 18: 1.5, 27: 2.5, 31: 1.0}
-GAP_OVERRIDE = {1: 0.385, 30: 0.385, 18: 0.46, 26: 0.43}  # 26: "thieves." -> "It gave them permission." ~0.33 s (A5 VOICE P2: the deadpan needs its beat)  # 18: "almost 8%." -> "You see," >= 0.35 s (AUDIO A4: the cha-ching rings alone)  # x GAP_SCALE -> 0.30 s: before "and wanted to steal", before the last sentence
+GAP_OVERRIDE = {1: 0.45, 30: 0.385, 18: 0.46, 26: 0.43, 9: 0.48, 16: 0.49, 17: 0.51, 20: 0.42, 22: 0.385, 28: 0.45}  # A6 VOICE: x GAP_SCALE -> true silence: 1 'sign...' 0.35 s, 9 'whispered:' 0.37, 16 'vanished.' 0.38, 17 before 'almost' 0.40, 20 'rules.'|'We' 0.33, 22 'warning.' 0.30, 28 'wood?'|'It came' 0.35  # 26: "thieves." -> "It gave them permission." ~0.33 s (A5 VOICE P2: the deadpan needs its beat)  # 18: "almost 8%." -> "You see," >= 0.35 s (AUDIO A4: the cha-ching rings alone)  # x GAP_SCALE -> 0.30 s: before "and wanted to steal", before the last sentence
 VERSION = "v3"
 TEST = [0, 1, 2, 4, 12]
 

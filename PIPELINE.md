@@ -91,6 +91,7 @@ had to re-time a finished picture to a new voice (`tools/voice_warp.py`). A new 
    - If a word fails, re-take only that beat with a different stability or style, or a respelling such as "Chal-dee-nee".
 6. **Install + time:** copy `_assembled/*` into `sound/<slug>/voice/`, then run:
    ```bash
+   cp sound/<slug>/voice/words.json sound/<slug>/voice/words_whisper.json  # refine_onsets reads this RAW copy
    PYTHONNOUSERSITE=1 $PY -s sound/<slug>/voice/refine_onsets.py          # snap word starts to the real onsets (both ways)
    PYTHONNOUSERSITE=1 $PY -s tools/gen_words_ts.py sound/<slug>/voice studio/src/videos/<slug>/words.ts
    ```

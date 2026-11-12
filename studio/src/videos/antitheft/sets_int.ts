@@ -7,7 +7,7 @@
 //    a returned parcel + envelope dropping onto the pile on BEAT.mailed, letters hopping on BEAT.apology, dust motes
 //    in the desk-lamp beam, coffee steam, twinkling stars in the night window;
 //  - blueprint: the diagram draws itself (path on "You see", THE RULE branch on "copy rules", EVERYONE ELSE on "copy
-//    each other"), labels pop, the grid shimmers, chalk dust floats, the MANY PAST VISITORS panel flies in on
+//    each other"), labels pop, the grid shimmers, chalk dust floats, the MANY VISITORS TAKE THE WOOD. panel flies in on
 //    BEAT.manySteal and settles at BP.signFloat (bob + sway), and on BEAT.everyone its three thieves multiply into dozens.
 // LIGHT: interiors use a WORLD-FIXED key (LightPreset.key, lights.ts): the classroom key comes through the east
 // window band (the shell casts shadows, so the windows print light patches with mullion / blind shadows); the
@@ -22,17 +22,31 @@
 // (sunset gradient on Sign B, the cloud shadow on the warning board's wood but not its letters).
 import * as THREE from "three";
 import { Batch, lam, boxGeo, V } from "./build";
-import { ctex, rng, testSignTex, parkWood, quartzFace } from "./paint";
+import { ctex, rng, testSignTex, parkWood, quartzFace, SIGN_B_LINES } from "./paint";
 import { NOINK } from "./ink";
-import { POOL, POOL_N, ZONE_N, TONE_X, twoTone } from "./shade";
+import { POOL, POOL_N, ZONE_N, TONE, TONE_X, CHAR, twoTone } from "./shade";
 import { CL, SR, BP, TT, TH, V3 } from "./plan";
-import { BEAT, clamp01, SHOTS, camAt, FPS, lightMixAt, PW } from "./story";
-import { KEY_CLASSROOM } from "./lights";
+import { BEAT, clamp01, SHOTS, camAt, FPS, lightMixAt, PW, V as toV, PV } from "./story";
+import { KEY_CLASSROOM, type LightState } from "./lights";
+import { VOICE_TOTAL } from "./voicewarp";
 import type { SetCtx } from "./ctx";
 
 // ======================================================================================================== helpers
 type P3 = [number, number, number];
 const TAU = Math.PI * 2;
+// ---- round 6 (LEAD A5 P1: idle life on the picture clock stretched / froze in the warped holds): every IDLE loop
+// (flicker, steam, sway, moths, motes, shimmer, bob) runs on the VIDEO frame VF (ctx.vf, the narration clock); story
+// actions stay on the picture clock f. LOOP SEAM RULE: a periodic idle term makes a WHOLE number of cycles over the
+// film (qw rounds its rate), so video frame 0 and VOICE_TOTAL - 1 pose every idle term the same way.
+let VF = 0;
+/** angular rate per VIDEO frame for a nominal w (rad / s), rounded to whole cycles over VOICE_TOTAL */
+const qw = (w: number) => (TAU * Math.max(1, Math.round((Math.abs(w) / TAU) * (VOICE_TOTAL / FPS))) * Math.sign(w || 1)) / VOICE_TOTAL;
+/** idle sine on the video clock: sin(w t + ph) with w snapped to whole cycles per film */
+const vs = (w: number, ph = 0) => Math.sin(qw(w) * VF + ph);
+/** idle phase (radians) on the video clock, w snapped (for orbits / wrapping phases) */
+const vph = (w: number) => qw(w) * VF;
+/** idle time in seconds on the video clock (for non-periodic drifts: motes) */
+const vtime = () => VF / FPS;
 const hash = (n: number) => { const s = Math.sin(n * 91.3458 + 47.853) * 43758.5453; return s - Math.floor(s); };
 const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
 const sm = (u: number) => { const x = clamp01(u); return x * x * (3 - 2 * x); };
@@ -49,7 +63,49 @@ const C = (hex: string) => lam("int:" + hex, () => ({ color: hex }));
 const TM = (key: string, map: () => THREE.Texture, extra: THREE.MeshLambertMaterialParameters = {}) => lam("int:" + key, () => ({ map: map(), ...extra }));
 /** round 3 (A2 P1: the conscience-pile chips read as navy coal): petrified-wood chip faces with an emissive floor
  *  from their own quartz map, so the red / orange / yellow / purple rings hold colour in the blue night shade */
-const qzE = (i: number, k = 0.42) => TM("srQzE" + i + "_" + k, () => quartzFace(i), { emissive: new THREE.Color(1, 1, 1), emissiveMap: quartzFace(i), emissiveIntensity: k });
+// round 6 (A5 P2: the chips read as rubies / raw meat: red-magenta facets, no bark edges, the rainbow link to the hook
+// rock lost): the chip top's UV window (chipGeos: centre .5 +- .275, radius .16) only ever saw the slice texture's red
+// core, so the interior chips get their OWN faces: 8 variants = 4 base colours (red #C84A3A, orange #E8893A, yellow
+// #F2C64A, purple #8A5AA8, ~25 % each) x with / without a brown bark edge (#7A5A44 / #5E4636 + a pale cambium line);
+// 2-3 curved growth-ring stripes, white crystal flecks and a milky quartz vein on every face
+const CHIP_BASE = ["#c84a3a", "#e8893a", "#f2c64a", "#8a5aa8"];
+const CHIP_RING = [["#e07a52", "#a8342c", "#f2c64a"], ["#f4b05a", "#c86a2a", "#c84a3a"], ["#fbe08a", "#d8a032", "#e8893a"], ["#b07ac8", "#6a3e8c", "#c84a3a"]];
+const chipTex = (v: number) => ctex("srChip6_" + v, 256, 256, (g, r) => {
+  const c = v % 4, bark = v >= 4, S = 256;
+  g.fillStyle = CHIP_BASE[c]; g.fillRect(0, 0, S, S);
+  // mottled body
+  for (let k = 0; k < 40; k++) { g.fillStyle = k % 2 ? "rgba(255,240,220,0.08)" : "rgba(60,20,30,0.07)"; g.beginPath(); g.arc(r() * S, r() * S, 10 + r() * 34, 0, TAU); g.fill(); }
+  // growth rings: arcs round a centre far below-left of the window (a fragment of a big slice), so they run parallel to the bark
+  const cx = -S * (0.7 + 0.3 * r()), cy = S * (1.7 + 0.3 * r()), R0 = Math.hypot(S * 0.5 - cx, S * 0.5 - cy);
+  const ring = (rr: number, w: number, col: string, a: number) => { g.strokeStyle = col; g.globalAlpha = a; g.lineWidth = w; g.beginPath(); g.arc(cx, cy, rr, -Math.PI / 2, 0.2); g.stroke(); g.globalAlpha = 1; };
+  const nR = 2 + Math.floor(r() * 2);
+  for (let k = 0; k < nR; k++) ring(R0 - 70 + k * (52 + r() * 20), 10 + r() * 10, CHIP_RING[c][k % 3], 0.85);
+  ring(R0 - 96 + r() * 30, 4, "#f6ecdc", 0.75);                                          // a thin milky quartz vein
+  // white crystal flecks (sparkle points) + a few tiny dark pores
+  for (let k = 0; k < 46; k++) { const x = r() * S, y = r() * S, s = 1 + r() * 3.2; g.fillStyle = "rgba(255,255,255," + (0.55 + 0.45 * r()).toFixed(2) + ")"; g.beginPath(); g.moveTo(x, y - s * 1.6); g.lineTo(x + s, y); g.lineTo(x, y + s * 1.6); g.lineTo(x - s, y); g.closePath(); g.fill(); }
+  for (let k = 0; k < 20; k++) { g.fillStyle = "rgba(50,24,30,0.35)"; g.fillRect(r() * S, r() * S, 2, 2); }
+  if (bark) { // the bark rind along the top of the texture (rows < ~70-96: about half the chip windows reach it)
+    const bnd = (x: number) => 70 + 0.1 * x + 8 * Math.sin(x * 0.07) + 4 * Math.sin(x * 0.19);
+    g.fillStyle = "#e2ccac"; g.beginPath(); g.moveTo(0, 0); for (let x = 0; x <= S; x += 8) g.lineTo(x, bnd(x) + 6); g.lineTo(S, 0); g.closePath(); g.fill();
+    g.fillStyle = "#7a5a44"; g.beginPath(); g.moveTo(0, 0); for (let x = 0; x <= S; x += 8) g.lineTo(x, bnd(x)); g.lineTo(S, 0); g.closePath(); g.fill();
+    g.strokeStyle = "#5e4636"; g.lineWidth = 3; for (let k = 0; k < 18; k++) { const x = r() * S, y0 = bnd(x) - 4; g.beginPath(); g.moveTo(x, y0); g.lineTo(x + (r() - 0.5) * 10, y0 - 10 - r() * 26); g.stroke(); }
+    for (let k = 0; k < 30; k++) { g.fillStyle = k % 2 ? "rgba(94,70,54,0.6)" : "rgba(140,108,84,0.5)"; const x = r() * S; g.fillRect(x, r() * (bnd(x) - 8), 3 + r() * 6, 2); }
+  }
+});
+/** chip face material (variant v: 0-3 colours, 4-7 the same with a bark edge), emissive floor k from its own map */
+const qzE = (i: number, k = 0.42) => { const v = ((i % 8) + 8) % 8; return TM("srChipE6_" + v + "_" + k, () => chipTex(v), { emissive: new THREE.Color(1, 1, 1), emissiveMap: chipTex(v), emissiveIntensity: k * 1.05 }); }; // round 6c: +25 % (the bait-pail chips read purple-blue in the insert)
+/** the heap mound under the chips: a dark rubble of mixed chip colours (no single red ring dome) */
+const heapTex = () => ctex("srHeap6", 512, 256, (g, r) => {
+  g.fillStyle = "#4a3430"; g.fillRect(0, 0, 512, 256);
+  for (let k = 0; k < 260; k++) {
+    const x = r() * 512, y = r() * 256, s = 6 + r() * 16, c = Math.floor(r() * 5), col = c < 4 ? CHIP_BASE[c] : "#7a5a44";
+    g.fillStyle = col; g.globalAlpha = 0.75 + 0.25 * r(); g.beginPath();
+    const n = 4 + Math.floor(r() * 3); for (let j = 0; j < n; j++) { const a = (j / n) * TAU + r() * 0.6; g.lineTo(x + Math.cos(a) * s * (0.6 + 0.5 * r()), y + Math.sin(a) * s * 0.7 * (0.6 + 0.5 * r())); }
+    g.closePath(); g.fill(); g.globalAlpha = 1;
+    if (r() < 0.3) { g.fillStyle = "rgba(255,255,255,0.8)"; g.fillRect(x, y, 2, 2); }
+  }
+});
+void quartzFace;
 const barkE = () => lam("int:srBarkE", () => ({ color: "#7a5a44", emissive: new THREE.Color("#4e3426"), emissiveIntensity: 0.5 }));
 const rockE = (hex: string) => lam("int:srRockE" + hex, () => ({ color: hex, emissive: new THREE.Color(hex), emissiveIntensity: 0.34 }));
 const bmats = new Map<string, THREE.MeshBasicMaterial>();
@@ -194,7 +250,7 @@ const metalTex = (key: string, base: string) => ctex(key, 256, 256, (g, r) => {
 });
 
 // ---- classroom art ----
-const boardTex = () => ctex("intChalkboard", 2048, 634, (g, r) => {
+const boardTex = () => ctex("intChalkboard6", 2048, 634, (g, r) => {
   const w = 2048, h = 634;
   const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, "#2f5d47"); gr.addColorStop(1, "#28503d");
   g.fillStyle = gr; g.fillRect(0, 0, w, h);
@@ -212,7 +268,15 @@ const boardTex = () => ctex("intChalkboard", 2048, 634, (g, r) => {
   // round 2: the right half is written on too: QUIZ TODAY (boxed), the date, a smiley, eraser streaks
   g.strokeStyle = "rgba(220,235,225,0.16)"; g.lineCap = "round";
   for (let i = 0; i < 5; i++) { g.lineWidth = 54; const y = 250 + i * 34 + r() * 10; g.beginPath(); g.moveTo(1280 + r() * 40, y); g.quadraticCurveTo(1500, y - 30 + r() * 20, 1700 + r() * 60, y + 10); g.stroke(); }
-  g.fillStyle = "rgba(244,246,238,0.82)"; font(g, 92, "'Comic Sans MS', 'Trebuchet MS', sans-serif"); g.fillText("QUIZ TODAY!", 1380, 140);
+  // round 6 (A5 ADD: QUIZ TODAY was only seen during the move): the boxed QUIZ TODAY! now sits in the board's free
+  // top-left corner (left of the chalk block, board-local x < -1.5 m), where the opening over-the-shoulder lens sees it
+  // whole above the teacher's head while she writes HALF THIS CLASS CHEATED. (in-world irony); caps ~0.1 m = 40+ px
+  { const fam = "'Comic Sans MS', 'Trebuchet MS', sans-serif", px = fitText(g, "TODAY!", 240, 104, fam);
+    g.fillStyle = "rgba(246,248,240,0.9)"; g.textAlign = "center"; g.textBaseline = "alphabetic";
+    font(g, px, fam); g.fillText("TODAY!", 144, 236); font(g, Math.min(px * 1.18, 104), fam); g.fillText("QUIZ", 144, 128); g.textAlign = "left"; }
+  g.strokeStyle = "rgba(244,246,238,0.78)"; g.lineWidth = 8; g.beginPath(); g.moveTo(16, 30); g.lineTo(272, 24); g.lineTo(276, 268); g.lineTo(12, 274); g.closePath(); g.stroke();
+  g.lineWidth = 6; g.beginPath(); g.moveTo(40, 290); g.quadraticCurveTo(146, 306, 252, 286); g.stroke(); // underline swoosh
+  g.fillStyle = "rgba(244,246,238,0.82)"; font(g, 92, "'Comic Sans MS', 'Trebuchet MS', sans-serif"); g.fillText("PAGE 42", 1440, 140);
   g.strokeStyle = "rgba(244,246,238,0.7)"; g.lineWidth = 7; g.beginPath(); g.moveTo(1356, 40); g.lineTo(1960, 34); g.lineTo(1966, 170); g.lineTo(1350, 176); g.closePath(); g.stroke();
   g.fillStyle = "rgba(244,246,238,0.7)"; font(g, 54, "'Comic Sans MS', 'Trebuchet MS', sans-serif"); g.fillText("JUNE 17", 1420, 250);
   g.strokeStyle = "rgba(244,246,238,0.75)"; g.lineWidth = 8; g.beginPath(); g.arc(1850, 330, 58, 0, TAU); g.stroke();
@@ -354,6 +418,17 @@ const worldMapTex = () => ctex("intWorldMap", 2048, 128, (g, r) => {
   g.fillStyle = "#8cc46a"; for (let i = 0; i < 6; i++) { const x = 160 + i * 330 + r() * 60; g.beginPath(); for (let a = 0; a < TAU; a += 0.6) g.lineTo(x + Math.cos(a) * (30 + r() * 30), 60 + Math.sin(a) * (20 + r() * 18)); g.fill(); }
   g.fillStyle = "#f4f0e4"; g.fillRect(0, 100, 2048, 28); centerText(g, "WORLD MAP", 1024, 114, 400, 26, "#3a2a26", "Arial, sans-serif");
 });
+/** round 6 (A5 ADD: the crib sheet must read next to the student's smug face): a big yellow crib card (3 lines,
+ *  ~0.045 m caps), stood up like a tent card on the right desk's top */
+const cribTex6 = () => ctex("intCrib6", 512, 384, (g, r) => {
+  g.fillStyle = "#fff15a"; g.fillRect(0, 0, 512, 384); g.fillStyle = "rgba(180,140,0,0.14)"; g.fillRect(0, 0, 512, 46);
+  g.fillStyle = "rgba(255,255,255,0.5)"; g.fillRect(180, 0, 150, 30); // a strip of tape
+  const fam = "'Comic Sans MS', 'Trebuchet MS', sans-serif", L = ["1.B  2.C", "3.A  4.D", "5.B  !!"];
+  const px = Math.min(...L.map((t) => fitText(g, t, 470, 112, fam)));
+  g.fillStyle = "#26265a"; g.textAlign = "left"; g.textBaseline = "middle";
+  L.forEach((t, i) => { g.save(); g.translate(26, 108 + i * 104); g.rotate((r() - 0.5) * 0.04); font(g, px, fam); g.fillText(t, 0, 0); g.restore(); });
+  g.strokeStyle = "rgba(200,40,40,0.85)"; g.lineWidth = 7; g.beginPath(); g.arc(352, 316, 34, 0, TAU); g.stroke(); // the circled '!!'
+});
 const cribTex = () => ctex("intCrib", 192, 128, (g) => {
   g.fillStyle = "#fff59a"; g.fillRect(0, 0, 192, 128); g.fillStyle = "rgba(255,255,255,0.55)"; g.fillRect(60, 0, 70, 18);
   g.fillStyle = "#2a2a58"; g.font = "bold 24px 'Comic Sans MS', 'Trebuchet MS', sans-serif"; g.textAlign = "left"; g.textBaseline = "middle";
@@ -398,6 +473,59 @@ const drawings4Tex = () => ctex("clDrawings4", 512, 468, (g, r) => {
     g.restore();
   }
 });
+// ---- classroom art, round 6 (A5 P3: the wall above the bookshelf was a big empty beige plane at the whip landing) ----
+const worldMap6Tex = () => ctex("clWorldMap6", 1024, 576, (g, r) => {
+  g.fillStyle = "#7cc0ea"; g.fillRect(0, 0, 1024, 576);
+  g.strokeStyle = "rgba(255,255,255,0.35)"; g.lineWidth = 2; for (let x = 64; x < 1024; x += 128) { g.beginPath(); g.moveTo(x, 60); g.lineTo(x, 576); g.stroke(); } for (let y = 124; y < 576; y += 96) { g.beginPath(); g.moveTo(0, y); g.lineTo(1024, y); g.stroke(); }
+  const blob = (cx: number, cy: number, rx: number, ry: number, col: string) => { g.fillStyle = col; g.beginPath(); for (let a = 0; a < TAU; a += 0.35) { const k = 0.75 + 0.35 * r(); g.lineTo(cx + Math.cos(a) * rx * k, cy + Math.sin(a) * ry * k); } g.closePath(); g.fill(); g.strokeStyle = "rgba(60,50,40,0.5)"; g.lineWidth = 3; g.stroke(); };
+  blob(210, 220, 120, 90, "#f2c46a"); blob(270, 400, 60, 100, "#9ad06a"); blob(520, 200, 70, 70, "#e88a6a"); blob(540, 360, 70, 110, "#f0d27a"); blob(760, 230, 160, 100, "#b48ad8"); blob(860, 440, 70, 50, "#f29a8a");
+  g.fillStyle = "#e8584a"; g.beginPath(); g.arc(250, 270, 10, 0, TAU); g.fill(); // "we are here"
+  g.fillStyle = "#fbf3dc"; g.fillRect(0, 0, 1024, 62); centerText(g, "OUR WORLD", 512, 34, 520, 46, "#2a3a6a", "'Arial Black', Impact, sans-serif", "normal");
+  g.strokeStyle = "#8a5a36"; g.lineWidth = 14; g.strokeRect(7, 7, 1010, 562);
+});
+const starChartTex = () => ctex("clStars6", 512, 640, (g) => {
+  g.fillStyle = "#fffaf0"; g.fillRect(0, 0, 512, 640); g.fillStyle = "#2e6fb0"; g.fillRect(0, 0, 512, 104);
+  star5(g, 50, 52, 26, "#f2c23a"); star5(g, 462, 52, 26, "#f2c23a");
+  centerText(g, "STAR", 256, 34, 300, 40, "#fff7e0", "'Arial Black', Impact, sans-serif", "normal"); centerText(g, "STUDENTS", 256, 78, 330, 40, "#fff7e0", "'Arial Black', Impact, sans-serif", "normal");
+  const N = ["AMY", "BEN", "CARA", "DEV", "ELLA", "FINN", "GUS"], S = [5, 3, 6, 2, 4, 6, 1];
+  N.forEach((n, i) => { const y = 140 + i * 70; g.fillStyle = i % 2 ? "#f3ecdc" : "#fffaf0"; g.fillRect(8, y - 32, 496, 66); g.fillStyle = "#3a2a26"; g.font = "bold 34px 'Trebuchet MS', sans-serif"; g.textAlign = "left"; g.textBaseline = "middle"; g.fillText(n, 24, y);
+    for (let k = 0; k < S[i]; k++) star5(g, 168 + k * 54, y, 22, k % 3 === 2 ? "#e8584a" : "#f2b632"); });
+  g.strokeStyle = "#2e6fb0"; g.lineWidth = 10; g.strokeRect(5, 5, 502, 630);
+});
+const corkNoticeTex = () => ctex("clCork6", 768, 470, (g, r) => {
+  g.fillStyle = "#c69a62"; g.fillRect(0, 0, 768, 470); speckle(g, r, 768, 470, 1200, ["#8a6638", "#e2bf8a"], 0.8, 2.2, 0.5);
+  const note = (x: number, y: number, w: number, h: number, c: string, rot: number, lines: string[], ink = "#2a2a58") => {
+    g.save(); g.translate(x, y); g.rotate(rot); g.fillStyle = "rgba(0,0,0,0.18)"; g.fillRect(-w / 2 + 6, -h / 2 + 6, w, h); g.fillStyle = c; g.fillRect(-w / 2, -h / 2, w, h);
+    lines.forEach((t, i) => centerText(g, t, 0, -h / 2 + 40 + i * 40, w - 20, 30, ink, "'Comic Sans MS', 'Trebuchet MS', sans-serif"));
+    g.fillStyle = "#d8432f"; g.beginPath(); g.arc(0, -h / 2 + 12, 9, 0, TAU); g.fill(); g.restore(); };
+  note(130, 130, 220, 180, "#fff59a", -0.06, ["FIELD TRIP", "FRIDAY!"]);
+  note(390, 120, 230, 160, "#ffd6e0", 0.05, ["LOST:", "BLUE PENCIL"]);
+  note(630, 150, 210, 200, "#d6ecff", -0.04, ["SPELLING", "WINNERS", "WED"]);
+  note(250, 340, 260, 170, "#e8f8d6", 0.04, ["PLEASE DO", "NOT COPY", "HOMEWORK"], "#8a2a1e");
+  note(560, 360, 220, 150, "#fffaf0", -0.07, ["LUNCH: TACO", "TUESDAY"]);
+  g.strokeStyle = "#7a4a2c"; g.lineWidth = 16; g.strokeRect(8, 8, 752, 454);
+});
+const kidDraw6Tex = (k: number) => ctex("clKid6_" + k, 320, 360, (g) => {
+  g.fillStyle = k ? "#fff6dc" : "#f4fbff"; g.fillRect(0, 0, 320, 360); g.lineWidth = 10; g.lineCap = "round"; g.lineJoin = "round";
+  if (k === 0) { // a rocket
+    g.fillStyle = "#e8584a"; g.beginPath(); g.moveTo(160, 40); g.lineTo(210, 150); g.lineTo(210, 250); g.lineTo(110, 250); g.lineTo(110, 150); g.closePath(); g.fill();
+    g.fillStyle = "#4fa0e0"; g.beginPath(); g.arc(160, 160, 26, 0, TAU); g.fill(); g.fillStyle = "#f2b632"; g.beginPath(); g.moveTo(120, 250); g.lineTo(160, 330); g.lineTo(200, 250); g.closePath(); g.fill();
+    for (const [x, y] of [[50, 60], [270, 90], [60, 290], [260, 300]]) star5(g, x, y, 16, "#f2c23a");
+  } else { // a cat + a sun
+    g.fillStyle = "#f5c63a"; g.beginPath(); g.arc(250, 70, 40, 0, TAU); g.fill();
+    g.fillStyle = "#e0883a"; g.beginPath(); g.ellipse(150, 250, 90, 60, 0, 0, TAU); g.fill(); g.beginPath(); g.arc(90, 190, 46, 0, TAU); g.fill();
+    g.beginPath(); g.moveTo(60, 160); g.lineTo(66, 120); g.lineTo(90, 150); g.moveTo(100, 150); g.lineTo(118, 118); g.lineTo(126, 160); g.fill();
+    g.fillStyle = "#2a2230"; g.beginPath(); g.arc(78, 186, 6, 0, TAU); g.arc(104, 186, 6, 0, TAU); g.fill();
+    g.strokeStyle = "#e0883a"; g.beginPath(); g.moveTo(236, 250); g.quadraticCurveTo(300, 230, 280, 170); g.stroke();
+  }
+  g.fillStyle = "#d8432f"; g.beginPath(); g.arc(160, 14, 9, 0, TAU); g.fill();
+});
+const pennant6Tex = () => ctex("clPennant6", 160, 512, (g) => {
+  g.clearRect(0, 0, 160, 512); g.fillStyle = "#2e8a5a"; g.beginPath(); g.moveTo(0, 0); g.lineTo(160, 0); g.lineTo(80, 512); g.closePath(); g.fill();
+  g.fillStyle = "#f2c23a"; g.fillRect(0, 0, 160, 24);
+  "GO TEAM".split("").forEach((ch, i) => { if (ch !== " ") centerText(g, ch, 80, 70 + i * 52, 70, 50, "#fdf3d2", "'Arial Black', Impact, sans-serif", "normal"); });
+});
+
 /** green EXIT sign: running figure + caps + arrow (self-lit) */
 const exitTex = () => ctex("clExit", 384, 136, (g) => {
   g.fillStyle = "#16883f"; rrect(g, 0, 0, 384, 136, 12); g.fill();
@@ -511,6 +639,17 @@ const parcelTex = (key: string) => ctex(key, 256, 256, (g, r) => {
   g.fillStyle = "#d8432f"; font(g, 26); g.textAlign = "center"; g.fillText("RETURN", 128, 228);
 });
 /** handwritten apology note; lines are drawn big so they read on camera */
+/** round 6b: the same paper note with ~40 % bigger letters (2 lines fitted to the full width, no ruled margin) */
+const noteTexBig = (key: string, lines: string[], paper = "#fbf8ee", ink = "#2a2a58") => ctex(key, 512, 360, (g, r) => {
+  g.fillStyle = paper; g.fillRect(0, 0, 512, 360);
+  g.fillStyle = "rgba(120,150,200,0.3)"; for (let y = 52; y < 360; y += 50) g.fillRect(0, y, 512, 2);
+  g.fillStyle = "rgba(0,0,0,0.06)"; g.fillRect(0, 0, 512, 16);
+  g.fillStyle = ink; g.textAlign = "center"; g.textBaseline = "middle";
+  const fam = "'Comic Sans MS', 'Trebuchet MS', sans-serif";
+  const px = Math.min(...lines.map((s) => fitText(g, s, 492, 150, fam)));
+  lines.forEach((s, i) => { g.save(); g.translate(252, 360 / 2 + (i - (lines.length - 1) / 2) * px * 1.04 - 6); g.rotate((r() - 0.5) * 0.05); font(g, px, fam); g.fillText(s, 0, 0); g.restore(); });
+  g.strokeStyle = "rgba(180,40,60,0.75)"; g.lineWidth = 5; g.beginPath(); g.moveTo(444, 330); g.bezierCurveTo(428, 306, 468, 298, 468, 322); g.bezierCurveTo(468, 298, 508, 306, 492, 330); g.lineTo(468, 352); g.closePath(); g.stroke();
+});
 const noteTex = (key: string, lines: string[], paper = "#fbf8ee", ink = "#2a2a58") => ctex(key, 512, 384, (g, r) => {
   g.fillStyle = paper; g.fillRect(0, 0, 512, 384);
   g.fillStyle = "rgba(120,150,200,0.35)"; for (let y = 60; y < 384; y += 46) g.fillRect(0, y, 512, 2);
@@ -628,9 +767,11 @@ const pailRedTex = () => ctex("intPailRed", 512, 256, (g, r) => {
   g.fillStyle = "#f2e6cc"; g.fillRect(0, 0, 512, 12);                                           // cream rolled rim band
 });
 /** braided oval rag rug: concentric braid rings in warm rust / mustard / cream with a slate and plum ring */
-const rugTex = () => ctex("intRug", 512, 512, (g, r) => {
+// round 8 (A7 P3: the lit #C48D76 rings were the brightest warm area after the bulb and pulled the eye to empty floor):
+// ~25 % darker with half the ring contrast (#8A5A4A / #6E4636 class, a dusty slate and plum ring kept faint)
+const rugTex = () => ctex("intRug8", 512, 512, (g, r) => {
   g.clearRect(0, 0, 512, 512);
-  const cols = ["#8e3a32", "#b8803a", "#d2bf98", "#3e5a86", "#9a5032", "#6a3e5e", "#b8944e", "#8e3a32", "#d2bf98", "#a45e34"];
+  const cols = ["#6e4636", "#8a5a4a", "#7a5040", "#5e5260", "#82543f", "#644456", "#8a5c44", "#6e4636", "#86604c", "#764a3a"];
   for (let k = 0; k < cols.length; k++) {
     const R = 250 - k * 23;
     g.fillStyle = cols[k]; g.beginPath(); g.arc(256, 256, R, 0, TAU); g.fill();
@@ -664,6 +805,16 @@ const lanternGlassTex = () => ctex("intLanternGlass", 128, 128, (g) => {
   const gr = g.createRadialGradient(64, 70, 4, 64, 64, 64); gr.addColorStop(0, "#fff6d8"); gr.addColorStop(0.35, "#ffd286"); gr.addColorStop(1, "#e08a3a");
   g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
 });
+/** round 8: a kerosene flame (white-yellow core, orange skirt, soft alpha), teardrop pointing up */
+const flameTex = () => ctex("intFlame8", 64, 128, (g) => {
+  g.clearRect(0, 0, 64, 128);
+  const shape = (w: number) => { g.beginPath(); g.moveTo(32, 6); g.bezierCurveTo(32 + w * 0.5, 40, 32 + w, 78, 32 + w * 0.8, 100); g.bezierCurveTo(32 + w * 0.5, 124, 32 - w * 0.5, 124, 32 - w * 0.8, 100); g.bezierCurveTo(32 - w, 78, 32 - w * 0.5, 40, 32, 6); g.closePath(); };
+  g.fillStyle = "rgba(255,140,40,0.55)"; shape(26); g.fill();
+  g.fillStyle = "rgba(255,196,90,0.9)"; shape(19); g.fill();
+  const gr = g.createRadialGradient(32, 92, 2, 32, 86, 30); gr.addColorStop(0, "rgba(255,255,245,1)"); gr.addColorStop(1, "rgba(255,236,170,0.9)");
+  g.fillStyle = gr; shape(12); g.fill();
+  g.fillStyle = "rgba(120,150,255,0.55)"; g.beginPath(); g.ellipse(32, 112, 7, 5, 0, 0, TAU); g.fill(); // the blue root of the flame
+});
 // ---- storeroom art, round 4 ----
 /** archive box label: white card, big year */
 const archiveLabelTex = (key: string, year: string) => ctex(key, 256, 160, (g) => {
@@ -691,30 +842,86 @@ const nightCloudTex = () => ctex("srNightCloud", 256, 96, (g) => {
   g.filter = "none";
 });
 
+// ---- storeroom art, round 6 ----
+/** the night cat curled asleep on the moonlit window sill (0 = asleep, 1 = one eye open, 2 = ears up + eye wide):
+ *  an orange tabby card with the film's plum ink, lamp-warm front, a cool moon rim along its back */
+/** round 7: st 3 = head lifted, both eyes open, looking right (toward the mail chute); tl 1 = the tail tip flicked up */
+const catTex = (st: number, tl = 0) => ctex("srCat7_" + st + "_" + tl, 512, 320, (g) => {
+  g.clearRect(0, 0, 512, 320);
+  const ink = "#2c1e2a"; g.lineJoin = "round"; g.lineCap = "round";
+  // tail curled round the front
+  g.strokeStyle = ink; g.lineWidth = 34; g.beginPath(); g.moveTo(420, 250);
+  if (tl) { g.quadraticCurveTo(486, 236, 482, 168); g.quadraticCurveTo(480, 118, 450, 96); } else { g.quadraticCurveTo(470, 300, 360, 296); g.quadraticCurveTo(220, 300, 150, 280); }
+  g.stroke();
+  g.strokeStyle = "#e0883a"; g.lineWidth = 22; g.stroke();
+  // body loaf
+  g.fillStyle = "#e0883a"; g.strokeStyle = ink; g.lineWidth = 9;
+  g.beginPath(); g.moveTo(120, 280); g.bezierCurveTo(90, 160, 210, 110, 320, 120); g.bezierCurveTo(430, 128, 470, 200, 440, 280); g.closePath(); g.fill(); g.stroke();
+  // tabby stripes + belly
+  g.strokeStyle = "#b05a24"; g.lineWidth = 11; for (const [x, y] of [[250, 128], [300, 124], [350, 130], [395, 146]] as number[][]) { g.beginPath(); g.moveTo(x, y + 4); g.quadraticCurveTo(x + 10, y + 34, x - 4, y + 62); g.stroke(); }
+  g.fillStyle = "#f6d7a8"; g.beginPath(); g.ellipse(270, 262, 70, 20, 0, 0, TAU); g.fill();
+  // cool moonlight rim on the back
+  g.strokeStyle = "rgba(170,190,255,0.85)"; g.lineWidth = 7; g.beginPath(); g.moveTo(215, 122); g.bezierCurveTo(280, 106, 400, 112, 445, 190); g.stroke();
+  // head (tucked low at the left), ears
+  const hy = st === 3 ? 150 : st === 2 ? 168 : 190, px = st === 3 ? 6 : 0;
+  g.fillStyle = "#e0883a"; g.strokeStyle = ink; g.lineWidth = 9;
+  for (const [ex, tilt] of [[100, -0.5], [176, 0.4]] as number[][]) { g.beginPath(); g.moveTo(ex - 28, hy - 30); g.lineTo(ex + 18 * Math.sin(tilt) - 4, hy - 82 - (st >= 2 ? 14 : 0)); g.lineTo(ex + 30, hy - 34); g.closePath(); g.fill(); g.stroke(); }
+  g.beginPath(); g.ellipse(140, hy + 8, 78, 62, 0, 0, TAU); g.fill(); g.stroke();
+  g.fillStyle = "#f6c0a8"; for (const ex of [100, 176]) { g.beginPath(); g.moveTo(ex - 12, hy - 36); g.lineTo(ex, hy - 64); g.lineTo(ex + 12, hy - 36); g.closePath(); g.fill(); }
+  // face: closed eyes (two arcs) / one eye open / both wide
+  g.strokeStyle = ink; g.lineWidth = 7;
+  const closed = (x: number) => { g.beginPath(); g.arc(x, hy + 4, 15, 0.15 * Math.PI, 0.85 * Math.PI); g.stroke(); };
+  const open = (x: number, R: number) => { g.fillStyle = "#f8f3ee"; g.beginPath(); g.ellipse(x, hy + 2, R, R * 1.1, 0, 0, TAU); g.fill(); g.stroke(); g.fillStyle = "#2a2030"; g.beginPath(); g.ellipse(x + 3, hy + 4, R * 0.42, R * 0.8, 0, 0, TAU); g.fill(); };
+  if (st === 0) { closed(112); closed(172); } else if (st === 1) { closed(112); open(172, 17); } else { open(112 + px, 20); open(172 + px, 20); }
+  g.fillStyle = "#c8505a"; g.beginPath(); g.moveTo(134, hy + 26); g.lineTo(150, hy + 26); g.lineTo(142, hy + 36); g.closePath(); g.fill();
+  g.strokeStyle = ink; g.lineWidth = 3; for (const s of [-1, 1]) for (const k of [0, 1]) { g.beginPath(); g.moveTo(142 + s * 30, hy + 30 + k * 10); g.lineTo(142 + s * 74, hy + 22 + k * 18); g.stroke(); }
+  if (st === 0) { g.fillStyle = "rgba(240,246,255,0.9)"; font(g, 40, "'Comic Sans MS', 'Trebuchet MS', sans-serif"); g.textAlign = "left"; g.textBaseline = "middle"; g.fillText("z", 220, 74); font(g, 28, "'Comic Sans MS', 'Trebuchet MS', sans-serif"); g.fillText("z", 256, 44); }
+});
+/** the tear-off LETTERS THIS YEAR counter over the RETURNS slot: the plaque (header + the pad's NEXT sheet) and the top
+ *  sheet that tears off on "mailed" */
+const counterTex = () => ctex("srCounter6", 512, 320, (g, r) => {
+  g.fillStyle = "#6b4426"; rrect(g, 0, 0, 512, 320, 22); g.fill();
+  g.strokeStyle = "#3a2416"; g.lineWidth = 10; rrect(g, 5, 5, 502, 310, 18); g.stroke();
+  for (let k = 0; k < 10; k++) { g.strokeStyle = "rgba(40,24,14,0.25)"; g.lineWidth = 2; g.beginPath(); const y = 20 + r() * 280; g.moveTo(10, y); g.bezierCurveTo(170, y + 8, 340, y - 8, 502, y + 4); g.stroke(); }
+  centerText(g, "LETTERS THIS YEAR:", 256, 50, 470, 44, "#f1e2c0", "'Arial Black', Impact, sans-serif", "normal");
+  g.fillStyle = "#f8f4ea"; g.fillRect(56, 92, 400, 196); g.fillStyle = "rgba(0,0,0,0.12)"; g.fillRect(56, 92, 400, 12);
+  centerText(g, "1,202", 256, 198, 380, 150, "#b8302a", "'Arial Black', Impact, sans-serif", "normal");
+});
+const sheetTex = () => ctex("srSheet6", 400, 196, (g) => {
+  g.fillStyle = "#fbf8ee"; g.fillRect(0, 0, 400, 196); g.fillStyle = "rgba(0,0,0,0.1)"; g.fillRect(0, 0, 400, 12);
+  g.fillStyle = "rgba(0,0,0,0.25)"; for (let x = 6; x < 400; x += 14) g.fillRect(x, 3, 6, 4); // perforation
+  centerText(g, "1,201", 200, 106, 380, 150, "#2a2a58", "'Arial Black', Impact, sans-serif", "normal");
+});
+
 // ---- storeroom art, round 2 ----
 const MARKER = "'Comic Sans MS', 'Trebuchet MS', sans-serif";
 /** corkboard of pinned apology letters with short readable lines + a heart or sad face each */
-const corkTex2 = () => ctex("intCork2", 1024, 760, (g, r) => {
+const corkTex2 = () => ctex("intCork6", 1024, 760, (g, r) => {
   g.fillStyle = "#b98a56"; g.fillRect(0, 0, 1024, 760);
   speckle(g, r, 1024, 760, 3200, ["#8a6236", "#d6aa72"], 0.8, 2.4, 0.6);
   g.fillStyle = "#5a3a22"; g.fillRect(0, 0, 1024, 104); centerText(g, "RETURNED WITH APOLOGIES", 512, 54, 960, 58, "#f4e6c4");
   const notes: [string[], string, number, number, number, "heart" | "sad"][] = [
     // round 5 (A4 P3: long lines read as ~20 px noise on the far wall): one or two BIG words per note (the 1972 note
     // moved onto the crate front, where the camera lingers)
-    [["SORRY!"], "#fbf8ee", 190, 250, -0.06, "heart"], [["BAD", "LUCK!"], "#fff7a8", 520, 236, 0.05, "sad"],
+    [["SORRY!"], "#fbf8ee", 190, 250, -0.06, "heart"], [["MY DOG", "LIMPS", "NOW"], "#d6ecff", 520, 250, 0.05, "sad"], // round 6: the floor note moved up here (it was cut by the frame edge in every lens)
     [["OOPS"], "#ffd9e2", 840, 262, 0.08, "heart"], [["MY", "BAD!"], "#d6ecff", 230, 560, 0.04, "sad"],
     [["FORGIVE", "ME"], "#e3f6d2", 560, 572, -0.07, "heart"], [["NEVER", "AGAIN!"], "#fbf8ee", 852, 560, 0.06, "sad"]];
+  // drawn last: the big 3-line MY DOG LIMPS NOW card (330 x 262, it overlaps its neighbours like a freshly pinned letter)
+  notes.sort((a, b) => a[0].length - b[0].length);
   for (const [L, c, x, y, rot, mark] of notes) {
     g.save(); g.translate(x, y); g.rotate(rot);
-    g.fillStyle = "rgba(40,20,10,0.32)"; g.fillRect(-142, -96, 296, 206);
-    g.fillStyle = c; g.fillRect(-150, -104, 296, 206);
-    g.fillStyle = "rgba(120,150,200,0.35)"; for (let yy = -60; yy < 100; yy += 38) g.fillRect(-150, yy, 296, 2);
+    const big = L.length === 3, cwid = big ? 330 : 296, chei = big ? 262 : 206, ox = -cwid / 2 - 2, oy = -chei / 2 - 1;
+    g.fillStyle = "rgba(40,20,10,0.32)"; g.fillRect(ox + 8, oy + 8, cwid, chei);
+    g.fillStyle = c; g.fillRect(ox, oy, cwid, chei);
+    g.fillStyle = "rgba(120,150,200,0.35)"; for (let yy = oy + 44; yy < oy + chei - 4; yy += 38) g.fillRect(ox, yy, cwid, 2);
     g.fillStyle = "#26265a"; g.textAlign = "center"; g.textBaseline = "middle";
-    L.forEach((s, k) => { fitText(g, s, 270, L.length === 1 ? 112 : 78, MARKER); g.fillText(s, -2, (k - (L.length - 1) / 2) * 80 - 8); });
+    L.forEach((s, k) => { fitText(g, s, big ? 300 : 270, L.length === 1 ? 112 : big ? 86 : 78, MARKER); g.fillText(s, -2, (k - (L.length - 1) / 2) * (big ? 74 : 80) - (big ? 12 : 8)); });
     g.strokeStyle = "#c8303a"; g.lineWidth = 5; g.lineCap = "round";
+    g.save(); g.translate((cwid - 296) / 2, (chei - 206) / 2 + (big ? 6 : 0));
     if (mark === "heart") { g.fillStyle = "#d8404a"; g.beginPath(); g.moveTo(110, 82); g.bezierCurveTo(90, 58, 118, 46, 122, 64); g.bezierCurveTo(126, 46, 154, 58, 134, 82); g.lineTo(122, 94); g.closePath(); g.fill(); }
     else { g.strokeStyle = "#26265a"; g.beginPath(); g.arc(122, 72, 20, 0, TAU); g.stroke(); g.beginPath(); g.arc(122, 90, 9, Math.PI * 1.15, Math.PI * 1.85); g.stroke(); g.fillStyle = "#26265a"; g.fillRect(114, 64, 4, 6); g.fillRect(127, 64, 4, 6); }
-    g.fillStyle = "#d8432f"; g.beginPath(); g.arc(-2, -92, 11, 0, TAU); g.fill(); g.fillStyle = "rgba(255,255,255,0.6)"; g.beginPath(); g.arc(-5, -95, 3.5, 0, TAU); g.fill();
+    g.restore();
+    g.fillStyle = "#d8432f"; g.beginPath(); g.arc(-2, oy + 12, 11, 0, TAU); g.fill(); g.fillStyle = "rgba(255,255,255,0.6)"; g.beginPath(); g.arc(-5, oy + 9, 3.5, 0, TAU); g.fill();
     g.restore();
   }
 });
@@ -730,7 +937,7 @@ const padTex = () => ctex("intPadEnv", 512, 320, (g, r) => {
   centerText(g, "RETURN TO PARK", 0, 2, 170, 30, "rgba(200,40,40,0.9)", "Impact, 'Arial Black', sans-serif", "normal"); g.restore();
 });
 /** taped parcel: kraft, tape cross, address label, stamps, red RETURN TO PARK / RETURNED stamp */
-const parcelTex2 = (key: string, stamp: string) => ctex(key, 256, 256, (g, r) => {
+const parcelTex2 = (key: string, stamp: string, post = "") => ctex(key, 256, 256, (g, r) => {
   g.fillStyle = "#c79a62"; g.fillRect(0, 0, 256, 256);
   mottle(g, r, 256, 256, 20, ["#b5884f", "#d8ad74"], 20, 60, 0.3);
   g.fillStyle = "#e9dcc0"; g.fillRect(0, 118, 256, 18); g.fillRect(118, 0, 18, 256);
@@ -738,6 +945,10 @@ const parcelTex2 = (key: string, stamp: string) => ctex(key, 256, 256, (g, r) =>
   for (const [x, c] of [[170, "#d8432f"], [214, "#2e5aa8"]] as [number, string][]) { g.fillStyle = "#fbf6ea"; g.fillRect(x - 20, 20, 40, 48); g.fillStyle = c; g.fillRect(x - 15, 25, 30, 38); }
   g.save(); g.translate(128, 198); g.rotate(-0.14); g.strokeStyle = "rgba(205,36,36,0.92)"; g.lineWidth = 6; g.strokeRect(-108, -28, 216, 56);
   centerText(g, stamp, 0, 2, 196, 38, "rgba(205,36,36,0.95)", "Impact, 'Arial Black', sans-serif", "normal"); g.restore();
+  if (post) { // round 7: a round black postmark with wavy cancel lines over the stamps
+    g.save(); g.translate(180, 52); g.rotate(0.12); g.strokeStyle = "rgba(30,26,40,0.85)"; g.lineWidth = 4; g.beginPath(); g.arc(0, 0, 34, 0, TAU); g.stroke();
+    centerText(g, post.split(" ")[0], 0, -9, 60, 17, "rgba(30,26,40,0.9)", "'Courier New', monospace"); centerText(g, post.split(" ")[1] ?? "", 0, 12, 60, 19, "rgba(30,26,40,0.9)", "'Courier New', monospace");
+    g.lineWidth = 3; for (let k = 0; k < 3; k++) { g.beginPath(); for (let x = 36; x < 110; x += 4) g.lineTo(x, -14 + k * 14 + 4 * Math.sin(x * 0.2)); g.stroke(); } g.restore(); }
 });
 const tallyTex = () => ctex("intTally", 384, 512, (g) => {
   g.fillStyle = "#fbfaf2"; g.fillRect(0, 0, 384, 512);
@@ -823,12 +1034,17 @@ const bpFloorTex = () => ctex("intBpFloor", 1024, 1024, (g, r) => {
   g.fillStyle = "rgba(220,235,255,0.07)"; for (let i = 0; i < 16; i++) { g.fillRect(i * 64, 0, 2, 1024); g.fillRect(0, i * 64, 1024, 2); } // 0.25 m lines (4 m tile)
   speckle(g, r, 1024, 1024, 1800, ["#bcd6ff", "#16407e"], 0.6, 1.6, 0.18);
 });
-/** floating "MANY PAST VISITORS" panel size (m): text cap ~50 px at 1080 from ~6.5 m with a 44 deg lens */
+/** floating "MANY VISITORS TAKE THE WOOD." panel size (m): text cap ~50 px at 1080 from ~6.5 m with a 44 deg lens */
 const BPS = 2.2;
-const THIEF_N = 30;
+const THIEF_N = 60; // round 7 (carry-over: ~60, 2-3 new per frame)
 /** round 5 (A4 P1/P2) blueprint label + title anchors (BP-local), from scripts/search*_wint.mjs against camAt(11):
  *  THE RULE (0.95 x 0.76 m), EVERYONE ELSE (1.56 x 0.8 m) low -> high on its pole, the FIG. 1 cartouche (2.0 m) */
 const LBL5 = { rule: [-0.9, 1.65, -2.25] as V3, ee: [1.6, 1.9, -3.5] as V3, eeHigh: 4.55, title: [-0.7, 5.2, -7.0] as V3 };
+/** round 8 (A7 P2): where the shot-11 visitor stands from 'Many people steal' on (cast.ts blueprint(): BP.person +
+ *  1.92 m along [0.416, -0.909]) and his head + cap ellipse (centre height, half width, half height, m) */
+const MAN11_HEAD = { x: BP.person[0] + 0.416 * 1.92, z: BP.person[2] - 0.909 * 1.92, y: 1.44, rx: 0.31, ry: 0.33 };
+/** clear margin kept round his head + cap on screen (m in his depth plane: ~120 px at 1080 in the 'everyone' lens) */
+const HEAD_CLEAR = 0.25;
 /** Sign B style pictogram visitor walking with a petrified-wood chip, alpha cut-out with a cream outline.
  *  walk 0 / 1 = the two step drawings, v = variant (chip carried in front / on the shoulder) */
 const pictoTex = (walk: number, v: number) => ctex(`bpPicto${walk}${v}`, 256, 384, (g) => {
@@ -849,6 +1065,49 @@ const pictoTex = (walk: number, v: number) => ctex(`bpPicto${walk}${v}`, 256, 38
   g.fillStyle = "#e8893a"; rrect(g, chip[0] + 4, chip[1] + 4, chip[2] - 8, chip[3] - 8, 7); g.fill();
   g.fillStyle = "#f2c64a"; g.beginPath(); g.ellipse(chip[0] + chip[2] - 14, chip[1] + chip[3] / 2, 7, chip[3] / 2 - 6, 0, 0, TAU); g.fill();
   g.fillStyle = "#ffffff"; g.beginPath(); g.arc(chip[0] + 16, chip[1] + 12, 4, 0, TAU); g.fill();
+});
+/** round 8 (script v2: Sign B now reads "MANY VISITORS TAKE THE WOOD."): the floating panel draws its OWN face in Sign B's
+ *  art (cream face, brown border, condensed Tahoma caps, the three-visitor pictogram carrying wood), so the shot-11 copy is
+ *  right whatever paint.ts carries; once WORLD-EXT's SIGN_B_LINES hold the new words, their line breaks are used */
+const BP_SIGN_LINES = SIGN_B_LINES.join(" ").includes("TAKE THE WOOD") ? SIGN_B_LINES : ["MANY VISITORS", "TAKE THE WOOD."];
+const bpFigure = (g: CanvasRenderingContext2D, x: number, y: number, s: number, col: string, reach: number) => {
+  g.save(); g.translate(x, y); g.fillStyle = col; g.strokeStyle = col; g.lineCap = "round"; g.lineJoin = "round";
+  const hipX = s * 0.06 * reach, hipY = -s * 0.36, shX = s * 0.22 * reach, shY = -s * (0.74 - 0.16 * reach);
+  g.beginPath(); g.arc(shX + s * 0.08 * reach, shY - s * 0.16, s * 0.11, 0, TAU); g.fill();
+  g.lineWidth = s * 0.15; g.beginPath(); g.moveTo(shX, shY); g.lineTo(hipX, hipY); g.stroke();
+  g.lineWidth = s * 0.11; g.beginPath(); g.moveTo(hipX, hipY); g.lineTo(-s * 0.14, 0); g.moveTo(hipX, hipY); g.lineTo(s * 0.16, 0); g.stroke();
+  const hx = shX + s * (0.18 + 0.12 * reach), hy = shY + s * (0.12 + 0.34 * reach);
+  g.lineWidth = s * 0.085; g.beginPath(); g.moveTo(shX, shY); g.lineTo(hx, hy); g.stroke();
+  g.beginPath(); g.moveTo(shX, shY); g.lineTo(shX - s * 0.14, shY + s * 0.22); g.lineTo(shX - s * 0.1, shY + s * 0.38); g.stroke();
+  g.fillStyle = "#a0603a"; rrect(g, hx - s * 0.04, hy - s * 0.05, s * 0.24, s * 0.12, s * 0.03); g.fill();
+  g.restore();
+};
+const bpWood = (g: CanvasRenderingContext2D, x: number, y: number, s: number) => {
+  g.fillStyle = "#a0603a"; rrect(g, x - s * 0.5, y - s * 0.28, s, s * 0.28, s * 0.06); g.fill();
+  g.fillStyle = "#d8843e"; g.beginPath(); g.ellipse(x + s * 0.5, y - s * 0.14, s * 0.07, s * 0.14, 0, 0, TAU); g.fill();
+};
+const bpSignTex = () => ctex("bpSignB8_" + BP_SIGN_LINES.join("|"), 1024, 1024, (g, r) => {
+  const S = 1024, ink = "#3a2414", fam = "Tahoma, Verdana, Arial, sans-serif";
+  const vg = g.createLinearGradient(0, 0, 0, S); vg.addColorStop(0, "#f6ebd8"); vg.addColorStop(0.55, "#efe3d0"); vg.addColorStop(1, "#e3d6cc");
+  g.fillStyle = vg; g.fillRect(0, 0, S, S);
+  for (let i = 0; i < 14; i++) { const x = r() * S, y = r() * S, rad = 80 + 160 * r(), gr = g.createRadialGradient(x, y, 0, x, y, rad), c = r() < 0.6 ? "150,120,80" : "255,255,245";
+    gr.addColorStop(0, `rgba(${c},0.06)`); gr.addColorStop(1, `rgba(${c},0)`); g.fillStyle = gr; g.fillRect(x - rad, y - rad, rad * 2, rad * 2); }
+  for (let i = 0; i < 900; i++) { g.fillStyle = r() < 0.5 ? "rgba(120,90,60,0.07)" : "rgba(255,255,250,0.1)"; g.fillRect(r() * S, r() * S, 2, 2); }
+  const sb = g.createLinearGradient(0, 0, 0, S * 0.09); sb.addColorStop(0, "rgba(70,52,70,0.2)"); sb.addColorStop(1, "rgba(70,52,70,0)");
+  g.fillStyle = sb; g.fillRect(0, 0, S, S * 0.09);
+  g.fillStyle = "rgba(255,214,160,0.55)"; g.fillRect(0, 0, S, 5);
+  g.strokeStyle = "#5a3a22"; g.lineWidth = 34; rrect(g, 17, 17, S - 34, S - 34, 40); g.stroke();
+  g.strokeStyle = "rgba(255,240,215,0.5)"; g.lineWidth = 4; rrect(g, 40, 40, S - 80, S - 80, 26); g.stroke();
+  // the short text in the band above the pictogram, as big as the widest line allows (caps ~50 px at 1080 in the hold)
+  const L = BP_SIGN_LINES, top = 70, bot = 560, pitch = (bot - top) / L.length, k = 0.84;
+  let px = Math.round(pitch * (L.length > 2 ? 0.8 : 0.6));
+  for (const l of L) { g.font = `bold ${px}px ${fam}`; const w = g.measureText(l).width * k; if (w > S - 120) px = Math.floor((px * (S - 120)) / w); }
+  L.forEach((l, i) => { g.save(); g.translate(S / 2, top + pitch * (i + 0.5)); g.scale(k, 1); g.font = `bold ${px}px ${fam}`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = ink; g.fillText(l, 0, 0); g.restore(); });
+  g.fillStyle = "rgba(90,58,34,0.35)"; g.fillRect(110, bot + 12, S - 220, 5);
+  const gy = S - 100;
+  g.fillStyle = "#ddcfb3"; g.fillRect(90, gy, S - 180, 8);
+  for (const [x, sc] of [[250, 0.82], [500, 0.95], [760, 0.82]] as const) bpFigure(g, x - 50, gy, 330 * sc, ink, 0.55);
+  bpWood(g, 395, gy, 80); bpWood(g, 650, gy, 80); bpWood(g, 880, gy, 70);
 });
 /** round 5 (A4: a few multiplying thieves landed on the THE RULE label at the reveal): where thief i lands (BP world
  *  x, z) around the floating panel at (sx, sz): the left half hop out FORWARD (in front of / below the THE RULE label),
@@ -969,15 +1228,145 @@ const bpNoteTex2 = (key: string, lines: string[], w: number, h: number) => ctex(
   g.clearRect(0, 0, w, h);
   lines.forEach((t, i) => centerText(g, t, w / 2, h * (0.3 + 0.42 * i), w - 24, h * 0.38, "rgba(236,246,255,0.92)", "'Courier New', monospace"));
 });
+// ---- blueprint art, round 6 (A5 P2: the top ~17 % of the wide was empty blue; the crowd read as ~14 static figures) ----
+const BPW = "rgba(238,246,255,0.96)", BPW2 = "rgba(214,230,255,0.85)";
+/** the drawing's sheet title block, top right: SHEET 2 / 3 - FIELD TEST */
+const bpSheetTex = () => ctex("bpSheet6", 1024, 400, (g) => {
+  g.clearRect(0, 0, 1024, 400); g.fillStyle = "rgba(12,40,96,0.4)"; g.fillRect(8, 8, 1008, 384);
+  g.strokeStyle = BPW; g.lineWidth = 9; g.strokeRect(8, 8, 1008, 384); g.lineWidth = 4;
+  g.beginPath(); g.moveTo(8, 270); g.lineTo(1016, 270); g.moveTo(560, 270); g.lineTo(560, 392); g.stroke();
+  centerText(g, "SHEET 2 / 3", 512, 92, 960, 120, BPW, "'Trebuchet MS', Verdana, sans-serif");
+  centerText(g, "FIELD TEST", 512, 206, 960, 96, BPW, "'Trebuchet MS', Verdana, sans-serif");
+  centerText(g, "DRN: TEAM   CHK: OK", 284, 332, 520, 40, BPW2, "'Courier New', monospace");
+  centerText(g, "TRAILS A / B", 788, 332, 420, 40, BPW2, "'Courier New', monospace");
+});
+/** a drafting compass rose with N / E / S / W */
+const bpCompassTex = () => ctex("bpCompass6", 512, 512, (g) => {
+  g.clearRect(0, 0, 512, 512); const c = 256; g.strokeStyle = BPW; g.lineWidth = 6;
+  g.beginPath(); g.arc(c, c, 170, 0, TAU); g.stroke(); g.lineWidth = 3; g.beginPath(); g.arc(c, c, 150, 0, TAU); g.stroke();
+  for (let k = 0; k < 32; k++) { const a = (k / 32) * TAU, r0 = k % 4 ? 160 : 140; g.beginPath(); g.moveTo(c + Math.cos(a) * r0, c + Math.sin(a) * r0); g.lineTo(c + Math.cos(a) * 170, c + Math.sin(a) * 170); g.stroke(); }
+  for (let k = 0; k < 8; k++) {
+    const a = (k / 8) * TAU - Math.PI / 2, R = k % 2 ? 92 : 150, w = k % 2 ? 0.26 : 0.18;
+    g.beginPath(); g.moveTo(c + Math.cos(a) * R, c + Math.sin(a) * R); g.lineTo(c + Math.cos(a + w) * 34, c + Math.sin(a + w) * 34); g.lineTo(c, c); g.closePath();
+    g.fillStyle = k === 0 ? "rgba(255,140,120,0.95)" : "rgba(236,246,255,0.9)"; g.fill();
+    g.beginPath(); g.moveTo(c + Math.cos(a) * R, c + Math.sin(a) * R); g.lineTo(c + Math.cos(a - w) * 34, c + Math.sin(a - w) * 34); g.lineTo(c, c); g.closePath(); g.lineWidth = 3; g.stroke();
+  }
+  ([["N", 0, -214], ["E", 214, 0], ["S", 0, 214], ["W", -214, 0]] as [string, number, number][]).forEach(([t, x, y]) => centerText(g, t, c + x, c + y + 4, 90, 66, BPW, "'Trebuchet MS', Verdana, sans-serif"));
+});
+/** a 0-1-2-3 m scale bar (alternate filled blocks) */
+const bpScaleBarTex = () => ctex("bpScaleBar6", 1024, 192, (g) => {
+  g.clearRect(0, 0, 1024, 192); g.strokeStyle = BPW; g.lineWidth = 5;
+  for (let k = 0; k < 6; k++) { const x = 60 + k * 150; if (k % 2 === 0) { g.fillStyle = "rgba(236,246,255,0.9)"; g.fillRect(x, 96, 150, 34); } g.strokeRect(x, 96, 150, 34); }
+  ["0", "1", "2", "3"].forEach((t, k) => centerText(g, t, 60 + k * 300, 56, 90, 58, BPW, "'Trebuchet MS', Verdana, sans-serif"));
+  centerText(g, "m", 990, 116, 60, 52, BPW, "'Trebuchet MS', Verdana, sans-serif");
+  centerText(g, "SCALE", 512, 168, 300, 34, BPW2, "'Courier New', monospace");
+});
+/** a chalk note (handwritten look) with a quick underline swoosh: the shot-10 counters coming back */
+const bpPctTex = (key: string, text: string, col = "rgba(255,236,150,0.98)") => ctex(key, 512, 200, (g) => {
+  g.clearRect(0, 0, 512, 200); g.save(); g.translate(256, 92); g.rotate(-0.05);
+  centerText(g, text, 0, 0, 470, 128, col, "'Comic Sans MS', 'Trebuchet MS', sans-serif");
+  g.restore(); g.strokeStyle = col; g.lineWidth = 9; g.lineCap = "round";
+  g.beginPath(); g.moveTo(40, 168); g.bezierCurveTo(170, 150, 330, 176, 470, 150); g.stroke();
+});
+const bpFig2Tex = () => ctex("bpFig26", 768, 256, (g) => {
+  g.clearRect(0, 0, 768, 256); g.fillStyle = "rgba(12,40,96,0.42)"; rrect(g, 8, 8, 752, 240, 18); g.fill();
+  g.strokeStyle = BPW; g.lineWidth = 7; rrect(g, 8, 8, 752, 240, 18); g.stroke(); g.lineWidth = 3; rrect(g, 24, 24, 720, 208, 10); g.stroke();
+  centerText(g, "FIG. 2: COPY", 384, 132, 680, 120, BPW, "'Trebuchet MS', Verdana, sans-serif");
+});
+// ---- blueprint art, round 7 (A6 P2: the opening's top ~35 % was empty blue through the pause after 'You see,'; the
+// tracing-paper corner was a flat grey trapezoid) ----
+/** the PROBLEM title strip that writes itself in the pause after 'You see,' */
+const bpProblemTex = () => ctex("bpProblem7", 1024, 300, (g) => {
+  g.clearRect(0, 0, 1024, 300); g.fillStyle = "rgba(12,40,96,0.4)"; rrect(g, 6, 6, 1012, 288, 16); g.fill();
+  g.strokeStyle = BPW; g.lineWidth = 7; rrect(g, 6, 6, 1012, 288, 16); g.stroke(); g.lineWidth = 3; g.beginPath(); g.moveTo(24, 96); g.lineTo(1000, 96); g.stroke();
+  font(g, 62, "'Courier New', monospace"); g.fillStyle = BPW2; g.textAlign = "left"; g.textBaseline = "middle"; g.fillText("PROBLEM:", 34, 54);
+  centerText(g, "FIELD NOTE 0", 820, 54, 340, 44, BPW2, "'Courier New', monospace");
+  centerText(g, "WHY DO PEOPLE STEAL?", 512, 196, 960, 132, BPW, "'Trebuchet MS', Verdana, sans-serif");
+});
+/** tracing paper: off-white with a printed white border, faint pencil construction lines, a FIG. 1a doodle (the fork,
+ *  sketched small) and a curled-up corner (6 % darker, with its soft shadow) */
+const bpTracingTex = () => ctex("bpTracing7", 512, 372, (g, r) => {
+  const W = 512, H = 372; g.clearRect(0, 0, W, H);
+  g.fillStyle = "#e8eef6"; g.beginPath(); g.moveTo(0, 0); g.lineTo(W, 0); g.lineTo(W, H - 62); g.lineTo(W - 86, H); g.lineTo(0, H); g.closePath(); g.fill();
+  g.strokeStyle = "rgba(255,255,255,0.95)"; g.lineWidth = 3; g.strokeRect(10, 10, W - 20, H - 20);
+  g.strokeStyle = "rgba(70,84,120,0.33)"; g.lineWidth = 1.6;
+  for (const [x0, y0, x1, y1] of [[24, 70, 488, 82], [40, 30, 64, 350], [24, 250, 470, 236], [300, 22, 352, 350]] as number[][]) { g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke(); }
+  g.strokeStyle = "rgba(60,72,110,0.55)"; g.lineWidth = 2.4; g.lineCap = "round";
+  g.beginPath(); g.moveTo(150, 300); g.lineTo(150, 210); g.lineTo(112, 140); g.moveTo(150, 210); g.lineTo(206, 128); g.stroke();
+  for (const [x, y, a] of [[112, 140, -2.1], [206, 128, -0.98]] as number[][]) { g.beginPath(); g.moveTo(x + 16 * Math.cos(a + 2.6), y + 16 * Math.sin(a + 2.6)); g.lineTo(x, y); g.lineTo(x + 16 * Math.cos(a - 2.6), y + 16 * Math.sin(a - 2.6)); g.stroke(); }
+  for (let k = 0; k < 7; k++) { g.beginPath(); g.arc(214 + (r() - 0.5) * 34, 112 + (r() - 0.5) * 22, 4, 0, TAU); g.stroke(); }
+  g.beginPath(); g.arc(104, 128, 4, 0, TAU); g.stroke();
+  font(g, 30, "'Courier New', monospace"); g.fillStyle = "rgba(50,62,100,0.7)"; g.textAlign = "left"; g.textBaseline = "alphabetic"; g.fillText("FIG. 1a", 258, 214); g.fillText("(SKETCH)", 258, 248);
+  // the curled corner (bottom right): the lifted flap 6 % darker + its shadow on the sheet
+  g.fillStyle = "rgba(40,60,110,0.22)"; g.beginPath(); g.moveTo(W, H - 62); g.lineTo(W - 86, H); g.lineTo(W - 104, H - 76); g.closePath(); g.fill();
+  g.fillStyle = "#d6dde8"; g.beginPath(); g.moveTo(W, H - 62); g.lineTo(W - 86, H); g.lineTo(W - 92, H - 70); g.closePath(); g.fill();
+  g.strokeStyle = "rgba(255,255,255,0.8)"; g.lineWidth = 2; g.beginPath(); g.moveTo(W, H - 62); g.lineTo(W - 92, H - 70); g.lineTo(W - 86, H); g.stroke();
+});
+/** a red-pencil double underline (two quick strokes, the second shorter) */
+const bpRedLineTex = () => ctex("bpRedLine7", 512, 96, (g) => {
+  g.clearRect(0, 0, 512, 96); g.strokeStyle = "rgba(255,92,80,0.98)"; g.lineCap = "round"; g.lineWidth = 11;
+  g.beginPath(); g.moveTo(14, 30); g.bezierCurveTo(150, 22, 330, 36, 498, 24); g.stroke();
+  g.lineWidth = 9; g.beginPath(); g.moveTo(40, 70); g.bezierCurveTo(170, 62, 330, 74, 470, 64); g.stroke();
+});
+/** margin doodle: a petrified-log slice (rings, bark, a crack) labelled SAMPLE 14 T (ties the diagram to the park) */
+const bpDoodleTex = () => ctex("bpDoodle7", 512, 512, (g) => {
+  g.clearRect(0, 0, 512, 512); g.strokeStyle = BPW; g.lineCap = "round"; g.lineJoin = "round";
+  const cx = 256, cy = 200;
+  g.lineWidth = 9; g.beginPath(); g.ellipse(cx, cy, 170, 128, -0.08, 0, TAU); g.stroke();
+  g.lineWidth = 4; for (const s of [0.78, 0.58, 0.4, 0.22]) { g.beginPath(); g.ellipse(cx + 8 * (1 - s), cy + 4 * (1 - s), 170 * s, 128 * s, -0.08 + 0.2 * (1 - s), 0, TAU); g.stroke(); }
+  g.lineWidth = 6; g.beginPath(); g.moveTo(cx + 20, cy - 10); g.lineTo(cx + 70, cy - 40); g.lineTo(cx + 96, cy - 34); g.lineTo(cx + 150, cy - 70); g.stroke();
+  g.fillStyle = "rgba(255,170,120,0.85)"; g.beginPath(); g.ellipse(cx - 60, cy + 30, 22, 14, 0.3, 0, TAU); g.fill();
+  g.lineWidth = 5; g.setLineDash([10, 12]); g.beginPath(); g.moveTo(cx + 168, cy + 30); g.lineTo(cx + 210, cy + 150); g.stroke(); g.setLineDash([]);
+  centerText(g, "SAMPLE 14 T", 256, 414, 470, 74, BPW, "'Comic Sans MS', 'Trebuchet MS', sans-serif");
+  g.lineWidth = 5; g.beginPath(); g.moveTo(70, 462); g.bezierCurveTo(180, 450, 330, 470, 444, 452); g.stroke();
+});
+/** a chalk stick walker in profile walking screen-right (walk 0/1 = the two leg drawings; look 1 = head snapped back
+ *  up-left toward the floating panel; chip = an orange chip in the front hand) */
+const chalkWalkerTex = (walk: number, look: number, chip: number) => ctex(`bpWalker6_${walk}${look}${chip}`, 128, 256, (g) => {
+  g.clearRect(0, 0, 128, 256); g.strokeStyle = "rgba(240,248,255,0.97)"; g.lineCap = "round"; g.lineJoin = "round"; g.lineWidth = 8;
+  const hx = 64 + (look ? -6 : 4), hy = 46 + (look ? -2 : 0);
+  g.beginPath(); g.arc(hx, hy, 22, 0, TAU); g.stroke();
+  g.fillStyle = "rgba(240,248,255,0.97)";
+  if (look) { g.beginPath(); g.arc(hx - 10, hy - 5, 4, 0, TAU); g.arc(hx - 2, hy - 7, 4, 0, TAU); g.fill(); } // eyes up-left
+  else { g.beginPath(); g.arc(hx + 11, hy - 2, 4, 0, TAU); g.fill(); }
+  g.beginPath(); g.moveTo(64, 70); g.lineTo(62, 150); g.stroke(); // body
+  const sw = walk ? 1 : -1;
+  g.beginPath(); g.moveTo(63, 88); g.lineTo(63 + 26 * sw, 128); g.moveTo(63, 88); g.lineTo(63 - 24 * sw, 126); g.stroke(); // arms
+  g.beginPath(); g.moveTo(62, 150); g.lineTo(62 + 30 * sw, 236); g.moveTo(62, 150); g.lineTo(62 - 24 * sw, 236); g.stroke(); // legs
+  if (chip) { g.fillStyle = "#ff9a3c"; const cx = 63 + 26 * sw, cy = 132; g.beginPath(); g.moveTo(cx, cy - 10); g.lineTo(cx + 11, cy); g.lineTo(cx, cy + 10); g.lineTo(cx - 11, cy); g.closePath(); g.fill(); }
+});
+/** an upright chalk-drawn texture that writes itself left -> right (uProg 0..1) with a glowing leading edge */
+const wipeMat = (map: THREE.Texture, col = new THREE.Color(1.22, 1.25, 1.3)) => new THREE.ShaderMaterial({
+  uniforms: { uMap: { value: map }, uProg: { value: 0 }, uAlpha: { value: 1 }, uCol: { value: col } },
+  vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+  fragmentShader: /* glsl */ `uniform sampler2D uMap; uniform float uProg, uAlpha; uniform vec3 uCol; varying vec2 vUv;
+  void main(){
+    vec4 t = texture2D(uMap, vUv);
+    float edge = uProg * 1.08 - 0.04 + 0.03 * sin(vUv.y * 21.0);
+    float vis = 1.0 - smoothstep(edge - 0.015, edge + 0.015, vUv.x);
+    float tip = exp(-abs(vUv.x - edge) * 60.0) * step(uProg, 0.999);
+    gl_FragColor = vec4(t.rgb * uCol * (1.0 + 2.5 * tip), t.a * vis * uAlpha);
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
+  }`,
+  transparent: true, depthWrite: false,
+});
+
 /** round 4 (A3 P3: the old 2.6 m block was cut by the frame edge and crossed by the path rail): a compact title block
  *  (1.16 x 0.46 m) that fits between the right rail / dashed circle and the frame edge at every lens of shot 11 */
-const bpTitleBlockTex = () => ctex("bpTitleBlk4", 1024, 406, (g) => {
+const bpTitleBlockTex = () => ctex("bpTitleBlk7", 1024, 406, (g) => {
   g.clearRect(0, 0, 1024, 406); g.strokeStyle = "rgba(235,245,255,0.92)"; g.lineWidth = 10; g.strokeRect(8, 8, 1008, 390);
   g.lineWidth = 5; g.beginPath(); g.moveTo(8, 214); g.lineTo(1016, 214); g.moveTo(700, 8); g.lineTo(700, 398); g.stroke();
   centerText(g, "VISITOR BEHAVIOR", 354, 112, 640, 104, "rgba(240,248,255,0.96)", "'Trebuchet MS', sans-serif");
   centerText(g, "HOW WARNINGS WORK", 354, 306, 640, 72, "rgba(225,238,255,0.88)", "'Courier New', monospace");
   centerText(g, "SHEET 1/1", 858, 112, 290, 58, "rgba(225,238,255,0.85)", "'Courier New', monospace");
   centerText(g, "FIELD TEST", 858, 306, 290, 66, "#ff8a7a", "'Trebuchet MS', sans-serif");
+  // round 7 (A6 ADD): a red NOT TO SCALE rubber stamp, rotated, across the title / sheet divider (worn ink edge)
+  g.save(); g.translate(520, 214); g.rotate(-0.1); g.globalAlpha = 0.9;
+  g.strokeStyle = "rgba(255,110,96,0.95)"; g.lineWidth = 8; g.strokeRect(-170, -40, 340, 80); g.lineWidth = 3; g.strokeRect(-160, -31, 320, 62);
+  centerText(g, "NOT TO SCALE", 0, 3, 300, 46, "rgba(255,120,104,0.98)", "Impact, 'Arial Black', sans-serif", "normal");
+  g.globalCompositeOperation = "destination-out"; for (let k = 0; k < 60; k++) { g.fillStyle = "rgba(0,0,0,0.5)"; g.fillRect(-170 + ((k * 97) % 340), -40 + ((k * 53) % 80), 3 + (k % 4), 2); }
+  g.restore();
 });
 /** round 4 (A3 P3: REV 2 / the compass were half cut by the frame top at 1330-1370): ONE low strip (9 x 0.56 m) in
  *  the band between the FIG. 1 title and the sign-hold frame top: compass rose, 0-1-2 m scale bar, SCALE, REV. 2 */
@@ -1159,15 +1548,31 @@ const fxShaftTex = () => ctex("fxShaft", 256, 64, (g) => {
   }
   g.putImageData(im, 0, 0);
 });
+/** round 6: a lamp's light cone (u = 0 at the bulb -> 1 at the lit face): narrow and bright at the bulb, widening and
+ *  fading, feathered sides */
+const fxConeTex = () => ctex("fxCone6", 256, 128, (g) => {
+  const im = g.createImageData(256, 128);
+  for (let y = 0; y < 128; y++) for (let x = 0; x < 256; x++) {
+    const u = x / 255, v = Math.abs(y / 127 - 0.5) * 2, half = 0.12 + 0.88 * u;
+    const a = Math.min(1, u * 10) * (1 - u) ** 0.8 * (1 - Math.min(1, v / half)) ** 1.4 * (0.85 + 0.15 * Math.sin(x * 0.11 + y * 0.05));
+    const i = (y * 256 + x) * 4; im.data[i] = im.data[i + 1] = im.data[i + 2] = 255; im.data[i + 3] = Math.round(255 * clamp01(a));
+  }
+  g.putImageData(im, 0, 0);
+});
 /** multiply overlay for a readable MeshBasic face (child of the face mesh): vertical gradient x cloud shadow on the
  *  dark (wood) pixels only, so letters keep their cream (uKeep = how much of the bright pixels are spared) */
+// round 7 (A6 P2 shot 1: the unlit board face looked pasted against the lit posts): uEdge = a soft inner occlusion along
+// the face's left / right / bottom edges (the raised frame), so the face sits IN its frame; the vertical gradient (uTop /
+// uBot) may exceed 1 (the scene buffer is half float): a warm sky-lit top, a darker bottom
 const faceOverlayMat = (map: THREE.Texture | null) => new THREE.ShaderMaterial({
   uniforms: { uMap: { value: map }, uTop: { value: new THREE.Vector3(1, 1, 1) }, uBot: { value: new THREE.Vector3(1, 1, 1) }, uKeep: { value: 0 },
-    uCloud: { value: new THREE.Vector4(1, 0, -1e5, -1e5) }, uCloudW: { value: 1 }, uCloudTint: { value: new THREE.Vector3(1, 1, 1) } },
+    uCloud: { value: new THREE.Vector4(1, 0, -1e5, -1e5) }, uCloudW: { value: 1 }, uCloudTint: { value: new THREE.Vector3(1, 1, 1) }, uEdge: { value: 0 } },
   vertexShader: `varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }`,
-  fragmentShader: /* glsl */ `uniform sampler2D uMap; uniform vec3 uTop, uBot, uCloudTint; uniform float uKeep, uCloudW; uniform vec4 uCloud; varying vec2 vUv; varying vec3 vW;
+  fragmentShader: /* glsl */ `uniform sampler2D uMap; uniform vec3 uTop, uBot, uCloudTint; uniform float uKeep, uCloudW, uEdge; uniform vec4 uCloud; varying vec2 vUv; varying vec3 vW;
   void main(){
     vec3 m = mix(uBot, uTop, smoothstep(0.0, 1.0, vUv.y));
+    float ex = min(vUv.x, 1.0 - vUv.x) * 1.3, ey = vUv.y;
+    m *= 1.0 - uEdge * (1.0 - smoothstep(0.0, 0.035, min(ex, ey)));
     vec2 cp = vW.xz * 0.35;
     float nz = fract(sin(dot(floor(cp), vec2(12.9898, 78.233))) * 43758.5453), nz2 = fract(sin(dot(floor(cp * 2.3 + 7.0), vec2(39.3468, 11.135))) * 24634.6345);
     float sC = dot(vW.xz, uCloud.xy) + (0.6 * nz + 0.4 * nz2 - 0.5) * uCloudW * 0.8;
@@ -1193,6 +1598,13 @@ const meanCam = (id: number) => {
   return m;
 };
 
+/** round 7 (carry-over for POST's sun13Dir): the WORLD point of the visible sunset sun of shot `id` (8 m behind the gap
+ *  between Sign B's top edge and its LED box, seen from the shot's OPENING camera). Pure: the direction toward the sun
+ *  from a camera at p is sunsetPoint(id).sub(p).normalize(). */
+export const sunsetPoint = (id: number): THREE.Vector3 => {
+  const c = camAt(id, SHOTS[id - 1].a), gap = V(TT.base[0] + TT.signB.dx - 0.02, 2.1, TT.base[2]);
+  return gap.clone().addScaledVector(gap.clone().sub(V(...c.pos)).normalize(), 8);
+};
 type FxShaft = { mesh: THREE.Mesh; mat: THREE.MeshBasicMaterial; off: P3; w: number; len: number };
 class LightFx {
   g = new THREE.Group();
@@ -1212,6 +1624,10 @@ class LightFx {
     { signB: null, warn: null, signBo: null, warno: null, found: false };
   private sunCache = new Map<number, THREE.Vector3>();
   private tmp = new THREE.Vector3(); private tmp2 = new THREE.Vector3(); private q = new THREE.Quaternion();
+  // round 6
+  private ov = { on: false, lit: new THREE.Vector3(), shade: new THREE.Vector3(), lift: new THREE.Vector3(), grad: 0, bodyGrad: 0, lambert: 0, sideK: 1 };
+  private boardLamps: { bulb: THREE.Vector3; aim: THREE.Vector3; glow: THREE.Sprite; core: THREE.Sprite; cone: THREE.Mesh; coneMat: THREE.MeshBasicMaterial; moths: THREE.Sprite[] }[] = [];
+  private boardDust!: Motes; private profDust!: Motes;
 
   constructor(private root: THREE.Object3D) {
     root.add(this.g);
@@ -1224,8 +1640,33 @@ class LightFx {
       X.uRimCol.value.copy(this.rim); X.uFill.value.copy(this.fill); X.uWoodShade.value.copy(this.ws); X.uWoodLift.value.copy(this.wl); X.uWoodK.value = this.wk;
       X.uCloud.value.copy(this.cloud); X.uCloudW.value = this.cloudW; X.uCloudTint.value.copy(this.cloudT);
       for (let i = 0; i < POOL_N; i++) POOL.uPoolCol.value[i].copy(this.pools[i]);
+      // round 6: this World's tone override (shot 10's noon contrast), written after world.ts's applyLight
+      if (this.ov.on) { TONE.uLitCol.value.copy(this.ov.lit); TONE.uShadeCol.value.copy(this.ov.shade); TONE.uShadeLift.value.copy(this.ov.lift); TONE.uLambert.value = this.ov.lambert; TONE.uSideK.value = this.ov.sideK; CHAR.uGrad.value = this.ov.grad; CHAR.uBodyGrad.value = this.ov.bodyGrad; }
     };
     root.add(this.hook);
+    // round 6: the warning board's two gooseneck sign lamps (sets_ext.ts builds the fittings): a blooming bulb glow, a
+    // soft warm light cone washing down the board face (camera-facing about its axis) and three moth specks each; on
+    // at dusk (shot 15) and switched on as a time-passing cue late in the shot-6 relight (video ~860)
+    for (const x of [-0.4, 0.4]) {
+      const bulb = V(x, TH.board.cy + TH.board.h / 2 + 0.14 + 0.17, 0.235), aim = V(x * 0.85, TH.board.cy + 0.05, 0.075);
+      const glowS = new THREE.Sprite(new THREE.SpriteMaterial({ map: softDot(), color: new THREE.Color(0, 0, 0), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+      const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: softDot(), color: new THREE.Color(0, 0, 0), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+      glowS.position.copy(bulb); core.position.copy(bulb); glowS.renderOrder = 5; core.renderOrder = 6;
+      const coneMat = new THREE.MeshBasicMaterial({ map: fxConeTex(), color: new THREE.Color(0, 0, 0), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, fog: false });
+      const cone = new THREE.Mesh(new THREE.PlaneGeometry(1, 1).translate(0.5, 0, 0), coneMat); cone.renderOrder = 4; cone.frustumCulled = false;
+      const moths = [0, 1, 2].map(() => { const m = new THREE.Sprite(new THREE.SpriteMaterial({ map: softDot(), color: new THREE.Color(1.6, 1.5, 1.3), transparent: true, depthWrite: false, fog: false })); m.scale.setScalar(0.03); m.renderOrder = 6; return m; });
+      for (const o2 of [glowS, core, cone, ...moths]) { o2.layers.set(NOINK); o2.visible = false; this.g.add(o2); }
+      this.boardLamps.push({ bulb, aim, glow: glowS, core, cone, coneMat, moths });
+    }
+    // round 7 (A6 ADD shot 6): golden dust motes drifting through the late light in front of the board once the lamps are
+    // on (and faintly in the lamp cones at dusk)
+    this.boardDust = new Motes(this.g, 46, 71, [TH.base[0], TH.base[1], TH.base[2]], [-1.25, 2.25, 0.12], [1.25, 4.35, 1.1], new THREE.Color(0, 0, 0), 0.02, 0.07);
+    this.boardDust.pts.visible = false;
+    // round 8 (A7 ADD shot 7): a dozen soft gold specks drifting slowly (~0.1-0.3 px/f) through the low morning light
+    // behind the professor's head in the MCU (TT-local box 1.2-2.0 m behind him along the MCU lens axis); the DOF turns
+    // them into soft bokeh dust
+    this.profDust = new Motes(this.g, 12, 83, [TT.base[0], TT.base[1], TT.base[2]], [2.35, 1.15, 0.75], [3.95, 2.55, 2.15], new THREE.Color(0, 0, 0), 0.075, 0.03);
+    this.profDust.pts.visible = false;
     // sun disc (blooms: > 1 linear), its halo, a broad horizon glow
     this.disc = new THREE.Sprite(new THREE.SpriteMaterial({ map: fxDiscTex(), color: new THREE.Color(6.5, 4.6, 2.3), fog: false, depthWrite: false, transparent: true }));
     this.halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: fxHaloTex(), color: new THREE.Color(1, 0.7, 0.4), fog: false, depthWrite: false, transparent: true, blending: THREE.AdditiveBlending }));
@@ -1296,17 +1737,33 @@ class LightFx {
    *  peeking over the panel's top edge (a cartoon cheat on parallax) instead of hiding behind the panel */
   private sunsetDir(id: number, camPos: THREE.Vector3) {
     let P = this.sunCache.get(id);
-    if (!P) {
-      const c = camAt(id, SHOTS[id - 1].a), gap = V(TT.base[0] + TT.signB.dx - 0.02, 2.1, TT.base[2]);
-      const d = gap.clone().sub(V(...c.pos)).normalize();
-      P = gap.addScaledVector(d, 8); this.sunCache.set(id, P);
-    }
+    if (!P) { P = sunsetPoint(id); this.sunCache.set(id, P); }
     return P.clone().sub(camPos).normalize();
   }
 
   pose(ctx: SetCtx) {
-    const L = ctx.light, f = ctx.f, t = ctx.t, cam = ctx.cam, name = L.name, set = ctx.shot.set;
+    const L = ctx.light, f = ctx.f, t = vtime(), cam = ctx.cam, name = L.name, set = ctx.shot.set; // round 6: idle on the video clock
     if (!this.faces.found) this.findFaces();
+    // round 6 (A5 P2 shot 10: flat noon on the trails, no form shading, mesas washed grey-lavender under a cobalt sky):
+    // this World only: key +15 %, the shade -15 % and turned toward violet (#6A5A9A class), a violet lift, more card form
+    // shading, and the scene fog ~30 % thinner so the lavender / rust / cream bands keep their colour
+    this.ov.on = ctx.id === 10 && name === "noon";
+    if (this.ov.on) {
+      this.ov.lit.set(...L.lit).multiplyScalar(1.12);
+      this.ov.shade.set(L.shade[0] * 0.74, L.shade[1] * 0.62, L.shade[2] * 0.7); // ~-30 % and violet (r / g 0.85 -> 1.1): the lit floor already sits on the tone-map shoulder, so the contrast comes from the shade
+      this.ov.lift.set(0.014, 0.008, 0.04); this.ov.grad = L.charGrad * 1.45; this.ov.bodyGrad = L.bodyGrad * 2.0;
+      this.ov.lambert = 0.58; this.ov.sideK = 0.72; // more cosine modelling: posts, panels, logs and rocks show a lit and a turned-away side
+      const sc = this.root.parent as THREE.Scene | null;
+      if (sc && sc.fog instanceof THREE.Fog) { sc.fog.near = L.fogNear * 1.3; sc.fog.far = L.fogFar * 1.43; }
+    }
+    // round 8 (user, preview 7: shot 6 'But why would a warning make an honest person want to steal?' must be a MYSTERY
+    // beat): on top of the noon -> late relight the light DROPS a little through the question: from 'honest' the key
+    // eases down ~14 %, the shade ~10 % and the lift ~35 % (deeper, plum darks) over ~26 video f, and it holds there to
+    // the dissolve, so the board lamps flicking on just before 'steal?' read as a motivated, slightly uneasy moment
+    if (ctx.id === 6 && set === "trailhead") {
+      const dk = sm((VF - (toV(BEAT.honest) - 4)) / 26);
+      if (dk > 0.001) this.toneOverride(L, 1 - 0.14 * dk, [1 - 0.1 * dk, 1 - 0.12 * dk, 1 - 0.06 * dk], [1 - 0.35 * dk, 1 - 0.35 * dk, 1 - 0.3 * dk]);
+    }
     // ---- shared-uniform extras for this World ----
     this.rim.set(...(L.rim ?? [0, 0, 0])); this.ws.set(...(L.woodShade ?? [1, 1, 1])); this.wl.set(...(L.woodLift ?? [0, 0, 0])); this.wk = L.woodK ?? 0;
     this.fill.set(...(L.fill ?? [0, 0, 0]));
@@ -1317,18 +1774,28 @@ class LightFx {
     this.cloud.set(1, 0, -1e5, -1e5); this.cloudT.set(1, 1, 1); this.cloudW = 1.1;
     let cloudOn = false;
     if (ctx.id === 4 && f >= BEAT.vandalized - 8) {
-      const f0 = BEAT.vandalized - 6, f1 = BEAT.tons14 + 20;
+      // round 7: the trailing edge clears with the light's own lift back to noon (story.ts SHOTS[3].relight[1]) if the
+      // LEAD moves that earlier (A6 P2: end the dip on '14'), else at tons14 + 20 as before
+      const lift = SHOTS[3].relight?.[1]?.f ?? 1e9, f0 = BEAT.vandalized - 6, f1 = Math.min(BEAT.tons14 + 20, lift + 2);
       const lead = -3.2 + (f - f0) * 0.22, trail = f >= f1 ? -3.4 + (f - f1) * 0.26 : -1e4;
       // round 5 (A4 P3: the posts went magenta-plum): a cool violet with green kept level with red (no magenta bias)
-      if (trail < 40) { this.cloud.set(1, 0, lead, trail); this.cloudT.set(0.8, 0.79, 0.9); cloudOn = true; } // round 4: violet, not grey-blue (A3 P2: muddy dim)
+      // round 7 (A6 P2): a cleaner lavender on the floor; shade.ts turns it warm-neutral on the brown wood
+      if (trail < 40) { this.cloud.set(1, 0, lead, trail); this.cloudT.set(0.79, 0.79, 0.92); cloudOn = true; } // round 4: violet, not grey-blue (A3 P2: muddy dim)
     }
     const F = this.faces;
     if (F.warno) {
-      const u = F.warno.uniforms; u.uCloud.value.copy(this.cloud); u.uCloudW.value = this.cloudW; u.uCloudTint.value.set(...(cloudOn ? [0.82, 0.8, 0.9] as P3 : [1, 1, 1] as P3));
+      // round 7 (A6 P2: the dimmed board read wine / maroon, hue ~340): the cloud darkens the board's wood WARM-NEUTRAL
+      // (-20 %, r over b), so it stays brown (#4A2F1D class); the letters are spared as before
+      const u = F.warno.uniforms; u.uCloud.value.copy(this.cloud); u.uCloudW.value = this.cloudW; u.uCloudTint.value.set(...(cloudOn ? [0.8, 0.77, 0.73] as P3 : [1, 1, 1] as P3));
       // round 5 (A4 P3): during the shot-6 relight the unlit board face's wood warms ~13 % toward #FFC890 (letters kept)
       let lk = 0;
       if (ctx.id === 6) { const mx = lightMixAt(6, f); lk = mx.a === "late" ? 1 : mx.b === "late" ? mx.k : 0; }
-      u.uTop.value.set(1, 1 - 0.1 * lk, 1 - 0.19 * lk); u.uBot.value.set(1, 1 - 0.12 * lk, 1 - 0.2 * lk);
+      // round 7 (A6 P2 shot 1: the flat unlit face looked pasted on): a sky-lit warm top (+6 %) to a darker foot (-10 %)
+      // and a soft inner occlusion along the frame (left / right / bottom), letters spared
+      u.uTop.value.set(1.07, 1.05 * (1 - 0.1 * lk), 1.0 * (1 - 0.19 * lk)); u.uBot.value.set(0.88, 0.865 * (1 - 0.12 * lk), 0.86 * (1 - 0.2 * lk));
+      // round 8: the shot-6 mystery drop darkens the unlit board's wood too (-12 %, the routed letters kept bright)
+      if (ctx.id === 6) { const dk = sm((VF - (toV(BEAT.honest) - 4)) / 26); u.uTop.value.multiplyScalar(1 - 0.12 * dk); u.uBot.value.multiplyScalar(1 - 0.14 * dk); }
+      u.uEdge.value = 0.16;
     }
     if (F.signBo) {
       const u = F.signBo.uniforms;
@@ -1354,7 +1821,7 @@ class LightFx {
       (this.glow.material as THREE.SpriteMaterial).color.setRGB(gc[0] * glowK, gc[1] * glowK, gc[2] * glowK);
     }
     if (sunset) {
-      const R = 900, pulse = 1 + 0.03 * Math.sin(t * 2.1);
+      const R = 900, pulse = 1 + 0.03 * vs(2.1);
       this.disc.position.copy(cam.position).addScaledVector(sd, R); this.disc.scale.setScalar(2 * R * Math.tan(THREE.MathUtils.degToRad(2.3)));
       this.halo.position.copy(this.disc.position); this.halo.scale.setScalar(2 * R * Math.tan(THREE.MathUtils.degToRad(17)) * pulse);
       (this.halo.material as THREE.SpriteMaterial).color.setRGB(1.25, 0.78, 0.38);
@@ -1363,7 +1830,7 @@ class LightFx {
       const C = this.tmp2.copy(cam.position).addScaledVector(sd, D / Math.max(0.3, sd.dot(fw)));
       const H = 2 * D * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
       this.rays.forEach((r, i) => {
-        const sway = 0.025 * Math.sin(t * 0.7 + i * 1.9), fl = 0.85 + 0.15 * Math.sin(t * 1.3 + i * 2.7);
+        const sway = 0.025 * vs(0.7, i * 1.9), fl = 0.85 + 0.15 * vs(1.3, i * 2.7);
         r.mesh.position.copy(C); r.mesh.quaternion.copy(cam.quaternion); r.mesh.rotateZ(r.a + sway);
         r.mesh.scale.set(H * r.len, H * 0.16 * r.w, 1);
         r.mat.color.setRGB(0.5 * fl, 0.3 * fl, 0.12 * fl);
@@ -1380,10 +1847,10 @@ class LightFx {
       const side = new THREE.Vector3().crossVectors(ax, toCam).normalize(), nrm = new THREE.Vector3().crossVectors(side, ax).normalize();
       s.mesh.position.copy(p0).addScaledVector(ax, -0.6);
       s.mesh.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(ax, side, nrm));
-      const br = 0.6 + 0.4 * Math.sin(t * 0.5 + s.off[0] * 2.0);
+      const br = 0.6 + 0.4 * vs(0.5, s.off[0] * 2.0);
       // round 3 (A2: thin streaks over the striped mounds in shot 6): gated by backK^2 (gone unless the sun is well
       // ahead of the lens), twice as wide and soft, at most ~7 %, one warm tint
-      s.mesh.scale.set(s.len, 2 * s.w * (1 + 0.08 * Math.sin(t * 0.8 + s.off[2])), 1);
+      s.mesh.scale.set(s.len, 2 * s.w * (1 + 0.08 * vs(0.8, s.off[2])), 1);
       const k = shaftK * backK * backK * (0.75 + 0.25 * br) * 0.07 * (name === "late" ? 0.6 : 1);
       s.mat.color.setRGB(1.0 * k, 0.72 * k, 0.42 * k);
     }
@@ -1397,6 +1864,8 @@ class LightFx {
     // round 5: morning god rays through the sign-post gaps (shots 8-9 at the trail heads): each starts ~1.6 m up-sun of
     // its gap and runs down along the light toward the lens side, turned about its axis to face the camera; ~10-14 %
     // at their brightest, a slow breathing so they shimmer with the dust
+    this.profDust.pts.visible = ctx.id === 7 && name === "morning";
+    if (this.profDust.pts.visible) { (this.profDust.pts.material as THREE.PointsMaterial).color.setRGB(1.25, 0.9, 0.5); this.profDust.pose(t * 0.45, 13); }
     const gapOn = name === "morning" && set === "trails" && (ctx.id === 8 || ctx.id === 9);
     for (const R of this.gapRays) {
       R.mesh.visible = gapOn;
@@ -1405,20 +1874,78 @@ class LightFx {
       const p0 = G.clone().addScaledVector(ax, -1.6), toCam = cam.position.clone().sub(p0).normalize();
       const side = new THREE.Vector3().crossVectors(ax, toCam).normalize(), nrm = new THREE.Vector3().crossVectors(side, ax).normalize();
       R.mesh.position.copy(p0); R.mesh.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(ax, side, nrm));
-      R.mesh.scale.set(R.len, R.w * (1 + 0.06 * Math.sin(t * 0.7 + R.ph)), 1);
-      const k = 0.12 * (0.8 + 0.2 * Math.sin(t * 0.55 + R.ph)) * (0.4 + 0.6 * backK);
+      R.mesh.scale.set(R.len, R.w * (1 + 0.06 * vs(0.7, R.ph)), 1);
+      const k = 0.12 * (0.8 + 0.2 * vs(0.55, R.ph)) * (0.4 + 0.6 * backK);
       R.mat.color.setRGB(1.0 * k, 0.76 * k, 0.48 * k);
     }
     // round 5: the morning sun glint sliding across the LED glass in shot 9 (Sign A's during the hold, Sign B's as the
     // camera trucks to it), one slow pass each; a faint late pass in shot 10's noon is left off (white noon light)
+    // round 7 (A6 P3 + carry-over: the pass lasted ~30 f and crossed the '0.00%' digits while 'Please don't' was spoken):
+    // each glint is now a quick 9 VIDEO-frame flick at ~35 %, inside the word gap just before 'Please' (Sign A) and
+    // before 'Another' (Sign B), so it is gone when the word starts (keyed to BEAT on the video clock: follows a re-timed voice)
     for (const G of this.ledGlints) {
-      const on = ctx.id === 9 && name === "morning";
+      const v0 = toV(G.k === 0 ? BEAT.please1 : BEAT.another) - 9.5, u = (VF - v0) / 9;
+      const on = ctx.id === 9 && name === "morning" && u > 0 && u < 1;
       G.mesh.visible = on;
       if (!on) continue;
-      const f0 = G.k === 0 ? SHOTS[8].a + 6 : BEAT.another - 18, dur = 46, u = clamp01((f - f0) / dur);
       G.mat.uniforms.uPos.value = -0.35 + 1.75 * sm(u);
-      G.mat.uniforms.uK.value = 0.55 * Math.sin(Math.PI * u);
+      G.mat.uniforms.uK.value = 0.35 * Math.sin(Math.PI * u);
     }
+    // round 6: the board's gooseneck lamps: on at dusk (shot 15), and in shot 6 they flick on late in the relight
+    // as the afternoon goes; glow + cone + moths (dusk only)
+    // round 8 (A7 ADD + the relay-click cue): in shot 6 each lamp flicks on with WORLD-EXT's fitting (sets_ext.ts), on the
+    // VIDEO clock: lamp i on at video toV(steal2) - 11 + 2 i for 1 f, off 2 f, then on for good (a 2 f rise), so the
+    // flicker reads at real speed in the fast window and lands with AUDIO's two relay clicks; the halo is a warm cream
+    // #FFD7A0 that blooms
+    const v6 = toV(BEAT.steal2) - 11;
+    const lampOn = (i: number) => {
+      if (name === "dusk" && set === "trailhead") return 1;
+      if (ctx.id !== 6) return 0;
+      const n = Math.floor(VF - (v6 + i * 2));
+      return n < 0 ? 0 : n === 0 ? 0.8 : n < 3 ? 0.08 : n === 3 ? 0.62 : 0.86;
+    };
+    this.lampKs = [lampOn(0), lampOn(1)]; this.lampK = Math.max(this.lampKs[0], this.lampKs[1]);
+    this.boardLamps.forEach((B, i) => {
+      const onK = this.lampKs[i], vis = onK > 0.01; B.glow.visible = B.core.visible = B.cone.visible = vis;
+      // round 7 (A6 ADD shot 6): two moth specks find the LEFT lamp as soon as it is on in shot 6 (the right one has the raven)
+      for (let j = 0; j < B.moths.length; j++) B.moths[j].visible = vis && (name === "dusk" || (ctx.id === 6 && i === 0 && j < 2 && VF >= v6 + 6));
+      if (!vis) return;
+      const fl = 1 + 0.03 * vs(11.0, i * 2.1) * vs(3.7, i);
+      // round 7 (A6 P2 shot 6: the right lamp's glow + cone washed the raven perched beside it into a translucent brown
+      // smear for ~12 f as it pecked the chip): in shot 6 the right lamp is small (glow 0.2, core 0.08, cone 0.5 wide at
+      // 60 %), and EVERY lamp glow is drawn just behind the raven's plane (pushed along its own view ray to z ~0, scaled
+      // so it projects the same), so the bird's opaque card occludes it and keeps its full dark fill + outline
+      const near = ctx.id === 6 && i === 1;
+      const gs = near ? 0.26 : name === "dusk" ? 0.38 : ctx.id === 6 ? 0.62 : 0.42, cs = near ? 0.09 : ctx.id === 6 ? 0.16 : 0.13; // round 8: the shot-6 switch-on must read against the bright late sky
+      const cp = cam.position, tz = Math.abs(cp.z - B.bulb.z) > 0.3 ? (cp.z - (TH.base[2] - 0.01)) / (cp.z - B.bulb.z) : 1, kz = Math.max(1, Math.min(1.6, tz));
+      B.glow.position.copy(cp).addScaledVector(this.tmp.copy(B.bulb).sub(cp), kz);
+      const cream = ctx.id === 6; // round 8: #FFD7A0 in the late light, the warmer orange at dusk
+      (B.glow.material as THREE.SpriteMaterial).color.setRGB((cream ? 1.5 : 1.1) * onK * fl, (cream ? 1.2 : 0.7) * onK * fl, (cream ? 0.78 : 0.3) * onK * fl); B.glow.scale.setScalar(gs * kz);
+      (B.core.material as THREE.SpriteMaterial).color.setRGB(3.2 * onK, (cream ? 2.7 : 2.4) * onK, (cream ? 1.9 : 1.3) * onK); B.core.scale.setScalar(cs);
+      // the cone: from the bulb down to the board face, turned about its axis to face the lens
+      const ax = this.tmp2.copy(B.aim).sub(B.bulb), len = ax.length(); ax.normalize();
+      const toCam = cam.position.clone().sub(B.bulb).normalize(), side = new THREE.Vector3().crossVectors(ax, toCam).normalize(), nrm = new THREE.Vector3().crossVectors(side, ax).normalize();
+      B.cone.position.copy(B.bulb); B.cone.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(ax, side, nrm)); B.cone.scale.set(len, near ? 0.5 : 0.95, 1);
+      const ck = 0.3 * onK * fl * (name === "dusk" ? 1 : 1.35) * (near ? 0.6 : 1); B.coneMat.color.setRGB(1.0 * ck, 0.68 * ck, 0.36 * ck); // round 8: x1.7 in shot 6
+      B.moths.forEach((m, j) => { const a = vph(4.4 + j * 1.3) + j * 2.1 + i, R = 0.1 + 0.04 * vs(1.6, j + i);
+        m.position.set(B.bulb.x + Math.cos(a) * R, B.bulb.y - 0.03 + 0.05 * vs(2.9, j * 1.7), B.bulb.z + 0.04 + Math.sin(a) * R * 0.7);
+        m.scale.setScalar(Math.floor((VF + j) / 2) % 2 ? 0.032 : 0.022); });
+    });
+    // round 7 (A6 ADD shot 6): golden dust motes drift through the late light in front of the board once the relight is
+    // well under way (brightest after the lamps flick on); at dusk a faint few hang in the lamp light
+    { let dk = 0;
+      if (ctx.id === 6) { const mx = lightMixAt(6, f), lk = mx.a === "late" ? 1 : mx.b === "late" ? mx.k : 0; dk = 0.55 * sm((lk - 0.35) / 0.4) + 0.45 * Math.min(1, this.lampK / 0.86); }
+      else if (name === "dusk" && set === "trailhead") dk = 0.45;
+      this.boardDust.pts.visible = dk > 0.01;
+      if (dk > 0.01) { (this.boardDust.pts.material as THREE.PointsMaterial).color.setRGB(1.0 * dk, 0.72 * dk, 0.36 * dk); this.boardDust.pose(t * 0.7, 8); } }
+  }
+  /** this World's board-lamp level (0 = off), read by Interiors.pose for the trailhead pools 9-10 (round 8: per lamp) */
+  lampK = 0; lampKs = [0, 0];
+  /** round 7: a per-World tone override (Interiors: the shot-14 BAIT insert): lit / shade / lift multipliers on L */
+  toneOverride(L: LightState, lit: number, shade: P3, lift: P3) {
+    const o = this.ov; o.on = true;
+    o.lit.set(...L.lit).multiplyScalar(lit); o.shade.set(L.shade[0] * shade[0], L.shade[1] * shade[1], L.shade[2] * shade[2]); o.lift.set(L.lift[0] * lift[0], L.lift[1] * lift[1], L.lift[2] * lift[2]);
+    o.lambert = L.lambert; o.sideK = L.sideK; o.grad = L.charGrad; o.bodyGrad = L.bodyGrad;
   }
 }
 
@@ -1478,9 +2005,10 @@ const chalkLineMat = (len: number, col = new THREE.Color(1.36, 1.44, 1.54)) => n
 });
 /** additive 1 m / 5 m grid with a slow travelling shimmer, fading with distance (blueprint floor overlay) */
 const gridMat = () => new THREE.ShaderMaterial({
-  uniforms: { uT: { value: 0 }, uCam: { value: new THREE.Vector3() }, uCol: { value: new THREE.Color(0.55, 0.72, 1.0) } },
+  uniforms: { uT: { value: 0 }, uCam: { value: new THREE.Vector3() }, uCol: { value: new THREE.Color(0.55, 0.72, 1.0) }, uRev: { value: new THREE.Vector3(0, 0, 1e4) },
+    uRip: { value: Array.from({ length: 4 }, () => new THREE.Vector4(0, 0, 0, 0)) } },
   vertexShader: CHALK_VS,
-  fragmentShader: /* glsl */ `uniform float uT; uniform vec3 uCam, uCol; varying vec2 vUv; varying vec3 vW;
+  fragmentShader: /* glsl */ `uniform float uT; uniform vec3 uCam, uCol, uRev; uniform vec4 uRip[ 4 ]; varying vec2 vUv; varying vec3 vW;
   void main(){
     vec2 p = vW.xz;
     vec2 g = abs(fract(p - 0.5) - 0.5) / fwidth(p);
@@ -1491,6 +2019,14 @@ const gridMat = () => new THREE.ShaderMaterial({
     float fade = 1.0 - smoothstep(12.0, 46.0, d);
     float wave = pow(0.5 + 0.5 * sin(dot(p, vec2(0.42, 0.27)) - uT * 3.14159), 4.0); // round 3: one sweep every 2 s
     float a = (line * (0.09 + 0.2 * wave) + major * (0.16 + 0.14 * wave)) * fade;
+    // round 6 (A5 ADD: the grid draws itself): on "You see," the grid inks outward from the visitor in a ring
+    // (uRev = origin xz, radius); its front edge glows like a fresh chalk line, the lines behind it settle
+    float dr = length(p - uRev.xy), front = uRev.z;
+    a *= 1.0 - smoothstep(front - 1.4, front, dr);
+    a += (line * 0.55 + major * 0.8) * exp(-abs(dr - front) * 1.5) * step(dr, front + 0.6) * step(front, 60.0) * fade;
+    // round 7 (A6 ADD): a faint shimmer ripples outward through the grid from each label / note as it lands
+    // (uRip[i] = origin xz, radius m, strength 0..1)
+    for (int i = 0; i < 4; i++) { vec4 R = uRip[ i ]; if (R.w <= 0.001) continue; float rr = length(p - R.xy); a += (line * 0.5 + major * 0.6) * R.w * exp(-abs(rr - R.z) * 3.2) * fade; }
     gl_FragColor = vec4(uCol * a, 1.0);
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
@@ -1509,12 +2045,14 @@ const BHEAP = (rho: number) => -0.015 + 0.057 * (1 - (rho / 0.15) ** 2);
 /** the scoop pours (cast.ts: fs = BEAT.pieces + 4 + n * (BEAT.apology - BEAT.pieces - 4) / 3; tips fs+4 .. fs+9): chip k
  *  of scoop n leaves the scoop at fs + 4 + k from cast's bucket target + [0, 0.32, 0] and lands 5 f later */
 /** the hurricane lantern on the storeroom floor, in front of the bait stool (room-local) */
-const LANTERN: P3 = [1.25, 0, -0.17];
+const LANTERN: P3 = [1.31, 0, -0.13]; // round 6: 6 cm right + 4 cm toward the lens (it hid the end of BAD LUCK EVER SINCE in the reveal)
 const pourAt = (n: number, k: number) => BEAT.pieces + 4 + (n * (BEAT.apology - BEAT.pieces - 4)) / 3 + 4 + k;
 /** storeroom swing-arm lamp: head high over the desk's right end, aimed at the crate top / letters / bucket */
 const LAMP_HEAD: P3 = [-1.15, 2.0, -1.5], LAMP_AIM: P3 = [0.4, 0.85, -1.05];
 /** brass mail slot in the north wall and the galvanized chute from it down to the back of the pile */
 const MAIL = { slot: [-0.2, 1.5, -2.75] as P3, s0: [-0.2, 1.44, -2.68] as P3, s1: [-0.12, 1.06, -1.6] as P3 };
+/** round 8: the warm plug-in night-light right of the slot collar (room-local x, y on the north wall) */
+const NIGHT_LIGHT: P3 = [0.13, 1.33, 0];
 /** round 5: the moonlight shaft (room-local): from the window centre, down and toward the lens, landing on the floor in
  *  front of the crate's left end */
 const MOON = (() => {
@@ -1531,8 +2069,11 @@ const DUSK_LAMPS: [P3, number, P3][] = [
 ];
 
 // ======================================================================================================== the rooms
-type ChalkLine = { mesh: THREE.Mesh; mat: THREE.ShaderMaterial; a: number; b: number; pre: number; pts: [number, number][]; L: number[]; stick: boolean };
-type Pop = { obj: THREE.Object3D; f: number; s: number };
+/** a self-drawing chalk line; round 7: `out` = picture frame it is rubbed out (6 f fade), `p3` = world points of an
+ *  upright line (for the chalk dust at its draw head) */
+type ChalkLine = { mesh: THREE.Mesh; mat: THREE.ShaderMaterial; a: number; b: number; pre: number; pts: [number, number][]; L: number[]; stick: boolean; out?: number; p3?: THREE.Vector3[] };
+/** a pop-in (8 picture f outBack); round 7: vd = its length in VIDEO frames instead (the THE RULE label pops in 3) */
+type Pop = { obj: THREE.Object3D; f: number; s: number; vd?: number };
 
 export class Interiors {
   private cl = new THREE.Group(); private sr = new THREE.Group(); private bp = new THREE.Group();
@@ -1570,18 +2111,26 @@ export class Interiors {
     // storeroom: the swing-arm lamp bulb (warm, strong, short) and the moon window (cool)
     const hd = V(...LAMP_HEAD), am = V(...LAMP_AIM).sub(hd).normalize(), bulbP = hd.clone().addScaledVector(am, 0.05);
     const lampBulb: P3 = [bulbP.x, bulbP.y, bulbP.z], aim = V(...LAMP_AIM).sub(bulbP).normalize();
-    set(2, SR.base, lampBulb, [1.3, 0.73, 0.29], 1.9); // round 3: +30 %
+    // round 6 (A5 P2: the warm pools did not pop against the lavender): every warm storeroom practical +25 % (#FFAD58 -
+    // #FFD2A0 class), the moon pool a cleaner blue
+    set(2, SR.base, lampBulb, [1.62, 0.9, 0.34], 1.9); // round 3: +30 %; round 6: +25 %
     // round 5: the cool moon pool sits where the new shaft lands (the floor + the crate's front-left), not on the wall
-    set(3, SR.base, [MOON.end[0] - 0.1, 0.45, MOON.end[2] - 0.2], [0.05, 0.075, 0.22], 1.5);
+    set(3, SR.base, [MOON.end[0] - 0.1, 0.45, MOON.end[2] - 0.2], [0.03, 0.08, 0.3], 1.5);
     // round 5 (A4 P2: no warm practical in frame, no warm wall falloff): the hanging work bulb, #FFD2A0, a long soft
     // reach (the back wall, the ceiling beams, the pile top, the stool and the jar shelf all take it)
-    set(8, SR.base, [WORK_BULB.hook[0], WORK_BULB.y, WORK_BULB.hook[2]], [1.55, 0.98, 0.5], 3.3);
+    set(8, SR.base, [WORK_BULB.hook[0], WORK_BULB.y, WORK_BULB.hook[2]], [2.45, 1.42, 0.5], 2.6); // round 6b: shorter reach, same near strength, warmer: the ceiling's warm-over-blue lavender band (A5 P2) shrinks to a quick warm -> blue edge
     // round 5 (A4 P2 dusk): the trailhead practicals, ON only in the dusk World (Interiors.pose zeroes them otherwise)
     DUSK_LAMPS.forEach(([p, r, c], i) => set(9 + i, [0, 0, 0], p, c, r));
-    set(4, SR.base, [0.5, 1.45, -0.5], [1.15, 0.62, 0.2], 1.9);  // round 3: lamp spill aimed at the pile top + the pail (lens side)
+    // round 7 (A6 P3 dusk: nothing motivated the warm floor): the gooseneck lamps' warm #FFC27A spill on the GROUND under
+    // the board, ~3 m reach each with a soft falloff (centred 1.2 m up so the paving takes it at a good angle), so the
+    // ground near the sign and the tourist's lens side are warm and the far floor falls into the blue hour
+    for (const [i, x] of [[12, -0.55], [13, 0.55]] as [number, number][]) set(i, [0, 0, 0], [x, 1.2, 0.95], [0.8, 0.43, 0.15], 2.8);
+    set(4, SR.base, [0.5, 1.45, -0.5], [1.44, 0.76, 0.23], 1.9);  // round 3: lamp spill aimed at the pile top + the pail (lens side)
     // round 3: the hurricane lantern on the floor (crate front, stool, pail, rug, notes) + a softer spill on the crate's left
-    set(6, SR.base, [LANTERN[0], 0.2, LANTERN[2]], [1.55, 0.74, 0.22], 2.3);
-    set(7, SR.base, [-0.2, 0.75, -0.25], [0.45, 0.24, 0.08], 1.4);
+    set(6, SR.base, [LANTERN[0], 0.2, LANTERN[2]], [1.94, 0.9, 0.26], 2.3);
+    set(7, SR.base, [-0.2, 0.75, -0.25], [0.56, 0.29, 0.09], 1.4);
+    // round 8 (A7 P3): the slot night-light's small warm pool (collar, chute lip and tray, the wall round the slot)
+    set(14, SR.base, [NIGHT_LIGHT[0] - 0.18, NIGHT_LIGHT[1] - 0.02, -SR.room.d / 2 + 0.3], [1.6, 0.86, 0.26], 1.5);
     // classroom: the teacher's desk lamp pool (warm, small)
     set(5, CL.base, [0.75 - 0.47, 1.0, -2.45 - 0.18], [0.8, 0.52, 0.2], 1.3); // round 3: the lamp reads as ON
     if (ZONE_N > 0) {
@@ -1779,7 +2328,11 @@ export class Interiors {
       for (let k = 0; k < 7; k++) b.geo(new THREE.ConeGeometry(0.012, 0.01, 5), C(k % 2 ? "#e0b070" : "#d8a050"), sx + 0.06 + (hash(k * 2.3) - 0.5) * 0.3, 0.005, -D + 0.12 + hash(k * 4.1) * 0.15, 0, Math.PI / 2, hash(k) * 3, 1, false); }
     { const pg = new THREE.BufferGeometry(); pg.setAttribute("position", new THREE.Float32BufferAttribute([0, 0.03, 0.16, -0.09, 0.0, -0.1, 0, 0.0, -0.1, 0, 0.03, 0.16, 0, 0.0, -0.1, 0.09, 0.0, -0.1, 0, 0.03, 0.16, 0, -0.03, -0.1, 0, 0.0, -0.1], 3)); pg.computeVertexNormals();
       b.geo(pg, lam("int:clPlane", () => ({ color: "#f6f4ec", side: THREE.DoubleSide })), 1.45, 0.04, 0.35, 0.9, 0.05, 0.1); }
-    b.panel(TM("clCrib", () => cribTex()), 0.15, 0.1, CL.desks[4][0] + 0.1, 0.6, CL.desks[4][1] - 0.3 - 0.265, Math.PI, 0.05, 0.06);
+    // round 6: the crib note became a big tent card on the right desk's front corner (desk 4), turned to the end
+    // two-shot lens (picture ~1497: x ~910-1060, y ~1030-1150 at 1080, next to the honest student's smug side-eye)
+    { const cx = CL.desks[4][0] + 0.29, cz = CL.desks[4][1] - 0.455, ry = -2.21, rx = -0.16, cw = 0.26, chh = 0.195, cy = 0.7 + chh / 2;
+      b.panel(TM("clCrib6", () => cribTex6(), { emissive: new THREE.Color(1, 1, 1), emissiveMap: cribTex6(), emissiveIntensity: 0.25 }), cw, chh, cx + 0.0032 * Math.sin(ry), cy + 0.001, cz + 0.0032 * Math.cos(ry), ry, rx, 0, false); // 1.7 mm proud of the card's lens-side face
+      b.rbox(C("#efe070"), cw, chh, 0.003, cx, cy, cz, ry, rx, 0, true); void cribTex; }
     for (const [di, col] of [[3, "#d8432f"], [5, "#3e8a4a"]] as [number, string][]) {
       const [x, zc] = CL.desks[di], sz = zc + 0.18;
       b.rbox(TM("clChairPack" + di, () => backpackTex("clChairPackT" + di, col)), 0.32, 0.36, 0.14, x, 0.6, sz + 0.28, 0, 0.12, 0);
@@ -1815,6 +2368,33 @@ export class Interiors {
       b.box(trim, W - 0.03, 1.24, 0.4, W, 1.86, 0.96); // left of the bubble's left lobe (z ~1.0 at 1510)
       b.panel(TM("clDrawings4", () => drawings4Tex()), 0.52, 0.58, W - 0.032, 1.55, 0.68, ry);
       b.panel(TM("clPlanets", () => planetsTex()), 0.6, 0.75, E, 2.475, 3.08, ry);
+      // round 6 (A5 P3: the wall above the bookshelf was a ~35 % empty beige plane at the whip landing, video 1915-1936):
+      // a framed OUR WORLD map, a cork board of class notices (PLEASE DO NOT COPY HOMEWORK: the film's irony), a STAR
+      // STUDENTS chart with gold stars, two kids' drawings and a GO TEAM pennant that sways in the window draft
+      b.panel(TM("clWorldMap6", () => worldMap6Tex()), 1.42, 0.8, E, 2.72, -2.12, ry);
+      b.panel(TM("clCork6", () => corkNoticeTex()), 0.92, 0.563, E, 1.97, -2.2, ry);
+      b.panel(TM("clKid6_0", () => kidDraw6Tex(0)), 0.36, 0.405, E - 0.002, 1.95, -1.48, ry, 0, 0.05);
+      b.panel(TM("clStars6", () => starChartTex()), 0.8, 1.0, E, 2.5, -0.55, ry);
+      b.panel(TM("clKid6_1", () => kidDraw6Tex(1)), 0.34, 0.38, E - 0.002, 1.62, -0.6, ry, 0, -0.06);
+      { const pg6 = new THREE.Group(); pg6.position.set(o[0] + E - 0.006, o[1] + 2.92, o[2] + 0.17); pg6.rotation.y = ry;
+        const pm6 = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 0.64).translate(0, -0.32, 0), lam("int:clPennant6", () => ({ map: pennant6Tex(), transparent: true, alphaTest: 0.5, side: THREE.DoubleSide })));
+        pm6.receiveShadow = true; pg6.add(pm6); this.cl.add(pg6); this.wallPennant = pg6;
+        b.geo(new THREE.SphereGeometry(0.014, 8, 6), C("#d8432f"), E - 0.01, 2.92, 0.17, 0, 0, 0, 1, false); }
+      // round 6 (A5 ADD: a spitball stuck on the ceiling tile): the classic gag over the board side of the room, in the
+      // top band of the opening over-the-shoulder lens: three pencils stuck point-first in the ceiling tiles (hanging,
+      // slightly crooked; one sways in the window draft, posed in Interiors.pose) and a scatter of dried spitballs
+      { const yel = C("#f2c23a"), pink = C("#ec8c9c"), ferr = C("#c0c6ce"), spit = C("#ebe6da");
+        const pencil = (x: number, z: number, dx: number, dz: number, L: number) => {
+          const top: P3 = [x, H - 0.004, z], end: P3 = [x + dx, H - L, z + dz], fe: P3 = [x + dx * 1.08, H - L - 0.012, z + dz * 1.08], er: P3 = [x + dx * 1.2, H - L - 0.032, z + dz * 1.2];
+          b.seg(C("#e8c89a"), [x, H + 0.01, z], top, 0.004, false, 6); b.seg(yel, top, end, 0.0085, false, 6); b.seg(ferr, end, fe, 0.009, false, 8); b.seg(pink, fe, er, 0.0088, false, 8);
+        };
+        pencil(-1.05, -2.55, 0.02, 0.012, 0.17); pencil(-1.62, -2.05, -0.03, 0.02, 0.16);
+        for (const [x, z, s] of [[-1.3, -2.75, 1], [-0.85, -2.2, 0.8], [-1.45, -1.75, 1.1], [-0.6, -2.85, 0.9], [-1.9, -2.6, 0.85], [-0.95, -1.6, 1]] as number[][])
+          b.geo(new THREE.SphereGeometry(0.02 * s, 8, 6), spit, x, H - 0.006, z, x * 3, 0, 0, [1.2, 0.45, 1], false); }
+      { const sw6 = new THREE.Group(); sw6.position.set(o[0] - 1.35, o[1] + H - 0.004, o[2] - 2.35); this.cl.add(sw6); this.ceilPencil = sw6;
+        const pb6 = new RB([0, 0, 0]);
+        pb6.seg(C("#f2c23a"), [0, 0, 0], [0, -0.165, 0], 0.0085, false, 6); pb6.seg(C("#c0c6ce"), [0, -0.165, 0], [0, -0.178, 0], 0.009, false, 8); pb6.seg(C("#ec8c9c"), [0, -0.178, 0], [0, -0.2, 0], 0.0088, false, 8);
+        pb6.done(sw6); }
       // wall pencil sharpener left of the door (grey: it is behind the bubble's lower edge)
       b.box(C("#9aa4b0"), W - 0.1, 1.0, 1.36, W, 1.1, 1.48); b.box(C("#7a8490"), W - 0.08, 0.97, 1.37, W - 0.02, 1.0, 1.47);
       b.geo(new THREE.CylinderGeometry(0.008, 0.008, 0.08, 6), C("#2a2a30"), W - 0.07, 1.06, 1.53, 0, Math.PI / 2, 0, 1, false);
@@ -1864,6 +2444,15 @@ export class Interiors {
     b.done(this.cl);
     // dust motes drifting in the window shafts (warm, sparse)
     this.clMotes = new Motes(this.cl, 70, 11, o, [-4.0, 0.7, -1.8], [2.2, 2.6, 3.3], new THREE.Color(0.72, 0.56, 0.32), 0.03, 0.12);
+    // round 8 (A7 ADD shot 12): dusty sunbeams. Three soft additive shafts (~11-13 %) slant in from the south panes along the
+    // low key (KEY_CLASSROOM) across the desks to the board wall, turned about their own axis to face the lens and slowly
+    // breathing; the pane nearest the honest student's seat is left out so no shaft crosses her face or her bubble
+    { const d = V(-KEY_CLASSROOM[0], -KEY_CLASSROOM[1], -KEY_CLASSROOM[2]).normalize(), sg = new THREE.PlaneGeometry(1, 1).translate(0.5, 0, 0);
+      for (const [x, w, len, ph] of [[-3.35, 1.15, 6.4, 0], [-1.85, 1.0, 6.0, 2.1], [1.15, 1.1, 6.2, 4.0]] as number[][]) {
+        const mat = new THREE.MeshBasicMaterial({ map: fxShaftTex(), color: new THREE.Color(0, 0, 0), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, fog: false });
+        const mesh = new THREE.Mesh(sg, mat); mesh.layers.set(NOINK); mesh.renderOrder = 4; mesh.frustumCulled = false; this.cl.add(mesh);
+        this.clShafts.push({ mesh, mat, p0: V(o[0] + x, o[1] + 1.95, o[2] + D - 0.08), d, w, len, ph });
+      } }
     // round 3: the ceiling darkens ~15 % toward the walls and corners (a soft dark warm gradient just under it)
     const cd = new THREE.Mesh(new THREE.PlaneGeometry(2 * W, 2 * D).rotateX(Math.PI / 2), new THREE.MeshBasicMaterial({ map: ctex("clCeilDark", 256, 200, (g) => {
       const gr = g.createRadialGradient(128, 100, 30, 128, 100, 160); gr.addColorStop(0, "rgba(40,24,16,0)"); gr.addColorStop(0.55, "rgba(40,24,16,0.08)"); gr.addColorStop(1, "rgba(40,24,16,0.3)");
@@ -1986,6 +2575,18 @@ export class Interiors {
     for (const sx of [-1, 1]) b.seg(C("#5a626e"), [mx + sx * 0.15, my - 0.1, -D + 0.01], [mx + sx * 0.15, my - 0.24, -D + 0.16], 0.008, false, 4);
     this.flap = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.08, 0.008).translate(0, -0.04, 0.004), TM("srFlap", () => brassTex("srFlapT", "MAIL", 384, 96)));
     this.flap.position.set(o[0] + mx, o[1] + my + 0.04, o[2] - D + 0.022); this.flap.castShadow = this.flap.receiveShadow = true; this.sr.add(this.flap);
+    // round 8 (A7 P3: the chute insert was one blue note, no warm practical in frame): a little brass plug-in night-light
+    // right of the slot collar, an amber dome that blooms (#FFB860), a soft warm glow over the slot's brass and a warm
+    // pool (shade.ts POOL 14) that catches the collar, the chute lip and the envelopes on its tray
+    { const nx = NIGHT_LIGHT[0], ny = NIGHT_LIGHT[1], nz = -D;
+      b.box(brass, nx - 0.04, ny - 0.06, nz, nx + 0.04, ny + 0.06, nz + 0.018, 0, false);
+      b.geo(new THREE.CylinderGeometry(0.004, 0.004, 0.03, 5).rotateX(Math.PI / 2), C("#2a2a30"), nx, ny - 0.035, nz + 0.02, 0, 0, 0, 1, false);
+      const dome = new THREE.MeshBasicMaterial({ color: glow("#ffb860", 2.2) });
+      const dm = new THREE.Mesh(new THREE.SphereGeometry(0.03, 14, 10, 0, TAU, 0, Math.PI / 2).rotateX(Math.PI / 2), dome); dm.scale.set(1, 1.25, 0.9);
+      dm.position.set(o[0] + nx, o[1] + ny + 0.01, o[2] + nz + 0.018); dm.layers.set(NOINK); this.sr.add(dm);
+      const ng = new THREE.Sprite(new THREE.SpriteMaterial({ map: softDot(), color: new THREE.Color(0.55, 0.3, 0.1), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+      ng.scale.setScalar(0.78); ng.position.set(o[0] + nx - 0.12, o[1] + ny + 0.04, o[2] + nz + 0.07); // round 8: a warm wash over the collar + chute lip ng.layers.set(NOINK); ng.renderOrder = 5; this.sr.add(ng);
+      this.nightLight = { glow: ng, dome, p: dm.position.clone() }; }
     {
       const S0 = V(...MAIL.s0), S1 = V(...MAIL.s1), u = S1.clone().sub(S0), L = u.length(); u.normalize();
       const x = new THREE.Vector3().crossVectors(V(0, 1, 0), u).normalize(), y = new THREE.Vector3().crossVectors(u, x).normalize();
@@ -2025,6 +2626,23 @@ export class Interiors {
       hs.position.set(o[0] - 0.48, o[1] + 1.98, o[2] - D + 0.014); hs.layers.set(NOINK); hs.renderOrder = 1; this.sr.add(hs); this.hatShadow = hs; }
     // the month calendar, right of the slot
     b.panel(TM("srCalendar", () => calendarTex()), 0.36, 0.48, 1.88, 1.95, -D + 0.012);
+    // round 6 (A5 ADD): a tear-off LETTERS THIS YEAR counter over the RETURNS sign (in every shot-14 lens from the reveal
+    // on): its top sheet 1,201 peels and flutters down on "mailed", leaving 1,202 (unlit, lamp-warm so it reads)
+    { const cx2 = 0.02, cy2 = 2.04, w = 0.42, h = 0.2625;
+      const pl = new THREE.Mesh(new THREE.PlaneGeometry(w, h), basic("srCounter6", () => ({ map: counterTex(), color: new THREE.Color(0.95, 0.84, 0.68) })));
+      pl.position.set(o[0] + cx2, o[1] + cy2, o[2] - D + 0.016); pl.layers.set(NOINK); this.sr.add(pl);
+      b.box(beam, cx2 - w / 2 - 0.015, cy2 - h / 2 - 0.015, -D, cx2 + w / 2 + 0.015, cy2 + h / 2 + 0.015, -D + 0.012, 0, false);
+      // the top sheet: hinged at its top edge (pivot), the pad window is x 56-456 / y 92-288 of the 512 x 320 plaque
+      const sw = (400 / 512) * w, sh = (196 / 320) * h, piv = new THREE.Group();
+      piv.position.set(o[0] + cx2, o[1] + cy2 + h / 2 - (92 / 320) * h, o[2] - D + 0.019); this.sr.add(piv);
+      const sheet = new THREE.Mesh(new THREE.PlaneGeometry(sw, sh).translate(0, -sh / 2, 0), basic("srSheet6", () => ({ map: sheetTex(), side: THREE.DoubleSide, color: new THREE.Color(0.97, 0.88, 0.74) })));
+      sheet.layers.set(NOINK); piv.add(sheet); this.tearSheet = { piv, sheet, base: piv.position.clone() }; }
+    // round 6 (A5 ADD): a ginger cat asleep on the moonlit window sill (right half, in frame from the reveal to the
+    // apology); one eye snaps open on the parcel thump (BEAT.mailed + 3), it looks for 12 f, closes again ~video 2290
+    { const cat = new THREE.Mesh(new THREE.PlaneGeometry(0.4, 0.25).translate(0, 0.125, 0), basic("srCat6", () => ({ map: catTex(0), transparent: true, alphaTest: 0.4, depthWrite: true, color: new THREE.Color(0.86, 0.8, 0.86) })));
+      cat.position.set(o[0] + (WIN.x0 + WIN.x1) / 2 + 0.2, o[1] + WIN.y0 - 0.005, o[2] - D + 0.07); cat.layers.set(NOINK); this.sr.add(cat); this.cat = cat;
+      const cs = new THREE.Mesh(new THREE.PlaneGeometry(0.46, 0.12).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: softDot(), color: new THREE.Color("#0a0c22"), transparent: true, opacity: 0.6, depthWrite: false, fog: false }));
+      cs.position.set(cat.position.x, cat.position.y + 0.004, cat.position.z); cs.layers.set(NOINK); cs.renderOrder = 1; this.sr.add(cs); }
     // ---- west wall (screen left): 3-tier steel shelf of returned boxes, ranger hat + binoculars on pegs, tear-off calendar ----
     const westShelf = (z0: number, labels: string[]) => {
       const x0 = -W + 0.03, x1 = x0 + 0.42, z1 = z0 + 1.15;
@@ -2106,7 +2724,7 @@ export class Interiors {
       const sock = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.028, 0.07, 12).translate(0, -L + 0.08, 0), lam("int:srSocket", () => ({ color: "#2a2a30" }))); sock.castShadow = false; piv.add(sock);
       const wb = new THREE.Mesh(new THREE.SphereGeometry(0.042, 16, 12), new THREE.MeshBasicMaterial({ color: glow("#ffdca8", 6.5) })); wb.scale.set(1, 1.18, 1); wb.position.y = -L + 0.01; piv.add(wb); this.workBulb = wb;
       const fil = new THREE.Mesh(new THREE.TorusGeometry(0.012, 0.0025, 4, 10), new THREE.MeshBasicMaterial({ color: glow("#fff2d0", 9) })); fil.position.y = -L + 0.012; fil.rotation.x = Math.PI / 2; piv.add(fil);
-      const halo = new THREE.Mesh(new THREE.PlaneGeometry(0.95, 0.95), new THREE.MeshBasicMaterial({ map: softDot(), color: new THREE.Color(0.85, 0.52, 0.22), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+      const halo = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.6), new THREE.MeshBasicMaterial({ map: softDot(), color: new THREE.Color(0.64, 0.36, 0.09), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false })); // round 6: -35 % (the warm halo over the blue read as lavender haze)
       halo.layers.set(NOINK); halo.renderOrder = 4; this.sr.add(halo); this.workHalo = halo; }
     const motesC = bulb.position.clone().addScaledVector(aim, 1.2).sub(V(...o));
     this.lampMotes = new Motes(this.sr, 46, 21, o, [motesC.x - 0.75, motesC.y - 0.35, motesC.z - 0.4], [motesC.x + 0.75, motesC.y + 0.35, motesC.z + 0.4], new THREE.Color(1.1, 0.6, 0.2), 0.03, 0.06);
@@ -2115,6 +2733,8 @@ export class Interiors {
     this.moth.scale.setScalar(0.05); this.moth.layers.set(NOINK); this.sr.add(this.moth);
     // round 4 (A3 ADD): a second moth round the lamp and one round the lantern
     for (const s0 of [0.045, 0.04]) { const mth = new THREE.Sprite(new THREE.SpriteMaterial({ map: mothTex(0), color: new THREE.Color(0.9, 0.82, 0.66), transparent: true, depthWrite: false })); mth.scale.setScalar(s0); mth.layers.set(NOINK); this.sr.add(mth); this.moths2.push(mth); }
+    // round 6 (A5 ADD: 2-3 moths circling the hanging bulb, catching its bloom): a third bulb moth (figure-8 orbit)
+    { const mth = new THREE.Sprite(new THREE.SpriteMaterial({ map: mothTex(0), color: new THREE.Color(1.25, 1.12, 0.9), transparent: true, depthWrite: false })); mth.scale.setScalar(0.042); mth.layers.set(NOINK); this.sr.add(mth); this.moths2.push(mth); }
     // desk props
     b.geo(new THREE.CylinderGeometry(0.045, 0.04, 0.1, 14), C("#d8432f"), dx + 0.3, 0.83, dz + 0.1, 0, 0, 0, 1, false);
     b.geo(new THREE.TorusGeometry(0.03, 0.009, 6, 10), C("#d8432f"), dx + 0.35, 0.835, dz + 0.1, 0, 0, 0, 1, false);
@@ -2134,7 +2754,7 @@ export class Interiors {
     b.panel(TM("srTally", () => tallyTex()), 0.2, 0.27, dx + 0.12, 0.783, dz - 0.05, 0.25, -Math.PI / 2);
     b.rbox(TM("srEnvO", () => envelopeTex("srEnvOT", true, "#2e5aa8")), 0.24, 0.008, 0.13, dx + 0.32, 0.79, dz + 0.24, -0.4, 0, 0.04);
     b.geo(new THREE.PlaneGeometry(0.2, 0.08).rotateX(-0.6), C("#f6efdc"), dx + 0.32, 0.81, dz + 0.17, -0.4);
-    { const cg = chipGeos(901, 0.035, 0.018); b.geo(cg.top, TM("qz1", () => quartzFace(1)), dx + 0.44, 0.8, dz + 0.3, 0.5, 0.2, 0.1); b.geo(cg.side, C("#7a5a44"), dx + 0.44, 0.8, dz + 0.3, 0.5, 0.2, 0.1); }
+    { const cg = chipGeos(901, 0.035, 0.018); b.geo(cg.top, qzE(5, 0.3), dx + 0.44, 0.8, dz + 0.3, 0.5, 0.2, 0.1); b.geo(cg.side, C("#7a5a44"), dx + 0.44, 0.8, dz + 0.3, 0.5, 0.2, 0.1); }
     for (let k = 0; k < 3; k++) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.06, 0.16), new THREE.MeshBasicMaterial({ map: softDot(), color: new THREE.Color(0.1, 0.1, 0.12), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending })); m.layers.set(NOINK); this.sr.add(m); this.steam.push(m); }
     this.mugTop = V(o[0] + dx + 0.3, o[1] + 0.9, o[2] + dz + 0.1);
     // chair, waste basket with crumpled paper, box of packing peanuts under the desk
@@ -2159,8 +2779,8 @@ export class Interiors {
     // plus a few rounded rocks, ~0.3 m above the rim; heapTop() is shared with the mail drop's landing
     const heapTop = (lx2: number, lz2: number) => { const rr = Math.max(Math.abs(lx2 / (cw / 2 - 0.08)), Math.abs(lz2 / (cd / 2 - 0.07))); return ch - 0.04 + 0.36 * (1 - Math.min(1, rr) ** 2) + 0.03; };
     this.heapTop = (lx2, lz2) => cm(lx2, heapTop(lx2, lz2), lz2);
-    const QZ = ["#c84a3a", "#e8893a", "#f2c64a", "#8a5aa8", "#e05a7a", "#f4ecd8", "#7a5a44", "#d86a3a", "#f0a03a", "#b83a4a", "#e8c25a"];
-    const qm = [0, 1, 2, 3].map((i) => qzE(i)), bark = barkE(), dotM = basic("srDot", () => ({ color: new THREE.Color(0.95, 0.94, 0.9) }));
+    const QZ = ["#c84a3a", "#e8893a", "#f2c64a", "#8a5aa8", "#7a5a44", "#f4ecd8", "#5e4636", "#e8893a", "#f2c64a", "#8a5aa8", "#c84a3a"]; // round 6: even red / orange / yellow / purple + bark browns + cream
+    const qm = [0, 1, 2, 3, 4, 5, 6, 7].map((i) => qzE(i)), bark = barkE(), dotM = basic("srDot", () => ({ color: new THREE.Color(0.95, 0.94, 0.9) }));
     for (let k = 0; k < 150; k++) {
       const u = hash(k * 1.31) * 2 - 1, v = hash(k * 2.77) * 2 - 1, lx2 = u * (cw / 2 - 0.07), lz2 = v * (cd / 2 - 0.06);
       const ly2 = heapTop(lx2, lz2) - 0.36 * (1 - hash(k * 4.3) ** 0.35) * 0.9;
@@ -2168,10 +2788,10 @@ export class Interiors {
       if (k % 4 === 3) { b.geo(rockGeo(k + 1, 0.04 + 0.04 * hash(k * 5.9), 0.65), rockE(QZ[Math.floor(hash(k * 7.7) * QZ.length) % QZ.length]), ...p, hash(k) * 6, hash(k * 2) * 2, hash(k * 3) * 2); continue; }
       const cg = chipGeos(k + 11, 0.05 + 0.045 * hash(k * 5.9), 0.024 + 0.016 * hash(k * 6.3));
       const q = faceQ(k + 11, 0.18, 0.98, 0.85, 0.7), c3 = V(...p);
-      b.ori(cg.top, qm[k % 4], c3, q); b.ori(cg.side, bark, c3, q);
+      b.ori(cg.top, qm[Math.floor(hash(k * 3.37 + 0.5) * 8) % 8], c3, q); b.ori(cg.side, bark, c3, q);
       if (ly2 > heapTop(lx2, lz2) - 0.12) b.ori(new THREE.CircleGeometry(cg.r * 0.13, 8).rotateX(-Math.PI / 2).translate(...cg.dot), dotM, c3, q, false);
     }
-    b.geo(new THREE.SphereGeometry(1, 16, 8, 0, TAU, 0, Math.PI / 2), TM("srMound", () => quartzFace(2), { emissive: new THREE.Color(1, 1, 1), emissiveMap: quartzFace(2), emissiveIntensity: 0.22 }), ...cm(0, ch - 0.08, 0), cyaw, 0, 0, [cw / 2 - 0.04, 0.3, cd / 2 - 0.04]);
+    b.geo(new THREE.SphereGeometry(1, 16, 8, 0, TAU, 0, Math.PI / 2), TM("srMound6", () => heapTex(), { emissive: new THREE.Color(1, 1, 1), emissiveMap: heapTex(), emissiveIntensity: 0.2 }), ...cm(0, ch - 0.08, 0), cyaw, 0, 0, [cw / 2 - 0.04, 0.3, cd / 2 - 0.04]);
     // glint stars on lamp-lit chip faces (round 3: 3 of them, twinkling all through the shot)
     for (const [gx, gz] of [[-0.12, 0.06], [0.22, -0.05], [0.36, 0.16]] as [number, number][]) {
       const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: starTex(), color: new THREE.Color(2.2, 1.9, 1.5), transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending }));
@@ -2231,7 +2851,7 @@ export class Interiors {
       jars.forEach(([a, yr, k]) => {
         const jx = x0 + 0.15 + k * 0.24, jz = z0 + 0.12, jh = 0.2 - 0.02 * (k % 2), cg = 0.075;
         // the chips inside (a quartz mound), the glass, the lid, the label
-        b.geo(new THREE.CylinderGeometry(cg * 0.9, cg * 0.9, jh * 0.62, 14), qzE(k % 4, 0.5), jx, y0 + jh * 0.31, jz, k);
+        b.geo(new THREE.CylinderGeometry(cg * 0.9, cg * 0.9, jh * 0.62, 14), qzE(k + 4 * (k % 2), 0.5), jx, y0 + jh * 0.31, jz, k);
         const jg = new THREE.Mesh(new THREE.CylinderGeometry(cg, cg, jh, 16, 1, true), glassJ); jg.position.set(o[0] + jx, o[1] + y0 + jh / 2, o[2] + jz); jg.renderOrder = 3; this.sr.add(jg);
         b.geo(new THREE.CylinderGeometry(cg * 1.04, cg * 1.04, 0.03, 16), C(["#b8302a", "#2e6a3e", "#c9a24a"][k]), jx, y0 + jh + 0.015, jz);
         const lb = new THREE.Mesh(new THREE.CylinderGeometry(cg + 0.002, cg + 0.002, 0.085, 16, 1, true, -0.95, 1.9), basic("srJarL" + k, () => ({ map: jarLabelTex("srJarLT" + k, a, yr), color: new THREE.Color(0.96, 0.84, 0.66) })));
@@ -2260,7 +2880,8 @@ export class Interiors {
     const cIns = camAt(14, SHOTS[13].a + 2), cMs = camAt(14, BEAT.pieces);
     const yawTo = (p: number[]) => Math.atan2(p[0] - (o[0] + bx), p[2] - (o[2] + bz));
     const baitYaw = 0.55 * yawTo(cIns.pos) + 0.45 * yawTo(cMs.pos); // label centred between the insert and the MS lenses (P3: the B sat on the silhouette)
-    b.geo(pail, lam("int:srPailRed", () => ({ map: pailRedTex(), side: THREE.DoubleSide, emissive: new THREE.Color("#b04a10"), emissiveIntensity: 0.6 })), bx, by + 0.16, bz, baitYaw - 2.0); // orange in the blue shade, not pink
+    this.pailMat = lam("int:srPailRed6", () => ({ map: pailRedTex(), color: new THREE.Color(0.55, 0.5, 0.48), side: THREE.DoubleSide, emissive: new THREE.Color(1, 1, 1), emissiveMap: pailRedTex(), emissiveIntensity: 0.78 })) as THREE.MeshLambertMaterial;
+    b.geo(pail, this.pailMat /* round 6: the greyed night albedo made it pink: a stronger orange emissive floor */, bx, by + 0.16, bz, baitYaw - 2.0); // orange in the blue shade, not pink
     b.geo(new THREE.CylinderGeometry(0.13, 0.13, 0.01, 20), C("#8a2e18"), bx, by + 0.005, bz);
     b.geo(new THREE.TorusGeometry(0.171, 0.011, 6, 28), lam("int:srPailRim", () => ({ color: "#f2e6cc", emissive: new THREE.Color("#3a3020"), emissiveIntensity: 0.6 })), bx, by + 0.32, bz, 0, Math.PI / 2);
     b.geo(new THREE.TorusGeometry(0.17, 0.005, 4, 20, Math.PI), C("#b4bcc6"), bx, by + 0.32, bz, 0.95, 0.35);
@@ -2274,20 +2895,22 @@ export class Interiors {
     this.bHeap = new THREE.Group(); this.bHeap.position.set(o[0] + bx, o[1] + by + 0.32, o[2] + bz); this.sr.add(this.bHeap);
     {
       const hb = new Batch();
-      hb.add(new THREE.SphereGeometry(1, 18, 8, 0, TAU, 0, Math.PI / 2), TM("srMound", () => quartzFace(2), { emissive: new THREE.Color(1, 1, 1), emissiveMap: quartzFace(2), emissiveIntensity: 0.22 }),
+      hb.add(new THREE.SphereGeometry(1, 18, 8, 0, TAU, 0, Math.PI / 2), TM("srMound6", () => heapTex(), { emissive: new THREE.Color(1, 1, 1), emissiveMap: heapTex(), emissiveIntensity: 0.2 }),
         new THREE.Matrix4().compose(V(0, -0.035, 0), new THREE.Quaternion(), V(0.158, 0.05, 0.158)));
       for (let k = 0; k < 46; k++) {
         const a = hash(k * 2.31 + 5) * TAU, rho = 0.14 * Math.sqrt(hash(k * 3.7 + 1)), cg = chipGeos(300 + k, 0.03 + 0.018 * hash(k * 1.9), 0.012 + 0.008 * hash(k * 4.1));
         const y = BHEAP(rho) - 0.012 * hash(k * 6.6) - (k < 14 ? 0.022 : 0);
         const m = new THREE.Matrix4().compose(V(Math.cos(a) * rho, y, Math.sin(a) * rho), faceQ(300 + k, Math.sin(baitYaw), Math.cos(baitYaw), 1.5, 0.6), V(1, 1, 1));
-        hb.add(cg.top, qzE(k % 4, 0.48), m); hb.add(cg.side, barkE(), m);
+        hb.add(cg.top, qzE(Math.floor(hash(k * 5.71 + 0.2) * 8), 0.48), m); hb.add(cg.side, barkE(), m);
+        // round 7 (A6 ADD: a story callback): the top chips carry shot 8's small white paint dot (the MARKED test chips)
+        if (k >= 14) hb.add(new THREE.CircleGeometry(cg.r * 0.16, 8).rotateX(-Math.PI / 2).translate(...cg.dot), basic("srDot", () => ({ color: new THREE.Color(0.95, 0.94, 0.9) })), m);
       }
       hb.build(this.bHeap, true);
     }
     // the 9 poured chips (3 per scoop), children of the heap so they ride its growth once landed
     for (let k = 0; k < 9; k++) {
       const cg = chipGeos(520 + k, 0.03 + 0.012 * hash(k * 2.7), 0.02), g = new THREE.Group();
-      const top = new THREE.Mesh(cg.top, qzE((k + 1) % 4, 0.5)), side = new THREE.Mesh(cg.side, barkE());
+      const top = new THREE.Mesh(cg.top, qzE(k * 3 + 1, 0.5)), side = new THREE.Mesh(cg.side, barkE());
       for (const m of [top, side]) { m.castShadow = true; m.receiveShadow = true; g.add(m); }
       g.visible = false; this.bHeap.add(g); this.pour.push(g);
     }
@@ -2304,22 +2927,21 @@ export class Interiors {
       b.geo(new THREE.TorusGeometry(0.025, 0.007, 5, 12, Math.PI * 1.2), C("#ece6d8"), mx2 - 0.045, by + 0.048, mz2, Math.PI / 2, 0, Math.PI / 2 + 0.6, 1, false);
       this.mug2Top = V(o[0] + mx2, o[1] + by + 0.1, o[2] + mz2);
       // round 4 (A3 ADD): the returns tally on a clipboard, hooked over the stool's front edge (RETURNED: 1,200+ LETTERS)
-      const cbz = bz + 0.212, cbx = bx - 0.07;
-      b.rbox(C("#8a5a30"), 0.22, 0.3, 0.012, cbx, by - 0.16, cbz, 0, -0.08);
-      b.geo(new THREE.PlaneGeometry(0.19, 0.25).translate(0, 0, 0.0075), TM("srTally", () => tallyTex()), cbx, by - 0.175, cbz, 0, -0.08, 0, 1, false);
-      b.rbox(C("#b4bcc6"), 0.09, 0.035, 0.02, cbx, by - 0.02, cbz + 0.004, 0, -0.08, 0, false);
+      // round 6: the clipboard tally gave its place to the BAD LUCK EVER SINCE note (the wall counter now carries the
+      // letter count): see the joke notes below
+      void tallyTex;
       for (let k = 0; k < 3; k++) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.05, 0.13), new THREE.MeshBasicMaterial({ map: softDot(), color: new THREE.Color(0.2, 0.17, 0.15), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false })); m.layers.set(NOINK); m.renderOrder = 5; this.sr.add(m); this.steam2.push(m); } }
     // the returned padded envelope + taped parcel that come down the chute on "mailed", and their paper puffs
     this.mailEnv = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.022, 0.24), [C("#c79a5e"), C("#c79a5e"), TM("srPad", () => padTex()), C("#c79a5e"), C("#c79a5e"), C("#c79a5e")]);
     // round 4 (A3 P2: ~30 px wide in the 540 preview, landed behind the PLEASE FORGIVE ME card): x1.5, its FRAGILE band
     // and stamps self-lit a little so they stay bright; it fits the chute across (0.3 < 0.34 m)
     this.mailBox = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.225, 0.39), TM("srParcelM2b", () => fragileTex(), { emissive: new THREE.Color(1, 1, 1), emissiveMap: fragileTex(), emissiveIntensity: 0.32 }));
-    this.mailBox2 = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.13, 0.26), TM("srParcelM3", () => parcelTex2("srParcelM3T", "RETURN TO PARK")));
+    this.mailBox2 = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.13, 0.26), TM("srParcelM7", () => parcelTex2("srParcelM7T", "RETURN TO PARK", "OHIO 1972"), { emissive: new THREE.Color(1, 1, 1), emissiveMap: parcelTex2("srParcelM7T", "RETURN TO PARK", "OHIO 1972"), emissiveIntensity: 0.22 })); // round 7 (A6 ADD): postmarked OHIO 1972
     for (const m of [this.mailEnv, this.mailBox, this.mailBox2]) { m.castShadow = m.receiveShadow = true; m.visible = false; this.sr.add(m); }
     // 4 chips knocked off the heap by the parcel's landing (hop onto the rug)
     for (let k = 0; k < 4; k++) {
       const cg = chipGeos(760 + k, 0.03 + 0.012 * hash(k * 2.9), 0.018), g = new THREE.Group();
-      const top = new THREE.Mesh(cg.top, qzE((k + 2) % 4, 0.5)), side = new THREE.Mesh(cg.side, barkE());
+      const top = new THREE.Mesh(cg.top, qzE(k * 5 + 2, 0.5)), side = new THREE.Mesh(cg.side, barkE());
       for (const m of [top, side]) { m.castShadow = true; m.receiveShadow = true; g.add(m); }
       g.visible = false; this.sr.add(g); this.hops.push(g);
     }
@@ -2339,13 +2961,20 @@ export class Interiors {
       b.geo(new THREE.ConeGeometry(0.078, 0.06, 16), lg, lx2, 0.275, lz2);
       b.geo(new THREE.CylinderGeometry(0.022, 0.026, 0.04, 10), ld, lx2, 0.32, lz2);
       b.geo(new THREE.TorusGeometry(0.075, 0.005, 4, 16, Math.PI), C("#8a949e"), lx2, 0.32, lz2, 0.5, 0, 0);
-      const glassM = new THREE.MeshBasicMaterial({ map: lanternGlassTex(), color: new THREE.Color(1.7, 1.25, 0.8), transparent: true, opacity: 0.92 });
+      // round 8 (A7 P3: a flat yellow glass, no flame, no bloom): the globe is a thinner amber glass (~50 %) so the FLAME card
+      // shows through it (a blooming teardrop, emissive ~2.6, flickering +-8 % every 3-5 f with a little lick), with a warm
+      // ~0.25 m glow sprite round it (posed per frame, kept just in front of the glass toward the lens)
+      const glassM = new THREE.MeshBasicMaterial({ map: lanternGlassTex(), color: new THREE.Color(1.2, 0.86, 0.55), transparent: true, opacity: 0.5, depthWrite: false });
       const gl = new THREE.Mesh(new THREE.SphereGeometry(1, 20, 14), glassM); gl.scale.set(0.058, 0.085, 0.058); gl.position.set(o[0] + lx2, o[1] + 0.16, o[2] + lz2); this.sr.add(gl);
       const coreM = new THREE.MeshBasicMaterial({ color: glow("#ffe2a6", 6.0) });
       const core = new THREE.Mesh(new THREE.SphereGeometry(0.018, 10, 8), coreM); core.scale.set(1, 1.6, 1); core.position.set(o[0] + lx2, o[1] + 0.15, o[2] + lz2); core.layers.set(NOINK); this.sr.add(core);
       const lh = new THREE.Mesh(new THREE.PlaneGeometry(0.85, 0.85), new THREE.MeshBasicMaterial({ map: softDot(), color: new THREE.Color(0.95, 0.5, 0.16), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
       lh.position.set(o[0] + lx2, o[1] + 0.16, o[2] + lz2); lh.layers.set(NOINK); lh.renderOrder = 4; this.sr.add(lh);
-      this.lantern = { halo: lh, glass: glassM, core: coreM };
+      const flame = new THREE.Sprite(new THREE.SpriteMaterial({ map: flameTex(), color: glow("#ffe0a0", 2.6), transparent: true, depthWrite: false, fog: false }));
+      flame.scale.set(0.036, 0.066, 1); flame.layers.set(NOINK); flame.renderOrder = 6; this.sr.add(flame);
+      const lg2 = new THREE.Sprite(new THREE.SpriteMaterial({ map: softDot(), color: new THREE.Color(1.1, 0.62, 0.22), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+      lg2.scale.setScalar(0.26); lg2.layers.set(NOINK); lg2.renderOrder = 6; this.sr.add(lg2);
+      this.lantern = { halo: lh, glass: glassM, core: coreM, flame, glow: lg2, c: V(o[0] + lx2, o[1] + 0.155, o[2] + lz2) };
       // warm light on the floor around it (additive, soft) + its contact shadow
       const fp = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.0).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: ctex("srLanternPool", 256, 200, (g) => {
         const gr = g.createRadialGradient(128, 100, 6, 128, 100, 128); gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(0.3, "rgba(255,255,255,0.55)"); gr.addColorStop(0.7, "rgba(255,255,255,0.14)"); gr.addColorStop(1, "rgba(255,255,255,0)");
@@ -2360,18 +2989,30 @@ export class Interiors {
       // RETURNS stencil turned to that lens and reading the right way, the tied neck flopped over; the envelopes that
       // spilled from it stay fanned on the rug
       const sackG = new THREE.LatheGeometry([[0.001, 0], [0.23, 0.01], [0.29, 0.14], [0.3, 0.28], [0.26, 0.44], [0.15, 0.57], [0.09, 0.62], [0.12, 0.66], [0.06, 0.71], [0.001, 0.72]].map(([x, y]) => new THREE.Vector2(x, y)), 20, 0, TAU);
-      const sackTex = () => ctex("srSackT5", 1024, 256, (g, r) => { g.fillStyle = "#cfb98c"; g.fillRect(0, 0, 1024, 256); mottle(g, r, 1024, 256, 50, ["#b8a276", "#e0cca2"], 12, 44, 0.35);
-        g.strokeStyle = "rgba(90,70,40,0.35)"; g.lineWidth = 3; for (const x of [80, 340, 690, 940]) { g.beginPath(); g.moveTo(x, 0); g.bezierCurveTo(x + 20, 90, x - 16, 170, x + 8, 256); g.stroke(); }
-        g.fillStyle = "#c9b088"; g.fillRect(700, 150, 90, 64); g.strokeStyle = "rgba(60,40,20,0.5)"; g.setLineDash([6, 5]); g.strokeRect(700, 150, 90, 64); g.setLineDash([]);
-        g.save(); g.translate(512, 170); g.rotate(-0.03); centerText(g, "RETURNS", 0, 0, 400, 46, "#2e4a7a", "Impact, 'Arial Black', sans-serif", "normal"); g.restore();
-        centerText(g, "TO THE PARK", 512, 214, 280, 20, "#2e4a7a", "Impact, 'Arial Black', sans-serif", "normal"); });
-      b.geo(sackG, TM("srSack5", () => sackTex(), { emissive: new THREE.Color("#7a5a36"), emissiveIntensity: 0.68 }), 0.6, 0, 1.2, -2.6, 0.12, 0.04, [1, 1, 0.9]);
-      // the tie cord round its neck
-      b.geo(new THREE.TorusGeometry(0.095, 0.012, 5, 14), C("#8a6a3a"), 0.6 - 0.038, 0.615, 1.2 - 0.063, -2.6, Math.PI / 2 + 0.12, 0, 1, false);
+      // round 6 (A5 P3: a featureless grey-lavender blob over 15-20 % of the reveal, stencil unreadable): warm BURLAP
+      // (#8A6A4A, weave + a strong emissive floor so the night shade cannot grey it), a bold dark-red RETURNS stencil
+      // on a pale patch, moved 0.1 m left and 0.1 m toward the lens (its right edge now ~130 px into the reveal: <= 10 %
+      // of the frame), the neck opened with three envelopes sticking out of it
+      const sackTex = () => ctex("srSackT6", 1024, 256, (g, r) => { g.fillStyle = "#8a6a4a"; g.fillRect(0, 0, 1024, 256); mottle(g, r, 1024, 256, 60, ["#7a5c3e", "#a07c56"], 12, 44, 0.4);
+        g.strokeStyle = "rgba(60,40,24,0.28)"; g.lineWidth = 2; for (let y = 2; y < 256; y += 6) { g.beginPath(); g.moveTo(0, y); g.lineTo(1024, y + 2); g.stroke(); } // burlap weave
+        g.strokeStyle = "rgba(190,160,120,0.18)"; for (let x = 3; x < 1024; x += 7) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x + 3, 256); g.stroke(); }
+        g.strokeStyle = "rgba(50,32,18,0.45)"; g.lineWidth = 4; for (const x of [80, 340, 690, 940]) { g.beginPath(); g.moveTo(x, 0); g.bezierCurveTo(x + 20, 90, x - 16, 170, x + 8, 256); g.stroke(); }
+        g.fillStyle = "#d8c49a"; g.save(); g.translate(512, 160); g.rotate(-0.03); g.fillRect(-230, -62, 460, 124); g.restore();
+        g.save(); g.translate(512, 152); g.rotate(-0.03); centerText(g, "RETURNS", 0, 0, 420, 78, "#8a2a1e", "Impact, 'Arial Black', sans-serif", "normal"); g.restore();
+        centerText(g, "TO THE PARK", 512, 206, 300, 26, "#3a2a1a", "Impact, 'Arial Black', sans-serif", "normal"); });
+      const SK: P3 = [0.5, 0, 1.3];
+      b.geo(sackG, basic("srSack7", () => ({ map: sackTex(), color: new THREE.Color(0.105, 0.11, 0.2) })) /* round 7 (A6 P3: a big blurred orange disc with partial red letters competed with the BAIT bucket): a dark NAVY silhouette framer (#1A1D40 class), its burlap weave just readable */ /* round 6c: unlit lantern-warm burlap (lit it still took the night blue: a navy blob at the reveal's lower-left edge) */, SK[0], 0, SK[2], -2.6, 0.12, 0.04, [1, 0.92, 0.9]); // round 6b: the map as the emissive floor (emissive #6a4c30 x the map was ~1 %: it still read navy)
+      // the loosened tie cord round its neck + three envelopes poking out of the open mouth
+      b.geo(new THREE.TorusGeometry(0.1, 0.012, 5, 14), C("#8a6a3a"), SK[0] - 0.038, 0.565, SK[2] - 0.063, -2.6, Math.PI / 2 + 0.12, 0, 1, false);
+      for (const [k, dx, dz, ry, rx] of [[0, 0.0, 0.0, 0.4, 0.5], [1, 0.05, -0.04, 1.6, -0.45], [2, -0.05, 0.03, 2.5, 0.2]] as number[][])
+        b.rbox(TM("srEnv" + (k % 3), () => envelopeTex("srEnvT" + (k % 3), k % 2 === 0, ["#d8432f", "#2e8a5a", "#e0a630"][k % 3])), 0.2, 0.005, 0.12, SK[0] - 0.04 + dx, 0.7, SK[2] - 0.06 + dz, ry, rx + Math.PI / 2 * 0.8, 0.1 * k, false);
       for (let k = 0; k < 13; k++) {
         const u = k / 12, x = 0.48 + u * 0.75 + (hash(k * 3.3) - 0.5) * 0.12, z = 0.82 - u * 0.25 + (hash(k * 1.7) - 0.5) * 0.3;
-        b.rbox(TM("srEnv" + (k % 3), () => envelopeTex("srEnvT" + (k % 3), k % 2 === 0, ["#d8432f", "#2e8a5a", "#e0a630"][k % 3])), 0.24, 0.005, 0.13, x, 0.008 + 0.003 * (k % 3), z, hash(k * 9.1) * 3, (hash(k) - 0.5) * 0.12, 0, false);
+        b.rbox(TM("srEnvR" + (k % 3), () => envelopeTex("srEnvT" + (k % 3), k % 2 === 0, ["#d8432f", "#2e8a5a", "#e0a630"][k % 3]), { color: new THREE.Color(0.7, 0.7, 0.7) }), 0.24, 0.005, 0.13, x, 0.008 + 0.003 * (k % 3), z, hash(k * 9.1) * 3, (hash(k) - 0.5) * 0.12, 0, false); // round 8: ~70 % (A7 P3)
       }
+      // round 7: one loose envelope on the rug that the chute draft stirs (posed per frame)
+      { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.24, 0.13).translate(0.12, 0, 0), TM("srEnv1", () => envelopeTex("srEnvT1", false, "#2e8a5a")));
+        m.material.side = THREE.DoubleSide; this.rugEnvP = V(o[0] + 0.78, o[1] + 0.016, o[2] + 0.3); m.position.copy(this.rugEnvP); m.rotation.set(-Math.PI / 2, 0, 0.8); m.castShadow = true; this.sr.add(m); this.rugEnv = m; }
       // the parcel stack front-right
       b.rbox(TM("srParcelF0", () => parcelTex2("srParcelFT0", "RETURNED")), 0.4, 0.24, 0.32, 1.76, 0.12, 0.8, 0.35);
       b.rbox(TM("srParcelF1", () => parcelTex2("srParcelFT1", "RETURN TO PARK")), 0.28, 0.17, 0.24, 1.78, 0.325, 0.78, -0.2);
@@ -2379,36 +3020,50 @@ export class Interiors {
       for (let k = 0; k < 9; k++) {
         const a = hash(k * 4.4) * TAU, d = 0.25 + 0.55 * hash(k * 7.3), x = LANTERN[0] - 0.25 + Math.cos(a) * d, z = LANTERN[2] + 0.35 + Math.sin(a) * d * 0.7;
         const cg = chipGeos(640 + k, 0.035 + 0.02 * hash(k * 2.2), 0.022);
-        b.geo(cg.top, qzE(k % 4, 0.45), x, 0.014, z, hash(k) * 6, (hash(k * 2) - 0.5) * 0.3, (hash(k * 5) - 0.5) * 0.3); b.geo(cg.side, barkE(), x, 0.014, z, hash(k) * 6, (hash(k * 2) - 0.5) * 0.3, (hash(k * 5) - 0.5) * 0.3);
+        b.geo(cg.top, qzE(k * 3, 0.45), x, 0.014, z, hash(k) * 6, (hash(k * 2) - 0.5) * 0.3, (hash(k * 5) - 0.5) * 0.3); b.geo(cg.side, barkE(), x, 0.014, z, hash(k) * 6, (hash(k * 2) - 0.5) * 0.3, (hash(k * 5) - 0.5) * 0.3);
         if (k < 2) {
           const st = new THREE.Sprite(new THREE.SpriteMaterial({ map: starTex(), color: new THREE.Color(2.0, 1.6, 1.1), transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending }));
           st.position.set(o[0] + x, o[1] + 0.04, o[2] + z); st.layers.set(NOINK); st.renderOrder = 6; st.visible = false; this.sr.add(st); this.floorGlints.push(st);
         }
       }
       // two readable apology notes propped in the foreground (unlit, lantern-warm), caps 40+ px at 1080
-      const prop = (key: string, lines: string[], paper: string, w: number, h: number, x: number, y: number, z: number, ry: number, rx: number, rz: number) => {
-        const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), basic(key, () => ({ map: noteTex(key + "T", lines, paper), side: THREE.DoubleSide, color: new THREE.Color(1.0, 0.86, 0.66) })));
+      const prop = (key: string, lines: string[], paper: string, w: number, h: number, x: number, y: number, z: number, ry: number, rx: number, rz: number, big = false) => {
+        const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), basic(key, () => ({ map: big ? noteTexBig(key + "T", lines, paper) : noteTex(key + "T", lines, paper), side: THREE.DoubleSide, color: new THREE.Color(1.0, 0.86, 0.66) })));
         m.position.set(o[0] + x, o[1] + y, o[2] + z); m.rotation.set(rx, ry, rz, "YXZ"); m.castShadow = true; this.sr.add(m);
       };
       const cy14 = meanCam(14).pos, face = (x: number, z: number) => Math.atan2(cy14.x - (o[0] + x), cy14.z - (o[2] + z));
-      prop("srNoteLuck", ["BAD LUCK", "EVER SINCE"], "#fff7a8", 0.32, 0.24, 1.12, 0.12, 0.47, face(1.12, 0.47), -0.45, 0.05);
-      prop("srNoteDog", ["MY DOG", "LIMPS NOW"], "#d6ecff", 0.3, 0.22, 0.96, 0.11, 0.86, face(0.96, 0.86) + 0.15, -0.5, -0.07);
+      // round 6 (A5 P3: the best joke notes sat at y 1430-1810 in the Shorts UI band, under the caption): BAD LUCK EVER
+      // SINCE is now pinned over the bait stool's front (y ~1200-1340 at 1080 in the reveal, caps ~0.075 m = 40+ px),
+      // MY DOG LIMPS NOW leans on a returned parcel right of the lantern (y ~1240-1330); both lantern-warm, unlit
+      // round 6b: the reveal measured ~22 px caps on this note and the lantern hid its last letters: big-letter layout
+      // (~34 px caps), the lantern stepped right; MY DOG LIMPS NOW (cut by the right frame edge in the reveal, the
+      // two-shot and the end MS) is now the big card on the RETURNED WITH APOLOGIES corkboard, high in every lens
+      prop("srNoteLuck6", ["BAD LUCK", "EVER SINCE"], "#fff7a8", 0.37, 0.26, BAIT.pos[0] - 0.11, BAIT.stool - 0.14, BAIT.pos[2] + 0.214, 0.06, -0.1, 0.035, true);
+      { const [nx, nz] = [1.46, -0.6];
+        b.rbox(TM("srParcelN6", () => parcelTex2("srParcelNT6", "RETURNED")), 0.32, 0.2, 0.26, nx, 0.1, nz, 0.25); void face; }
+      for (const [k, x, y, z] of [[0, BAIT.pos[0] - 0.26, BAIT.stool - 0.03, BAIT.pos[2] + 0.226], [1, BAIT.pos[0] + 0.04, BAIT.stool - 0.025, BAIT.pos[2] + 0.226]] as number[][])
+        b.geo(new THREE.SphereGeometry(0.011, 8, 6), C(k ? "#2e6fb0" : "#d8432f"), x, y, z, 0, 0, 0, 1, false); // push-pins
     }
     b.done(this.sr);
   }
+  private clShafts: { mesh: THREE.Mesh; mat: THREE.MeshBasicMaterial; p0: THREE.Vector3; d: THREE.Vector3; w: number; len: number; ph: number }[] = [];
   private clLampPos!: THREE.Vector3; private clHalo!: THREE.Mesh; private lampHalo!: THREE.Mesh; private mugTop!: THREE.Vector3; private bucketBase!: THREE.Vector3;
   private heapTop!: (lx: number, lz: number) => P3; private glints: THREE.Sprite[] = []; private puffs: THREE.Sprite[] = [];
   private flap!: THREE.Mesh; private chute!: { S0: THREE.Vector3; S1: THREE.Vector3; u: THREE.Vector3; x: THREE.Vector3; y: THREE.Vector3; q: THREE.Quaternion };
   private mailEnv!: THREE.Mesh; private mailBox!: THREE.Mesh; private srSec!: THREE.Mesh; private moth!: THREE.Sprite; private bulbPos!: THREE.Vector3;
   private lampMotes2!: Motes;
   private bHeap!: THREE.Group; private pour: THREE.Group[] = []; private bGlints: THREE.Sprite[] = [];
-  private lantern!: { halo: THREE.Mesh; glass: THREE.MeshBasicMaterial; core: THREE.MeshBasicMaterial }; private floorGlints: THREE.Sprite[] = [];
+  private lantern!: { halo: THREE.Mesh; glass: THREE.MeshBasicMaterial; core: THREE.MeshBasicMaterial; flame: THREE.Sprite; glow: THREE.Sprite; c: THREE.Vector3 }; private floorGlints: THREE.Sprite[] = [];
+  private nightLight!: { glow: THREE.Sprite; dome: THREE.MeshBasicMaterial; p: THREE.Vector3 };
   private mailBox2!: THREE.Mesh; private hops: THREE.Group[] = []; private moths2: THREE.Sprite[] = []; private nightCloud!: THREE.Mesh;
   private mug2Top!: THREE.Vector3; private steam2: THREE.Mesh[] = []; private q2 = new THREE.Quaternion();
   // round 5
   private moonShaft!: THREE.Mesh; private moonAxes!: { d: THREE.Vector3; s0: THREE.Vector3; u0: THREE.Vector3 }; private moonMoteBase!: Float32Array; private moonMotes!: THREE.Points;
   private bulbPivot!: THREE.Group; private workBulb!: THREE.Mesh; private workHalo!: THREE.Mesh; private hatPeg!: THREE.Group; private hatShadow!: THREE.Mesh;
-  private lanternPool: THREE.MeshBasicMaterial | null = null; private v2 = new THREE.Vector3(); private v3 = new THREE.Vector3();
+  private lanternPool: THREE.MeshBasicMaterial | null = null; private v2 = new THREE.Vector3(); private v3 = new THREE.Vector3(); private v4 = new THREE.Vector3();
+  // round 6
+  private L!: LightState; private pailMat!: THREE.MeshLambertMaterial; private rugEnv!: THREE.Mesh; private rugEnvP = new THREE.Vector3(); private workHaloCol = new THREE.Color(0.64, 0.36, 0.09);
+  private cat!: THREE.Mesh; private tearSheet!: { piv: THREE.Group; sheet: THREE.Mesh; base: THREE.Vector3 }; private wallPennant: THREE.Object3D | null = null; private ceilPencil: THREE.Object3D | null = null;
 
   // ================================================================================================ BLUEPRINT
   private buildBlueprint() {
@@ -2428,11 +3083,12 @@ export class Interiors {
       if (pre === 0 && w >= 0.05 && L[L.length - 1] >= 0.8) { const e = pts[pts.length - 1]; this.puffAt.push({ p: V(o[0] + e[0], o[1] + 0.04, o[2] + e[1]), f: b2 }); }
     };
     /** upright chalk drawing (local x right, y up) standing at p (x, z) facing +z, base height y0 */
-    const addVLine = (pts: [number, number][], w: number, a: number, b2: number, p: [number, number], y0: number) => {
+    const addVLine = (pts: [number, number][], w: number, a: number, b2: number, p: [number, number], y0: number, col?: THREE.Color, out?: number) => {
       const { g, len } = ribbon(pts.map(([x, y]) => [x, -y] as [number, number]), w, 0); g.rotateX(Math.PI / 2);
-      const mat = chalkLineMat(len), m = new THREE.Mesh(g, mat);
+      const mat = chalkLineMat(len, col), m = new THREE.Mesh(g, mat);
       m.position.set(o[0] + p[0], o[1] + y0, o[2] + p[1]); m.layers.set(NOINK); m.renderOrder = 5; this.bp.add(m);
-      this.lines.push({ mesh: m, mat, a, b: b2, pre: 0, pts: [], L: [0], stick: false });
+      const L = [0]; for (let i = 1; i < pts.length; i++) L.push(L[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+      this.lines.push({ mesh: m, mat, a, b: b2, pre: 0, pts: [], L, stick: false, out, p3: pts.map(([x, y]) => V(o[0] + p[0] + x, o[1] + y0 + y, o[2] + p[1])) });
     };
     const fillShape = (pts: [number, number][], f: number) => {
       const s = new THREE.Shape(pts.map(([x, z]) => new THREE.Vector2(x, -z))), g = new THREE.ShapeGeometry(s); g.rotateX(-Math.PI / 2);
@@ -2572,8 +3228,14 @@ export class Interiors {
       this.posts5.push({ post, label: m, f, h });
       return m;
     };
-    label5("bpRule5", ["THE", "RULE"], 0.95, 0.76, [LBL5.rule[0], LBL5.rule[2]], LBL5.rule[1], BEAT.copyRules + 2);
-    this.eeLabel = label5("bpCrowd5", ["EVERYONE", "ELSE"], 1.56, 0.8, [LBL5.ee[0], LBL5.ee[2]], LBL5.ee[1], BEAT.eachOther + 2);
+    // round 7 (A6 P3: it popped 4-7 f AFTER 'rules.' began): the THE RULE label pops 2.5 VIDEO f before the word, in
+    // 3 video f (scale 0 -> 1.1 -> 1); its chalk post grows with it
+    label5("bpRule5", ["THE", "RULE"], 0.95, 0.76, [LBL5.rule[0], LBL5.rule[2]], LBL5.rule[1], PV(toV(BEAT.copyRules) - 2.5));
+    this.pops[this.pops.length - 1].vd = 3;
+    // round 8 (A7 P3: it first popped on the backdrop ruler's base line, then the landing panel covered it): it pops at
+    // its FINAL spot above the panel's landing (LBL5.eeHigh) and never moves; the panel now slides in from the right,
+    // under it (poseBlueprint), so nothing ever crosses it
+    this.eeLabel = label5("bpCrowd5", ["EVERYONE", "ELSE"], 1.56, 0.8, [LBL5.ee[0], LBL5.ee[2]], LBL5.eeHigh, BEAT.eachOther + 2);
     // a chalk arrow on the EVERYONE ELSE pole, pointing down into the crowd (rides with the label)
     { const ar: [number, number][] = [[-0.16, 0.0], [0.0, -0.22], [0.16, 0.0]], gq = ribbon(ar.map(([x, y]) => [x, -y] as [number, number]), 0.05, 0); gq.g.rotateX(Math.PI / 2);
       const am = new THREE.Mesh(gq.g, chalkLineMat(gq.len)); am.layers.set(NOINK); am.renderOrder = 6; am.visible = false; this.bp.add(am); this.eeArrow = am; }
@@ -2601,7 +3263,7 @@ export class Interiors {
     flat(bpToolTex(0), 1.7, 1.7, [-3.3, 1.2], 0.35, 0, 0.6, 0.6);
     flat(bpToolTex(1), 1.5, 1.5, [3.9, 0.9], -0.5, 0, 0.6, 0.6);
     for (let k = 0; k < 14; k++) { const cr = new THREE.Mesh(new THREE.BoxGeometry(0.05 + 0.04 * hash(k), 0.025, 0.035), basic("bpCrumb", () => ({ color: new THREE.Color(0.86, 0.66, 0.7) })));
-      cr.position.set(o[0] + 1.38 + (hash(k * 2.1) - 0.5) * 0.9, o[1] + 0.013, o[2] + 2.47 + (hash(k * 3.9) - 0.5) * 0.18); cr.rotation.y = hash(k) * 3; this.bp.add(cr); }
+      cr.position.set(o[0] + 1.38 + (hash(k * 2.1) - 0.5) * 0.9, o[1] + 0.013, o[2] + 2.47 + (hash(k * 3.9) - 0.5) * 0.18); cr.rotation.y = hash(k) * 3; this.bp.add(cr); this.crumbs.push({ m: cr, p: cr.position.clone(), k }); }
     // round 4 (A3 ADD): blueprint-on-a-desk cues at the frame edges, 3D so they throw soft blue shadows: a giant
     // yellow pencil lying on the sheet (lower left), a pink eraser in a blue sleeve + crumbs + soft eraser smudges
     // (right), and a corner of tracing paper taped down with a red push-pin (lower right)
@@ -2623,7 +3285,9 @@ export class Interiors {
         const sm0 = new THREE.Mesh(new THREE.PlaneGeometry(0.9 * sx, 0.5 * sx).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: softDot(), color: new THREE.Color(0.11, 0.13, 0.17), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
         sm0.position.set(o[0] + x, o[1] + 0.01, o[2] + z); sm0.rotation.y = r; sm0.layers.set(NOINK); sm0.renderOrder = 1; this.bp.add(sm0);
       }
-      const tr = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 1.6).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: new THREE.Color(0.85, 0.89, 0.95), transparent: true, opacity: 0.2, depthWrite: false, fog: false }));
+      // round 7 (A6 P2: a flat untextured grey trapezoid that read as a render glitch): a real sheet of tracing paper,
+      // off-white with a printed border, pencil construction lines, a FIG. 1a sketch and a curled corner, at ~60 %
+      const tr = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 1.6).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: bpTracingTex(), color: new THREE.Color(0.97, 0.98, 1.0), transparent: true, opacity: 0.62, depthWrite: false, fog: false }));
       tr.position.set(o[0] + 3.35, o[1] + 0.009, o[2] + 3.0); tr.rotation.y = 0.35; tr.layers.set(NOINK); tr.renderOrder = 1; this.bp.add(tr);
       flat(bpTapeTex(), 0.62, 0.2, [2.2, 2.72], 0.35 + 0.78, 0, 0.85, 1);
       const pin2 = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), C("#d8432f")); pin2.position.set(o[0] + 2.32, o[1] + 0.06, o[2] + 2.82); pin2.castShadow = true; this.bp.add(pin2);
@@ -2631,9 +3295,9 @@ export class Interiors {
     // the sheet is brighter toward the fork (radial falloff, additive): depth instead of a flat PowerPoint blue
     const fg = new THREE.Mesh(new THREE.PlaneGeometry(16, 16).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: softDot(), color: new THREE.Color(0.07, 0.1, 0.17), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
     fg.position.set(o[0] + 0.4, o[1] + 0.006, o[2] - 0.6); fg.layers.set(NOINK); fg.renderOrder = 1; this.bp.add(fg);
-    // ---- the floating MANY PAST VISITORS panel: Sign B's own face art (paint.ts), frame wood and posts ----
+    // ---- the floating MANY VISITORS TAKE THE WOOD. panel: Sign B's face art (round 8: its own copy, bpSignTex), frame wood and posts ----
     this.sign = new THREE.Group();
-    const S = BPS, faceMat = new THREE.MeshBasicMaterial({ map: testSignTex("B"), color: new THREE.Color(0.97, 0.97, 0.97) });
+    const S = BPS, faceMat = new THREE.MeshBasicMaterial({ map: bpSignTex(), color: new THREE.Color(0.97, 0.97, 0.97) });
     const face = new THREE.Mesh(new THREE.PlaneGeometry(S, S), faceMat); face.position.z = 0.031; face.castShadow = true; this.sign.add(face); this.signFace = faceMat;
     const frWood = lam("atBeamDark", () => ({ map: parkWood("#85593a", false) })), postWood = lam("atPostDark", () => ({ map: parkWood("#94663f", true) }));
     const fr = new THREE.Mesh(new THREE.BoxGeometry(S + 0.1, S + 0.1, 0.06), frWood); fr.castShadow = true; fr.receiveShadow = true; this.sign.add(fr);
@@ -2642,6 +3306,8 @@ export class Interiors {
     const rim = new THREE.Mesh(new THREE.PlaneGeometry(S + 0.7, S + 0.7), new THREE.MeshBasicMaterial({ map: bpRimTex(), color: new THREE.Color(0.16, 0.2, 0.26), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
     rim.position.z = -0.04; rim.layers.set(NOINK); rim.renderOrder = 3; this.sign.add(rim);
     this.bp.add(this.sign);
+    // round 8 (A7 ADD): a chalk-dust ring puffs up from the paper under each post as the panel lands (fa + 16)
+    for (const dx of [-0.38, 0.38]) this.puffAt.push({ p: V(o[0] + BP.signFloat[0] + (dx * BPS) / 0.92, o[1] + 0.04, o[2] + BP.signFloat[2] - 0.03), f: BEAT.manySteal + 12 });
     // its soft navy contact shadow on the paper (grows as it settles)
     this.signShadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: softDot(), color: new THREE.Color("#0d2348"), transparent: true, opacity: 0, depthWrite: false, fog: false }));
     this.signShadow.layers.set(NOINK); this.signShadow.renderOrder = 2; this.bp.add(this.signShadow);
@@ -2678,8 +3344,125 @@ export class Interiors {
       st.visible = false; st.layers.set(NOINK); this.bp.add(st); this.sticks.push(st);
     }
     for (let k = 0; k < 84; k++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: softDot(), color: new THREE.Color(0.85, 0.9, 1.0), transparent: true, depthWrite: false, opacity: 0 })); s.layers.set(NOINK); s.visible = false; this.bp.add(s); this.bpPuffs.push(s); }
+    // round 7 (A6 ADD): chalk-dust specks shed at the draw head of every line while it draws (fall 10-14 f)
+    for (let k = 0; k < 120; k++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: softDot(), color: new THREE.Color(0.92, 0.96, 1.05), transparent: true, depthWrite: false, opacity: 0 })); s.layers.set(NOINK); s.visible = false; this.bp.add(s); this.headDust.push(s); }
     this.bpDust = new Motes(this.bp, 80, 31, o, [-5, 0.1, -8], [5, 4.5, 6], new THREE.Color(0.7, 0.9, 1.4), 0.07, 0.15);
+    // ---- round 6 (A5 P2: the wide's top ~17 % was empty blue): drafting furniture that writes itself into the band
+    // above the FIG. 1 cartouche once the panel has landed (searched against camAt(11): plane z -7.3 sees y ~5.0-7.8 at
+    // the hold lenses): a compass rose (top left), a 0-3 m scale bar over the cartouche, a dimension chain across the
+    // top, the SHEET 2 / 3 - FIELD TEST title block (top right) and a FIG. 2: COPY cartouche left of FIG. 1; plus the
+    // shot-10 counters coming back as chalk notes: 1.67 % over THE RULE (on "rules") and 7.92 % riding over EVERYONE
+    // ELSE (on "each other")
+    {
+      const zP = -7.3, land = BEAT.manySteal + 9;
+      const up = (tex: THREE.Texture, w: number, h: number, x: number, y: number, z: number, a: number, dur: number, col?: THREE.Color) => {
+        const mat = wipeMat(tex, col), m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
+        m.position.set(o[0] + x, o[1] + y, o[2] + z); m.layers.set(NOINK); m.renderOrder = 2; m.visible = false; this.bp.add(m);
+        this.wipes.push({ m, mat, a, b: a + dur }); return m;
+      };
+      up(bpCompassTex(), 1.05, 1.05, -2.6, 6.75, zP, land + 8, 12);
+      up(bpScaleBarTex(), 2.0, 0.375, -0.7, 6.22, zP, land + 13, 11);
+      up(bpSheetTex(), 2.0, 0.78, 2.9, 6.8, zP, land + 4, 13);
+      up(bpFig2Tex(), 1.1, 0.367, -2.58, 5.95, zP, land + 18, 12); // under the compass, clear of FIG. 1
+      // dimension chain across the top: a line with end ticks, mid tick and arrowheads + two chalk figures
+      const dy = 7.05, x0 = -1.75, x1 = 1.85, xm = 0.1, a0 = land;
+      addVLine([[x0, 0], [x1, 0]], 0.05, a0, a0 + 12, [0, zP + 0.05], dy);
+      for (const [x, k] of [[x0, 0], [xm, 5], [x1, 11]] as number[][]) addVLine([[x, -0.16], [x, 0.16]], 0.045, a0 + k, a0 + k + 2, [0, zP + 0.05], dy);
+      for (const [x, d] of [[x0, 1], [xm, -1], [xm, 1], [x1, -1]] as number[][]) addVLine([[x + d * 0.22, -0.09], [x, 0], [x + d * 0.22, 0.09]], 0.045, a0 + 12, a0 + 14, [0, zP + 0.05], dy);
+      up(bpNoteTex2("bpDimA6", ["1.85 m"], 512, 160), 0.85, 0.27, (x0 + xm) / 2, dy + 0.24, zP + 0.05, a0 + 13, 6);
+      up(bpNoteTex2("bpDimB6", ["1.75 m"], 512, 160), 0.85, 0.27, (xm + x1) / 2, dy + 0.24, zP + 0.05, a0 + 15, 6);
+      // the shot-10 counters, back as chalk: 1.67 % over THE RULE (left of the panel), 7.92 % over EVERYONE ELSE
+      up(bpPctTex("bpPct1", "1.67 %"), 0.95, 0.37, LBL5.rule[0] - 0.05, LBL5.rule[1] + 1.22, LBL5.rule[2] + 0.02, BEAT.copyRules + 9, 12); // above the backdrop ruler line
+      this.pct8 = up(bpPctTex("bpPct8", "7.92 %"), 1.15, 0.45, LBL5.ee[0], LBL5.ee[1] + 0.7, LBL5.ee[2] + 0.02, BEAT.eachOther + 9, 12);
+    }
+    // ---- round 6 (A5 P2: EVERYONE ELSE read as ~14 static figures in one clump): a receding chalk CROWD on the wide
+    // arrow behind / right of the cast's stream: 6 rows (s 2.3 .. 6.4 m along the branch), 36 walkers on 2-drawing walk
+    // cycles in place toward the arrow head (bob ~3 %, 10-12 video-f cycle, random phase), ~20 % carrying an orange
+    // chip; they ink in row by row on "each other" and every head snaps back up toward the panel as it lands
+    {
+      const dir = Math.atan2(BP.crowd[0] - 1.1, -(BP.crowd[2] - 0.1)), ux = Math.sin(dir), uz = -Math.cos(dir), vx = -uz, vz = ux;
+      const rows: [number, number, number, number][] = [[2.3, 6, -0.05, 0.95], [3.1, 7, -0.15, 1.0], [3.9, 8, -0.3, 1.05], [4.7, 8, -0.4, 1.1], [5.6, 9, -1.3, 1.35], [6.4, 8, -1.0, 1.0]]; // round 6b: 46 walkers (A5 P2 asked 40-60)
+      const g = new THREE.PlaneGeometry(0.36, 0.72).translate(0, 0.36, 0); let k = 0;
+      rows.forEach(([s, n, t0, t1], r) => {
+        for (let i = 0; i < n; i++, k++) {
+          const tt = lerp(t0, t1, n > 1 ? i / (n - 1) : 0.5) + (hash(k * 2.3) - 0.5) * 0.18, ss = s + (hash(k * 4.1) - 0.5) * 0.35;
+          const x = 1.1 + ux * ss + vx * tt, z = 0.1 + uz * ss + vz * tt, chip = hash(k * 7.7) < 0.22 ? 1 : 0;
+          const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ map: chalkWalkerTex(0, 0, chip), transparent: true, alphaTest: 0.3, depthWrite: true, color: new THREE.Color(1.18, 1.22, 1.3), fog: false }));
+          m.position.set(o[0] + x, o[1], o[2] + z); m.layers.set(NOINK); m.renderOrder = 5; m.visible = false; this.bp.add(m);
+          this.walkers.push({ m, ph: hash(k * 3.9), per: 10 + 2 * hash(k * 5.5), f0: BEAT.eachOther + 1 + r * 2 + 2 * hash(k * 1.9), look: BEAT.manySteal + 5 + 2 * hash(k * 6.1), chip, h: 0.92 + 0.16 * hash(k * 8.3),
+            s: ss, t: tt, k, early: k % 9 === 4 ? PV(toV(BEAT.manySteal) - 4) + 2 * hash(k * 2.7) : 1e9 });
+        }
+      });
+    }
+    // ---- round 7 (A6 P2: the pivot opened on the emptiest frame of the film, the top ~35 % flat blue through the silent
+    // pause after 'You see,'): drafting marks standing in the opening lens's top band (bp z -3.3 .. -4.6, y 2.2 .. 3.6;
+    // projected with scripts/project_wint.mjs at picture 1216-1240), ONE NEW MARK EVERY ~6-8 VIDEO FRAMES across the pause:
+    // the PROBLEM / WHY DO PEOPLE STEAL? strip writes itself (video ~1612-1630), a compass rose spins in (~1618-1632), a
+    // dimension arrow grows under the strip with chalk dust at its head (~1622-1638), a red-pencil ring circles STEAL?
+    // (~1633-1641) and a SAMPLE 14 T log-slice doodle writes in at the top left (~1628-1642). All of it is rubbed out
+    // (6 f fade) as THE RULE takes over (video ~1664), before the labels, the 1.67 % note and the panel use that space
+    {
+      const yv = toV(BEAT.youSee), P = (dv: number) => PV(yv + dv), rub = P(63), zS = -4.4;
+      const up7 = (tex: THREE.Texture, w: number, h: number, x: number, y: number, z: number, a: number, b2: number, col?: THREE.Color) => {
+        const mat = wipeMat(tex, col), m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
+        m.position.set(o[0] + x, o[1] + y, o[2] + z); m.layers.set(NOINK); m.renderOrder = 2; m.visible = false; this.bp.add(m);
+        this.wipes.push({ m, mat, a, b: b2, out: rub }); return m;
+      };
+      up7(bpProblemTex(), 3.3, 0.97, 0.15, 2.85, zS, P(11), P(29)); // (y 2.85: whole inside the opening lens, y ~50-250 px)
+      this.compass7 = up7(bpCompassTex(), 0.8, 0.8, -2.0, 2.15, -3.3, P(17), P(31));
+      up7(bpDoodleTex(), 0.8, 0.8, -2.05, 3.0, -4.0, P(27), P(41));
+      // the dimension arrow under the strip: a line growing left -> right, end ticks, arrowheads, its note
+      const dy = 2.18, x0 = -1.35, x1 = 1.65, zD = zS + 0.05;
+      addVLine([[x0, 0], [x1, 0]], 0.05, P(21), P(35), [0, zD], dy, undefined, rub);
+      addVLine([[x0, -0.14], [x0, 0.14]], 0.045, P(21), P(22.5), [0, zD], dy, undefined, rub);
+      addVLine([[x1, -0.14], [x1, 0.14]], 0.045, P(34), P(35.5), [0, zD], dy, undefined, rub);
+      for (const [x, d] of [[x0, 1], [x1, -1]] as number[][]) addVLine([[x + d * 0.2, -0.085], [x, 0], [x + d * 0.2, 0.085]], 0.045, P(35), P(37), [0, zD], dy, undefined, rub);
+      up7(bpNoteTex2("bpDimP7", ["1 VISITOR"], 512, 160), 0.9, 0.28, 0.15, dy - 0.2, zD, P(35), P(40));
+      // a red-pencil ring round STEAL? (the strip's big line runs x ~-0.9 .. 1.2 at y ~2.93)
+      // round 8 (A7 P3: the ring circled 'PLE STEA' and cut the L): centred on STEAL? (measured on the render: STEAL? spans
+      // x ~0.77 .. 1.66 m on the strip) with a ~0.1 m clear margin round the word
+      const ring: [number, number][] = []; for (let k = 0; k <= 40; k++) { const a = -0.4 + (k / 40) * TAU * 1.08; ring.push([1.21 + Math.cos(a) * 0.56 * (1 + 0.04 * Math.sin(a * 3)), Math.sin(a) * 0.23]); }
+      addVLine(ring, 0.05, P(32), P(40), [0, zS + 0.03], 2.67, new THREE.Color(1.45, 0.34, 0.28), rub);
+    }
+    // round 7 (A6 ADD): on 'Many' a red-pencil double underline draws itself under EVERYONE ELSE (it rides the label up
+    // its pole: a child of the label)
+    { const mat = wipeMat(bpRedLineTex(), new THREE.Color(1.1, 1.0, 1.0)), m = new THREE.Mesh(new THREE.PlaneGeometry(1.36, 0.255), mat);
+      m.position.set(0, -0.5, 0.01); m.layers.set(NOINK); m.renderOrder = 7; m.visible = false; this.eeLabel.add(m);
+      this.wipes.push({ m, mat, a: BEAT.manySteal - 1, b: BEAT.manySteal + 6 }); }
+    // round 6 (A5 ADD: a real sheet on a desk + a rewatch callback): the HOOK's paperclip, with its tiny red gift bow,
+    // clipped over the VISITOR BEHAVIOR title block's top-right corner (desk scale, like the giant pencil); it throws a
+    // soft blue shadow on the paper
+    {
+      const pb3 = new RB(o), steel = lam("int:bpClip6", () => ({ color: "#c8d0dc", emissive: new THREE.Color("#5a6a88"), emissiveIntensity: 0.35 }));
+      const L0 = 0.62, W0 = 0.17, r0 = W0 / 2, pts: THREE.Vector3[] = [];
+      // the classic double-loop wire: long outer U, short inner U (local x along the clip, z across, y up)
+      const arc = (cx: number, r: number, a0: number, a1: number) => { for (let k = 0; k <= 10; k++) { const a = a0 + ((a1 - a0) * k) / 10; pts.push(V(cx + Math.cos(a) * r, 0, Math.sin(a) * r)); } };
+      pts.push(V(L0 * 0.25, 0, r0 * 0.4)); arc(L0 - r0, r0, Math.PI / 2, -Math.PI / 2); pts.push(V(r0 * 0.8, 0, -r0));
+      arc(r0 * 0.8, r0 * 0.98, -Math.PI / 2, -Math.PI * 1.5); pts.push(V(L0 - r0 * 2.2, 0, r0 * 0.7)); arc(L0 - r0 * 2.2, r0 * 0.7, Math.PI / 2, -Math.PI / 2); pts.push(V(r0 * 1.6, 0, -r0 * 0.7));
+      const tube = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, "catmullrom", 0.1), 120, 0.011, 6, false);
+      const cx3 = 1.96, cz3 = 1.86, yaw3 = -0.75;
+      pb3.geo(tube, steel, cx3, 0.03, cz3, yaw3, 0, 0.05);
+      // the bow: two red loops, a knot and two tails, on the clip's outer end
+      const red = lam("int:bpBow6", () => ({ color: "#e8443a", emissive: new THREE.Color("#a82a20"), emissiveIntensity: 0.45 }));
+      const ex = cx3 + Math.cos(-yaw3) * (L0 - 0.02), ez = cz3 + Math.sin(-yaw3) * (L0 - 0.02);
+      for (const s2 of [-1, 1]) pb3.geo(new THREE.TorusGeometry(0.045, 0.014, 6, 14), red, ex + s2 * 0.045, 0.05, ez + s2 * 0.02, yaw3 + s2 * 0.5, Math.PI / 2 - 0.35, 0);
+      pb3.geo(new THREE.SphereGeometry(0.022, 10, 8), red, ex, 0.05, ez);
+      for (const s2 of [-1, 1]) pb3.rbox(red, 0.022, 0.006, 0.08, ex + s2 * 0.02, 0.03, ez + 0.05, yaw3 + s2 * 0.4, 0, 0, false);
+      pb3.done(this.bp);
+      const sh3 = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 0.32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: softDot(), color: new THREE.Color("#0d2a66"), transparent: true, opacity: 0.45, depthWrite: false, fog: false }));
+      sh3.position.set(o[0] + cx3 + 0.3 * Math.cos(-yaw3) + 0.03, o[1] + 0.012, o[2] + cz3 + 0.3 * Math.sin(-yaw3) + 0.06); sh3.rotation.y = yaw3; sh3.layers.set(NOINK); sh3.renderOrder = 2; this.bp.add(sh3);
+    }
+    // chalk dust motes drifting right in front of the lens (big, soft: the DOF turns them into out-of-focus specks)
+    this.bpLensDust = new Motes(this.bp, 18, 47, o, [-2.2, 1.6, 3.6], [2.2, 4.4, 6.4], new THREE.Color(0.32, 0.42, 0.62), 0.09, 0.22);
+    // round 7: grid-ripple sources (a label / note / the panel landing: world xz, picture frame)
+    { const R = (x: number, z: number, f: number) => this.ripples.push({ x: o[0] + x, z: o[2] + z, f });
+      R(0.15, -4.4, PV(toV(BEAT.youSee) + 29)); R(-2.0, -3.3, PV(toV(BEAT.youSee) + 31)); R(LBL5.rule[0], LBL5.rule[2], PV(toV(BEAT.copyRules) - 2.5) + 1); R(LBL5.rule[0], LBL5.rule[2] + 0.3, BEAT.copyRules + 20);
+      R(LBL5.ee[0], LBL5.ee[2], BEAT.eachOther + 4); R(LBL5.ee[0], LBL5.ee[2], BEAT.eachOther + 20); R(BP.signFloat[0], BP.signFloat[2], BEAT.manySteal + 12); }
   }
+  // round 6 blueprint
+  private wipes: { m: THREE.Mesh; mat: THREE.ShaderMaterial; a: number; b: number; out?: number }[] = []; private pct8!: THREE.Mesh;
+  private compass7!: THREE.Mesh; private headDust: THREE.Sprite[] = []; private ripples: { x: number; z: number; f: number }[] = [];
+  private walkers: { m: THREE.Mesh; ph: number; per: number; f0: number; look: number; chip: number; h: number; s: number; t: number; k: number; early: number }[] = []; private bpLensDust!: Motes;
   private fades: { m: THREE.MeshBasicMaterial; f: number; pre: number; full: number }[] = [];
   private puffAt: { p: THREE.Vector3; f: number }[] = []; private sticks: THREE.Mesh[] = []; private bpPuffs: THREE.Sprite[] = [];
   private signFace!: THREE.MeshBasicMaterial; private signShadow!: THREE.Mesh; private signBoil: THREE.Texture | null = null;
@@ -2687,15 +3470,21 @@ export class Interiors {
   // round 5
   private posts5: { post: THREE.Mesh; label: THREE.Mesh; f: number; h: number }[] = []; private eeLabel!: THREE.Mesh; private eeArrow!: THREE.Mesh;
   private thiefPuffs: THREE.Sprite[] = []; private crowdPrints: { m: THREE.Mesh; s: number; ph: number }[] = [];
+  private crumbs: { m: THREE.Mesh; p: THREE.Vector3; k: number }[] = []; // round 8: eraser crumbs that hop when the panel lands
+  private thiefPush = new Array<number>(THIEF_N).fill(0); // round 8: each thief's head-clear slide this frame (m along the lens horizontal)
 
   // ================================================================================================ per frame
   pose(ctx: SetCtx) {
-    const set = ctx.shot.set, f = ctx.f, t = ctx.t;
+    VF = ctx.vf ?? ctx.f; // round 6: idle loops run on the video clock (see qw / vs above)
+    this.L = ctx.light;
+    const set = ctx.shot.set, f = ctx.f, t = vtime();
     this.cl.visible = set === "classroom"; this.sr.visible = set === "storeroom"; this.bp.visible = set === "blueprint";
     for (let i = 0; i < POOL_N; i++) this.fx.pools[i].copy(this.poolBase[i]);
     // round 5: the trailhead practicals (pools 9-11) light only the dusk World (shot 15); every other World has them off
-    if (!(ctx.light.name === "dusk" && set === "trailhead")) for (let i = 9; i < 12 && i < POOL_N; i++) this.fx.pools[i].set(0, 0, 0);
+    if (!(ctx.light.name === "dusk" && set === "trailhead")) for (let i = 9; i < 14 && i < POOL_N; i++) this.fx.pools[i].set(0, 0, 0);
     this.fx.pose(ctx);
+    // round 6: the board lamps switched on late in the shot-6 relight light the board face and posts a little
+    if (ctx.id === 6 && this.fx.lampK > 0) for (let i = 9; i < 11 && i < POOL_N; i++) this.fx.pools[i].copy(this.poolBase[i]).multiplyScalar(1.3 * this.fx.lampKs[i - 9]); // round 8: a readable warm pool on the board's top rail + frame
     if (!this.cl.visible && !this.sr.visible && !this.bp.visible) return;
     if (this.cl.visible) this.poseClassroom(f, t, ctx.cam);
     if (this.sr.visible) this.poseStoreroom(f, t, ctx.cam);
@@ -2705,12 +3494,14 @@ export class Interiors {
   private poseClassroom(f: number, t: number, cam: THREE.Camera) {
     this.chalk.draw(f);
     this.clHalo.quaternion.copy(cam.quaternion);
-    // clock: 10:10 and a ticking second hand (snap + tiny overshoot each second)
+    // clock: 10:10 and a ticking second hand (snap + tiny overshoot each second); round 6: real seconds (video clock)
     const sec = Math.floor(t), fr = t - sec, tick = sec + Math.min(1, fr * 6) + 0.12 * Math.sin(Math.min(1, fr * 6) * Math.PI) * (fr < 0.3 ? 1 : 0);
     this.secHand.rotation.z = -((tick + 22) / 60) * TAU; this.minHand.rotation.z = -((10 + t / 60) / 60) * TAU; this.hourHand.rotation.z = -((10 + 10 / 60) / 12) * TAU;
     // round 4: the back-wall clock over the door shows the same time and ticks with it (it faces -x: + = clockwise)
     this.sec2.rotation.x = ((tick + 22) / 60) * TAU; this.min2.rotation.x = ((10 + t / 60) / 60) * TAU; this.hour2.rotation.x = ((10 + 10 / 60) / 12) * TAU;
-    this.pennants.forEach((pm, i) => { pm.rotation.set(0.05 * Math.sin(t * 1.3 + i * 0.9) + 0.02 * Math.sin(t * 3.1 + i), 0, -(0.12 + 0.06 * Math.sin(t * 0.9 + i * 1.7))); });
+    this.pennants.forEach((pm, i) => { pm.rotation.set(0.05 * vs(1.3, i * 0.9) + 0.02 * vs(3.1, i), 0, -(0.12 + 0.06 * vs(0.9, i * 1.7))); });
+    this.wallPennant?.rotation.set(0, -Math.PI / 2, 0.035 * vs(1.1, 0.4) + 0.012 * vs(2.7, 1.2));
+    this.ceilPencil?.rotation.set(0.05 + 0.03 * vs(1.6, 0.7), 0, 0.04 * vs(1.25, 2.1)); // round 6: the stuck pencil wobbles in the draft
     this.patchMotes.pose(t * 0.7, 6);
     // chalk specks puffing off each letter as it is finished (3 per letter, 14 f, fall + drift off the board)
     { const G = glyphs(), top = CL.board.cy + CL.board.h / 2; let pi = 0;
@@ -2726,8 +3517,14 @@ export class Interiors {
       }
       for (; pi < this.letterPuffs.length; pi++) this.letterPuffs[pi].visible = false; }
     this.clMotes.pose(t, 3);
-    for (const s of this.swingers) s.g.rotation.set(0, 0, s.amp * Math.sin(TAU * s.hz * t + s.ph) * (0.75 + 0.25 * Math.sin(t * 0.7 + s.ph)));
-    if (this.clTree && this.clTree2) { this.clTree.rotation.z = 0.012 * Math.sin(t * 1.1) + 0.006 * Math.sin(t * 2.7); this.clTree2.rotation.z = 0.014 * Math.sin(t * 1.3 + 1) + 0.005 * Math.sin(t * 3.1); }
+    for (const S of this.clShafts) { // round 8: face the lens about the beam axis, breathe slowly (video clock)
+      const toCam = cam.position.clone().sub(S.p0).normalize(), side = new THREE.Vector3().crossVectors(S.d, toCam).normalize(), nrm = new THREE.Vector3().crossVectors(side, S.d).normalize();
+      S.mesh.position.copy(S.p0); S.mesh.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(S.d, side, nrm));
+      S.mesh.scale.set(S.len, S.w * (1 + 0.05 * vs(0.6, S.ph)), 1);
+      const k = 0.13 * (0.85 + 0.15 * vs(0.45, S.ph)); S.mat.color.setRGB(1.0 * k, 0.78 * k, 0.48 * k);
+    }
+    for (const s of this.swingers) s.g.rotation.set(0, 0, s.amp * vs(TAU * s.hz, s.ph) * (0.75 + 0.25 * vs(0.7, s.ph)));
+    if (this.clTree && this.clTree2) { this.clTree.rotation.z = 0.012 * vs(1.1) + 0.006 * vs(2.7); this.clTree2.rotation.z = 0.014 * vs(1.3, 1) + 0.005 * vs(3.1); }
     // chalk dust: shown only near the writing tip while writing, falling a little
     const tip = chalkTip(f);
     const cd = this.chalkDust;
@@ -2773,23 +3570,47 @@ export class Interiors {
     // ---- mail: the flap snaps open (1 f), a padded envelope then a taped parcel shoot down the chute, drop onto the
     // pile (the envelope lands ON BEAT.mailed, the parcel 3 f later), 2-3 f bounce, paper puff; the flap swings shut
     // round 4: a second parcel follows on "apology" + 20 (the flow never stops), so the flap opens twice
+    // round 6 (A5 P3: the parcel popped into existence in front of the RETURNS sign): the mail now comes THROUGH the
+    // brass slot. The flap knocks twice (video ~2262: something is pushing from outside), snaps open in 1 f (~2266), each
+    // item squeezes out of the 7 cm slot (squashed flat while its back is still inside the wall, then it pops back to
+    // shape with a little overshoot), slides 5-6 f down the chute and falls onto the pile (the parcel still lands at
+    // BEAT.mailed + 3 = video ~2273); after it lands the flap swings open / shut twice more (decaying)
     const fm = BEAT.mailed, f2 = BEAT.apology + 20, C = this.chute;
-    const flapK = (L: number) => (f >= L - 7 ? (f < L + 1 ? 1.25 : 1.25 * Math.max(0, 1 - (f - L - 1) / 2) + (f >= L + 3 ? 0.18 * Math.sin((f - L - 3) * 1.7) * Math.exp(-(f - L - 3) * 0.35) : 0)) : 0);
-    const open = f >= f2 - 9 ? flapK(f2 - 2) : flapK(fm);
-    this.flap.rotation.x = -open;
-    const item = (m: THREE.Mesh, land: number, at: [number, number], half: number, spin: number, puff0: number) => {
-      const fe = land - 6, P = this.heapTop(at[0], at[1]), rest = V(o[0] + P[0], o[1] + P[1] + half, o[2] + P[2]);
-      m.visible = f >= fe;
+    const fOpen = fm - 4.4, fOpen2 = f2 - 7.5;
+    const flapAng = (O: number, shut: number) => {
+      if (f < O - 4.2) return 0;
+      if (f < O) { const u = (f - (O - 4.2)) / 4.2; return 0.14 * Math.abs(Math.sin(u * Math.PI * 2)); } // two knocks
+      if (f < O + 1) return 1.25 * (f - O);                                                                 // 1 f snap
+      if (f < shut) return 1.25;
+      const v = f - shut; if (v < 1.5) return 1.25 * (1 - v / 1.5);
+      const w = v - 1.5; return 0.45 * Math.exp(-w / 5.5) * Math.abs(Math.sin((w / 4.4) * Math.PI));        // two swings
+    };
+    this.flap.rotation.x = -(f >= fOpen2 - 4.2 ? flapAng(fOpen2, fOpen2 + 3.4) : flapAng(fOpen, fOpen + 4.2));
+    /** an item squeezing out of the slot and sliding down the chute: s = distance along the chute from S0 (back of the
+     *  wall < sW < 0 < chute length), the squash while any part of it is still inside the wall */
+    const S0w = this.v4.copy(C.S0).add(V(...o)), Lc = C.S1.distanceTo(C.S0), sW = (-SR.room.d / 2 - C.S0.z) / C.u.z;
+    const chute = (m: THREE.Mesh, out0: number, lip: number, half: number, len: number, sqY: number, sqX: number, pad: number, sqD = 2.0) => {
+      const out1 = out0 + sqD, s0 = sW - len / 2 - 0.02, s1 = len / 2 + 0.02;
+      let sl: number;
+      if (f < out1) sl = lerp(s0, s1, (f - out0) / (out1 - out0));
+      else sl = s1 + (Lc - s1) * Math.min(1, (f - out1) / Math.max(1, lip - out1)) ** 1.5;
+      const inside = sl - len / 2 < sW + 0.005, sClear = sW + 0.005 + len / 2, fClear = out0 + ((sClear - s0) / (s1 - s0)) * (out1 - out0);
+      const pop = inside ? 0 : outBack(clamp01((f - fClear) / 2.2), 2.4), sy = lerp(sqY, 1, pop), sx = lerp(sqX, 1, pop), sz = lerp(1 / Math.sqrt(sqY * sqX), 1, pop);
+      m.scale.set(sx, sy, sz); m.quaternion.copy(C.q);
+      m.position.copy(S0w).addScaledVector(C.u, sl).addScaledVector(C.y, half * sy + pad);
+    };
+    const item = (m: THREE.Mesh, out0: number, land: number, at: [number, number], half: number, len: number, sqX: number, spin: number, puff0: number, sqD = 2.0) => {
+      const P = this.heapTop(at[0], at[1]), rest = V(o[0] + P[0], o[1] + P[1] + half, o[2] + P[2]);
+      m.visible = f >= out0;
       if (!m.visible) { for (let k = 0; k < 8; k++) this.puffs[puff0 + k].visible = false; return; }
-      const end = C.S1.clone().add(V(...o)).addScaledVector(C.y, half + 0.022), start = C.S0.clone().add(V(...o)).addScaledVector(C.u, -0.05).addScaledVector(C.y, half + 0.022);
-      if (f < land - 2) { // slide (accelerating) down the chute
-        const u = ((f - fe) / 4) ** 1.6; m.position.lerpVectors(start, end, u); m.quaternion.copy(C.q);
-      } else if (f < land) { // fall off the lip onto the heap
-        const u = (f - (land - 2)) / 2; m.position.lerpVectors(end, rest, u); m.position.y += 0.05 * Math.sin(u * Math.PI);
+      const end = C.S1.clone().add(V(...o)).addScaledVector(C.y, half + 0.022);
+      if (f < land - 2) chute(m, out0, land - 2, half, len, Math.min(1, 0.032 / half), sqX, 0.022, sqD); // squeeze out + slide down the chute
+      else if (f < land) { // fall off the lip onto the heap
+        const u = (f - (land - 2)) / 2; m.scale.set(1, 1, 1); m.position.lerpVectors(end, rest, u); m.position.y += 0.05 * Math.sin(u * Math.PI);
         m.quaternion.copy(C.q).multiply(this.q1.setFromEuler(new THREE.Euler(0.5 * u, spin * u, 0.3 * u)));
       } else { // land, bounce, settle
         const v = f - land, bounce = v < 4 ? Math.abs(Math.sin((v / 4) * Math.PI)) * 0.045 * (1 - v / 4) : 0;
-        m.position.copy(rest).add(V(0, bounce, 0));
+        m.scale.set(1, 1, 1); m.position.copy(rest).add(V(0, bounce, 0));
         m.quaternion.setFromEuler(new THREE.Euler(0.12 + (v < 4 ? 0.1 * (1 - v / 4) : 0), spin + 0.2, -0.08));
       }
       for (let k = 0; k < 8; k++) { // paper / dust puff at the landing
@@ -2801,19 +3622,29 @@ export class Interiors {
         s.scale.setScalar(0.05 + 0.13 * u); (s.material as THREE.SpriteMaterial).opacity = 0.55 * (1 - u) ** 1.3;
       }
     };
-    item(this.mailEnv, fm, [-0.3, 0.12], 0.011, 0.5, 0);
-    item(this.mailBox2, f2, [-0.33, 0.12], 0.065, 0.9, 16);
-    // the FRAGILE parcel (x1.5): slides down the chute, arcs off the lip and lands on the heap's FRONT-RIGHT (clear of
-    // the note cards, left of the pail), 2 f squash, 3 f bounce, a paper-dust puff, 4 chips hop off the heap onto the rug
+    item(this.mailEnv, fOpen + 2.4, fm + 5, [-0.3, 0.12], 0.011, 0.24, 0.8, 0.5, 0, 1.4); // round 6: right behind the parcel, lands BEAT.mailed + 5
+    item(this.mailBox2, fOpen2 + 0.3, f2, [-0.33, 0.12], 0.065, 0.26, 1, 0.9, 16);
+    // the FRAGILE parcel (x1.5): squeezes out of the slot right behind the envelope, slides down the chute, arcs off the
+    // lip and lands on the heap's FRONT-RIGHT (clear of the note cards, left of the pail), 2 f squash, 3 f bounce, a
+    // paper-dust puff, 4 chips hop off the heap onto the rug
     {
       const L = fm + 3, m = this.mailBox, half = 0.1125, P = this.heapTop(0.36, 0.22), rest = V(o[0] + P[0], o[1] + P[1] + half, o[2] + P[2]);
-      const qRest = this.q2.setFromEuler(new THREE.Euler(0.08, 0.2, -0.07));
-      m.visible = f >= L - 8; m.scale.set(1, 1, 1);
+      const qRest = this.q2.setFromEuler(new THREE.Euler(0.08, 0.2, -0.07)), out0 = fOpen, fall = 2.4;
+      // round 7 (A6 P3: it faded in half-transparent / squashed on the chute instead of sliding out of the slot): the
+      // flap snaps first (1 f), then the parcel is OPAQUE and full-size from its first frame, pushed 0.25 m out of the slot
+      // mouth in 3 f (a quick stretch along the push), then it slides on down the chute, arcs off the lip and falls
+      m.visible = f >= out0 + 1; m.scale.set(1, 1, 1);
       if (m.visible) {
-        const end = C.S1.clone().add(V(...o)).addScaledVector(C.y, half + 0.026), start = C.S0.clone().add(V(...o)).addScaledVector(C.u, -0.1).addScaledVector(C.y, half + 0.026);
-        if (f < L - 4) { const u = ((f - (L - 8)) / 4) ** 1.6; m.position.lerpVectors(start, end, u); m.quaternion.copy(C.q); }
+        const end = C.S1.clone().add(V(...o)).addScaledVector(C.y, half + 0.026);
+        if (f < L - fall) {
+          const sA = sW + 0.39 / 2 + 0.01, sB = sA + 0.25, u3 = (f - (out0 + 1)) / 3;
+          const sl = u3 < 1 ? lerp(sA, sB, outCubic(u3)) : sB + (Lc - sB) * Math.min(1, (f - (out0 + 4)) / Math.max(1, L - fall - (out0 + 4))) ** 1.5;
+          const pk = u3 < 1 ? 1 + 0.12 * Math.sin(Math.PI * clamp01(u3)) : 1;
+          m.scale.set(1 / Math.sqrt(pk), 1 / Math.sqrt(pk), pk); m.quaternion.copy(C.q);
+          m.position.copy(S0w).addScaledVector(C.u, sl).addScaledVector(C.y, half + 0.026);
+        }
         else if (f < L) {
-          const u = (f - (L - 4)) / 4; m.position.lerpVectors(end, rest, u); m.position.y = lerp(end.y, rest.y, u * u) + 0.07 * Math.sin(Math.PI * u);
+          const u = (f - (L - fall)) / fall; m.position.lerpVectors(end, rest, u); m.position.y = lerp(end.y, rest.y, u * u) + 0.07 * Math.sin(Math.PI * u);
           m.quaternion.slerpQuaternions(C.q, qRest, outCubic(u)); m.rotateX(0.55 * Math.sin(Math.PI * u));
         } else {
           const v = f - L; let sy = 1, dy = 0;
@@ -2854,7 +3685,7 @@ export class Interiors {
     this.letters.forEach((L, i) => {
       const v = f - (BEAT.apology + i * 3), hop = v >= 0 && v < 10 ? Math.sin((v / 10) * Math.PI) : 0;
       L.m.position.copy(L.p).add(V(0, hop * 0.05, 0));
-      L.m.rotation.set(L.r.x + Math.sin(t * 2.1 + i) * 0.012, L.r.y, L.r.z + Math.sin(t * 1.7 + i * 2) * 0.012 + hop * 0.05, "YXZ");
+      L.m.rotation.set(L.r.x + vs(2.1, i) * 0.012, L.r.y, L.r.z + vs(1.7, i * 2) * 0.012 + hop * 0.05, "YXZ");
       L.m.scale.setScalar(1 + hop * 0.08);
     });
     // chip glints on the lamp-lit heap: three 4-point stars twinkling in turn all through the shot (one is always
@@ -2867,62 +3698,78 @@ export class Interiors {
       const per = 47 + 9 * i, v = (((f - (BEAT.bait - 2) - i * 21) % per) + per) % per; g.visible = v < 7; // round 4: keyed to the beat (was a hard-coded 1615)
       if (g.visible) { const k = Math.sin((v / 7) * Math.PI); g.scale.setScalar(0.015 + 0.06 * k); g.material.rotation = 0.3 * v; }
     });
+    // round 6: every idle loop below runs on the VIDEO clock (t = vtime(), vs / vph snapped to whole cycles); the
+    // story kicks (the parcel thump, the flap) stay on the picture clock f
     this.lampMotes.pose(t * 0.6, 5); this.lampMotes2.pose(t * 0.8, 7);
-    const flick = 0.95 + 0.035 * Math.sin(t * 9.0) * Math.sin(t * 2.3) + 0.015 * Math.sin(t * 23.0);
-    (this.lampHalo.material as THREE.MeshBasicMaterial).color.setRGB(0.9, 0.55, 0.2).multiplyScalar(flick);
+    const flick = 0.95 + 0.035 * vs(9.0) * vs(2.3) + 0.015 * vs(23.0);
+    (this.lampHalo.material as THREE.MeshBasicMaterial).color.setRGB(0.64, 0.4, 0.14).multiplyScalar(flick); // round 6: -30 % (haze)
     this.fx.pools[2].multiplyScalar(flick);
     // the lantern flame (round 5, A4 P2: it did not flicker): an irregular kerosene flicker of about +-8 % made of
     // three incommensurate 4-8 Hz sines riding a slow breath, a short gutter dip now and then; the halo faces the lens
-    const lfN = (Math.sin(TAU * 4.3 * t) + 0.7 * Math.sin(TAU * 5.9 * t + 1.3) + 0.5 * Math.sin(TAU * 7.7 * t + 2.1)) / 2.2;
-    const gutter = Math.max(0, Math.sin(TAU * 0.37 * t + 0.8)) ** 12;
-    const lf = 1 + 0.08 * lfN * (0.75 + 0.25 * Math.sin(TAU * 0.6 * t)) - 0.07 * gutter;
+    const lfN = (vs(TAU * 4.3) + 0.7 * vs(TAU * 5.9, 1.3) + 0.5 * vs(TAU * 7.7, 2.1)) / 2.2;
+    const gutter = Math.max(0, vs(TAU * 0.37, 0.8)) ** 12;
+    const lf = 1 + 0.08 * lfN * (0.75 + 0.25 * vs(TAU * 0.6)) - 0.07 * gutter;
     this.fx.pools[6].multiplyScalar(lf);
-    (this.lantern.halo.material as THREE.MeshBasicMaterial).color.setRGB(0.95 * lf, 0.5 * lf, 0.16 * lf);
+    (this.lantern.halo.material as THREE.MeshBasicMaterial).color.setRGB(0.8 * lf, 0.42 * lf, 0.12 * lf); // round 6: a touch less haze
     this.lantern.core.color.copy(glow("#ffe2a6", 6.0 * lf));
-    if (this.lanternPool) this.lanternPool.color.setRGB(0.2 * lf, 0.09 * lf, 0.025 * lf);
+    // round 8: the flame card + its glow sit 7 cm in front of the globe's centre toward the lens (in front of the glass), the
+    // flame licks (height +-12 %, a 1-2 mm sway) with the same flicker
+    { const Lt = this.lantern, toCam = this.v3.copy(cam.position).sub(Lt.c).normalize();
+      Lt.flame.position.copy(Lt.c).addScaledVector(toCam, 0.07); Lt.flame.position.x += 0.0015 * vs(TAU * 3.1, 0.7);
+      Lt.flame.scale.set(0.034 * (1 + 0.04 * lfN), 0.064 * (1 + 0.12 * lfN), 1); Lt.flame.material.color.copy(glow("#ffe0a0", 2.6 * lf));
+      Lt.glow.position.copy(Lt.c).addScaledVector(toCam, 0.075); Lt.glow.scale.setScalar(0.26 * (1 + 0.05 * lfN)); Lt.glow.material.color.setRGB(1.1 * lf, 0.62 * lf, 0.22 * lf); }
+    // round 8: the slot night-light: a steady warm dome with a faint mains shimmer (its pool is shade.ts POOL 14)
+    { const N = this.nightLight, sh = 1 + 0.02 * vs(TAU * 0.5, 1.1); N.glow.material.color.setRGB(0.62 * sh, 0.34 * sh, 0.11 * sh); this.fx.pools[14]?.multiplyScalar(sh); }
+    if (this.lanternPool) this.lanternPool.color.setRGB(0.25 * lf, 0.11 * lf, 0.03 * lf); // round 6: +25 %
     this.lantern.halo.quaternion.copy(cam.quaternion);
     this.lampHalo.quaternion.copy(cam.quaternion);
     // round 5: the hanging work bulb swings on its cord: a slow idle sway (~1.5 deg) plus a kick when the parcel lands
     // on the pile (BEAT.mailed + 3) that decays over ~1.5 s; the warm pool follows the bulb, a faint mains shimmer
     { const kv = f - (BEAT.mailed + 3), kick = kv > 0 ? 0.07 * Math.exp(-kv / 16) * Math.sin(kv * 0.42) : 0;
-      const ax = 0.026 * Math.sin(TAU * 0.33 * t + 0.4) + kick, az = 0.018 * Math.sin(TAU * 0.27 * t + 2.0) + 0.4 * kick;
+      const ax = 0.026 * vs(TAU * 0.33, 0.4) + kick, az = 0.018 * vs(TAU * 0.27, 2.0) + 0.4 * kick;
       this.bulbPivot.rotation.set(ax, 0, az);
       this.bulbPivot.updateMatrixWorld(true);
-      const bp = this.workBulb.getWorldPosition(this.v2), sh = 1 + 0.015 * Math.sin(t * 37.0) * Math.sin(t * 3.1);
+      const bp = this.workBulb.getWorldPosition(this.v2), sh = 1 + 0.015 * vs(37.0) * vs(3.1);
       POOL.uPoolPos.value[8].copy(bp); this.fx.pools[8].multiplyScalar(sh);
       this.workHalo.position.copy(bp); this.workHalo.quaternion.copy(cam.quaternion); this.workHalo.scale.setScalar(sh);
       (this.workBulb.material as THREE.MeshBasicMaterial).color.copy(glow("#ffdca8", 6.5 * sh)); }
     // round 5: the moonlight shaft turns about its own axis to face the lens (never an edge-on polygon); its motes drift
     // slowly down the beam (one pass ~25 s) with a lazy wobble, brightest in the beam's core
+    // round 6 (A5 ADD: raise the shaft to ~15-20 % so the cool / warm split reads; A5 P2: no lavender): a clean moon
+    // blue (#5A8CFF class, no red), ~10 % stronger
     { const A = this.moonAxes, s0 = V(o[0] + MOON.start[0], o[1] + MOON.start[1], o[2] + MOON.start[2]);
       const mid = this.v3.copy(s0).addScaledVector(A.d, MOON.len * 0.5), toCam = cam.position.clone().sub(mid).normalize();
       const side = new THREE.Vector3().crossVectors(A.d, toCam).normalize(), nrm = new THREE.Vector3().crossVectors(side, A.d).normalize();
       this.moonShaft.position.copy(s0); this.moonShaft.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(A.d, side, nrm));
-      this.moonShaft.scale.set(MOON.len, 1.3 + 0.04 * Math.sin(t * 0.6), 1);
-      (this.moonShaft.material as THREE.MeshBasicMaterial).color.setRGB(0.45, 0.55, 1.0).multiplyScalar(0.4 * (0.93 + 0.07 * Math.sin(t * 0.45)));
+      this.moonShaft.scale.set(MOON.len, 1.3 + 0.04 * vs(0.6), 1);
+      (this.moonShaft.material as THREE.MeshBasicMaterial).color.setRGB(0.22, 0.42, 1.0).multiplyScalar(0.46 * (0.93 + 0.07 * vs(0.45)));
       const pa = this.moonMotes.geometry.attributes.position as THREE.BufferAttribute, P = pa.array as Float32Array, B = this.moonMoteBase;
       for (let i = 0; i < B.length / 3; i++) {
-        const s = ((B[i * 3] + t * (0.03 + 0.012 * hash(i * 1.7))) % 1) * 0.9 + 0.06, a = B[i * 3 + 1] + 0.05 * Math.sin(t * 0.7 + i), c = B[i * 3 + 2] + 0.05 * Math.sin(t * 0.5 + i * 1.9);
+        const s = ((B[i * 3] + t * (0.03 + 0.012 * hash(i * 1.7))) % 1) * 0.9 + 0.06, a = B[i * 3 + 1] + 0.05 * vs(0.7, i), c = B[i * 3 + 2] + 0.05 * vs(0.5, i * 1.9);
         P[i * 3] = s0.x + A.d.x * s * MOON.len + A.s0.x * a + A.u0.x * c;
         P[i * 3 + 1] = s0.y + A.d.y * s * MOON.len + A.s0.y * a + A.u0.y * c;
         P[i * 3 + 2] = s0.z + A.d.z * s * MOON.len + A.s0.z * a + A.u0.z * c;
       }
       pa.needsUpdate = true; }
     // round 5: the ranger hat swings on its peg when the parcel lands (and its wall shadow follows), a faint idle sway
-    { const kv = f - (BEAT.mailed + 3), sw = 0.012 * Math.sin(TAU * 0.4 * t) + (kv > 0 ? 0.11 * Math.exp(-kv / 14) * Math.sin(kv * 0.5) : 0);
+    { const kv = f - (BEAT.mailed + 3), sw = 0.012 * vs(TAU * 0.4) + (kv > 0 ? 0.11 * Math.exp(-kv / 14) * Math.sin(kv * 0.5) : 0);
       this.hatPeg.rotation.set(0, 0, sw); this.hatShadow.position.x = SR.base[0] - 0.48 - 0.16 * sw; this.hatShadow.rotation.z = sw * 0.8; }
-    // moth: a lazy wobbling orbit round the work bulb (in frame), wings flap every 2 frames
-    const ma = t * 5.2, mr = 0.09 + 0.02 * Math.sin(t * 1.7);
-    this.moth.position.copy(this.v2).add(V(Math.cos(ma) * mr, 0.04 + 0.03 * Math.sin(t * 3.3), Math.sin(ma) * mr * 0.8));
-    const mm = this.moth.material as THREE.SpriteMaterial, mt = mothTex(Math.floor(f / 2) % 2); if (mm.map !== mt) { mm.map = mt; mm.needsUpdate = true; }
-    // round 4: the second lamp moth (counter-orbit) and the lantern moth, wings on 2s out of phase
-    { const ma2 = -(t * 4.1 + 2.0), mr2 = 0.14 + 0.03 * Math.sin(t * 1.3 + 1);
-      this.moths2[0].position.copy(this.v2).add(V(Math.cos(ma2) * mr2, 0.01 + 0.05 * Math.sin(t * 2.6 + 1), Math.sin(ma2) * mr2 * 0.8));
-      const ma3 = t * 3.3 + 4, mr3 = 0.1 + 0.03 * Math.sin(t * 1.9);
-      this.moths2[1].position.set(o[0] + LANTERN[0] + Math.cos(ma3) * mr3, o[1] + 0.33 + 0.04 * Math.sin(t * 2.2), o[2] + LANTERN[2] + Math.sin(ma3) * mr3 * 0.8);
-      this.moths2.forEach((s2, i) => { const m2 = s2.material as THREE.SpriteMaterial, tx = mothTex(Math.floor((f + 1 + i) / 2) % 2); if (m2.map !== tx) { m2.map = tx; m2.needsUpdate = true; } }); }
+    // moths: three lazy wobbling orbits round the work bulb (~0.65-0.85 Hz, in frame, catching its bloom) and one round
+    // the lantern; wings flap every 2 VIDEO frames, out of phase
+    const wing = (i: number) => mothTex(Math.floor((VF + i) / 2) % 2);
+    const ma = vph(5.2), mr = 0.09 + 0.02 * vs(1.7);
+    this.moth.position.copy(this.v2).add(V(Math.cos(ma) * mr, 0.04 + 0.03 * vs(3.3), Math.sin(ma) * mr * 0.8));
+    const mm = this.moth.material as THREE.SpriteMaterial, mt = wing(0); if (mm.map !== mt) { mm.map = mt; mm.needsUpdate = true; }
+    // round 4: the second lamp moth (counter-orbit) and the lantern moth, wings on 2s out of phase; round 6: + a third
+    // bulb moth on a figure-8
+    { const ma2 = -(vph(4.1) + 2.0), mr2 = 0.14 + 0.03 * vs(1.3, 1);
+      this.moths2[0].position.copy(this.v2).add(V(Math.cos(ma2) * mr2, 0.01 + 0.05 * vs(2.6, 1), Math.sin(ma2) * mr2 * 0.8));
+      const ma3 = vph(3.3) + 4, mr3 = 0.1 + 0.03 * vs(1.9);
+      this.moths2[1].position.set(o[0] + LANTERN[0] + Math.cos(ma3) * mr3, o[1] + 0.33 + 0.04 * vs(2.2), o[2] + LANTERN[2] + Math.sin(ma3) * mr3 * 0.8);
+      if (this.moths2[2]) { const a8 = vph(4.6) + 1.1; this.moths2[2].position.copy(this.v2).add(V(0.16 * Math.sin(a8), -0.02 + 0.07 * Math.sin(2 * a8), 0.11 * Math.cos(a8))); }
+      this.moths2.forEach((s2, i) => { const m2 = s2.material as THREE.SpriteMaterial, tx = wing(1 + i); if (m2.map !== tx) { m2.map = tx; m2.needsUpdate = true; } }); }
     this.nightCloud.position.x = o[0] - 1.95 + (f - (BEAT.mailed - 6)) * 0.0075;
-    { const fq = Math.floor(f / 2) * 2, tq = fq / FPS;
+    { const fq = Math.floor(VF / 2) * 2, tq = fq / FPS;
       this.steam2.forEach((m, i) => {
         const ph = (tq * 0.5 + i / 3) % 1;
         m.position.copy(this.mug2Top).add(V(-0.05 * ph + 0.015 * Math.sin(tq * 1.4 + i * 2), ph * 0.26, 0));
@@ -2931,22 +3778,84 @@ export class Interiors {
       }); }
     this.steam.forEach((m, i) => {
       const ph = ((t * 0.45 + i / 3) % 1);
-      m.position.copy(this.mugTop).add(V(Math.sin(t * 1.3 + i * 2) * 0.03, ph * 0.3, 0));
+      m.position.copy(this.mugTop).add(V(vs(1.3, i * 2) * 0.03, ph * 0.3, 0));
       m.quaternion.copy(cam.quaternion); m.scale.set(1 + ph, 1 + ph * 0.5, 1);
       (m.material as THREE.MeshBasicMaterial).opacity = Math.sin(ph * Math.PI) * 0.8;
     });
     this.srSec.rotation.z = -((Math.floor(t) + 14) / 60) * TAU;
-    const sm2 = this.stars.material as THREE.PointsMaterial; sm2.size = 0.045 + 0.012 * Math.sin(t * 3.1);
+    // round 6: the cat on the sill breathes (~0.3 Hz), one eye snaps open on the parcel thump (BEAT.mailed + 3) with
+    // the ears pricked for 2 f, it stares ~15 f, then the eye closes again by ~video 2290 ('z' while asleep)
+    // round 7 (A6 ADD): on the clunk it LIFTS its head (eyes open, looking at the chute), flicks its tail twice, then
+    // one eye stays open a moment and it tucks back in by ~video 2386 (keyed on the video clock from the thump)
+    { const kv = f - (BEAT.mailed + 3), dv = VF - toV(BEAT.mailed + 3);
+      const st = dv >= 0 && dv < 1.5 ? 2 : dv >= 1.5 && dv < 12 ? 3 : dv >= 12 && dv < 16 ? 1 : 0, tl = (dv >= 3 && dv < 5) || (dv >= 8 && dv < 10) ? 1 : 0;
+      const cm2 = this.cat.material as THREE.MeshBasicMaterial, ct = catTex(st, tl); if (cm2.map !== ct) { cm2.map = ct; cm2.needsUpdate = true; }
+      const br = 1 + 0.018 * vs(TAU * 0.3), jump = kv >= 0 && kv < 4 ? 0.06 * Math.sin((kv / 4) * Math.PI) : 0;
+      this.cat.scale.set(1, br + jump, 1); }
+    // round 6: the LETTERS THIS YEAR counter: the top sheet 1,201 peels off its pad on "mailed" (video ~2270), then
+    // flutters down past the chute and is gone; 1,202 underneath
+    // round 7 (A6 ADD): it no longer vanishes mid-air: it see-saws down and forward in ~40 f (a falling-leaf flutter that
+    // calms as it drops) and lands FLAT on the rug in front of the crate, with a little slide
+    { const T = this.tearSheet, v = f - (BEAT.mailed - 0.3), W = 40, land = this.v3.set(o[0] + 0.62, o[1] + 0.014, o[2] + 0.05);
+      T.sheet.visible = true;
+      if (v < 0) { T.piv.position.copy(T.base); T.piv.rotation.set(0, 0, 0); }
+      else if (v < 2.5) { const u = v / 2.5; T.piv.position.copy(T.base); T.piv.rotation.set(-1.1 * outCubic(u), 0, 0.12 * u); }
+      else if (v < 2.5 + W) { const w = v - 2.5, u = w / W, e = u * u * (3 - 2 * u), calm = 1 - 0.6 * u;
+        T.piv.position.set(lerp(T.base.x, land.x, e) + 0.16 * Math.sin(w * 0.32) * calm, lerp(T.base.y, land.y + 0.06, u ** 1.35), lerp(T.base.z + 0.05, land.z, e));
+        T.piv.rotation.set(lerp(-1.1, -Math.PI / 2, e) - 0.45 * Math.sin(w * 0.32) * calm, 0.6 * Math.sin(w * 0.2) * calm, 0.12 + 0.5 * Math.sin(w * 0.32 + 0.6) * calm); }
+      else { const w = v - 2.5 - W, sl = 0.05 * (1 - Math.exp(-w / 3));
+        T.piv.position.set(land.x + sl, land.y + 0.06 * Math.exp(-w / 1.5), land.z + 0.4 * sl); T.piv.rotation.set(-Math.PI / 2, 0.45, 0.12); } }
+    // round 7 (A6 ADD): an envelope on the rug stirs in the draft each time the chute flap swings (lifts its corner, shuffles)
+    { const v1 = f - (BEAT.mailed - 4.4 + 4.2), v2 = f - (BEAT.apology + 20 - 7.5 + 3.4); let lift = 0;
+      for (const v of [v1, v2]) if (v >= 0 && v < 12) lift = Math.max(lift, Math.sin((v / 12) * Math.PI) * (1 - 0.3 * (v / 12)));
+      this.rugEnv.rotation.set(-Math.PI / 2 + 0.28 * lift * Math.abs(Math.sin(v1 * 0.9)), 0, 0.8 + 0.12 * lift);
+      this.rugEnv.position.set(this.rugEnvP.x + 0.02 * lift, this.rugEnvP.y + 0.012 * lift, this.rugEnvP.z + 0.015 * lift); }
+    const sm2 = this.stars.material as THREE.PointsMaterial; sm2.size = 0.045 + 0.012 * vs(3.1);
+    // round 7 (A6 P2: the BAIT insert read milky lavender-pink, L* 48 / b* -5 against the wide's L* 36 / b* -26, the
+    // pail salmon #E38E83, no warm practical on it): while the lens is on the insert (fading out over the 30 video f pull
+    // to the reveal) the scene is keyed from the LANTERN side (its pool +15 %, warmer #FFB070), the desk-lamp key -30 %
+    // and its spill / the work bulb -45-50 % (the right and back fall into the night blue), the shade's red / green ~30 %
+    // deeper with its blue kept (darks toward L* ~12-15 but blue, b* down), the additive halos and the moon shaft (the haze) cut ~35-70 %, and the pail
+    // takes its colour from its emissive orange-red (albedo -60 %), so it matches the wide's hue
+    { const k = 1 - sm((VF - (toV(BEAT.conscience) - 25)) / 30);
+      this.pailMat.color.setRGB(0.55, 0.5, 0.48).multiplyScalar(1 - 0.6 * k); this.pailMat.emissiveIntensity = 0.78 + 0.06 * k;
+      if (k > 0.001) {
+        this.fx.toneOverride(this.L, 1 - 0.3 * k, [1 - 0.35 * k, 1 - 0.3 * k, 1], [1 - 0.6 * k, 1 - 0.6 * k, 1 - 0.1 * k]); // the desk-lamp key backs off (the lantern keys the insert); the darks go deeper but stay BLUE
+        const P = this.fx.pools;
+        P[6].multiplyScalar(1 + 0.15 * k).multiply(this.v3.set(1 + 0.08 * k, 1, 1 - 0.12 * k));
+        P[2].multiplyScalar(1 - 0.45 * k); P[4].multiplyScalar(1 - 0.45 * k); P[8].multiplyScalar(1 - 0.5 * k); P[7].multiplyScalar(1 - 0.2 * k);
+        (this.lantern.halo.material as THREE.MeshBasicMaterial).color.multiplyScalar(1 - 0.6 * k);
+        (this.lampHalo.material as THREE.MeshBasicMaterial).color.multiplyScalar(1 - 0.7 * k);
+        (this.moonShaft.material as THREE.MeshBasicMaterial).color.multiplyScalar(1 - 0.35 * k);
+      }
+      (this.workHalo.material as THREE.MeshBasicMaterial).color.copy(this.workHaloCol).multiplyScalar(1 - 0.6 * k); }
   }
   private q1 = new THREE.Quaternion();
 
   private poseBlueprint(f: number, t: number, cam: THREE.PerspectiveCamera) {
     const o = BP.base;
-    let si = 0;
+    let si = 0, hd = 0;
     for (const L of this.lines) {
       const prog = L.b > L.a ? clamp01((f - L.a) / (L.b - L.a)) : f >= L.a ? 1 : 0;
       if (L.pre > 0 && f < L.a) { L.mat.uniforms.uProg.value = 1; L.mat.uniforms.uAlpha.value = L.pre; }
       else { L.mat.uniforms.uProg.value = prog; L.mat.uniforms.uAlpha.value = L.pre > 0 ? lerp(L.pre, 1, prog) : 1; }
+      // round 7: rubbed out (the opening's construction marks)
+      if (L.out !== undefined) { const e = sm((f - L.out) / 6); L.mat.uniforms.uAlpha.value *= 1 - e; L.mesh.visible = e < 0.999; }
+      // round 7 (A6 ADD): chalk dust shed at the draw head: one speck every 2.5 picture f along the head's path, each
+      // falling ~0.12 m and fading over 12 f (only lines >= 0.5 m long, while drawing and just after)
+      const LL = L.L[L.L.length - 1];
+      if (LL >= 0.5 && L.b > L.a && f >= L.a && f < L.b + 12 && (L.pts.length > 1 || (L.p3 && L.p3.length > 1)) && (L.out === undefined || f < L.out)) {
+        for (let j = 0; j < 6 && hd < this.headDust.length; j++) {
+          const te = Math.floor(f / 2.5) * 2.5 - j * 2.5, age = f - te;
+          if (te < L.a || te > L.b || age < 0 || age >= 12) continue;
+          const s = clamp01((te - L.a) / (L.b - L.a)) * LL; let i = 1; while (i < L.L.length - 1 && L.L[i] < s) i++;
+          const k = (s - L.L[i - 1]) / Math.max(1e-6, L.L[i] - L.L[i - 1]), h = hash(te * 1.37 + L.a * 0.71 + j), u = age / 12;
+          const sp = this.headDust[hd++]; sp.visible = true;
+          if (L.p3) sp.position.lerpVectors(L.p3[i - 1], L.p3[i], k).add(this.v1.set((h - 0.5) * 0.08 * u, -0.12 * u * u - 0.03 * u, 0.04 + 0.03 * h));
+          else { const a2 = L.pts[i - 1], c2 = L.pts[i]; sp.position.set(lerp(a2[0], c2[0], k) + (h - 0.5) * 0.1 * u, o[1] + 0.03 + 0.1 * u * (1 - u) + 0.02 * h, lerp(a2[1], c2[1], k) + (hash(h * 7.1) - 0.5) * 0.1 * u); }
+          sp.scale.setScalar(0.028 + 0.03 * h + 0.02 * u); (sp.material as THREE.SpriteMaterial).opacity = 0.7 * (1 - u) ** 1.2;
+        }
+      }
       // the chalk stick leading the line (tilted toward the drawing direction), with a dust grain or two
       if (L.stick && prog > 0 && prog < 1 && si < this.sticks.length) {
         const s = prog * L.L[L.L.length - 1]; let i = 1; while (i < L.L.length - 1 && L.L[i] < s) i++;
@@ -2957,13 +3866,21 @@ export class Interiors {
       }
     }
     for (let i = si; i < this.sticks.length; i++) this.sticks[i].visible = false;
+    for (let i = hd; i < this.headDust.length; i++) this.headDust[i].visible = false;
     for (const F of this.fills) F.m.opacity = 0.16 * sm((f - F.f) / 8);
     for (const F of this.fades) F.m.opacity = F.full * lerp(F.pre, 1, sm((f - F.f) / 8));
     this.grid.uniforms.uT.value = t; this.grid.uniforms.uCam.value.copy(cam.position);
+    { const g0 = SHOTS[10].a - 3, u = clamp01((f - g0) / 28); // the reveal runs over the dissolve + the first ~25 picture f
+      this.grid.uniforms.uRev.value.set(o[0] + BP.person[0], o[2] + BP.person[2], u >= 1 ? 1e4 : 1.2 + 46 * (1 - (1 - u) ** 2.2)); }
     for (const p of this.pops) {
-      const u = (f - p.f) / 8, k = u <= 0 ? 0 : outBack(u);
+      const u = p.vd ? (VF - toV(p.f)) / p.vd : (f - p.f) / 8, k = u <= 0 ? 0 : outBack(u);
       p.obj.visible = u > 0; p.obj.scale.setScalar(Math.max(1e-3, k * p.s));
     }
+    // round 7 (A6 ADD): grid shimmer rings from the labels / notes / panel as they land (the 4 freshest, ~0.8 s each)
+    { const R = this.grid.uniforms.uRip.value as THREE.Vector4[]; let n = 0;
+      const live = this.ripples.filter((r) => f >= r.f && f < r.f + 24).sort((a2, b2) => b2.f - a2.f);
+      for (const r of live) { if (n >= 4) break; const age = f - r.f; R[n++].set(r.x, r.z, 0.25 + 0.16 * age, 0.85 * (1 - age / 24) ** 1.5); }
+      for (; n < 4; n++) R[n].set(0, 0, 0, 0); }
     for (const m of this.labels) { m.rotation.set(0, Math.atan2(cam.position.x - m.position.x, cam.position.z - m.position.z), 0); }
     // chalk-dust puffs where each main line / arrow finishes drawing (round 4: 7 specks each, 12 f; only the live
     // puffs take sprites)
@@ -2987,15 +3904,20 @@ export class Interiors {
     let k = 0;
     if (f >= fa) {
       k = outBack(u, 1.4);
-      const from = V(rest.x + 4.5, rest.y + 4.0, rest.z - 3.0), hold = f > fb ? clamp01((f - fb) / 10) : 0;
-      const bob = Math.sin(TAU * 0.35 * ((f - fb) / 30)) * 0.06 * hold;
+      // round 8 (A7 P3): it slides in from the RIGHT, a little low and nearer the lens (it used to swoop down from the
+      // upper right straight through the EVERYONE ELSE label); its top edge stays under the label the whole way
+      const from = V(rest.x + 5.4, rest.y - 0.25, rest.z + 0.9), hold = f > fb ? clamp01((f - fb) / 10) : 0;
+      const bob = vs(TAU * 0.35) * 0.06 * hold; // round 6: idle float on the video clock
       this.sign.position.lerpVectors(from, rest, Math.min(1.08, k)).add(V(0, bob, 0));
-      this.sign.rotation.set(0.6 * (1 - k) + 0.04 * Math.sin(f * 0.07) * hold, -1.1 * (1 - k) + 0.04 * Math.sin(f * 0.05 + 1) * hold, 0.5 * (1 - k) + 0.035 * Math.sin(f * 0.09) * hold);
-      if (!this.signBoil) this.signBoil = boilTex(testSignTex("B"));
-      const tex = f > fb && Math.floor((f - fb) / 4) % 2 === 1 ? this.signBoil : testSignTex("B");
+      this.sign.rotation.set(0.25 * (1 - k) + 0.04 * vs(2.1) * hold, -1.0 * (1 - k) + 0.04 * vs(1.5, 1) * hold, -0.22 * (1 - k) + 0.035 * vs(2.7) * hold);
+      if (!this.signBoil) this.signBoil = boilTex(bpSignTex());
+      const tex = f > fb && Math.floor(VF / 4) % 2 === 1 ? this.signBoil : bpSignTex(); // round 6: boil on 4 video f
       if (this.signFace.map !== tex) { this.signFace.map = tex; this.signFace.needsUpdate = true; }
     }
     const shK = f >= fa ? clamp01(k) : 0;
+    // round 8 (A7 ADD): the landing jolts the sheet: the eraser crumbs hop 1-3 cm and settle (8 f, staggered)
+    for (const c of this.crumbs) { const v = f - (fb + 0.4 * hash(c.k * 5.1)), hop = v >= 0 && v < 8 ? Math.sin((v / 8) * Math.PI) * (1 - v / 10) : 0;
+      c.m.position.set(c.p.x + 0.012 * hop * (hash(c.k * 7.3) - 0.5), c.p.y + (0.01 + 0.02 * hash(c.k * 2.9)) * hop, c.p.z); c.m.rotation.x = 0.6 * hop * (hash(c.k) - 0.5); }
     this.signShadow.visible = shK > 0.01;
     this.signShadow.position.set(this.sign.position.x, o[1] + 0.009, this.sign.position.z + 0.2);
     this.signShadow.scale.set(BPS * 1.05 * (0.5 + 0.5 * shK), 1, BPS * 0.33 * (0.5 + 0.5 * shK));
@@ -3017,11 +3939,16 @@ export class Interiors {
     // down (never up over the text: the picture is already below the text block), land STANDING on the paper around
     // the sign base, then walk off toward the EVERYONE ELSE crowd with a step bob (walk drawings swap every 4 f)
     const fe = BEAT.everyone - 3, sp = this.sign.position, right = V(1, 0, 0).applyQuaternion(cam.quaternion); // round 4 (A3 P2): pops start 3 f before the word
+    // round 8: the lens basis + the visitor's head in it (for the head-clear ring below)
+    const camRt = right, camUp = V(0, 1, 0).applyQuaternion(cam.quaternion), camFw = V(0, 0, -1).applyQuaternion(cam.quaternion), rgtH = V(right.x, 0, right.z).normalize();
+    const hd11 = V(o[0] + MAN11_HEAD.x, o[1] + MAN11_HEAD.y, o[2] + MAN11_HEAD.z).sub(cam.position), headZ = hd11.dot(camFw), headX = hd11.dot(camRt), headY = hd11.dot(camUp);
     this.thieves.forEach((m, i) => {
       const f1 = fe + i / 2.5, v = f - f1;
       m.visible = f >= f1 && this.sign.visible;
       if (!m.visible) return;
-      const fig = (i % 3) - 1, start = V(sp.x + fig * 0.27 * BPS + (hash(i * 1.3) - 0.5) * 0.12, sp.y - 0.25 * BPS, sp.z + 0.06);
+      // round 8 (A7 P2): a thief pops out of the pictogram figure on its own landing side (left half: the left figure,
+      // right half: the middle or right figure), never across the visitor's head
+      const fig = i % 2 ? (i % 4 === 1 ? 0 : 1) : -1, start = V(sp.x + fig * 0.27 * BPS + (hash(i * 1.3) - 0.5) * 0.12, sp.y - 0.25 * BPS, sp.z + 0.06);
       const side = i % 2 ? 1 : -1, [tx, tz] = thiefLand(i, sp.x, sp.z);
       const flight = 9, land = V(tx, o[1], tz);
       const c = V(BP.crowd[0] + o[0], o[1], BP.crowd[2] + o[2]), wd = c.clone().sub(land); wd.y = 0; const wl = wd.length(); wd.normalize();
@@ -3032,14 +3959,31 @@ export class Interiors {
         pos = V(lerp(start.x, land.x, e), lerp(start.y, land.y, i % 2 ? uu * uu : e) + 0.18 * Math.sin(Math.PI * uu) - 0.275 * 0.9 * (1 - uu), lerp(start.z, land.z, e));
         sc = 0.35 + 0.65 * outBack(clamp01(uu * 1.6)); moveDir = land.clone().sub(start);
       } else {
-        const w = v - flight, speed = (0.4 + 0.2 * hash(i * 9.1)) / 30, d = Math.min(wl - 0.3, w * speed);
-        pos = land.clone().addScaledVector(wd, Math.max(0, d)); sc = 1;
+        // round 7 (carry-over: ~60 thieves, walking OUTWARD ~0.4 m/s with a 10 f step bob until the dissolve; nobody
+        // stops): the right half stream on toward the crowd and past it, 7 of the left half spill onto THE RULE path (the
+        // rule-followers' road fills up too), the rest walk out toward the lens side, away from the panel
+        const w = v - flight, speed = (0.38 + 0.12 * hash(i * 9.1)) / 30, d = w * speed;
+        if (i % 8 === 0) { const rp = V(o[0] + BP.ruleFigure[0] * (0.55 + 0.3 * hash(i * 2.9)), o[1], o[2] + BP.ruleFigure[2] * (0.5 + 0.35 * hash(i * 4.4))).sub(land); rp.y = 0; moveDir = rp.normalize(); }
+        else if (i % 2 === 0) { moveDir = V(land.x - sp.x, 0, land.z - sp.z + 1.2).normalize(); }
+        else moveDir = wd;
+        pos = land.clone().addScaledVector(moveDir, d); sc = 1;
         if (w < 3) sy = 1 - 0.18 * Math.sin((w / 3) * Math.PI);
-        walk = Math.floor(w / 4) % 2; pos.y += 0.02 * Math.abs(Math.sin((w / 8) * Math.PI));
+        walk = Math.floor(w / 5) % 2; pos.y += 0.022 * Math.abs(Math.sin((w / 10) * Math.PI));
       }
+      const s = (0.92 + 0.16 * hash(i * 8.8)) * sc, flip = moveDir.dot(right) < 0 ? -1 : 1;
+      // round 8 (A7 P2: a thief stood on his cap at the punch word): the head-clear ring. In his depth plane the card may
+      // not enter his head + cap ellipse grown by HEAD_CLEAR (+ the card's own half size); a card that would is slid
+      // along the lens's horizontal to its landing side, so the paths bend round his head and nobody stands on it
+      { const dt = this.v3.copy(pos).addScaledVector(camUp, 0.275 * s * sy).sub(cam.position), tz = dt.dot(camFw);
+        if (tz > 0.3 && headZ > 0.3) {
+          const k = headZ / tz, DX = dt.dot(camRt) * k - headX, DY = dt.dot(camUp) * k - headY;
+          const ex = MAN11_HEAD.rx + HEAD_CLEAR + 0.185 * s * k, ey = MAN11_HEAD.ry + HEAD_CLEAR + 0.275 * s * sy * k;
+          const W = ex * Math.sqrt(Math.max(0, 1 - (DY / ey) ** 2)), side = i % 2 ? 1 : -1, need = W - side * DX;
+          this.thiefPush[i] = need > 0 ? (need * side) / k : 0;
+          if (need > 0) pos.addScaledVector(rgtH, this.thiefPush[i]);
+        } else this.thiefPush[i] = 0; }
       m.position.copy(pos);
       m.rotation.set(0, Math.atan2(cam.position.x - pos.x, cam.position.z - pos.z), 0);
-      const s = (0.92 + 0.16 * hash(i * 8.8)) * sc, flip = moveDir.dot(right) < 0 ? -1 : 1;
       m.scale.set(s * flip, s * sy, s);
       const mat = m.material as THREE.MeshBasicMaterial, tex = pictoTex(walk, i % 2);
       if (mat.map !== tex) { mat.map = tex; mat.needsUpdate = true; }
@@ -3048,7 +3992,7 @@ export class Interiors {
     { let tp = 0;
       for (let i = 0; i < THIEF_N && this.sign.visible; i++) {
         const v = f - (fe + i / 2.5 + 9); if (v < 0 || v >= 10) continue;
-        const [tx, tz] = thiefLand(i, sp.x, sp.z), u = v / 10;
+        const [tx0, tz0] = thiefLand(i, sp.x, sp.z), u = v / 10, tx = tx0 + rgtH.x * this.thiefPush[i], tz = tz0 + rgtH.z * this.thiefPush[i];
         for (let k = 0; k < 3 && tp < this.thiefPuffs.length; k++, tp++) {
           const s = this.thiefPuffs[tp], a = (k / 3) * TAU + i * 1.3, rr = (0.08 + 0.1 * hash(i * 3.3 + k)) * outCubic(u);
           s.visible = true; s.position.set(tx + Math.cos(a) * rr, o[1] + 0.03 + 0.12 * u, tz + Math.sin(a) * rr * 0.8);
@@ -3060,22 +4004,55 @@ export class Interiors {
     // label climbs its pole on "Many people steal" (10 f, a small overshoot) so the panel never covers it
     for (const P5 of this.posts5) {
       const lab = P5.label;
-      if (lab === this.eeLabel) { const c = (f - (BEAT.manySteal + 3)) / 10, k = c <= 0 ? 0 : c >= 1 ? 1 : outBack(c, 1.25); lab.position.y = o[1] + lerp(LBL5.ee[1], LBL5.eeHigh, k); }
+      if (lab === this.eeLabel) lab.position.y = o[1] + LBL5.eeHigh; // round 8: no climb (it pops where it stays)
       const grow = sm((f - P5.f) / 6);
       P5.post.visible = f >= P5.f && grow > 0.01; P5.post.scale.y = Math.max(1e-3, (lab.position.y - o[1] - P5.h / 2 + 0.02) * grow);
     }
     { const L = this.eeLabel, am = this.eeArrow, on = f >= BEAT.eachOther + 6;
       am.visible = on;
       if (on) { const u = am.material as THREE.ShaderMaterial; u.uniforms.uProg.value = clamp01((f - (BEAT.eachOther + 6)) / 5); u.uniforms.uAlpha.value = 1;
-        am.position.set(L.position.x, L.position.y - 0.4 - 0.08 - 0.03 * Math.sin(t * 4.0), L.position.z + 0.02); am.rotation.set(0, L.rotation.y, 0); } }
+        am.position.set(L.position.x, L.position.y - 0.4 - 0.08 - 0.03 * vs(4.0), L.position.z + 0.02); am.rotation.set(0, L.rotation.y, 0); } }
     // round 5 (A4 P2): the crowd footprints ink in along the branch, then pulse in a wave flowing up it (~1.2 m/s)
     { const fs = BEAT.eachOther + 4;
       this.crowdPrints.forEach((cp, k) => {
         const fin = clamp01((f - (fs + k * 0.4)) / 4); cp.m.visible = fin > 0;
         if (!cp.m.visible) return;
-        const flow = 0.5 + 0.5 * Math.sin(TAU * (t * 0.9 - cp.s * 0.75 + cp.ph));
+        const flow = 0.5 + 0.5 * Math.sin(vph(TAU * 0.9) - TAU * (cp.s * 0.75 - cp.ph));
         (cp.m.material as THREE.MeshBasicMaterial).opacity = 0.78 * fin * (0.22 + 0.78 * flow * flow);
       }); }
+    // round 6: the top-band drafting furniture + the 1.67 % / 7.92 % chalk notes write themselves in (left -> right)
+    for (const W of this.wipes) {
+      const u = (f - W.a) / Math.max(1, W.b - W.a), e = W.out === undefined ? 0 : sm((f - W.out) / 6); W.m.visible = u > 0 && e < 0.999;
+      if (W.m.visible) { W.mat.uniforms.uProg.value = clamp01(u); W.mat.uniforms.uAlpha.value = 1 - e; }
+    }
+    // round 7: the opening compass rose spins in as it draws (a quarter turn with a small overshoot)
+    { const W = this.wipes.find((w) => w.m === this.compass7); if (W) { const u = clamp01((f - W.a) / Math.max(1, W.b - W.a)); this.compass7.rotation.z = -1.4 * (1 - outBack(u, 1.6)); } }
+    // 7.92 % rides with the EVERYONE ELSE label as it climbs its pole (above it, facing the lens like the label)
+    { const L = this.eeLabel; this.pct8.position.set(L.position.x + 0.05, L.position.y + 0.7, L.position.z + 0.02); this.pct8.rotation.set(0, L.rotation.y, -0.04); }
+    // round 6: the receding chalk crowd: ink in row by row (6 f pop with a little overshoot), walk in place toward the
+    // arrow head on 2 drawings (10-12 video-f cycle, ~3 % bob), every head snaps up toward the panel as it lands and
+    // holds there ~1.4 s, then they walk on with an occasional glance back
+    // round 7 (A6 P3: the ~46 figures were frozen for 4 s of holds): they now MARCH down the wide arrow at ~0.15 m/s
+    // (looping at the far end: they shrink away there and grow back in at the near end), every figure boils (+-1.5 px
+    // on 2s), and 5 of them turn their heads back toward the visitor as he arrives (video ~1723)
+    { const right = this.v1.set(1, 0, 0).applyQuaternion(cam.quaternion), dir = Math.atan2(BP.crowd[0] - 1.1, -(BP.crowd[2] - 0.1)), dirX = Math.sin(dir);
+      const ux = Math.sin(dir), uz = -Math.cos(dir), vx = -uz, vz = ux, S0 = 2.0, S1 = 6.9, bq = Math.floor(VF / 2);
+      const flip = right.x * dirX >= 0 ? 1 : -1;
+      for (const w of this.walkers) {
+        const u = (f - w.f0) / 6; w.m.visible = u > 0;
+        if (!w.m.visible) continue;
+        const run = Math.max(0, VF - toV(w.f0)) * (0.15 / FPS), s = S0 + ((((w.s - S0 + run) % (S1 - S0)) + (S1 - S0)) % (S1 - S0));
+        const endK = sm(Math.min(s - S0, S1 - s) / 0.35);
+        const jx = (hash(bq * 1.31 + w.k * 7.7) - 0.5) * 0.014, jy = (hash(bq * 2.17 + w.k * 3.3) - 0.5) * 0.012;
+        w.m.position.set(o[0] + 1.1 + ux * s + vx * w.t + jx, o[1] + jy, o[2] + 0.1 + uz * s + vz * w.t);
+        const cyc = (VF / w.per + w.ph) % 1, step = cyc < 0.5 ? 0 : 1, bob = 0.03 * Math.abs(Math.sin(cyc * TAU));
+        const lv = f - w.look, ev = f - w.early, look = (ev >= 0 && ev < 30) || (lv >= 0 && lv < 42) || (lv >= 42 && ((Math.floor(VF / 30) + Math.floor(w.ph * 7)) % 9 === 0)) ? 1 : 0;
+        const sc = outBack(u, 2.2) * w.h * Math.max(1e-3, endK), mat = w.m.material as THREE.MeshBasicMaterial, tx = chalkWalkerTex(step, look, w.chip);
+        if (mat.map !== tx) { mat.map = tx; mat.needsUpdate = true; }
+        w.m.scale.set(sc * flip, sc * (1 + bob), sc);
+        w.m.rotation.set(0, Math.atan2(cam.position.x - w.m.position.x, cam.position.z - w.m.position.z), 0);
+      } }
+    this.bpLensDust.pose(t * 0.8, 9);
     this.bpDust.pose(t, 2);
   }
 

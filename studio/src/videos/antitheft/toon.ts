@@ -212,7 +212,7 @@ const OW = 4;
 export type Expr = "neutral" | "read" | "calm" | "proud" | "browsUp" | "wide" | "scheme" | "goggle" | "listen" | "guilty"
   | "whistle" | "nod" | "stern" | "grin" | "focus" | "aww" | "think" | "smile" | "shock" | "worry" | "smug"
   | "shifty" | "grimace" | "skeptic" | "effort" | "wince" | "smirk" | "uneasy" | "fair"
-  | "gasp" | "knowing" | "content" | "ponder" | "hush" | "sheepish" | "dotSmirk" | "blow" | "plot" | "laugh";
+  | "gasp" | "knowing" | "content" | "ponder" | "hush" | "sheepish" | "dotSmirk" | "blow" | "plot" | "laugh" | "alert";
 type EyeK = "dot" | "big" | "small" | "lid" | "slit" | "happy" | "dash" | "squeeze" | "shock" | "shockHalf" | "side" | "goggle" | "goggleHalf";
 type MouthK = "dash" | "frown" | "smirk" | "smile" | "smileWide" | "grin" | "o" | "O" | "wave" | "teeth" | "t0" | "t1" | "t2" | "pout" | "purse" | "smirk1";
 /** eyes [back, front], brows [inner, outer] offsets in u (+ = down), optional other brow, mouth kind */
@@ -253,6 +253,8 @@ const FACE: Record<Expr, { eye: [EyeK, EyeK]; brow: [number, number]; brow2?: [n
   smirk: { eye: ["lid", "lid"], brow: [1, -2], brow2: [-6, -8], mouth: "smirk1" },
   // A3: a gasp (wide dot eyes, brows up, small "o"): the fiance's shot-4 reaction (the goggles stay exclusive to "now")
   gasp: { eye: ["big", "big"], brow: [-8, -7], mouth: "o" },
+  // A5: alert (eyes widened, brows up, mouth still closed): the beat BEFORE the "o" (shot 4 "vandalized")
+  alert: { eye: ["big", "big"], brow: [-7, -6], mouth: "dash" },
   // A3 professor: calm and respectful, never a V. knowing = screen-left brow arched ~10 deg, the other flat, half-lids,
   // small closed smile; content = ^^ eyes + flat relaxed brows; ponder = flat brows lifted 2 u, pursed thinking mouth
   knowing: { eye: ["lid", "lid"], brow: [-5, -8], brow2: [-1, -1], mouth: "smile" },
@@ -442,6 +444,8 @@ export type Outfit = {
    *  colour, sunglasses pushed up on the forehead, knit sweater (rib hem), pen / folded map peeking from the pocket */
   moustache?: string; browCol?: string; glassesUp?: boolean; badge?: boolean; fanny?: string; sunUp?: boolean; sweater?: boolean;
   pocketPeek?: "pen" | "map" | null;
+  /** A5: the honest student's unique marks: a gold star sticker on the chest, a red hair clip */
+  starBadge?: boolean; hairClip?: string;
   /** A3 backpack extras: a water bottle in the side pocket (colour), a carabiner swinging on the strap */
   bottle?: string; carabiner?: boolean;
 };
@@ -723,7 +727,7 @@ export const jasper = (p: Pen, cx: number, cy: number, r: number, seed: number, 
 
 // ---------------- held props ----------------
 export type Hold = "camera" | "clipboard" | "pen" | "chalk" | "stopwatch" | "tally" | "chip" | "scoop" | "letter" | "panel" | "clip" | "brush"
-  | "bucket" | "map" | "plank" | "testboard" | "pencil" | "envelope" | "pole" | "coffee" | "tarp" | "counter" | "phone" | "paper" | null;
+  | "bucket" | "map" | "plank" | "testboard" | "pencil" | "envelope" | "pole" | "coffee" | "tarp" | "counter" | "phone" | "paper" | "gum" | "ruler" | "note" | null;
 /** prop at hand (hx, hy); ang in degrees (0 = upright); side = which arm; n = prop state (ticks, seconds, scoop load) */
 const holdProp = (p: Pen, kind: Hold, hx: number, hy: number, u: number, ang: number, side: number, light: number, n = 0) => {
   if (!kind) return;
@@ -763,8 +767,8 @@ const holdProp = (p: Pen, kind: Hold, hx: number, hy: number, u: number, ang: nu
       p.stroke(R([[hx - 19 * u, hy - 21 * u], [hx + 19 * u, hy - 21 * u]]), 1 * u, "#8a93a8");
       p.stroke(R([[hx, hy - 19 * u], [hx, hy + 22 * u]]), 1 * u, "#8a93a8");
       for (const [cx, L] of [[-10, "A"], [10, "B"]] as const) p.text(L, ...R([[hx + cx * u, hy - 13 * u]])[0], 9 * u, "#c8343a", "Arial Black", "center", rad(ang));
-      for (let k = 0; k < Math.min(n, 16); k++) { // ink ticks appear one by one: 5-bar gates; A4: A stops at II, B runs to ~14 (a rewatch clue)
-        const col = k < 4 ? (k % 2 ? 10 : -10) : 10, i = k < 4 ? Math.floor(k / 2) : k - 2, g = Math.floor(i / 5), j = i % 5;
+      for (let k = 0; k < Math.min(n, 16); k++) { // ink ticks appear one by one: 5-bar gates; A6 P2 (no spoiler before shot 10): A and B fill EVENLY
+        const col = k % 2 ? 10 : -10, i = Math.floor(k / 2), g = Math.floor(i / 5), j = i % 5;
         const x = hx + (col - 6 + j * 3) * u, y = hy - 2 * u + g * 11 * u;
         p.stroke(R(j < 4 ? [[x, y - 3.5 * u], [x, y + 3.5 * u]] : [[x - 13 * u, y + 2.5 * u], [x + 0.5 * u, y - 2.5 * u]]), 1.2 * u, "#2a3a6a");
       }
@@ -786,6 +790,24 @@ const holdProp = (p: Pen, kind: Hold, hx: number, hy: number, u: number, ang: nu
       for (let r = 0; r < 3; r++) p.stroke(R([[hx - 10 * u, hy - 24 * u + r * 7 * u], [hx + 10 * u, hy - 24 * u + r * 7 * u]]), 1 * u, "#8a93a8");
       p.text("A", ...R([[hx + 7 * u, hy - 33 * u]])[0], 9 * u, "#d8342c", "Arial Black", "center", rad(ang));
       p.dot(hx, hy, 5.4 * u);
+      break;
+    }
+    case "gum": { // A5: a pink bubble-gum bubble at the mouth (n = 0..10 size)
+      const r = (5 + 1.1 * n) * u;
+      p.ell(hx + side * 2 * u, hy - 2 * u, r, r * 0.92, "#ff8fc0", 1.6 * u);
+      p.ell(hx + side * 2 * u - 0.35 * r, hy - 2 * u - 0.35 * r, 0.22 * r, 0.16 * r, "#ffe1ef", 0);
+      break;
+    }
+    case "ruler": { // A5: a wooden school ruler with tick marks
+      const b = R(rrect(hx - 3 * u, hy - 40 * u, hx + 3 * u, hy + 4 * u, 0.8 * u));
+      p.poly(b, "#e9c46a", 1.4 * u);
+      for (let k = 0; k < 7; k++) p.stroke(R([[hx - 3 * u, hy - 36 * u + k * 6 * u], [hx - (k % 2 ? 0.5 : -0.8) * u, hy - 36 * u + k * 6 * u]]), 0.9 * u);
+      break;
+    }
+    case "note": { // A5: a crumpled crib note (a small cream wad with scribble lines)
+      const pts: P2[] = []; for (let k = 0; k < 9; k++) { const a = (k / 9) * Math.PI * 2, rr = (7 + (k % 2 ? 1.5 : -1)) * u; pts.push([hx + rr * Math.cos(a), hy - 6 * u + rr * Math.sin(a)]); }
+      p.poly(pts, "#f4ecd6", 1.3 * u);
+      p.stroke([[hx - 4 * u, hy - 8 * u], [hx + 3 * u, hy - 7 * u]], 0.9 * u, "#5a6a9a"); p.stroke([[hx - 3 * u, hy - 4 * u], [hx + 4 * u, hy - 5 * u]], 0.9 * u, "#5a6a9a");
       break;
     }
     case "envelope": {
@@ -839,7 +861,7 @@ const holdProp = (p: Pen, kind: Hold, hx: number, hy: number, u: number, ang: nu
     }
     case "chip": { // small rainbow petrified-wood chip PINCHED by its edge (fingers below it, the whole cut face shows)
       // n bits: 1 = white paint dot, 2 = glint, 4 = big (the marked-wood insert), 8 = quartz (the dusk tag chip)
-      const big = n & 4 ? 1.45 : 1, r = 17 * u * big, cy = hy - r * 0.95;
+      const big = n & 4 ? 1.8 : 1, r = 17 * u * big, cy = hy - r * 0.95; // A6: 1.8x (was 1.45x): the held chips read at phone size
       jasper(p, hx, cy, r, 5 + (n >> 4), { dot: !!(n & 1), quartz: !!(n & 8), ink: 2 * u * big, dotK: n & 4 ? 1.5 : 1 });
       if (n & 2) star4(p, hx - r * 0.6, cy - r * 0.7, r * 1.1, "#fffdf2", 1.2 * u);
       // finger + thumb pinching the lower edge
@@ -938,7 +960,7 @@ const holdProp = (p: Pen, kind: Hold, hx: number, hy: number, u: number, ang: nu
 
 // ---------------- the rig (geometry shared by drawing and by cast.ts, which needs hand positions) ----------------
 export type Target = "hang" | "hip" | "mouth" | "chin" | "head" | "pocket" | "chest" | "chestPocket" | "waist" | "reach" | "ground"
-  | "eye" | "up" | "point" | "board" | "show" | "behind" | "lap" | "strap" | "whisper" | "temple" | "raise" | "selfie" | "thumb";
+  | "eye" | "up" | "point" | "board" | "show" | "behind" | "lap" | "strap" | "whisper" | "temple" | "raise" | "selfie" | "thumb" | "hipPocket";
 /** hand drawing: ball (default), open mitten (whisper), thumbs-up, 1-3 raised fingers (counting), open palm */
 export type HandShape = "ball" | "mitten" | "thumb" | "f1" | "f2" | "f3" | "palm";
 /** a hand: a named target (or a design point in FINAL canvas units), optionally blended toward b by k, offset in u.
@@ -973,6 +995,8 @@ export type PersonOpts = {
   brimShade?: number;
   /** pocket bulge after something went into it (0..1) */
   bulge?: number;
+  /** A6: a visible hip-pocket slit on the shorts [side -1 | 1, bulge 0..1, chip peek 0..1] (shot 3) */
+  hipSlit?: [number, number, number];
   /** a chip peeking out of the chest pocket: 0 = none, 0..1 = how far it sticks out (top 30 % at ~0.35) */
   pocketChip?: number;
   /** hat brim / ribbon flutter (-1..1, a fast wave on top of the slow wind) */
@@ -989,7 +1013,7 @@ export type PersonOpts = {
   /** A4: reading glasses (glassesUp outfits) dropping from the hair onto the nose 0..1 (>1 = the bounce) */
   glassesDrop?: number;
 };
-const FRONT_T: Partial<Record<Target, boolean>> = { mouth: true, chin: true, head: true, pocket: true, chest: true, chestPocket: true,
+const FRONT_T: Partial<Record<Target, boolean>> = { mouth: true, chin: true, head: true, pocket: true, hipPocket: true, chest: true, chestPocket: true,
   waist: true, eye: true, hip: true, show: true, lap: true, strap: true, whisper: true, temple: true, selfie: true, thumb: true };
 
 export type Rig = ReturnType<typeof rig>;
@@ -1047,6 +1071,7 @@ export const rig = (o: Outfit, opts: PersonOpts) => {
       case "board": return [tcx + side * 1.25 * T.a, chin - 0.32 * HH];
       case "show": return [tcx + side * 1.3 * T.a, chin + 0.12 * HH];
       case "behind": return [tcx + side * 0.6 * T.a, torsoBot - 0.2 * HH];
+      case "hipPocket": return [300 + side * (0.98 * T.a - 6 * u), torsoBot + 0.07 * HH]; // A6: INTO the shorts' hip-pocket slit (the slit + chip peek show inboard of the hand)
     }
     return S;
   };
@@ -1365,6 +1390,7 @@ export const drawPerson = (p: Pen, o: Outfit, opts: PersonOpts) => {
     if (o.sweater) p.poly([[tcx - 15 * u, chin - 0.01 * HH], [tcx + 15 * u, chin - 0.01 * HH], [tcx, chin + 0.24 * HH]], shade(o.shirt, 0.78), 1.6 * u); // sweater V
     for (const s of [-1, 1]) p.poly([[tcx + s * 1 * u, chin + 0.08 * HH], [tcx + s * 20 * u, chin - 0.03 * HH], [tcx + s * 17 * u, chin + 0.2 * HH]], "#f6f3ec", 1.8 * u);
   }
+  if (o.starBadge && !back) star4(p, tcx + 0.5 * T.a, chin + 0.36 * HH, 11 * u, "#ffd23a", 1.6 * u);
   if (o.badge && !back) { // lanyard + ID badge
     p.stroke([[tcx - 0.42 * T.a, chin + 0.02 * HH], [tcx + 0.28 * T.a, chin + 0.46 * HH], [tcx + 0.52 * T.a, chin + 0.02 * HH]], 1.6 * u, "#c8343a");
     const bx = tcx + 0.28 * T.a, by2 = chin + 0.46 * HH;
@@ -1402,21 +1428,29 @@ export const drawPerson = (p: Pen, o: Outfit, opts: PersonOpts) => {
   if (back && facing) {
     // back 3/4 (A3): the head turns toward `facing`: a ~25 % cheek crescent shows on that side (the hair cap slides
     // away), with one white-rimmed side-eye looking further round, the glasses' temple arm + lens edge, a brow tick
-    const sl = 0.3 * H.a;
+    // A5 (audit: the white eye inside the crescent read as a sticker / headband): a real 3/4 rear view. The hair dome
+    // covers ~86 % of the head; on the turning side a thin skin sliver (~14 % of the head width) with the CHEEK bulging
+    // a little past the skull contour (inked, continuous), a short brow tick and a lash tick poking past the contour
+    // (they tilt up when the character looks up); no eye white. Glasses: just the temple arm.
+    // A6 P1 (still read as a white comma inside the hair): a narrower sliver (~17 % of the head) tinted toward the
+    // lavender far side, never a pure-white crescent
+    const sl = 0.19 * H.a, skinQ = mix(skin, "#b9a8d2", 0.32);
+    p.clip(hp, () => { p.poly(hp, skinQ, 0); });
     p.clip(hp, () => {
       const g = p.g; g.save();
       hairOn(p, o, hp.map(([x, y]) => [x - facing * sl, y] as P2), H, 300 - facing * sl, hc, light, ow, back, hatted);
       g.restore();
     });
+    const ly = clamp(opts.lookY ?? 0, -1.5, 1.5), cx0 = 300 + facing * 0.9 * H.a, cy0 = hc + 0.3 * H.b;
+    // the cheek: a skin ellipse bulging ~5 % past the contour at jaw height, its seam hidden under the head fill
+    const ck: P2[] = []; for (let k = 0; k <= 16; k++) { const a = (k / 16) * Math.PI * 2; ck.push([cx0 + 0.16 * H.a * Math.cos(a), cy0 + 0.26 * H.b * Math.sin(a)]); }
+    p.poly(ck, skinQ, ow * 0.9);
+    p.clip(hp, () => { p.poly(ck.map(([x, y]) => [x - facing * 0.04 * H.a, y] as P2), skinQ, 0); });
     p.inkRing(hp, ow, thick);
-    const exx = 300 + facing * 0.84 * H.a, eyy = hc + 1 * u + (opts.lookY ?? 0) * 1.5 * u;
-    p.clip(hp, () => {
-      p.ell(exx, eyy, 5.2 * u, 6.2 * u, WHITE, 1.4 * u);
-      p.dot(exx + facing * 2.2 * u, eyy + 0.6 * u, 3.1 * u, EYE);
-      p.stroke([[exx - facing * 4 * u, eyy - 9.5 * u], [exx + facing * 5 * u, eyy - 11 * u]], 3.4 * u, opts.face?.browCol ?? INK);
-      if (o.glasses === "round") p.arc(exx + facing * 1 * u, eyy, 8.5 * u, 8.5 * u, facing > 0 ? 100 : -100, facing > 0 ? 260 : 80, 2.2 * u);
-    });
-    if (o.glasses) p.stroke([[300 + facing * 0.45 * H.a, hc - 4 * u], [300 + facing * 0.76 * H.a, hc - 1.5 * u]], 2.4 * u);
+    { const ex = 300 + facing * 1.0 * H.a, ey = hc - 0.02 * H.b + ly * 2 * u, up = -ly * 4 * u + (opts.face?.browUp?.[1] ?? 0) * u, bc = opts.face?.browCol ?? INK;
+      p.stroke([[ex - facing * 4 * u, ey - 10 * u], [ex + facing * 4.5 * u, ey - 12 * u - up]], 3.2 * u, bc);          // brow tick
+      p.stroke([[ex - facing * 1 * u, ey], [ex + facing * 4 * u, ey - 1.5 * u - up * 0.6]], 2.4 * u, INK); }             // lash tick
+    if (o.glasses) p.stroke([[300 + facing * 0.45 * H.a, hc - 4 * u], [300 + facing * 0.98 * H.a, hc - 2.5 * u]], 2.4 * u);
   } else hairOn(p, o, hp, H, 300, hc, light, ow, back, hatted);
   if (!back) {
     const brim = o.hat === "bucket" || o.hat === "ranger" || o.hat === "cap" || o.hat === "visor";
@@ -1432,11 +1466,12 @@ export const drawPerson = (p: Pen, o: Outfit, opts: PersonOpts) => {
     if (o.moustache) X.moustache = o.moustache;
     faceFront(p, 300, hc, W, expr, facing, look, lookY, blink, brim, skin, talk, o.glasses, X);
     // soft brim shadow across the forehead (lavender multiply), following the head
-    const bs = opts.brimShade ?? (o.hat === "sunhat" ? 1 : o.hat ? 0.6 : 0);
+    // A7 P2 (noon sun, a wide straw brim, an evenly lit face): a firmer lavender brim band that reaches the eyes
+    const bs = opts.brimShade ?? (o.hat === "sunhat" ? 1 : o.hat ? 0.75 : 0);
     if (bs > 0) p.clip(hp, () => {
-      const g = p.g, top = hc - (o.hat === "sunhat" ? 0.72 : 0.58) * H.b, bot = hc - (o.hat === "sunhat" ? 0.08 : 0.3) * H.b;
+      const g = p.g, top = hc - (o.hat === "sunhat" ? 0.72 : 0.58) * H.b, bot = hc + (o.hat === "sunhat" ? 0.06 : -0.24) * H.b;
       const [ax, ay] = p.P(300, top), [bx, by] = p.P(300, bot), gr = g.createLinearGradient(ax, ay, bx, by);
-      gr.addColorStop(0, `rgba(160,142,208,${0.8 * bs})`); gr.addColorStop(0.55, `rgba(185,169,214,${0.5 * bs})`); gr.addColorStop(1, "rgba(185,169,214,0)");
+      gr.addColorStop(0, `rgba(160,142,208,${0.85 * bs})`); gr.addColorStop(0.5, `rgba(184,168,204,${0.6 * bs})`); gr.addColorStop(1, "rgba(184,168,204,0)");
       g.save(); g.globalCompositeOperation = "multiply"; g.fillStyle = gr;
       p.path(rrect(300 - 1.3 * H.a, top - 0.2 * H.b, 300 + 1.3 * H.a, bot, 1), true); g.fill(); g.restore();
     });
@@ -1468,6 +1503,11 @@ export const drawPerson = (p: Pen, o: Outfit, opts: PersonOpts) => {
     const er = rotPts([[px - 3 * u, py - 22 * u], [px + 3 * u, py - 22 * u], [px + 3 * u, py - 17 * u], [px - 3 * u, py - 17 * u]], rad(-30 * s), px, py);
     p.poly(er, "#e88a9a", 1.4 * u);
   }
+  if (o.hairClip) { // A5: a small barrette on the hair (screen-left side front, right side from behind)
+    const s = back ? 1 : -1, cx = 300 + s * 0.62 * H.a, cy = hc - 0.62 * H.b;
+    p.poly(rotPts(rrect(cx - 9 * u, cy - 3.2 * u, cx + 9 * u, cy + 3.2 * u, 2.5 * u), rad(28 * s), cx, cy), o.hairClip, 1.6 * u);
+    p.dot(cx + s * 4 * u, cy - 1 * u, 1.3 * u, "#ffffff");
+  }
   if (opts.rim) rimLine(p, hp, ow * 0.55, opts.rim, 1.6 * u * (opts.rimK ?? 1), hc + 0.25 * H.b);
   if (opts.hatLag || opts.hatLift) { p.rot = headRot(opts.hatLag ?? 0.0001); if (opts.hatLift && p.rot) p.rot = [p.rot[0], p.rot[1], p.rot[2], p.rot[3] ?? 0, (p.rot[4] ?? 0) - opts.hatLift]; }
   hatOn(p, o, H, 300, hc, light, ow, wind + 0.35 * (opts.flutter ?? 0), back, facing, opts.flutter ?? 0);
@@ -1478,6 +1518,17 @@ export const drawPerson = (p: Pen, o: Outfit, opts: PersonOpts) => {
   }
   // ---- arms + props in front ----
   p.rot = A ? [rad(A), 300, hipY] : null;
+  if (opts.hipSlit && o.shorts && !back) { // A6 P2 (shot 3; drawn OUTSIDE the shirt clip, under the front arms): a READABLE hip-pocket slit on the shorts just under the shirt hem,
+    // its bulge after the chip goes in and a rainbow chip corner peeking out of it
+    const [hs, hb, hpk] = opts.hipSlit, wx = 0.98 * T.a, x0 = 300 + hs * (wx - 4 * u), x1 = 300 + hs * (wx - 21 * u), y0 = torsoBot + 1 * u, y1 = torsoBot + 0.17 * HH;
+    const st = "#140a1c", hl = mix(o.pants, "#ffffff", 0.42);
+    if (hb > 0) p.ell(300 + hs * (wx - 13 * u), torsoBot + 0.09 * HH, 10 * u * (1 + 0.5 * hb), 8 * u * (1 + 0.4 * hb), mix(o.pants, "#ffffff", 0.16), 0);
+    if (hpk > 0) { const jx = 300 + hs * (wx - 14 * u), jy = torsoBot + (3 - 7 * hpk) * u; jasper(p, jx, jy, 7.5 * u, 9, { ink: 1.5 * u }); }
+    const sl2 = curve([x0, y0], [x1 + hs * 2 * u, torsoBot + 0.06 * HH], [x1 - hs * 1 * u, y1], 8);
+    p.stroke(sl2.map(([x, y]) => [x - hs * 1.6 * u, y] as P2), 1.3 * u, hl);            // a pale lip on the slit (contrast on dark shorts)
+    p.stroke(sl2, 3 * u, st);
+    for (let k = 0; k < 4; k++) { const yy = y0 + 4 * u + k * 5 * u; p.stroke([[x1 + hs * (9 - 1.6 * k) * u, yy], [x1 + hs * (9 - 1.6 * k) * u, yy + 2.2 * u]], 1 * u, hl); }
+  }
   for (const h of R.hands) if (h.front || h.split) { drawArm(h, h.split ? "hand" : "all"); props(h); }
   p.rot = null;
 };
@@ -1594,20 +1645,22 @@ export const fxBubbleClip = (p: Pen, step = 8, tail = true) => {
   // desk + clerk on the right
   p.poly(rrect(560, 470, 900, 560, 10), "#a8743f", 9);
   const clerk: Outfit = { shirt: "#f2f2ef", pants: "#3b3f52", shoes: "#3a2a20", hair: "#3a2a20", hairStyle: "short", tie: "#c8343a", glasses: null };
-  g.save(); g.translate(765 - 300 * 0.5, 600 - 975 * 0.5); g.scale(0.5, 0.5);
+  g.save(); g.translate(820 - 300 * 0.5, 600 - 975 * 0.5); g.scale(0.5, 0.5);
   const wipe = st >= 12;
   // A4: from step 6 his near hand reaches out toward the clip (palm up), the far one stays up in surprise / wipes
   const reachC = st >= 6;
-  drawPerson(new Pen(g), clerk, { expr: wipe ? "worry" : "shock", facing: -1, look: -0.8, lookY: 0.2, tilt: -4 + (st % 4 < 2 ? 1.5 : -1.5),
+  drawPerson(new Pen(g), clerk, { expr: wipe ? "worry" : "goggle", facing: -1, look: -0.8, lookY: 0.2, /* A5: goggle eyes */ tilt: -4 + (st % 4 < 2 ? 1.5 : -1.5),
     hands: [reachC ? { a: "point", dx: -8, dy: 14 + 0.5 * bob, shape: "palm", sz: 0.24 } : { a: "up", dy: 10 + bob }, wipe ? { a: "head", dx: -6, dy: st % 4 < 2 ? 2 : -3 } : { a: "up", dy: 10 - bob }], seed: 4 });
   g.restore();
   p.poly(rrect(560, 470, 900, 545, 10), "#b98250", 9); // desk front over the clerk's legs
   p.poly(rrect(600, 430, 700, 470, 4), "#fbf8ef", 6);    // papers on the desk
   // her (mini): teal sundress + sun hat, leaning in and holding the paperclip right up to the clerk
   const her: Outfit = WOMAN_FIT, HX = 450;
-  const reach = st < 3 ? 26 - 8 * (st / 3) : 26 + 12 * Math.min(1, (st - 3) / 3) - 3 * (st >= 6 && st < 8 ? 1 : 0);
+  // A6 (render check: the red bow sat ON the clerk's face and read as a bloody nose): the clip is offered tipped
+  // toward him (66 deg) at his chest / palm height in the clear gap between them, and he sits 55 u further right (the bow stays in the gap, off his face and shirt)
+  const reach = st < 3 ? -8 - 8 * (st / 3) : -8 + 10 * Math.min(1, (st - 3) / 3) - 3 * (st >= 6 && st < 8 ? 1 : 0);
   const ho: PersonOpts = { expr: "proud", facing: 1, tilt: 6 + (st >= 8 && st < 10 ? 9 : 0), headTilt: st >= 8 && st < 10 ? 8 : 0,
-    hands: [{ a: "hang" }, { a: "point", dx: reach, dy: 14, hold: "clip", front: true, n: 58, ang: 28 }], seed: 11, wind: 0.2 };
+    hands: [{ a: "hang" }, { a: "point", dx: reach, dy: 34, hold: "clip", front: true, n: 58, ang: 66 }], seed: 11, wind: 0.2 };
   g.save(); g.translate(HX - 300 * 0.52, 625 - 975 * 0.52); g.scale(0.52, 0.52);
   drawPerson(new Pen(g), her, ho);
   g.restore();
@@ -1617,8 +1670,8 @@ export const fxBubbleClip = (p: Pen, step = 8, tail = true) => {
   if (Math.floor(st / 6) % 2 === 0) star4(p, sx + 34, sy - 60, 30, "#ffd84a", 3); else star4(p, sx - 8, sy - 30, 18, "#fff6c0", 3);
   // surprise ticks over the clerk (pulse on 2s)
   const tl = st % 4 < 2 ? 1 : 1.3;
-  for (const a of [-60, -90, -120]) { const b = rad(a); p.stroke([[735 + 66 * Math.cos(b), 205 + 66 * Math.sin(b)], [735 + (66 + 34 * tl) * Math.cos(b), 205 + (66 + 34 * tl) * Math.sin(b)]], 8); }
-  if (wipe) { const dx = 690, dy = 228, pts: P2[] = [[dx, dy - 22]]; for (let i = 0; i <= 14; i++) { const a = rad(-20 + (220 * i) / 14); pts.push([dx + 13 * Math.cos(a), dy + 12 + 13 * Math.sin(a)]); } p.poly(pts, "#8fd0f0", 5); }
+  for (const a of [-60, -90, -120]) { const b = rad(a); p.stroke([[790 + 66 * Math.cos(b), 205 + 66 * Math.sin(b)], [790 + (66 + 34 * tl) * Math.cos(b), 205 + (66 + 34 * tl) * Math.sin(b)]], 8); }
+  if (wipe) { const dx = 745, dy = 228, pts: P2[] = [[dx, dy - 22]]; for (let i = 0; i <= 14; i++) { const a = rad(-20 + (220 * i) / 14); pts.push([dx + 13 * Math.cos(a), dy + 12 + 13 * Math.sin(a)]); } p.poly(pts, "#8fd0f0", 5); }
   });
   bubbleInk(p, fr);
 };
@@ -1637,9 +1690,11 @@ export const fxBubbleCheat = (p: Pen, ph = 0) => {
       hairStyle: (["short", "curly", "pony"] as HairStyle[])[v], collar: true, sweater: true, build: "kid" });
     const xs = [205, 500, 795];
     const figs: PersonOpts[] = [
-      { expr: "shifty", facing: 1, look: 1.4, lookY: 0.7, tilt: 13 + (ph ? 3 : 0), headTilt: ph ? 6 : 2, hands: [{ a: "lap" }, { a: "chest", dx: 8, dy: 10 }] },
-      { expr: "shifty", facing: -1, look: ph ? -1.3 : 1.3, lookY: 0.2, tilt: -3, hands: [{ a: "raise", dx: -6, dy: 22 }, { a: "lap" }] },
-      { expr: "shifty", facing: -1, look: -1, lookY: 1, tilt: -9 - (ph ? 2 : 0), headTilt: ph ? -5 : -2, hands: [{ a: "lap", dx: -10, dy: 26, hold: "phone" }, { a: "lap" }] },
+      // A7 P2 (a frozen drawing for 1.8 s): 4 poses on 2s-ish (cast.ts ph 0..3): the peeker's eyes dart between his own
+      // paper and the neighbour's, the crib strip slides, the phone hand flicks
+      { expr: "shifty", facing: 1, look: ph % 2 ? 1.4 : 0.5, lookY: ph % 2 ? 0.7 : 1, tilt: 13 + (ph % 2 ? 3 : 0), headTilt: ph % 2 ? 6 : 2, hands: [{ a: "lap" }, { a: "chest", dx: 8, dy: 10 }] },
+      { expr: "shifty", facing: -1, look: ph >= 2 ? -1.3 : 1.3, lookY: 0.2, tilt: -3 + (ph === 1 ? 2 : 0), hands: [{ a: "raise", dx: -6 + (ph === 3 ? 4 : 0), dy: 22 }, { a: "lap" }] },
+      { expr: "shifty", facing: -1, look: -1, lookY: 1, tilt: -9 - (ph % 2 ? 2 : 0), headTilt: ph % 2 ? -5 : -2, hands: [{ a: "lap", dx: -10, dy: 26 - (ph === 2 ? 6 : 0), hold: "phone" }, { a: "lap" }] },
     ];
     const at2 = (i: number, hand: 0 | 1): P2 => { const [hx, hy] = handAt(kid(i), { ...figs[i], mode: "chair", seed: 3 + i * 2 }, hand); return [xs[i] + (hx - 300) * sc, base + (hy - 975) * sc]; };
     const head = (i: number): P2 => [xs[i] + (figs[i].facing ?? 0) * 6, base + (503 - 975) * sc];
@@ -1664,7 +1719,7 @@ export const fxBubbleCheat = (p: Pen, ph = 0) => {
       const ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
       p.poly(rotPts([[b[0] + 20, b[1]], [b[0] - 12, b[1] - 16], [b[0] - 12, b[1] + 16]], ang, b[0], b[1]), INK, 0); }
     // 2: a long crib sheet unrolled out of the raised cuff, answers scrawled down it (it sways on the 2nd pose)
-    { const [x, y] = at2(1, 0), sw = ph ? 8 : -4, strip: P2[] = [[x - 12, y - 4], [x + 12, y - 4], [x + 16 + sw, y + 150], [x - 10 + sw, y + 156]];
+    { const [x, y] = at2(1, 0), sw = [-4, 2, 8, 2][ph % 4], strip: P2[] = [[x - 12, y - 4], [x + 12, y - 4], [x + 16 + sw, y + 150], [x - 10 + sw, y + 156]];
       p.poly(strip, "#fbf8ef", 5);
       for (let k = 0; k < 6; k++) p.stroke([[x - 6 + sw * (k / 6), y + 14 + k * 22], [x + 9 + sw * (k / 6), y + 14 + k * 22]], 3.4, "#2a3a6a");
       p.ell(x, y - 2, 15, 8, "#fbf8ef", 5); }
@@ -1720,7 +1775,7 @@ export const fxTag = (p: Pen, n: number, twine = false, flap = false) => {
   p.arc(78, 192, 40, 46, 120, 400, 6, "#e9e0c8");
   if (twine) p.stroke([[78, 196], [40, 236], [4, 262]], 9, INK); // A3: the short dark twine down into the pocket
   const g2 = p.g; g2.save(); g2.globalAlpha = 0.85;
-  p.poly(rotPts(rrect(196, 288, 470, 340, 6), rad(-5), 333, 314), null, 5, "#c8343a"); p.text("RETURNED", 333, 315, 38, "#c8343a", "Arial Black", "center", rad(-5));
+  p.poly(rotPts(rrect(132, 270, 538, 350, 7), rad(-6), 335, 310), null, 6, "#d8342c"); p.text("RETURNED", 335, 313, 62, "#d8342c", "Arial Black", "center", rad(-6)); // A6 P2: >= 30 px at the snap
   g2.restore();
 };
 /** A4: the tag's split-flap number card (192 x 288): cream card, plum ink, the big red count, a hinge line */
@@ -1760,9 +1815,10 @@ export const fxChipTag = (p: Pen, n: number, chip: boolean) => {
   const g = p.g;
   // A3: the SAME rainbow petrified-wood bait chip as the trails (red / orange / yellow / purple, bark rind, one white
   // paint dot), tied to the tag's eyelet with a short dark twine
-  p.stroke([[190, 236], [262, 222], [370, 256]], 7, "#2c1e2a");
-  g.save(); g.translate(300, 64); g.scale(0.92, 0.92); fxTag(new Pen(g), n); g.restore();
-  if (chip) jasper(p, 150, 245, 112, 21, { dot: true, ink: 11, dotK: 1.25 });
+  // A7 P2: the chip ~1.3x bigger (the payoff's hero object), the tag a little smaller and further right
+  p.stroke([[220, 236], [292, 222], [392, 256]], 7, "#2c1e2a");
+  g.save(); g.translate(352, 78); g.scale(0.82, 0.82); fxTag(new Pen(g), n); g.restore();
+  if (chip) jasper(p, 160, 250, 148, 21, { dot: true, ink: 12, dotK: 1.35 });
 };
 /** darken an effect card toward the scene light (unlit cards in dusk / night shots), keeping its alpha */
 export const tintCard = (p: Pen, w: number, h: number, rgba: string) => {
@@ -1811,15 +1867,38 @@ export const fxRabbit = (p: Pen, leg: number) => {
   p.band([[70, 64], [86 + 10 * leg, 74 - 4 * leg]], D, 5, 2.5, "round");
 };
 /** music note (whistling) on a 128 x 128 canvas: off-white with plum ink */
-export const fxNote = (p: Pen) => {
-  p.ell(48, 96, 21, 15, "#f8f3ee", 7, 0, 360, -22);
-  p.band([[66, 92], [66, 22]], "#f8f3ee", 9, 4);
-  p.band(curve([66, 24], [92, 34], [100, 62], 8), "#f8f3ee", 9, 4, "round");
+export const fxNote = (p: Pen, col = "#f8f3ee") => {
+  p.ell(48, 96, 21, 15, col, 7, 0, 360, -22);
+  p.band([[66, 92], [66, 22]], col, 9, 4);
+  p.band(curve([66, 24], [92, 34], [100, 62], 8), col, 9, 4, "round");
+};
+/** A6 ADD: a cold-morning breath puff on a 256 x 128 canvas, t 0..1: three small cartoon vapour puffs (white, a thin
+ *  cool-grey line so they read against a pale sky) that bud out of the mouth one after another, drift right and up,
+ *  swell and fade (mirror with dir = -1) */
+export const fxBreath = (p: Pen, t: number, dir = 1) => {
+  const g = p.g; g.save(); if (dir < 0) { g.translate(256, 0); g.scale(-1, 1); }
+  for (const [x0, y0, r, d] of [[36, 76, 24, 0], [96, 68, 32, 0.12], [164, 62, 40, 0.24]] as const) {
+    const k = clamp((t + 0.05 - d) / (1 - d), 0, 1); if (k <= 0) continue;
+    const x = x0 + 40 * k, y = y0 - 10 * k, rr = r * (0.6 + 0.5 * k), a = Math.min(1, 3.5 * k) * (1 - Math.max(0, (k - 0.55) / 0.45));
+    g.globalAlpha = a; // A6 P3: a pale lavender fill (55 %) with a thin plum-grey ink, so the wisp reads on a pale sky
+    g.beginPath(); g.ellipse(x, y, rr, rr * 0.86, 0, 0, Math.PI * 2);
+    g.fillStyle = "rgba(232,228,242,0.62)"; g.fill(); g.lineWidth = 4; g.strokeStyle = "rgba(44,30,42,0.42)"; g.stroke();
+    g.beginPath(); g.ellipse(x - 0.3 * rr, y - 0.3 * rr, 0.28 * rr, 0.2 * rr, 0, 0, Math.PI * 2); g.fillStyle = "#ffffff"; g.fill();
+  }
+  g.restore();
 };
 /** dust puff on a 256 x 128 canvas, t 0..1 (grows and fades) */
-export const fxPuff = (p: Pen, t: number) => {
-  const g = p.g; g.save(); g.globalAlpha = 0.85 * (1 - t);
-  for (const [x, r] of [[70, 26], [128, 34], [186, 24], [100, 20], [160, 22]] as const) p.ell(x + (x - 128) * t * 0.6, 92 - 26 * t - (r > 25 ? 10 : 0), r * (0.7 + 0.7 * t), r * (0.6 + 0.6 * t), "#efe0c4", 0);
+export const fxPuff = (p: Pen, t: number, chalk = false) => {
+  // A6 P3 (a row of identical cotton balls): 5 soft-edged puffs of different sizes and beige tones (#E8D2B0..#D9BE98;
+  // chalk dust stays white), each rising 10-20 px at its own rate while it fades, one pebble kicked out sideways
+  const g = p.g; g.save(); g.filter = "blur(2.5px)";
+  const C = chalk ? ["#fbfaf4", "#f1f0ea", "#fbfaf4", "#e9e8e2", "#f6f5ef"] : ["#e8d2b0", "#dcc29e", "#e4cca8", "#d9be98", "#eedcbc"];
+  ([[70, 22, 0.8], [124, 34, 0.55], [184, 20, 1.0], [98, 15, 1.2], [156, 26, 0.7]] as const).forEach(([x, r, rs], k) => {
+    g.globalAlpha = 0.88 * (1 - t) ** (0.8 + 0.2 * k);
+    p.ell(x + (x - 128) * t * 0.7, 96 - (10 + 12 * rs) * t * 1.6 - (r > 25 ? 8 : 0), r * (0.7 + 0.7 * t), r * (0.58 + 0.6 * t), C[k], 0);
+  });
+  g.filter = "none";
+  if (!chalk && t > 0.15 && t < 0.8) { g.globalAlpha = 1; p.ell(200 + 60 * t, 100 - 40 * t + 50 * t * t, 5, 4, "#8a6a52", 2); }
   g.restore();
 };
 /** surprise "!" pop on a 128 x 256 canvas (red with plum ink) */
@@ -1887,6 +1966,44 @@ export const fxFlyRaven = (p: Pen, w: number, B = "#1e2233", dir = 1, chalk = fa
   }
   p.rot = null; g.restore();
 };
+/** A5 (shot 14 insert / wide): his ball hand gripping the hand scoop, on a 512 x 512 card centred on the hand. th =
+ *  the blade's screen direction (deg, 0 = right, 90 = down), sl = the sleeve's direction (toward his body, off the
+ *  card), n = chips riding on the blade (0-5), sleeve / skin colours */
+export const fxHandScoop = (p: Pen, th: number, sl: number, n: number, sleeve = "#b8472e", skin = SKIN, limb: boolean | P2[] = false) => {
+  const c = Math.cos(rad(th)), s0 = Math.sin(rad(th)), cs = Math.cos(rad(sl)), ss = Math.sin(rad(sl)), H: P2 = [256, 256];
+  const at = (d: number, w: number): P2 => [H[0] + c * d - s0 * w, H[1] + s0 * d + c * w];
+  // the sleeve (forearm) to the card edge, toward his body; A6 P1 (the wide: a flat red plank floating under his arm):
+  // limb = the standard single dark stick-arm stroke along the SAME shoulder-to-hand line, so it merges with his arm
+  // A7 P1 (the wide: two loose sticks): limb = the card arm's OWN curve (hand -> elbow -> toward the shoulder, canvas
+  // offsets from the hand), so the overlay forearm and the card's upper arm share one elbow
+  if (Array.isArray(limb)) p.stroke([H, ...limb.map(([x, y]) => [H[0] + x, H[1] + y] as P2)], 17, INK);
+  else if (limb) p.stroke([[H[0] + cs * 10, H[1] + ss * 10], [H[0] + cs * 250, H[1] + ss * 250]], 17, INK);
+  else p.band([[H[0] + cs * 14, H[1] + ss * 14], [H[0] + cs * 300, H[1] + ss * 300]], sleeve, 44, 5, "round");
+  // the handle, then the blade (a rounded open scoop, its bowl lighter inside)
+  p.band([at(0, 0), at(70, 0)], "#7a5236", 15, 4, "round");
+  const blade: P2[] = [at(62, -26), at(150, -30), at(176, -16), at(182, 0), at(176, 16), at(150, 30), at(62, 26)];
+  p.poly(blade, "#aeb5c2", 6);
+  p.poly([at(74, -17), at(148, -21), at(166, -10), at(168, 0), at(166, 10), at(148, 21), at(74, 17)], "#d7dce6", 0);
+  p.stroke([at(80, -12), at(150, -14)], 3, "#ffffff");
+  for (let k = 0; k < Math.min(5, n); k++) { const [x, y] = at(96 + (k % 3) * 24, (k - 2) * 9); jasper(p, x, y, 15, 31 + k, { ink: 3.5 }); }
+  // the ball hand gripping the handle (fingers wrap over it)
+  p.ell(H[0], H[1], 30, 28, skin, 6);
+  p.stroke([at(-6, -18), at(16, -20)], 4, INK); p.stroke([at(-4, 18), at(16, 20)], 4, INK);
+};
+/** A5 (shot 10 insert): a tourist's arm rising from below holding a rainbow chip up (256 x 512 card: sleeve from the
+ *  bottom edge, ball hand, the chip pinched above it, a little star when lit = 1) */
+export const fxHandChip = (p: Pen, sleeve: string, seed: number, lit = 0) => {
+  // A7 P2 (they read as orange crayons with white tips): an ARM like the cast's: a short-sleeve stub with the paler
+  // flower print at the bottom, the dark plum stick forearm, the dark ball hand pinching a BIG inked rainbow chip
+  const arm = mix(sleeve, INK, 0.88);
+  p.band([[128, 520], [128, 392]], sleeve, 96, 7, "round");
+  for (const [x, y] of [[104, 430], [150, 468], [118, 500], [158, 410]] as P2[]) { p.ell(x, y, 11, 9, mix(sleeve, "#ffffff", 0.55), 0); p.dot(x, y, 3.5, mix(sleeve, "#ffffff", 0.2)); }
+  p.stroke([[128, 400], [128, 250]], 30, arm);
+  p.dot(128, 240, 34);
+  p.band([[110, 232], [102, 206]], INK, 18, 0, "round"); p.band([[146, 232], [154, 208]], INK, 17, 0, "round");
+  jasper(p, 128, 150, 56, seed, { ink: 7 });
+  if (lit) star4(p, 178, 98, 38, "#fffdf2", 3);
+};
 /** camera flash: white starburst on a 256 x 256 canvas */
 export const fxFlash = (p: Pen) => {
   for (let i = 0; i < 12; i++) { const a = rad(i * 30); p.stroke([[128 + 26 * Math.cos(a), 128 + 26 * Math.sin(a)], [128 + (i % 2 ? 84 : 120) * Math.cos(a), 128 + (i % 2 ? 84 : 120) * Math.sin(a)]], 12, "#fffef6"); }
@@ -1946,7 +2063,7 @@ export const ASST1_FIT: Outfit = { shirt: "#b8472e", pants: "#6e5a40", shoes: "#
 export const ASST2_FIT: Outfit = { shirt: "#3d63b8", pants: "#5a4a3a", shoes: "#3a2a20", hair: "#2a2020", hairStyle: "crop", hat: "bucket", hatCol: "#5e7f6b", vest: "#c2a878", build: "small" };
 export const RANGER_FIT: Outfit = { shirt: "#4e7a4a", pants: "#5a4a32", shoes: "#3a2a20", hair: "#5a3b2a", hairStyle: "crop", hat: "ranger", hatCol: "#9c7a45" };
 export const TEACHER_FIT: Outfit = { shirt: "#f3ead8", pants: "#4a4458", shoes: "#3a2a20", hair: "#8a4a2e", hairStyle: "bun", cardigan: "#8a5a9e", glasses: "round", build: "small" };
-export const STUDENT_FIT: Outfit = { shirt: "#5c7fa8", pants: "#3b3f52", shoes: "#3a2a20", hair: "#3a2a1e", hairStyle: "bowl", collar: true, sweater: true, pencil: true, build: "kid" };
+export const STUDENT_FIT: Outfit = { shirt: "#5c7fa8", pants: "#3b3f52", shoes: "#3a2a20", hair: "#3a2a1e", hairStyle: "bowl", collar: true, sweater: true, pencil: true, build: "kid", starBadge: true, hairClip: "#e23a3a" };
 /** the blueprint person = the story's visitor (orange Hawaiian shirt, red cap, camera). A3: NOT chalk-tinted any more:
  *  the card is lit nearly neutral in the blueprint space (cardshade uFlat), so #F07A2A / #D8342C pop against the blue */
 export const BP_FIT: Outfit = { shirt: "#f07a2a", pants: "#313862", shoes: "#e9e4da", hair: "#4a3326", hairStyle: "crop", hat: "cap", hatCol: "#d8342c",
@@ -1968,7 +2085,7 @@ export const tourist = (v: number): Outfit => ({
 const PUPIL_SHIRT = ["#5c7fa8", "#4f6f96", "#6a86ad", "#58779e", "#5c7fa8"];
 export const pupil = (v: number): Outfit => ({
   shirt: PUPIL_SHIRT[v % 5], pants: "#3b3f52", shoes: "#3a2a20", hair: ["#2a2020", "#7a4a2e", "#c9a46a", "#5a3b2a", "#3a2a20"][v % 5],
-  hairStyle: (["short", "pony", "curly", "bob", "crop"] as HairStyle[])[v % 5], collar: true, sweater: true, build: "kid",
+  hairStyle: (["short", "pony", "curly", "bob", "swept"] as HairStyle[])[v % 5], collar: true, sweater: true, build: "kid", // A7 P3: no "crop" (it read as a bald head on a kid)
 });
 
 // ---------------- the Sign A panel swap (shot 8), shared by CHAR (the assistant's hands) and WORLD-EXT (the panels) ----------------
@@ -1982,7 +2099,7 @@ const lerpP = (a: PanelPose, b: PanelPose, k: number): PanelPose => a.map((v, i)
  *  comes up out of the stack (6 f); 19..25 it is hung on the hooks with a 2 f overshoot, then wobbles +-2 deg 6 f.
  *  Shot 9 keeps the old panel leaning until he picks it up (t 40..42), then it is the plank under his arm (null). */
 export const SWAP_STACK: PanelPose = [0.88, -1.07, 0.15, 0.22], SWAP_LEAN: PanelPose = [0.84, -1.08, 0.27, 0.2];
-export const SWAP_T = { grip: -1, lifted: 7, leaned: 13, up: 19, hung: 25, pick9: 99, gone9: 30 }; // A4: gone9 = he walks off right (empty-handed) BEFORE the 8 -> 9 dissolve; the old panel stays leaning
+export const SWAP_T = { grip: -1, lifted: 7, leaned: 13, up: 19, hung: 25, pick9: 99, gone9: 28 }; // A6 LEAD P3: off 2 f sooner (the 8 -> 9 dissolve) // A4: gone9 = he walks off right (empty-handed) BEFORE the 8 -> 9 dissolve; the old panel stays leaning
 export const swapPath = (id: number, t: number): { old: PanelPose | null; neu: PanelPose } => {
   const HOOK: PanelPose = [0, 0, 0, 0], T = SWAP_T, OFF: PanelPose = [0, 0.14, 0.15, -0.02], LIFT: PanelPose = [0.3, 0.15, 0.16, 0.05], PRE: PanelPose = [0, 0.13, 0.08, 0];
   if (id < 8) return { old: HOOK, neu: SWAP_STACK };

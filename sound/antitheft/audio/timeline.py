@@ -18,7 +18,87 @@ VOICE_INFO = os.path.join(ROOT, "voice", "voice_info.json")
 with open(TL_PATH, encoding="utf-8") as _f:
     _J = json.load(_f)
 with open(WORDS_PATH, encoding="utf-8") as _f:
-    WORDS = json.load(_f)
+    WORDS_JSON = json.load(_f)
+
+
+# ---- round 7 (A6 P2): the ACOUSTIC word onsets. words.json (Whisper + refine_onsets.py) is 4-11 f late on words that
+# follow a pause ('fourteen' 16.81 vs 16.44, 'tested', 'Visitors', 'almost', 'conscience', 'twice', 'leaned', 'honest')
+# and 9-10 f early where it put the start on the previous word's tail ('"Half' 63.83 vs 64.15, 'and (wanted)' 4.36 vs
+# 4.67). Every word-keyed sound system (the speech-band ducks, key ducks, rides, word carves, gap placement) reads
+# WORDS = these acoustic times; WORDS_JSON (the picture's / captions' clock) stays available. Pure function of
+# voice.wav + words.json, so a voice re-assembly needs nothing but `python mix.py`. Silence = 10 ms RMS below
+# p99 - 40 dB for >= 50 ms (the audit's definition); a start moves EARLIER to the end of the latest silence within 0.45 s
+# before it (never into the previous word: >= its start + 0.12 s), or LATER to the end of a silence that begins within
+# 0.15 s after the json start while the json start sits on a decaying tail (>= 6 dB under the word's own peak); a
+# phrase-final end moves to the start of the next silence.
+def _acoustic_words(words):
+    try:
+        import wave
+        with wave.open(VOICE_PATH, "rb") as wf:
+            sr, ch, sw, n = wf.getframerate(), wf.getnchannels(), wf.getsampwidth(), wf.getnframes()
+            raw = wf.readframes(n)
+    except Exception:  # noqa
+        return [dict(w) for w in words], []
+    if sw == 3:
+        b = np.frombuffer(raw, np.uint8).reshape(-1, 3)
+        x = (b[:, 0].astype(np.int32) | (b[:, 1].astype(np.int32) << 8) | (b[:, 2].astype(np.int32) << 16))
+        x = np.where(x >= 1 << 23, x - (1 << 24), x).astype(np.float64) / (1 << 23)
+    elif sw == 2:
+        x = np.frombuffer(raw, np.int16).astype(np.float64) / 32768.0
+    else:
+        x = np.frombuffer(raw, np.int32).astype(np.float64) / 2.0 ** 31
+    x = x.reshape(-1, ch).mean(1)
+    hop = sr // 100
+    nb = len(x) // hop
+    lev = 10 * np.log10((x[: nb * hop] ** 2).reshape(nb, hop).mean(1) + 1e-14)
+    thr = float(np.percentile(lev, 99)) - 40.0
+    sil = lev < thr
+    d = np.diff(np.concatenate([[0], sil.astype(np.int8), [0]]))
+    runs = [(a / 100.0, b / 100.0) for a, b in zip(np.flatnonzero(d == 1), np.flatnonzero(d == -1)) if b - a >= 5]
+    pk = lambda a, b: float(lev[max(0, int(a * 100)): max(int(a * 100) + 1, int(b * 100))].max())
+    out, moved = [], []
+    prev_s = -1.0
+    for i, w in enumerate(words):
+        s, e = float(w["s"]), float(w["e"])
+        ns_ = s
+        early = [(a, b) for a, b in runs if s - 0.02 <= a <= s + 0.15 and b <= e - 0.08 and b - s <= 0.4]
+        if early and pk(s + 0.01, max(early[0][0], s + 0.02)) <= pk(early[0][1], e) - 6.0:
+            ns_ = early[0][1]                                      # the json start sat on the previous word's tail
+        else:
+            inside = [(a, b) for a, b in runs if a <= s < b]
+            lo = max(s - 0.45, prev_s + 0.12)
+            if inside:
+                a_in, b_in = inside[0]
+                cand = [b for a, b in runs if lo <= b <= a_in - 0.03]
+                if cand:
+                    ns_ = cand[-1]                                 # a sound before the stop closure belongs to this word ('It gave')
+                elif b_in - s <= 0.2 and e - b_in >= 0.12:
+                    ns_ = b_in                                     # the word starts as the silence ends
+            else:
+                cand = [b for a, b in runs if lo <= b <= s + 0.005]
+                if cand and cand[-1] < s - 0.03:
+                    ns_ = cand[-1]                                 # json late: the end of the silence before it
+        out.append(dict(w, s=round(ns_, 3)))
+        if abs(ns_ - s) >= 0.03:
+            moved.append((w["w"], s, round(ns_, 3)))
+        prev_s = ns_
+    for i, w in enumerate(out):                                    # ends: never past the next start; a phrase-final word
+        nxt = out[i + 1]["s"] if i + 1 < len(out) else len(x) / sr   # ends where the silence nearest its json end begins
+        je = float(w["e"])
+        e = min(je, nxt)
+        if nxt - je > 0.05:
+            sl = [a for a, b in runs if max(w["s"] + 0.08, je - 0.25) <= a <= nxt]
+            if sl:
+                e = min(sl, key=lambda a: abs(a - je))
+        else:
+            sl = [a for a, b in runs if a <= je < b and a >= w["s"] + 0.08]
+            if sl:
+                e = sl[0]
+        w["e"] = round(max(e, w["s"] + 0.05), 3)
+    return out, moved
+
+
+WORDS, ONSET_MOVES = _acoustic_words(WORDS_JSON)
 
 FPS = int(_J["fps"])
 TOTAL = int(_J["total"])

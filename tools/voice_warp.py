@@ -13,6 +13,7 @@ Outputs:
            one is kept as timeline_old.json), maps EVERY cue in picture_events_used.json (old frames, from an old-unit
            mix run) into picture_events.json (new frames; old file kept as picture_events_old.json), and maps
            picture_probe.json (tumbleweed windows / contacts / paths).
+v3 (2026-11-12): the new script may CHANGE words: pairs by text + beat edges + sound/<short>/audio/warp_anchors.json.
 Usage: python -s voice_warp.py <old words.json> <new voice dir (voice.wav, words.json, phrases.json)> [--audio]
        python voice_warp.py sound/<short>/voice/words.json sound/<short>/voice --identity   (new short: voice made FIRST,
        picture timed from it -> identity map, so AntiTheft-style components work unchanged)
@@ -36,7 +37,46 @@ old_w = json.load(open(sys.argv[1], encoding="utf-8"))
 nd = Path(sys.argv[2])
 new_w = json.load(open(nd / "words.json", encoding="utf-8"))
 new_p = json.load(open(nd / "phrases.json", encoding="utf-8"))
-assert len(old_w) == len(new_w), (len(old_w), len(new_w))
+# --- word pairing old -> new (v3, 2026-11-12: the script may change words) ---------------------------------------
+# Same token list: index i <-> i (the original behaviour). Otherwise: difflib match on normalised tokens, plus
+# beat-edge pairs (first/last word of every beat, from both phrase lists), plus manual pairs from
+# sound/<short>/audio/warp_anchors.json [[old_idx, new_idx], ...]; non-monotone pairs are dropped.
+import re as _re
+from difflib import SequenceMatcher as _SM
+_key = lambda w: _re.sub(r"[^a-z0-9%']", "", w.lower())
+old_p = json.load(open(Path(sys.argv[1]).parent / "phrases.json", encoding="utf-8"))
+def _beats(ws, ps):
+    out = []
+    for w in ws:
+        m = (w["s"] + w["e"]) / 2
+        b = next((q["beat"] for q in ps if q["s"] - 0.05 <= m <= q["e"] + 0.05), None)
+        if b is None:
+            b = min(ps, key=lambda q: min(abs(m - q["s"]), abs(m - q["e"])))["beat"]
+        out.append(b)
+    return out
+if len(old_w) == len(new_w) and all(_key(a["w"]) == _key(b["w"]) for a, b in zip(old_w, new_w)):
+    PAIR = {i: i for i in range(len(old_w))}
+else:
+    PAIR = {}
+    sm = _SM(None, [_key(w["w"]) for w in old_w], [_key(w["w"]) for w in new_w], autojunk=False)
+    for a0, b0, n in sm.get_matching_blocks():
+        for t in range(n):
+            PAIR[a0 + t] = b0 + t
+    ob, nb = _beats(old_w, old_p), _beats(new_w, new_p)
+    for bt in sorted(set(ob) & set(nb)):
+        oi = [i for i, b in enumerate(ob) if b == bt]; ni = [j for j, b in enumerate(nb) if b == bt]
+        PAIR[oi[0]] = ni[0]; PAIR[oi[-1]] = ni[-1]
+    man = AUD / "warp_anchors.json"
+    if man.exists():
+        for o, n in json.load(open(man, encoding="utf-8")):
+            PAIR[int(o)] = int(n)
+    mono, last = {}, -1
+    for o in sorted(PAIR):
+        if PAIR[o] > last:
+            mono[o] = PAIR[o]; last = PAIR[o]
+    PAIR = mono
+    print(f"word pairing: {len(PAIR)} of {len(old_w)} old words paired to {len(new_w)} new words (text changed)")
+INV = {v: k for k, v in PAIR.items()}
 old_total = json.load(open(AUD / "timeline.json", encoding="utf-8"))["total"]  # the live picture clock (export_timeline.mjs)
 new_end = round(new_w[-1]["e"] * FPS)
 new_total = new_end + 2 + TAIL
@@ -53,12 +93,17 @@ use = set()
 for b in tl_beats.values():
     k = min(range(len(of)), key=lambda q: abs(of[q] - b["f"]))
     if abs(of[k] - b["f"]) <= 1:
-        use.add(k)
+        if k in PAIR:
+            use.add(k)
+        else:
+            print(f"  beat {next(n for n, v in tl_beats.items() if v is b)!r} (old word {old_w[k]['w']!r}) has no new word: interpolated")
 for p in new_p:
     ks = [q for q, w in enumerate(new_w) if p["s"] - 0.02 <= w["s"] <= p["e"] + 0.02]
-    if ks:
-        use.update((ks[0], ks[-1]))
-A = [(0.0, 0.0)] + [(new_w[q]["s"] * FPS, old_w[q]["s"] * FPS) for q in sorted(use)]
+    for j in (ks[:1] + ks[-1:]):
+        if j in INV:
+            use.add(INV[j])
+use |= {o for o in PAIR if o not in use and PAIR[o] in (0, len(new_w) - 1)}
+A = [(0.0, 0.0)] + [(new_w[PAIR[q]]["s"] * FPS, old_w[q]["s"] * FPS) for q in sorted(use)]
 A += [(new_w[-1]["e"] * FPS, old_w[-1]["e"] * FPS), (new_total - 1.0, old_total - 1.0)]
 A.sort()
 xs, ys = [A[0][0]], [A[0][1]]
@@ -74,7 +119,7 @@ w = np.maximum.accumulate(w)
 if IDENT:
     w = np.arange(new_total, dtype=float)
 sm = np.diff(w, prepend=0.0)
-err = [abs(np.interp(new_w[q]["s"] * FPS, fr, w) - old_w[q]["s"] * FPS) for q in sorted(use)]
+err = [abs(np.interp(new_w[PAIR[q]]["s"] * FPS, fr, w) - old_w[q]["s"] * FPS) for q in sorted(use)]
 inv = np.interp(np.arange(old_total, dtype=float), w, fr)   # old frame -> new frame
 print(f"old {old_total} f -> new {new_total} f ({new_total / FPS:.2f} s); {len(use)} anchor words; slope p1 {np.percentile(sm[1:], 1):.2f} .. p99 {np.percentile(sm[1:], 99):.2f}, "
       f"anchor error median {np.median(err):.2f} f, max {max(err):.2f} f")

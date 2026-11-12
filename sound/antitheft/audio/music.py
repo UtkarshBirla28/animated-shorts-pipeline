@@ -7,6 +7,11 @@
 # each region starts on the first word of its clause and holds a whole number of beats at ~112 bpm, so every region
 # downbeat lands on its word and a new voice take only needs a re-run. Inside a region the arrangement switches by the
 # time of the words (quote, whisper, pen-scratch holes, counter rolls, ...).
+# Round 8 (the user's preview-7 notes): shot 6 is a real MYSTERY beat (hush, breathing glass pad + open-fifth drone,
+# Dm(add9) -> Bbmaj7(#11) as the light drops, a celesta question that climbs to the raised 4th, a soft low roll that stops
+# on 'steal?', the D-E question asked in the gap after it); the jokes get a held beat (the score stops dead for the heap's
+# BOOMF on '14 tons') and the mischief motif (the sly G#-A pizz grace) returns for the guilty pocketers; the '2%' run ends
+# before 'two'; the loop bridge sits low and its pickup is a quick 0.25 s pair; the frame-0 low D -4 dB.
 import numpy as np
 from dsp import SR, ns, rng, pan, place, fades, dbg, make_ir, convolve_st, integrated, lp, hp, ramp, shelf
 import instruments as I
@@ -78,6 +83,8 @@ class Band:
     def __init__(self):
         self.tr, self.send, self.cues, self.holes, self.mutes = {}, {}, [], {}, []
         self.wood_q = []                 # round 5 (A4 P3): woodblock hits are queued and filtered against the words (wood_pass)
+        self.wrap = []                   # round 7 (A6 P2 loop bridge): (track, mono/stereo x, t, pan) placed AFTER the end fade and
+                                         # folded circularly past the last sample onto the start (the loop rings into frame 0)
 
     def track(self, name, send):
         if name not in self.tr:
@@ -111,6 +118,8 @@ def vj(v):
 
 # ---------------------------------------------------------------- players
 def bass(b, t, m, vel, length=0.32, slide=0.0):
+    if t < 0.05:                     # A7 P3 (loop seam): the frame-0 low D landed +8-9 dB at 60-250 Hz over the last 0.3 s: -4 dB
+        vel *= 10 ** (-4.0 / 20.0)
     b.add("bass", I.bass_pizz(F(m), vj(vel), _r(), length=length, slide=slide), hum(t, 3), -0.08)
 
 
@@ -254,7 +263,7 @@ def merge_thinned(b, src, dst, fc=1000.0):
         return
     x = b.tr.pop(src)
     b.send.pop(src, None)
-    e = word_env(x.shape[1])[None, :]
+    e = word_env(x.shape[1], pre=0.05)[None, :]          # A6 P2: from 50 ms before the ACOUSTIC onset ('It' 71.45 -> 71.40)
     y = x * (1 - e) + lp(x, fc, 4) * e
     b.tr[dst] = b.tr.get(dst, np.zeros_like(y)) + y
 
@@ -284,7 +293,7 @@ SECTIONS = sections()
 def build():
     b = Band()
     for name, send in [("bass", 0.08), ("pizz", 0.2), ("marimba", 0.2), ("celesta", 0.3), ("wood", 0.12), ("glass", 0.3),
-                       ("musicbox", 0.3), ("triangle", 0.3), ("tick", 0.1)]:
+                       ("musicbox", 0.3), ("triangle", 0.3), ("tick", 0.1), ("canyon", 0.0)]:
         b.track(name, send)
     A = anchors()
     ce = lambda t, d: b.cues.append((t, d))
@@ -305,6 +314,19 @@ def build():
     b.add("pizz", I.pluck(F(57), 0.5, _r(), dur=0.35, bright=0.6), min(tg, A["arizona"] - 0.12) + 0.07, 0.2)
     ce(0.0, f"hook ({g.bpm():.0f} bpm): tiptoe pizz bass, soft pizz stabs, celesta plays the tiptoe turn (motif A bar 1); clears the high band before the glint on 'steal'")
     ce(tg, "sly chromatic pizz grace G#-A into the downbeat on 'Arizona's'")
+    # A6 ADD (the vista's scale): the downbeat on 'Arizona's' throws a soft canyon echo - the D (bass + marimba) through a
+    # 1.2 s outdoor reverb with a 0.21 s slap off the far mesa, wet only, ~-30 LU
+    ta = A["arizona"]
+    dry = I.marimba(F(74), 0.8, _r()) * 0.7
+    bp_ = I.bass_pizz(F(38), 0.8, _r(), length=0.4)
+    L_ = max(len(dry), len(bp_))
+    dz = np.zeros(L_)
+    dz[: len(dry)] += dry
+    dz[: len(bp_)] += bp_ * 0.6
+    ir_c = make_ir(1.2, 41, pre=0.06, hf=2.2, early=[(0.21, 0.5, -0.6), (0.36, 0.3, 0.7)])
+    wet_c = convolve_st(np.concatenate([dz, np.zeros(ns(1.6))]), ir_c)
+    b.add("canyon", lp(wet_c, 3500, 2), ta + 0.03)
+    ce(ta + 0.03, "a soft canyon echo of the downbeat on 'Arizona's' (1.2 s, a slap off the far mesa at 0.21 s)")
 
     # ============ STORY: "Arizona's" -> "But" (setting, the quote, the whisper) - one tempo region
     g = Grid("story", A["arizona"], A["but"])
@@ -351,6 +373,17 @@ def build():
             if g.t(hb + 1) < t_now - 0.1:
                 wood(b, g.t(hb + 1), 0.2, not second)
     b.holes["wood"] = [(A["tons14"] - 0.25, A["tons14"] + 0.45)]
+    # round 8 (the user: make the jokes land with a held beat): the cartoon heap of chips lands on '14 tons' (WORLD-EXT
+    # poseHeap14, read by audio_probe) - the score stops dead for its BOOMF, a beat of silence, then carries on
+    try:
+        import json as _json, os as _os
+        _hp = (_json.load(open(_os.path.join(T.HERE, "picture_probe.json"), encoding="utf-8")).get("facts") or {}).get("heap") or {}
+        t_heap = float(_hp["land_vf"]) / T.FPS if _hp.get("present") and _hp.get("land_vf") is not None else None
+    except (OSError, ValueError, KeyError, TypeError):
+        t_heap = None
+    if t_heap is not None and A["tons14"] - 0.3 < t_heap < A["sheRead"] - 0.6:
+        b.mutes.append((t_heap - 0.04, t_heap + 0.5))
+        ce(t_heap - 0.04, "HELD BEAT: the score stops dead for the heap's comic BOOMF on '14 tons' (0.54 s of silence under the thump), then carries on")
     # the tune over the setting: motif A on marimba ("Arizona's ... pieces."), the answer up to "warning:"
     mel(b, "marimba", g, MOTIF_A, 0, vel=0.85, until=t_quote - 0.05)
     mel(b, "marimba", g, MOTIF_B, 8, vel=0.75, until=t_quote - 0.05)
@@ -370,6 +403,17 @@ def build():
     for k, m in enumerate([86, 84, 81]):
         b.add("celesta", I.celesta(F(m + oct_), v0 - 0.06 * k * (v0 / 0.42), _r(), damp=0.16), float(t_fig) + sp_ * k, 0.3)
     ts = t_fig
+    # round 8 (funny beats land): the guilty pocketers ('...one small piece at a time.') get the film's mischief motif - the
+    # same sly pizz grace G#-A that answered '...wanted to steal.' - in the gap before 'one', as the first hand slips a chip in
+    try:
+        ye_ = float(T.word("year", A["tons14"])["e"])
+        gy0, gy1 = T.gap_after(ye_ - 0.01, 0.15)
+    except KeyError:
+        gy0 = gy1 = 0.0
+    if gy1 - gy0 >= 0.15:
+        b.add("pizz", I.pluck(F(68), 0.36, _r(), dur=0.28, bright=0.6), gy0 + 0.02, 0.25)
+        b.add("pizz", I.pluck(F(69), 0.44, _r(), dur=0.34, bright=0.6), gy0 + 0.09, 0.25)
+        ce(gy0 + 0.02, "the mischief motif again - sly pizz grace G#-A in the gap before 'one small piece at a time' (the guilty pocketers)")
     # the whisper: a sly celesta turn on "leaned over", then only ticks + a last low bass note; "now." gets the plonk
     mel(b, "celesta", Grid("lean", A["leaned"], A["leaned"] + 4 * g.bl, nb=4), [(0, 69, .25, .6), (.5, 68, .25, .45), (.75, 69, .25, .55), (1.5, 74, .5, .6), (2.5, 72, .25, .45), (3, 71, .5, .5)], 0, vel=0.62, until=t_wsp + 0.1)
     bass(b, t_now - 0.01, 38, 0.95, length=0.22)
@@ -387,13 +431,32 @@ def build():
 
     # ============ MYSTERY "But why would a warning ...": sparse, suspended, ONE woodblock tick on "honest"
     t0, t1, th = A["but"], A["her"], A["honest"]
-    glass(b, t0 - 0.02, th, "Dsus2", 0.55, att=0.35, rel=0.5)
-    glass(b, th, t1 + 0.15, "Gadd9", 0.5, att=0.3, rel=0.45)
-    bass(b, t0, 38, 0.7, length=0.9)
-    bass(b, th, 31, 0.6, length=0.8)
-    for k, (dt, m, v) in enumerate([(0.12, 69, .55), (0.5, 74, .5), (0.88, 76, .5), (1.26, 81, .55)]):
+    # round 8 (the user: shot 6 must be a real MYSTERY beat - a slow push, the light dropping, a question in the world): a
+    # HUSH - the caper stops dead after 'now.', then a slow-blooming, breathing glass pad over a soft open-fifth drone; as
+    # the light drops (the noon -> late relight) the harmony darkens from Dm(add9) to Bbmaj7(#11) (the lydian E over Bb:
+    # suspense, no resolution); the celesta asks a slow question that climbs to the raised 4th (G#) instead of home; a very
+    # soft low marimba roll swells under 'honest person want to' and stops on 'steal?', whose celesta D-E is left hanging
+    breathe = lambda t: 0.78 + 0.22 * np.sin(2 * np.pi * 0.42 * t - np.pi / 2)        # a slow 0.42 Hz breath
+    rl6 = [r_ for r_ in (T.SHOTS[6].get("relight") or []) if r_.get("to") == "late"]
+    t_dark = min(th, T.fr(rl6[0]["f"] + 0.5 * rl6[0].get("dur", 60))) if rl6 else th
+    t_dark = max(t0 + 0.8, t_dark)
+    CH["Bbmaj7s11"] = dict(root=34, fifth=41, up=[57, 62, 64], arp=[62, 64, 69, 64], pad=[46, 53, 57, 62, 64])
+    CH["Dm9m"] = dict(root=38, fifth=45, up=[57, 64, 65], arp=[62, 64, 65, 69], pad=[50, 57, 62, 64, 65])
+    glass(b, t0 - 0.02, t_dark + 0.3, "Dm9m", 0.5, att=0.9, rel=0.7, swell=breathe)
+    glass(b, t_dark, t1 + 0.2, "Bbmaj7s11", 0.5, att=0.8, rel=0.6, swell=breathe)
+    b.add("glass", I.glass_pad([F(38), F(45)], t1 + 0.2 - t0, 0.32, _r(), att=1.0, rel=0.6, bright=0.05), t0, 0.0)   # the drone
+    bass(b, t0, 38, 0.62, length=1.0)
+    bass(b, t_dark, 34, 0.55, length=1.1)                                               # the floor drops with the light
+    for k, (dt, m, v) in enumerate([(0.14, 69, .5), (0.62, 74, .46), (1.1, 76, .46), (1.58, 80, .5)]):
         if t0 + dt < th - 0.1:
             b.add("celesta", I.celesta(F(m), v, _r()), t0 + dt, 0.2 - 0.1 * k)
+    try:
+        pe6 = float(T.word("person", th - 0.1)["s"])
+        st6 = float(T.word("steal", pe6)["s"])
+    except KeyError:
+        pe6, st6 = th + 0.4, A["steal2"]
+    if st6 - pe6 > 0.3:
+        trem(b, pe6, st6 - 0.04, 50, 0.05, 0.17, rate=13.0, track="marimba", p=-0.1)
     try:                                            # A5 P3: the lone tick masked the stressed word (6.4 dB margin)
         hw = T.word("honest", th - 0.3)
         nxt_ = [float(w["s"]) for w in T.WORDS if float(w["s"]) >= float(hw["e"]) - 1e-3]
@@ -407,11 +470,21 @@ def build():
         b.add("wood", lp(I.woodblock(0.75 * 0.5, _r(), 1180.0), 2000, 2), hum(th, 2), 0.35)
         th_tick = th
     st2 = A["steal2"]
-    b.add("celesta", I.celesta(F(79), 0.42, _r(), damp=0.3), st2 - 0.02, 0.25)
-    b.add("celesta", I.celesta(F(81), 0.5, _r()), st2 + 0.16, 0.25)
-    ce(t0, "mystery: glass pad Dsus2 -> Gadd9 (suspended), slow rising celesta A-D-E-A, low pizz D")
+    # the question is ASKED in the gap after 'steal?' (r8: on the word it cost the key word ~9 dB of 1-4 kHz margin)
+    try:
+        se2 = float(T.word("steal", st2 - 0.4)["e"])
+        g2_ = T.gap_after(se2 - 0.01, 0.1)
+    except KeyError:
+        se2, g2_ = st2 + 0.3, (st2 + 0.3, st2 + 0.6)
+    tq0 = max(se2 + 0.01, g2_[0] + 0.01)
+    b.add("celesta", I.celesta(F(86), 0.36, _r(), damp=0.3), tq0, 0.25)
+    b.add("celesta", I.celesta(F(88), 0.42, _r()), tq0 + min(0.14, max(0.08, (g2_[1] - tq0) * 0.5)), 0.25)
+    ce(t0, "MYSTERY (round 8): a hush, then a slow-blooming breathing glass pad Dm(add9) over a soft open D-A drone, low pizz D; "
+           "the slow celesta question A-D-E climbs to G# (the raised 4th) instead of home")
+    ce(t_dark, "as the light drops (noon -> late relight) the harmony darkens to Bbmaj7(#11) and the bass floor drops to Bb")
+    ce(pe6, "a very soft low marimba roll on D swells under 'honest person want to' and stops on 'steal?'")
     ce(th_tick, "ONE woodblock tick on 'honest' (A5 P3: in the gap after the word, or on its onset at -6 dB with a 2 kHz low-pass)")
-    ce(st2, "celesta G-A question on 'steal?' (left hanging)")
+    ce(tq0, "celesta D-E right after 'steal?' - the #11 over Bb, left hanging (no resolution)")
 
     # ============ TEST "Her fiance's professor ..." -> "You see,": busier
     g = Grid("test", A["her"], A["youSee"])
@@ -493,11 +566,19 @@ def build():
     mel(b, "marimba", g, MOTIF_A, m_start, vel=0.62, tr=-12, until=A["withA"] - 0.05, start=A["another"])
     # results: celesta run up into "2%" (lands with a soft stab), a "vanished" marimba drop, the build, the hush, the stop
     p2, p8 = A["pct2"], A["pct8"]
-    run = [74, 76, 77, 79, 81, 83, 84, 86]
+    # A7 P2: the run, the pizz stab, the counter lock and the chip put-back all landed on 'two percent' (1-4 kHz margin
+    # 2.7 dB): the run now ENDS on the note before 'two' (its last note 0.06 s before the word's acoustic onset, the
+    # notes softer and shorter), no celesta / pizz stab on the landing - the counter lock carries it, with one low pizz D
+    # under it (below 1 kHz)
+    try:
+        t_two = float(T.word("2", p2 - 0.4)["s"])
+    except KeyError:
+        t_two = p2
+    run = [74, 76, 77, 79, 81, 83, 84]
+    r_end = t_two - 0.06
     for k, m in enumerate(run):
-        b.add("celesta", I.celesta(F(m), 0.3 + 0.03 * k, _r(), damp=0.12), p2 - 0.75 + k * 0.75 / len(run), 0.25)
-    pizz_chord(b, p2, "Dm", 0.45)
-    b.add("celesta", I.celesta(F(86), 0.5, _r()), p2, 0.3)
+        b.add("celesta", I.celesta(F(m), 0.24 + 0.025 * k, _r(), damp=0.09), r_end - 0.66 + k * 0.66 / (len(run) - 1), 0.25)
+    bass(b, p2, 38, 0.7, length=0.35)
     tv = A["vanished"]
     try:
         tve = float(T.word("vanished", tv - 0.15)["e"]) + 0.01          # A4 P2: AFTER the word (it landed ON 'vanished')
@@ -506,7 +587,7 @@ def build():
     for k, m in enumerate([81, 77, 74, 69, 65]):
         b.add("marimba", I.marimba(F(m), (0.55 - 0.06 * k) * 0.7, _r(), damp=0.1), tve + k * 0.04, -0.2 + 0.1 * k)
     tw = A["withB"]
-    t_hush = T.gap_after(tw + 0.5, 0.25)[0]
+    t_hush = min(T.gap_after(tw + 0.5, 0.15)[0], p8 - 0.35)          # A6: the acoustic pause before 'almost' is 0.20 s
     for k, m in enumerate([62, 64, 65, 67, 69]):
         b.add("marimba", I.marimba(F(m + 12), 0.4 + 0.06 * k, _r(), damp=0.15), tw + 0.08 + k * (t_hush - tw - 0.1) / 5, -0.2)
     trem(b, t_hush, p8 - 0.06, 69, 0.18, 0.36, track="marimba")
@@ -516,7 +597,7 @@ def build():
     ce(A["team"], "team: busier - walking pizz 8ths, marimba ostinato, the clip-clop on muted pizz ticks (woodblock only in the gaps), the answer on celesta")
     ce(A["please1"], "sign A text: prim 'polite' C|F tune on celesta, light bass")
     ce(A["many1"], "sign B text: the sly tiptoe tune an octave down on marimba (Dm|G)")
-    ce(p2 - 0.75, "results: celesta run up into '2%' (lands with a soft pizz stab on the counter landing)")
+    ce(r_end - 0.66, "results: celesta run up to the note before '2%' (A7 P2: it ends 0.06 s before 'two'; the counter lock + a low pizz D carry the landing)")
     ce(tve, "'vanished': quick marimba drop A-F-D-A-F, in the gap AFTER the word (A4 P2)")
     ce(tw, "the build on 'many past visitors' ...")
     ce(t_hush, "... hush in the pause before 'almost': marimba tremolo on A + held low A")
@@ -627,14 +708,31 @@ def build():
     for m in [62, 66, 69]:
         b.add("marimba", I.marimba(F(m), 0.5 * vchord, _r()), tt2 + 0.005, -0.2)
     b.add("celesta", I.celesta(F(78), 0.45 * vchord, _r()), tt2 + 0.01, 0.3)
+    # A6 P2 + ADD (the loop seam): the score no longer cuts to digital zero 0.4 s after 'twice.' (the loop passed through a
+    # 0.65 s dead lull). An open D-A glass pad (no third, so it sits under frame 0's D minor) swells in under the chord as it
+    # fades and keeps ringing softly (~-24 LU) to the last sample; the celesta plays the hook's tiptoe-turn pickup E-C# (two
+    # 16ths of the hook grid) in the last 0.3 s, resolving onto frame 0's D. Both are rendered past the end and folded
+    # onto the start (b.wrap), so the loop lands musically and the seam is continuous.
+    # A7 P3: the bridge ROSE -43.6 -> -35.7 dBFS over the last 0.62 s (an unresolved pickup on every play-through): the pad
+    # now sits lower and fades a little toward the end, and the pickup is a quick 0.25 s pair (two 16ths, softer) right
+    # before the seam, so the film ends on the last word + wind and the loop still lands on frame 0's D
+    p_e, p_c = T.DUR - 0.25, T.DUR - 0.125
+    s16b = 0.125
+    pad_d = T.DUR - (tt2 + 0.05) + 0.02
+    b.wrap.append(("glass", I.glass_pad([F(m) for m in (50, 57, 62, 69)], pad_d, 0.038, _r(), att=0.45, rel=0.9,
+                                        swell=lambda t, d_=pad_d: 1.0 - 0.35 * np.clip((t - (d_ - 1.2)) / 1.2, 0, 1)), tt2 + 0.05, 0.0))
+    b.wrap.append(("celesta", I.celesta(F(76), 0.1, _r(), damp=s16b + 0.12), p_e, 0.25))
+    b.wrap.append(("celesta", I.celesta(F(73), 0.115, _r(), damp=s16b + 0.3), p_c, 0.2))
+    ce(p_e, f"loop bridge: the celesta's tiptoe pickup E-C# ({p_e:.2f}, {p_c:.2f} s) over a soft open D-A pad that rings to the last sample "
+            "and folds onto frame 0 (resolves on its D)")
     ce(A["and"], "twist: night - celesta question (Dsus2 pad) on 'And the bait wood?'")
     ce(A["came"], "the tune returns softly on celesta + music box an octave up (night), tiptoe bass")
     ce(A["pieces"], "the answer on celesta + low marimba ('pieces people stole, then mailed back ...')")
     ce(tm, "small swell begins: glass pad crescendo from 'mailed'")
     ce(ts_, "peak: 'So some of it got stolen twice.' - bass climbs D-E-F#-A, celesta arpeggio up, pad G -> A7, marimba tremolo")
     ce(tt2, "final D-major chord ON 'twice.' (no sting): pad + marimba + celesta, dies with the word")
-    ce(te, f"after the last word the D-major chord (-2 dB) fades out exponentially to -60 dB by {t_off:.2f} s (the end of the 15 -> 16 dissolve, <= 0.4 s after "
-           "the word); silence to the last sample (exactly 0), so only the noon wind crosses into frame 0's pizz (A5 P3)")
+    ce(te, f"after the last word the D-major chord (-2 dB) fades out exponentially to -60 dB by {t_off:.2f} s (<= 0.4 s after the word); the soft "
+           "open D-A pad carries on to the last sample (A6 P2)")
     b.end_fade = (te, t_off)
     wood_pass(b)
     return b
@@ -642,7 +740,7 @@ def build():
 
 TARGET = {  # relative balance inside the score (LU, each track's integrated loudness over its active span)
     "bass": -1.0, "pizz": -6.5, "marimba": 0.0, "celesta": -1.5, "wood": -8.0, "glass": -4.0, "musicbox": -9.0, "triangle": -16.0,
-    "tick": -13.0,
+    "tick": -13.0, "canyon": -10.0,
 }
 BASS_LOW_SHELF = (110.0, -3.0)          # A4 P2 (tonal balance: the sub band ran ~5 dB over the references)
 
@@ -652,11 +750,13 @@ def render(b, ref=-20.0):
     dry = np.zeros((2, N))
     wet = np.zeros(N)
     levels = {}
+    gains = {}
     for k, x in b.tr.items():
         if not np.any(x):
             continue
         L = integrated(x)
         g = dbg(ref + TARGET.get(k, -6) - L)
+        gains[k] = g
         levels[k] = (round(L, 1), round(ref + TARGET.get(k, -6), 1))
         x = x * g
         if k == "bass" and BASS_LOW_SHELF:
@@ -683,4 +783,23 @@ def render(b, ref=-20.0):
         gcur[ia:iz] *= np.linspace(1, 0, iz - ia) ** 1.5
     gcur[iz:] = 0.0
     out *= gcur[None, :]
+    # A6 P2: the loop bridge (pad + pickup), at its track's gain, with a little room, folded circularly onto the start
+    if b.wrap:
+        L = max(ns(t) + (x.shape[-1] if np.ndim(x) > 1 else len(x)) for _, x, t, _ in b.wrap) - N + ns(1.6)
+        buf = np.zeros((2, N + max(0, L)))
+        wetb = np.zeros(buf.shape[1])
+        for k, x, t, p_ in b.wrap:
+            y = (pan(x, p_) if np.ndim(x) == 1 else x) * gains.get(k, 1.0)
+            place(buf, y, t)
+            i0, m_ = ns(t), y.mean(0)
+            n_ = max(0, min(len(m_), len(wetb) - i0))
+            wetb[i0:i0 + n_] += b.send.get(k, 0.2) * m_[:n_]
+        buf += 0.8 * convolve_st(wetb, room)[:, : buf.shape[1]]
+        buf = hp(buf, 35, 2)
+        out += buf[:, :N]
+        tail = buf[:, N:]
+        while tail.shape[1] > 0:                     # fold everything past the last sample onto the start (circular)
+            k_ = min(N, tail.shape[1])
+            out[:, :k_] += tail[:, :k_]
+            tail = tail[:, k_:]
     return out, levels

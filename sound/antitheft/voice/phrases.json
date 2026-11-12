@@ -3,239 +3,239 @@
   "i": 0,
   "beat": 1,
   "s": 0.03,
-  "e": 2.49,
-  "markup": "She'd never even kept a borrowed paperclip.",
+  "e": 3.39,
+  "markup": "She'd never stolen anything. Not even a paperclip.",
   "style": null
  },
  {
   "i": 1,
   "beat": 1,
-  "s": 2.737,
-  "e": 4.357,
+  "s": 3.667,
+  "e": 5.207,
   "markup": "Then she read one sign...",
   "style": null
  },
  {
   "i": 2,
   "beat": 1,
-  "s": 4.357,
-  "e": 6.157,
+  "s": 5.207,
+  "e": 7.337,
   "markup": "and wanted to steal.",
   "style": null
  },
  {
   "i": 3,
   "beat": 2,
-  "s": 6.574,
-  "e": 8.614,
+  "s": 7.714,
+  "e": 9.754,
   "markup": "Arizona's Petrified Forest.",
   "style": null
  },
  {
   "i": 5,
   "beat": 2,
-  "s": 9.006,
-  "e": 10.806,
+  "s": 10.146,
+  "e": 11.946,
   "markup": "Visitors kept pocketing little pieces.",
   "style": null
  },
  {
   "i": 6,
   "beat": 2,
-  "s": 11.048,
-  "e": 12.648,
+  "s": 12.188,
+  "e": 13.788,
   "markup": "So the park put up a warning:",
   "style": null
  },
  {
   "i": 7,
   "beat": 3,
-  "s": 12.874,
-  "e": 16.354,
-  "markup": "\"Your heritage is being vandalized every day...",
+  "s": 14.014,
+  "e": 15.574,
+  "markup": "It said... \"Warning!",
   "style": null
  },
  {
   "i": 8,
   "beat": 3,
-  "s": 16.814,
-  "e": 20.282,
-  "markup": "{14|fourteen} tons a year, mostly a small piece at a time.\"",
+  "s": 15.989,
+  "e": 20.337,
+  "markup": "{14|Fourteen} tons stolen every year... one small piece at a time.\"",
   "style": null
  },
  {
   "i": 9,
   "beat": 4,
-  "s": 20.543,
-  "e": 24.283,
-  "markup": "She read it, leaned over to her {fianc\u00e9,|fee-ahn-say,} and whispered:",
+  "s": 20.628,
+  "e": 24.368,
+  "markup": "She read it, leaned over to her {fiancé,|fee-ahn-say,} and whispered:",
   "style": null
  },
  {
   "i": 10,
   "beat": 4,
-  "s": 24.423,
-  "e": 26.323,
+  "s": 24.508,
+  "e": 26.408,
   "markup": "\"We'd better get ours now.\"",
   "style": "whisper"
  },
  {
   "i": 11,
   "beat": 5,
-  "s": 26.596,
-  "e": 30.016,
+  "s": 26.681,
+  "e": 30.101,
   "markup": "But why would a warning make an honest person want to steal?",
   "style": null
  },
  {
   "i": 12,
   "beat": 6,
-  "s": 30.299,
-  "e": 34.357,
-  "markup": "Her {fianc\u00e9's|fee-ahn-say's} professor, psychologist Robert {Cialdini,|Chal-dee-nee,} tested it.",
+  "s": 30.384,
+  "e": 34.442,
+  "markup": "Her {fiancé's|fee-ahn-say's} professor, psychologist Robert {Cialdini,|Chal-dee-nee,} tested it.",
   "style": null
  },
  {
   "i": 13,
   "beat": 6,
-  "s": 34.598,
-  "e": 38.358,
+  "s": 34.684,
+  "e": 38.444,
   "markup": "His team hid marked wood along the trails, and kept swapping the signs.",
   "style": null
  },
  {
   "i": 14,
   "beat": 7,
-  "s": 38.629,
-  "e": 41.637,
-  "markup": "One said: \"Please don't remove the petrified wood.\"",
+  "s": 38.714,
+  "e": 41.442,
+  "markup": "One sign said: \"Please don't take the wood.\"",
   "style": null
  },
  {
   "i": 15,
   "beat": 7,
-  "s": 41.984,
-  "e": 45.712,
-  "markup": "Another said: \"Many past visitors have removed the petrified wood.\"",
+  "s": 41.939,
+  "e": 44.667,
+  "markup": "The other said: \"Many visitors take the wood.\"",
   "style": null
  },
  {
   "i": 16,
   "beat": 8,
-  "s": 45.942,
-  "e": 49.402,
-  "markup": "With \"please don't,\" fewer than {2%|two percent} of the pieces vanished.",
+  "s": 44.968,
+  "e": 48.128,
+  "markup": "With \"please don't,\" only {2%|two percent} of the pieces vanished.",
   "style": null
  },
  {
   "i": 17,
   "beat": 8,
-  "s": 49.77,
-  "e": 51.17,
-  "markup": "With \"many past visitors\"...",
+  "s": 48.598,
+  "e": 49.658,
+  "markup": "With \"many visitors\"...",
   "style": null
  },
  {
   "i": 18,
   "beat": 8,
-  "s": 51.57,
-  "e": 52.81,
+  "s": 50.198,
+  "e": 51.498,
   "markup": "almost {8%.|eight percent.}",
   "style": null
  },
  {
   "i": 20,
   "beat": 9,
-  "s": 53.238,
-  "e": 55.818,
+  "s": 51.926,
+  "e": 54.526,
   "markup": "You see, we don't copy rules.",
   "style": null
  },
  {
   "i": 21,
   "beat": 9,
-  "s": 56.124,
-  "e": 57.344,
+  "s": 55.026,
+  "e": 56.586,
   "markup": "We copy each other.",
   "style": null
  },
  {
   "i": 22,
   "beat": 9,
-  "s": 57.707,
-  "e": 60.387,
+  "s": 56.969,
+  "e": 59.609,
   "markup": "\"Many people steal\" doesn't sound like a warning.",
   "style": null
  },
  {
   "i": 23,
   "beat": 9,
-  "s": 60.633,
-  "e": 62.253,
+  "s": 60.049,
+  "e": 61.649,
   "markup": "It sounds like what everyone does.",
   "style": null
  },
  {
   "i": 24,
   "beat": 10,
-  "s": 62.529,
-  "e": 65.729,
+  "s": 61.935,
+  "e": 65.135,
   "markup": "Like a teacher saying, \"Half this class cheated.\"",
   "style": null
  },
  {
   "i": 25,
   "beat": 10,
-  "s": 65.729,
-  "e": 68.929,
+  "s": 65.135,
+  "e": 68.335,
   "markup": "The other half hears: everybody cheats.",
   "style": null
  },
  {
   "i": 26,
   "beat": 11,
-  "s": 69.085,
-  "e": 70.845,
+  "s": 68.491,
+  "e": 70.251,
   "markup": "The sign didn't stop thieves.",
   "style": null
  },
  {
   "i": 27,
   "beat": 11,
-  "s": 71.579,
-  "e": 73.139,
+  "s": 70.985,
+  "e": 72.545,
   "markup": "It gave them permission.",
   "style": null
  },
  {
   "i": 28,
   "beat": 12,
-  "s": 73.511,
-  "e": 75.071,
+  "s": 72.917,
+  "e": 74.667,
   "markup": "And the bait wood?",
   "style": null
  },
  {
   "i": 29,
   "beat": 12,
-  "s": 75.071,
-  "e": 77.211,
+  "s": 74.667,
+  "e": 76.807,
   "markup": "It came from the park's \"conscience pile\":",
   "style": null
  },
  {
   "i": 30,
   "beat": 12,
-  "s": 77.483,
-  "e": 80.503,
+  "s": 77.079,
+  "e": 80.099,
   "markup": "pieces people stole, then mailed back with apology letters.",
   "style": null
  },
  {
   "i": 31,
   "beat": 12,
-  "s": 81.061,
-  "e": 83.279,
+  "s": 80.657,
+  "e": 83.037,
   "markup": "So some of it got stolen twice.",
   "style": null
  }

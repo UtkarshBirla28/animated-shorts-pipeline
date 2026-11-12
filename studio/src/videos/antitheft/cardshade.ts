@@ -33,7 +33,7 @@ vec3 outgoingLight = diffuseColor.rgb * tintK;
   float uu = clamp( ( vMapUv.x - 0.5 ) / hw, -1.0, 1.0 ) * sign( dFdx( vMapUv.x ) + 1e-7 ); // -1..1 screen left..right
   float t = uu * side;                                                                     // +1 = edge facing the sun
   float g = mix( uBodyGrad * uGradKB, min( uGrad * uGradK, 0.4 ), head );
-  float dark = smoothstep( -0.2, 1.0, -t );                                                  // far side: broad soft gradient, centre stays pale
+  float dark = smoothstep( -0.2, 1.0, -t ) * uDarkK;                                         // far side: broad soft gradient, centre stays pale (A5: x uDarkK per light mode)
   // lavender far side (bible 4.1: 10-25 % darker, blue-violet): the preset side tint, squared, at full strength on
   // the far edge, plus an extra ~18 % lavender multiply (uFarK; less in warm light, where the gold tint carries it)
   vec3 lav = uSideTint * uSideTint * mix( vec3( 1.0 ), vec3( 0.86, 0.84, 0.97 ), uFarK * ( 1.0 - 0.5 * warm ) );
@@ -115,7 +115,7 @@ if ( uModeK > 0.0 ) {
 const DECL = "#include <common>\nuniform vec3 uCharTint; uniform float uCharShade; uniform float uGrad; uniform float uBodyGrad; uniform vec3 uSideTint;"
   + " uniform float uGradK; uniform float uGradKB; uniform float uTintK; uniform float uTintWarm; uniform float uFarK; uniform float uNorm; uniform float uGain; uniform float uPx; uniform float uRimK;"
   + " uniform float uBack; uniform float uDuo; uniform float uFlat;"
-  + " uniform float uModeK; uniform vec3 uFaceMul; uniform vec3 uBodyMul; uniform vec3 uFarMul; uniform float uFarW; uniform vec3 uRimCol2; uniform float uRimW2;";
+  + " uniform float uModeK; uniform vec3 uFaceMul; uniform vec3 uBodyMul; uniform vec3 uFarMul; uniform float uFarW; uniform vec3 uRimCol2; uniform float uRimW2; uniform float uDarkK;";
 /** card-only constants (not per light): gradient share, tint share (day / warm light), lavender far-side extra,
  *  overall gain (calibrated: faces ~.93 V) */
 export const CARD_K = { uGradK: { value: GRAD_K }, uGradKB: { value: GRAD_KB }, uTintK: { value: TINT_K }, uTintWarm: { value: 0.9 }, uFarK: { value: 1.0 },
@@ -125,10 +125,10 @@ export const CARD_K = { uGradK: { value: GRAD_K }, uGradKB: { value: GRAD_KB }, 
 /** per-card light mode uniforms (each Actor owns its material): uBack = backlit low sun, uDuo = lamp duotone.
  *  cast.ts sets them per card from its draw key, so two dissolving shots never share one value */
 type U1 = { value: number }; type U3 = { value: THREE.Vector3 };
-export type CardU = { uBack: U1; uDuo: U1; uFlat: U1; uModeK: U1; uFaceMul: U3; uBodyMul: U3; uFarMul: U3; uFarW: U1; uRimCol2: U3; uRimW2: U1 };
+export type CardU = { uBack: U1; uDuo: U1; uFlat: U1; uModeK: U1; uFaceMul: U3; uBodyMul: U3; uFarMul: U3; uFarW: U1; uRimCol2: U3; uRimW2: U1; uDarkK: U1 };
 const v3 = (x: number, y: number, z: number) => ({ value: new THREE.Vector3(x, y, z) });
 export const cardU = (m: THREE.Material): CardU => (m.userData.cardU ??= { uBack: { value: 0 }, uDuo: { value: 0 }, uFlat: { value: 0 },
-  uModeK: { value: 0 }, uFaceMul: v3(1, 1, 1), uBodyMul: v3(1, 1, 1), uFarMul: v3(1, 1, 1), uFarW: { value: 0.45 }, uRimCol2: v3(1, 1, 1), uRimW2: { value: 3 } }) as CardU;
+  uModeK: { value: 0 }, uFaceMul: v3(1, 1, 1), uBodyMul: v3(1, 1, 1), uFarMul: v3(1, 1, 1), uFarW: { value: 0.45 }, uRimCol2: v3(1, 1, 1), uRimW2: { value: 3 }, uDarkK: { value: 1 } }) as CardU;
 /** sRGB hex -> linear rgb */
 const lin = (h: string): [number, number, number] => {
   const n = parseInt(h.slice(1), 16), f = (v: number) => { const s = v / 255; return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
@@ -137,17 +137,22 @@ const lin = (h: string): [number, number, number] => {
 /** the screen colour a key-side face should read as -> the multiply on the pale face fill (#F8F3EE), share k */
 const faceTo = (h: string, k: number): [number, number, number] => { const a = lin(h), s = lin("#f8f3ee"); return [0, 1, 2].map((i) => 1 + (Math.min(1.05, a[i] / s[i]) - 1) * k) as [number, number, number]; };
 /** A4 per-light card modes (the 4th LX digit): 1 morning, 2 dusk, 3 sunset (backlit), 4 blueprint */
-type Mode = { face: [number, number, number]; body: [number, number, number]; far: [number, number, number]; farW: number; rim: [number, number, number]; rimW: number };
+type Mode = { face: [number, number, number]; body: [number, number, number]; far: [number, number, number]; farW: number; rim: [number, number, number]; rimW: number; darkK?: number };
 const MODES: Record<number, Mode> = {
   1: { face: [1.0, 0.995, 0.985], body: [1.0, 0.99, 0.97], far: [0.9, 0.88, 1.03], farW: 0.42, rim: lin("#ffc46e"), rimW: 5.2 }, // (measured: the morning grade already warms the face to ~#FBE4B5)
-  2: { face: [0.78, 0.72, 0.84], body: [0.95, 0.9, 0.92], far: [1.0, 1.12, 1.45], farW: 0.45, rim: lin("#ffb070"), rimW: 3.2 },
-  3: { face: [0.88, 0.72, 0.88], body: [0.97, 0.9, 0.9], far: [0.84, 0.8, 1.04], farW: 0.4, rim: lin("#ffb060"), rimW: 3.6 }, // (measured 2026-11-11: lit face ~#EBC0AE)
+  // A5 P3 (dusk far side measured #8E7BD2, ~45 % darker and strongly violet): the base far-side darkening x0.5 and a
+  // milder, greyer lavender (target ~#B6A4D8, <= 30 % under the lit #F5D6D9), the warm rim kept
+  2: { face: [0.78, 0.72, 0.84], body: [0.95, 0.9, 0.92], far: [1.02, 1.0, 1.12], farW: 0.45, rim: lin("#ffb070"), rimW: 3.2, darkK: 0.5 },
+  // A6 P3 (shot 13 faces read evenly front-lit cream): the camera-side face fill ~12 % toward violet (#C9898C class), a
+  // bolder 4.6 px orange sun-side rim
+  3: { face: [0.83, 0.66, 0.84], body: [0.95, 0.86, 0.88], far: [0.8, 0.74, 1.02], farW: 0.46, rim: lin("#ff9a3c"), rimW: 4.6 }, // (A5 measured: lit face ~#EBC0AE)
   4: { face: [1, 1, 1], body: [1, 1, 1], far: [0.86, 0.91, 1.0], farW: 0.4, rim: lin("#bff3ff"), rimW: 2.6 },
 };
 /** set a card's per-light mode uniforms (0 = off) */
 export const setCardMode = (U: CardU, mode: number) => {
   const M = MODES[mode];
   U.uModeK.value = M ? 1 : 0;
+  U.uDarkK.value = M?.darkK ?? 1;
   if (!M) return;
   U.uFaceMul.value.set(...M.face); U.uBodyMul.value.set(...M.body); U.uFarMul.value.set(...M.far); U.uFarW.value = M.farW;
   U.uRimCol2.value.set(...M.rim); U.uRimW2.value = M.rimW;

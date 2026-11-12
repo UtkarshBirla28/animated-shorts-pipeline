@@ -26,6 +26,15 @@ Each lesson is a real failure from the antitheft build, its cause, and the rule 
 8. Some beats are bright in sibilance because of their content (lots of s/z). Re-takes do not fix that. Accept the
    best take and let the mix de-esser handle it.
 
+8b. **`eleven_build.py` can only SHORTEN a pause.** When a take's own pause is shorter than the script needs
+    (the '...' before a reveal), use `tools/insert_pause.py <assembled dir> "wordA|wordB|0.40"`. It inserts true silence
+    in the quiet middle and shifts every later word. Measure pauses as TRUE silence (-45 dBFS runs), not from Whisper
+    word edges: the edges hide 0.1-0.3 s.
+8c. **When installing a new voice, overwrite `voice/words_whisper.json` too** (or delete it). `refine_onsets.py` refines
+    from that raw copy when it exists, so a stale copy silently puts the OLD word times on the NEW audio.
+8d. **Whisper p is low on a quoted word's first token** (e.g. `"Please`, `"Half`) in EVERY take. That is a quote-mark
+    artifact: compare it with the same word unquoted before spending credits on a re-take.
+
 ## Picture clock and life
 9. **Idle life runs on the video clock; story actions run on the picture clock.** Breath, sway, blinks, wind, birds and
    flicker use `ctx.vf` (cast.ts `VF`). Gestures and expression swaps keyed to words use `f` / `BEAT`. Otherwise
@@ -71,3 +80,23 @@ Each lesson is a real failure from the antitheft build, its cause, and the rule 
 27. Write block comments in world.ts. An inline `//` comment once swallowed the rest of a line.
 28. Private reference videos and frames are for study only: never commit, upload or send them. Never name the
     reference channel in anything public. The story, characters and voice are the channel's own.
+
+## From rounds 6-8 (2026-11-12)
+29. **Calm beats busy.** Chasing the reference's ~1.7 s-per-picture rhythm (whips, snaps, crash punch-ins) made the film
+    feel too fast to follow. The user's standing direction:
+    - framings hold 2.5-4 s with a gentle creep, zoom <= ~1.5 %/f, at most 2 comic snaps per film;
+    - boards stay on screen >= 1.5-2.5 s at a readable size, gestures take >= 12-18 f;
+    - nothing tighter than an MCU except a clean insert;
+    - a straight cut beats a fast swing.
+    The film went from ~58 framings to ~36, and the scores went UP.
+30. **Short boards, clear lines.** Board/sign text <= ~6-8 words, narrated exactly as written. Script lines short and
+    plain. Plan one funny beat and one mystery beat on purpose.
+31. **Changing the script after the picture exists:** `tools/voice_warp.py` v3 pairs old/new words by text.
+    - Pin renamed beat words in `sound/<short>/audio/warp_anchors.json`.
+    - Check the slope windows > 1.1 it prints: the picture runs faster there, so key the actions in those windows to the video clock.
+32. **Whisper merges two words** ("Baitwood"). The DP alignment then parks the second word in the following silence:
+    the caption shows late, and an auditor may report the word as "missing". Look at the energy, then split the times at the closure.
+33. **Budget the usage limit.**
+    - Cost per loop: a fix round ~2.5-3.4 M subagent tokens, an audit ~2.1-2.6 M; one loop ~5-6 M.
+    - The weekly limit stopped audit A8 mid-way, with 3 of 10 auditors failed. Plan the rounds you can afford.
+    - Keep HANDOFF.md + args files current, so the loop resumes exactly after the reset.

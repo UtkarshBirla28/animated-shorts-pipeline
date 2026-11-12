@@ -171,6 +171,9 @@ uniform vec4 shimmer;       // amplitude (px @1080), horizon (uv.y), band half h
 uniform vec2 shimmerRange;  // distance ramp (m)
 uniform float paper;        // paper texture strength (0 = off)
 uniform vec3 lineGlow;      // round 5: chalk-line glow: target luminance, max saturation, min luminance (x = 0: off)
+uniform float skyGradK;     // round 7: sky re-gradient strength (0 = off)
+uniform vec3 skyS0, skyS1, skyS2, skyS3, skyS4; uniform vec4 skySE;   // the world's sky stops this frame (world.ts sky shader)
+uniform vec3 skyT0, skyT1, skyT2, skyT3, skyT4; uniform vec4 skyTE;   // the target stops (same ramp, radians)
 uniform mat4 camWorld;
 uniform vec2 proj;          // projection p00, p11
 #define SKY_DEPTH 0.999995
@@ -183,10 +186,31 @@ float paperAt(vec2 p) {
   float mot = 0.6 * atN(p * 1.3) + 0.4 * atN(p * 3.7 + 1.9);
   return 0.45 * (fib - 0.5) + 0.25 * (crs - 0.5) + 0.55 * (mot - 0.5);
 }
+vec3 skyRampS(float el) {   // world.ts sky shader, verbatim
+  vec3 c = mix(skyS0, skyS1, smoothstep(0.0, skySE.x, el)); c = mix(c, skyS2, smoothstep(skySE.x, skySE.y, el));
+  c = mix(c, skyS3, smoothstep(skySE.y, skySE.z, el)); return mix(c, skyS4, smoothstep(skySE.z, skySE.w, el)); }
+vec3 skyRampT(float el) {
+  vec3 c = mix(skyT0, skyT1, smoothstep(0.0, skyTE.x, el)); c = mix(c, skyT2, smoothstep(skyTE.x, skyTE.y, el));
+  c = mix(c, skyT3, smoothstep(skyTE.y, skyTE.z, el)); return mix(c, skyT4, smoothstep(skyTE.z, skyTE.w, el)); }
 void mainImage(const in vec4 inputColor, const in vec2 uv, const in float depth, out vec4 outputColor) {
   vec3 c = inputColor.rgb;
   float d = -getViewZ(depth);
   bool sky = depth >= SKY_DEPTH;
+  // round 7 (audit A6 P3 shot 9: the morning sky is a flat pale grey-blue ~#B8C4D8, no deep blue at the top, no gold at the
+  // horizon): sky pixels (the sky sphere + the clouds, which write no depth) are re-graded by elevation: each pixel's view
+  // ray gives its elevation, the world's own sky ramp S(el) is evaluated exactly as world.ts draws it, and the pixel takes
+  // the ratio T(el) / S(el) to the target ramp, so the plain sky lands ON the target and the clouds keep their own shapes
+  // and shading (their bright lit tops are spared: they keep the low sun's gold). The ratio is relative to the LIVE
+  // world stops, so a world-side sky change toward the same target fades this out by itself (never doubles).
+  if (sky && skyGradK > 0.0) {
+    vec2 n = uv * 2.0 - 1.0;
+    vec3 dir = normalize(mat3(camWorld) * vec3(n.x / proj.x, n.y / proj.y, -1.0));
+    float el = asin(clamp(dir.y, -1.0, 1.0));
+    vec3 S = skyRampS(el), T = skyRampT(el);
+    float ls = dot(S, vec3(0.2126, 0.7152, 0.0722)), lc = dot(c, vec3(0.2126, 0.7152, 0.0722));
+    float w = skyGradK * (1.0 - 0.75 * smoothstep(1.08 * ls + 0.02, 1.3 * ls + 0.12, lc));
+    c *= mix(vec3(1.0), clamp(T / max(S, vec3(1e-4)), vec3(0.2), vec3(3.0)), w);
+  }
   float pt = 0.0;
   if (paper > 0.0) {          // uniform branch: derivatives are safe here
     vec2 n = uv * 2.0 - 1.0;
@@ -256,7 +280,11 @@ export type AtmosParams = {
   paper?: number;
   /** round 5: chalk-line glow [target luminance (linear), max saturation, min luminance]: needs the world depth */
   lineGlow?: [number, number, number];
+  /** round 7: sky re-gradient: strength, the world's live sky stops (5 linear colours + 4 ramp elevations, radians) and
+   *  the target stops (same layout) */
+  skyGrad?: { k: number; src: { c: Color3[]; e: [number, number, number, number] }; dst: { c: Color3[]; e: [number, number, number, number] } };
 };
+type Color3 = { r: number; g: number; b: number };
 export class AtmosEffect extends Effect {
   constructor() {
     super("AtmosEffect", atmosFrag, {
@@ -269,6 +297,8 @@ export class AtmosEffect extends Effect {
         ["hazeCol", new Uniform(new Vector4())], ["skyDeep", new Uniform(new Vector4())],
         ["paper", new Uniform(0)], ["camWorld", new Uniform(new Matrix4())], ["proj", new Uniform(new Vector2(1, 1))],
         ["lineGlow", new Uniform(new Vector3())],
+        ["skyGradK", new Uniform(0)], ["skySE", new Uniform(new Vector4(1, 2, 3, 4))], ["skyTE", new Uniform(new Vector4(1, 2, 3, 4))],
+        ...[0, 1, 2, 3, 4].flatMap((i) => [[`skyS${i}`, new Uniform(new Vector3())], [`skyT${i}`, new Uniform(new Vector3())]] as [string, Uniform][]),
       ]),
     });
   }
@@ -293,6 +323,11 @@ export class AtmosEffect extends Effect {
     const lg = worldDepth ? p.lineGlow : undefined;
     (u.get("lineGlow")!.value as Vector3).set(lg ? lg[0] : 0, lg ? lg[1] : 0, lg ? lg[2] : 0);
     u.get("tWorldDepth")!.value = worldDepth; u.get("useWorld")!.value = worldDepth ? 1 : 0;
+    const sg = p.skyGrad; u.get("skyGradK")!.value = sg ? sg.k : 0;
+    if (sg) {
+      (u.get("skySE")!.value as Vector4).set(...sg.src.e); (u.get("skyTE")!.value as Vector4).set(...sg.dst.e);
+      for (let i = 0; i < 5; i++) { const a = sg.src.c[i], b = sg.dst.c[i]; (u.get(`skyS${i}`)!.value as Vector3).set(a.r, a.g, a.b); (u.get(`skyT${i}`)!.value as Vector3).set(b.r, b.g, b.b); }
+    }
     (u.get("camWorld")!.value as Matrix4).copy(camWorld);
     (u.get("proj")!.value as Vector2).set(proj[0], proj[1]);
   }
@@ -302,7 +337,8 @@ export class AtmosEffect extends Effect {
 // Reprojects every pixel (depth -> world) with the camera of frame f + 0.5 (story.ts camAt is pure, so the next camera
 // is exact; f + 0.5 stays in the same impact-kick bucket, so the 1-frame kick jitter is never smeared). Blur vector =
 // per-frame screen velocity x shutter (in frames), minus a knee so slow glides and creeps stay crisp, capped at maxLen
-// px @1080; 16 taps with a fixed interleaved-gradient jitter (static per pixel, no frame noise). Off (amount 0) on
+// px @1080; 24 tent-weighted taps (round 6; 16 box taps before) with a fixed interleaved-gradient jitter (static per
+// pixel, no frame noise). Off (amount 0) on
 // frames whose fastest probe moves less than the knee.
 // Round 5 (audit A4 P2 shot 12 + the carry-over caps): `amount` is the SIGNED scale from the sampled camera to one VIDEO
 // frame of motion (AntiTheft.tsx: warp rate / (2 x sample step)), so the blur follows the real on-screen speed of the
@@ -337,15 +373,20 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, const in float depth,
   float L2 = min(max(L - knee, 0.0), card ? maxLenCard : maxLen);
   if (L2 < 0.5) return;
   vel *= L2 / L;
+  // round 6 (audit A5 P2 shot 12: the whip landing showed 2-3 discrete ghost copies of the card outlines): a BOX kernel
+  // turns a thin dark ink line into a flat band with two hard ends, which reads as a doubled outline. Now a TENT kernel
+  // (weight 1 - |x|) over 1.3 x the blur length (the same mean smear), 24 taps: a line smears into one soft streak
+  vel *= 1.3;
   float j = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
   vec3 acc = vec3(0.0); float wsum = 0.0;
-  for (int i = 0; i < 16; i++) {
-    vec2 s = uv + vel * ((float(i) + j) / 16.0 - 0.5);
-    float w = 1.0;
+  for (int i = 0; i < 24; i++) {
+    float x = (float(i) + j) / 24.0 - 0.5;
+    vec2 s = uv + vel * x;
+    float w = 1.0 - 2.0 * abs(x);
     if (guard && !card) { vec2 sc = clamp(s, vec2(0.001), vec2(0.999)); if (mbCard(sc, readDepth(sc))) w = 0.0; }
     acc += texture2D(inputBuffer, s).rgb * w; wsum += w;
   }
-  outputColor = vec4(wsum > 0.5 ? acc / wsum : inputColor.rgb, inputColor.a);
+  outputColor = vec4(wsum > 0.25 ? acc / wsum : inputColor.rgb, inputColor.a);
 }`;
 export class MotionBlurEffect extends Effect {
   constructor({ shutter = 0.22, knee = 3, maxLen = 48 } = {}) {
@@ -399,6 +440,11 @@ export class MotionBlurEffect extends Effect {
 //                   their value (x lfD.w gain) and take a temperature (lfD.z: - = cooler crimson, + = hot red-orange)
 //   kind 6 ghost  : (round 4) a soft hexagonal lens ghost: p1 = radius (px), p2 = edge softness (px), p3 = rim (0..1);
 //                   its visibility is probed at lfD.yz (the sun's uv, at distance lfA.z) so it dies with the sun
+//   kind 7 burst  : (round 6, audit A5 P3 shot 13: the climax slam had no impact FX) a cartoon impact: an elliptical ring
+//                   (p1, p2 = radii x / y px, p3 = ring thickness px) plus N radial streaks (lfD.y = N) from lfD.z to lfD.w
+//                   x the ring radius (each streak's length hashed 0.82-1.18 x), additive
+//   kind 8 puff   : (round 6) a soft noisy dust puff painted OVER the picture (alpha-over, not additive): p1, p2 = radii
+//                   (px), p3 = noise cell (px); lfD.y = opacity, lfD.z = noise seed; colour = the dust colour (linear)
 // Round 3 per-pixel occlusion (occ, metres): a source is never painted on pixels nearer than (its distance - occ), so a
 // sharp character standing in front of the glint rock or of a blurred lamp stays clean (audit A2: the rock streak
 // crossed her dress). 0 = off: lens artefacts of the glass itself (the sun streak) keep crossing everything.
@@ -407,7 +453,7 @@ export class MotionBlurEffect extends Effect {
 // cut dark shafts out of a warm additive glow; a fixed per-pixel jitter hides the tap steps (no frame noise). The sky
 // itself gets only 15 % (sets_int.ts already draws the sun halo and a fan of rays there): the shafts fall on the air in
 // front of the sign, the posts, the people and the ground.
-export const LFX_N = 24; // round 4: 12 -> 16 (shot 15: band + tag swell + 7 dusk practicals x 2); round 5: 24 (shot 13: + 10 lens-dust specks)
+export const LFX_N = 32; // round 4: 12 -> 16 (shot 15: band + tag swell + 7 dusk practicals x 2); round 5: 24 (shot 13: + 10 lens-dust specks); round 7: 32 (shot 13: + god-ray quads + the impact pulse; shot 12: chalk glints)
 const lensFxFrag = /* glsl */ `
 #define LFX_N ${LFX_N}
 #define GR_TAPS 32
@@ -422,6 +468,8 @@ uniform vec2 grSun;        // sun screen uv (may lie outside 0..1)
 uniform vec3 grCol;        // linear HDR colour x strength (0 = off)
 uniform vec2 grP;          // radial e-fold around the sun (px), march length (fraction of the way to the sun)
 uniform float grDark;      // round 5: dark protection of the god-ray veil (0 = off .. 1 = no veil on black)
+uniform vec4 lfScan;       // round 6: LED face scanlines: x = strength (0 = off), y = line period (px @1080), z = phase (rad),
+                           // w = rolling bright band strength
 uniform vec4 grM;          // round 4: x = mode (0 = open SKY lets light through, 1 = BRIGHT pixels do, e.g. a window,
                            // 2 = everything FARTHER than y metres does: near posts / people cut shadow shafts),
                            // y = mode-1 luminance threshold (linear) / mode-2 distance, z = weight of the rays on sky pixels,
@@ -441,6 +489,9 @@ float lfHex(vec2 q, float r) {   // signed distance to a flat-topped hexagon of 
   q = abs(q); q -= 2.0 * min(dot(k.xy, q), 0.0) * k.xy; q -= vec2(clamp(q.x, -k.z * r, k.z * r), r);
   return length(q) * sign(q.y);
 }
+float atHash(vec2 p) { vec3 q = fract(vec3(p.xyx) * 0.1031); q += dot(q, q.yzx + 33.33); return fract((q.x + q.y) * q.z); }
+float atNoise(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(atHash(i), atHash(i + vec2(1.0, 0.0)), f.x), mix(atHash(i + vec2(0.0, 1.0)), atHash(i + vec2(1.0, 1.0)), f.x), f.y); }
 void mainImage(const in vec4 inputColor, const in vec2 uv, const in float depth, out vec4 outputColor) {
   vec3 add = vec3(0.0);
   vec3 base = inputColor.rgb;
@@ -471,17 +522,43 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, const in float depth,
         float t = D.z;
         vec3 mulT = t >= 0.0 ? vec3(1.0, 1.0 + 2.2 * t, 1.0 + 0.3 * t) : vec3(1.0, 1.0 + 0.5 * t, 1.0 - 5.0 * t);
         vec3 lit = base * mix(vec3(1.0), mulT, red * fw) * mix(1.0, D.w, fw);
+        if (lfScan.x > 0.0) {   // round 6 (audit A5 ADD shot 10): dot-matrix scanlines + a slow bright band rolling down
+          float sl = 0.5 + 0.5 * sin(6.2831853 * r.y / lfScan.y + lfScan.z);
+          float band = exp(-pow(fract(r.y / (14.0 * lfScan.y) - 0.07 * lfScan.z) - 0.5, 2.0) * 40.0);
+          lit *= mix(1.0, (1.0 - lfScan.x * sl) * (1.0 + lfScan.w * band), fw);
+        }
         base = mix(face, lit, dig);
       }
       k = exp(-o / C.z) * smoothstep(-0.75, 1.5, max(q.x, q.y));
     }
-    else { float hd = lfHex(r, C.x); k = (1.0 - smoothstep(-C.y, C.y, hd)) * (0.7 + C.z * smoothstep(-3.0 * C.y, -C.y, hd)); }
+    else if (A.w < 6.5) { float hd = lfHex(r, C.x); k = (1.0 - smoothstep(-C.y, C.y, hd)) * (0.7 + C.z * smoothstep(-3.0 * C.y, -C.y, hd)); }
+    else if (A.w < 7.5) {
+      vec2 q = r / C.xy; float rho = length(q), Rm = 0.5 * (C.x + C.y);
+      float ring = exp(-pow((rho - 1.0) * Rm / C.z, 2.0));
+      float N = max(D.y, 1.0), seg = 6.2831853 / N, ang = atan(q.y, q.x);
+      float id = floor((ang - 0.21) / seg + 0.5), a0 = id * seg + 0.21;
+      float hs = fract(sin(mod(id, N) * 91.7 + 3.1) * 43758.5453);
+      float outer = D.w * (0.82 + 0.36 * hs), inner = D.z * (0.96 + 0.08 * hs);
+      float dperp = abs(sin(ang - a0)) * length(r), along = clamp((rho - inner) / max(outer - inner, 1e-3), 0.0, 1.0);
+      float th = C.z * (0.75 - 0.45 * along);   // a tapered stroke, thick at the root
+      float streak = exp(-dperp * dperp / (th * th + 0.25)) * smoothstep(inner, inner + 0.05, rho) * (1.0 - smoothstep(outer - 0.1, outer, rho));
+      k = ring + 0.9 * streak;
+    }
+    else {   // kind 8 puff: alpha-over
+      vec2 q = r / C.xy; float e = dot(q, q);
+      vec2 np = r / C.z + D.z;
+      float n = 0.6 * atNoise(np) + 0.4 * atNoise(np * 2.3 + 7.1);
+      float a = exp(-1.8 * e) * smoothstep(0.25, 0.75, n + 0.35 - 0.25 * e);
+      if (D.x > 0.0 && A.z > 0.0) a *= smoothstep(A.z - 2.0 * D.x, A.z - D.x, dHere);
+      base = mix(base, B.rgb, clamp(a * D.y, 0.0, 1.0));
+      continue;
+    }
     if (k < 1e-4) continue;
     if (D.x > 0.0 && A.z > 0.0) k *= smoothstep(A.z - 2.0 * D.x, A.z - D.x, dHere);
     // round 5 (audit A4 P2 shot 8: the morning veil made the frame milky): a wide glow can keep off the darks, so the
     // long violet shadows and the ink stay deep while the lit floor takes the warmth
     if (A.w < 4.5 && D.w > 0.0) k *= mix(1.0 - D.w, 1.0, smoothstep(0.0, 0.3, dot(base, vec3(0.2126, 0.7152, 0.0722))));
-    add += B.rgb * k * mix(C.w, 1.0, lfVis(A.w > 5.5 ? D.yz : A.xy, A.z));
+    add += B.rgb * k * mix(C.w, 1.0, lfVis(A.w > 5.5 && A.w < 6.5 ? D.yz : A.xy, A.z));
   }
   if (grCol.r + grCol.g + grCol.b > 0.0) {
     vec2 dv = grSun - uv;
@@ -507,7 +584,9 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, const in float depth,
   }
   outputColor = vec4(base + add, inputColor.a);
 }`;
-export type LensSrc = { uv: [number, number]; dist: number; kind: 0 | 1 | 2 | 3 | 4 | 5 | 6; col: [number, number, number]; rot?: number; p: [number, number, number?]; minVis?: number;
+export type LensSrc = { uv: [number, number]; dist: number; kind: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8; col: [number, number, number]; rot?: number; p: [number, number, number?]; minVis?: number;
+  /** round 6, kind 7: [streak count, streak start, streak end] (x the ring radius); kind 8: [opacity, noise seed] */
+  burst?: [number, number, number]; puff?: [number, number];
   /** round 3: per-pixel occlusion margin (m): never paint pixels nearer than dist - occ (0 / unset = off) */
   occ?: number;
   /** round 4, kind 5: [face strength 0..1, digit temperature -1..1, digit gain]; kind 6: the visibility probe uv */
@@ -534,10 +613,12 @@ export class LensFxEffect extends Effect {
         ["lfD", new Uniform(Array.from({ length: LFX_N }, () => new Vector4()))],
         ["lfN", new Uniform(0)],
         ["grSun", new Uniform(new Vector2(0.5, 0.5))], ["grCol", new Uniform(new Vector3())], ["grP", new Uniform(new Vector2(200, 1))],
-        ["grM", new Uniform(new Vector4(0, 1, 0.15, 0))], ["grDark", new Uniform(0)],
+        ["grM", new Uniform(new Vector4(0, 1, 0.15, 0))], ["grDark", new Uniform(0)], ["lfScan", new Uniform(new Vector4())],
       ]),
     });
   }
+  /** round 6: LED face scanlines for this frame (strength 0 = off; period px @1080; phase rad; rolling band strength) */
+  scan(strength: number, period = 6, phase = 0, band = 0) { (this.uniforms.get("lfScan")!.value as Vector4).set(strength, period, phase, band); }
   set(src: LensSrc[], rays?: GodRays | null) {
     const A = this.uniforms.get("lfA")!.value as Vector4[], B = this.uniforms.get("lfB")!.value as Vector4[], C = this.uniforms.get("lfC")!.value as Vector4[];
     const D = this.uniforms.get("lfD")!.value as Vector4[];
@@ -548,6 +629,8 @@ export class LensFxEffect extends Effect {
       C[i].set(Math.max(1e-3, s.p[0]), Math.max(1e-3, s.p[1]), s.kind === 4 || s.kind === 6 ? Math.max(0, s.p[2] ?? 0) : Math.max(1e-3, s.p[2] ?? 1), s.minVis ?? 0);
       if (s.kind === 5) D[i].set(s.occ ?? 0, s.led?.[0] ?? 0.8, s.led?.[1] ?? 0, s.led?.[2] ?? 1);
       else if (s.kind === 6) D[i].set(0, s.probe?.[0] ?? s.uv[0], s.probe?.[1] ?? s.uv[1], 0);
+      else if (s.kind === 7) D[i].set(s.occ ?? 0, s.burst?.[0] ?? 14, s.burst?.[1] ?? 1.1, s.burst?.[2] ?? 1.6);
+      else if (s.kind === 8) D[i].set(s.occ ?? 0, s.puff?.[0] ?? 0.6, s.puff?.[1] ?? 0, 0);
       else D[i].set(s.occ ?? 0, 0, 0, s.dark ?? 0);
     }
     this.uniforms.get("lfN")!.value = n;

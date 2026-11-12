@@ -107,7 +107,7 @@ export class World {
       const a = (i / 11) * Math.PI * 2 + 0.3 - (i === 7 ? 0.12 : 0), d = 560 + (i % 3) * 70; // cloud 7 nudged fully outside the P0 frame (no edge cut on the loop frame)
       const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, fog: false, color: new THREE.Color(1.1, 1.1, 1.1) }));
       const w = 150 + (i % 4) * 40;
-      m.position.set(Math.cos(a) * d, 95 + (i % 4) * 34, Math.sin(a) * d); m.scale.set(w, w / 2, 1);
+      m.position.set(Math.cos(a) * d, i === 8 ? 40 : 95 + (i % 4) * 34, Math.sin(a) * d); /* cloud 8 hides behind the mesas (WORLD-EXT A5: the 'two suns') */ m.scale.set(w, w / 2, 1);
       m.layers.set(NOINK);
       this.clouds.push(m); this.cloudBase.push(m.position.clone()); R.add(m);
     }
@@ -198,6 +198,7 @@ export class World {
     const cm = this.cloudMaps(L.look.cloud);
     for (let i = 0; i < this.clouds.length; i++) {
       const m = this.clouds[i], mat = m.material as THREE.MeshBasicMaterial;
+      m.visible = !(L.name === "dusk" && (i === 7 || i === 8)); /* no peach discs at dusk (WORLD-EXT A5) */
       // slow drift in whole cycles over the film, so the last frame flows into frame 0 (loop)
       const ph = (2 * Math.PI * f) / TOTAL + i * 1.7, b0 = this.cloudBase[i];
       m.position.set(b0.x + 14 * Math.sin(ph), b0.y + 2 * Math.sin(2 * ph), b0.z + 10 * Math.cos(ph));

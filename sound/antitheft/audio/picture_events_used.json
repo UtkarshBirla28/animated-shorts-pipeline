@@ -1,16 +1,16 @@
 {
  "_doc": "frames (30 fps) every SFX used in the last mix.py run; copy a key into picture_events.json to override it (a frame, a list of frames, the same dict shape, or null to drop the cue)",
  "bubble_in": {
-  "value": 50,
-  "source": "cast probe: bubbleClip card 44-84, in frame from 51: revealed full-size by the camera tilt -> a soft reveal, not a pop"
+  "value": 44,
+  "source": "cast probe: bubbleClip card 44-71, in frame from 44: pops in on screen"
  },
  "bubble_out": {
-  "value": 83.0,
-  "source": "OVERRIDE picture_events.json (\"sign1-5\")"
+  "value": 70.5,
+  "source": "cast probe: bubbleClip card 44-71: shrinks 70-71 (A6 P2: on the shrink, ~video 81.5)"
  },
  "snap_push": {
-  "value": 125,
-  "source": "story.ts dive1: DIVE0 = steal1+2 (first moving frame 126->127); whoosh from DIVE0-1, peak ~132"
+  "value": null,
+  "source": "story.ts dive1: DIVE0 = steal1+2 (first moving frame 126->127); whoosh from DIVE0-1, peak ~132 | camera probe: the dive peaks at only 0.14 deg/f -> no whoosh"
  },
  "glint": {
   "value": 121.8,
@@ -21,22 +21,39 @@
   "source": "cast probe: the raven's on-screen ruffle (cue 1 f before its first moving frame): 28 -> none (dropped 28: no such action in the picture)"
  },
  "raven_hop_1": {
+  "value": [],
+  "source": "cast probe: the raven's on-screen hop (cue 1 f before its first moving frame): 93 -> none (dropped 93: no such action in the picture)"
+ },
+ "shutter_1": {
   "value": [
-   93.0
+   30.0,
+   64.0,
+   75.0
   ],
-  "source": "cast probe: the raven's on-screen hop (cue 1 f before its first moving frame): 93 -> 93"
+  "source": "cast probe: in-frame camera flashes of shot 1: 30, 64, 75"
+ },
+ "chain_1": {
+  "value": true,
+  "source": "sets_ext TRAIL OPEN plate: swings with the shared gust curve -> the strongest gust in shot 1"
  },
  "vista_flash": {
-  "value": null,
-  "source": "cast.ts vista() flash at mid-6 = 159 is off screen (audio_probe / project.mjs) -> no cue"
+  "value": 176.0,
+  "source": "cast probe: the in-frame flashes of shot 2 (165, 173, 176): one far shutter on the last"
+ },
+ "pickup_2": {
+  "value": {
+   "vf_on": 215,
+   "vf_lead": 10
+  },
+  "source": "sets_ext poseA5b: the shot-2 pickup clears the entrance sign at video 215, drives left"
  },
  "chip_glint_3": {
   "value": 190,
   "source": "CHAR A1-P1: a 4-point glint on the chip at B-16..B-9"
  },
  "pocket_3": {
-  "value": 205.0,
-  "source": "cast probe: the chip leaves his hand into the pocket (tick 4 f into the cue): 205 -> 205"
+  "value": null,
+  "source": "cast probe: the chip leaves his hand into the pocket (tick 4 f into the cue): 205 -> none (dropped 205: no such action in the picture)"
  },
  "pocket_pats_3": {
   "value": [
@@ -50,19 +67,16 @@
   "source": "CHAR A1-P1: tiny rainbow glint peeking out of the pocket at B+16"
  },
  "whistle_3": {
-  "value": 236.33,
+  "value": 236.22,
   "source": "innocent 2-note whistle in the gap after 'pieces.' (cast.ts notes drawn at B+30 / B+36)"
  },
  "whistle_note2_3": {
-  "value": 239.5,
-  "source": "cast probe: the note drawn after the gap whistle (2nd note 1.5 f before it): 239.5 -> 239.5"
+  "value": 238.5,
+  "source": "cast probe: the note drawn after the gap whistle (2nd note 1.5 f before it): 239.5 -> 238.5"
  },
  "whistle_soft_3": {
-  "value": [
-   214.0,
-   221.0
-  ],
-  "source": "cast probe: whistle-note births before the gap whistle: 214, 221 -> 214, 221"
+  "value": [],
+  "source": "cast probe: whistle-note births before the gap whistle: 214, 221 -> none (dropped 214, 221: no such action in the picture)"
  },
  "shutter_3": {
   "value": 234.0,
@@ -72,22 +86,29 @@
   "value": null,
   "source": "no walker in shot 3's frame (preview2) -> none"
  },
+ "shift_3": {
+  "value": 224.0,
+  "source": "cast probe: his weight shift kicks up the dust puff at 224 (A6 ADD: a gravel scuff)"
+ },
  "flip_seqs": {
-  "value": [
-   [
-    1,
-    -8
+  "value": {
+   "seqs": [
+    [
+     1,
+     471.1302681992337
+    ],
+    [
+     4,
+     466.1302681992337
+    ]
    ],
-   [
-    4,
-    -13
-   ]
-  ],
-  "source": "sets_ext poseFlip FLAP_SEQ(1, tons14-8) tens + FLAP_SEQ(4, tons14-13) ones: [target, start - tons14]"
+   "clock": "video"
+  },
+  "source": "audio_probe: sets_ext poseFlip FLAP_SEQ(1, toNew(BEAT.tons14) - 8) tens + FLAP_SEQ(4, toNew(BEAT.tons14) - 13) ones, video clock"
  },
  "flip_hush_until": {
-  "value": 354.31,
-  "source": "A4 P3: the flaps that land before the end of 'day...' (+1 f) are 6 dB softer"
+  "value": 345.4,
+  "source": "the flaps that land before the end of 'Warning!' (+1 f) are 6 dB softer"
  },
  "stroll_steps_4": {
   "value": null,
@@ -108,6 +129,24 @@
  "redcap_pocket_4": {
   "value": 424.0,
   "source": "cast probe: the red-cap tourist's chip leaves his hand (tick 3 f into the cue): 424 -> 424"
+ },
+ "heap_4": {
+  "value": {
+   "land": 363,
+   "land_vf": null,
+   "fall_vf": 6
+  },
+  "source": "LEAD plan.ts TH.heap14: drops on BEAT.tons14, lands ~6 video f later (sets_ext HEAP14_LAND if declared, else tons14 + 4 picture f); sets_ext builds the heap"
+ },
+ "pock_4": {
+  "value": [
+   {
+    "f": 398.0,
+    "vf": null,
+    "who": "tour5pk"
+   }
+  ],
+  "source": "cast probe: 2 pk chips into pockets, 1 on screen: tour5pk 398"
  },
  "whistle_4": {
   "value": [
@@ -131,8 +170,8 @@
   "source": "cast probe: her whisper hand first moves on 505 -> the sleeve swish starts 1 f before"
  },
  "sweat_5": {
-  "value": 543.0,
-  "source": "cast probe: the fiance's sweat drop pops on: 544 -> 543"
+  "value": 544.0,
+  "source": "cast probe: the fiance's sweat drop pops on: 544 -> 544"
  },
  "raven_wing_5": {
   "value": [
@@ -145,10 +184,8 @@
   "source": "A4 P3: the shot-5 photographer + flash (520) are occluded in preview4 (video 659) -> none"
  },
  "raven_6": {
-  "value": [
-   604.0
-  ],
-  "source": "cast probe: the raven's on-screen ruffle (cue 1 f before its first moving frame): 604 -> 604"
+  "value": [],
+  "source": "cast probe: the raven's on-screen ruffle (cue 1 f before its first moving frame): 604 -> none (dropped 604: no such action in the picture)"
  },
  "relight_6": {
   "value": {
@@ -160,6 +197,27 @@
  "cricket_6": {
   "value": 629,
   "source": "A4 ADD: the first distant cricket as the late light settles (relight end)"
+ },
+ "lamps_6": {
+  "value": [
+   885.485,
+   888.485,
+   887.485,
+   890.485
+  ],
+  "source": "sets_ext: gooseneck lamps 2 / 3 flick on at video toNew(steal2) - 11 (+2): on, off 2 f, on (VIDEO frames)"
+ },
+ "raven_tink_6": {
+  "value": 632.0,
+  "source": "cast probe: the raven's chip glints in frame at 632 (CHAR: the peck / snatch)"
+ },
+ "fiance_walk_6": {
+  "value": [
+   580.25,
+   587.5,
+   594.75
+  ],
+  "source": "cast probe: he starts walking on 573, contacts 580.25, 587.5, 594.75, head in frame until 579 -> steps on 580.25, 587.5, 594.75"
  },
  "pen_write_7": {
   "value": [
@@ -178,9 +236,9 @@
  },
  "wren_7": {
   "value": [
-   690
+   665.5
   ],
-  "source": "sets_ext.ts wren hop(h1 = professor+14): a faint cactus-wren chirp on the visible hop"
+  "source": "audio_probe: the wren is in frame 653-682 (hop h1 690 is not) -> a chirp on a bob at 665.5 (mid-window)"
  },
  "pen_more_7": {
   "value": [
@@ -196,12 +254,8 @@
   "source": "A4 P2: the visible tally strokes after 'professor,' (video 852-858, 868-874) -> two short scratch bursts"
  },
  "fly_7": {
-  "value": {
-   "start": 753,
-   "peak": 764,
-   "end": 767
-  },
-  "source": "story.ts FLY7 = testedIt+1 (the dolly + zoom into the clipboard), fastest at the 7->8 dissolve (A4 P2: video 924-944)"
+  "value": null,
+  "source": "story.ts FLY7 = testedIt+1 (the dolly + zoom into the clipboard), fastest at the 7->8 dissolve (A4 P2: video 924-944) | camera probe: the fly-in peaks at only 0.23 deg/f -> no air"
  },
  "chip_set_8": {
   "value": [
@@ -211,19 +265,16 @@
   "source": "cast probe: every on-screen chip that leaves a hand onto the trail: 776 (asst1, dust puff = thud), 778 (asst2)"
  },
  "dot_dab_8": {
-  "value": 782,
-  "source": "cast.ts team: fxChip gets its white dot at BEAT.marked (dotHand bump marked-3..+3)"
+  "value": 782.0,
+  "source": "cast probe: the dotted chip card (fx 'chipHeroD') is first in frame at 782: the dab lands on the first video frame showing it"
  },
  "stopwatch_8": {
-  "value": null,
-  "source": "cast probe: the stopwatch thumb press (fx 'stopw1f') IN FRAME: 792 -> none (dropped 792: no such action in the picture)"
+  "value": 772.0,
+  "source": "cast probe: the stopwatch thumb press (fx 'stopw1f') IN FRAME at 772"
  },
  "whip_8": {
-  "value": {
-   "start": 799,
-   "peak": 806
-  },
-  "source": "story.ts WHIP8 = marked+17, CUT8 = WHIP8+7 (the pan peaks at the hidden cut)"
+  "value": null,
+  "source": "story.ts WHIP8 = marked+17, CUT8 = WHIP8+7 (the pan peaks at the hidden cut) | camera probe: no fast move (>= 2.5 deg/f) near video 1090 in shot 8 -> no swish"
  },
  "panel_unhook_8": {
   "value": 840.0,
@@ -238,12 +289,12 @@
   "source": "cast probe: toon.ts swapPath: hang on 855+0 f = the visible move (new panel peak speed 852, settles 867)"
  },
  "dust_off_8": {
-  "value": 864.0,
-  "source": "cast probe: asst3 dusts off his hands right before he walks off (866 - 2)"
+  "value": 862.0,
+  "source": "cast probe: asst3 dusts off his hands right before he walks off (864 - 2)"
  },
  "asst3_turn_8": {
-  "value": 866.0,
-  "source": "cast probe: asst3 starts walking off on 866"
+  "value": 864.0,
+  "source": "cast probe: asst3 starts walking off on 864"
  },
  "asst_steps_9": {
   "value": null,
@@ -267,8 +318,8 @@
  },
  "readerB_pats_9": {
   "value": [
-   1008,
-   1012
+   1006,
+   1010
   ],
   "source": "CHAR r3 signReaders: reader B's hip pats from REM = 'removed' (every 4 f)"
  },
@@ -284,12 +335,12 @@
   "source": "replaced by readerA_walk_9"
  },
  "truck_air_9": {
-  "value": 946,
-  "source": "story.ts CAMS[9] truck A -> B: key at another-16, dur 34 (peak speed mid-glide)"
+  "value": null,
+  "source": "story.ts CAMS[9] truck A -> B: key at another-16, dur 34 (peak speed mid-glide) | camera probe: no fast move (>= 1.2 deg/f) near video 1258 in shot 9 -> no swish"
  },
  "readerB_pocket_9": {
-  "value": 1005.0,
-  "source": "cast probe: reader B's chip into his hip pocket (tick 3 f into the cue): 1010 -> 1005"
+  "value": 1007.0,
+  "source": "cast probe: reader B's chip into his hip pocket (tick 3 f into the cue): 1008 -> 1007"
  },
  "far_pick_9": {
   "value": [
@@ -337,19 +388,17 @@
  },
  "crowd_pocket_10": {
   "value": 1174.0,
-  "source": "cast probe: the crowd's chips go into their pockets (1177, 1177, 1177, 1177, 1177; ticks 3 f into the cue): 1173 -> 1174"
+  "source": "cast probe: the crowd's chips go into their pockets (1177, 1180, 1180, 1180, 1180, 1180; ticks 3 f into the cue): 1173 -> 1174"
  },
  "shutter_10": {
-  "value": [
-   1150.0
-  ],
-  "source": "cast probe: on-screen camera flash (not the one under the cha-ching): 1150 -> 1150"
+  "value": [],
+  "source": "cast probe: on-screen camera flash (not the one under the cha-ching): 1150 -> none (dropped 1150: no such action in the picture)"
  },
  "glint_10": {
   "value": [
-   1168.0
+   1166.0
   ],
-  "source": "cast probe: the chip held up to the sun glints: 1168 -> 1168"
+  "source": "cast probe: the chip held up to the sun glints: 1168 -> 1166"
  },
  "counter_B": {
   "value": {
@@ -360,7 +409,11 @@
  },
  "cha_ching": {
   "value": 1189,
-  "source": "the counter lands ON '8%'"
+  "source": "the counter lands ON '8%': the low 'ka-' thunk (A6 P1); the bell 'CHING' blooms in the stop-time gap after '8%.'"
+ },
+ "bang_10": {
+  "value": 1079.0,
+  "source": "cast probe: tourist A's '!' card is in frame from 1079"
  },
  "raven_bolt_10": {
   "value": 1189.0,
@@ -371,8 +424,13 @@
   "source": "cast probe: the loose feather drifting down past the LED: 1192 -> 1193"
  },
  "scurry_10": {
-  "value": null,
-  "source": "cast probe: on-screen foot contacts of the Sign B crowd after the cha-ching: 0 (their heads are outside the frame while they scurry off -> none)"
+  "value": [
+   1193.62,
+   1194.92,
+   1195.98,
+   1197
+  ],
+  "source": "cast probe: on-screen foot contacts after the cha-ching: 8"
  },
  "bp_path_11": {
   "value": 1212,
@@ -387,8 +445,41 @@
   "source": "sets_int: junction copyRules-10..-8, THE RULE arrow copyRules-8 over 16 f"
  },
  "bp_rule_label_11": {
-  "value": 1241,
-  "source": "sets_int: label 'THE RULE' pops (outBack 8 f)"
+  "value": 1237.76,
+  "source": "sets_int: label 'THE RULE' pops at PV(toV(copyRules) - 2.5)"
+ },
+ "bp_draft7_11": {
+  "value": {
+   "strip": [
+    1572.91,
+    1590.91
+   ],
+   "compass": [
+    1578.91,
+    1592.91
+   ],
+   "dim": [
+    1582.91,
+    1596.91
+   ],
+   "heads": [
+    1595.91,
+    1598.91
+   ],
+   "ring": [
+    1593.91,
+    1601.91
+   ],
+   "rub": [
+    1624.91,
+    1630.91
+   ],
+   "underline": [
+    1702.433,
+    1713.745
+   ]
+  },
+  "source": "sets_int r7: the drafting marks after 'You see,' (VIDEO frames from toV(youSee)) + the red underline on 'Many'"
  },
  "bp_crowd_11": {
   "value": 1257,
@@ -401,17 +492,17 @@
  "bp_walk_11": {
   "value": {
    "contacts": [
-    1259.47,
-    1262.94,
-    1266.47,
-    1269.94,
-    1273.41,
-    1276.89,
-    1280.39
+    1259.41,
+    1263.12,
+    1266.67,
+    1269.83,
+    1273.29,
+    1276.82,
+    1280.45
    ],
    "stop": 1284
   },
-  "source": "cast probe: toon.ts walk phase: 7 foot contacts 1259.5-1280.4, stops (feet together) on 1284"
+  "source": "cast probe: toon.ts walk phase: 7 foot contacts 1259.4-1280.5, stops (feet together) on 1284"
  },
  "sign_float_11": {
   "value": 1282,
@@ -422,16 +513,56 @@
    "start": 1265.0,
    "end": 1407.0
   },
-  "source": "cast probe: the chalk crowd cards are on screen 1265-1407 (464 card runs)"
+  "source": "cast probe: the chalk crowd cards are on screen 1265-1407 (501 card runs)"
  },
  "thief_pops_11": {
   "value": {
-   "start": 1379,
-   "count": 30,
+   "start": 1374.0,
+   "count": 60,
    "rate": 2.5,
-   "land": 9
+   "land": 9.0
   },
-  "source": "sets_int: thief i at everyone + i/2.5 (THIEF_N 30), visible from +2 f; lands 9 f later (chalk-paper tap)"
+  "source": "sets_int: thief i emerges at fe + i/2.5 (fe = BEAT.everyone - 3, THIEF_N 60, read by audio_probe), lands 9 f later"
+ },
+ "pct_notes_11": {
+  "value": [
+   [
+    1248,
+    12,
+    "1.67 %"
+   ],
+   [
+    1277,
+    12,
+    "7.92 %"
+   ]
+  ],
+  "source": "sets_int: the 1.67 % / 7.92 % chalk notes wipe in"
+ },
+ "draft_11": {
+  "value": [
+   [
+    1295,
+    12
+   ],
+   [
+    1299,
+    13
+   ],
+   [
+    1303,
+    12
+   ],
+   [
+    1308,
+    11
+   ],
+   [
+    1313,
+    12
+   ]
+  ],
+  "source": "sets_int: dimension chain land..+12, sheet +4, compass +8, scale +13, FIG. 2 +18"
  },
  "chalk_12": {
   "value": [
@@ -556,11 +687,8 @@
   "source": "cast.ts student darts flip every 6 f from BEAT.everybody"
  },
  "whip_12": {
-  "value": {
-   "center": 1478.4,
-   "half": 8
-  },
-  "source": "story.ts arc12: ARC12A = cheated-4, ARC12D = 54, fastest ~cheated+28 (A4 P3: video ~1815)"
+  "value": null,
+  "source": "story.ts arc12: ARC12A = cheated-4, ARC12D = 54, fastest ~cheated+28 (A4 P3: video ~1815) | camera probe: no fast move (>= 2.5 deg/f) near video 1982 in shot 12 -> no swish"
  },
  "pencils_12": {
   "value": [
@@ -574,6 +702,10 @@
   "value": 1496,
   "source": "A4 ADD: one chair creak on 'everybody' (a pupil shifts as the bubble pops)"
  },
+ "react_12": {
+  "value": true,
+  "source": "A6 ADD: the room reacts in the gap after '\"Half this class cheated.\"' (pencil drop, desk scrape, one gasp)"
+ },
  "chalk_dot_12": {
   "value": 1459.3125,
   "source": "sets_int chalkWords(): the '.' of 'CHEATED.' is drawn mid-window -> a chalk tok + snap"
@@ -586,8 +718,12 @@
   "source": "cast probe: on-screen chips into pockets within 12 f of 'thieves': 1546, 1549 (ticks 3 f into the cue)"
  },
  "stamp": {
-  "value": 1585,
-  "source": "sets_ext poseStamp: falls F-5..F, squash F..F+2, hold to F+8, lift F+8..F+17"
+  "value": 1583.9126198257081,
+  "source": "sets_ext poseStamp: F = STAMP_F (read by audio_probe): falls F-5..F, squash F..F+2, hold to F+8, lift F+8..F+17"
+ },
+ "chip_pop_13": {
+  "value": 1589.0,
+  "source": "cast probe: the chip popped off by the slam glints at 1589"
  },
  "photo_13": {
   "value": [
@@ -608,7 +744,7 @@
   "value": {
    "from": 1586,
    "to": 1603,
-   "after_s": 73.139
+   "after_s": 72.68
   },
   "source": "cast.ts permission: the red cap laughs F+1..F+18 -> 'heh-heh' in the gap after 'permission.'"
  },
@@ -642,20 +778,38 @@
     "chips": [
      [
       9.0,
-      -6.0
+      0.0
      ],
      [
       10.0,
-      -6.0
+      0.0
      ],
      [
       11.0,
-      -6.0
+      0.0
+     ]
+    ]
+   },
+   {
+    "fs": 1713.67,
+    "dig": false,
+    "chips": [
+     [
+      9.0,
+      0.0
+     ],
+     [
+      10.0,
+      0.0
+     ],
+     [
+      11.0,
+      0.0
      ]
     ]
    }
   ],
-  "source": "cast probe: 1676: bite on screen, clinks 1686, 1687, 1688, 1689; 1693: bite on screen, clinks 1702 (-6 dB, bucket at the frame edge), 1703 (-6 dB, bucket at the frame edge), 1704 (-6 dB, bucket at the frame edge); 1713.67: nothing on screen -> none"
+  "source": "cast probe: 1676: bite on screen, clinks 1686, 1687, 1688, 1689; 1693: bite on screen, clinks 1702, 1703, 1704; 1713.67: bite off screen, clinks 1722.67, 1723.67, 1724.67"
  },
  "bait_scoop_14": {
   "value": [
@@ -664,36 +818,63 @@
   "source": "CHAR r3 storeroom: the first scoop ON 'the bait wood?' (FS[0] = bait+1), already loaded when the insert opens: no dig; the blade tips at fs+4 and its 4 chips land fs+10.6 .. +13.6 (A5 P3: preview5 video 2149-2153)"
  },
  "mail_flap_14": {
-  "value": 1727.0,
-  "source": "OVERRIDE picture_events.json (\"mailed-4\")"
+  "value": 1726.6,
+  "source": "sets_int: the flap snaps open at fOpen = mailed - 4.4"
+ },
+ "mail_knock_14": {
+  "value": [
+   1723.4499999999998,
+   1725.55
+  ],
+  "source": "sets_int flapAng: two knocks from outside (bumps peak at fOpen - 3.15, - 1.05)"
+ },
+ "mail_shut_14": {
+  "value": [
+   1732.3,
+   1736.7
+  ],
+  "source": "sets_int flapAng: the flap slaps shut (shut + 1.5) and taps once on its first swing back"
+ },
+ "tear_14": {
+  "value": 1730.7,
+  "source": "sets_int: the LETTERS THIS YEAR tear-off sheet rips at mailed - 0.3"
+ },
+ "mail2_14": {
+  "value": {
+   "snap": 1767.5,
+   "land": 1775
+  },
+  "source": "sets_int: the second mail - flap snaps at apology + 12.5, the box lands apology + 20"
  },
  "parcel_14": {
   "value": 1734,
   "source": "sets_int: item(mailBox, mailed+3): the parcel lands 1734 (preview2: in the chute 1731, lip 1732, falls 1733)"
  },
  "envelope_14": {
-  "value": 1731,
-  "source": "sets_int: item(mailEnv, mailed): the envelope lands ON 'mailed' 1731 (preview2: lip 1729, mid-fall 1730)"
+  "value": 1736,
+  "source": "sets_int r6: item(mailEnv, fOpen + 2.4, mailed + 5): the envelope lands 2 f after the parcel"
  },
  "letter_pick_14": {
-  "value": 1756.0,
-  "source": "cast probe: he takes the letter at 1749 outside the frame -> rustle as he comes into view with it at 1756"
+  "value": null,
+  "source": "cast probe: he takes the letter at 1749 outside the frame -> none"
  },
  "rocks_14": {
   "value": null,
-  "source": "A4 ADD: the pile settles after each visible bite (fs+2), from scoops_14"
+  "source": "A4 ADD: the pile settles after each visible bite (fs+2) - A6 P3: dropped (the reveal line was cluttered)"
  },
  "letters_hop_14": {
   "value": [
-   1755,
-   1758,
-   1761
+   1755
   ],
-  "source": "sets_int: the three hero letters hop at apology + 3i"
+  "source": "sets_int: the three hero letters hop at apology + 3i - A6 P3: only the first one sounds"
  },
  "bulb_14": {
   "value": 1735,
-  "source": "sets_int: the hanging bulb swings on the parcel landing (mailed+3): chain tink + hum swell"
+  "source": "sets_int: the hanging bulb swings on the parcel landing (mailed+3): hum swell (A6 P3: no chain tink)"
+ },
+ "snap_band_14": {
+  "value": true,
+  "source": "A6 ADD: a rubber band snaps on a parcel in the gap after 'apology letters.' (callback to the borrowed paperclip)"
  },
  "owl_14": {
   "value": 1791,
@@ -704,20 +885,27 @@
   "source": "cast probe: the chip slides into the pocket 1821-1824 (A3: gone behind the pocket edge 1 f in): 1822 -> 1822"
  },
  "tag_sparkle_15": {
-  "value": 1800.0,
-  "source": "cast probe: the chip in his hand sparkles: 1800 -> 1800"
+  "value": 1801.0,
+  "source": "cast probe: the chip in his hand sparkles: 1800 -> 1801"
  },
  "tag_ding_15": {
-  "value": 1828.0,
-  "source": "cast probe: the tag's '2' key starts 1827 (a thin '2'), the card opens 1 f later (CHAR r5: 1828): 1828 -> 1828"
+  "value": 1827.0,
+  "source": "cast probe: the tag's '2' key starts 1826 (a thin '2'), the card opens 1 f later (CHAR r5: 1828): 1828 -> 1827"
  },
  "card_flick_15": {
-  "value": 1825.5,
-  "source": "cast probe: the tag flap shuts 1825-1826 (CHAR r5): a soft tick 1.5 f before the '2' key (1827)"
+  "value": 1824.5,
+  "source": "cast probe: the tag flap shuts 1825-1826 (CHAR r5): a soft tick 1.5 f before the '2' key (1826)"
  },
  "nighthawk_15": {
   "value": 1799,
   "source": "A4 ADD: a far nighthawk 'peent' as the dusk shot settles (S15.a+5), fades well before the loop"
+ },
+ "kiosk_lamp_15": {
+  "value": [
+   1800,
+   1803
+  ],
+  "source": "sets_ext: the kiosk post lamp flicks on at soSome + 9 (on 1 f, off 2 f, on at + 12)"
  },
  "pats_15": {
   "value": null,
@@ -732,135 +920,135 @@
     ],
     [
      1822,
-     0.0029
+     -0.0183
     ],
     [
      1823,
-     0.0087
+     -0.0726
     ],
     [
      1824,
-     0.0133
+     -0.1487
     ],
     [
      1825,
-     0.0139
+     -0.2022
     ],
     [
      1826,
-     0.0117
+     -0.2158
     ],
     [
      1827,
-     0.0094
+     -0.0283
     ],
     [
      1828,
-     0.0068
+     0.0088
     ],
     [
      1829,
-     0.0665
+     -0.1672
     ],
     [
      1830,
-     0.0839
+     -0.2098
     ],
     [
      1831,
-     0.0657
+     -0.1271
     ],
     [
      1832,
-     0.0407
+     -0.0446
     ],
     [
      1833,
-     0.0103
+     -0.0274
     ],
     [
      1834,
-     -0.0161
+     -0.0516
     ],
     [
      1835,
-     -0.0342
+     -0.0827
     ],
     [
      1836,
-     -0.0439
+     -0.112
     ],
     [
      1837,
-     -0.0231
+     -0.134
     ],
     [
      1838,
-     -0.0065
+     -0.1649
     ],
     [
      1839,
-     -0.0012
+     -0.1977
     ],
     [
      1840,
-     -0.0087
+     -0.1897
     ],
     [
      1841,
-     -0.0254
+     -0.39
     ],
     [
      1842,
-     -0.0325
+     -0.5203
     ],
     [
      1843,
-     -0.0396
+     -0.5282
     ],
     [
      1844,
-     -0.0448
+     -0.4977
     ],
     [
      1845,
-     -0.0477
+     -0.4899
     ],
     [
      1846,
-     -0.0485
+     -0.4722
     ],
     [
      1847,
-     -0.0481
+     -0.4456
     ],
     [
      1848,
-     -0.0473
+     -0.4448
     ],
     [
      1849,
-     -0.0467
+     -0.4259
     ],
     [
      1850,
-     -0.0466
+     -0.409
     ],
     [
      1851,
-     -0.0468
+     -0.3953
     ],
     [
      1852,
-     -0.0469
+     -0.3855
     ],
     [
      1853,
-     -0.0468
+     -0.3801
     ]
    ]
   },
-  "source": "cast probe: tag swing 1821-1853 (max swing speed 0.060 rad/f)"
+  "source": "cast probe: tag swing 1821-1853 (max swing speed 0.200 rad/f)"
  },
  "car_15": {
   "value": {
@@ -870,31 +1058,158 @@
   },
   "source": "A3 ADD: far car door ~'So', starter under 'some of it', catches on 'got', drives off, gone before 'twice'"
  },
+ "tumble_1": {
+  "value": {
+   "on": [
+    77,
+    108
+   ],
+   "contacts": [
+    80.41,
+    92.76,
+    105.12
+   ],
+   "x": [
+    -14,
+    969
+   ],
+   "r_px": 53
+  },
+  "source": "audio_probe: on screen 77-108, x -14 -> 969, nearest 53 px, hop landings [80.41, 92.76, 105.12]"
+ },
  "tumble_2": {
+  "value": {
+   "on": [
+    163,
+    188
+   ],
+   "contacts": [
+    173.35,
+    183.94
+   ],
+   "x": [
+    -22,
+    513
+   ],
+   "r_px": 46
+  },
+  "source": "audio_probe: on screen 163-188, x -22 -> 513, nearest 46 px, hop landings [173.35, 183.94, 194.53]"
+ },
+ "tumble_4": {
   "value": null,
-  "source": "audio_probe: too small or only a sliver on screen (9 probe points inside the frame, nearest 23 px) -> none"
+  "source": "audio_probe: too small or only a sliver on screen (7 probe points inside the frame, nearest 35 px) -> none"
  },
  "tumble_6": {
   "value": null,
-  "source": "audio_probe: too small or only a sliver on screen (8 probe points inside the frame, nearest 23 px) -> none"
+  "source": "audio_probe: too small or only a sliver on screen (12 probe points inside the frame, nearest 22 px) -> none"
+ },
+ "tumble_8": {
+  "value": {
+   "on": [
+    816,
+    850
+   ],
+   "contacts": [
+    832.5,
+    846.67
+   ],
+   "x": [
+    2,
+    1025
+   ],
+   "r_px": 77
+  },
+  "source": "audio_probe: on screen 816-850, x 2 -> 1025, nearest 77 px, hop landings [832.5, 846.67]"
+ },
+ "tumble_3": {
+  "value": {
+   "on": [
+    213,
+    243
+   ],
+   "contacts": [
+    226.35,
+    236.94
+   ],
+   "x": [
+    -2,
+    1076
+   ],
+   "r_px": 70
+  },
+  "source": "audio_probe: on screen 213-243, x -2 -> 1076, nearest 70 px, hop landings [226.35, 236.94, 247.53]"
+ },
+ "tumble_5": {
+  "value": {
+   "on": [
+    472,
+    506
+   ],
+   "contacts": [
+    484,
+    505.67
+   ],
+   "x": [
+    -3,
+    1096
+   ],
+   "r_px": 59
+  },
+  "source": "audio_probe: on screen 472-506, x -3 -> 1096, nearest 59 px, hop landings [484, 505.67]"
+ },
+ "tumble_13": {
+  "value": {
+   "on": [
+    1528,
+    1568
+   ],
+   "contacts": [
+    1547.5,
+    1568.33
+   ],
+   "x": [
+    -15,
+    1116
+   ],
+   "r_px": 83
+  },
+  "source": "audio_probe: on screen 1528-1568, x -15 -> 1116, nearest 83 px, hop landings [1547.5, 1568.33]"
+ },
+ "tumble_9": {
+  "value": {
+   "on": [
+    1039,
+    1051
+   ],
+   "contacts": [
+    1038,
+    1053
+   ],
+   "x": [
+    -21,
+    859
+   ],
+   "r_px": 62
+  },
+  "source": "audio_probe: on screen 1039-1051, x -21 -> 859, nearest 62 px, hop landings [1038, 1053]"
  },
  "tumble_15": {
   "value": {
    "on": [
     1794,
-    1835
+    1842
    ],
    "contacts": [
-    1814,
-    1835.67
+    1817.5,
+    1843.33
    ],
    "x": [
-    13,
-    1142
+    131,
+    1128
    ],
-   "r_px": 130
+   "r_px": 132
   },
-  "source": "audio_probe: on screen 1794-1835, x 13 -> 1142, nearest 130 px, hop landings [1814, 1835.67]"
+  "source": "audio_probe: on screen 1794-1842, x 131 -> 1128, nearest 132 px, hop landings [1817.5, 1843.33]"
  },
  "led_hum": {
   "value": {
@@ -911,131 +1226,87 @@
  "raven_auto": {
   "value": [
    [
-    82,
-    90,
+    317,
+    325,
     "ruffle",
-    1,
-    647,
-    124
-   ],
-   [
-    292,
-    298,
-    "hop",
     4,
-    729,
-    119
-   ],
-   [
-    389,
-    395,
-    "hop",
-    4,
-    654,
-    115
+    705,
+    104
    ],
    [
     506,
     507,
     "hop",
     5,
-    866,
-    131
+    751,
+    133
    ],
    [
-    512,
-    513,
-    "hop",
+    521,
+    526,
+    "ruffle",
     5,
-    843,
-    131
+    707,
+    133
    ],
    [
-    574,
-    576,
+    615,
+    620,
     "hop",
     6,
-    601,
-    101
-   ],
-   [
-    582,
-    589,
-    "hop",
-    6,
-    577,
-    106
+    718,
+    116
    ],
    [
     862,
-    864,
-    "hop",
-    8,
-    398,
-    159
-   ],
-   [
     862,
-    865,
-    "ruffle",
+    "hop",
     8,
-    398,
+    147,
+    153
+   ],
+   [
+    870,
+    873,
+    "hop",
+    8,
+    132,
     159
    ],
    [
-    971,
-    977,
-    "hop",
-    9,
-    389,
-    161
-   ],
-   [
-    999,
-    1007,
-    "ruffle",
-    9,
-    376,
-    175
-   ],
-   [
-    1165,
-    1171,
+    1138,
+    1142,
     "hop",
     10,
-    509,
-    180
+    520,
+    146
    ],
    [
-    1553,
-    1559,
-    "hop",
-    13,
-    540,
-    118
+    1808,
+    1809,
+    "ruffle",
+    15,
+    170,
+    182
    ],
    [
     1811,
-    1812,
+    1815,
     "ruffle",
     15,
-    278,
+    136,
     186
-   ],
-   [
-    1844,
-    1850,
-    "hop",
-    15,
-    131,
-    190
    ]
   ],
-  "source": "cast probe: 15 on-screen raven moves without a scripted cue: ruffle 82-90 (shot 1), hop 292-298 (shot 4), hop 389-395 (shot 4), hop 506-507 (shot 5), hop 512-513 (shot 5), hop 574-576 (shot 6), hop 582-589 (shot 6), hop 862-864 (shot 8), ruffle 862-865 (shot 8), hop 971-977 (shot 9), ruffle 999-1007 (shot 9), hop 1165-1171 (shot 10), hop 1553-1559 (shot 13), ruffle 1811-1812 (shot 15), hop 1844-1850 (shot 15)"
+  "source": "cast probe: 9 on-screen raven moves without a scripted cue: ruffle 317-325 (shot 4), hop 506-507 (shot 5), ruffle 521-526 (shot 5), hop 615-620 (shot 6), hop 862-862 (shot 8), hop 870-873 (shot 8), hop 1138-1142 (shot 10), ruffle 1808-1809 (shot 15), ruffle 1811-1815 (shot 15)"
+ },
+ "cam_moves": {
+  "value": null,
+  "source": "camera probe: 0 fast moves get an air swish: "
  },
  "bubble_reveal": {
-  "value": true,
-  "source": "cast probe: the bubble is first in frame on 51 (camera tilt reveal)"
+  "value": false,
+  "source": "cast probe: the bubble is first in frame on 44 (pops in on screen)"
  },
  "chip_thud_8": {
   "value": [

@@ -36,7 +36,7 @@ XF = 0.012
 EDGE = 0.02
 START = 0.03
 # deliberate beats INSIDE a phrase (phrase index, key of the word before the beat) -> pause (s) (A5 VOICE P2)
-INNER = {(20, "see"): 0.30}
+INNER = {(0, "anything"): 0.30, (7, "said"): 0.35, (20, "see"): 0.30, (25, "hears"): 0.30, (31, "stolen"): 0.30, (2, "to"): 0.26, (21, "copy"): 0.15}  # A6 VOICE: beats before the punch words
 # beat file -> phrase indices (cut list items 1 and 2 applied: P4 and P19 out; P24 uses SHORT_ANALOGY)
 BEATS = [(1, [0, 1, 2]), (2, [3, 5, 6]), (3, [7, 8]), (4, [9, 10]), (5, [11]), (6, [12, 13]), (7, [14, 15]),
          (8, [16, 17, 18]), (9, [20, 21, 22, 23]), (10, [24, 25]), (11, [26, 27]), (12, [28, 29, 30, 31])]

@@ -95,7 +95,7 @@ def loop_xfade(x, n, L):
     return x[..., :n]
 
 
-def desert_wind(n, r, g, level=1.0, whistle=0.3, sand=0.22, rustle=0.25, low=0.18, f_whistle=(640, 980), bright=1.0, width=1.0):
+def desert_wind(n, r, g, level=1.0, whistle=0.3, sand=0.22, rustle=0.25, low=0.18, f_whistle=(640, 980), bright=1.0, width=1.0, f_mul=None):
     """open desert wind. g = per-sample gust curve (~0.3 .. 1.0). Stereo (2, n).
     body: broadband air whose brightness follows the gusts; whistle: the wind singing in the sign posts / rail on strong
     gusts; sand: dry grains hissing along the ground; rustle: sagebrush / dry grass fluttering; low: soft buffeting."""
@@ -128,6 +128,8 @@ def desert_wind(n, r, g, level=1.0, whistle=0.3, sand=0.22, rustle=0.25, low=0.1
             nz = colored(n, r, 0.5)
             drift = smooth_noise(n, r, 0.2)
             fc_s = (lo_ + (hi_ - lo_) * np.clip((gl - 0.6) / 0.7 + 0.2 * drift, 0, 1)) * mul
+            if f_mul is not None:                        # round 8 (A7 ADD): a time-varying pitch of the post singing
+                fc_s = fc_s * np.asarray(f_mul, float)[:n]
             wl = shape(nz, lambda Tq, Fq: np.exp(-0.5 * (np.log2(np.maximum(Fq[:, None], 20) / np.interp(Tq, T_, fc_s)[None, :]) / wd) ** 2), 4096, 1024)
             wl = wl / (np.std(wl) + 1e-12) * gate * (0.5 if j == 0 else 0.3)
             out += pan(wl * whistle, pn)
@@ -1241,3 +1243,311 @@ def bulb_swing(r, dur=1.5, mains=60.0):
     h = lamp_hum(n, r, mains)
     env = (0.35 + 0.65 * np.abs(np.sin(np.pi * 1.3 * t))) * np.exp(-t / (dur * 0.4)) * np.clip(t / 0.05, 0, 1)
     return fades(h * env, 0.01, 0.15)
+
+
+# ================================================================ round 7 (A6): new voices
+def heap_thump(r, dur=0.9):
+    """A6 LEAD P2: the cartoon heap of petrified chips lands - a big comic BOOMF: a deep pitched thump gliding 62 -> 38 Hz,
+    a squashy mid 'whump' (body 140-260 Hz), a low rumble tail and a soft dust 'poof'. Mono, unit-ish."""
+    n = ns(dur)
+    t = np.arange(n) / SR
+    f = 38.0 + 24.0 * np.exp(-t / 0.05)
+    y = np.sin(phase(f)) * np.exp(-t / 0.2) * (1 - np.exp(-t / 0.003))
+    y += np.sin(phase(150.0 + 110.0 * np.exp(-t / 0.02))) * np.exp(-t / 0.06) * 0.55
+    y += lp(colored(n, r, 1.8), 160, 2) * np.exp(-t / 0.28) * 1.4 * np.clip(t / 0.01, 0, 1)
+    y += bp(r.standard_normal(n), 300, 2000, 1) * np.exp(-((t - 0.035) / 0.05) ** 2) * 0.25
+    return fades(y, 0.0005, 0.12)
+
+
+def heap_clatter(r, dur=0.75, n_hits=46):
+    """...the chips spill and clatter off the heap: a dense burst of small stone clinks thinning out. Mono."""
+    y = np.zeros(ns(dur + 0.1))
+    for k in range(n_hits):
+        u = (k / n_hits) ** 1.7
+        tm = 0.004 + u * dur * 0.92 + r.uniform(0, 0.012)
+        c = clink(r, np.exp(r.uniform(np.log(1400), np.log(4600))), 0.07, 0.8) * (1.0 - 0.75 * u) * r.uniform(0.35, 1.0)
+        _place_mono(y, c, tm)
+    y += lp(bp(colored(len(y), r, 0.6), 700, 3000, 1), 3500, 1) * np.exp(-np.arange(len(y)) / SR / 0.12) * 0.08
+    return fades(y, 0.0005, 0.05)
+
+
+def ka_thunk(r):
+    """A6 P1: the cash register's 'ka-' - the drawer / relay clunk ON the counter landing, kept BELOW 800 Hz (it lands on
+    'eight'). Mono."""
+    d = 0.3
+    t = tt(d)
+    y = modal(d, [(120, 1.0, 0.05), (210, 0.8, 0.04), (390, 0.55, 0.03), (640, 0.25, 0.018)], r)
+    y += lp(r.standard_normal(len(t)), 700, 2) * np.exp(-t / 0.014) * 0.7
+    y += np.sin(phase(72.0 * (1 + 0.3 * np.exp(-t / 0.01)))) * np.exp(-t / 0.05) * 0.5
+    return lp(fades(y, 0.0003, 0.05), 800, 4)
+
+
+def ching(r, d=1.6):
+    """A6 P1: the register bell alone ('CHING'), natural two-tone ring + a few coins settling. Mono."""
+    bell = modal(d, [(2349.3, 1.0, 0.6), (2349.3 * 2.0, 0.3, 0.27), (2349.3 * 2.76, 0.32, 0.17), (2793.8, 0.6, 0.5),
+                     (2793.8 * 2.76, 0.18, 0.13), (2349.3 * 5.4, 0.07, 0.05)], r)
+    t = tt(d)
+    bell *= (1 - np.exp(-t / 0.0006)) * (1 + 0.08 * np.sin(TAU * 6.5 * t))
+    coins = rattle(0.3, r, 50, np.exp(-np.linspace(0, 1, ns(0.3)) * 3), lo=2800, hi=7000, tau=(0.008, 0.03)) * 0.25
+    _place_mono(bell, coins, 0.012)
+    return fades(bell, 0.0003, 0.15)
+
+
+def tag_ding(r, f0=4698.6, body=1174.7, body_db=-13.0, tau=0.24, dur=0.8):
+    """A6 P1: the tag's bright ding moved up an octave (D8 4699 Hz, above the consonant band of 'twice') with a soft
+    D6 body at body_db and a little sparkle. Mono."""
+    t = tt(dur)
+    y = modal(dur, [(f0, 1.0, tau), (f0 * 2.0, 0.12, tau * 0.4), (body, 10 ** (body_db / 20), tau * 0.9)], r)
+    y *= (1 - np.exp(-t / 0.0006)) * (1 + 0.1 * np.sin(TAU * 7.5 * t))
+    for k in range(3):
+        _place_mono(y, modal(0.12, [(r.uniform(6500, 9000), 1.0, 0.03)], r) * r.uniform(0.12, 0.25), 0.02 + 0.03 * k)
+    return fades(y, 0.0003, 0.1)
+
+
+def chirp(r, f0, f1, dur=0.085, vib=0.0):
+    """A6 P2: an innocent whistle chirp as a nearly pure tone gliding f0 -> f1 (1.8-2.6 kHz, above the voice formants).
+    Mono."""
+    t = tt(dur)
+    u = t / dur
+    f = f0 * (f1 / f0) ** (0.5 - 0.5 * np.cos(np.pi * np.clip(u * 1.15, 0, 1)))
+    f = f * (1 + vib * np.sin(TAU * 6.0 * t))
+    env = np.clip(u / 0.15, 0, 1) ** 1.5 * np.clip((1 - u) / 0.3, 0, 1)
+    y = (np.sin(phase(f)) + 0.03 * np.sin(2 * phase(f))) * env
+    y += bp(r.standard_normal(len(t)), 1500, 4000, 1) * env * 0.04
+    return fades(y, 0.002, 0.01)
+
+
+def pip(r, f0=1320.0):
+    """A6 ADD: a tiny cartoon 'pip!' sting for a '!' card: a quick up-flick + a glassy tick. Mono."""
+    d = 0.16
+    t = tt(d)
+    f = f0 * (1 + 0.65 * (1 - np.exp(-t / 0.012)))
+    y = np.sin(phase(f)) * np.exp(-t / 0.035) * (1 - np.exp(-t / 0.001))
+    y += modal(d, [(f0 * 3.02, 0.25, 0.02)], r)
+    return fades(y, 0.0003, 0.03)
+
+
+def gasp(r, dur=0.24, f_sh=1.0):
+    """A6 ADD: a wordless sharp inhale ('hh-UH') - breath noise through rising vowel formants, a quick stop. Mono."""
+    n = ns(dur)
+    t = np.arange(n) / SR
+    u = t / dur
+    src = colored(n, r, 0.6)
+    y = np.zeros(n)
+    for fa, fb, g in ((620, 820, 1.0), (1150, 1350, 0.7), (2500, 2700, 0.35)):
+        seg = np.zeros(n)
+        for k in range(8):                                     # piecewise resonance (a slow formant glide)
+            a, b = k * n // 8, (k + 1) * n // 8
+            fc = (fa + (fb - fa) * (k + 0.5) / 8) * f_sh
+            seg[a:b] = reson(src, float(fc), 6.0)[a:b]
+        y += seg * g
+    env = np.clip(u / 0.55, 0, 1) ** 1.6 * np.clip((1 - u) / 0.12, 0, 1)
+    return fades(hp(y * env, 250, 2), 0.004, 0.02)
+
+
+def paper_sigh(r, dur=0.35):
+    """A6 ADD: a soft paper 'sigh' - one sheet sliding / lifting (slow, airy, no crackle). Mono."""
+    n = ns(dur)
+    t = np.arange(n) / SR
+    env = np.sin(np.pi * np.clip(t / dur, 0, 1)) ** 1.5
+    y = bp(colored(n, r, 0.5), 900, 6500, 1) * env
+    y += bp(r.standard_normal(n), 2500, 7000, 1) * env ** 3 * 0.25
+    return fades(y, 0.005, 0.03)
+
+
+def rubber_snap(r):
+    """A6 ADD: a rubber band snapping on a parcel: a tight 'thwip' twang dropping in pitch + a slap. Mono."""
+    d = 0.18
+    t = tt(d)
+    y = np.sin(phase(260 * (1 + 0.6 * np.exp(-t / 0.01)))) * np.exp(-t / 0.035) * 0.8
+    y += bp(r.standard_normal(len(t)), 1200, 6000, 1) * np.exp(-t / 0.003) * 0.9
+    y += np.sin(phase(130 * np.ones(len(t)))) * np.exp(-t / 0.02) * 0.3
+    return fades(y, 0.0002, 0.03)
+
+
+def relay_click(r, buzz=0.06, mains=60.0):
+    """A6 P3: a soft relay click + a short filament buzz (a lamp switching on). Mono."""
+    d = 0.05 + buzz + 0.03
+    t = tt(d)
+    y = modal(d, [(2400, 0.6, 0.004), (5200, 0.3, 0.002), (900, 0.5, 0.006)], r)
+    y += hp(r.standard_normal(len(t)), 3000) * np.exp(-t / 0.0005) * 0.5
+    hz = np.sign(np.sin(TAU * 2 * mains * t)) * 0.3 + np.sin(TAU * 2 * mains * t) * 0.5
+    hz = lp(hz, 2500, 2) * np.clip((t - 0.008) / 0.01, 0, 1) * np.clip((0.008 + buzz - t) / 0.025, 0, 1) * 0.35
+    return fades(y + hz, 0.0002, 0.02)
+
+
+def glass_tink(r, f0=4500.0, dur=0.08):
+    """A6 P3: a tiny high glassy 'tink' (4-5 kHz, 80 ms). Mono."""
+    y = modal(dur, [(f0, 1.0, 0.018), (f0 * 2.31, 0.3, 0.008)], r)
+    y += hp(r.standard_normal(len(y)), 5000) * np.exp(-tt(dur) / 0.0004) * 0.3
+    return fades(y, 0.0002, 0.015)
+
+
+def slot_knock(r, f0=330.0, hard=1.0):
+    """A6 (WORLD-INT mail slot): the brass flap jolted from outside - a dull knock with a little metal rattle. Mono."""
+    d = 0.14
+    t = tt(d)
+    y = modal(d, [(f0, 1.0, 0.03), (f0 * 2.7, 0.45 * hard, 0.012), (f0 * 6.1, 0.25 * hard, 0.006)], r)
+    y += lp(r.standard_normal(len(t)), 1800, 2) * np.exp(-t / 0.006) * 0.5
+    y += np.pad(rattle(0.05, r, 200, np.exp(-np.linspace(0, 1, ns(0.05)) * 4), lo=2000, hi=5000, tau=(0.002, 0.005)), (0, len(t) - ns(0.05)))[: len(t)] * 0.12 * hard
+    return fades(y, 0.0003, 0.03)
+
+
+def pencil_drop(r):
+    """A6 ADD: a pencil dropped on a wooden desk: a hollow tick + two small bounces + a short roll. Mono."""
+    y = np.zeros(ns(0.45))
+    for k, (tm, a) in enumerate(((0.0, 1.0), (0.11, 0.45), (0.19, 0.22))):
+        c = modal(0.08, [(r.uniform(1700, 2100), 1.0, 0.012), (r.uniform(3800, 4400), 0.5, 0.006), (420, 0.4, 0.02)], r)
+        c += hp(r.standard_normal(len(c)), 3000) * np.exp(-tt(0.08) / 0.0004) * 0.4
+        _place_mono(y, c * a, tm)
+    roll = bp(colored(ns(0.18), r, 0.4), 600, 3000, 1) * np.linspace(0.12, 0, ns(0.18)) * (0.7 + 0.3 * np.sin(TAU * 24 * tt(0.18)))
+    _place_mono(y, roll, 0.24)
+    return fades(y, 0.0003, 0.03)
+
+
+def desk_scrape(r, dur=0.2):
+    """A6 ADD: a desk / chair leg scraping the wooden floor a little. Mono."""
+    return lp(creak(dur, r, 140, 210, WOOD, None, 0.25, 0.08, 0.8), 3000, 2)
+
+
+def paper_boil(n, r, rate=60.0):
+    """A6 ADD: the 'boiling' chalk crowd - a faint papery crackle texture (sparse soft crackles, 1-4 kHz). Stereo."""
+    out = np.zeros((2, n))
+    for ch in range(2):
+        g = np.zeros(n)
+        k = r.random(n) < rate / SR
+        g[k] = r.uniform(0.1, 1.0, k.sum()) ** 2
+        c = bp(np.convolve(g, r.standard_normal(40) * np.exp(-np.arange(40) / 9))[:n], 900, 4200, 1)
+        out[ch] = c + bp(colored(n, r, 0.5), 700, 3000, 1) * 0.04
+    return out
+
+
+def far_vehicle(r, dur, far=1.0):
+    """A6 (WORLD-EXT shot 2): a far pickup driving on a gravel road: a low engine drone with a gentle gear swell,
+    tyre-on-gravel hiss, all distant (low-passed). Mono."""
+    n = ns(dur)
+    t = np.arange(n) / SR
+    f = 46.0 * (1 + 0.12 * np.clip(t / dur, 0, 1)) * (1 + 0.01 * smooth_noise(n, r, 2.0))
+    eng = np.sin(phase(f)) + 0.6 * np.sin(2 * phase(f) + 0.3) + 0.35 * np.sin(3 * phase(f) + 1.1) + 0.2 * np.sin(5 * phase(f))
+    eng *= 0.8 + 0.2 * smooth_noise(n, r, 6.0)
+    grav = bp(colored(n, r, 0.6), 500, 2500, 1) * (0.6 + 0.4 * smooth_noise(n, r, 9.0)) * 0.35
+    y = lp(eng * 0.5 + grav, 1600 / far, 2)
+    env = np.clip(t / 0.5, 0, 1) * np.clip((dur - t) / 0.6, 0, 1)
+    return fades(y * env, 0.01, 0.05)
+
+
+def chain_creak(r):
+    """A6 ADD: the TRAIL OPEN plate's little chain on its biggest swing - a soft metal squeak + two link clinks. Mono."""
+    y = np.zeros(ns(0.4))
+    sq = creak(0.22, r, 520, 700, WOOD, None, 0.08, 0.02, 1.4)
+    _place_mono(y, lp(sq, 6000, 1) * 0.6, 0.0)
+    for k, tm in enumerate((0.05, 0.19)):
+        _place_mono(y, clink(r, r.uniform(2600, 3600), 0.06, 0.6) * (0.5 - 0.15 * k), tm)
+    return fades(y, 0.001, 0.04)
+
+
+def pocket_snap(r):
+    """A6 ADD: a pocket snap / short zip accent (the shot-10 group pocketing): a tiny zip burr then a press-stud click.
+    Mono."""
+    y = np.zeros(ns(0.2))
+    z = bp(r.standard_normal(ns(0.07)), 1800, 6000, 1) * (0.6 + 0.4 * np.sign(np.sin(TAU * 140 * tt(0.07)))) * np.linspace(0.3, 1, ns(0.07)) * 0.5
+    _place_mono(y, z, 0.0)
+    _place_mono(y, modal(0.05, [(3100, 1.0, 0.006), (1250, 0.5, 0.01)], r), 0.08)
+    return fades(y, 0.0005, 0.02)
+
+
+# ================================================================ round 8 (A7 ADD)
+def hawk_scream(r, dur=None):
+    """a far red-tailed hawk 'kee-eeeer' (the Southwest park call): a hoarse, harmonic-rich scream that rises briefly and
+    falls ~3.2 -> 2.1 kHz, rough (~90 Hz AM) with breathy noise, a soft attack and a long fading tail. Mono."""
+    d = dur or r.uniform(1.05, 1.3)
+    n = ns(d)
+    t = np.arange(n) / SR
+    u = t / d
+    f = r.uniform(2900, 3150) * (1.0 + 0.06 * np.sin(np.pi * np.clip(u / 0.18, 0, 1)) - 0.34 * np.clip((u - 0.12) / 0.88, 0, 1) ** 1.3)
+    f *= 1 + 0.012 * smooth_noise(n, r, 18.0)
+    ph = np.cumsum(f) / SR
+    src = np.sin(TAU * ph) + 0.45 * np.sin(2 * TAU * ph + 0.4) + 0.18 * np.sin(3 * TAU * ph + 1.3)
+    rough = 1.0 + 0.6 * np.sin(TAU * r.uniform(82, 98) * t + r.uniform(0, TAU))
+    hiss = bp(colored(n, r, 0.2), 1800, 5200, 1) * 0.55
+    y = src * rough * 0.7 + hiss * (0.6 + 0.4 * rough)
+    env = np.clip(t / 0.07, 0, 1) ** 1.5 * np.exp(-np.clip(u - 0.25, 0, None) * 2.6) * (1 - np.clip((u - 0.9) / 0.1, 0, 1))
+    return fades(y * env, 0.005, 0.08)
+
+
+def coyote_yip(r, n_yips=2):
+    """a far coyote: two short rising yips then a thin falling howl-let. Mono."""
+    y = np.zeros(ns(1.2))
+    tm = 0.0
+    for k in range(n_yips):
+        d = r.uniform(0.08, 0.11)
+        n = ns(d)
+        t = np.arange(n) / SR
+        f = r.uniform(620, 720) * (1 + 0.5 * (t / d))
+        s = np.sin(TAU * np.cumsum(f) / SR) + 0.3 * np.sin(2 * TAU * np.cumsum(f) / SR)
+        _place_mono(y, s * np.sin(np.pi * t / d) ** 0.6, tm)
+        tm += d + r.uniform(0.07, 0.11)
+    d = r.uniform(0.42, 0.55)
+    n = ns(d)
+    t = np.arange(n) / SR
+    f = r.uniform(880, 980) * (1 + 0.05 * np.sin(np.pi * np.clip(t / (0.3 * d), 0, 1)) - 0.22 * t / d) * (1 + 0.006 * np.sin(TAU * 5.5 * t))
+    s = np.sin(TAU * np.cumsum(f) / SR) + 0.25 * np.sin(2 * TAU * np.cumsum(f) / SR)
+    _place_mono(y, s * np.sin(np.pi * t / d) ** 0.8 * 0.8, tm + 0.03)
+    return fades(lp(y, 2600, 2), 0.004, 0.06)
+
+
+def tape_peel(r, dur=0.32):
+    """parcel tape peeling off cardboard: a fast sticky crackle that speeds up, a little tearing hiss. Mono."""
+    n = ns(dur)
+    t = np.arange(n) / SR
+    rate = 260 + 900 * (t / dur)
+    k = r.random(n) < rate / SR
+    imp = np.zeros(n)
+    imp[k] = r.uniform(0.3, 1.0, k.sum())
+    y = bp(imp, 1500, 7000, 1) * 2.2 + bp(colored(n, r, 0.4), 2000, 6500, 1) * 0.25 * (t / dur)
+    env = np.clip(t / 0.03, 0, 1) * np.clip((dur - t) / 0.05, 0, 1)
+    return fades(y * env, 0.002, 0.02)
+
+
+def envelope_tear(r, dur=0.26):
+    """a soft envelope tear: fibrous paper ripping (dense crackle, darker than tape), one sigh at the end. Mono."""
+    n = ns(dur)
+    t = np.arange(n) / SR
+    k = r.random(n) < 1800 / SR
+    imp = np.zeros(n)
+    imp[k] = r.uniform(0.2, 1.0, k.sum())
+    y = bp(imp, 900, 4500, 1) * 1.6 + bp(colored(n, r, 0.6), 700, 3500, 1) * 0.35
+    env = np.sin(np.pi * np.clip(t / dur, 0, 1)) ** 0.7
+    return fades(y * env, 0.002, 0.03)
+
+
+def school_bell(r, dur=1.4):
+    """a far school-corridor bell / chime tone through walls: a soft two-partial ring, low-passed. Mono."""
+    y = modal(dur, [(880.0, 1.0, 0.55), (880.0 * 2.0, 0.25, 0.3), (1318.5, 0.45, 0.45)], r)
+    return fades(lp(y, 2200, 2), 0.004, 0.2)
+
+
+def page_turn(r, dur=0.3):
+    """one notebook page turned: a soft flap swish with a crisp edge flick at the end. Mono."""
+    n = ns(dur)
+    t = np.arange(n) / SR
+    sw = bp(colored(n, r, 0.5), 600, 4000, 1) * np.sin(np.pi * np.clip(t / dur, 0, 1)) ** 1.4
+    y = sw
+    _place_mono(y, bp(r.standard_normal(ns(0.02)), 2000, 6000, 1) * np.exp(-np.arange(ns(0.02)) / SR / 0.004) * 1.4, dur * 0.78)
+    return fades(y, 0.003, 0.03)
+
+
+def mail_truck(r, dur=2.2):
+    """a mail truck pulling away outside at night (through the window): a low diesel idle that revs and recedes,
+    tyres hissing, all muffled. Mono."""
+    n = ns(dur)
+    t = np.arange(n) / SR
+    u = t / dur
+    f = 38.0 * (1 + 0.35 * np.clip((u - 0.15) / 0.4, 0, 1) - 0.1 * np.clip((u - 0.6) / 0.4, 0, 1))
+    ph = np.cumsum(f) / SR
+    eng = np.sin(TAU * ph) + 0.6 * np.sin(2 * TAU * ph + 0.2) + 0.4 * np.sin(3 * TAU * ph + 0.9) + 0.25 * np.sin(4 * TAU * ph + 2.0)
+    eng *= 1 + 0.25 * np.sin(TAU * 4 * f * t / 38.0)
+    tyre = bp(colored(n, r, 0.8), 250, 1500, 1) * 0.4 * np.clip((u - 0.2) / 0.3, 0, 1)
+    y = lp(eng * 0.6 + tyre, 900, 2)
+    env = np.clip(t / 0.25, 0, 1) * (1 - np.clip((u - 0.35) / 0.65, 0, 1)) ** 1.5
+    return fades(y * env, 0.01, 0.1)

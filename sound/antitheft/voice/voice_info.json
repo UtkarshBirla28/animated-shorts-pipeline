@@ -1,11 +1,46 @@
 {
- "take": "eleven_v4:james_QhpsGjDKZmM9qRYdMhBD:final_A5_closures:tempo1.0",
+ "take": "eleven_v4:james:tempo1.0",
  "stats": {
-  "duration_s": 83.53,
-  "last_word_end_s": 83.279,
-  "n_words": 205,
-  "words_per_s": 2.46,
+  "duration_s": 82.22,
+  "last_word_end_s": 81.967,
+  "n_words": 198,
+  "words_per_s": 2.42,
   "tempo": 1.0,
   "thr": 0.1
- }
+ },
+ "inserted_pauses": [
+  {
+   "at_s": 5.372,
+   "added_s": 0.09
+  },
+  {
+   "at_s": 6.582,
+   "added_s": 0.2
+  },
+  {
+   "at_s": 15.424,
+   "added_s": 0.13
+  },
+  {
+   "at_s": 17.984,
+   "added_s": 0.06
+  },
+  {
+   "at_s": 41.092,
+   "added_s": 0.15
+  },
+  {
+   "at_s": 47.668,
+   "added_s": 0.05
+  },
+  {
+   "at_s": 49.043,
+   "added_s": 0.2
+  },
+  {
+   "at_s": 73.457,
+   "added_s": 0.19
+  }
+ ],
+ "duration_s": 83.287
 }

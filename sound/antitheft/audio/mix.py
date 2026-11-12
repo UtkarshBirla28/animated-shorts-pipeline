@@ -20,6 +20,10 @@
 # lines); the permission build -6 dB through 'It gave them'; the slam tail -6 dB from 'per-'; band-duck exemptions end at
 # the word the hit precedes; an extra -3 dB de-ess on the last line; the music / bed bus filters run circularly (loop seam)
 # and the score's last sample is exactly 0.
+# Round 8 (A7, script v2 narration): an automatic per-take matching EQ (beat_match_eq: every voice beat within ~1 dB of the
+# mean take in 7 bands), the voice bus brighter toward the references (+1.8 dB at 3.2 kHz, +1.5 dB shelf from 7 kHz, no
+# 8 kHz cut, de-esser at its percentile), rides on the whisper (+3.5), 'piece at a time.', 'only', 'little pieces';
+# WORD_BAND_DUCKS (band-limited line ducks: the music under '"please don't," only 2%'); the mystery a hush (-20 LU).
 # Cache: _cache/<name>-<hash>.npy, one hash per stage over exactly the inputs of that stage (music: music.py,
 # instruments.py, dsp.py, timeline.py, timeline.json, words.json; sfx: sfx.py, sfx_gen.py, dsp.py, timeline.py,
 # timeline.json, words.json, picture_events.json, voice.wav, mix.py), so an edit or a new voice take can never reuse a
@@ -30,10 +34,11 @@ import time
 import json
 import glob
 import hashlib
+import re
 import subprocess
 import numpy as np
 from scipy import ndimage, signal
-from dsp import (SR, ns, st, dbg, read_wav, write_wav, integrated, momentary, momentary_max, short_term, lra, true_peak, shelf, hp)
+from dsp import (SR, ns, st, dbg, read_wav, write_wav, integrated, momentary, momentary_max, short_term, lra, true_peak, shelf, hp, peq)
 
 # round 4: re-export the picture clock from the merged story.ts BEFORE timeline.py reads it, so a voice / picture re-time
 # reaches every BEAT-keyed cue on the next run (`--no-probe` skips this and the two picture probes)
@@ -62,9 +67,13 @@ CEIL_DBTP = -2.9                 # limiter ceiling (spec: true peak <= -2.0 dBTP
 # old -2 dB ring dip; the flaps under 'day...' -5 dB (was -1.5). An optional 7th value is the ramp (s).
 KEY_DUCKS = [("sfx", "permission", "gave", 0.0, 0.20, -6.0, 0.01), ("sfx", "permission", "gave", 0.10, 0.32, -2.0),
              ("music", "twice", "soSome", 0.03, 0.28, -2.0),
-             ("sfx", "twice", "soSome", 0.0, 0.30, -5.0, 0.012), ("sfx", "day", "vandalized", 0.0, 0.22, -5.0),
+             # A6 P1: 'twice.' - the window now starts 20 ms BEFORE the acoustic onset (82.74; json 82.90 was 170 ms late)
+             # and holds -6 dB through the word (10 ms ramps)
+             ("sfx", "twice", "soSome", -0.02, 0.48, -6.0, 0.01),     # (script v2: 'day...' is gone; the flaps' word ticks are cut in sfx.py)
              ("music", "honest", "but", 0.0, 0.24, -2.0),
-             ("music", "now", "whisper", 0.05, 0.3, -1.5), ("sfx", "now", "whisper", 0.06, 0.3, -1.5)]
+             ("music", "now", "whisper", 0.05, 0.3, -1.5), ("sfx", "now", "whisper", 0.06, 0.3, -1.5),
+             # A6 P2: 'It (gave them permission)' - a short weak vowel right on a pizz stab of the build: the score -5 dB under it
+             ("music", "It", "thieves", -0.06, 0.2, -5.0, 0.015)]
 KEY_RAMP = 0.025
 # A3 P3: frame windows keyed to BEATS where the bed came within 2-4 dB of the voice: (stem, from beat, +f, to beat, +f, dB,
 # ramp frames). The permission crescendo's marimba tremolo under the tail of 'thieves.' (thieves+4 .. gave, 1556-1568 today).
@@ -76,7 +85,12 @@ BEAT_DUCKS = [("music", "thieves", 4, "permission", -2, -6.0, 3)]
 WORD_DUCKS = [("music", "everybody@hears", "cheats", -3.0), ("music", "It@sounds", "=does", -3.0),
               # A5 (measured on the round-6 mix): the two lines still most masked by the score, 'little pieces' (7.8 dB 1-4 kHz
               # margin) and 'of the pieces vanished' (8.6 dB), under the setting tune / the busy results ostinato
-              ("music", "little@pocketing", "pieces", -2.5), ("music", "of@pct2", "=vanished", -2.5)]
+              ("music", "little@pocketing", "pieces", -4.5), ("music", "of@pct2", "=vanished", -2.5),   # r8: 'little' -2.5 -> -4.5 (9.3 dB margin)
+              # A6 (round-7 margins): 'rules.' is a low word with little 1-4 kHz energy; the blueprint pad sat ~10 dB under it
+              ("music", "rules@copyRules", "rules", -3.0)]
+# A7 P2: band-limited line ducks (stem, first word spec, last word, dB, lo Hz, hi Hz): the celesta run + the counter-A stab
+# under '"please don't," only 2%' (the 1-4 kHz margin on 'two' was 2.7-7.6 dB; music.py also ends the run before 'two')
+WORD_BAND_DUCKS = [("music", "please@withA", "2", -6.0, 1000.0, 4000.0), ("sfx", "2@pct2", "2", -4.0, 1000.0, 4000.0)]
 # A3 P3 (spectral balance): +3 dB low shelf at 80 Hz on the music bus (with the pizz bass's soft sub octave in
 # instruments.py, the score gets a real bottom under the voice); the stamp / parcel / flip-lock thumps get +2.5 dB at 70 Hz in sfx.py
 MUSIC_LOW_SHELF = None          # A4 P2: the A3 +3 dB at 80 Hz is gone (the sub band ran ~5 dB over the references)
@@ -85,7 +99,7 @@ DUCK_DB = -2.5                   # music dip while the voice speaks (keyed from 
 CORR_MAX = 4.0                   # per-section level correction is clamped to +-4 dB around the global music gain
 
 # music level per section, LU relative to the voice in that section (bible: bed ~18 LU under the voice)
-MUSIC_TARGET = {"hook": -18.5, "setting": -17.5, "quote": -20.5, "whisper": -21.0, "mystery": -19.0, "professor": -17.5,
+MUSIC_TARGET = {"hook": -18.5, "setting": -17.5, "quote": -20.5, "whisper": -21.0, "mystery": -20.0, "professor": -17.5,   # r8: the mystery a hush
                 "team": -17.0, "signs": -18.0, "results": -16.5, "blueprint": -19.0, "classroom": -18.0, "permission": -17.0,
                 "twist": -18.0, "swell": -16.0, "tail": -18.0}
 GLOBAL_MUSIC = -18.0             # whole-score level vs the whole voice, before the per-section corrections
@@ -99,12 +113,20 @@ VOICE_RIDES = [("youSee", "other", +2.5), ("soSome", "twice", +2.5),
                # was the quietest but one), the narrated lead-in to the whisper -0.5, the whispered line itself +1.5 (keeps
                # its texture, ~5 LU under the read), the twist question +1.5 (A4 P2: 'And the bait wood?' sat 4.5 dB low),
                # the climax line a touch forward
-               ("@0", "steal", +1.0), ("sheRead", "whispered", -0.5), ("whisper", "now", +1.5),
+               # A7 P3: the whispered line (truly unvoiced) was still the quietest speech on a phone: +3.5 (was +1.5)
+               ("@0", "steal", +1.0), ("sheRead", "whispered", -0.5), ("whisper", "now", +3.5),
+               # A7 P3: 'piece at a time.' trailed off (~12 dB under the voice average on 'time.')
+               ("piece@piece", "time", +2.0),
+               # r8 (new v2 take, measured): 'only (2%)' and 'little (pieces)' are the quietest unstressed words under busy beds
+               ("only@withA", "only", +2.0), ("little@pocketing", "pieces", +2.0),
                # A5: the hook's payoff 'and wanted to steal.' +2.5 more (it was the quietest phrase, -16.1 vs -13.9 LUFS);
                # 'everybody cheats.' +2 (the analogy's punch sank); the twist question +3 (was +1.5); the climax line
                # 'It gave them permission.' +2.5 (was +0.5: it sat 1.7 LU under its own setup; +2 left it 0.4 LU under)
                ("and@sign1", "steal", +2.5), ("everybody@hears", "cheats", +2.0), ("and", "wood", +3.0),
-               ("It@gave", "permission", +2.5)]
+               ("It@gave", "permission", +2.5),
+               # A6 P3: the payoff number '8%.' sat 2.4 dB under 'almost' (+2, gain only); 'twice.' was not the hottest word of
+               # its line (+1.5 on top of the line's +2.5)
+               ("8@pct8", "8", +2.0), ("twice@twice", "twice", +1.5)]
 # voice-bus compressor (A1 P3): soft-knee, threshold at the loud-syllable level of this take, fast attack, speech release
 VCOMP = dict(ratio=2.0, knee_db=6.0, att=0.005, rel=0.1, thr_pct=60.0)
 VPEAK_CREST = 11.5               # voice-bus peak limiter: true peak at most this far above the voice's integrated loudness
@@ -118,9 +140,11 @@ def log(*a):
 PE_JSON = os.path.join(HERE, "picture_events.json")
 CAST_JSON = os.path.join(HERE, "picture_cast.json")
 STAGE_INPUTS = {
-    "music": ["music.py", "instruments.py", "dsp.py", "timeline.py", T.TL_PATH, T.WORDS_PATH],
+    "music": ["music.py", "instruments.py", "dsp.py", "timeline.py", T.TL_PATH, T.WORDS_PATH, T.VOICE_PATH,   # A6: WORDS are acoustic (voice.wav)
+              os.path.join(HERE, "picture_probe.json"), os.path.join(HERE, "warp.json")],                       # round 8: the heap's held beat
     "sfx": ["sfx.py", "sfx_gen.py", "dsp.py", "timeline.py", T.TL_PATH, T.WORDS_PATH, PE_JSON, os.path.join(HERE, "picture_probe.json"), CAST_JSON,
-            T.VOICE_PATH, "mix.py"],
+            T.VOICE_PATH, "mix.py", os.path.join(HERE, "warp.json"), os.path.join(ROOT, "voice", "phrases.json"),
+            os.path.join(ROOT, "voice", "_kokoro_v3", "words.json")],                              # r8: the picture-clock words
 }
 
 
@@ -356,7 +380,7 @@ def key_duck_db(stem):
 # ================================================================ round 5 (A4): voice clean-up, leveler, de-esser, bus EQ
 # A4 P2/P3 (voice joins + breath tails): the per-beat takes are butt-joined (a step to digital zero at every join) and
 # phrase ends carry 120-360 ms unvoiced exhale / murmur tails. voice_clean() works on ANY take (no frame literals):
-# every digital-zero run gets a 15 ms raised-cosine fade-out before it and a 5 ms fade-in after it; and after the last
+# every digital-zero run gets a 15 ms raised-cosine fade-out before it and a 15 ms (A6; was 5) fade-in after it; and after the last
 # VOICED frame of each phrase it keeps 60 ms (final /s z t ts/: up to 120 ms while the energy above 3.5 kHz dominates),
 # then fades to digital silence over 40 ms until the next onset (so every gap is the same clean silence; the beds fill
 # it). "Last voiced frame" = the last 10 ms frame within 20 dB of the median speech level (a conservative gate: the
@@ -364,8 +388,26 @@ def key_duck_db(stem):
 # The whispered line (unvoiced by design) and the words next to it are never touched.
 CLEAN = dict(keep=0.06, hf_keep=0.12, fade=0.04, min_gap=0.16, voiced=0.45, head_pre=0.025, active_db=-20.0)
 VOICE_HP = 70.0                  # A4 P2: the ElevenLabs take carries a rumble floor under 70 Hz (sub band +5 dB over the refs)
-VOICE_SHELF = (3000.0, 3.0)      # A4 P2: presence (+1.5 at 3.5 kHz asked; the high band still read ~1.7 dB dull, and the de-esser takes the peaks back)
-DEESS = dict(lo=5000.0, hi=10000.0, ratio=3.0, max_db=6.0, thr_pct=96.0, att=0.001, rel=0.05)
+VOICE_SHELF = (3000.0, 1.5)      # A4 P2: presence; A6 P2 (the voice read 1.2-5.7 dB bright vs the refs): +3 -> +1.5 dB
+# A6 P2 (tone: 8-11 kHz air -20.6 dB re 120-500 Hz vs the refs' -26.3; 500 Hz-3 kHz +1.9, 3-8 kHz +1.2; 'warm low-mids,
+# never bright'): a -4 dB high shelf at 8 kHz and a -1.5 dB bell at 2.5 kHz on the voice bus, and the de-esser 1.5 dB lower
+# A7 P2 (measured like measure_video band_mean: the narration was darker than every reference - voice 3-8 kHz -25.2 dB re
+# 120-500 Hz vs the refs' -22.1, the mix at or below the refs' p10 in every band; sibilance p99 -9.1 vs -6.3, so no extra
+# de-essing is needed): the A6 -4 dB 8 kHz shelf and -1.5 dB 2.5 kHz bell are gone, a +2.5 dB bell at 3.2 kHz (Q 0.7) and a
+# +2 dB high shelf from 7 kHz instead, and the de-esser threshold back at its percentile (thr_off 0)
+VOICE_EQ = [("bell", 3200.0, 1.8, 0.7), ("high", 7000.0, 1.5, 0.7)]   # (r8: +2.5 / +2 overshot the target by ~1 dB on the v2 take)
+DEESS = dict(lo=5000.0, hi=10000.0, ratio=3.0, max_db=6.0, thr_pct=96.0, att=0.001, rel=0.05, thr_off=0.0)
+# A6 P2: beat 10 (the teacher analogy, take b10) is 5-7 dB brighter / more forward than beats 9 and 11: a matching EQ over
+# that beat's phrases only (voice/phrases.json 'beat'), 40 ms crossfades at its edges
+BEAT_EQ = {}                      # A7 P3: replaced by the automatic per-take matching EQ (beat_match_eq) - the hand-tuned beat-10
+                                  # curve over-cut its 6-14 kHz band (-2.7 dB) and beats 8 / 12 / 1 / 3 / 4 stepped 3-6 dB
+# A7 P3 (take-to-take timbre steps, 'one take' illusion): every voice beat (voice/phrases.json 'beat') is matched to the mean
+# spectrum of all takes on its VOICED frames in 7 bands; a gentle EQ (low shelf, 5 octave bells, high shelf) takes out
+# MATCH['amount'] of each band's deviation (dead band MATCH['dead'] dB, at most +-MATCH['max'] dB), measured twice (the bells
+# overlap), 40 ms crossfades at the beat edges. A pure function of the take: a new voice needs nothing but a re-run.
+MATCH = dict(amount=0.85, dead=0.8, max=5.0, iters=2)
+MATCH_BANDS = [(120, 250), (250, 500), (500, 1000), (1000, 2000), (2000, 4000), (4000, 6000), (6000, 14000)]
+BEAT_EQ_XF = 0.04
 # A5 P3: the last line carries the hottest sibilants (b12's bright fricatives + the +2.5 ride): a further static cut of
 # the 5-10 kHz band over the whole line (first word spec, last word, dB)
 DEESS_EXTRA = [("soSome", "twice", -3.0)]
@@ -377,11 +419,144 @@ SPEECH_BAND_DUCK = {"sfx": -5.0, "music": -4.0}   # A4 P2: 1-4 kHz dip on the be
 # windows that keep their full band: (s before the beat, s after the beat | "word:<w>" = until that word's onset + 5 ms).
 # The cha-ching's 'ka-CHING' attack; the stamp and the tag ding only up to the onset of the word they precede (A5 P2:
 # 'per-' and 'twice.' then get the normal dip under their ring); the hook's glint ding (its own 0.6-4 kHz carve in sfx.py)
-BAND_DUCK_EXEMPT = {"pct8": (0.03, 0.12), "permission": (0.03, "word:permission"), "twice": (0.12, "word:twice"), "steal1": (0.03, 0.45)}
+# A6 P1: the cha-ching no longer keeps its band (its bell now rings in the stop-time gap after '8%.', sfx.py), and the tag
+# ding's window ends 30 ms before the ACOUSTIC onset of 'twice.' (the ding lands inside the word: no exemption remains)
+BAND_DUCK_EXEMPT = {"permission": (0.03, "word:permission"), "twice": (0.12, "word:twice-0.03"), "steal1": (0.03, 0.45)}
+BAND_DUCK_PRE = 0.10             # A6 P2: the duck opens 100 ms before each word (was 30 ms: the late json starts slipped through)
 MUSIC_HP = 60.0                  # A4 P2: 12 dB/oct high-pass on the music + ambience buses
 AMB_HP = 60.0
 MUSIC_AIR = (6000.0, 2.0)        # a little air on the score above the consonant band
 AMB_SHELF = (4000.0, 4.0)        # the sand / grass / cicada top of the beds
+
+
+def eq_chain(x, chain):
+    """[(kind 'high' | 'low' | 'bell', f0, dB, q)] in order"""
+    for kind, f0, db, q in chain:
+        x = shelf(x, f0, db, kind, q) if kind in ("high", "low") else peq(x, f0, db, q)
+    return x
+
+
+def beat_eq(v):
+    """A6 P2: a matching EQ over the phrases of one voice beat (voice/phrases.json 'beat'), crossfaded at the edges"""
+    try:
+        P = json.load(open(os.path.join(ROOT, "voice", "phrases.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        return v, []
+    t = np.arange(v.shape[1]) / SR
+    rows = []
+    for beat, chain in BEAT_EQ.items():
+        sp = [(float(x["s"]), float(x["e"])) for x in P if int(x.get("beat", -1)) == int(beat)]
+        if not sp:
+            continue
+        a, z = min(s_ for s_, _ in sp) - 0.03, max(e_ for _, e_ in sp) + 0.03
+        u = np.clip(np.minimum((t - (a - BEAT_EQ_XF)) / BEAT_EQ_XF, ((z + BEAT_EQ_XF) - t) / BEAT_EQ_XF), 0, 1)
+        w = 0.5 - 0.5 * np.cos(np.pi * u)
+        v = v * (1 - w)[None, :] + eq_chain(v, chain) * w[None, :]
+        rows.append((beat, a, z))
+    return v, rows
+
+
+def _beat_bands(m, spans):
+    """voiced-frame long-term spectrum of mono m over [(s, e)] spans: dB per MATCH_BANDS, re the 120-14k total"""
+    hop, nfft = ns(0.01), 2048
+    win = np.hanning(nfft)
+    f = np.fft.rfftfreq(nfft, 1 / SR)
+    acc = []
+    for s_, e_ in spans:
+        seg = m[ns(s_): ns(e_)]
+        if len(seg) < 2 * nfft:
+            continue
+        nfr = 1 + (len(seg) - nfft) // hop
+        idx = np.arange(nfft)[None, :] + hop * np.arange(nfr)[:, None]
+        P = np.abs(np.fft.rfft(seg[idx] * win[None, :], axis=1)) ** 2
+        lev = 10 * np.log10(P.sum(1) + 1e-14)
+        ac = np.fft.irfft(P, axis=1)
+        per = ac[:, SR // 400: SR // 70].max(1) / (ac[:, 0] + 1e-14)
+        k = (per > 0.45) & (lev > np.percentile(lev, 90) - 25)
+        if k.any():
+            acc.append(P[k])
+    if not acc:
+        return None
+    P = np.concatenate(acc).mean(0)
+    tot = P[(f >= 120) & (f < 14000)].sum()
+    return np.array([10 * np.log10(P[(f >= a) & (f < b)].sum() / tot + 1e-14) for a, b in MATCH_BANDS])
+
+
+def _match_chain(g):
+    """band gains (dB, MATCH_BANDS order) -> EQ chain: low shelf at 250 Hz, octave bells, high shelf at 6 kHz"""
+    ch = []
+    for k, ((a, b), db) in enumerate(zip(MATCH_BANDS, g)):
+        if abs(db) < 0.05:
+            continue
+        if k == 0:
+            ch.append(("low", 250.0, db, 0.7))
+        elif k == len(MATCH_BANDS) - 1:
+            ch.append(("high", 6000.0, db, 0.7))
+        else:
+            ch.append(("bell", float(np.sqrt(a * b)), db, 1.4))
+    return ch
+
+
+def beat_match_eq(v):
+    """A7 P3: per-take matching EQ (see MATCH); returns the voice and rows (beat, a, z, dev before, gains, dev after)"""
+    try:
+        P = json.load(open(os.path.join(ROOT, "voice", "phrases.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        return v, []
+    beats = sorted({int(x.get("beat", -1)) for x in P if int(x.get("beat", -1)) >= 0})
+    meas = {b: [(float(x["s"]), float(x["e"])) for x in P if int(x.get("beat", -1)) == b and x.get("style") != "whisper"] for b in beats}
+    span = {b: (min(float(x["s"]) for x in P if int(x.get("beat", -1)) == b) - 0.03,
+                max(float(x["e"]) for x in P if int(x.get("beat", -1)) == b) + 0.03) for b in beats}
+    gains = {b: np.zeros(len(MATCH_BANDS)) for b in beats}
+    dev0 = {}
+
+    def apply(x, gset):
+        t = np.arange(x.shape[1]) / SR
+        y = x.copy()
+        for b in beats:
+            ch = _match_chain(gset[b])
+            if not ch:
+                continue
+            a, z = span[b]
+            i0, i1 = max(0, ns(a - 0.6)), min(x.shape[1], ns(z + 0.6))
+            seg = eq_chain(x[:, i0:i1], ch)
+            u = np.clip(np.minimum((t[i0:i1] - (a - BEAT_EQ_XF)) / BEAT_EQ_XF, ((z + BEAT_EQ_XF) - t[i0:i1]) / BEAT_EQ_XF), 0, 1)
+            w = 0.5 - 0.5 * np.cos(np.pi * u)
+            y[:, i0:i1] = y[:, i0:i1] * (1 - w)[None, :] + seg * w[None, :]
+        return y
+    y = v
+    for it in range(int(MATCH["iters"]) + 1):
+        m = y.mean(0)
+        L = {b: _beat_bands(m, meas[b]) for b in beats}
+        L = {b: l for b, l in L.items() if l is not None}
+        mean = np.mean(np.array(list(L.values())), 0)
+        dev = {b: L[b] - mean for b in L}
+        if it == 0:
+            dev0 = dev
+        if it == int(MATCH["iters"]):
+            break
+        for b, d in dev.items():
+            step = np.where(np.abs(d) > MATCH["dead"], -MATCH["amount"] * d, 0.0)
+            gains[b] = np.clip(gains[b] + step, -MATCH["max"], MATCH["max"])
+        y = apply(v, gains)
+    rows = [(b, span[b][0], span[b][1], dev0.get(b), gains[b], dev.get(b)) for b in beats]
+    return y, rows
+
+
+def voice_ltas(v):
+    """A6 P2: long-term spectrum of the voice over its loud (voiced) 50 ms frames, band dB re 120-500 Hz"""
+    m = v.mean(0)
+    hop = ns(0.05)
+    nb = len(m) // hop
+    fr_ = m[: nb * hop].reshape(nb, hop)
+    lev = 10 * np.log10(np.mean(fr_ ** 2, axis=1) + 1e-14)
+    k = lev > np.percentile(lev, 99) - 25
+    P = (np.abs(np.fft.rfft(fr_[k] * np.hanning(hop)[None, :], axis=1)) ** 2).mean(0)
+    f = np.fft.rfftfreq(hop, 1 / SR)
+    band = lambda a, b: 10 * np.log10(P[(f >= a) & (f < b)].sum() + 1e-20)
+    ref = band(120, 500)
+    return {"0.5-3k": band(500, 3000) - ref, "3-8k": band(3000, 8000) - ref, "8-11k": band(8000, 11000) - ref,
+            "5-8k": band(5000, 8000) - ref}
 
 
 def phrase_list():
@@ -438,7 +613,7 @@ def voice_clean(v):
         L1 = min(ns(0.015), a)
         if L1 > 0:
             g[a - L1:a] = np.minimum(g[a - L1:a], 0.5 + 0.5 * np.cos(np.pi * np.arange(1, L1 + 1) / L1))
-        L2 = min(ns(0.005), n - b)
+        L2 = min(ns(0.015), n - b)          # A6 P3: 15 ms raised cosine (the 5 ms edge read as a hard 'M' on 'Many people steal')
         if L2 > 0:
             g[b:b + L2] = np.minimum(g[b:b + L2], 0.5 - 0.5 * np.cos(np.pi * np.arange(L2) / L2))
         joins += 1
@@ -529,7 +704,7 @@ def deess(v, ride_db):
     speak = np.zeros(nb, bool)
     for w in T.WORDS:
         speak |= (tc >= float(w["s"])) & (tc <= float(w["e"]))
-    thr = float(np.percentile(lev[speak], DEESS["thr_pct"]))
+    thr = float(np.percentile(lev[speak], DEESS["thr_pct"])) + DEESS.get("thr_off", 0.0)
     rd = np.interp(tc, np.arange(len(ride_db))[:: SR // 100] / SR, ride_db[:: SR // 100])
     over = lev - (thr - np.maximum(rd, 0.0))
     gr = np.clip(over * (1 - 1 / DEESS["ratio"]), 0, DEESS["max_db"])
@@ -551,7 +726,7 @@ def deess(v, ride_db):
                                                      extra_max=float(extra.max()))
 
 
-def band_duck(x, depth_db, exempt=(), lo=1000.0, hi=4000.0, pre=0.03, post=0.05, att=0.015, rel=0.06):
+def band_duck(x, depth_db, exempt=(), lo=1000.0, hi=4000.0, pre=BAND_DUCK_PRE, post=0.05, att=0.015, rel=0.06):
     """dip the 1-4 kHz band of a bed stem by depth_db while a word is spoken (zero-phase band, smoothed key)"""
     sos = signal.butter(2, [lo, hi], btype="bandpass", fs=SR, output="sos")
     band = signal.sosfiltfilt(sos, x, axis=-1)
@@ -570,6 +745,29 @@ def band_duck(x, depth_db, exempt=(), lo=1000.0, hi=4000.0, pre=0.03, post=0.05,
         env[i] = e
     g = dbg(depth_db * np.interp(np.arange(x.shape[1]) / SR, np.arange(nc) / ctrl, env))
     return x - band * (1 - g)[None, :]
+
+
+def band_curve(x, curve_db, lo=1000.0, hi=4000.0):
+    """dip the lo..hi band of x by a per-sample dB curve (zero-phase band split, perfect reconstruction)"""
+    if not np.any(curve_db < -0.01):
+        return x
+    sos = signal.butter(2, [lo, hi], btype="bandpass", fs=SR, output="sos")
+    band = signal.sosfiltfilt(sos, x, axis=-1)
+    return x - band * (1 - dbg(curve_db))[None, :]
+
+
+def word_band_ducks(x, stem):
+    rows = []
+    g = np.zeros(x.shape[1])
+    for st_, first, last, db, lo, hi in WORD_BAND_DUCKS:
+        if st_ != stem:
+            continue
+        c, az = span_curve(first, last, db)
+        if c is None:
+            continue
+        x = band_curve(x, c, lo, hi)
+        rows.append((stem, f"{first}..{last} ({lo:.0f}-{hi:.0f} Hz)", az[0], az[1], db))
+    return x, rows
 
 
 def circ(fn, x, pad_s=1.0):
@@ -598,12 +796,14 @@ def section_db(m_ducked, v, secs):
         ref = Lv if np.isfinite(Lv) else Lv_all
         g = ref + MUSIC_TARGET.get(name, GLOBAL_MUSIC) - Lm
         gains[name] = float(np.clip(g, g0 - CORR_MAX, g0 + CORR_MAX))
+    if "tail" in gains and "hook" in gains:     # A6 P2 (loop bridge): the score now rings to the last sample, so the tail
+        gains["tail"] = gains["hook"]           # runs at the hook's gain and the gain is the same on both sides of the seam
     curve = np.zeros(N)
     t = np.arange(N) / SR
     for name, a, b in secs:
         curve[(t >= a) & (t < b)] = gains[name]
     curve[t >= secs[-1][2]] = gains[secs[-1][0]]
-    curve = ndimage.uniform_filter1d(curve, ns(0.25), mode="nearest")
+    curve = ndimage.uniform_filter1d(curve, ns(0.25), mode="wrap")
     assert np.all(np.isfinite(curve))
     return curve, gains, g0
 
@@ -711,6 +911,15 @@ def main():
     log(f"voice clean: {vclean['joins']} join fades, {len(vclean['tails'])} phrase tails gated (median speech {vclean['med']:.1f} dB): "
         + ", ".join(f"{w} {a:.2f}->{h:.2f}" for w, a, k, h, d in vclean["tails"][:40]))
     v = hp(v, VOICE_HP, 2)                                      # A4 P2: no rumble under the voice
+    v, beq_rows = beat_eq(v)                                    # A6 P2: the bright beat-10 take matched to its neighbours
+    for bq, a_, z_ in beq_rows:
+        log(f"beat EQ: beat {bq} {a_:.2f}-{z_:.2f} s " + ", ".join(f"{k} {f0:.0f} Hz {db:+.1f} dB" for k, f0, db, q in BEAT_EQ[bq]))
+    v, bm_rows = beat_match_eq(v)                               # A7 P3: every take matched to the mean take spectrum
+    for b_, a_, z_, d0_, g_, d1_ in bm_rows:
+        if d0_ is None:
+            continue
+        log(f"take match: beat {b_:2d} {a_:6.2f}-{z_:6.2f} s  dev " + " ".join(f"{x:+4.1f}" for x in d0_) + "  -> EQ " + " ".join(f"{x:+4.1f}" for x in g_)
+            + "  -> dev " + " ".join(f"{x:+4.1f}" for x in d1_) + f"  (max |dev| {np.abs(d0_).max():.1f} -> {np.abs(d1_).max():.1f} dB)")
     v_raw_ref = integrated(v)
     v, vgr, vthr = voice_comp(v, **VCOMP)
     v = v * dbg(v_raw_ref - integrated(v))                      # same integrated level as before the compressor
@@ -725,6 +934,8 @@ def main():
     log("de-esser", {k: round(x, 2) for k, x in ds_stats.items()})
     if VOICE_SHELF:
         v = shelf(v, VOICE_SHELF[0], VOICE_SHELF[1], "high")
+    if VOICE_EQ:
+        v = eq_chain(v, VOICE_EQ)                               # A6 P2: warmer voice bus
     v, vg = limiter(v, ceil_db=v_mid + VPEAK_CREST, look=0.0015, rel=0.04)   # ... and before the look-ahead voice peak limiter
     vpk = -20 * np.log10(np.maximum(vg, 1e-9))
     sp = np.zeros(N, bool)
@@ -737,7 +948,12 @@ def main():
     v_ref = integrated(v)
     for row in ride_rows:
         log(f"voice ride {row[4]:+.1f} dB on '{row[0]}' .. '{row[1]}' ({row[2]:.2f}-{row[3]:.2f} s)")
-    log(f"voice: {v_ref:.2f} LUFS (as stereo), TP {true_peak(v):.2f} dBTP")
+    log(f"voice: {v_ref:.2f} LUFS (as stereo), TP {true_peak(v):.2f} dBTP; LTAS re 120-500 Hz: "
+        + ", ".join(f"{k} {x:+.1f} dB" for k, x in voice_ltas(v).items()))
+    # A6 P2: the acoustic word times every sound system used (for the LEAD: captions / BEAT can take them too)
+    json.dump([{"w": w["w"], "s": float(w["s"]), "e": float(w["e"]), "json_s": float(j["s"]), "json_e": float(j["e"])}
+               for w, j in zip(T.WORDS, T.WORDS_JSON)], open(os.path.join(HERE, "words_acoustic.json"), "w", encoding="utf-8"), indent=0)
+    log(f"acoustic onsets: {len(T.ONSET_MOVES)} word starts moved >= 30 ms: " + ", ".join(f"{w} {a:.2f}->{b:.2f}" for w, a, b in T.ONSET_MOVES))
 
     # ---------------- music
     import music
@@ -751,7 +967,6 @@ def main():
         m_raw = circ(lambda x: hp(x, MUSIC_HP, 2), m_raw)
     if MUSIC_AIR:
         m_raw = circ(lambda x: shelf(x, MUSIC_AIR[0], MUSIC_AIR[1], "high"), m_raw)
-    m_raw[:, -ns(0.005):] *= np.linspace(1.0, 0.0, ns(0.005))[None, :] ** 2     # A5 P3: the score's last sample is exactly 0
     log(f"music bus: HP {MUSIC_HP:.0f} Hz 12 dB/oct, air shelf {MUSIC_AIR[1]:+.1f} dB at {MUSIC_AIR[0]:.0f} Hz -> {lufs(m_raw):.2f} LUFS raw")
     dk = duck_db(T.speech_spans())
     m_d = m_raw * dbg(dk)[None, :]
@@ -800,20 +1015,26 @@ def main():
             continue
         t_b = T.bt(b_)
         if isinstance(post_, str) and post_.startswith("word:"):
+            mm = re.match(r"word:([^+-]+)([+-][\d.]+)?$", post_)
             try:
-                t_e = float(T.word(post_[5:], t_b - 0.3)["s"]) + 0.005
-            except KeyError:
+                t_e = float(T.word(mm.group(1), t_b - 0.4)["s"]) + (float(mm.group(2)) if mm.group(2) else 0.005)
+            except (KeyError, AttributeError):
                 t_e = t_b + 0.05
-            t_e = max(t_e, t_b + 0.02)
         else:
             t_e = t_b + float(post_)
-        ex.append((t_b - float(pre_), t_e))
+        if t_e > t_b - float(pre_) + 0.005:
+            ex.append((t_b - float(pre_), t_e))
     if SPEECH_BAND_DUCK.get("sfx"):
         ev = band_duck(ev, SPEECH_BAND_DUCK["sfx"], ex)
     if SPEECH_BAND_DUCK.get("music"):
         m = band_duck(m, SPEECH_BAND_DUCK["music"], ex)
     log(f"speech-band ducks (1-4 kHz under the words): sfx {SPEECH_BAND_DUCK.get('sfx', 0):+.1f} dB, music {SPEECH_BAND_DUCK.get('music', 0):+.1f} dB "
         f"(exempt: {', '.join(BAND_DUCK_EXEMPT)})")
+    m, wb_m = word_band_ducks(m, "music")
+    ev, wb_s = word_band_ducks(ev, "sfx")
+    for row in wb_m + wb_s:
+        log(f"band duck {row[0]} {row[4]:+.1f} dB under '{row[1]}' {row[2]:.3f}-{row[3]:.3f} s")
+    kd_rows += wb_m + wb_s
 
     # ---------------- master
     mix0 = v + m + ev + amb
@@ -908,7 +1129,8 @@ def write_cues(C, b, st_, rows, eb, bed_rows):
       f">0.5 dB on {gr['pct_over_0_5']:.2f} %")
     s = st_["seam"]
     w(f"- Loop seam (last sample -> first): jump {s['jump']:.5f} vs p99 sample step {s['step_p99_tail']:.5f} (tail) / {s['step_p99_head']:.5f} (head); "
-      f"the last 0.3 s is wind only ({s['rms_last_0_3s_dbfs']:.1f} dBFS RMS), no fade at either end")
+      f"the last 0.3 s ({s['rms_last_0_3s_dbfs']:.1f} dBFS RMS) is the noon wind + the loop bridge (A6: a soft open D-A pad and the celesta's tiptoe "
+      "pickup E-C#, folded circularly onto frame 0 where they resolve on its D); no fade at either end, no SFX crosses the seam")
     w("")
     w("ffmpeg ebur128 cross-check:")
     w("```")
@@ -961,9 +1183,13 @@ def write_cues(C, b, st_, rows, eb, bed_rows):
       "synced 0-3 f to the picture event they are keyed to; the tumbleweeds come from `picture_probe.json` "
       "(`node studio/scripts/audio_probe.mjs [storyDir] [extDir]`: sets_ext TUMBLE projected through the film camera -> on-screen "
       "window, hop landings, pan, size); no whoosh on any plain dissolve (only the dive into the rock in shot 1, the panel fly-in "
-      "in shot 11 and a -30 LU breath of air under the shot-9 camera truck); the stamp is the climax hit (its 0.6-4 kHz band dips "
-      "7 dB for 150 ms under 'per-', its ring tail -2 dB under '-MIS-'); the music ends on the last word; nothing but the wind "
-      "crosses the loop point.")
+      "in shot 11, and - A6 - air swishes that follow the camera's OWN speed on its fast whips / trucks / arcs, from audio_probe.mjs 'cam'); "
+      "the stamp is the climax hit (its 0.6-4 kHz band dips 7 dB for 150 ms under 'per-', its ring tail -2 dB under '-MIS-'); the cha-ching is "
+      "split (A6 P1): a low 'ka-' on the counter landing, the bell 'CHING' in the stop-time gap after '8%.'; every word-keyed system uses the "
+      "ACOUSTIC word onsets (timeline.py, words_acoustic.json); the score's final chord fades and a soft pad + the hook's pickup ring into the "
+      "loop (A6 P2); no SFX crosses the loop point. Round 8: the camera is calm (the user's preview-7 notes) - every scripted whoosh is "
+      "checked against the camera probe and dropped when its move is no longer fast (dive / fly-in >= 2-2.5 deg per video f, whips >= 2.5, "
+      "the truck >= 1.2); the generic swishes need >= 4 deg/f (or >= 2.2 with >= 15 deg of sideways travel), so only a deliberate comic whip gets air.")
     w("")
     w("## Picture event frames used (what every cue is keyed to; override in picture_events.json)")
     w("| event | frame(s) | source |")

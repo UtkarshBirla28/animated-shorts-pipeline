@@ -68,7 +68,10 @@ export const KEY_STOREROOM: C3 = [-0.782, 0.58, -0.227]; // round 2: from the sw
 
 export const LIGHTS: Record<LightName, LightPreset> = {
   // bright desert noon: high side-back sun from screen right, crisp blue-violet ground shade
-  noon: { ...DAY },
+  // round 7 (A6 P2 shot 1: only a contact blob under her, faint noon shadows): the cards cast their silhouettes at noon
+  // too (the trailhead sun is side-back, so each card throws a slim violet shadow across the paving), dim the same so the
+  // relight never pops them
+  noon: { ...DAY, actorShadow: true },
   // "vandalized": same direction, key and sky ~20 % down, a little greyer
   // round 4 (A3 P2: mean saturation 70 -> 44, hazy lifted shadows, a muddy grey-lavender counter insert): the value
   // drop stays (~20 %) but the colour does not go: the shade turns VIOLET (#3A2E5A class: more red, less green than
@@ -77,15 +80,26 @@ export const LIGHTS: Record<LightName, LightPreset> = {
   // round 5 (A4 P3: the dim turned the dark posts / board frame magenta-plum #52133A): the drop is a cool-VIOLET
   // ambient now (green kept level with red, no magenta bias), the key -20 %, and brown wood keeps its own WARM
   // shade (#4A2E24-#5A3A22 class in the cloud shadow) instead of the lavender multiplier
-  dim: { ...DAY, lit: [1.28, 1.2, 1.06], shade: [0.37, 0.36, 0.62], lift: [0.012, 0.012, 0.034], charTint: [0.98, 0.96, 0.97], fog: "#c6d3ea", fogNear: 80, fogFar: 1150, sunI: 2.2,
-    woodShade: [0.44, 0.48, 0.42], woodLift: [0.008, 0.008, 0.006], woodK: 0.9 },
+  // round 7 (A6 P2: the dip read as a different, wine-coloured sign: board hue ~340, a grey sky, frame chroma 28 -> 19):
+  // the KEY keeps noon's warm-neutral hue at -22 % (noon lit x 0.78), only the SHADOW turns more lavender (blue up,
+  // red / green level, no magenta), the wood keeps a warm-neutral shade, the sky keeps noon's saturated blue one step
+  // darker (LOOK.dim) and the fog is a clean pale blue; the cloud band itself is warm-neutral on wood (shade.ts)
+  dim: { ...DAY, actorShadow: true, lit: [1.25, 1.17, 1.03], shade: [0.36, 0.355, 0.7], lift: [0.012, 0.012, 0.04], charTint: [0.99, 0.96, 0.94], fog: "#c8d9ef", fogNear: 80, fogFar: 1150, sunI: 2.2,
+    woodShade: [0.46, 0.44, 0.4], woodLift: [0.01, 0.008, 0.006], woodK: 0.9 },
   // mystery relight: warmer, sun ~24 deg, longer shadows, amber haze
   // round 2: sun swings round to the back-right and drops (az 95 -> 32, el 24 -> 18) during the relight, so the posts
   // and the couple throw long blue-violet shadows toward the lens; warm orange rim on the sun-side edges
   // round 5 (A4 P3: the relight read mostly on the ground): the sun drops further (el 18 -> 12) so the post shadows rake
   // toward the lens across the paving while it relights, a warmer key, the sky / clouds go warm in LOOK.late
-  late: { ...DAY, az: 32, el: 12, lit: [1.8, 1.18, 0.7], shade: [0.34, 0.32, 0.66], lift: [0.024, 0.024, 0.1], term: 0.12,
-    charTint: [1.0, 0.87, 0.68], sideTint: [0.86, 0.83, 0.97], fog: "#efceae", fogNear: 60, fogFar: 820, sunCol: "#ffcf96", actorShadow: true, blob: [0.62, 0.58, 0.76],
+  // round 6 (A5 P3: the relight read mostly in the sky): the key goes to a warm #F2B880-class orange (r : g : b ~
+  // 1 : .55 : .25), so the paving, posts and couple visibly turn amber while the shadows stretch (el 58 -> 12); the
+  // board's two gooseneck lamps flick on late in the shot (sets_int.ts LightFx, video ~860)
+  // round 8 (A7 P3: a milky sky top #7A99D2 fading to cream, lifted blacks p5 L* 17-21 against 10-14 in shot 5; user: shot 6
+  // must be a MYSTERY beat with the light dropping a little): a saturated #FFB46A key (r : g : b ~ 1 : .47 : .15, ~11 %
+  // less luminance than before) at ~20 deg, a plum-violet shade (#5F4A7A class on the far sides), the black point down to
+  // ~(30, 18, 36) (lift / 2.5), and a clean #5A86D6 sky top over a #F3C98F horizon (LOOK.late); the board face stays warm
+  late: { ...DAY, az: 32, el: 20, lit: [1.88, 0.88, 0.29], shade: [0.31, 0.25, 0.6], lift: [0.012, 0.007, 0.03], term: 0.12,
+    charTint: [1.0, 0.85, 0.64], sideTint: [0.82, 0.77, 0.95], fog: "#f0c8a0", fogNear: 60, fogFar: 820, sunCol: "#ffb46a", actorShadow: true, blob: [0.58, 0.52, 0.72],
     rim: [2.2, 1.0, 0.3], woodShade: [0.42, 0.3, 0.42], woodLift: [0.02, 0.016, 0.045], woodK: 0.85 },
   // the test: early morning, low golden sun from the right-back (long shadows toward the lens), cool lavender shade
   // round 2: warmer key (#FFD9A0), lavender ambient -20 %, fog -30 %; the shade is less blue so brown wood reads
@@ -95,8 +109,9 @@ export const LIGHTS: Record<LightName, LightPreset> = {
   // round 5 (A4 P2: 'morning' read as plain noon, b* ~5 against noon's -1.4, so the 9 -> 10 time dissolve showed no
   // change): a golden #FFD49A key at ~0.9 of noon's value, el 14 (long shadows kept), violet #6E6AA8-class shade, warm
   // haze fog #EBC9A8, and a peach-horizon -> pale-blue sky with gold-lit clouds (LOOK.morning); noon stays white + blue
+  // round 8 (A7 P3 shot 9: faces read neutral white, the warmth only on the floor): the card tint pushed toward #FBE3CC
   morning: { ...GOLD, az: 62, el: 14, lit: [1.74, 1.16, 0.57], shade: [0.36, 0.33, 0.62], lift: [0.03, 0.03, 0.11], term: 0.1, showSun: false,
-    charTint: [1.0, 0.86, 0.68], sideTint: [0.88, 0.85, 0.98], fog: "#ebc9a8", fogNear: 70, fogFar: 800, sunCol: "#ffd49a", grade: "golden", blob: [0.66, 0.62, 0.82],
+    charTint: [1.0, 0.82, 0.6], sideTint: [0.88, 0.85, 0.98], fog: "#ebc9a8", fogNear: 70, fogFar: 800, sunCol: "#ffd49a", grade: "golden", blob: [0.66, 0.62, 0.82],
     actorShadow: true, rim: [2.4, 1.2, 0.42], woodShade: [0.47, 0.33, 0.4], woodLift: [0.016, 0.012, 0.026], woodK: 1, fill: [0.02, 0.012, 0.0] },
   // permission: backlit golden sunset (story.ts forces az 0 / el 6), violet-blue replacement shade, sun disc
   // round 2: the sun disc, halo and god rays are drawn by sets_int.ts (LightFx) so the disc can peek past Sign B's
@@ -117,9 +132,19 @@ export const LIGHTS: Record<LightName, LightPreset> = {
   // shadows raking toward camera-left, a blue-violet sky fill on everything (uFill: the lit ground reads rose-mauve
   // #B47C78 class, the shade #6C5A8C class), and warm practical pools from the board's two gooseneck lamps + the lot
   // lamp (sets_int.ts pools 9-11, dusk only)
-  dusk: { ...GOLD, az: 48, el: 7, lit: [1.26, 0.76, 0.58], shade: [0.34, 0.32, 0.62], lift: [0.04, 0.044, 0.14], term: 0.12, lambert: 0.55, // grazing key: the ground gets ~55 %, faces turned to it get it all
-    charTint: [1.0, 0.88, 0.76], sideTint: [0.78, 0.8, 1.0], fog: "#9a8cb8", fogNear: 90, fogFar: 950, sunDisc: "#ffb07a", sunCol: "#f0b48a", sunI: 2.4, showSun: false, blob: [0.56, 0.56, 0.84],
-    sky: "#6e6ab8", ground: "#5a4a70", rim: [1.6, 0.78, 0.42], woodShade: [0.34, 0.27, 0.42], woodLift: [0.03, 0.03, 0.09], fill: [0.14, 0.13, 0.3] },
+  // round 7 (A6 P3: the whole floor still lit uniform golden-hour orange under a starry blue-hour sky; nothing motivates
+  // it): the key -30 % and ROSE (#E7A08A class: r : g : b ~ 1 : .45 : .32), the blue-violet ambient (#5A5CA8 class) +15 %
+  // and a little more blue fill, so the far floor falls into blue; the warm ground and the tourist's warm side now come
+  // from the board's two gooseneck lamps (sets_int.ts: a ~3 m warm #FFC27A ground pool under each, pools 12-13)
+  // round 8 (A7 P2 shot 15: an even violet wash, no readable key direction, no cast shadows on the pebble floor): the shade
+  // was BRIGHTER than the grazing key on the ground (lum ~.35 vs ~.25, plus the blue fill on both), so no shadow could
+  // read. Now the ground's lit side is ~2x the shade (shadow opacity ~.5): a stronger ROSE-CORAL key (#F0A070 class, r : g
+  // : b ~ 1 : .46 : .32) that the grazing floor takes at ~75 % (lambert .3), a deep violet shade (#4F256D-#6C4F73 class on
+  // the paving, r over g: no navy) with half the blue fill and a small lift, the sun a little higher (el 10: posts and
+  // people throw ~6x long violet shadows), a hotter key-side rim; faces keep their warm-white tint
+  dusk: { ...GOLD, az: 48, el: 10, lit: [1.25, 0.58, 0.4], shade: [0.21, 0.165, 0.5], lift: [0.02, 0.016, 0.075], term: 0.1, lambert: 0.3,
+    charTint: [1.0, 0.88, 0.76], sideTint: [0.8, 0.76, 1.0], fog: "#9a8cb8", fogNear: 90, fogFar: 950, sunDisc: "#ffb07a", sunCol: "#f0a070", sunI: 1.9, showSun: false, blob: [0.46, 0.4, 0.74],
+    sky: "#6e6ab8", ground: "#5a4a70", rim: [2.0, 0.92, 0.46], woodShade: [0.3, 0.22, 0.4], woodLift: [0.024, 0.018, 0.06], fill: [0.055, 0.05, 0.19] },
   // storeroom at night: deep saturated blue shade, one warm desk-lamp key (world-fixed; faded with distance from the
   // lamp in shade.ts so the far corners stay blue), warm-white faces with a cool far side
   // round 3 (A2: darkest shot, one blue hue): +0.25 EV ambient (shade / lift x1.19, still saturated blue), lamp key
@@ -127,8 +152,13 @@ export const LIGHTS: Record<LightName, LightPreset> = {
   // round 5 (A4 P2: one blue-lavender note, b* -41..-47, mean L* 29-30, ~14 % warm pixels): the night shade is a
   // little less saturated and +0.2 EV (still deep blue), a faint warm fill so the mids lift, warmer card key; the warm
   // practicals (hanging work bulb, lamp, flickering lantern) are pools in sets_int.ts
-  night_int: { ...GOLD, az: -60, el: 35, key: KEY_STOREROOM, lit: [2.4, 1.46, 0.66], shade: [0.15, 0.168, 0.42], lift: [0.03, 0.038, 0.125], lambert: 0.25, term: 0.12,
-    fill: [0.012, 0.008, 0.006],
+  // round 6 (A5 P2: pastel lavender haze, a* +18..+20, b* -2..-18, magenta darks; the walls #48386E-#7D80BD): the warm
+  // pine x a blue multiplier was the violet. The night shade is now a ROYAL BLUE with green above red (no magenta: shade
+  // r .06 < g .13), the lift small and blue, and LOOK.night_int.sat 0.5 greys the warm albedo before the light colours
+  // it (so the planks take the night's hue in the shade and the lamp's in the pools; chips / labels / cards are
+  // emissive or unlit and keep their colour). Target: walls in shade #2E3F9A-#3B4BD1, whole frame L* ~38, b* -20..-28
+  night_int: { ...GOLD, az: -60, el: 35, key: KEY_STOREROOM, lit: [2.5, 1.48, 0.62], shade: [0.06, 0.13, 0.9], lift: [0.004, 0.014, 0.08], lambert: 0.25, term: 0.12,
+    fill: [0.0, 0.004, 0.02],
     sideK: 0.86, charTint: [1.0, 0.85, 0.7], charShade: 0.84, charGrad: 0.09, bodyGrad: 0.25, sideTint: [0.84, 0.85, 1.0],
     blob: [0.55, 0.58, 0.85], fog: "#10183a", fogNear: 400, fogFar: 1500, showSun: false, sunCol: "#ffc27a", actorShadow: true, grade: "night",
     bias: -0.0004, normalBias: 0.02, rim: [0.5, 0.26, 0.08], woodK: 0 },
@@ -153,20 +183,26 @@ export const LOOK: Record<LightName, WorldLook> = {
   // pale hazy horizon -> saturated deep blue zenith (bible 6.2: #1F80F7-#3FA1F5 top over #B5D9FB-#E6E3ED)
   noon: { sky: { c: ["#d3e1ef", "#aecff2", "#72adf1", "#3f90ee", "#1c72e4"], e: [0, 3, 9, 20, 50] }, cloud: CLOUD_DAY, bounce: [0.07, 0.035, 0.0], sat: 1.1 },
   // round 4: a clean, deeper blue (no grey), violet cloud undersides, albedo saturation up (A3 P2)
-  dim: { sky: { c: ["#c6d3ea", "#a0bde6", "#6b9bdc", "#3f7ad2", "#2258b8"], e: [0, 3, 9, 20, 50] }, cloud: { lit: "#e8e6f0", mid: "#c9c7e0", shade: "#9d98c8" }, bounce: [0.06, 0.03, 0], sat: 1.08 }, // round 5: 1.15 -> 1.08 (the dark wood went red-maroon)
+  // round 7 (A6 P2: a grey dim sky, chroma at the bible's floor): noon's own saturated blues, ~12 % darker, no grey
+  dim: { sky: { c: ["#c8d9ef", "#9ec4ef", "#5f9eec", "#2f80e6", "#1464d4"], e: [0, 3, 9, 20, 50] }, cloud: { lit: "#eceaf4", mid: "#cdcbe6", shade: "#a09ccf" }, bounce: [0.06, 0.03, 0], sat: 1.1 }, // round 5: 1.15 -> 1.08 (the dark wood went red-maroon); round 7: 1.1 (= noon; the wood shade is warm-neutral now)
   // round 5: the warm horizon stop lifted to ~6 deg (it shows under the board), a warmer mid sky, gold-topped clouds
-  late: { sky: { c: ["#f4c69a", "#efc0a0", "#d4b8c0", "#86a6da", "#3d76cc"], e: [0, 6, 12, 24, 52] }, cloud: { lit: "#ffd9b0", mid: "#f2c2b0", shade: "#b79ad0" }, bounce: [0.09, 0.04, 0], sat: 1.16 },
+  // round 8 (A7 P3): the visible top is a clean #5A86D6 by ~30 deg (no milky cream fade), a short peach -> lilac blend low
+  late: { sky: { c: ["#f3c98f", "#ecc29c", "#b9b4cc", "#7d9ad6", "#5a86d6"], e: [0, 4, 9, 16, 30] }, cloud: { lit: "#ffd9b0", mid: "#f2c2b0", shade: "#a890c8" }, bounce: [0.09, 0.04, 0], sat: 1.16 },
   // round 3 (A2: washed grey-blue top, cream clouds): crisp clean blue from ~10 deg up (#3F86D8) over a peach horizon
   // (#F3C9A0); white clouds with a peach-gold lit side and lavender undersides
   // round 5 (A4 P2): early morning, not noon: peach horizon #F6C9A0 -> rose haze -> pale soft blue #7FB4F0 at the
   // zenith (no saturated noon blue anywhere), clouds gold-lit with lavender undersides
-  morning: { sky: { c: ["#f6c9a0", "#f2c3aa", "#d8c3cc", "#a8bfe6", "#7fb4f0"], e: [0, 3, 8, 16, 40] }, cloud: { lit: "#ffe4c6", mid: "#f4d0c8", shade: "#a69ad2" }, bounce: [0.08, 0.04, 0], sat: 1.14 },
+  // round 8 (A7 P3 shot 9: the MS sky's upper 30 % a pale hazy blue-lavender): a peach band (#F4C9A0) held to ~9 deg (it
+  // clears the mesas: ~25 % of the visible sky), a rose-lilac blend, and a deeper ~#6E95D6 top by ~28 deg (a morning blue, still softer than noon's)
+  morning: { sky: { c: ["#f6c49a", "#f4c9a0", "#e8c4b4", "#a6b4da", "#6e95d6"], e: [0, 9, 14, 21, 32] }, cloud: { lit: "#ffe4c6", mid: "#f4d0c8", shade: "#a69ad2" }, bounce: [0.08, 0.04, 0], sat: 1.14 },
   sunset: { sky: { c: ["#ffc47c", "#f7ae78", "#e8967c", "#c4848e", "#7f6a92"], e: [0, 4, 10, 20, 40] }, cloud: CLOUD_GOLD, bounce: [0.05, 0.02, 0], sat: 1.12 },
   // round 3: coral -> mauve -> plum horizon band (#E67968 -> #B45F83 -> #4F256D), deep indigo zenith
   // round 4 (A3 P2): blue hour. Coral horizon band #F08A6A (0-3 deg) -> a short rose / violet blend -> deep blue
   // #2C3D7A from ~16 deg up; clouds: warm-lit rims, violet mids, blue undersides
-  dusk: { sky: { c: ["#f2946e", "#d88482", "#8f7cac", "#4a5890", "#2c3d7a"], e: [0, 3, 8, 16, 34] }, cloud: { lit: "#f6a88c", mid: "#8c7aa8", shade: "#38457e" }, bounce: [0.05, 0.025, 0.02], sat: 1.02 }, // round 5: albedo saturation down (the orange floor)
-  night_int: { sky: { c: ["#1a2450", "#16204a", "#121a40", "#0e1636", "#0a102c"], e: [0, 4, 10, 20, 40] }, cloud: { lit: "#3a4270", mid: "#2c3360", shade: "#1e2450" }, bounce: [0.0, 0.0, 0.03], sat: 1.08 },
+  // round 8 (A7 P2: no warm afterglow at the horizon): a wider warm afterglow band (#F2A07A -> #E67968) over the lowest
+  // ~10 % of the sky seen between the posts, then mauve -> violet -> the deep blue (the lavender far badlands = fog stand in front)
+  dusk: { sky: { c: ["#f2a07a", "#e67968", "#a0709e", "#4e5a92", "#2c3d7a"], e: [0, 4.5, 10, 18, 34] }, cloud: { lit: "#f6a88c", mid: "#8c7aa8", shade: "#38457e" }, bounce: [0.05, 0.025, 0.02], sat: 1.02 }, // round 5: albedo saturation down (the orange floor)
+  night_int: { sky: { c: ["#1a2450", "#16204a", "#121a40", "#0e1636", "#0a102c"], e: [0, 4, 10, 20, 40] }, cloud: { lit: "#3a4270", mid: "#2c3360", shade: "#1e2450" }, bounce: [0.0, 0.0, 0.03], sat: 0.5 }, // round 6: albedo greyed (see LIGHTS.night_int)
   classroom: { sky: { c: ["#d3e1ef", "#aecff2", "#72adf1", "#3f90ee", "#1c72e4"], e: [0, 3, 9, 20, 50] }, cloud: CLOUD_DAY, bounce: [0.05, 0.035, 0.012], sat: 1.06 },
   blueprint: { sky: { c: ["#153a81", "#14367a", "#11306e", "#0d2860", "#0a2050"], e: [0, 4, 10, 20, 40] }, cloud: CLOUD_DAY, bounce: [0, 0, 0], sat: 1.0 },
 };
@@ -191,6 +227,17 @@ export const blendLight = (a: LightName, b: LightName, k: number): LightState =>
     else if (Array.isArray(va) && Array.isArray(vb)) (out as Record<string, unknown>)[key] = l3(va as C3, vb as C3, k);
     else if (typeof va === "string" && typeof vb === "string" && va.startsWith("#")) (out as Record<string, unknown>)[key] = lhex(va, vb, k);
     else (out as Record<string, unknown>)[key] = k < 0.5 ? va : vb;
+  }
+  // round 6b (A5 P3 shot 6: the noon -> late relight read in the sky only; the ground leaves the frame ~40 % into the
+  // relight): in a noon -> late blend the SUN leads: elevation, azimuth, key / shade / rim colour and the card tint run
+  // on a fast-out ease (1 - (1 - k)^3: ~55 % done when the sky is ~25 % done), so the posts' and the couple's shadows
+  // visibly stretch toward the lens and the paving turns amber while it is still in frame; the sky / fog / clouds keep
+  // the slow blend (shot 6's sun is side-on, sunAz 77, so the card silhouettes stay on the existing k >= .5 switch)
+  if (a === "noon" && b === "late") {
+    const ke = 1 - (1 - k) ** 3;
+    out.el = lerp(A.el, B.el, ke); out.az = lerp(A.az, B.az, ke);
+    out.lit = l3(A.lit, B.lit, ke); out.shade = l3(A.shade, B.shade, ke); out.lift = l3(A.lift, B.lift, ke); out.rim = l3(A.rim, B.rim, ke);
+    out.sunCol = lhex(A.sunCol, B.sunCol, ke); out.charTint = l3(A.charTint, B.charTint, ke);
   }
   const look: WorldLook = {
     sky: { c: LA.sky.c.map((c, i) => lhex(c, LB.sky.c[i], k)), e: LA.sky.e.map((e, i) => lerp(e, LB.sky.e[i], k)) },

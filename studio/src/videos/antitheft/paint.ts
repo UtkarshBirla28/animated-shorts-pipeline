@@ -946,14 +946,30 @@ export const BADLAND_BANDS3: Band[] = [
   ["#9eaac6", 3.0], ["#ab8792", 0.45], ["#8e80b0", 2.0], ["#7c88ab", 1.3], ["#c6b9c6", 0.4], ["#9aaac8", 2.4], ["#a57c8c", 0.6],
   ["#9c8ab8", 1.9], ["#69718d", 0.4], ["#7e8aac", 2.2], ["#b29ca6", 1.3], ["#93a2c2", 2.3],
 ];
+/** audit A5 P1 (shot 2 mounds read as indigo night tents, mean luma 0.25-0.40): the planned Blue Mesa palette at full
+ *  value - lavender #9C8AB8, grey-blue #8FA3C4, cream #E6D6C0 and rust #B9735A beds (cream ~19 %, rust ~20 % of the
+ *  height), slate #6F7FA6 only as three thin marker beds (~4 %), nothing darker than slate. Bottom up, metres (36 m). */
+export const BADLAND_BANDS4: Band[] = [
+  ["#c9a08a", 0.9], ["#8fa3c4", 1.6], ["#e6d6c0", 1.2], ["#9c8ab8", 1.8], ["#b9735a", 1.1], ["#6f7fa6", 0.4], ["#8fa3c4", 1.9],
+  ["#e6d6c0", 0.9], ["#a493bd", 1.5], ["#c07a60", 1.3], ["#9fb0cc", 1.7], ["#e9dcc8", 1.4], ["#9c8ab8", 1.6], ["#6f7fa6", 0.5],
+  ["#b9735a", 1.2], ["#8fa3c4", 1.8], ["#e6d6c0", 1.0], ["#9888b4", 1.7], ["#b37060", 0.9], ["#93a6c6", 1.6], ["#ddcbb8", 1.3],
+  ["#a08ebc", 1.5], ["#6f7fa6", 0.45], ["#c58066", 1.1], ["#8fa3c4", 1.9], ["#e6d6c0", 0.9], ["#9c8ab8", 1.5], ["#b9735a", 0.6], ["#8fa3c4", 0.75],
+];
+/** round 6 (audit A6 P2 shot 2: "uniform high-frequency candy stripes, a saturated orange band: circus tents"): Blue
+ *  Mesa beds as 3-4 BROAD bands per dome height (3.5-5.5 m: 15-25 % of a 22 m dome) led by grey-blue, lavender and
+ *  slate, cream ash beds + thin accents (0.5-1.4 m), rust only as two thin beds (~6 % of the height). Bottom up, 36 m. */
+export const BADLAND_BANDS5: Band[] = [
+  ["#c49a86", 0.8], ["#8fa3c4", 4.5], ["#d9ccbe", 0.7], ["#9c8ab8", 5.5], ["#a87a6c", 0.9], ["#6f7fa6", 3.5], ["#e0d2c0", 1.2],
+  ["#8fa3c4", 3.0], ["#a493bd", 0.9], ["#6f7fa6", 1.0], ["#9c8ab8", 4.0], ["#b08070", 1.0], ["#e0d2c0", 1.6], ["#8fa3c4", 3.5], ["#9c8ab8", 3.5],
+];
 /** audit A4 P2: banded strata with life. The band EDGES wobble +-wob of the thinner neighbour along u (periodic
  *  low-frequency sines, never an azimuth stripe pattern), every edge blends over ~blend of the band, thick beds carry
  *  2-3 thin sub-beds, and dark lavender (#6F6390, 25-40 %) erosion rills run DOWN the slope: irregular spacing,
  *  thick at the foot and tapering upward, meandering, some forked, plus faint micro-rills. 1024 x 2048 (v = H metres). */
-export const strataBandsHD = (key: string, bands: Band[], H: number, o: { wob?: number; blend?: number; rills?: number; rillTop?: [number, number]; sat?: number } = {}) => ptex("atStrata5" + key, 1024, 2048, (g, r) => {
+export const strataBandsHD = (key: string, bands: Band[], H: number, o: { wob?: number; blend?: number; rills?: number; rillTop?: [number, number]; sat?: number; fine?: number; srgb?: boolean } = {}) => ptex("atStrata5" + key, 1024, 2048, (g, r) => {
   const W = 1024, HP = 2048, pm = HP / H, nB = bands.length, wob = o.wob ?? 0.12, blendK = o.blend ?? 0.16, nR = o.rills ?? 16;
   const tops: number[] = []; let acc = 0; for (const [, t] of bands) { acc += t; tops.push(acc * pm); }
-  const sat = o.sat ?? 1, thick = bands.map(([, t]) => t * pm), cols = bands.map(([c]) => { const q = hexRGB(c), l = 0.3 * q[0] + 0.59 * q[1] + 0.11 * q[2]; return q.map((v) => l + (v - l) * sat); });
+  const sat = o.sat ?? 1, thick = bands.map(([, t]) => t * pm), cols = bands.map(([c]) => { const q = o.srgb ? hexS(c) : hexRGB(c), l = 0.3 * q[0] + 0.59 * q[1] + 0.11 * q[2]; return q.map((v) => l + (v - l) * sat); });
   const wobP = tops.map(() => [1 + Math.floor(r() * 2), 2 + Math.floor(r() * 3), 5 + Math.floor(r() * 3)].map((k) => [k, r() * TAU, U(r, 0.35, 1)]));
   // thin sub-beds inside the thick beds (straight, in the middle 20-80 % of the bed): +-6-10 % value, a hue nudge
   const mod = new Float32Array(HP).fill(1);
@@ -1004,6 +1020,12 @@ export const strataBandsHD = (key: string, bands: Band[], H: number, o: { wob?: 
   }
   for (let i = 0; i < nR * 2; i++) rill(U(r, 0, W), U(r, 4, 9), U(r, 0.1, 0.35) * HP, U(r, 0.22, 0.34), U(r, 3, 9), false); // medium rills
   for (let i = 0; i < nR * 3; i++) rill(U(r, 0, W), U(r, 1, 2.5), U(r, 0.06, 0.22) * HP, U(r, 0.12, 0.2), U(r, 2, 5), false); // micro-rills
+  // audit A5 P2 (shot 2: smooth striped domes, no rills): fine darker-lavender rills cutting DOWN through the bands,
+  // evenly irregular (spacing ~1.5-2x their width apart on screen: 12-20 px at 1080 on the hero domes), 2-4 texels
+  // wide at the foot, reaching 30-75 % up the texture, each with a faint lit lip
+  const nF = o.fine ?? 0;
+  for (let i = 0; i < nF; i++) { const x0 = ((i + U(r, 0.2, 0.8)) / nF) * W, top = U(r, 0.18, 0.72) * HP;
+    rill(x0, U(r, 1.6, 3.2), top, U(r, 0.24, 0.42), U(r, 3, 10), r() < 0.5); }
   for (let i = 0; i < 24000; i++) { const x = U(r, 0, W), y = U(r, 0, HP), s = U(r, 1, 2.4), d = r() < 0.5; // popcorn-clay speckle
     g.fillStyle = d ? "rgba(70,50,80,0.09)" : "rgba(255,250,244,0.11)"; g.fillRect(x, y, s, s); }
 });
@@ -1159,6 +1181,16 @@ export const plazaWarmHD = () => ptex("atPlazaWarm", 1024, 1024, (g, r) => {
       g.beginPath(); g.moveTo(wx, wy); g.lineTo(wx + Math.cos(a) * l, wy + Math.sin(a) * l); g.stroke(); }
   }
 });
+/** round 7 (audit A7 P2 shot 1: the plaza round the glint rock read one warm orange): the trailhead plaza = the warm
+ *  plaza + extra dark grit and pale grey gravel (the material colour pulls it toward dusty red-tan #CF9670) */
+export const plazaTH = () => ptex("atPlazaTH7", 1024, 1024, (g, r) => {
+  const S = 1024;
+  g.drawImage(plazaWarmHD().image as HTMLCanvasElement, 0, 0);
+  for (let i = 0; i < 14000; i++) { const x = U(r, 0, S), y = U(r, 0, S), s = U(r, 1, 2.6); g.fillStyle = r() < 0.7 ? "rgba(92,62,50,0.55)" : "rgba(70,52,58,0.5)"; g.fillRect(x, y, s, s); }
+  const PG = ["#e8e2d8", "#d8d2ca", "#cfc6bc", "#f0ebe2", "#bfb4aa"];
+  for (let i = 0; i < 700; i++) { const x = U(r, 0, S), y = U(r, 0, S), big = r() < 0.12, rx = big ? U(r, 5, 9) : U(r, 2, 4.5), c = pick(r, PG), rot = U(r, -0.6, 0.6), ry = rx * U(r, 0.55, 0.85);
+    wrap2(S, S, x, y, rx * 2, (xx, yy) => pebbleDab(g, xx, yy, rx, ry, rot, c)); }
+});
 /** a gravel border strip (#9C6E4E family) for plaza / trail edges: u across (256 px), v along (1024 px = 2.2 m) */
 export const gravelEdgeHD = () => ptex("atGravelEdge", 256, 1024, (g, r) => {
   g.fillStyle = "#a87a58"; g.fillRect(0, 0, 256, 1024);
@@ -1217,6 +1249,10 @@ const pN = (x: number, y: number, s: number) => {
 };
 const pF = (x: number, y: number, s: number) => pN(x, y, s) * 0.5 + pN(x * 2.1, y * 2.1, s + 1) * 0.27 + pN(x * 4.3, y * 4.3, s + 2) * 0.15 + pN(x * 8.7, y * 8.7, s + 3) * 0.08;
 const hexRGB = (h: string) => { const c = new THREE.Color(h); return [c.r * 255, c.g * 255, c.b * 255]; };
+/** round 5 (audit A5 P1, root cause of the "indigo night tents"): THREE.Color(hex) is the LINEAR working colour, so
+ *  hexRGB() painted every band into the sRGB canvas already linearised (decoded twice on the GPU: #8FA3C4 grey-blue
+ *  rendered #435B87, slate #6F7FA6 -> #26376B, rust #B9735A -> #561415). hexS() is the hex's own sRGB 0..255 value. */
+const hexS = (h: string) => { const n = parseInt(h.replace("#", ""), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
 /** Cut face of a petrified log slice (audit A4 P2/P3: the blob / camouflage faces read as lava or pizza). Now a real
  *  petrified-wood section: colour ZONES that follow the growth rings (a warm yellow-orange heart, an orange-red body,
  *  a red outer zone, a purple rim zone of ~15 % of the face), 9-13 thin darker growth rings (25-35 %, slightly wobbly,
@@ -1224,7 +1260,10 @@ const hexRGB = (h: string) => { const c = new THREE.Color(h); return [c.r * 255,
  *  (dark, pale-lipped, two of them open V checks), a 6-10 px pale quartz band inside a chipped bark rind of 7-9 % of the
  *  radius (#5E4636 -> #7A5A44), white crystal flecks in 2-3 pockets + a few milky veins. Same saturation and family in
  *  every variant (the shot 1 -> 2 rock-to-log match reads as the same stone); i = 4 is the shot-1 glint rock. */
-export const quartzFace = (i: number) => ptex("atJasper5_" + i, 768, 768, (g, r) => {
+const faceTex = (i: number, jas: boolean) => ptex((jas ? "atJasper7_" : "atJasper5_") + i, 768, 768, (g, r) => {
+  // round 5b (audit A5 P3: "a near-uniform saturated red ring, an emissive lollipop"): the jasper faces paint the
+  // hexes' own sRGB values (hexRGB() linearised them, so every zone came out darker and over-saturated)
+  const hx = jas ? hexS : hexRGB, JAS = JAS_HEX.map(hx);
   const S = 768, C = S / 2, RD = 0.47 * S, s0 = 40 + i * 13;
   const Z = [ // [core, body, outer, rim] zone colour pairs (mottled inside each zone)
     [["#f6d060", "#f3e2c8"], ["#ee9444", "#e8703c"], ["#d4503c", "#c84a3a"], ["#9a68b8", "#b070c0"]],
@@ -1232,9 +1271,9 @@ export const quartzFace = (i: number) => ptex("atJasper5_" + i, 768, 768, (g, r)
     [["#f6d060", "#ee9444"], ["#d4503c", "#ee9444"], ["#d8708a", "#d4503c"], ["#b070c0", "#9a68b8"]],
     [["#ee9444", "#f6d060"], ["#f6d060", "#f3e2c8"], ["#d4503c", "#ee9444"], ["#9a68b8", "#d4503c"]],
     [["#f09a40", "#f6d060"], ["#ee9444", "#d4503c"], ["#d4503c", "#f6d060"], ["#9a68b8", "#b070c0"]],
-  ][i % 5].map((p) => p.map(hexRGB));
+  ][i % 5].map((p) => p.map(hx));
   const ZB = [0.2 + U(r, -0.03, 0.03), 0.5 + U(r, -0.04, 0.04), 0.8 + U(r, -0.02, 0.02)]; // zone boundaries (ring coordinate)
-  const RIND = hexRGB("#7a5a44"), RIND2 = hexRGB("#5e4636"), MILK = hexRGB("#f6ecdc"), QZ = hexRGB("#efe4d8");
+  const RIND = hx("#7a5a44"), RIND2 = hx("#5e4636"), MILK = hx("#f6ecdc"), QZ = hx("#efe4d8");
   const ox = U(r, -0.11, 0.11) * RD, oy = U(r, -0.11, 0.11) * RD; // pith offset (fades out toward the rim)
   const nRings = 9 + Math.floor(r() * 5), ringQ = Array.from({ length: nRings }, (_, k) => 0.06 + 0.8 * ((k + 0.6) / nRings) ** 0.82 * U(r, 0.97, 1.03));
   const ringA = ringQ.map(() => U(r, 0.25, 0.35));
@@ -1256,8 +1295,16 @@ export const quartzFace = (i: number) => ptex("atJasper5_" + i, 768, 768, (g, r)
       const mot = pF(x / 70, y / 70, s0 + 20), pair = Z[z];
       c = mixRGB(pair[0], pair[1], THREE.MathUtils.clamp((mot - 0.3) / 0.4, 0, 1));
       for (let b = 0; b < 3; b++) { const e = zq - ZB[b]; if (Math.abs(e) < 0.03) { const n2 = mixRGB(Z[b][0], Z[b + 1][0], 0.5); c = mixRGB(c, n2, 0.35 * (1 - Math.abs(e) / 0.03)); } } // soft zone edges
-      if (z === 0) c = mixRGB(c, [250, 228, 170], 0.25 * (1 - zq / ZB[0])); // the glowing heart
-      let ring = 0; for (let n = 0; n < nRings; n++) { const e = (q - ringQ[n]) * RD; if (Math.abs(e) < 4) ring = Math.max(ring, ringA[n] * Math.exp(-((e / 1.35) ** 2))); }
+      if (z === 0) c = mixRGB(c, [250, 228, 170], (jas ? 0.1 : 0.25) * (1 - zq / ZB[0])); // the glowing heart
+      if (jas) { // audit A5 P3 (the hero face read as an emissive lollipop): mottled jasper patches with soft blotch edges
+        // (rust ~30 %, ochre ~15 %, brown ~10 %, lavender-grey ~10 %), the outer zones ~15 % less saturated
+        const n1 = pF(x / 70 + 11, y / 70 + 5, s0 + 70), n2 = pF(x / 52 + 3, y / 52 + 9, s0 + 71), bl = (lo: number, hi: number, v: number) => THREE.MathUtils.clamp((v - lo) / (hi - lo), 0, 1);
+        c = mixRGB(c, JAS[0], 0.88 * bl(0.36, 0.43, n1) * (1 - bl(0.58, 0.65, n1)));
+        c = mixRGB(c, JAS[1], 0.55 * bl(0.6, 0.68, n2));
+        c = mixRGB(c, JAS[2], 0.6 * (1 - bl(0.33, 0.41, n2)));
+        c = mixRGB(c, JAS[3], 0.7 * bl(0.65, 0.7, n1));
+        if (z >= 2) { const l = 0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]; c = c.map((v) => l + (v - l) * 0.85); } }
+      let ring = 0; for (let n = 0; n < nRings; n++) { const e = (q - ringQ[n]) * RD; if (Math.abs(e) < 4) ring = Math.max(ring, ringA[n] * (jas ? 0.3 : 1) * Math.exp(-((e / 1.35) ** 2))); }
       c = [c[0] * (1 - ring), c[1] * (1 - ring * 1.05), c[2] * (1 - ring * 0.85)];
       const lv = 0.96 + 0.08 * pN(x / 30, y / 30, s0 + 30);
       c = [c[0] * lv, c[1] * lv, c[2] * lv];
@@ -1294,13 +1341,150 @@ export const quartzFace = (i: number) => ptex("atJasper5_" + i, 768, 768, (g, r)
     for (const [ax, ay] of [[1, 0], [0, 1]]) { g.beginPath(); g.moveTo(cx - ax * L, cy - ay * L); g.quadraticCurveTo(cx + ay * 1.8, cy + ax * 1.8, cx + ax * L, cy + ay * L); g.quadraticCurveTo(cx - ay * 1.8, cy - ax * 1.8, cx - ax * L, cy - ay * L); g.fill(); }
   }
   for (let k = 0; k < 40; k++) { const aa = r() * TAU, dd = Math.sqrt(r()) * 0.85 * RD; g.fillStyle = "rgba(255,252,244,0.7)"; g.beginPath(); g.arc(C + Math.cos(aa) * dd, C + Math.sin(aa) * dd, U(r, 0.8, 1.8), 0, TAU); g.fill(); } // scattered flecks
+  if (jas) { // a painted lit-to-shade gradient across the face: key side +8 %, far side -15 % toward violet #5A3F6E
+    g.save(); g.beginPath(); g.arc(C, C, RD * 1.0, 0, TAU); g.clip();
+    const lg = g.createLinearGradient(C - RD * 0.8, C - RD * 0.8, C + RD * 0.8, C + RD * 0.8);
+    lg.addColorStop(0, "rgba(255,238,214,0.1)"); lg.addColorStop(0.45, "rgba(255,238,214,0)"); g.fillStyle = lg; g.fillRect(0, 0, S, S);
+    const sg = g.createLinearGradient(C - RD * 0.8, C - RD * 0.8, C + RD * 0.8, C + RD * 0.8);
+    sg.addColorStop(0.5, "rgba(90,63,110,0)"); sg.addColorStop(1, "rgba(90,63,110,0.24)"); g.fillStyle = sg; g.fillRect(0, 0, S, S);
+    g.restore(); }
 });
+/** the petrified-log cut face as rainbow quartz (sets_int keeps this one) */
+export const quartzFace = (i: number) => faceTex(i, false);
+/** round 6 (audit A6 P2 shot 2: "mottled magenta / purple discs, no rings, no orange / yellow zones, read as salami"):
+ *  a petrified-wood section painted in the hexes' own sRGB values. 4-6 BROAD colour zones that follow the growth
+ *  rings (yellow / orange heart, orange-red body, red outer zone, a THIN purple band only near the rim), 5 clear dark
+ *  growth rings (35-45 %) + faint fine rings, 3-5 radial checks, 2-3 white crystal pockets + scattered 1-2 px flecks,
+ *  a milky quartz band and a chipped bark rind of ~7 % of the radius; mottling stays within +-8 % value (no muddy
+ *  rust / lavender patches). i = 4 is the most orange / yellow (the shot-1 rock and the shot-2 match slice). */
+const JZ: [number, string][][] = [ // [ring coordinate, colour] stops, pith (0) -> quartz band (1)
+  [[0, "#f2cf6a"], [0.2, "#ecc04e"], [0.32, "#e8a04a"], [0.5, "#de863e"], [0.64, "#d2683c"], [0.8, "#c04c3c"], [0.9, "#b05a5a"], [0.96, "#8a5aa8"], [1, "#8a5aa8"]],
+  [[0, "#eedcb0"], [0.16, "#ecc04e"], [0.34, "#de863e"], [0.52, "#c84a3a"], [0.62, "#d2603a"], [0.7, "#c84a3a"], [0.84, "#d87440"], [0.95, "#8a5aa8"], [1, "#8a5aa8"]],
+  [[0, "#c04c3c"], [0.18, "#d2603a"], [0.34, "#de863e"], [0.5, "#ecc04e"], [0.64, "#e09c44"], [0.82, "#cc5a3a"], [0.94, "#9a5a9a"], [1, "#8a5aa8"]],
+  [[0, "#e8924a"], [0.22, "#f0cc62"], [0.4, "#ecc04e"], [0.56, "#de863e"], [0.74, "#c84a3a"], [0.88, "#bc5a50"], [0.95, "#8a5aa8"], [1, "#8a5aa8"]],
+  [[0, "#f4d878"], [0.26, "#f0cc62"], [0.44, "#ecac4a"], [0.6, "#e89a44"], [0.77, "#de863e"], [0.9, "#cc6040"], [0.97, "#9a6ab4"], [1, "#8a5aa8"]],
+];
+const jasFace8 = (i: number) => ptex("atJasper8_" + i, 768, 768, (g, r) => {
+  const S = 768, C = S / 2, RD = 0.47 * S, s0 = 140 + i * 17, stops = JZ[i % 5].map(([q, h]) => [q, ...hexS(h)] as number[]);
+  const zc = (q: number) => { let k = 1; while (k < stops.length - 1 && q > stops[k][0]) k++; const a = stops[k - 1], b = stops[k], t = THREE.MathUtils.clamp((q - a[0]) / Math.max(1e-3, b[0] - a[0]), 0, 1), s = t * t * (3 - 2 * t);
+    return [a[1] + (b[1] - a[1]) * s, a[2] + (b[2] - a[2]) * s, a[3] + (b[3] - a[3]) * s]; };
+  const RIND = hexS("#7a5a44"), RIND2 = hexS("#5e4636"), MILK = hexS("#f6ecdc"), QZ = hexS("#efe4d8");
+  const ox = U(r, -0.1, 0.1) * RD, oy = U(r, -0.1, 0.1) * RD;
+  const ringQ = Array.from({ length: 5 }, (_, k) => 0.14 + 0.78 * ((k + 0.5) / 5) ** 0.85 * U(r, 0.95, 1.05)), ringA = ringQ.map(() => U(r, 0.35, 0.45));
+  const im = g.createImageData(S, S), D = im.data;
+  for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
+    const dx = x - C, dy = y - C, d = Math.hypot(dx, dy) / RD, a = Math.atan2(dy, dx), k = (y * S + x) * 4, ca = Math.cos(a), sa = Math.sin(a);
+    const rin = 0.93 - 0.012 * pN(ca * 3 + 5, sa * 3 + 5, s0 + 9) - 0.03 * Math.max(0, pN(ca * 5 + 1, sa * 5 + 1, s0 + 11) - 0.74) / 0.26;
+    let c: number[];
+    if (d > 1.02) c = RIND2;
+    else if (d > rin) { // chipped bark rind with radial crack ticks and a pale cambium line
+      const t = pN(x / 9, y / 3, s0 + 13), tick = Math.pow(0.5 + 0.5 * Math.cos(a * 46 + 3 * pN(ca * 4, sa * 4, s0 + 15)), 14);
+      c = mixRGB(mixRGB(RIND2, RIND, ((d - rin) / Math.max(0.02, 1 - rin)) * 0.6 + 0.4 * t), [52, 34, 26], 0.75 * tick);
+      if (d < rin + 0.012) c = mixRGB(c, [226, 204, 172], 0.55);
+    } else {
+      const fade = 1 - Math.min(1, d) ** 1.5, px = x - C - ox * fade, py = y - C - oy * fade;
+      const wq = 0.06 * (pF(x / 120, y / 120, s0) - 0.5) + 0.018 * (pN(x / 26, y / 26, s0 + 3) - 0.5); // ring wobble (stone, not a target)
+      const q = Math.hypot(px, py) / RD / rin + wq;
+      c = zc(q + 0.06 * (pF(x / 80 + 7, y / 80 + 3, s0 + 4) - 0.5));
+      const mot = pF(x / 55, y / 55, s0 + 20); c = c.map((v) => v * (0.88 + 0.24 * mot)); // +-12 % value mottling
+      const jp = pF(x / 70 + 11, y / 70 + 5, s0 + 70), lp = pF(x / 64 + 3, y / 64 + 9, s0 + 71);
+      if (jp > 0.58) c = mixRGB(c, hexS("#a8452e"), 0.38 * Math.min(1, (jp - 0.58) / 0.08)); // jasper patches
+      if (lp > 0.66 && q < 0.85) c = mixRGB(c, hexS("#b0948a"), 0.3 * Math.min(1, (lp - 0.66) / 0.06)); // dull chert patches
+      { const l = 0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]; c = c.map((v) => l + (v - l) * 0.86); } // -14 % saturation
+      let ring = 0; for (let n = 0; n < ringQ.length; n++) { const e = (q - ringQ[n]) * RD; if (Math.abs(e) < 6) ring = Math.max(ring, ringA[n] * Math.exp(-((e / 1.7) ** 2))); }
+      ring = Math.max(ring, 0.07 * Math.pow(0.5 + 0.5 * Math.cos(q * 150 + 2 * pN(x / 40, y / 40, s0 + 5)), 6)); // faint fine rings
+      c = [c[0] * (1 - ring), c[1] * (1 - ring * 1.08), c[2] * (1 - ring * 0.9)];
+      const vein = Math.abs(pF(x / 90, y / 90, s0 + 40) - 0.5); if (vein < 0.01) c = mixRGB(c, MILK, 0.55 * (1 - vein / 0.01)); // milky quartz veins
+      const qb = rin - d; if (qb < 0.028) c = mixRGB(c, QZ, 0.8 * (1 - qb / 0.028) ** 0.6); // pale quartz band inside the rind
+    }
+    const n = (pH(x, y, s0 + 50) - 0.5) * 6;
+    D[k] = THREE.MathUtils.clamp(c[0] + n, 0, 255); D[k + 1] = THREE.MathUtils.clamp(c[1] + n, 0, 255); D[k + 2] = THREE.MathUtils.clamp(c[2] + n, 0, 255); D[k + 3] = 255;
+  }
+  g.putImageData(im, 0, 0);
+  const PX = C + ox, PY = C + oy;
+  g.fillStyle = "rgba(246,226,196,0.6)"; g.beginPath(); g.arc(PX, PY, 12, 0, TAU); g.fill();
+  g.fillStyle = "#6a3020"; g.beginPath(); g.arc(PX, PY, 5.5, 0, TAU); g.fill();
+  g.lineCap = "round"; g.lineJoin = "round";
+  const nk = 3 + Math.floor(r() * 3), a0 = r() * TAU;
+  for (let k = 0; k < nk; k++) { // radial checks from the pith (dark, pale-lipped); the first one an open V check
+    const a = a0 + (k / nk) * TAU + U(r, -0.35, 0.35), l0 = U(r, 0.02, 0.08) * RD, l1 = U(r, 0.5, 0.9) * RD;
+    const pts: number[][] = []; for (let q = 0; q <= 6; q++) { const l = l0 + ((l1 - l0) * q) / 6, da = q && q < 6 ? U(r, -0.05, 0.05) : 0; pts.push([PX + Math.cos(a + da) * l, PY + Math.sin(a + da) * l]); }
+    if (k === 0) { const w = U(r, 0.025, 0.04), side = (sg: number) => pts.map(([xx, yy], q) => { const s = (q / 6) * w * RD * sg; return [xx - Math.sin(a) * s, yy + Math.cos(a) * s]; });
+      const shape = [...side(1), ...side(-1).reverse()]; g.fillStyle = "rgba(255,236,214,0.4)"; poly(g, shape, 1.6, 1.6); g.fill(); g.fillStyle = "rgba(48,26,24,0.8)"; poly(g, shape); g.fill(); }
+    for (const [col, lw, o] of [["rgba(255,236,214,0.4)", 3.4, 1.6], ["rgba(46,26,24,0.75)", U(r, 1.8, 2.8), 0]] as const) {
+      g.strokeStyle = col; g.lineWidth = lw; g.beginPath(); pts.forEach(([xx, yy], q) => (q ? g.lineTo(xx + o, yy + o) : g.moveTo(xx + o, yy + o))); g.stroke(); }
+  }
+  for (let q = 0, nq = 2 + Math.floor(r() * 2); q < nq; q++) { // crystal pockets: a pale druse patch + white flecks + one sparkle
+    const ap = r() * TAU, dp = U(r, 0.3, 0.7) * RD, cx = C + Math.cos(ap) * dp, cy = C + Math.sin(ap) * dp, R0 = U(r, 14, 26);
+    g.fillStyle = "rgba(236,226,246,0.5)"; g.beginPath(); g.ellipse(cx, cy, R0 * 0.7, R0 * 0.45, ap, 0, TAU); g.fill();
+    for (let k = 0, n = 16 + Math.floor(r() * 10); k < n; k++) { const aa = r() * TAU, dd = Math.sqrt(r()) * R0, s = U(r, 1.2, 3.0);
+      g.fillStyle = pick(r, ["rgba(255,255,255,0.95)", "rgba(230,240,255,0.85)", "rgba(255,240,214,0.9)"]); g.beginPath(); g.arc(cx + Math.cos(aa) * dd, cy + Math.sin(aa) * dd * 0.7, s, 0, TAU); g.fill(); }
+    const L = U(r, 10, 16); g.fillStyle = "rgba(255,255,255,0.95)";
+    for (const [ax, ay] of [[1, 0], [0, 1]]) { g.beginPath(); g.moveTo(cx - ax * L, cy - ay * L); g.quadraticCurveTo(cx + ay * 1.8, cy + ax * 1.8, cx + ax * L, cy + ay * L); g.quadraticCurveTo(cx - ay * 1.8, cy - ax * 1.8, cx - ax * L, cy - ay * L); g.fill(); }
+  }
+  for (let k = 0; k < 70; k++) { const aa = r() * TAU, dd = Math.sqrt(r()) * 0.86 * RD; g.fillStyle = k % 3 ? "rgba(255,252,244,0.8)" : "rgba(255,255,255,0.95)"; g.beginPath(); g.arc(C + Math.cos(aa) * dd, C + Math.sin(aa) * dd, U(r, 0.9, 2.0), 0, TAU); g.fill(); } // scattered flecks
+  g.save(); g.beginPath(); g.arc(C, C, RD, 0, TAU); g.clip(); // a painted lit-to-shade gradient: key side +6 %, far side -12 % toward violet
+  const lg = g.createLinearGradient(C - RD * 0.8, C - RD * 0.8, C + RD * 0.8, C + RD * 0.8);
+  lg.addColorStop(0, "rgba(255,240,218,0.08)"); lg.addColorStop(0.45, "rgba(255,240,218,0)"); lg.addColorStop(0.55, "rgba(90,63,110,0)"); lg.addColorStop(1, "rgba(90,63,110,0.16)"); g.fillStyle = lg; g.fillRect(0, 0, S, S);
+  g.restore();
+});
+/** the exterior log faces (round 6: jasFace8, rings + zones that read) */
+export const jasperFace = (i: number) => jasFace8(i);
+/** round 6 (audit A6 P2 chips read as jelly beans / red glass): the cut face of a broken chip = a piece of a slice face,
+ *  ~18 % less saturated, so the rings show as arcs and part of the bark rind shows on one edge */
+export const chipFace = (i: number) => ptex("atChipFace" + i, 512, 512, (g) => {
+  g.filter = "saturate(0.82)"; g.drawImage(jasFace8(i % 5).image as HTMLCanvasElement, 0, 0, 512, 512); g.filter = "none";
+});
+const JAS_HEX = ["#a8452e", "#c98a3a", "#6e4a36", "#9a8aa8"];
 const mixRGB = (a: number[], b: number[], t: number) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 
+/** round 7 (audit A7 P2: the rainbow rock sat on the same orange as the floor): the glint rock's face = jasper face 1
+ *  plus two COOL rings - a purple amethyst band (#8A5AA8) and a pale blue-white crystal band - so it pops off the sand */
+export const glintFaceTex = () => ptex("atGlintFace7", 768, 768, (g, r) => {
+  const S = 768, C = S / 2, RD = 0.47 * S;
+  g.drawImage(jasFace8(1).image as HTMLCanvasElement, 0, 0);
+  g.save(); g.beginPath(); g.arc(C, C, RD * 0.9, 0, TAU); g.clip();
+  const ring = (q: number, w: number, col: string, a: number) => {
+    g.strokeStyle = col; g.globalAlpha = a; g.lineWidth = w * RD; g.beginPath();
+    for (let k = 0; k <= 90; k++) { const t = (k / 90) * TAU, rr2 = q * RD * (1 + 0.035 * Math.sin(t * 3 + 0.7) + 0.02 * Math.sin(t * 7 + 2.1)); k ? g.lineTo(C + Math.cos(t) * rr2, C + Math.sin(t) * rr2) : g.moveTo(C + Math.cos(t) * rr2, C + Math.sin(t) * rr2); }
+    g.closePath(); g.stroke(); g.globalAlpha = 1;
+  };
+  ring(0.5, 0.13, "#8a5aa8", 0.92); ring(0.5, 0.05, "#a77cc4", 0.7); ring(0.44, 0.018, "rgba(46,26,40,0.6)", 1); // amethyst band with a dark seam
+  ring(0.72, 0.075, "#dfe8fb", 0.9); ring(0.72, 0.025, "#ffffff", 0.75); ring(0.665, 0.012, "rgba(60,70,110,0.45)", 1); // blue-white crystal band
+  for (let k = 0; k < 60; k++) { const a = r() * TAU, d = (0.68 + 0.08 * r()) * RD; g.fillStyle = k % 2 ? "rgba(255,255,255,0.95)" : "rgba(200,220,255,0.9)"; g.beginPath(); g.arc(C + Math.cos(a) * d, C + Math.sin(a) * d, U(r, 1, 2.6), 0, TAU); g.fill(); }
+  g.restore();
+});
+/** round 7 (ADD shot 1): the rainbow caustic the glinting quartz throws on the ground (a soft spectral fan, alpha) */
+export const causticTex = () => ptex("atCaustic", 256, 128, (g) => {
+  g.clearRect(0, 0, 256, 128);
+  const cols = ["255,70,70", "255,160,60", "255,236,90", "110,230,120", "90,170,255", "170,110,255"];
+  cols.forEach((c, i) => { const gr = g.createRadialGradient(128, 118, 18 + i * 13, 128, 118, 30 + i * 13); gr.addColorStop(0, `rgba(${c},0)`); gr.addColorStop(0.5, `rgba(${c},0.85)`); gr.addColorStop(1, `rgba(${c},0)`);
+    g.fillStyle = gr; g.fillRect(0, 0, 256, 128); });
+  g.globalCompositeOperation = "destination-in"; const m = g.createLinearGradient(0, 0, 256, 0); m.addColorStop(0, "rgba(0,0,0,0)"); m.addColorStop(0.3, "rgba(0,0,0,1)"); m.addColorStop(0.7, "rgba(0,0,0,1)"); m.addColorStop(1, "rgba(0,0,0,0)");
+  g.fillStyle = m; g.fillRect(0, 0, 256, 128); g.globalCompositeOperation = "source-over";
+});
+/** round 7 (shot 6 mystery): a '?' someone scratched into the board's stain, pale raw wood in the grooves with a dark
+ *  lower lip and stray scratch ticks (transparent; revealed by the raking late light) */
+export const scratchQTex = () => ptex("atScratchQ", 256, 320, (g, r) => {
+  g.clearRect(0, 0, 256, 320);
+  const path: number[][] = []; // the '?' hook as a polyline, then the dot
+  for (let k = 0; k <= 26; k++) { const t = -0.95 * Math.PI + (k / 26) * 1.55 * Math.PI; path.push([128 + Math.cos(t) * 70, 102 + Math.sin(t) * 64]); }
+  path.push([150, 168], [134, 190], [128, 218]);
+  const stroke = (ox: number, oy: number, col: string, lw: number, jit: number) => {
+    g.strokeStyle = col; g.lineWidth = lw; g.lineCap = "round"; g.lineJoin = "round"; g.beginPath();
+    path.forEach(([x, y], k) => { const jx = (r() - 0.5) * jit, jy = (r() - 0.5) * jit; k ? g.lineTo(x + ox + jx, y + oy + jy) : g.moveTo(x + ox + jx, y + oy + jy); }); g.stroke();
+  };
+  stroke(4, 5, "rgba(30,14,8,0.7)", 22, 3);              // the groove's shadowed lower lip
+  for (let n = 0; n < 4; n++) stroke((r() - 0.5) * 7, (r() - 0.5) * 7, n ? "rgba(236,206,160,0.6)" : "rgba(246,222,182,0.95)", n ? 6 : 15, 5); // raw pale wood, re-scratched 3x
+  g.fillStyle = "rgba(30,14,8,0.7)"; g.beginPath(); g.arc(132, 270, 17, 0, TAU); g.fill();
+  g.fillStyle = "rgba(246,222,182,0.95)"; g.beginPath(); g.arc(128, 265, 14, 0, TAU); g.fill();
+  for (let k = 0; k < 9; k++) { const x = U(r, 30, 226), y = U(r, 20, 300), a = U(r, -0.6, 0.6), L = U(r, 10, 26); // stray knife ticks
+    g.strokeStyle = "rgba(236,206,160,0.5)"; g.lineWidth = 2; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * L, y + Math.sin(a) * L); g.stroke(); }
+});
 /** the shot-3 loose slice: a big bright quartz face (variant 1 rings) with a pale fresh notch scar on its rim where
  *  the tourist's chip came off (#F4E3C8) and a few extra crystal sparkles */
 export const quartzNotch = () => ptex("atQuartzNotch", 512, 512, (g, r) => {
-  g.drawImage(quartzFace(1).image as HTMLCanvasElement, 0, 0, 512, 512);
+  g.drawImage(jasperFace(1).image as HTMLCanvasElement, 0, 0, 512, 512);
   const a = -0.75, cx = 256 + Math.cos(a) * 214, cy = 256 + Math.sin(a) * 214;
   // audit A3: a RECESSED fracture (not a pale sticker): dark lavender broken quartz inside (#6E5A86), a pale crystal lip
   // (#D9CCE6) along the break, stepped conchoidal ridges and a few crystal points catching the light
@@ -1316,8 +1500,8 @@ export const quartzNotch = () => ptex("atQuartzNotch", 512, 512, (g, r) => {
   g.fillStyle = "rgba(255,255,255,0.85)"; for (const [x, y, l] of [[-44, -6, 4], [-30, 16, 3], [40, 4, 3.5], [24, 34, 3], [-6, -26, 3]]) { g.beginPath(); g.moveTo(x - l, y); g.lineTo(x, y - l * 0.6); g.lineTo(x + l, y); g.lineTo(x, y + l * 0.6); g.closePath(); g.fill(); }
   g.strokeStyle = "rgba(60,40,50,0.75)"; g.lineWidth = 3; poly(g, notch); g.stroke();
   g.restore();
-  for (let k = 0; k < 14; k++) { const aa = r() * TAU, d = Math.sqrt(r()) * 200, x = 256 + Math.cos(aa) * d, y = 256 + Math.sin(aa) * d;
-    g.strokeStyle = "rgba(255,255,255,0.95)"; g.lineWidth = 2; g.beginPath(); g.moveTo(x - 8, y); g.lineTo(x + 8, y); g.moveTo(x, y - 8); g.lineTo(x, y + 8); g.stroke(); }
+  // audit A5 P3: no painted '+' stickers (the face twinkles with 5 scene glints in sets_ext instead)
+  for (let k = 0; k < 18; k++) { const aa = r() * TAU, d = Math.sqrt(r()) * 190; g.fillStyle = "rgba(255,250,240,0.55)"; g.beginPath(); g.arc(256 + Math.cos(aa) * d, 256 + Math.sin(aa) * d, U(r, 0.8, 1.6), 0, TAU); g.fill(); }
 });
 /** brown park wood with grain: vertical (posts) or horizontal (beams, boards) */
 export const parkWood = (col: string, vertical: boolean) => ptex("atWood" + col + (vertical ? "V" : "H"), 512, 512, (g, r) => {
@@ -1455,23 +1639,58 @@ const triangleWarn = (g: G, cx: number, cy: number, s: number) => {
   g.restore();
 };
 
-export const WARN_LINES = ["YOUR HERITAGE IS BEING", "VANDALIZED EVERY DAY BY", "THEFT LOSSES OF PETRIFIED", "WOOD OF 14 TONS A YEAR,", "MOSTLY A SMALL PIECE", "AT A TIME."];
+/** round 7 (script v2, the user asked for SHORT boards): the title + three short lines; the last item breaks in two
+ *  slightly smaller lines so every row reads big at frame 0 (caps ~49-80 px at 1080) */
+export const WARN_TITLE = "WARNING!";
+export const WARN_LINES = ["14 TONS STOLEN", "EVERY YEAR", "ONE SMALL PIECE", "AT A TIME."];
+/** the board's text rows (metres from the board's TOP edge; font = em size in m; caps ~0.69 em): CHAR / CAM can aim at
+ *  a row with y = TH.board.cy + TH.board.h / 2 - row.y. The bottom 0.17 m stays clear (her hat at frame 0). */
+export const warnLayout = (h: number) => {
+  const top = 0.075, bottom = h - 0.17, sep = 0.05, rel = [1.25, 1.0, 1.0, 0.78, 0.78], lead = 1.18;
+  const F = (bottom - top - 2 * sep) / (lead * rel.reduce((a, b) => a + b, 0));
+  const rows: { text: string; y: number; font: number; title: boolean }[] = [];
+  const seps: number[] = [];
+  let y = top;
+  [WARN_TITLE, ...WARN_LINES].forEach((text, i) => {
+    if (i === 1 || i === 3) { seps.push(y + sep * 0.45); y += sep; }
+    const p = lead * rel[i] * F; rows.push({ text, y: y + p * 0.53, font: rel[i] * F, title: i === 0 }); y += p;
+  });
+  return { rows, seps };
+};
+/** a routed groove line (dark cut, pale lower lip) from x0 to x1 at y (canvas px) */
+const routedRule = (g: G, x0: number, x1: number, y: number, lw: number) => {
+  g.lineCap = "round";
+  g.strokeStyle = "rgba(28,14,6,0.85)"; g.lineWidth = lw; g.beginPath(); g.moveTo(x0, y); g.lineTo(x1, y); g.stroke();
+  g.strokeStyle = "rgba(241,226,192,0.55)"; g.lineWidth = lw * 0.45; g.beginPath(); g.moveTo(x0 + lw, y + lw * 0.55); g.lineTo(x1 - lw, y + lw * 0.55); g.stroke();
+};
 /** the main warning board, w x h metres; text column limited to colW metres (so the frame-0 lens reads all of it) */
 export const warnBoardTex = (w: number, h: number, colW: number) => {
   const PX = 640, W = Math.round(w * PX), H = Math.round(h * PX);
-  return ptex(`atWarn_${w}_${h}_${colW}`, W, H, (g, r) => {
+  return ptex(`atWarn7_${w}_${h}_${colW}`, W, H, (g, r) => {
     plankBoard(g, r, W, H, "#6b4426", 4);
     const inset = 0.045 * PX; // routed border groove
     g.strokeStyle = "rgba(28,14,6,0.8)"; g.lineWidth = 0.022 * PX; rr(g, inset, inset, W - 2 * inset, H - 2 * inset, 0.03 * PX); g.stroke();
     g.strokeStyle = "#e8d6b0"; g.lineWidth = 0.012 * PX; rr(g, inset + 2, inset + 2, W - 2 * inset, H - 2 * inset, 0.03 * PX); g.stroke();
     for (const [bx, by] of [[0.1, 0.1], [w - 0.1, 0.1], [0.1, h - 0.1], [w - 0.1, h - 0.1]]) nail(g, bx * PX, by * PX, 0.016 * PX, "#2a1a10");
-    const tri = 0.15 * PX, top = inset + 0.05 * PX;
-    triangleWarn(g, W / 2, top + tri / 2, tri);
-    const fam = "Georgia, 'Times New Roman', serif", k = 0.79; // audit A4 P3: +8 % letters (condensed 0.84 -> 0.79, column 1.94 -> 1.98 m)
-    const y0 = top + tri + 0.05 * PX, y1 = H - inset - 0.06 * PX, pitch = (y1 - y0) / WARN_LINES.length;
-    // audit A3: +14 % letters (frame-0 caps ~36 px -> ~41 px); the column may now use 1.94 m of the 2.01 m inside the border
-    const px = Math.min(fitPx(g, WARN_LINES, fam, colW * PX, Math.round(pitch * 0.8), k), Math.round(pitch * 0.8));
-    WARN_LINES.forEach((l, i) => engraveLine(g, l, W / 2, y0 + pitch * (i + 0.5), px, fam, "#f1e2c0", k));
+    const fam = "Georgia, 'Times New Roman', serif", k = 0.82, Lw = warnLayout(h);
+    // body lines share one size per group (the two fact lines, the two qualifier lines), each capped by the column width
+    const body = Lw.rows.filter((q) => !q.title);
+    const pxA = Math.min(Math.round(body[0].font * PX), fitPx(g, [body[0].text, body[1].text], fam, colW * PX, 999, k));
+    const pxB = Math.min(Math.round(body[2].font * PX), fitPx(g, [body[2].text, body[3].text], fam, colW * PX * 0.92, 999, k));
+    for (const q of Lw.rows) {
+      if (q.title) {
+        // WARNING! in warning-yellow routed letters, flanked by two yellow warning triangles
+        const tri = q.font * PX * 0.92;
+        const px = Math.min(Math.round(q.font * PX), fitPx(g, [q.text], fam, colW * PX - 2 * (tri * 1.25 + 0.05 * PX), 999, k));
+        g.font = `bold ${px}px ${fam}`; const tw = g.measureText(q.text).width * k;
+        engraveLine(g, q.text, W / 2, q.y * PX + px * 0.03, px, fam, "#f4cf5e", k);
+        for (const sx of [-1, 1]) triangleWarn(g, W / 2 + sx * (tw / 2 + 0.06 * PX + tri * 0.55), q.y * PX - tri * 0.02, tri);
+      } else {
+        const px = q === body[0] || q === body[1] ? pxA : pxB;
+        engraveLine(g, q.text, W / 2, q.y * PX + px * 0.03, px, fam, "#f1e2c0", k);
+      }
+    }
+    Lw.seps.forEach((sy, i) => { const half = (i ? 0.34 : 0.42) * colW * PX; routedRule(g, W / 2 - half, W / 2 + half, sy * PX, 0.011 * PX); });
     // the drip cap shades the top of the face, the sun bleaches the very top edge, weather streaks run down
     const tb = g.createLinearGradient(0, 0, 0, H * 0.13); tb.addColorStop(0, "rgba(34,18,10,0.3)"); tb.addColorStop(1, "rgba(34,18,10,0)");
     g.fillStyle = tb; g.fillRect(0, 0, W, H * 0.13);
@@ -1529,6 +1748,26 @@ export const flapAtlas = () => ptex("atFlapAtlas", 256 * 11, 384, (g) => {
     g.fillStyle = "rgba(255,255,255,0.12)"; g.fillRect(x + 8, 195, 240, 2);
   }
 });
+/** audit A5 P2 (the loop frame read 'TON' / '/YEA' behind her bob): a narrow STACKED counter - the two flap cells on
+ *  top, "TONS / YEAR" in one condensed line underneath - in a box ~40 % narrower than round 4's (left edge unchanged) */
+export const FLIP_STACK = (w: number, h: number) => {
+  const ch = h * 0.58, cw = ch * 0.6, gap = 0.012, y = h / 2 - 0.035 - ch / 2;
+  return { cw, ch, cells: [{ x: -(cw + gap) / 2, y }, { x: (cw + gap) / 2, y }], labelY: -h / 2 + 0.06, labelW: w - 0.05, labelH: 0.07 };
+};
+export const flipStackTex = (w: number, h: number) => ptex(`atFlipStack_${w}_${h}`, Math.round(w * 1600), Math.round(h * 1600), (g, r) => {
+  const PX = 1600, W = Math.round(w * PX), H = Math.round(h * PX);
+  g.fillStyle = "#4b4844"; g.fillRect(0, 0, W, H);
+  for (let i = 0; i < 1400; i++) { g.fillStyle = r() < 0.5 ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.06)"; g.fillRect(U(r, 0, W), U(r, 0, H), 2, 2); }
+  rr(g, 10, 10, W - 20, H - 20, 18); g.strokeStyle = "rgba(255,255,255,0.16)"; g.lineWidth = 4; g.stroke();
+  for (const [bx, by] of [[22, 22], [W - 22, 22], [22, H - 22], [W - 22, H - 22]]) nail(g, bx, by, 7, "#1a1c20");
+  const L = FLIP_STACK(w, h);
+  for (const c of L.cells) { g.fillStyle = "#0c0d10"; rr(g, (c.x - L.cw / 2 - 0.008 + w / 2) * PX, (h / 2 - c.y - L.ch / 2 - 0.008) * PX, (L.cw + 0.016) * PX, (L.ch + 0.016) * PX, 10); g.fill(); }
+  const fam = "Arial, Helvetica, sans-serif", ly = (h / 2 - L.labelY) * PX;
+  g.fillStyle = "rgba(0,0,0,0.25)"; rr(g, 0.02 * PX, ly - L.labelH * 0.62 * PX, W - 0.04 * PX, L.labelH * 1.24 * PX, 8); g.fill(); // a darker label strip
+  g.fillStyle = "#f4f1ea"; g.textAlign = "center"; g.textBaseline = "middle";
+  const px = fitPx(g, ["TONS / YEAR"], fam, L.labelW * PX, Math.round(L.labelH * PX * 1.3), 0.8);
+  g.save(); g.translate(W / 2, ly + px * 0.04); g.scale(0.8, 1); g.font = `bold ${px}px ${fam}`; g.fillText("TONS / YEAR", 0, 0); g.restore();
+});
 /** cell centres (metres from the face centre, y up) for the flip counter of size w x h */
 export const FLIP_LAYOUT = (w: number, h: number) => {
   // everything inside the central 0.44 m, so a close lens (TH.flip close-up ~0.5 m wide) reads "14 TONS / YEAR" whole
@@ -1562,25 +1801,32 @@ const DOT57: Record<string, string> = {
   N: "10001100011100110101100111000110001", G: "01110100011000010111100011000101111", " ": "00000000000000000000000000000000000",
 };
 /** draw a string as LED dots: (x, y) top-left, p = dot pitch px; lit = colour of "on" dots, dim = colour of "off" dots */
+/** round 6 (audit A6 P3: "7. 92%" - the point sat in a full digit cell): the decimal point advances only DOT_ADV
+ *  dot pitches (a half cell), so the value reads 7.92% with even spacing */
+const DOT_ADV = 2.6;
+/** the width (in dot pitches) of a string drawn by ledText */
+export const ledWidth = (s: string) => { let w = 0; for (const ch of s) w += ch === "." ? DOT_ADV : 6; return w - 1; };
 export const ledText = (g: G, s: string, x: number, y: number, p: number, lit: string | null, dim: string | null) => {
+  let cx0 = x;
   for (let i = 0; i < s.length; i++) {
-    if (s[i] === "." && lit) { // the decimal point is one solid 2 x 2 block (round dots read as "," or ":" at preview size)
-      g.fillStyle = lit; rr(g, x + i * 6 * p + p * 0.32, y + 5 * p + p * 0.32, p * 1.36, p * 1.36, p * 0.4); g.fill();
-      continue;
+    if (s[i] === ".") { // the decimal point is one solid 2 x 2 block (round dots read as "," or ":" at preview size), centred in its half cell
+      const col = lit ?? dim; if (col) { g.fillStyle = col; rr(g, cx0 + p * (DOT_ADV - 1 - 1.36) / 2, y + 5 * p + p * 0.32, p * 1.36, p * 1.36, p * 0.4); g.fill(); }
+      cx0 += DOT_ADV * p; continue;
     }
     const bits = DOT57[s[i]] ?? DOT57[" "];
     for (let k = 0; k < 35; k++) {
-      const on = bits[k] === "1", cx = x + (i * 6 + (k % 5)) * p + p / 2, cy = y + Math.floor(k / 5) * p + p / 2;
+      const on = bits[k] === "1", cx = cx0 + (k % 5) * p + p / 2, cy = y + Math.floor(k / 5) * p + p / 2;
       const col = on ? lit : dim;
       if (!col) continue;
       g.fillStyle = col; g.beginPath(); g.arc(cx, cy, p * 0.4, 0, TAU); g.fill();
     }
+    cx0 += 6 * p;
   }
 };
-/** LED box layout (canvas px for a W x H canvas): label row and value row */
+/** LED box layout (canvas px for a W x H canvas): label row and value row (the value "X.XX%" with a half-cell point) */
 export const LED_LAYOUT = (W: number, H: number) => {
-  const lp = (W * 0.84) / (14 * 6 - 1), vp = Math.min((W * 0.84) / (5 * 6 - 1), (H * 0.5) / 7);
-  return { lp, lx: (W - (14 * 6 - 1) * lp) / 2, ly: H * 0.1, vp, vx: (W - (5 * 6 - 1) * vp) / 2, vy: H * 0.1 + 7 * lp + H * 0.08 };
+  const vw = ledWidth("8.88%"), lp = (W * 0.84) / (14 * 6 - 1), vp = Math.min((W * 0.84) / vw, (H * 0.5) / 7);
+  return { lp, lx: (W - (14 * 6 - 1) * lp) / 2, ly: H * 0.1, vp, vx: (W - vw * vp) / 2, vy: H * 0.1 + 7 * lp + H * 0.08 };
 };
 /** static LED face: black box, bezel, every dot faintly visible (unlit LEDs) */
 export const ledFaceTex = () => ptex("atLedFace", 1024, 333, (g) => {
@@ -1611,9 +1857,10 @@ const woodPiece = (g: G, x: number, y: number, s: number) => {
   g.fillStyle = "#a0603a"; rr(g, x - s * 0.5, y - s * 0.28, s, s * 0.28, s * 0.06); g.fill();
   g.fillStyle = "#d8843e"; g.beginPath(); g.ellipse(x + s * 0.5, y - s * 0.14, s * 0.07, s * 0.14, 0, 0, TAU); g.fill();
 };
-export const SIGN_A_LINES = ["PLEASE DON'T", "REMOVE THE", "PETRIFIED WOOD", "FROM THE PARK."];
-export const SIGN_B_LINES = ["MANY PAST VISITORS", "HAVE REMOVED THE", "PETRIFIED WOOD", "FROM THE PARK."];
-export const testSignTex = (which: "A" | "B") => ptex("atTestSign" + which, 1024, 1024, (g, r) => {
+/** round 7 (script v2, short on purpose): both signs end on the same line, so only the first line differs */
+export const SIGN_A_LINES = ["PLEASE DON'T", "TAKE THE WOOD."];
+export const SIGN_B_LINES = ["MANY VISITORS", "TAKE THE WOOD."];
+export const testSignTex = (which: "A" | "B") => ptex("atTestSign7" + which, 1024, 1024, (g, r) => {
   const S = 1024, ink = "#3a2414";
   // the face belongs to the scene light: warm top -> cooler bottom, a soft shadow band under the LED housing,
   // a faint warm glow along the top edge (the face is unlit MeshBasic for legibility; world tint multiplies it)
@@ -1627,10 +1874,14 @@ export const testSignTex = (which: "A" | "B") => ptex("atTestSign" + which, 1024
   g.strokeStyle = "#5a3a22"; g.lineWidth = 34; rr(g, 17, 17, S - 34, S - 34, 40); g.stroke();
   g.strokeStyle = "rgba(255,240,215,0.5)"; g.lineWidth = 4; rr(g, 40, 40, S - 80, S - 80, 26); g.stroke();
   const lines = which === "A" ? SIGN_A_LINES : SIGN_B_LINES, fam = "Tahoma, Verdana, Arial, sans-serif";
-  // audit A3 P3: Sign A uses the band above the pictogram (4 lines, ~1.3x the old caps), Sign B ~1.17x (condensed)
-  const top = which === "A" ? 64 : 62, bot = which === "A" ? 588 : 556, pitch = (bot - top) / lines.length, kk = which === "A" ? 0.94 : 0.84;
-  const px = fitPx(g, lines, fam, S - 110, Math.round(pitch * 0.82), kk);
-  lines.forEach((l, i) => textLine(g, l, S / 2, top + pitch * (i + 0.5), px, fam, ink, kk, false));
+  // round 7: two short lines, the SAME letter size on both signs (fitted to the widest of the four lines), ~1.5x the
+  // round-6 caps; the first (different) line sits on a pale band so the eye compares PLEASE DON'T vs MANY VISITORS
+  const top = 70, bot = 572, kk = 0.7, pitch = (bot - top) / 2; // condensed 0.7: the lines are width-limited, so narrower letters = taller caps (~46 px at 1080 in the shot-9 MS)
+  const px = fitPx(g, [...SIGN_A_LINES, ...SIGN_B_LINES], fam, S - 92, Math.round(pitch * 0.74), kk);
+  const y1 = top + pitch * 0.5 + 6, y2 = top + pitch * 1.5 - 4;
+  g.fillStyle = which === "A" ? "rgba(216,52,44,0.1)" : "rgba(240,122,42,0.12)"; rr(g, 56, y1 - px * 0.62, S - 112, px * 1.24, 18); g.fill();
+  textLine(g, lines[0], S / 2, y1, px, fam, which === "A" ? "#8a1f1a" : ink, kk, false);
+  textLine(g, lines[1], S / 2, y2, px, fam, ink, kk, false);
   g.fillStyle = "rgba(90,58,34,0.35)"; g.fillRect(110, bot + 12, S - 220, 5);
   const gy = S - 100;
   g.fillStyle = "#ddcfb3"; g.fillRect(90, gy, S - 180, 8); // ground line
@@ -1654,14 +1905,15 @@ export const oldPanelTex = () => ptex("atOldPanel", 1024, 1024, (g, r) => {
   L.forEach((l, i) => textLine(g, l, S / 2, 250 + i * 250, px, fam, "#f1e2c0", 0.86));
 });
 /** audit A3 name plate (JASPER / LONG LOGS on the sign posts, CRYSTAL on its own post): w x h m, condensed routed caps */
-export const namePlateTex = (name: string, w: number, h: number) => ptex(`atPlate${name}_${w}_${h}`, 1024, Math.round((1024 * h) / w), (g, r) => {
-  const W = 1024, H = Math.round((1024 * h) / w);
-  plankBoard(g, r, W, H, "#6e4628", 1);
+export const namePlateTex = (name: string, w: number, h: number, lines: string[] = [name]) => ptex(`atPlate${name}_${w}_${h}_${lines.length}`, 1024, Math.round((1024 * h) / w), (g, r) => {
+  const W = 1024, H = Math.round((1024 * h) / w), n = lines.length;
+  plankBoard(g, r, W, H, "#6e4628", n);
   g.strokeStyle = "rgba(28,14,6,0.75)"; g.lineWidth = 9; rr(g, 12, 12, W - 24, H - 24, 18); g.stroke();
   g.strokeStyle = "rgba(232,214,176,0.55)"; g.lineWidth = 4; rr(g, 22, 22, W - 44, H - 44, 12); g.stroke();
   for (const [bx, by] of [[34, H / 2], [W - 34, H / 2]]) nail(g, bx, by, 9, "#2a1a10");
-  const fam = "Georgia, 'Times New Roman', serif", k = 0.64, px = fitPx(g, [name], fam, W - 120, Math.round(H * 0.8), k);
-  engraveLine(g, name, W / 2, H / 2 + px * 0.04, px, fam, "#f1e2c0", k);
+  // audit A5 P2 (LONG LOGS ~28 px, CRYSTAL ~20 px at the "trails" beat): two stacked lines fill a taller plate
+  const fam = "Georgia, 'Times New Roman', serif", k = n > 1 ? 0.8 : 0.64, pitch = (H - 40) / n, px = fitPx(g, lines, fam, W - 120, Math.round(pitch * (n > 1 ? 0.86 : 0.8)), k);
+  lines.forEach((l, i) => engraveLine(g, l, W / 2, 20 + pitch * (i + 0.5) + px * 0.04, px, fam, "#f1e2c0", k));
 });
 /** routed name board for the trail-head marker posts */
 export const markerTex = (name: string) => ptex("atMarker" + name, 1024, 256, (g, r) => {
@@ -1677,10 +1929,11 @@ export const plaqueTex = () => ptex("atPlaque", 1024, 726, (g, r) => {
   for (let i = 0; i < 10; i++) blotch(g, U(r, 0, W), U(r, 0, H), U(r, 80, 220), 1.4, r() < 0.5 ? "20,10,5" : "255,220,180", 0.07);
   g.strokeStyle = "#c9a96a"; g.lineWidth = 10; rr(g, 26, 26, W - 52, H - 52, 24); g.stroke();
   const fam = "Georgia, 'Times New Roman', serif";
-  textLine(g, "LATE TRIASSIC", W / 2, 100, 64, fam, "#e3c27a", 1, false);
-  g.fillStyle = "#c9a96a"; g.fillRect(200, 146, W - 400, 5);
-  const L = ["TREES OVER", "200 MILLION", "YEARS OLD"], px = fitPx(g, L, fam, W - 110, 160, 0.9);
-  L.forEach((l, i) => textLine(g, l, W / 2, 262 + i * 160, px, fam, "#f5ead2", 0.9, false));
+  textLine(g, "LATE TRIASSIC", W / 2, 92, 60, fam, "#e3c27a", 1, false);
+  g.fillStyle = "#c9a96a"; g.fillRect(200, 134, W - 400, 5);
+  // round 6 (audit A6 P2): condensed (0.8) so the caps can be taller for the same plaque width
+  const L = ["TREES OVER", "200 MILLION", "YEARS OLD"], px = fitPx(g, L, fam, W - 90, 182, 0.8);
+  L.forEach((l, i) => textLine(g, l, W / 2, 252 + i * 172, px, fam, "#f5ead2", 0.8, false));
 });
 /** small brown post signs (optionally with an arrow, dir = 1 right / -1 left) */
 export const smallSignTex = (key: string, lines: string[], w: number, h: number, arrow = 0) => ptex("atSmall" + key, Math.round(w * 1200), Math.round(h * 1200), (g, r) => {
@@ -1795,21 +2048,21 @@ export const wispTex = () => ptex("atWisp2", 1024, 256, (g, r) => {
 });
 /** dust devil funnel: tan dust with 3-4 darker spiral bands and many fine light streaks, seamless in x; alpha fades
  *  out toward the top (v = 1) and is thickest near the base */
-export const dustDevilTex = () => ptex("atDustDevil3", 512, 1024, (g, r) => {
+export const dustDevilTex = () => ptex("atDustDevil4", 512, 1024, (g, r) => { // audit A5 P2: ~2x denser (the vista devil was invisible)
   const W = 512, H = 1024;
   g.clearRect(0, 0, W, H);
   // audit A3: a soft noisy dust body with 3-4 broad blurred helix streaks (1.5 turns over the height) - the round-2 lattice
   // of 120 hair-thin spirals read as a wicker lampshade
-  for (let i = 0; i < 60; i++) { const x = U(r, 0, W), y = H * (1 - Math.sqrt(r())), rad = U(r, 30, 90), a = U(r, 0.08, 0.16);
+  for (let i = 0; i < 80; i++) { const x = U(r, 0, W), y = H * (1 - Math.sqrt(r())), rad = U(r, 30, 90), a = U(r, 0.16, 0.28);
     wrap2(W, H, x, y, rad, (xx, yy) => blotch(g, xx, yy, rad, 1.6, "226,194,152", a)); }
   g.save(); g.filter = "blur(10px)"; g.lineCap = "round";
   for (let i = 0; i < 4; i++) { const x0 = (i / 4) * W + U(r, -30, 30), lw = U(r, 26, 44), dark = i % 2 === 0;
-    for (const ox of [-W, 0, W]) { g.strokeStyle = dark ? "rgba(168,124,86,0.3)" : "rgba(246,224,190,0.3)"; g.lineWidth = lw; g.beginPath();
+    for (const ox of [-W, 0, W]) { g.strokeStyle = dark ? "rgba(168,124,86,0.45)" : "rgba(246,224,190,0.42)"; g.lineWidth = lw; g.beginPath();
       for (let k = 0; k <= 48; k++) { const t = k / 48, x = x0 + ox - t * 1.5 * W, y = H - t * H; if (k) g.lineTo(x, y); else g.moveTo(x, y); }
       g.stroke(); } }
   g.restore();
   for (let i = 0; i < 260; i++) { g.fillStyle = r() < 0.5 ? "rgba(176,136,100,0.35)" : "rgba(250,232,206,0.35)"; const y = H * (1 - Math.sqrt(r())); g.fillRect(U(r, 0, W), y, 2, 2); }
-  { const m = g.createLinearGradient(0, 0, 0, H); m.addColorStop(0, "rgba(0,0,0,0.72)"); m.addColorStop(0.35, "rgba(0,0,0,0.45)"); m.addColorStop(0.8, "rgba(0,0,0,0.05)"); m.addColorStop(1, "rgba(0,0,0,0)");
+  { const m = g.createLinearGradient(0, 0, 0, H); m.addColorStop(0, "rgba(0,0,0,0.6)"); m.addColorStop(0.35, "rgba(0,0,0,0.3)"); m.addColorStop(0.8, "rgba(0,0,0,0.05)"); m.addColorStop(1, "rgba(0,0,0,0)");
     g.globalCompositeOperation = "destination-out"; g.fillStyle = m; g.fillRect(0, 0, W, H); g.globalCompositeOperation = "source-over"; }
 });
 /** dust devil ground skirt: a swirling ring of dust (alpha), radial */
@@ -1833,6 +2086,28 @@ export const puffTex = () => ptex("atPuff", 256, 256, (g, r) => {
   for (let i = 0; i < 9; i++) { const a = r() * TAU, d = U(r, 0, 50), x = 128 + Math.cos(a) * d, y = 140 + Math.sin(a) * d * 0.6, rad = U(r, 40, 80);
     const gr = g.createRadialGradient(x, y, 0, x, y, rad); gr.addColorStop(0, "rgba(255,255,255,0.55)"); gr.addColorStop(1, "rgba(255,255,255,0)");
     g.fillStyle = gr; g.fillRect(x - rad, y - rad, rad * 2, rad * 2); }
+});
+/** round 7 (audit A7 P3: the heap's dust puffs were soft beige blobs): a cartoon puff - 3-4 round lobes, cream fill with
+ *  a lit top, one plum ink outline round the union (~2-3 px on screen at its size) */
+export const cartoonPuffTex = (seed: number) => ptex("atCPuff" + seed, 256, 256, (g, r) => {
+  g.clearRect(0, 0, 256, 256);
+  const n = 3 + (seed % 2), L: number[][] = [];
+  for (let i = 0; i < n; i++) { const t = (i + 0.5) / n; L.push([56 + t * 144 + U(r, -10, 10), 150 - 40 * Math.sin(Math.PI * t) + U(r, -8, 8), U(r, 40, 56) * (0.8 + 0.35 * Math.sin(Math.PI * t))]); }
+  L.push([128 + U(r, -16, 16), 112 + U(r, -6, 6), U(r, 44, 54)]);
+  const all = (fn: (x: number, y: number, rad: number) => void) => L.forEach(([x, y, rad]) => fn(x, y, rad));
+  g.fillStyle = "#4a2a40"; all((x, y, rad) => { g.beginPath(); g.arc(x, y, rad + 7, 0, TAU); g.fill(); });   // the ink outline
+  g.fillStyle = "#e9d6b8"; all((x, y, rad) => { g.beginPath(); g.arc(x, y, rad, 0, TAU); g.fill(); });       // dusty cream
+  g.fillStyle = "#f8ecd8"; all((x, y, rad) => { g.beginPath(); g.arc(x - rad * 0.2, y - rad * 0.25, rad * 0.62, 0, TAU); g.fill(); }); // lit tops
+  g.fillStyle = "rgba(150,120,150,0.35)"; all((x, y, rad) => { g.beginPath(); g.ellipse(x + rad * 0.15, y + rad * 0.55, rad * 0.7, rad * 0.3, 0, 0, TAU); g.fill(); }); // lavender bellies
+});
+/** a small hand-lettered plank (cream paint on weathered wood) */
+export const plankNoteTex = (key: string, text: string) => ptex("atPlankNote" + key, 512, 144, (g, r) => {
+  g.fillStyle = "#9a7450"; g.fillRect(0, 0, 512, 144);
+  for (let i = 0; i < 12; i++) grain(g, r, 512, U(r, 0, 512), U(r, 8, 136), U(r, 120, 400), U(r, 2, 5), U(r, 1.5, 3), "rgba(40,20,10,0.3)");
+  g.strokeStyle = "#3a2414"; g.lineWidth = 6; g.strokeRect(3, 3, 506, 138);
+  g.save(); g.translate(256, 76); g.rotate(-0.03); g.font = "bold 92px 'Trebuchet MS', Verdana, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+  const w = g.measureText(text).width, k = Math.min(1, 470 / w); g.scale(k, 1);
+  g.fillStyle = "rgba(30,14,6,0.6)"; g.fillText(text, 3, 4); g.fillStyle = "#f4ead2"; g.fillText(text, 0, 0); g.restore();
 });
 /** dust + ink impact ring (white, tinted): a lumpy annulus of puffs */
 /** the stamp impact: a puffy dust ring (46 soft dabs) + audit A4 P3: 18 thin radial streaks flying out past it */
@@ -1931,12 +2206,12 @@ export const birdTex = (flap: number) => ptex("atBird" + flap, 256, 128, (g) => 
 });
 /** a clear rising (near-full) moon, #F4EEDC with faint maria / crater tones and a soft glow (audit A2: the plain peach
  *  disc read as an unclear sun) */
-export const moonTex = () => ptex("atMoon2", 256, 256, (g, r) => {
+export const moonTex = () => ptex("atMoon3", 256, 256, (g, r) => { // audit A5 P3: a cool white moon (#E8E6F2), cool halo
   g.clearRect(0, 0, 256, 256);
-  const gl = g.createRadialGradient(128, 128, 44, 128, 128, 126); gl.addColorStop(0, "rgba(255,246,226,0.32)"); gl.addColorStop(1, "rgba(255,246,226,0)");
+  const gl = g.createRadialGradient(128, 128, 44, 128, 128, 126); gl.addColorStop(0, "rgba(214,222,255,0.26)"); gl.addColorStop(1, "rgba(214,222,255,0)");
   g.fillStyle = gl; g.fillRect(0, 0, 256, 256);
   g.save(); g.beginPath(); g.arc(128, 128, 50, 0, TAU); g.clip();
-  g.fillStyle = "#f4eedc"; g.fillRect(0, 0, 256, 256);
+  g.fillStyle = "#e8e6f2"; g.fillRect(0, 0, 256, 256);
   for (const [x, y, rad, a] of [[112, 112, 18, 0.16], [140, 104, 12, 0.13], [132, 140, 16, 0.12], [104, 142, 9, 0.1], [150, 128, 8, 0.1]] as const) {
     g.fillStyle = `rgba(150,140,150,${a})`; g.beginPath(); g.ellipse(x, y, rad, rad * 0.8, 0.4, 0, TAU); g.fill(); }
   for (let i = 0; i < 14; i++) { const a = r() * TAU, d = Math.sqrt(r()) * 44, x = 128 + Math.cos(a) * d, y = 128 + Math.sin(a) * d, s = U(r, 1.5, 4);
@@ -2129,11 +2404,282 @@ export const tumbleTex = () => ptex("atTumble2", 512, 256, (g, r) => {
 export const driftTex = (i: number) => ptex("atDrift" + i, 512, 512, (g, r) => {
   g.clearRect(0, 0, 512, 512);
   for (let k = 0; k < 9; k++) { const x = U(r, 120, 392), y = U(r, 120, 392), rad = U(r, 50, 150);
-    const gr = g.createRadialGradient(x, y, 0, x, y, rad); gr.addColorStop(0, "rgba(210,152,104,0.85)"); gr.addColorStop(0.6, "rgba(210,152,104,0.45)"); gr.addColorStop(1, "rgba(210,152,104,0)");
+    const gr = g.createRadialGradient(x, y, 0, x, y, rad); gr.addColorStop(0, "rgba(202,150,120,0.85)"); gr.addColorStop(0.6, "rgba(202,150,120,0.45)"); gr.addColorStop(1, "rgba(202,150,120,0)"); // round 7: cooler dusty red-tan (it rendered C ~42 under the warm noon key)
     g.save(); g.translate(x, y); g.scale(1.6, 0.7); g.translate(-x, -y); g.fillStyle = gr; g.fillRect(x - rad, y - rad, rad * 2, rad * 2); g.restore(); }
   g.globalCompositeOperation = "source-atop";
-  for (let k = 0; k < 30; k++) { const y = U(r, 60, 452), x = U(r, 60, 300), len = U(r, 60, 200); g.strokeStyle = "rgba(240,206,164,0.5)"; g.lineWidth = 2.5;
+  for (let k = 0; k < 30; k++) { const y = U(r, 60, 452), x = U(r, 60, 300), len = U(r, 60, 200); g.strokeStyle = "rgba(236,210,184,0.5)"; g.lineWidth = 2.5;
     g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + len / 2, y + U(r, -8, 8), x + len, y); g.stroke(); }
   for (let k = 0; k < 1200; k++) { g.fillStyle = r() < 0.5 ? "rgba(140,88,56,0.6)" : "rgba(246,214,176,0.6)"; g.fillRect(U(r, 0, 512), U(r, 0, 512), 2, 2); }
   g.globalCompositeOperation = "source-over";
+});
+/** audit A5 P2 shot 10: Sign A's red circle-and-bar alone (transparent), for the "no!" pulse overlay. 256 px = 0.26 m,
+ *  drawn at testSignTex's scale (circle r 100 / stroke 30 / bar +-70 of 1024 px on the 0.92 m face) */
+export const circleBarTex = () => ptex("atCircleBar", 256, 256, (g) => {
+  g.clearRect(0, 0, 256, 256); const k = 256 / ((0.26 * 1024) / 0.92);
+  g.strokeStyle = "#d8342c"; g.lineWidth = 30 * k; g.lineCap = "butt";
+  g.beginPath(); g.arc(128, 128, 100 * k, 0, TAU); g.stroke();
+  g.beginPath(); g.moveTo(128 - 70 * k, 128 - 70 * k); g.lineTo(128 + 70 * k, 128 + 70 * k); g.stroke();
+});
+/** audit A5 P2 heat shimmer: a pale, wavering mirage band (horizontal streaks of reflected sky, soft top and bottom),
+ *  scrolled and wobbled per frame along the far floor in front of the badlands. 1024 x 64, alpha */
+export const mirageTex = () => ptex("atMirage", 1024, 64, (g, r) => {
+  g.clearRect(0, 0, 1024, 64);
+  for (let i = 0; i < 70; i++) { const y = U(r, 8, 56), x = U(r, -100, 1024), w = U(r, 60, 320), h = U(r, 1.2, 3.4), a = U(r, 0.18, 0.5);
+    wrapX(1024, x, w, (xx) => { const gr = g.createLinearGradient(xx, 0, xx + w, 0); gr.addColorStop(0, "rgba(255,255,255,0)"); gr.addColorStop(0.5, `rgba(255,255,255,${a})`); gr.addColorStop(1, "rgba(255,255,255,0)");
+      g.fillStyle = gr; g.fillRect(xx, y, w, h); }); }
+  g.globalCompositeOperation = "destination-in";
+  const v = g.createLinearGradient(0, 0, 0, 64); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(0.35, "rgba(0,0,0,1)"); v.addColorStop(0.75, "rgba(0,0,0,1)"); v.addColorStop(1, "rgba(0,0,0,0)");
+  g.fillStyle = v; g.fillRect(0, 0, 1024, 64); g.globalCompositeOperation = "source-over";
+});
+/** a dropped TALLY sheet on a clipboard-less page: header, grid of tick marks (shot 8 foreground) */
+export const tallyTex = () => ptex("atTally", 384, 512, (g, r) => {
+  g.fillStyle = "#f6f1e4"; g.fillRect(0, 0, 384, 512);
+  g.fillStyle = "#3a2c22"; g.font = "bold 46px Arial, Helvetica, sans-serif"; g.textAlign = "center"; g.fillText("TALLY", 192, 62);
+  g.strokeStyle = "rgba(60,90,150,0.45)"; g.lineWidth = 2; for (let y = 96; y < 500; y += 34) { g.beginPath(); g.moveTo(24, y); g.lineTo(360, y); g.stroke(); }
+  g.strokeStyle = "rgba(40,30,30,0.85)"; g.lineWidth = 3.5;
+  for (let row = 0; row < 11; row++) { const n = 2 + Math.floor(r() * 9), y = 96 + row * 34 + 6;
+    for (let k = 0; k < n; k++) { const x = 40 + k * 14 + Math.floor(k / 5) * 12; if (k % 5 === 4) { g.beginPath(); g.moveTo(x - 58, y + 22); g.lineTo(x + 2, y + 2); g.stroke(); } else { g.beginPath(); g.moveTo(x, y); g.lineTo(x + U(r, -2, 2), y + 24); g.stroke(); } } }
+  for (let i = 0; i < 9; i++) blotch(g, U(r, 0, 384), U(r, 0, 512), U(r, 20, 70), 1.4, "150,110,70", 0.06);
+});
+/** prickly-pear pad: a flat oval, sage-green with areoles (spine dots) and a faint rim */
+export const pearPadTex = () => ptex("atPearPad", 256, 256, (g, r) => {
+  g.fillStyle = "#6f8a4e"; g.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 12; i++) blotch(g, U(r, 0, 256), U(r, 0, 256), U(r, 30, 90), 1.4, r() < 0.5 ? "60,80,40" : "200,220,160", 0.12);
+  for (let y = 20; y < 256; y += 30) for (let x = 14 + ((y / 30) % 2) * 15; x < 256; x += 30) { g.fillStyle = "#e8dcb0"; g.beginPath(); g.arc(x + U(r, -3, 3), y + U(r, -3, 3), 2.6, 0, TAU); g.fill(); g.fillStyle = "#5a4a2a"; g.beginPath(); g.arc(x + 1, y + 1, 1.2, 0, TAU); g.fill(); }
+});
+/** audit A5 ADD (shot 9: the midground between the signs was only chips): rabbitbrush - a rounded clump of slender
+ *  grey-green stems topped by golden-yellow flower tufts (#E8C23A / #F2D45A), ink-outlined like the sage cards */
+export const rabbitTex = () => ptex("atRabbit", 512, 512, (g, r) => {
+  const S = 512; g.clearRect(0, 0, S, S); g.lineCap = "round";
+  const bx = S / 2, by = S - 6, stems: number[][] = [];
+  for (let k = 0; k < 26; k++) { const a = -Math.PI / 2 + ((k / 25) - 0.5) * 1.9 + U(r, -0.08, 0.08), L = U(r, 260, 380) * (1 - 0.3 * Math.abs((k / 25) - 0.5));
+    stems.push([bx + U(r, -14, 14), by, bx + Math.cos(a) * L, by + Math.sin(a) * L * 0.95]); }
+  for (const [lw, col] of [[7, "#2a1a26"], [3, "#7f8f6a"]] as const) { g.strokeStyle = col; g.lineWidth = lw;
+    for (const [x0, y0, x1, y1] of stems) { g.beginPath(); g.moveTo(x0, y0); g.quadraticCurveTo((x0 + x1) / 2 + U(r, -10, 10), (y0 + y1) / 2, x1, y1); g.stroke(); } }
+  // narrow leaves along the stems
+  for (const [x0, y0, x1, y1] of stems) for (let j = 0; j < 5; j++) { const t = U(r, 0.25, 0.85), x = x0 + (x1 - x0) * t, y = y0 + (y1 - y0) * t;
+    g.fillStyle = "#2a1a26"; g.beginPath(); g.ellipse(x, y, 9, 3.4, U(r, -1, 1), 0, TAU); g.fill();
+    g.fillStyle = pick(r, ["#8fa07a", "#9aab84", "#7e9070"]); g.beginPath(); g.ellipse(x, y, 7, 2.2, U(r, -1, 1), 0, TAU); g.fill(); }
+  // flower tufts: overlapping golden puffs at the stem tips, a darker ochre underside and pale highlights
+  for (const [, , x1, y1] of stems) { const R = U(r, 16, 26);
+    g.fillStyle = "#2a1a26"; g.beginPath(); g.ellipse(x1, y1, R + 3, R * 0.75 + 3, 0, 0, TAU); g.fill();
+    for (let k = 0; k < 9; k++) { const a = r() * TAU, d = Math.sqrt(r()) * R * 0.8, up = Math.sin(a) < 0;
+      g.fillStyle = up ? pick(r, ["#f2d45a", "#f6de74"]) : pick(r, ["#e8c23a", "#c9a02e"]); g.beginPath(); g.arc(x1 + Math.cos(a) * d, y1 + Math.sin(a) * d * 0.7, U(r, 5, 9), 0, TAU); g.fill(); }
+    g.fillStyle = "rgba(255,250,214,0.7)"; g.beginPath(); g.arc(x1 - R * 0.25, y1 - R * 0.3, R * 0.22, 0, TAU); g.fill(); }
+});
+/** a yucca rosette's leaf: a long dagger blade, dark green at the base to a paler olive tip, a cream edge thread */
+export const yuccaLeafTex = () => ptex("atYuccaLeaf", 64, 256, (g, r) => {
+  const gr = g.createLinearGradient(0, 256, 0, 0); gr.addColorStop(0, "#41593a"); gr.addColorStop(0.6, "#5f7d4a"); gr.addColorStop(1, "#9aa86a");
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 256);
+  g.fillStyle = "rgba(236,228,190,0.55)"; g.fillRect(0, 0, 4, 256); g.fillRect(60, 0, 4, 256);
+  for (let i = 0; i < 6; i++) { g.fillStyle = "rgba(30,40,24,0.18)"; g.fillRect(U(r, 14, 50), 0, 2, 256); }
+});
+
+// ======================================== round 5b (audit A5 ADD / P3) ========================================
+/** a park wayside exhibit panel: cream face, dark brown border + text, a small rainbow log-slice icon on the left
+ *  (the shot-2 "PLEASE DO NOT REMOVE PETRIFIED WOOD" panel that sets up the irony) */
+export const waysideTex = (key: string, lines: string[], w: number, h: number, icon: "log" | "trail" = "log") => ptex("atWayside" + key, Math.round(w * 1100), Math.round(h * 1100), (g, r) => {
+  const W = Math.round(w * 1100), H = Math.round(h * 1100);
+  g.fillStyle = "#4a2e1c"; g.fillRect(0, 0, W, H);
+  g.fillStyle = "#efe2c4"; rr(g, 16, 16, W - 32, H - 32, 14); g.fill();
+  for (let i = 0; i < 30; i++) blotch(g, U(r, 0, W), U(r, 0, H), U(r, 30, 90), 1.6, r() < 0.5 ? "150,110,70" : "255,250,236", 0.06);
+  g.strokeStyle = "#7a4e2c"; g.lineWidth = 6; rr(g, 34, 34, W - 68, H - 68, 10); g.stroke();
+  const ic = H * 0.22, cx = 44 + ic * 1.05, cy = H / 2;
+  if (icon === "log") { // icon: a sliced log end (bark rim, red / orange / yellow / purple rings, white flecks)
+    for (const [rad, col] of [[1, "#6e4a36"], [0.86, "#8a5aa8"], [0.72, "#c84a3a"], [0.52, "#e8893a"], [0.3, "#f2c64a"]] as const) {
+      g.fillStyle = col; g.beginPath(); g.ellipse(cx, cy, ic * rad, ic * rad * 0.94, 0, 0, TAU); g.fill(); }
+    for (let i = 0; i < 9; i++) { const a = U(r, 0, TAU), d = U(r, 0.2, 0.8) * ic; g.fillStyle = "rgba(255,255,255,0.8)"; g.fillRect(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 4, 4); }
+  } else { // round 6 (audit A6 P3: the log disc read as Sign A's no-symbol): a hiker on a trail + a direction arrow, brown on cream
+    g.fillStyle = "#4a2e1c"; g.strokeStyle = "#4a2e1c"; g.lineCap = "round"; g.lineJoin = "round";
+    const s = ic * 1.7, bx = cx - ic * 0.25, by = cy + ic * 0.85;
+    g.beginPath(); g.arc(bx + s * 0.06, by - s * 0.92, s * 0.1, 0, TAU); g.fill();                                   // head
+    g.lineWidth = s * 0.12; g.beginPath(); g.moveTo(bx + s * 0.04, by - s * 0.78); g.lineTo(bx - s * 0.04, by - s * 0.4); g.stroke(); // torso
+    g.lineWidth = s * 0.09; g.beginPath(); g.moveTo(bx - s * 0.04, by - s * 0.4); g.lineTo(bx - s * 0.22, by); g.moveTo(bx - s * 0.04, by - s * 0.4); g.lineTo(bx + s * 0.16, by - s * 0.02); g.stroke();
+    g.lineWidth = s * 0.07; g.beginPath(); g.moveTo(bx + s * 0.03, by - s * 0.7); g.lineTo(bx + s * 0.24, by - s * 0.5); g.lineTo(bx + s * 0.3, by - s * 0.02); g.stroke(); // arm + walking stick
+    g.lineWidth = s * 0.05; g.beginPath(); g.moveTo(bx - s * 0.5, by + s * 0.06); g.quadraticCurveTo(bx + s * 0.1, by - s * 0.02, bx + s * 0.6, by + s * 0.1); g.stroke(); // the trail
+  }
+  const fam = "Georgia, 'Times New Roman', serif", tx0 = cx + ic * 1.15, tw = W - tx0 - 44, pitch = (H - 80) / lines.length;
+  const px = fitPx(g, lines, fam, tw, Math.round(pitch * 0.8), 0.86);
+  lines.forEach((l, i) => textLine(g, l, tx0 + tw / 2, 40 + pitch * (i + 0.5), px, fam, "#4a2e1c", 0.86, false));
+});
+/** cholla joints: pale yellow-green with dense straw spines (they glow in the backlight) */
+export const chollaTex = () => ptex("atCholla", 128, 256, (g, r) => {
+  g.fillStyle = "#8f9a5c"; g.fillRect(0, 0, 128, 256);
+  for (let i = 0; i < 10; i++) blotch(g, U(r, 0, 128), U(r, 0, 256), U(r, 20, 50), 1.2, r() < 0.5 ? "90,100,50" : "220,220,150", 0.18);
+  for (let i = 0; i < 520; i++) { const x = U(r, 0, 128), y = U(r, 0, 256); g.strokeStyle = r() < 0.7 ? "rgba(244,236,190,0.75)" : "rgba(120,100,60,0.5)"; g.lineWidth = 1.2;
+    g.beginPath(); g.moveTo(x, y); g.lineTo(x + U(r, -5, 5), y + U(r, -6, 2)); g.stroke(); }
+});
+/** a pale two-rut dirt track (alpha-feathered edges), u along the road */
+export const dirtRoadTex = () => ptex("atDirtRoad", 512, 128, (g, r) => {
+  g.clearRect(0, 0, 512, 128);
+  const gr = g.createLinearGradient(0, 0, 0, 128); gr.addColorStop(0, "rgba(240,222,196,0)"); gr.addColorStop(0.22, "rgba(240,222,196,0.9)"); gr.addColorStop(0.78, "rgba(240,222,196,0.9)"); gr.addColorStop(1, "rgba(240,222,196,0)");
+  g.fillStyle = gr; g.fillRect(0, 0, 512, 128);
+  for (const y of [40, 88]) { g.fillStyle = "rgba(150,104,74,0.6)"; g.fillRect(0, y - 6, 512, 12); g.fillStyle = "rgba(250,232,206,0.35)"; g.fillRect(0, y + 5, 512, 3); }
+  for (let i = 0; i < 900; i++) { g.fillStyle = r() < 0.5 ? "rgba(140,100,70,0.25)" : "rgba(255,244,226,0.3)"; g.fillRect(U(r, 0, 512), U(r, 26, 102), U(r, 1, 4), U(r, 1, 3)); }
+});
+/** a soft horizontal haze band: dense at the bottom, fading up, feathered at both ends (morning ground mist) */
+export const mistBandTex = () => ptex("atMistBand", 512, 128, (g, r) => {
+  g.clearRect(0, 0, 512, 128);
+  for (let x = 0; x < 512; x += 2) { const e = Math.min(1, x / 90, (512 - x) / 90), k = 0.75 + 0.25 * Math.sin(x * 0.031 + 1.3) * Math.sin(x * 0.011);
+    const gr = g.createLinearGradient(0, 128, 0, 0); gr.addColorStop(0, `rgba(255,255,255,${0.95 * e * k})`); gr.addColorStop(0.45, `rgba(255,255,255,${0.5 * e * k})`); gr.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = gr; g.fillRect(x, 0, 2, 128); }
+  for (let i = 0; i < 40; i++) blotch(g, U(r, 0, 512), U(r, 60, 128), U(r, 10, 40), 3, "255,255,255", 0.12);
+});
+/** a thin contrail: bright at the head (u = 1), widening and fading toward the tail */
+export const contrailTex = () => ptex("atContrail", 1024, 32, (g) => {
+  g.clearRect(0, 0, 1024, 32);
+  for (let x = 0; x < 1024; x += 2) { const u = x / 1024, a = Math.pow(u, 0.7) * (u > 0.985 ? (1 - u) / 0.015 : 1), w = 3 + 9 * (1 - u);
+    const gr = g.createLinearGradient(0, 16 - w, 0, 16 + w); gr.addColorStop(0, "rgba(255,255,255,0)"); gr.addColorStop(0.5, `rgba(255,255,255,${0.9 * a})`); gr.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = gr; g.fillRect(x, 16 - w, 2, 2 * w); }
+});
+/** a crushed paper coffee cup (white with a brown sleeve band), flattened oval seen from above */
+export const cupTex = () => ptex("atCrushedCup", 256, 128, (g, r) => {
+  g.fillStyle = "#f2eee6"; g.fillRect(0, 0, 256, 128);
+  g.fillStyle = "#9a6a44"; g.fillRect(90, 0, 70, 128);
+  for (let i = 0; i < 26; i++) { g.strokeStyle = r() < 0.5 ? "rgba(120,100,90,0.35)" : "rgba(255,255,255,0.5)"; g.lineWidth = U(r, 1, 3); g.beginPath(); const x = U(r, 0, 256), y = U(r, 0, 128); g.moveTo(x, y); g.lineTo(x + U(r, -40, 40), y + U(r, -30, 30)); g.stroke(); }
+});
+
+// ===================================== round 6 (WORLD-EXT, audit A6) =====================================
+/** shot 4 "14 tons" heap: a dense cartoon pile of broken rainbow chips (angular, ringed, white flecks, dark seams) on a
+ *  dusty brown ground, seamless, 1024 px = ~1.4 m */
+export const heapTex = () => ptex("atHeap14b", 1024, 1024, (g, r) => {
+  const S = 1024;
+  g.fillStyle = "#5c5048"; g.fillRect(0, 0, S, S); // round 7 (audit A7 P3 "rubble / granola"): a darker bark-grey under-fill, ~40 % less of it shows
+  // (round 6 look pass: fewer yellows, more reds / purples and bark-brown pieces, so the pile reads as broken logs)
+  // round 7: + bark-grey inked chunks (#8A8078 / #6E6660 / #9A8E84) so it reads as broken petrified logs
+  const CC = ["#c84a3a", "#de863e", "#ecc04e", "#8a5aa8", "#d2603a", "#b04a40", "#a8508a", "#8a8078", "#6e6660", "#9a8e84", "#e09c44", "#7a5a44"];
+  for (let i = 0; i < 760; i++) {
+    const x = U(r, 0, S), y = U(r, 0, S), s = U(r, 14, 40), a = r() * TAU, n = 5 + Math.floor(r() * 3), col = pick(r, CC), col2 = pick(r, CC), rim = r() < 0.55;
+    const pts = Array.from({ length: n }, (_, k) => { const t = a + (k / n) * TAU + U(r, -0.3, 0.3), rr2 = s * U(r, 0.6, 1); return [x + Math.cos(t) * rr2, y + Math.sin(t) * rr2 * 0.85]; });
+    const ra = r() * TAU, fl = Math.floor(r() * 4);
+    wrap2(S, S, x, y, s * 1.2, (xx, yy) => {
+      const ox = xx - x, oy = yy - y;
+      g.fillStyle = "rgba(40,22,26,0.6)"; poly(g, pts, ox + 2.5, oy + 3.5); g.fill();            // contact shadow
+      g.fillStyle = col; poly(g, pts, ox, oy); g.fill();
+      g.save(); poly(g, pts, ox, oy); g.clip();                                                    // a ring band across the face
+      g.strokeStyle = col2; g.lineWidth = s * 0.35; g.beginPath(); g.arc(xx + Math.cos(ra) * s * 1.2, yy + Math.sin(ra) * s * 1.2, s * 1.05, 0, TAU); g.stroke();
+      g.strokeStyle = "rgba(60,30,30,0.3)"; g.lineWidth = 2; g.beginPath(); g.arc(xx + Math.cos(ra) * s * 1.2, yy + Math.sin(ra) * s * 1.2, s * 0.85, 0, TAU); g.stroke();
+      if (rim) { g.strokeStyle = "#5e4636"; g.lineWidth = s * 0.3; poly(g, pts, ox, oy); g.stroke(); }  // a bark edge
+      g.restore();
+      g.strokeStyle = "rgba(42,26,24,0.8)"; g.lineWidth = 2.2; poly(g, pts, ox, oy); g.stroke();      // ink seam
+      g.strokeStyle = "rgba(255,244,230,0.45)"; g.lineWidth = 1.6; g.beginPath(); g.moveTo(pts[0][0] + ox, pts[0][1] + oy); g.lineTo(pts[1][0] + ox, pts[1][1] + oy); g.stroke(); // lit edge
+      for (let k = 0; k < fl; k++) { g.fillStyle = "rgba(255,255,255,0.9)"; g.beginPath(); g.arc(xx + (k - 1.5) * s * 0.22, yy - s * 0.1 + k * 2, 1.6, 0, TAU); g.fill(); }
+    });
+  }
+  for (let i = 0; i < 1400; i++) { g.fillStyle = r() < 0.5 ? "rgba(255,255,255,0.55)" : "rgba(40,22,26,0.3)"; g.fillRect(U(r, 0, S), U(r, 0, S), 1.6, 1.6); }
+});
+/** the heap's summit pennant: cream cloth, red "14 TONS" */
+export const heapFlagTex = () => ptex("atHeapFlag", 512, 256, (g) => {
+  g.fillStyle = "#f2e6cc"; g.fillRect(0, 0, 512, 256);
+  g.strokeStyle = "#c8342c"; g.lineWidth = 14; g.strokeRect(10, 10, 492, 236);
+  const fam = "Impact, 'Arial Black', Arial", px = fitPx(g, ["14 TONS"], fam, 440, 150, 0.95);
+  textLine(g, "14 TONS", 256, 136, px, fam, "#c8342c", 0.95, false);
+});
+/** round 6 (audit A6 P2 shot 7: the tarp read as a wooden crate): heavy tan canvas with deep fold shadows (lavender in
+ *  the creases, lit ridges), a stitched hem, weave, red dust at the bottom. 512 x 1024 (taller than wide) */
+export const tarpTex3 = () => ptex("atTarpTex4", 512, 1024, (g, r) => {
+  const W = 512, H = 1024;
+  const vg = g.createLinearGradient(0, 0, 0, H); vg.addColorStop(0, "#d4bd94"); vg.addColorStop(1, "#bea47c"); g.fillStyle = vg; g.fillRect(0, 0, W, H);
+  for (let i = 0; i < 4000; i++) { const y = U(r, 0, H); g.fillStyle = r() < 0.5 ? "rgba(120,96,60,0.09)" : "rgba(255,246,226,0.09)"; g.fillRect(0, y, W, 1); }
+  for (let i = 0; i < 2600; i++) { const x = U(r, 0, W); g.fillStyle = r() < 0.5 ? "rgba(120,96,60,0.05)" : "rgba(255,246,226,0.05)"; g.fillRect(x, 0, 1, H); }
+  for (let i = 0; i < 7; i++) { // hanging folds from the rope line: a violet crease + a lit ridge, fanning toward the hem
+    const x0 = 36 + i * 74 + U(r, -14, 14), x1 = x0 + (x0 - W / 2) * 0.25 + U(r, -20, 20), w = U(r, 12, 22);
+    const gr = g.createLinearGradient(x0 - w, 0, x0 + w, 0); gr.addColorStop(0, "rgba(92,70,110,0)"); gr.addColorStop(0.5, "rgba(92,70,110,0.42)"); gr.addColorStop(1, "rgba(92,70,110,0)");
+    g.fillStyle = gr; g.beginPath(); g.moveTo(x0 - w * 0.5, 150); g.lineTo(x0 + w * 0.5, 150); g.lineTo(x1 + w * 1.4, H); g.lineTo(x1 - w * 1.4, H); g.closePath(); g.fill();
+    g.strokeStyle = "rgba(255,246,226,0.38)"; g.lineWidth = 3; g.beginPath(); g.moveTo(x0 - w * 0.7, 150); g.lineTo(x1 - w * 1.6, H); g.stroke();
+  }
+  for (const yy of [142, 784]) { const gr = g.createLinearGradient(0, yy - 40, 0, yy + 40); gr.addColorStop(0, "rgba(92,70,110,0)"); gr.addColorStop(0.5, "rgba(92,70,110,0.3)"); gr.addColorStop(1, "rgba(92,70,110,0)"); g.fillStyle = gr; g.fillRect(0, yy - 40, W, 80); } // gathers under the ropes
+  for (let i = 0; i < 8; i++) blotch(g, U(r, 0, W), U(r, 700, H), U(r, 40, 120), 1.8, "150,104,70", 0.14); // red dust low down
+  for (let i = 0; i < 3000; i++) { g.fillStyle = r() < 0.5 ? "rgba(90,66,40,0.1)" : "rgba(255,245,225,0.12)"; g.fillRect(U(r, 0, W), U(r, 0, H), 2, 2); }
+  g.strokeStyle = "rgba(110,80,46,0.65)"; g.lineWidth = 5; g.setLineDash([12, 9]); g.beginPath(); g.moveTo(0, H - 26); g.lineTo(W, H - 26); g.stroke(); g.setLineDash([]); // stitched hem
+  for (const x of [40, 256, 472]) { g.fillStyle = "#8a8a86"; g.beginPath(); g.arc(x, H - 44, 9, 0, TAU); g.fill(); g.fillStyle = "#5a4a36"; g.beginPath(); g.arc(x, H - 44, 4, 0, TAU); g.fill(); }
+});
+/** a two-line card tag (cream, dark ink caps) */
+export const tagTex2 = (key: string, lines: string[]) => ptex("atTag2" + key, 512, 256, (g) => {
+  g.fillStyle = "#f4efe2"; g.fillRect(0, 0, 512, 256); g.strokeStyle = "#3a2414"; g.lineWidth = 8; rr(g, 10, 10, 492, 236, 16); g.stroke();
+  g.fillStyle = "#8a6a3a"; g.beginPath(); g.arc(40, 128, 13, 0, TAU); g.fill();
+  const fam = "Impact, 'Arial Black', Arial", px = fitPx(g, lines, fam, 400, 96, 0.92);
+  lines.forEach((l, i) => textLine(g, l, 276, 128 + (i - (lines.length - 1) / 2) * px * 1.08, px, fam, "#3a2414", 0.92, false));
+});
+/** round 6 stamp sole (audit A6 P2): bright red rubber #B8262E, a raised border, MIRRORED raised PERMISSION GRANTED
+ *  shining with wet ink (glossy streaks), seen as the stamp flips up off Sign B */
+export const stampSoleTex2 = () => ptex("atStampSole2", 1024, 600, (g, r) => {
+  const W = 1024, H = 600;
+  g.fillStyle = "#b8262e"; g.fillRect(0, 0, W, H);
+  for (let i = 0; i < 3000; i++) { g.fillStyle = r() < 0.5 ? "rgba(60,8,12,0.16)" : "rgba(255,190,180,0.08)"; g.fillRect(U(r, 0, W), U(r, 0, H), 2, 2); }
+  g.save(); g.translate(W, 0); g.scale(-1, 1);
+  const raised = (draw: () => void) => { g.save(); g.translate(5, 7); g.fillStyle = "rgba(50,4,8,0.6)"; g.strokeStyle = "rgba(50,4,8,0.6)"; draw(); g.restore(); g.fillStyle = "#e2303a"; g.strokeStyle = "#e2303a"; draw(); };
+  raised(() => { g.lineWidth = 24; rr(g, 40, 40, W - 80, H - 80, 30); g.stroke(); });
+  const fam = "Impact, 'Arial Black', Arial";
+  raised(() => { g.font = `bold 176px ${fam}`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("PERMISSION", W / 2, 215); g.fillText("GRANTED", W / 2, 400); });
+  g.restore();
+  g.strokeStyle = "rgba(255,226,220,0.55)"; g.lineWidth = 8; g.lineCap = "round";
+  for (const [x, y, l] of [[170, 140, 240], [610, 310, 280], [290, 450, 170], [760, 120, 150], [120, 330, 90]]) { g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + l / 2, y - 14, x + l, y + 4); g.stroke(); }
+});
+/** a yellow survey tape measure ribbon with black tick marks + numbers (along u: 1 m per 256 px) */
+export const tapeTex = () => ptex("atTape", 1024, 64, (g) => {
+  g.fillStyle = "#f2c230"; g.fillRect(0, 0, 1024, 64); g.fillStyle = "#2a2018";
+  for (let i = 0; i < 1024; i += 8) { const h = i % 256 === 0 ? 30 : i % 128 === 0 ? 22 : i % 32 === 0 ? 14 : 8; g.fillRect(i, 0, 2, h); }
+  g.font = "bold 22px Arial"; for (let i = 0; i < 4; i++) g.fillText(String(i + 1), i * 256 + 10, 54);
+});
+/** orange / white striped barrier board with a label (RESEARCH AREA / TEST IN PROGRESS) */
+export const barrierTex = (lines: string[]) => ptex("atBarrier" + lines.join("_"), 1024, 256, (g) => {
+  for (let i = -4; i < 20; i++) { g.fillStyle = i % 2 ? "#f4f0e6" : "#e8662a"; g.beginPath(); g.moveTo(i * 80, 0); g.lineTo(i * 80 + 80, 0); g.lineTo(i * 80 + 80 - 120, 256); g.lineTo(i * 80 - 120, 256); g.closePath(); g.fill(); }
+  g.fillStyle = "#f4f0e6"; rr(g, 150, 58, 724, 140, 14); g.fill(); g.strokeStyle = "#2a2018"; g.lineWidth = 6; g.stroke();
+  const fam = "Impact, 'Arial Black', Arial", px = fitPx(g, lines, fam, 680, 110, 0.95);
+  textLine(g, lines[0], 512, 136, px, fam, "#2a2018", 0.95, false);
+});
+/** round 6 (audit A6 ADD shot 15: "replace the plain white dot"): a thin waxing crescent with earthshine + a cool halo */
+export const crescentTex = () => ptex("atCrescent", 256, 256, (g) => {
+  g.clearRect(0, 0, 256, 256);
+  const gl = g.createRadialGradient(128, 128, 40, 128, 128, 126); gl.addColorStop(0, "rgba(214,222,255,0.22)"); gl.addColorStop(1, "rgba(214,222,255,0)"); g.fillStyle = gl; g.fillRect(0, 0, 256, 256);
+  g.fillStyle = "rgba(150,160,200,0.16)"; g.beginPath(); g.arc(128, 128, 48, 0, TAU); g.fill(); // earthshine on the dark disc
+  g.save(); g.beginPath(); g.arc(128, 128, 48, 0, TAU); g.clip();
+  g.fillStyle = "#f2f0fa"; g.beginPath(); g.arc(128, 128, 48, 0, TAU); g.fill();
+  g.globalCompositeOperation = "destination-out"; g.beginPath(); g.arc(108, 120, 46, 0, TAU); g.fill(); g.globalCompositeOperation = "source-over";
+  g.restore();
+});
+/** a red ink run (drip) under the stamp mark: alpha streak with a round bead at the bottom */
+export const dripTex = () => ptex("atDrip", 64, 256, (g) => {
+  g.clearRect(0, 0, 64, 256);
+  const gr = g.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, "rgba(200,30,40,0.95)"); gr.addColorStop(1, "rgba(170,20,30,0.95)");
+  g.fillStyle = gr; g.beginPath(); g.moveTo(22, 0); g.lineTo(42, 0); g.quadraticCurveTo(38, 120, 40, 214); g.arc(32, 222, 14, 0, Math.PI); g.quadraticCurveTo(26, 120, 22, 0); g.fill();
+  g.fillStyle = "rgba(255,200,200,0.6)"; g.fillRect(27, 10, 3, 180);
+});
+/** round 6 (audit A6 P3 shot 3: "a long white box with one row of blue windows: a train carriage"): the visitor centre's
+ *  adobe front - warm stucco #D9B48A with plaster mottling, a darker stone wainscot, THREE window groups (3 deep-set
+ *  windows each, dark frames, warm-grey glass with a sky sheen), the entry doors in the middle, a viga shadow line.
+ *  W x H metres (1 m = 80 px) */
+export const vcFrontTex = (W: number, H: number) => ptex(`atVCfront_${W}_${H}`, Math.round(W * 80), Math.round(H * 80), (g, r) => {
+  const PW = Math.round(W * 80), PH = Math.round(H * 80), m = 80;
+  g.fillStyle = "#d9b48a"; g.fillRect(0, 0, PW, PH);
+  for (let i = 0; i < 60; i++) blotch(g, U(r, 0, PW), U(r, 0, PH), U(r, 30, 120), 1.6, r() < 0.5 ? "190,150,110" : "236,206,170", 0.12);
+  for (let i = 0; i < 6000; i++) { g.fillStyle = r() < 0.5 ? "rgba(150,110,80,0.12)" : "rgba(250,230,200,0.12)"; g.fillRect(U(r, 0, PW), U(r, 0, PH), 2, 2); }
+  g.fillStyle = "#a8825e"; g.fillRect(0, PH - 0.7 * m, PW, 0.7 * m);                                   // stone wainscot
+  for (let x = 0; x < PW; x += 0.5 * m) { g.fillStyle = "rgba(80,56,40,0.35)"; g.fillRect(x, PH - 0.7 * m, 2, 0.7 * m); }
+  g.fillStyle = "rgba(80,56,40,0.45)"; g.fillRect(0, PH - 0.72 * m, PW, 4);
+  g.fillStyle = "rgba(70,46,30,0.3)"; g.fillRect(0, 0, PW, 0.35 * m);                                   // viga shadow under the eave
+  const win = (cx: number, top: number, w: number, h: number) => {
+    g.fillStyle = "#5a3a26"; g.fillRect(cx - w / 2 - 6, top - 6, w + 12, h + 12);                     // deep-set frame
+    const gr = g.createLinearGradient(0, top, 0, top + h); gr.addColorStop(0, "#9aa6b8"); gr.addColorStop(0.5, "#6e7486"); gr.addColorStop(1, "#4e5262"); g.fillStyle = gr; g.fillRect(cx - w / 2, top, w, h);
+    g.fillStyle = "rgba(255,240,220,0.3)"; g.beginPath(); g.moveTo(cx - w / 2, top + h * 0.7); g.lineTo(cx - w / 2 + w * 0.5, top); g.lineTo(cx - w / 2 + w * 0.75, top); g.lineTo(cx - w / 2, top + h); g.fill(); // sky sheen
+    g.fillStyle = "#5a3a26"; g.fillRect(cx - 3, top, 6, h); g.fillRect(cx - w / 2, top + h * 0.45, w, 5);  // mullions
+    g.fillStyle = "#b89068"; g.fillRect(cx - w / 2 - 10, top + h + 6, w + 20, 10);                     // sill
+  };
+  const groups = [0.17, 0.5, 0.83];
+  groups.forEach((gx, gi) => { const cx = gx * PW;
+    if (gi === 1) { // the entry: double doors under a lintel
+      g.fillStyle = "#4a2e1c"; g.fillRect(cx - 1.0 * m, PH - 2.4 * m, 2.0 * m, 2.4 * m - 0.02 * m);
+      g.fillStyle = "#6e7486"; g.fillRect(cx - 0.9 * m, PH - 2.25 * m, 0.85 * m, 1.6 * m); g.fillRect(cx + 0.05 * m, PH - 2.25 * m, 0.85 * m, 1.6 * m);
+      g.fillStyle = "#8a6a44"; g.fillRect(cx - 1.15 * m, PH - 2.6 * m, 2.3 * m, 0.2 * m);
+      for (const dx of [-2.2, 2.2]) win(cx + dx * m, PH - 2.7 * m, 0.9 * m, 1.3 * m);
+    } else for (const dx of [-1.25, 0, 1.25]) win(cx + dx * m, PH - 2.9 * m, 0.85 * m, 1.55 * m);
+  });
+});
+/** a few distinct dry grass blades for a near-lens clump (straw, darker base, pale tips), alpha */
+export const bladeTex = () => ptex("atBlades", 128, 512, (g) => {
+  g.clearRect(0, 0, 128, 512);
+  const gr = g.createLinearGradient(0, 512, 0, 0); gr.addColorStop(0, "#8a6a40"); gr.addColorStop(0.45, "#c9a466"); gr.addColorStop(1, "#f0dcae");
+  g.fillStyle = gr; g.beginPath(); g.moveTo(44, 512); g.quadraticCurveTo(52, 260, 66, 0); g.quadraticCurveTo(70, 260, 84, 512); g.closePath(); g.fill();
+  g.strokeStyle = "rgba(90,64,36,0.5)"; g.lineWidth = 2; g.beginPath(); g.moveTo(64, 512); g.quadraticCurveTo(63, 260, 66, 6); g.stroke();
 });

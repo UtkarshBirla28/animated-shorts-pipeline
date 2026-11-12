@@ -36,6 +36,19 @@
 # card (+3 dB) with the flap tick before it; new life: wren chirp, clipboard flutter, whip gust + sand, sand scrape, raven
 # bolt + feather at the cha-ching, the chalk crowd shuffle, the full-stop snap, the red cap's 'heh-heh', the bulb chain +
 # hum swell, a far owl; the noon wind +3 dB across the loop seam.
+# Round 7 (A6): every word-keyed system reads timeline.py's ACOUSTIC word times; the camera's own motion (audio_probe.mjs
+# 'cam' rows, video clock) drives the whip / truck / arc air swishes (peak on the fastest frames, gone 2 f after the
+# landing); the cha-ching is split into a low 'ka-' ON the counter landing and the bell 'CHING' blooming in the stop-time
+# gap after '8%.'; the tag ding an octave up (D8); the shot-4 heap drop + pocket inserts; the WORLD-INT mail slot; the
+# whistle notes found again (the probe missed the note#<colour> cards); many small on-screen details (see cues.md).
+# Round 8 (A7 + the user's preview-7 notes; script v2): the probe reads the thieves' EMERGENCE clock (pops on it, taps on the
+# landing), the split-flap schedule + clock (WORLD-EXT may move it to video frames) and the wren's on-screen window; every
+# scripted whoosh (dive, fly-in, whips, truck) plays only while the probe still shows a FAST camera move (the calm camera);
+# the CHING rings alone and is gone 0.13 s before 'You see,'; flap ticks on a word -12 dB / 2-8 kHz -10 dB; the fiance's
+# walk-off steps; the chalk +6 dB; no car under the payoff; per-instance raven variation; the MYSTERY hush (park life -7 dB,
+# wind dip then the late-light rise, cicadas -8 dB, the post singing -2 st over the relight); new detail: the paperclip's
+# hand-back tick, a far hawk on the vista arrival, the shot-11 drafting marks (strip / compass / dimension / red ring / rub
+# out / underline), the classroom corridor + bell + page turn, the mail truck outside the night window.
 import os
 import re
 import json
@@ -98,7 +111,8 @@ def _probe():
 class Cue:
     def __init__(self, t, name, desc, gen, level, kind="event", p=0.0, lpf=None, space="out", send=0.08, group=None, post=None, pe=None, wcarve=None):
         self.t, self.name, self.desc, self.gen, self.level = t, name, desc, gen, level
-        self.wcarve = wcarve      # A5: extra dB on this cue's 1-4 kHz band while a word is spoken (small actions landing on words)
+        self.wcarve = wcarve      # A5: extra dB on this cue's 1-4 kHz band while a word is spoken (small actions landing on words);
+                                  # A6: or a dict(db, lo, hi, broad) - band dip + broadband trim while words sound
         self.kind, self.p, self.lpf, self.space, self.send = kind, p, lpf, space, send
         self.group = group or name
         self.post = post          # post(x) after the level match (e.g. the stamp's mid-band carve)
@@ -118,20 +132,27 @@ def _word_end(text, after_beat):
         return None
 
 
-def _flap_landings(seqs, f14):
+def _flap_landings(spec, f14=None):
     """sets_ext.ts FLAP_SEQ(target, f0): for c = 0..target a card flips c -> c+1 starting at f, lasting 3 f (c even) or
     2 f (c odd). A5 P1/P2: the clack goes where the viewer SEES the card change - 40 % into the flip, as the falling
     flap uncovers the new digit's top half and passes vertical (audit strip S34_s4_flaps_458-487: the new digit shows at
     video 461, 467, 471, 477 and the '14' at 481-482 = picture 347.0, 349.9, 352.4, 354.8, 357.7; the landing frames
-    f0 + d were 2-3 picture f = 4-6 VIDEO f late). Returns [(frame, is the last card of its digit)]; when both digits
-    flip together the tens card trails by 0.3 f."""
+    f0 + d were 2-3 picture f = 4-6 VIDEO f late). Returns [(PICTURE frame, is the last card of its digit)]; when both
+    digits flip together the tens card trails by 0.3 f. round 8: spec = {"seqs": [[target, start f], ...], "clock":
+    "picture" | "video"} from the probe (a VIDEO-clock schedule is mapped back onto the picture clock here); the old
+    [[target, start - tons14], ...] list form still works."""
+    if isinstance(spec, dict):
+        seqs, clock = [(int(t_), float(s_)) for t_, s_ in spec["seqs"]], spec.get("clock", "picture")
+    else:
+        seqs, clock = [(int(t_), float(f14) + float(o_)) for t_, o_ in spec], "picture"
     out = []
-    for j, (target, off) in enumerate(seqs):
-        f = f14 + off
+    for j, (target, f0) in enumerate(seqs):
+        f = f0
         lag = 0.3 if j == 0 and len(seqs) > 1 else 0.0          # seqs = [tens, ones] (sets_ext poseFlip)
         for c in range(int(target) + 1):
             d = 2 if c % 2 else 3
-            out.append((f + 0.4 * d + lag, c == target))
+            fv = f + 0.4 * d + lag
+            out.append((T.sec_to_old(fv / T.FPS) if clock == "video" else fv, c == target))
             f += d
     return sorted(out)
 
@@ -164,6 +185,25 @@ def _chalk_glyphs():
     return out
 
 
+_PICW = []
+
+
+def _pic_word_f(text, after_f=0.0):
+    """round 8: a word of the PICTURE clock (words.ts is generated from voice/_kokoro_v3/words.json; cast.ts PW(..)) ->
+    its picture frame, the first at / after after_f; None if missing"""
+    if not _PICW:
+        try:
+            with open(os.path.join(T.ROOT, "voice", "_kokoro_v3", "words.json"), encoding="utf-8") as f:
+                _PICW.extend(json.load(f))
+        except (OSError, ValueError):
+            return None
+    key = T._clean(text)
+    for w in _PICW:
+        if round(float(w["s"]) * T.FPS) >= after_f - 1e-6 and T._clean(w["w"]).startswith(key):
+            return int(round(float(w["s"]) * T.FPS))
+    return None
+
+
 def picture_events():
     B, S = T.BEAT, T.SHOTS
     A = lambda i: S[i]["a"]
@@ -186,10 +226,18 @@ def picture_events():
     # cast.ts thRaven(): the scripted ruffle tau 28-38 (A2: CHAR makes it a visible puff + wing spread at 28)
     d("raven_ruffle_1", [28], "CHAR r3 thRaven: the ruffle on the AUDIO cue (28): puff 1.15x + wings ~35 % for 7 f")
     d("raven_hop_1", [93], "CHAR r3 thRaven: a small hop on the rail at tau 93..101 (in frame with CAM r3's shot-1 lens: x 854 y 135)")
+    # A6 ADD: the background tourists' camera flashes in shot 1 (cast probe fx 'flash', in frame) get a faint shutter
+    d("shutter_1", None, "cast probe: the in-frame camera flashes of shot 1")
+    # A6 ADD: the TRAIL OPEN plate on its two chains swings with the gusts (sets_ext, loop clock): one soft chain creak on
+    # the strongest gust of shot 1, moved into the nearest word gap
+    d("chain_1", True, "sets_ext TRAIL OPEN plate: swings with the shared gust curve -> the strongest gust in shot 1")
     # ---- 2 vista
     # cast.ts vista(): the photographer's flash at mid-6 is OUT of the crane's frame (A2 P3: x -3442 px at 159): no cue until
     # CHAR stages a photographer in frame (A2 CHAR P1); then set {"vista_flash": <flash frame>} in picture_events.json
     d("vista_flash", None, "cast.ts vista() flash at mid-6 = 159 is off screen (audio_probe / project.mjs) -> no cue")
+    # A6 (WORLD-EXT r5): the white park pickup clears the entrance sign at video ~215 and drives left (0.31 m per video f)
+    # to the cut: a far engine + gravel, panned centre -> left (sets_ext poseA5b: s0 = sE + 0.31 (vf - 215))
+    d("pickup_2", {"vf_on": 215, "vf_lead": 10}, "sets_ext poseA5b: the shot-2 pickup clears the entrance sign at video 215, drives left")
     # ---- 3 pocketing (A1 P1 for CHAR: a 24 f action around BEAT.pocketing = B)
     P = B["pocketing"]
     d("chip_glint_3", P - 15, "CHAR A1-P1: a 4-point glint on the chip at B-16..B-9")
@@ -208,13 +256,26 @@ def picture_events():
       "224, flash(234, 3 f)")
     # A2: nobody strolls behind him in shot 3 (preview2 186-244) -> no footsteps
     d("steps_3", None, "no walker in shot 3's frame (preview2) -> none")
+    d("shift_3", None, "cast probe: his weight shift = the last in-frame dust puff of shot 3 (A6 ADD: video ~334)")
     # ---- 4 the sign
-    d("flip_seqs", [[1, -8], [4, -13]], "sets_ext poseFlip FLAP_SEQ(1, tons14-8) tens + FLAP_SEQ(4, tons14-13) ones: [target, start - tons14]")
-    # A4 P3: every flap that lands before the end of the word 'day...' (+1 f) is 6 dB softer (the K-weighted margin on
-    # 'day...' was 0.5 dB); the flaps on '14' stay full
-    wde = _word_end("day", "vandalized")
+    # round 8: the probe reads sets_ext poseFlip's own schedule + clock (WORLD-EXT may move it to the VIDEO clock: the
+    # 'It said... Warning!' window is squeezed 1.5x on the picture clock); default = the r7 picture formula
+    fp_ = (_probe().get("facts") or {}).get("flip") or {}
+    if fp_.get("seqs") and all(s_[1] is not None for s_ in fp_["seqs"]):
+        d("flip_seqs", {"seqs": [[int(t_), float(f_)] for t_, f_ in fp_["seqs"]], "clock": fp_.get("clock", "picture")},
+          f"audio_probe: sets_ext poseFlip FLAP_SEQ({fp_['seqs'][0][0]}, {fp_['expr'][0]}) tens + FLAP_SEQ({fp_['seqs'][1][0]}, {fp_['expr'][1]}) ones, "
+          f"{fp_.get('clock', 'picture')} clock")
+    else:
+        d("flip_seqs", {"seqs": [[1, B["tons14"] - 8.0], [4, B["tons14"] - 13.0]], "clock": "picture"},
+          "sets_ext poseFlip FLAP_SEQ(1, tons14-8) tens + FLAP_SEQ(4, tons14-13) ones (formula)")
+    # A4 P3 / script v2: every flap that lands before the end of '"Warning!' (+1 f) is 6 dB softer; A7 P2: a tick that lands
+    # INSIDE a word ('14' was masked) is -12 dB with its 2-8 kHz band -10 dB (sfx flap_seq)
+    try:
+        wde = float(T.word("warning", T.bt("vandalized") - 0.4)["e"])
+    except KeyError:
+        wde = None
     d("flip_hush_until", round(T.sec_to_old(wde) + 1, 2) if wde else B["tons14"] - 7,
-      "A4 P3: the flaps that land before the end of 'day...' (+1 f) are 6 dB softer")
+      "the flaps that land before the end of 'Warning!' (+1 f) are 6 dB softer")
     walk = []
     for x0 in (-3.5, -4.4):                         # cast.ts trailhead id 4: x = x0 + 1.1 (f - a) / 30, phase x / 1.4
         k = int(np.ceil(x0 / 0.7))
@@ -238,6 +299,17 @@ def picture_events():
     # chip (hand to the pocket from 424, the chip gone at 427) and whistles two notes (notes() at 428, 434); project.mjs:
     # x ~300 y ~1140-1210 (above the caption band) at 420-434
     d("redcap_pocket_4", 424, "CHAR r3 trailhead id 4: pk = ramp(424, 5), chip held until 427 -> rustle from 424, tick at 427")
+    # A6 LEAD P2: the cartoon heap of petrified chips drops in on BEAT.tons14 and lands ~6 VIDEO f later with a squash
+    # (WORLD-EXT; audio_probe reads sets_ext HEAP14_LAND when it is declared, else tons14 + 4 picture f)
+    hf_ = (_probe().get("facts") or {}).get("heap") or {}
+    # WORLD-EXT r7 poseHeap14 runs on the VIDEO clock: FALL = 6, v0 = toNew(tons14) - 1 -> lands on video v0 + 6 ('land_vf')
+    d("heap_4", ({"land": float(hf_["land"]) if hf_.get("land") is not None else (T.sec_to_old(float(hf_["land_vf"]) / T.FPS) if hf_.get("land_vf") is not None
+                  else B["tons14"] + 4), "land_vf": hf_.get("land_vf"), "fall_vf": hf_.get("fall_vf") or 6} if hf_.get("present") else None),
+      "LEAD plan.ts TH.heap14: drops on BEAT.tons14, lands ~6 video f later (sets_ext HEAP14_LAND if declared, else tons14 + 4 picture f); "
+      + ("sets_ext builds the heap" if hf_.get("present") else "NOT in sets_ext yet -> no sound"))
+    # A6 LEAD P2 / CHAR: three tourists at TH.pock[0..2] pocket a chip one after the other (14 video f apart from 'mostly' + 2):
+    # the cast probe's chip -> pocket hand changes of the 'pk' tourists (CHAR's video-frame contacts when they agree)
+    d("pock_4", None, "cast probe: the pock[] tourists' chips into their pockets (CHAR POCK4_V = video('mostly') + 2 + 14 k)")
     d("whistle_4", [428, 434], "CHAR r3 trailhead id 4: notes(..., [428, 434]) with the 'whistle' face 427-445")
     # the red-cap tourist behind the sign photographs it: the flash on 'vandalized'+18 is in frame (preview2 334-335), the
     # one on 'warning'+2 is hidden behind her hat (271-276) -> one shutter
@@ -258,6 +330,13 @@ def picture_events():
     rl = [r for r in (T.SHOTS[6].get("relight") or []) if r.get("to") == "late"]
     d("relight_6", {"f": rl[0]["f"], "dur": rl[0].get("dur", 60)} if rl else None, "story.ts SHOTS[6].relight (noon -> late)")
     d("cricket_6", (rl[0]["f"] + rl[0].get("dur", 60)) if rl else None, "A4 ADD: the first distant cricket as the late light settles (relight end)")
+    # A6 P3: the two gooseneck sign lamps flick on before 'steal?' (sets_ext: lamp gi = 2, 3 on at VIDEO toNew(steal2) - 11
+    # + 2 (gi - 2): on 1 f, off 2 f, then on) -> a soft relay click + a 60 ms filament buzz
+    vl = T.fr(B["steal2"]) * T.FPS - 11.0
+    d("lamps_6", [vl, vl + 3.0, vl + 2.0, vl + 5.0], "sets_ext: gooseneck lamps 2 / 3 flick on at video toNew(steal2) - 11 (+2): on, off 2 f, on (VIDEO frames)")
+    d("raven_tink_6", None, "cast probe: the raven's chip-snatch glint in shot 6 (fx 'glint', first in-frame frame)")
+    # A7 P3: the fiance's walk-off in shot 6 had no footsteps: his first 3 foot contacts after he starts walking (cast probe)
+    d("fiance_walk_6", None, "cast probe: the fiance's walk-off foot contacts in shot 6 (first 3)")
     # the tumbleweeds come from picture_probe.json (audio_probe.mjs) further down
     # ---- 7 the professor
     d("pen_write_7", [A(7) + 4, B["professor"] - 2], "cast.ts professor: writing while f < professor-2 (pen jiggles on the board)")
@@ -267,7 +346,21 @@ def picture_events():
       "(748 / 751 / 754; A5 P2: the SFX was 19 f late)")
     # A5 ADD: the canyon wren on the CRYSTAL plate hops at professor+14 (sets_ext.ts hop(h1), in frame: preview5 video 925);
     # its second hop (cialdini-6) is outside the frame after the camera move
-    d("wren_7", [B["professor"] + 14], "sets_ext.ts wren hop(h1 = professor+14): a faint cactus-wren chirp on the visible hop")
+    # A7 P3: the chirp played after the wren had left the frame -> the probe's on-screen window (audio_probe facts.wren):
+    # on the hop if it is in frame, else in a word gap while the bird is in frame (else mid-window), never in the dissolve
+    wr_ = (_probe().get("facts") or {}).get("wren") or {}
+    vis_w = [r_[0] for r_ in (wr_.get("vis") or []) if r_[3] and A(7) + 4 <= r_[0] < Z(7) - 4]
+    h1_ = wr_.get("h1", B["professor"] + 14)
+    if vis_w and h1_ is not None and any(abs(v_ - h1_) < 1 for v_ in vis_w):
+        d("wren_7", [float(h1_)], f"sets_ext wren hop h1 = {h1_} is in frame (audio_probe) -> chirp on the hop")
+    elif vis_w:
+        lo_, hi_ = vis_w[0] + 2, vis_w[-1] - 6
+        gp_ = [(a_, b_) for a_, b_ in T.gaps(0.12) if lo_ <= T.sec_to_old(a_ + 0.02) <= hi_]
+        fw_ = T.sec_to_old(gp_[-1][0] + 0.02) if gp_ else 0.5 * (lo_ + hi_)
+        d("wren_7", [round(fw_, 2)], f"audio_probe: the wren is in frame {vis_w[0]}-{vis_w[-1]} (hop h1 {h1_} is not) -> a chirp on a bob at {fw_:.1f}"
+          + (" (word gap)" if gp_ else " (mid-window)"))
+    else:
+        d("wren_7", None, "audio_probe: the wren is never in frame in shot 7 -> none")
     # A4 P2: the tallies keep growing on screen after the first scratch (preview4 video 852-858 / 868-874 = picture
     # professor+8..+13 / +24..+31): two more short scratch bursts on those strokes
     d("pen_more_7", [[B["professor"] + 8, B["professor"] + 13], [B["professor"] + 24, B["professor"] + 31]],
@@ -303,13 +396,20 @@ def picture_events():
     # far back holds up the stopwatch and clicks it (965-968; x 349 y 1115); reader B (tt([0.65,0,0.8]), in frame: x 701 at
     # 1004) pats his hip pocket on 'removed' (pat = 3 |sin((f - REM)/4 pi)|, back on the pocket every 4 f) and his hand goes
     # to the pocket from 1033 while a tourist up the path squats and pockets a marked chip (1031-1041, x 847)
-    rem = round(T.sec_to_old(float(T.word("removed", T.bt("many1"))["s"])))
+    # script v2: the PICTURE still runs on the old-script clock (words.ts PW(15, "removed") = cast.ts REM), so reader B's
+    # pats key to that picture word (voice/_kokoro_v3/words.json = the picture clock); fallback: the new 'take' through the warp
+    rem = _pic_word_f("removed", B["many1"])
+    if rem is None:
+        try:
+            rem = round(T.sec_to_old(float(T.word("take", T.bt("many1") - 0.3)["s"])))
+        except KeyError:
+            rem = B["many1"] + 20
     d("shutter_9", [905], "CHAR r3 signReaders: flash(905, 2 f) of the distant JASPER-path couple")
     d("stopwatch_9", [965], "CHAR r3 signReaders: asst2's stopwatch shows a click at 965-968")
     d("readerB_pats_9", [rem + 4, rem + 8], "CHAR r3 signReaders: reader B's hip pats from REM = 'removed' (every 4 f)")
     d("raven_land_9", [958, 962], "CHAR r3 signReaders: the raven glides with the truck and lands on B's LED at L0 = 958 (wing fold), hops 958-962-966")
     d("readerA_steps_9", None, "replaced by readerA_walk_9")
-    d("truck_air_9", B["another"] + 1, "story.ts CAMS[9] truck A -> B: key at another-16, dur 34 (peak speed mid-glide)")
+    d("truck_air_9", {"peak": B["another"] + 1}, "story.ts CAMS[9] truck A -> B: key at another-16, dur 34 (peak speed mid-glide)")
     # reader B (tt([1.0,0,0.6])) is OFF screen right the whole shot (project.mjs x ~1300 at 964-990): his 'shifty' weight
     # shift (1000) and pocket move (1036) have no picture (A2 P3) -> none until CHAR stages a pocketer at B (A2 CHAR P2: 1033-1038)
     d("readerB_pocket_9", rem + 6, "CHAR r5 signReaders: reader B's chip goes into his hip pocket at REM+6 ('removed'), pats REM+10..+16")
@@ -328,7 +428,8 @@ def picture_events():
     d("shutter_10", [1150], "CHAR r3 results: crowd member 3 photographs the PANEL, flash(1150, 2 f) (CAM r3: x 799 y 932)")
     d("glint_10", [1168], "CHAR r3 results: one holds his chip up to the sun, glintAt(1168, 6 f) (x 617 y 901)")
     d("counter_B", {"target": 7.92, "land": B["pct8"]}, "sets_ext poseLed val(7.92, BEAT.pct8)")
-    d("cha_ching", B["pct8"], "the counter lands ON '8%'")
+    d("cha_ching", B["pct8"], "the counter lands ON '8%': the low 'ka-' thunk (A6 P1); the bell 'CHING' blooms in the stop-time gap after '8%.'")
+    d("bang_10", None, "cast probe: tourist A's '!' card (fx 'bang', first in-frame frame) -> a tiny 'pip' sting")
     # A5 ADD: the raven on Sign B's LED box bolts at the cha-ching (cast probe wing run at pct8) and a loose feather drifts
     # down past the LED (fx 'feather' 1191-1210)
     d("raven_bolt_10", B["pct8"], "cast.ts results: the raven bolts off Sign B's LED box at the cha-ching (wings out on pct8)")
@@ -340,7 +441,17 @@ def picture_events():
     d("bp_path_11", B["youSee"] + 2, "sets_int: the path rails draw f0 = youSee+2 .. +15, footstep dashes")
     d("bp_circle_11", B["youSee"] + 10, "sets_int: dashed circle marker f0+8 .. f0+20")
     d("bp_rule_11", B["copyRules"] - 10, "sets_int: junction copyRules-10..-8, THE RULE arrow copyRules-8 over 16 f")
-    d("bp_rule_label_11", B["copyRules"] + 2, "sets_int: label 'THE RULE' pops (outBack 8 f)")
+    # carry-over: sets_int label5('bpRule5', ...) pops at PV(toV(BEAT.copyRules) - 2.5) (VIDEO clock), its dust R(...) 1 f later
+    d("bp_rule_label_11", round(T.sec_to_old((T.fr(B["copyRules"]) * T.FPS - 2.5) / T.FPS), 2), "sets_int: label 'THE RULE' pops at PV(toV(copyRules) - 2.5)")
+    # carry-over (WORLD-INT r7): the drafting marks in the pause after 'You see,' write themselves on the VIDEO clock
+    # P(dv) = PV(toV(youSee) + dv): the PROBLEM strip 11-29, compass rose 17-31, dimension arrow 21-35 (+ end ticks / heads
+    # 34-37), the red-pencil ring round STEAL? 32-40, all rubbed out at 63 (6 f); the red double underline on 'Many'
+    # (manySteal - 1 .. + 6, picture)
+    vy_ = T.fr(B["youSee"]) * T.FPS
+    d("bp_draft7_11", {"strip": [vy_ + 11, vy_ + 29], "compass": [vy_ + 17, vy_ + 31], "dim": [vy_ + 21, vy_ + 35], "heads": [vy_ + 34, vy_ + 37],
+                       "ring": [vy_ + 32, vy_ + 40], "rub": [vy_ + 63, vy_ + 69],
+                       "underline": [T.fr(B["manySteal"] - 1) * T.FPS, T.fr(B["manySteal"] + 6) * T.FPS]},
+      "sets_int r7: the drafting marks after 'You see,' (VIDEO frames from toV(youSee)) + the red underline on 'Many'")
     d("bp_crowd_11", B["copyEach"] + 3, "sets_int: junction copyEach+3..+6, EVERYONE ELSE arrow copyEach+6 over 16 f")
     d("bp_crowd_label_11", B["eachOther"] + 2, "sets_int: label 'EVERYONE ELSE' pops")
     # A3 P2: cast.ts walks him from w0 = copyEach+2 at 1.4 m/s and STOPS at manySteal-2; toon.ts lands a foot every half
@@ -353,8 +464,20 @@ def picture_events():
     d("bp_crowd_walk_11", {"start": B["copyEach"] + 11, "end": T.SHOTS[11]["b"]}, "cast.ts blueprint: the EVERYONE ELSE crowd stream walks (chalkc* cards)")
     # sets_int poseBlueprint: THIEF_N = 30 cut-outs, thief i leaves the picture at everyone + i/2.5 (scale 0.35 -> 1, so it
     # separates from the picture ~2 f later: A2 P3 saw the first ones pop at 1379-1380), flies 9 f and lands standing (squash)
-    d("thief_pops_11", {"start": B["everyone"] + 2, "count": 30, "rate": 2.5, "land": 9},
-      "sets_int: thief i at everyone + i/2.5 (THIEF_N 30), visible from +2 f; lands 9 f later (chalk-paper tap)")
+    th_ = (_probe().get("facts") or {}).get("thieves") or {}
+    # A7 P2: the pops sat 6 f late (the sound started at everyone + 2, the picture's `fe = BEAT.everyone - 3`): thief i
+    # EMERGES at fe + i / rate (already 0.35 scale and visible) -> pop i there; its paper tap on the landing (fe + i/rate + flight)
+    fe_ = th_.get("fe")
+    fe_v = th_.get("fe_clock") == "video"
+    d("thief_pops_11", {"start": (T.sec_to_old(float(fe_) / T.FPS) if fe_v else float(fe_)) if fe_ is not None else B["everyone"] - 3.0,
+                        "count": int(th_.get("n") or 30), "rate": float(th_.get("rate") or 2.5), "land": float(th_.get("flight") or th_.get("land") or 9)},
+      f"sets_int: thief i emerges at fe + i/{th_.get('rate') or 2.5} (fe = {th_.get('fe_expr') or 'BEAT.everyone - 3'}, THIEF_N {th_.get('n') or 30}, "
+      f"read by audio_probe), lands {th_.get('flight') or th_.get('land') or 9} f later")
+    # A6 ADD: the chalk notes 1.67 % (copyRules + 9, 12 f) and 7.92 % (eachOther + 9, 12 f) write themselves in (sets_int wipes)
+    d("pct_notes_11", [[B["copyRules"] + 9, 12, "1.67 %"], [B["eachOther"] + 9, 12, "7.92 %"]], "sets_int: the 1.67 % / 7.92 % chalk notes wipe in")
+    # A6 ADD: the drafting furniture (sheet, compass, scale bar, FIG. 2, the dimension chain) draws itself from manySteal + 9
+    ld = B["manySteal"] + 9
+    d("draft_11", [[ld, 12], [ld + 4, 13], [ld + 8, 12], [ld + 13, 11], [ld + 18, 12]], "sets_int: dimension chain land..+12, sheet +4, compass +8, scale +13, FIG. 2 +18")
     # ---- 12 classroom
     d("chalk_12", [[round(a, 2), round(b, 2), ch] for a, b, ch in _chalk_glyphs()], "sets_int chalkWords()/glyphs(): letter windows (frames)")
     d("bubble_12", B["everybody"] - 1, "cast.ts classroom: the student's bubble pops at everybody-1 (scale 0.55)")
@@ -365,12 +488,16 @@ def picture_events():
     d("whip_12", {"center": B["cheated"] - 4 + 0.6 * 54, "half": 8}, "story.ts arc12: ARC12A = cheated-4, ARC12D = 54, fastest ~cheated+28 (A4 P3: video ~1815)")
     d("pencils_12", [B["cheated"] + 36, B["cheated"] + 46, B["cheated"] + 57], "A4 P3: 2-3 faint pencil scratches from the seated pupils after the whip")
     d("chair_12", B["everybody"] + 2, "A4 ADD: one chair creak on 'everybody' (a pupil shifts as the bubble pops)")
+    d("react_12", True, "A6 ADD: the room reacts in the gap after '\"Half this class cheated.\"' (pencil drop, desk scrape, one gasp)")
     # A5 ADD: a crisp chalk 'tok' + tiny snap on the full stop of 'CHEATED.' (its glyph window, the dot shows mid-window)
     dots = [0.5 * (a + b) for a, b, ch in _chalk_glyphs() if ch == "."]
     d("chalk_dot_12", dots[0] if dots else None, "sets_int chalkWords(): the '.' of 'CHEATED.' is drawn mid-window -> a chalk tok + snap")
     # ---- 13 permission
     d("thieves_pocket_13", [B["thieves"], B["thieves"] + 3, B["thieves"] + 7], "CHAR A1-P1: three backlit tourists pocket chips on 'thieves', 3-4 f apart")
-    d("stamp", B["permission"], "sets_ext poseStamp: falls F-5..F, squash F..F+2, hold to F+8, lift F+8..F+17")
+    sf_ = ((_probe().get("facts") or {}).get("stamp") or {})
+    d("stamp", float(sf_["F"]) if sf_.get("F") is not None else B["permission"], "sets_ext poseStamp: F = " + str(sf_.get("expr") or "BEAT.permission")
+      + " (read by audio_probe): falls F-5..F, squash F..F+2, hold to F+8, lift F+8..F+17")
+    d("chip_pop_13", None, "cast probe: the chip popping out on the slam glints (fx 'glint' in shot 13, CHAR: 1589)")
     d("photo_13", [1598], "cast.ts permission: her flash(1598, 6 f) on the stamped sign (in frame, preview2 1598-1603)")
     # A2 P3: the raven bolts off Sign B's LED box on the slam (cast.ts fo = F, wings out 1585-1588, two loose feathers
     # drifting 1588-1597): two fast flaps after the slam's 150 ms mid-band dip, then a feather flutter
@@ -394,20 +521,29 @@ def picture_events():
       "CHAR r5 storeroom: FS[1..3] = conscience+10 (CHAR: dig 1669, chips 1680-1686), pieces+4, pieces+4+gap")
     d("bait_scoop_14", [B["bait"] + 1], "CHAR r3 storeroom: the first scoop ON 'the bait wood?' (FS[0] = bait+1), already loaded when the insert "
       "opens: no dig; the blade tips at fs+4 and its 4 chips land fs+10.6 .. +13.6 (A5 P3: preview5 video 2149-2153)")
-    d("mail_flap_14", B["mailed"] - 7, "sets_int poseStoreroom: open = f >= mailed-7 (1724; matches WORLD-INT A2-P2 'swing the flap on 1724')")
+    # A6 (WORLD-INT r6 sets_int poseStoreroom): fOpen = mailed - 4.4: the flap knocks twice (bumps peak at fOpen - 3.15 and
+    # fOpen - 1.05), snaps open in 1 f at fOpen, shuts at fOpen + 4.2 (slap 1.5 f later), swings twice (w = 4.4, 8.8 f);
+    # the tear-off sheet rips at mailed - 0.3; the second mail: fOpen2 = apology + 20 - 7.5, its box lands apology + 20
+    fo_, fo2_ = B["mailed"] - 4.4, B["apology"] + 20 - 7.5
+    d("mail_flap_14", fo_, "sets_int: the flap snaps open at fOpen = mailed - 4.4")
+    d("mail_knock_14", [fo_ - 3.15, fo_ - 1.05], "sets_int flapAng: two knocks from outside (bumps peak at fOpen - 3.15, - 1.05)")
+    d("mail_shut_14", [fo_ + 4.2 + 1.5, fo_ + 4.2 + 1.5 + 4.4], "sets_int flapAng: the flap slaps shut (shut + 1.5) and taps once on its first swing back")
+    d("tear_14", B["mailed"] - 0.3, "sets_int: the LETTERS THIS YEAR tear-off sheet rips at mailed - 0.3")
+    d("mail2_14", {"snap": fo2_, "land": B["apology"] + 20}, "sets_int: the second mail - flap snaps at apology + 12.5, the box lands apology + 20")
     # sets_int: item(mailEnv, land = mailed), item(mailBox, land = mailed + 3): the padded envelope lands ON 'mailed' (1731),
     # the taped parcel 3 f later (1734) - preview2 crops 1728-1735 confirm (A2 P2: they were swapped)
     d("parcel_14", B["mailed"] + 3, "sets_int: item(mailBox, mailed+3): the parcel lands 1734 (preview2: in the chute 1731, lip 1732, falls 1733)")
-    d("envelope_14", B["mailed"], "sets_int: item(mailEnv, mailed): the envelope lands ON 'mailed' 1731 (preview2: lip 1729, mid-fall 1730)")
+    d("envelope_14", B["mailed"] + 5, "sets_int r6: item(mailEnv, fOpen + 2.4, mailed + 5): the envelope lands 2 f after the parcel")
     # A4 P3: the letter is picked at LB = apology-6 and lifted to the lens LC = apology-4 .. +6 (cast.ts storeroom; video
     # 2140-2146): the rustle starts on the pick and covers the lift
     d("letter_pick_14", B["apology"] - 6, "cast.ts storeroom: LA = apology-10 (reach), LB = apology-6 (picked, hold 'letter'), lifted LC = apology-4 over 6 f")
     # A4 ADD: chips sliding / settling on the CONSCIENCE PILE a few frames after each scoop bites it (the bite is fs-5)
-    d("rocks_14", None, "A4 ADD: the pile settles after each visible bite (fs+2), from scoops_14")
-    d("letters_hop_14", [B["apology"] + 3 * k for k in range(3)], "sets_int: the three hero letters hop at apology + 3i")
+    d("rocks_14", None, "A4 ADD: the pile settles after each visible bite (fs+2) - A6 P3: dropped (the reveal line was cluttered)")
+    d("letters_hop_14", [B["apology"]], "sets_int: the three hero letters hop at apology + 3i - A6 P3: only the first one sounds")
     # A5 ADD (WORLD-INT r4): the hanging bulb swings when the parcel lands (mailed+3, decays ~1.5 s): a chain 'tink' at
     # mailed+4 and a short mains-hum swell that decays with the swing
-    d("bulb_14", B["mailed"] + 4, "sets_int: the hanging bulb swings on the parcel landing (mailed+3): chain tink + hum swell")
+    d("bulb_14", B["mailed"] + 4, "sets_int: the hanging bulb swings on the parcel landing (mailed+3): hum swell (A6 P3: no chain tink)")
+    d("snap_band_14", True, "A6 ADD: a rubber band snaps on a parcel in the gap after 'apology letters.' (callback to the borrowed paperclip)")
     # A5 ADD: one far owl hoot through the night window, in the word gap before 'So some of it' (if it falls in shot 14)
     d("owl_14", B["soSome"], "A5 ADD: a far owl hoot in the gap before 'So some of it' (night by ear, no words added)")
     # ---- 15 dusk
@@ -420,6 +556,7 @@ def picture_events():
     d("card_flick_15", B["twice"] - 3.5, "CHAR r5: the tag flap shuts at 1825-1826, a soft flick tick there (tag2 key - 1.5)")
     # A4 ADD: one far nighthawk 'peent' once the dusk shot is up (dusk life), long before the loop seam
     d("nighthawk_15", T.SHOTS[15]["a"] + 5, "A4 ADD: a far nighthawk 'peent' as the dusk shot settles (S15.a+5), fades well before the loop")
+    d("kiosk_lamp_15", [B["soSome"] + 9, B["soSome"] + 12], "sets_ext: the kiosk post lamp flicks on at soSome + 9 (on 1 f, off 2 f, on at + 12)")
     # A3 P3: the two pats (twice+2 + 5 k) are a 4.8-unit hand dip inside the camera whip - nobody sees them -> none
     # (if CHAR draws a readable pat, e.g. a 10 px drop for 3 f, set "pats_15": ["twice+7", "twice+12"] in picture_events.json)
     d("pats_15", None, "A3 P3: no visible pat (hand static / blurred at 1836, 1841) -> none")
@@ -455,6 +592,7 @@ def picture_events():
       "the LED boxes are in frame in shot 8's wide (from CUT8), 9, 10 (rolling) and 13: a faint driver buzz under the wind")
 
     d("raven_auto", None, "cast probe: the other ON-SCREEN raven hops / ruffles (cast.ts raven() idle life) -> soft flutters / claw ticks")
+    d("cam_moves", None, "audio_probe 'cam': the camera's fast pans / trucks / arcs on the video clock (whip swishes)")
 
     _apply_cast(D, SRC)                         # the picture's own frames (cast probe) over the formulas above
     over = {}
@@ -474,8 +612,9 @@ def picture_events():
 # ================================================================ round 4: follow the picture's own frames (cast probe)
 RAVEN_KEYS = ("raven_ruffle_1", "raven_hop_1", "raven_4", "raven_ruffle_4", "raven_wing_5", "raven_6", "raven_9", "raven_land_9", "raven_13",
               "feathers_13")
-HIT_BEATS = ("paperclip", "steal1", "tons14", "now", "honest", "pct2", "pct8", "permission", "mailed", "twice")
+HIT_BEATS = ("paperclip", "steal1", "tons14", "now", "honest", "steal2", "pct2", "pct8", "permission", "mailed", "twice")   # r8: + 'steal?' (the mystery's key word)
 RAVEN_AUTO_MAX = 2                              # per shot
+RAVEN_AUTO_SHOT = {6: 1}                         # r8: the mystery shot is a hush - one soft raven move at most (no board creak)
 
 
 def _apply_cast(D, SRC):
@@ -551,11 +690,20 @@ def _apply_cast(D, SRC):
         setv("bubble_in", (a_on - 1) if rev else r[0][0], f"bubbleClip card {r[0][0]}-{r[0][1]}, in frame from {a_on}: "
              + ("revealed full-size by the camera tilt -> a soft reveal, not a pop" if rev else "pops in on screen"))
         setv("bubble_reveal", bool(rev), "the bubble is first in frame on " + str(a_on) + (" (camera tilt reveal)" if rev else " (pops in on screen)"))
-        setv("bubble_out", round(r[0][1] - 1.3, 2), f"bubbleClip card {r[0][0]}-{r[0][1]}: shrinks {r[0][1] - 1}-{r[0][1]} (A5: audit 82.7)")
+        setv("bubble_out", round(r[0][1] - 0.5, 2), f"bubbleClip card {r[0][0]}-{r[0][1]}: shrinks {r[0][1] - 1}-{r[0][1]} (A6 P2: on the shrink, ~video 81.5)")
+    fl1 = [on_run(r_)[0] for r_ in fxr(1, "flash", on=False) if on_run(r_)[0] is not None]
+    setv("shutter_1", [float(x) for x in fl1] or None, "in-frame camera flashes of shot 1: " + (", ".join(map(str, fl1)) or "none"))
     g1 = fxr(1, "glint")
     if g1:
         follow("glint", 1, [g1[0][0] + 0.8], 6, f"the glint star's run {g1[0][0]}-{g1[0][1]} (A5 P3: ding 0.8 f after its first frame, video ~167.5)")
+    # ---- 2: one far shutter on the last in-frame photographer's flash
+    fl2 = [on_run(r_)[0] for r_ in fxr(2, "flash", on=False) if on_run(r_)[0] is not None]
+    if fl2:
+        setv("vista_flash", float(fl2[-1]), f"the in-frame flashes of shot 2 ({', '.join(map(str, fl2))}): one far shutter on the last")
     # ---- 3
+    pf3 = [on_run(r_)[0] for r_ in fxr(3, "puff", on=False) if on_run(r_)[0] is not None]
+    if pf3:
+        setv("shift_3", float(pf3[-1]), f"his weight shift kicks up the dust puff at {pf3[-1]} (A6 ADD: a gravel scuff)")
     follow("pocket_3", 3, [h[0] - 4 for h in holds(3, "chip", None, tgts=POCKET)], 6, "the chip leaves his hand into the pocket (tick 4 f into the cue)")
     nb3 = sorted((sh(3) or {}).get("notes", []))
     w3 = D.get("whistle_3")
@@ -567,6 +715,30 @@ def _apply_cast(D, SRC):
     follow("redcap_pocket_4", 4, [h[0] - 3 for h in holds(4, "chip", None)], 6, "the red-cap tourist's chip leaves his hand (tick 3 f into the cue)")
     follow("whistle_4", 4, sorted((sh(4) or {}).get("notes", [])), 4, "whistle-note births")
     follow("shutter_4", 4, [r[0] for r in fxr(4, "flash")], 4, "on-screen camera flash")
+    # A6 LEAD P2: the pock[] tourists (CHAR 'pk' cards) - each chip that leaves a hand into a pocket; seen when the head is
+    # in frame or the pat's dust puff is (a hand CU); timed on CHAR's video-frame contact when it agrees with the probe
+    pk4 = holds(4, "chip", None, who=r".*pk.*", tgts=POCKET)
+    if pk4:
+        pf4 = [r_ for r_ in fxr(4, "puff", on=False)]
+        try:
+            v0 = round(float(T.WORDS_JSON[[i for i, w in enumerate(T.WORDS_JSON) if T._clean(w["w"]) == "mostly"][0]]["s"]) * T.FPS) + 2
+        except IndexError:
+            v0 = None
+        out4 = []
+        for k, (f_, who, x_, y_) in enumerate(pk4):
+            on_ = any(h[0] == f_ and h[1] == who and h[8] for h in (sh(4) or {}).get("holds", []))
+            puff_on = any(f_ - 1 <= r_[0] <= f_ + 4 and on_run(r_)[0] is not None for r_ in pf4)
+            if not (on_ or puff_on):
+                continue
+            vf_ = None
+            if v0 is not None:
+                cands = [v0 + 14 * j for j in range(3)]
+                best = min(cands, key=lambda c: abs(T.sec_to_old(c / T.FPS) - f_))
+                if abs(T.sec_to_old(best / T.FPS) - f_) <= 2.0:
+                    vf_ = float(best)
+            out4.append({"f": float(f_), "vf": vf_, "who": who})
+        setv("pock_4", out4 or None, f"{len(pk4)} pk chips into pockets, {len(out4)} on screen: " + ", ".join(
+            f"{o['who']} {o['f']:g}" + (f" (video {o['vf']:g})" if o["vf"] is not None else "") for o in out4))
     if sh(4):
         steps = sorted(c[0] for w, cs in sh(4).get("walks", {}).items() for c in cs if c[3] and c[0] < B["vandalized"] - 24)
         gaps = np.diff(steps) if len(steps) > 1 else np.array([99.0])
@@ -579,6 +751,21 @@ def _apply_cast(D, SRC):
             setv("hand_mouth_5", hm[0] - 1, f"her whisper hand first moves on {hm[0]} -> the sleeve swish starts 1 f before")
     follow("sweat_5", 5, [r[0] for r in fxr(5, "sweat")], 4, "the fiance's sweat drop pops on")
     follow("shutter_5", 5, [r[0] for r in fxr(5, "flash")], 8, "on-screen camera flash (projection only: not occlusion-checked)")
+    # ---- 6: the raven's chip-snatch glint
+    gl6 = [on_run(r_)[0] for r_ in fxr(6, "glint", on=False) if on_run(r_)[0] is not None]
+    if gl6:
+        setv("raven_tink_6", float(gl6[0]), f"the raven's chip glints in frame at {gl6[0]} (CHAR: the peck / snatch)")
+    if sh(6):
+        fw6 = [c[0] for c in sh(6).get("walks", {}).get("fiance", [])]
+        st6 = modes(6, "stand", "walk", r"fiance")
+        vis6 = (sh(6).get("vis") or {}).get("fiance") or []
+        last_seen = max([b_ for a_, b_ in vis6] or [-1])
+        if st6 and fw6:
+            cs6 = [c for c in fw6 if c >= st6[0]][:3]
+            # his head leaves the frame first (an MCU); the stride stays visible a little longer -> contacts up to 18 f after
+            cs6 = [c for c in cs6 if c <= last_seen + 18]
+            setv("fiance_walk_6", [round(float(c), 2) for c in cs6] or None, f"he starts walking on {st6[0]}, contacts {', '.join(f'{c:g}' for c in fw6[:4])}, "
+                 f"head in frame until {last_seen} -> steps on {', '.join(f'{c:g}' for c in cs6) or 'none'}")
     # ---- 8
     cs8 = [h for h in holds(8, "chip", None, tgts=("ground",), on=True)]
     if sh(8):
@@ -586,9 +773,13 @@ def _apply_cast(D, SRC):
         setv("chip_set_8", [round(float(h[0]), 2) for h in cs8] or None, "every on-screen chip that leaves a hand onto the trail: "
              + ", ".join(f"{h[0]} ({h[1]}{', dust puff = thud' if any(abs(p_ - h[0]) <= 1 for p_ in puffs) else ''})" for h in cs8))
         setv("chip_thud_8", [float(h[0]) for h in cs8 if any(abs(p_ - h[0]) <= 1 for p_ in puffs)], "the chip set-downs with a dust puff (a dull thud)")
+        dd8 = [on_run(r_)[0] for r_ in fxr(8, "chipHeroD", on=False) if on_run(r_)[0] is not None]
+        if dd8 and D.get("dot_dab_8") is not None:   # A7 P3: the dab ON the frame the white dot appears (preview7: video 1068)
+            setv("dot_dab_8", float(dd8[0]), f"the dotted chip card (fx 'chipHeroD') is first in frame at {dd8[0]}: the dab lands on the first video frame showing it")
         sw = [r_ for r_ in fxr(8, "stopw1f", on=False) if on_run(r_)[0] is not None]
-        if D.get("stopwatch_8") is not None:
-            follow("stopwatch_8", 8, [r_[0] for r_ in sw], 3, "the stopwatch thumb press (fx 'stopw1f') IN FRAME")
+        if D.get("stopwatch_8") is not None:      # A6 P2: the press itself, wherever CHAR puts it (it was 20 f from the formula)
+            setv("stopwatch_8", float(on_run(sw[0])[0]) if sw else None, "the stopwatch thumb press (fx 'stopw1f') IN FRAME at "
+                 + (str(on_run(sw[0])[0]) if sw else "- (none in frame)"))
         wk3 = modes(8, "stand", "walk", r"asst3")
         if wk3 and D.get("asst3_turn_8") is not None:
             setv("asst3_turn_8", float(wk3[0]), f"asst3 starts walking off on {wk3[0]}")
@@ -620,6 +811,9 @@ def _apply_cast(D, SRC):
     follow("shutter_10", 10, [r[0] for r in fxr(10, "flash") if abs(r[0] - B["pct8"]) > 3], 6, "on-screen camera flash (not the one under the cha-ching)")
     follow("glint_10", 10, [r[0] for r in fxr(10, "glint")], 6, "the chip held up to the sun glints")
     follow("whistle_10", 10, sorted((sh(10) or {}).get("notes", [])), 4, "whistle-note births")
+    bg10 = [on_run(r_)[0] for r_ in fxr(10, "bang", on=False) if on_run(r_)[0] is not None]
+    if bg10:
+        setv("bang_10", float(bg10[0]), f"tourist A's '!' card is in frame from {bg10[0]}")
     # ---- 11: the walk-off
     if sh(11):
         cs = [c for c in sh(11).get("walks", {}).get("bp", []) if c[3]]
@@ -635,6 +829,9 @@ def _apply_cast(D, SRC):
              "(ticks 3 f into the cue)")
         fl13 = [r[0] for r in fxr(13, "flash")]
         setv("photo_13", fl13 or None, "every on-screen camera flash (A5: + the back silhouette's at 1572): " + ", ".join(map(str, fl13)))
+        gp13 = [on_run(r_)[0] for r_ in fxr(13, "glint", on=False) if on_run(r_)[0] is not None and r_[0] >= B["permission"]]
+        if gp13:
+            setv("chip_pop_13", float(gp13[0]), f"the chip popped off by the slam glints at {gp13[0]}")
     # ---- 14: the letter pick (the hand's hold changes to 'letter'); A5 P3: if he takes it OUTSIDE the frame, the rustle
     # moves to the frame he comes back into view holding it (preview5: picked at video 2288, enters ~2294)
     vis14 = (sh(14) or {}).get("vis", {})
@@ -751,9 +948,100 @@ def _apply_cast(D, SRC):
                         continue
                     cand.append([int(a), int(b), kind, sid, int(x), int(px)])
         cand.sort(key=lambda c: -c[5])
-        auto += sorted(cand[:RAVEN_AUTO_MAX])
+        auto += sorted(cand[:RAVEN_AUTO_SHOT.get(sid, RAVEN_AUTO_MAX)])
     setv("raven_auto", sorted(auto) or None, f"{len(auto)} on-screen raven moves without a scripted cue: "
          + ", ".join(f"{k} {a}-{b} (shot {s_})" for a, b, k, s_, _, _ in sorted(auto)))
+    _apply_cam(D, SRC)
+
+
+# ================================================================ round 7 (A6 P3): the camera's own moves (audio_probe 'cam')
+CAM_ON, CAM_MIN_F = 0.8, 4            # deg / video f to count as moving; shortest move (video f)
+CLAIM = {"whip_8": 8, "whip_12": 12, "truck_air_9": 9}   # scripted moves that take their timing from the probe
+CLAIM_MIN = {"whip_8": 2.5, "whip_12": 2.5, "truck_air_9": 1.2}   # round 8: the least peak speed (deg / video f) that still gets air
+
+
+def cam_segments():
+    """the camera's moves from picture_probe.json 'cam' (VIDEO frames): [{a, b, pk, peak, shot, lat, curve}]"""
+    rows = (_probe().get("cam") or {}).get("rows") or []
+    if not rows:
+        return []
+    fl = np.array([r[3] for r in rows], float)
+    cut = np.array([r[5] for r in rows], int)
+    on = (fl > CAM_ON) & (cut == 0)
+    out, i = [], 0
+    while i < len(on):
+        if not on[i]:
+            i += 1
+            continue
+        j = i
+        while j + 1 < len(on) and on[j + 1] and rows[j + 1][2] == rows[i][2]:
+            j += 1
+        if j - i + 1 >= CAM_MIN_F:
+            k = i + int(np.argmax(fl[i:j + 1]))
+            out.append(dict(a=i, b=j, pk=k, peak=float(fl[k]), shot=int(rows[k][2]), lat=float(sum(rows[q][4] for q in range(i, j + 1))),
+                            curve=[float(x) for x in fl[i:j + 1]]))
+        i = j + 1
+    return out
+
+
+def _apply_cam(D, SRC):
+    segs = cam_segments()
+    if not segs:
+        return
+    used = set()
+    # the scripted swishes take the probe's real move nearest their formula peak (same shot, within 24 video f); round 8
+    # (the user: a calm camera, no whips except <= 2 deliberate comic ones): a scripted swish whose move is no longer FAST
+    # in the probe (peak under CLAIM_MIN deg / video f) is DROPPED instead of falling back to its formula timing
+    for key, sid in CLAIM.items():
+        v = D.get(key)
+        if not v:
+            continue
+        f_ref = float(v.get("peak", v.get("center", v.get("start", 0)))) if isinstance(v, dict) else float(v)
+        vref = T.fr(f_ref) * T.FPS
+        cand = [s_ for s_ in segs if s_["shot"] == sid and abs(s_["pk"] - vref) <= 24 and s_["peak"] >= CLAIM_MIN.get(key, 2.5)]
+        if cand:
+            s_ = max(cand, key=lambda q: q["peak"])
+            used.add(s_["a"])
+            D[key] = dict(v, vf=[s_["a"], s_["pk"], s_["b"]], curve=s_["curve"], lat=s_["lat"])
+            SRC[key] = SRC.get(key, "") + f" | camera probe: the move runs video {s_['a']}-{s_['b']}, fastest at {s_['pk']} ({s_['peak']:.1f} deg/f)"
+        else:
+            D[key] = None
+            SRC[key] = SRC.get(key, "") + f" | camera probe: no fast move (>= {CLAIM_MIN.get(key, 2.5)} deg/f) near video {vref:.0f} in shot {sid} -> no swish"
+    # the formula-timed air of the shot-1 dive into the rock and the shot-7 fly into the clipboard: kept only while the
+    # probe still shows a fast camera move there
+    rows = (_probe().get("cam") or {}).get("rows") or []
+    if rows:
+        def vmax(sids, v0, v1):
+            return max([r_[3] for r_ in rows if r_[2] in sids and v0 <= r_[0] <= v1 and not r_[5]] or [0.0])
+        if D.get("snap_push") is not None:
+            v0 = T.fr(float(D["snap_push"])) * T.FPS
+            pk_ = vmax((1, 2), v0 - 2, v0 + 32)
+            if pk_ < 2.5:
+                D["snap_push"] = None
+                SRC["snap_push"] = SRC.get("snap_push", "") + f" | camera probe: the dive peaks at only {pk_:.2f} deg/f -> no whoosh"
+            else:
+                SRC["snap_push"] = SRC.get("snap_push", "") + f" | camera probe: the dive peaks at {pk_:.2f} deg/f"
+        fl = D.get("fly_7")
+        if isinstance(fl, dict):
+            v0, v1 = T.fr(float(fl["start"])) * T.FPS, T.fr(float(fl["end"])) * T.FPS
+            pk_ = vmax((7, 8), v0 - 2, v1 + 4)
+            if pk_ < 2.0:
+                D["fly_7"] = None
+                SRC["fly_7"] = SRC.get("fly_7", "") + f" | camera probe: the fly-in peaks at only {pk_:.2f} deg/f -> no air"
+            else:
+                SRC["fly_7"] = SRC.get("fly_7", "") + f" | camera probe: the fly-in peaks at {pk_:.2f} deg/f"
+    # the others: a fast pan / truck / arc (peak >= 4 deg/f, or >= 2.2 with >= 15 deg of sideways travel), not a kick
+    # (shorter than 8 f), never in shot 1 (the scripted dive) or the ending shots 15 / 16 ('twice.' / the loop), nor the
+    # fly into the clipboard (fly_7)
+    gen = []
+    for s_ in segs:
+        if s_["a"] in used or s_["shot"] in (1, 7, 15, 16) or s_["b"] - s_["a"] + 1 < 8:
+            continue
+        if s_["peak"] >= 4.0 or (s_["peak"] >= 2.2 and abs(s_["lat"]) >= 15.0):
+            gen.append(s_)
+    D["cam_moves"] = gen or None
+    SRC["cam_moves"] = f"camera probe: {len(gen)} fast moves get an air swish: " + ", ".join(
+        f"shot {g['shot']} video {g['a']}-{g['b']} (peak {g['pk']}, {g['peak']:.1f} deg/f, lateral {g['lat']:+.0f})" for g in gen)
 
 
 def _bw(key, t):
@@ -827,7 +1115,16 @@ def bed_signal(key, t0, t1, r):
     """raw (unnormalized) stereo bed over [t0, t1)"""
     n = ns(t1 - t0)
     if key == "th_noon":
-        return G.desert_wind(n, r, _gust(n, t0), 1.0, 0.32, 0.22, 0.26, 0.18)
+        # A7 ADD: over shot 6's noon -> late relight the wind's singing in the sign posts drops ~2 semitones (the time change
+        # heard as well as seen), back to noon pitch by the cut to shot 7 (so the loop seam is untouched)
+        fm = None
+        rl = _pe().get("relight_6")
+        if rl:
+            tq = t0 + np.arange(n) / SR
+            f0_, d_ = float(rl["f"]), float(rl["dur"])
+            s7 = T.SHOTS[7]["a"]
+            fm = 2.0 ** (np.interp(tq, [T.fr(f0_), T.fr(f0_ + d_), T.fr(s7 + 4), T.fr(s7 + 12)], [0.0, -2.0, -2.0, 0.0], left=0.0, right=0.0) / 12.0)
+        return G.desert_wind(n, r, _gust(n, t0), 1.0, 0.32, 0.22, 0.26, 0.18, f_mul=fm)
     if key == "vista":
         gv = _gust(n, t0, 1.12, 0.04)
         x = G.desert_wind(n, r, gv, 1.0, 0.12, 0.32, 0.22, 0.2, (520, 820), 1.08)
@@ -918,11 +1215,23 @@ def bed_mod_db(key, t):
             up = 3.0 if key == "th_noon" else 1.5
             g += np.interp(t, [u0, u1], [0.0, up], left=0.0, right=up)
             g += np.interp(t, [0.0, 0.6], [up, 0.0], left=up, right=0.0)
-    if key == "th_noon" and PE.get("relight_6"):
+    if key == "th_cicada" and PE.get("relight_6"):         # A7 ADD: the noon cicadas fade -8 dB as the light turns late
         rl = PE["relight_6"]
         f0, d = float(rl["f"]), float(rl["dur"])
         s7 = T.SHOTS[7]["a"]
-        g += np.interp(t, [T.fr(f0), T.fr(f0 + d), T.fr(s7 + 4), T.fr(s7 + 12)], [0, 3.0, 3.0, 0], left=0, right=0)
+        g += np.interp(t, [T.fr(f0), T.fr(f0 + d), T.fr(s7 + 4), T.fr(s7 + 12)], [0, -8.0, -8.0, 0], left=0, right=0)
+    if key == "th_noon" and PE.get("relight_6"):
+        # round 8 (the MYSTERY beat): the world holds its breath on 'But why...' - the wind dips -2.5 dB, then rises with the
+        # late light to +1 dB by the relight's end (was a +3 dB swell), back to 0 after the cut to shot 7
+        rl = PE["relight_6"]
+        f0, d = float(rl["f"]), float(rl["dur"])
+        s7 = T.SHOTS[7]["a"]
+        tb = T.bt("but") if "but" in T.BEAT else T.fr(f0)
+        g += np.interp(t, [tb - 0.3, tb + 0.5, T.fr(f0 + d), T.fr(s7 + 4), T.fr(s7 + 12)], [0, -2.5, 1.0, 1.0, 0], left=0, right=0)
+    if key == "th_life" and "but" in T.BEAT and 7 in T.SHOTS:
+        # ... and the park life (chatter, car doors, the halyard) fades -7 dB under the mystery line: a real hush
+        s7 = T.SHOTS[7]["a"]
+        g += np.interp(t, [T.bt("but") - 0.4, T.bt("but") + 0.6, T.fr(s7 + 4), T.fr(s7 + 12)], [0, -7.0, -7.0, 0], left=0, right=0)
     if key == "tt_noon":
         for k in sorted(k for k in PE if k.startswith("tumble_")):
             sp = PE.get(k)
@@ -979,13 +1288,16 @@ LIFE = {  # layer: (parent bed whose weight it rides, level LU vs the voice, des
     "vista_life": ("vista", -41.0, "vista: faint tourist chatter drifting along the paved trail"),
     "tt_life": ("tt_noon", -43.0, "faint chatter of the tourists along the three trails"),
     "tt_cicada": ("tt_noon", -46.0, "the noon cicadas again, farther off, at the trail heads"),
+    # A7 ADD: the classroom's school around it - a faint, muffled corridor murmur through the door (never intelligible)
+    "class_life": ("classroom", -47.0, "a faint muffled school-corridor murmur through the classroom door (< 700 Hz)"),
 }
 TICKS = {  # wall clocks that tick with their on-screen second hands: sets_int.ts snaps them on integer t = f / 30 (picture)
     "class_clock": ("classroom", -36.0, 0.45, "the classroom wall clock (10:10), ticking with its red second hand (picture f = 30k)"),
     "store_clock": ("storeroom", -36.0, 0.05, "the storeroom wall clock (11:40), ticking with its second hand (picture f = 30k)"),
 }
 CAR_DOOR_AT = [("paperclip", 20), ("your", -3)]   # near these picture frames (beat + f): each door goes into the nearest word gap
-KEEP_CLEAR = [(T.bt("honest") - 0.6, T.bt("honest") + 0.6),   # no park-life detail near the lone woodblock tick on 'honest'
+KEEP_CLEAR = [(T.bt("but") - 0.3, T.fr(T.SHOTS[7]["a"])),      # r8: no park-life detail in the whole mystery line (the hush)
+              (T.bt("honest") - 0.6, T.bt("honest") + 0.6),   # no park-life detail near the lone woodblock tick on 'honest'
               (T.bt("whisper") - 0.3, T.bt("nowEnd") + 0.45)]           # ... nor under / right after the whisper (the plonk + sweat plip)
 LED_LEVEL = -35.0                   # LU vs the voice at 0 dB (shot 10); the shot offsets come from picture_events 'led_hum'
 
@@ -1032,7 +1344,10 @@ def render_life(v_ref, W, rows, seed):
         else:
             act = np.flatnonzero(w > 1e-4)
             a, z = max(0, act[0] - ns(0.05)), min(N, act[-1] + ns(0.05))
-            x = G.crowd_murmur(z - a, r, 5, 180, 1000, 0.8) if "life" in k else G.cicada_drone(z - a, r, 2, 4600, 6200)
+            if k == "class_life":
+                x = lp(G.crowd_murmur(z - a, r, 7, 160, 900, 1.1), 700, 2)
+            else:
+                x = G.crowd_murmur(z - a, r, 5, 180, 1000, 0.8) if "life" in k else G.cicada_drone(z - a, r, 2, 4600, 6200)
         full = w[a:z] > 0.999
         ref = integrated(x[:, full]) if full.sum() > ns(0.5) else integrated(x)
         x = x * dbg(v_ref + lvl - ref)
@@ -1162,15 +1477,21 @@ def carve_span(x, t0, a, b, lo=600.0, hi=4000.0, depth_db=-7.0, ramp=0.02, broad
 
 _WCARVE = {"pocket_pat": -6.0, "whistle_soft": -6.0, "mail_flap": -6.0, "chip_place": -6.0, "thief_pops": -6.0, "label_tok": -6.0,
            "pocket": -5.0, "chip_pick": -4.0, "chip_back": -4.0, "scoop": -4.0, "shutter": -5.0, "shutter_far": -4.0, "envelope_slap": -4.0,
-           "chalk_line": -3.0, "hand_pocket": -5.0, "dust_puff": -4.0, "raven_ruffle": -4.0, "raven_hop": -4.0}
+           "chalk_line": -3.0, "hand_pocket": -5.0, "dust_puff": -8.0, "raven_ruffle": -4.0, "raven_hop": -4.0,
+           # A6: 'now.' (sweat plip), '"Many' (the panel fly-in), 'hid' (the chip thud: -6 left a -2.1 dB margin)
+           "sweat_plip": -6.0, "float_in": -8.0, "bubble_out": -8.0, "stopwatch": -6.0, "pip": -5.0, "relay_click": -6.0, "glass_tink": -3.0,
+           "slot_knock": -6.0, "brass_flap": -8.0, "label_tok": -9.0, "chip_place": -10.0, "tear_rip": -8.0, "paper_sigh": -6.0, "heap_clatter": dict(db=-12.0, lo=1000.0, hi=5000.0, broad=-3.0),
+           "pocket_cu": -6.0, "camera_air": dict(db=-6.0, lo=1000.0, hi=4000.0, broad=-2.0), "pencil_note": -8.0, "draft": -6.0,
+           "far_vehicle": -3.0, "chain_creak": -6.0, "gravel_scuff": -5.0, "pocket_snap": -6.0}
 # A5 P2 (masking): the small on-screen actions that land ON words (the worst 1-4 kHz margins of the A5 mix: 'little' 4.9 dB
 # under the pocket pats, 'then' 6.1 under the mail flap, 'hid' 6.6 under the chip thud, 'does.' 7.0 under the thief pops,
 # 'rules.' 7.1 under the label tok, 'removed' 8.2 under reader B's pocket ...): their 1-4 kHz band dips this much more while
 # a word is spoken (on top of mix.py's -5 dB speech-band duck); attacks in a word gap keep their full band
 
 
-def carve_words(x, t0, depth_db, lo=1000.0, hi=4000.0, pre=0.02, post=0.04):
-    """dip the lo..hi band of an event placed at narration time t0 while words are spoken (smoothed 15 ms edges)"""
+def carve_words(x, t0, depth_db, lo=1000.0, hi=4000.0, pre=0.02, post=0.04, broad_db=0.0):
+    """dip the lo..hi band of an event placed at narration time t0 while words are spoken (smoothed 15 ms edges); A6: plus
+    an optional broadband trim over the same windows"""
     n = x.shape[-1]
     t = t0 + np.arange(n) / SR
     e = np.zeros(n)
@@ -1187,7 +1508,12 @@ def carve_words(x, t0, depth_db, lo=1000.0, hi=4000.0, pre=0.02, post=0.04):
     rest = x - low
     high = hp(rest, hi, 4)
     midb = rest - high
-    return low + high + midb * dbg(depth_db * e)
+    return (low + high) * dbg(broad_db * e) + midb * dbg((depth_db + broad_db) * e)
+
+
+def in_word(t, pre=0.03, post=0.03):
+    """A6: is narration time t inside a spoken word (acoustic times)?"""
+    return any(float(w["s"]) - pre <= t <= float(w["e"]) + post for w in T.WORDS)
 
 
 def pic_of(t):
@@ -1235,6 +1561,21 @@ def cues():
            one(lambda r: G.pop(r, 430, True)), -17.5, p=-0.1)
     ev("bubble_out", PE["bubble_out"], "bubble_out", "thought bubble shrinks away (2 f shrink)",
        one(lambda r: G.pop(r, 520, False, 0.09)), -21, p=-0.1)
+    if PE.get("bubble_in") is not None and PE.get("bubble_out") is not None:   # A7 ADD: the bowed paperclip handed back
+        b0_, b1_ = fr(float(PE["bubble_in"])), fr(float(PE["bubble_out"]))
+        gb = [(a_, z_) for a_, z_ in T.gaps(0.1) if b0_ + 0.15 <= a_ <= b1_ - 0.1]
+        if gb:
+            ga_, gz_ = gb[0]
+
+            def handback(r):
+                y = np.zeros(ns(0.45))
+                G._place_mono(y, G.rustle(r, 0.22, 1, 1.3, centers=[0.09]) * 0.5, 0.0)       # the ribbon bow
+                G._place_mono(y, G.card_flick(r) * 0.9, 0.05)                                  # the paper-tag tick
+                G._place_mono(y, G.clink(r, 4200.0, 0.04, 0.5) * 0.25, 0.07)                   # the paperclip's wire
+                return lp(y, 9000, 1), 0.0
+            add(Cue(ga_ + 0.01, "bubble_gift", f"in the bubble she hands the bowed paperclip back: a tiny paper-tag tick + a ribbon rustle (in the "
+                    f"{ga_:.2f}-{gz_:.2f} s gap after 'paperclip.')", lambda r=rr(): handback(r), -30, p=-0.1, send=0.06, pe="bubble run -> word gap",
+                    wcarve=-6.0))
     # the dive (story.ts dive1) starts at DIVE0 = 126; its image motion (preview2 frame diff) jumps 4.7 -> 15 -> 28 at
     # 126-128, peaks 38-39 at 130-133 (the look swings onto the rock) and settles ~20 through the dissolve: the whoosh
     # starts 1 f before the move, peaks ~7 f in (in the 'steal.' -> 'Arizona's' gap) and tails off into the vista
@@ -1255,10 +1596,70 @@ def cues():
     for f in _frames(PE["raven_ruffle_1"]):
         ev("raven_ruffle_1", f, "raven_ruffle", "the raven on the board shakes out its wings (soft feather flutter)",
            one(lambda r: G.wing_ruffle(r, 3, 0.05, 0.035)), -29, p=0.35, lpf=7000, send=0.1)
+    for k, f in enumerate(_frames(PE.get("shutter_1"))):     # A6 ADD
+        ev("shutter_1", f, "shutter_far", "a background tourist at the trailhead takes a photo (white flash): a faint far shutter",
+           one(G.shutter), -33 - 2 * k, p=-0.45 if k % 2 == 0 else 0.5, lpf=5500, send=0.16)
+    if PE.get("chain_1"):                                    # A6 ADD: the TRAIL OPEN plate's chains on the strongest shot-1 gust
+        a1_, b1_ = T.shot_t(1)
+        tg_ = np.arange(a1_ + 0.4, b1_ - 0.6, 0.01)
+        if len(tg_):
+            tpk_ = float(tg_[int(np.argmax(T.gust(tg_)))])
+            gp_ = [(a_, b_) for a_, b_ in T.gaps(0.14) if a1_ + 0.3 < a_ < b1_ - 0.5]
+            if gp_:
+                ga_, gb_ = min(gp_, key=lambda g: abs(0.5 * (g[0] + g[1]) - tpk_))
+                add(Cue(ga_ + 0.015, "chain_creak", f"the TRAIL OPEN plate swings on its little chains on the strongest gust (~{tpk_:.2f} s): a soft "
+                        f"squeak + two link clinks, in the {ga_:.2f}-{gb_:.2f} s word gap", lambda r=rr(): (G.chain_creak(r), 0.0), -37, p=0.3, lpf=7000,
+                        send=0.1, pe="chain_1 (gust peak -> nearest gap)"))
 
     # ---------------- 2 VISTA
-    ev("vista_flash", PE["vista_flash"], "shutter_far", "a tourist by the big log takes a photo (white flash): distant shutter",
-       one(G.shutter), -27, p=-0.35, lpf=6000, send=0.15)
+    ev("vista_flash", PE["vista_flash"], "shutter_far", "a tourist along the vista trail takes a photo (white flash): one far shutter click",
+       one(G.shutter), -32, p=-0.35, lpf=5500, send=0.18)
+    pk2 = PE.get("pickup_2")
+    if pk2:                                                   # A6 (WORLD-EXT): the far white pickup on the dirt track
+        a2_, b2_ = T.shot_t(2)
+        x2_ = T.xfade(3)
+        t_on = (float(pk2["vf_on"]) - float(pk2.get("vf_lead", 10))) / T.FPS
+        t_end = x2_[1] if x2_[1] > t_on else b2_
+        if t_end - t_on > 0.4:
+            def pickup(r, d=t_end - t_on):
+                y = G.far_vehicle(r, d + 0.35, 1.3)
+                th = (np.linspace(0.05, -0.65, len(y)) + 1) * np.pi / 4          # centre -> left as it drives off
+                return np.stack([y * np.cos(th), y * np.sin(th)]) * np.sqrt(2), 0.0
+            add(Cue(t_on, "far_vehicle", f"the white park pickup comes out from behind the entrance sign (video {pk2['vf_on']}) and drives off left on the dirt "
+                    "track: a far engine drone + tyres on gravel, panned centre -> left, under the wind", lambda r=rr(): pickup(r), -41, lpf=1800, send=0.2,
+                    pe="pickup_2 (sets_ext poseA5b)"))
+        # A6 ADD: a far dust devil swirls past hard right in the gap after 'Forest.' (scale), and the flagpole halyard on the gust
+        gv_ = [(a_, b_) for a_, b_ in T.gaps(0.12) if a2_ - 0.2 <= a_ <= T.shot_t(3)[1] and _bw("vista", [a_]).min() > 0.5]
+        if gv_:
+            ga_, gb_ = gv_[-1]
+
+            def devil(r, d=max(0.5, min(0.9, gb_ - ga_ + 0.5))):
+                y = G.whoosh(d, r, d * 0.45, 600, 3600, 0.6, 0.6, 0.45)
+                th = (np.linspace(0.55, 0.95, len(y)) + 1) * np.pi / 4
+                return np.stack([y * np.cos(th), y * np.sin(th)]) * np.sqrt(2), 0.0
+            add(Cue(ga_ + 0.01, "dust_devil", f"a far dust devil swirls past hard right in the {ga_:.2f}-{gb_:.2f} s gap (the badlands' scale)",
+                    lambda r=rr(): devil(r), -38, lpf=6000, send=0.25, pe="vista word gap"))
+            add(Cue(ga_ + 0.05, "halyard", "...and a far flagpole halyard clinks on the gust", lambda r=rr(): (lp(G.clink(r, 2900, 0.16, 0.6) + 0.5 * np.pad(G.clink(r, 2500, 0.12, 0.5), (ns(0.21), 0))[: ns(0.16)], 5000, 1), 0.0),
+                    -42, p=-0.5, send=0.2, pe="vista word gap"))
+    # A7 ADD: as the camera arrives over the badlands, a far red-tailed hawk screams once (the Southwest-park call), its
+    # head in the gap before "Arizona's", a slap echo off the mesa 0.36 s later; carved under the words that follow
+    try:
+        az_ = float(T.word("arizona", T.bt("arizona") - 0.4)["s"])
+        gh_ = [(a_, b_) for a_, b_ in T.gaps(0.15) if az_ - 0.6 <= b_ <= az_ + 0.01]
+    except KeyError:
+        gh_ = []
+    if gh_:
+        ga_, gz_ = gh_[-1]
+
+        def hawk(r):
+            c = G.hawk_scream(r)
+            y = np.zeros(len(c) + ns(0.9))
+            G._place_mono(y, lp(c, 5000, 2), 0.0)
+            G._place_mono(y, lp(c, 2500, 2) * 0.28, 0.36)                    # the slap back off the far mesa
+            return y, 0.0
+        add(Cue(ga_ + 0.02, "hawk_far", f"a far red-tailed hawk screams once over the badlands ('kee-eeeer', head in the {ga_:.2f}-{gz_:.2f} s gap, "
+                "mesa slap echo; 1-4 kHz carved under the words)", lambda r=rr(): hawk(r), -36, p=-0.35, send=0.3, pe="vista arrival gap",
+                wcarve=dict(db=-9.0, lo=1000.0, hi=5000.0, broad=-3.0)))
     # A4 ADD: the two ravens circling high over the vista give ONE far, reverberant 'kraa' in a word gap (the sign raven
     # stays silent); the slap back off the mesa ~0.33 s later
     if True:
@@ -1286,6 +1687,12 @@ def cues():
        one(lambda r, f=PE["pocket_3"]: G.chip_pocket(r, dfr(f + 4, f) if f is not None else 4 * FR, 0.4)), -16, p=0.05)
     for f in _frames(PE["pocket_pats_3"]):
         ev("pocket_pats_3", f, "pocket_pat", "two pats on the pocket", one(lambda r: G.cloth_pat(r, 0.8)), -25, p=0.05)
+        if not in_word(fr(f + 0.3)):
+            ev("pocket_pats_3", f + 0.3, "pocket_clink", "...the chip clinks faintly against a coin inside (only where the pat falls in a word gap)",
+               one(lambda r: lp(G.clink(r, r.uniform(2400, 3000), 0.05, 0.5), 4000, 1)), -37, p=0.05, wcarve=-4.0)
+    if PE.get("shift_3") is not None:
+        ev("shift_3", PE["shift_3"], "gravel_scuff", "he shifts his weight (the dust puff at his heel): one gritty gravel scuff",
+           one(lambda r: G.gravel_scuff(r, 0.2, 0.75)), -30, p=0.0, lpf=7500)
     ev("peek_glint_3", PE["peek_glint_3"], "peek_glint", "a tiny rainbow glint peeks out of the pocket",
        one(lambda r: G.tiny_ting(r, 5270.0, 0.07)), -31, p=0.1, send=0.1)
     ev("shutter_3", PE["shutter_3"], "shutter", "a couple behind him photograph a log (flash): shutter click-clack",
@@ -1301,6 +1708,8 @@ def cues():
         ev("whistle_3", f0, "whistle", f"he whistles innocently (2 notes, {f0:.0f} + {float(n2) if n2 is not None else f0:.1f}, in the gap after 'pieces.' under the drawn notes)",
            one(lambda r, n=notes: G.whistle(r, n, 0.12)), -22, p=0.05, send=0.12)
     for k, f in enumerate(_frames(PE["whistle_soft_3"])):
+        if in_word(fr(f)):                                    # A6: a pure whistle note on 'pocketing little' masked it
+            continue
         nt = [(0.0, 0.07, 1174.7, 1318.5)] if k % 2 == 0 else [(0.0, 0.07, 1568.0, 1318.5)]
         ev("whistle_soft_3", f, "whistle_soft", "...the whistle already under his breath while he pockets it (a note per drawn note)",
            one(lambda r, n=nt: G.whistle(r, n, 0.16)), -31, p=0.05, lpf=6000, send=0.1)
@@ -1315,23 +1724,34 @@ def cues():
             y = np.zeros(ns((T.fr(L[-1][0]) - T.fr(f1)) + 0.25))
             for i, (f, last) in enumerate(L):
                 lock = i == len(L) - 1
-                # A5 P1: light ticks (~-9..-5 dB under the lock) on every visible flip, -6 dB more under 'day...', and ONE heavy
+                # A5 P1: light ticks (~-9..-5 dB under the lock) on every visible flip, -6 dB more under 'Warning!', and ONE heavy
                 # lock clack on the '14' (its 70 Hz body + a 60 ms spring rattle inside the same 4 video f: nothing after it)
                 g = 1.0 if lock else (0.35 + 0.22 * i / max(1, len(L) - 2)) * (dbg(-6.0) if hu is not None and f < float(hu) else 1.0)
                 c = G.flap(r, last=lock)
+                if not lock and in_word(T.fr(f), 0.02, 0.0):   # A7 P2: a tick ON a word (the 'f' / 'our' of '14'): -12 dB, 2-8 kHz -10 dB
+                    c = peq(c * dbg(-12.0), 4000.0, -10.0, 0.7)
                 if lock:
                     th = _thump(r, 70.0, 0.04) * 0.3
-                    sp_ = G.spring_rattle(r) * 0.3
+                    sp_ = G.spring_rattle(r, 0.03) * 0.3                  # A6 P2: 30 ms (was 60)
                     cc = np.zeros(max(len(c), len(th), len(sp_) + ns(0.012)))
                     cc[: len(c)] += c
                     cc[: len(th)] += th
                     G._place_mono(cc, sp_, 0.012)
                     c = cc
-                G._place_mono(y, c * g, (T.fr(f) - T.fr(f1)))
+                if lock:                                                   # (the lock's carve is a post: after the level match)
+                    G._place_mono(y, c * g, (T.fr(f) - T.fr(f1)))
+                    continue
+                G._place_mono(y, _carve_mono(c * g, T.fr(f), -6.0), (T.fr(f) - T.fr(f1)))
             return y
-        ev("flip_seqs", f_first, "flip_flaps", f"split-flap counter flips '--' -> '14': a light tick as each card visibly turns (mid-flip) at "
+        vis4 = ((_probe().get("facts") or {}).get("shot4") or {}).get("flip") or []
+        fv = {int(r_[0]): int(r_[3]) for r_ in vis4}
+        flip_db = 0.0 if (not fv or fv.get(int(round(lands[-1][0])), 1)) else -8.0     # A6: the box out of frame at the lock -> -8 dB
+        ev("flip_seqs", f_first, "flip_flaps", (f"(A6: the box is OUT of frame at the lock -> -8 dB) " if flip_db else "") + f"split-flap counter flips '--' -> '14': a light tick as each card visibly turns (mid-flip) at "
            f"{', '.join(f'{f:.1f}' for f, _ in lands[:-1])}, the heavy lock + spring rattle on '14' at {lands[-1][0]:.1f}",
-           lambda r=rr(): (flap_seq(r), 0.0), -12, p=-0.15, send=0.05)
+           lambda r=rr(): (flap_seq(r), 0.0), -12 + flip_db, p=-0.15, send=0.05,
+           # A6 P2: the lock + rattle lands between 'four-' and '-teen': its 0.3-4 kHz band -8 dB from 20 ms before it for 160 ms
+           # (after the level match, so the lock's 70-300 Hz clack keeps its weight)
+           post=lambda x, t0=fr(f_first), tl=fr(lands[-1][0]): carve_span(x, t0, tl - 0.02, tl + 0.16, lo=300.0, hi=4000.0, depth_db=-8.0, ramp=0.008))
     for k, f in enumerate(_frames(PE["stroll_steps_4"])):
         ev("stroll_steps_4", f, "stroll_step", "the tourist couple strolling past behind the sign (light steps)",
            (lambda r=rr(): (G.gravel_step(r, r.uniform(0.6, 0.85), 0.3), 0.0)), -30, p=-0.6 + 0.1 * k, lpf=7000, group="steps4")
@@ -1346,11 +1766,52 @@ def cues():
            one(lambda r, f=PE["redcap_pocket_4"]: G.chip_pocket(r, dfr(f + 3, f), 0.3, 1)), -29, p=-0.45, lpf=7000, send=0.1)
     for k, f in enumerate(_frames(PE["whistle_4"])):
         nt = [(0.0, 0.075, 1318.5, 1760.0)] if k % 2 == 0 else [(0.0, 0.075, 1760.0, 1318.5)]
+        tw4 = fr(f)
+        wd4 = T.word_at(tw4)
+        if wd4 is not None:                                  # A7 P3: a note on 'time."' masked the trailing word: into the gap after it
+            ga_, gb_ = T.gap_after(float(wd4["e"]) - 0.01, 0.12)
+            if gb_ - ga_ >= 0.12 and ga_ - tw4 <= 0.35:
+                add(Cue(ga_ + 0.02, "whistle_soft", f"...and whistles two innocent notes (A7 P3: the note drawn on '{wd4['w']}' sounds in the gap after it)",
+                        one(lambda r, n=nt: G.whistle(r, n, 0.14)), -31, p=-0.45, lpf=6000, send=0.12, pe="whistle_4 -> word gap"))
+            continue
         ev("whistle_4", f, "whistle_soft", "...and whistles two innocent notes (a note per drawn note)",
            one(lambda r, n=nt: G.whistle(r, n, 0.14)), -31, p=-0.45, lpf=6000, send=0.12)
     for f in _frames(PE["shutter_4"]):
         ev("shutter_4", f, "shutter_far", "the red-cap tourist behind the sign photographs it (flash on 'vandalized'+18)",
            one(G.shutter), -26, p=-0.45, lpf=6500, send=0.15)
+    hp4 = PE.get("heap_4")
+    if hp4 and hp4.get("land") is not None:                   # A6 LEAD P2: '14 tons a year' - the cartoon heap drops in
+        hl = float(hp4["land"])
+        t_land = float(hp4["land_vf"]) / T.FPS if hp4.get("land_vf") is not None else fr(hl)
+        hv = {int(r_[0]): r_ for r_ in (((_probe().get("facts") or {}).get("shot4") or {}).get("heap") or [])}
+        # seen at the landing, or within the next 12 video f while it still squashes / wobbles / puffs (a whip onto it)
+        win_h = [hv[f_] for f_ in range(int(np.floor(hl)) - 1, int(np.ceil(T.sec_to_old(t_land + 12.0 / T.FPS))) + 1) if f_ in hv]
+        rowh = next((r_ for r_ in win_h if r_[3]), None)
+        seen_h = (not hv) or rowh is not None
+        late_h = rowh is not None and not (hv.get(int(round(hl))) or [0, 0, 0, 0])[3]
+        pnh = float(np.clip((rowh[1] / 1080.0 - 0.5) * 1.2, -0.7, 0.7)) if rowh else -0.3
+        hl = T.sec_to_old(t_land)
+        if seen_h:
+            ev("heap_4", hl, "heap_thump", ("(lands just before the camera reaches it) " if late_h else "") + "the cartoon heap of rainbow chips lands with a squash: a big comic BOOMF (deep thump gliding 62 -> 38 Hz, a squashy "
+               "whump, a low rumble, a dust poof); its 1-4 kHz band dips under '14 tons' (the band never masks the number)",
+               one(lambda r: G.heap_thump(r)), -11, p=pnh, send=0.06, post=lambda x: body(x, 3.0, 45.0), wcarve=dict(db=-10.0, lo=600.0, hi=4000.0))
+            ev("heap_4", T.sec_to_old(t_land - float(hp4.get("fall_vf") or 6) / T.FPS), "air_fall", "...a short air whistle as it drops in from above (its 6 video f fall)",
+               one(lambda r, d_=float(hp4.get("fall_vf") or 6) / T.FPS: lp(G.whoosh(d_ + 0.02, r, d_, 300, 1400, 0.8, 0.02, 0.05), 2000, 2)), -32, p=pnh, send=0.03, wcarve=-6.0)
+            ev("heap_4", hl + 0.4, "heap_clatter", "...and the chips spill and clatter off its flanks (carved -12 dB at 1-5 kHz + -3 dB under the words)",
+               one(lambda r: G.heap_clatter(r)), -21 - (3 if late_h else 0), p=pnh, lpf=7000, send=0.08)
+    for k, pk in enumerate(PE.get("pock_4") or []):            # A6 LEAD P2: 'a small piece at a time' - the three pocket inserts
+        f_, vf_ = float(pk["f"]), pk.get("vf")
+        t_c = (float(vf_) / T.FPS) if vf_ is not None else fr(f_)
+        pn4 = [0.35, -0.35, 0.2][k % 3]
+
+        def pock(r, k=k):
+            y = np.zeros((2, ns(0.5)))
+            place(y, pan(G.chip_pocket(r, 3.0 / T.FPS, 0.3, 1) * 0.8, pn4), 0.0)                   # hand slides in (video -3 .. 0)
+            place(y, pan(G.cloth_pat(r, 0.85), pn4), 5.0 / T.FPS)                                   # the pat (video +2, the dust puff)
+            return y, 3.0 / T.FPS
+        add(Cue(t_c, "pocket_cu", f"insert {k + 1}: a tourist's hand slides a chip into his hip pocket (rustle, tick ON the contact) and pats it (soft cloth pat)",
+                lambda r=rr(), k=k: pock(r, k), -24 - 1.0 * k, send=0.04, pe="pock_4"))
+
 
     # ---------------- 5 WHISPER
     ev("lean_5", PE["lean_5"], "lean_rustle", "she leans toward her fiance: soft dress / camera-strap rustle", one(lambda r: G.rustle(r, 0.4, 2, 0.8, centers=[0.07, 0.17])),
@@ -1360,7 +1821,16 @@ def cues():
     for f in _frames(PE["raven_wing_5"]):
         ev("raven_wing_5", f, "raven_wings", "the raven hops down to the post bracket: two soft wing flaps",
            one(lambda r: G.wing_ruffle(r, 2, 0.07, 0.08)), -27, p=0.4, lpf=8000, send=0.1)
-    ev("sweat_5", PE["sweat_5"], "sweat_plip", "the fiance's sweat drop pops on: a tiny 'plip'", one(lambda r: G.drop_plip(r, 760.0)), -25, p=0.2)
+    ev("sweat_5", PE["sweat_5"], "sweat_plip", "the fiance's sweat drop pops on: a tiny 'plip' (A6: its 1-4 kHz band -6 dB under 'now.')", one(lambda r: G.drop_plip(r, 760.0)), -25, p=0.2)
+    if PE.get("sweat_5") is not None:                      # A6 ADD: a wordless sharp inhale in the gap after 'now.'
+        try:
+            nw_ = T.word("now", T.bt("whisper"))
+            ga_, gb_ = T.gap_after(float(nw_["e"]) - 0.01, 0.2)
+        except KeyError:
+            ga_ = gb_ = 0.0
+        if gb_ - ga_ >= 0.24:
+            add(Cue(ga_ + 0.03, "gasp", f"the fiance's goggle-eyed shock: one wordless sharp inhale in the {ga_:.2f}-{gb_:.2f} s gap after 'now.'",
+                    lambda r=rr(), d_=min(0.24, gb_ - ga_ - 0.06): (G.gasp(r, d_, 0.92), 0.0), -29, p=0.25, send=0.06, pe="sweat_5 -> the gap after 'now.'"))
     for f in _frames(PE["shutter_5"]):
         ev("shutter_5", f, "shutter_far", "a far tourist behind the couple photographs the logs (blurred flash)",
            one(G.shutter), -31, p=0.05, lpf=5000, send=0.18)
@@ -1372,6 +1842,19 @@ def cues():
         ev("raven_6", f, "raven_ruffle", "the raven on the board top shakes out its feathers" + (" (A5 P3: -15 dB, it lands on the lone woodblock tick of 'honest')" if near else ""),
            one(lambda r: G.wing_ruffle(r, 2, 0.05, 0.04, 1.0)), -46 if near else -31, p=0.3, lpf=7000, send=0.1)
 
+    fw6_ = _frames(PE.get("fiance_walk_6"))
+    for k, f in enumerate(fw6_):                              # A7 P3: his walk-off, soft gravel steps fading as he exits right
+        ev("fiance_walk_6", f, "gravel_step", f"the fiance walks off right: soft gravel step {k + 1}/{len(fw6_)} (fading as he exits)",
+           (lambda r=rr(): (G.gravel_step(r, r.uniform(0.6, 0.8), 0.35), 0.0)), -34 - 3.0 * k, p=0.4 + 0.2 * k, lpf=6500, send=0.1, group="steps6")
+    lm6 = PE.get("lamps_6")
+    if lm6:                                                   # A6 P3: the gooseneck lamps flick on (VIDEO frames)
+        for k, vf_ in enumerate(lm6[:2]):
+            add(Cue(float(vf_) / T.FPS, "relay_click", "the board's gooseneck lamp flicks on: a soft relay click + a short filament buzz" if k == 0 else
+                    "...and on again for good (on 1 f, off 2 f, then on)", lambda r=rr(), k=k: (G.relay_click(r, 0.06 if k else 0.03), 0.0), -44 - 2 * k,
+                    p=0.15, send=0.05, pe="lamps_6"))
+    if PE.get("raven_tink_6") is not None:
+        ev("raven_tink_6", PE["raven_tink_6"], "glass_tink", "the raven snatches a glinting chip off the board top: a tiny high glassy 'tink' (6 dB under the "
+           "celesta question on 'steal?')", one(lambda r: G.glass_tink(r, 4600.0)), -40, p=0.3, send=0.1)
     if PE.get("cricket_6") is not None:
         def far_cricket(r):
             y = G.crickets(0.9, r, 1, 4500, 4700)
@@ -1445,20 +1928,24 @@ def cues():
                 c = c + 0.5 * bp(r.standard_normal(len(c)), 2500, 6000, 1) * np.abs(c)
                 G._place_mono(y, c, 0.065 * k)
             return lp(y, 7000, 1), 0.0
-        ev("wren_7", f, "wren_chirp", "the canyon wren on the CRYSTAL plate chirps as it hops (faint, dry 'chut-chut-chut')",
-           lambda r=rr(): wren_chirp(r), -36, p=-0.2, send=0.12)
+        ev("wren_7", f, "wren_chirp", "the canyon wren on the CRYSTAL plate chirps while it is in frame (faint, dry 'chut-chut-chut'; carved under the words)",
+           lambda r=rr(): wren_chirp(r), -36, p=-0.2, send=0.12, wcarve=dict(db=-6.0, lo=2000.0, hi=6000.0, broad=-2.0))
 
     # ---------------- 8 THE TEAM
     thuds = _frames(PE.get("chip_thud_8"))
     for k, f in enumerate(_frames(PE["chip_set_8"])):
         heavy = any(abs(f - t_) < 0.6 for t_ in thuds)
         ev("chip_set_8", f, "chip_place", f"marked chip {k + 1} set down on the trail" + (" (a dull thud + the dust puff)" if heavy else " (a light stone tick)"),
-           one(lambda r, h=heavy: G.chip_place(r) + 0.0) if not heavy else one(lambda r: body(G.chip_place(r), 3.0)), -17 if heavy else -21,
+           one(lambda r, h=heavy: G.chip_place(r) + 0.0) if not heavy else one(lambda r: body(lp(G.chip_place(r), 2500, 2), 4.0)), -21 if heavy else -23,
            p=-0.2 + 0.35 * k, group="chips")
         if heavy:
             ev("chip_set_8", f + 0.5, "dust_puff", "...a small dust puff off the trail", one(lambda r: G.dust_puff(r, 0.18)), -31, p=-0.2 + 0.35 * k, group="chips")
-    ev("dot_dab_8", PE["dot_dab_8"], "paint_dab", "the white paint dot dabbed on the chip", one(G.brush_dab), -26, p=-0.15)
-    ev("stopwatch_8", PE["stopwatch_8"], "stopwatch", "the assistant clicks the stopwatch (2:00:00): crown click + release", one(G.stopwatch), -13, p=0.25)
+    if PE.get("dot_dab_8") is not None:                       # A7 P3: on the first VIDEO frame that shows the dot
+        vf_d = float(np.ceil(fr(float(PE["dot_dab_8"])) * T.FPS - 1e-6))
+        add(Cue(vf_d / T.FPS, "paint_dab", f"the white paint dot dabbed on the chip (on video {vf_d:.0f}, the first frame showing the dot)", one(G.brush_dab), -26,
+                p=-0.15, pe="dot_dab_8"))
+    ev("stopwatch_8", PE["stopwatch_8"], "stopwatch", "the assistant thrusts the stopwatch up and clicks it (2:00:00): crown click + its release 80 ms later",
+       one(G.stopwatch), -20, p=-0.1)
     ev("panel_unhook_8", PE["panel_unhook_8"], "panel_lift", "the old panel is lifted off the Sign A hooks (knock + wood scrape)", one(G.panel_lift), -15,
        p=-0.1, group="swap")
     ev("panel_lean_8", PE["panel_lean_8"], "panel_lean", "...and leaned against the post (soft wooden knock)",
@@ -1472,7 +1959,11 @@ def cues():
     ev("asst3_turn_8", PE.get("asst3_turn_8"), "turn_scuff", "...and turns to walk off right (one soft gravel scuff)", one(lambda r: G.gravel_scuff(r, 0.18, 0.6)),
        -31, p=0.45, lpf=7000)
     w8 = PE.get("whip_8")
-    if w8:
+    if w8 and w8.get("vf"):                                  # A6 P3: the probe's real swing (peak on the fastest frame, gone 2 f after the landing)
+        add(Cue(w8["vf"][0] / T.FPS, "whip_gust", f"the whip pan to the trail heads: a light wind gust + sand hiss following the camera's own speed (video "
+                f"{w8['vf'][0]}-{w8['vf'][2]}, fastest {w8['vf'][1]})", lambda r=rr(), w=w8: (cam_air(r, w["curve"], w["lat"], sand=True), 0.0), -27, send=0.03,
+                pe="whip_8 (camera probe)"))
+    elif w8:
         # A5 P3: the whip is a light WIND GUST + sand hiss across the pan (no tonal whoosh), ending 2 f after it lands
         def whip(r, a=float(w8["start"]), pk=float(w8["peak"])):
             d = fr(pk + 8) - fr(a)
@@ -1494,8 +1985,13 @@ def cues():
         ev("readerA_walk_9", f, "reader_step", "reader A strolls off from Sign A past Sign B (sneakers on the gritty paving, a foot every 0.5 m)",
            (lambda r=rr(): (G.gravel_step(r, r.uniform(0.6, 0.8), 0.45), 0.0)), -28.5 - (3.0 if k == len(wa) - 1 else 0.0) - (k % 2) * 0.7,
            p=float(np.clip(-0.45 + 1.3 * u, -0.6, 0.85)), lpf=7000, group="steps9")
-    ev("truck_air_9", PE["truck_air_9"], "truck_air", "a breath of breeze as the camera trucks from Sign A to Sign B (not a dissolve whoosh)",
-       lambda r=rr(): (G.air_swish(r, 0.6), 0.3), -30, send=0.04)
+    t9 = PE.get("truck_air_9")
+    if isinstance(t9, dict) and t9.get("vf"):
+        add(Cue(t9["vf"][0] / T.FPS, "truck_air", f"a breath of breeze as the camera trucks from Sign A to Sign B (video {t9['vf'][0]}-{t9['vf'][2]}, follows its speed)",
+                lambda r=rr(), w=t9: (cam_air(r, w["curve"], w["lat"]), 0.0), -30, send=0.04, pe="truck_air_9 (camera probe)"))
+    else:
+        ev("truck_air_9", t9 if not isinstance(t9, dict) else None, "truck_air", "a breath of breeze as the camera trucks from Sign A to Sign B (not a dissolve whoosh)",
+           lambda r=rr(): (G.air_swish(r, 0.6), 0.3), -30, send=0.04)
     ev("readerB_pocket_9", PE["readerB_pocket_9"], "pocket", "reader B slips a marked chip into his hip pocket (rustle, tick as it drops in)",
        one(lambda r, f=PE["readerB_pocket_9"]: G.chip_pocket(r, dfr(f + 3, f) if f is not None else 0.1, 0.3, 1)), -26, p=0.35)
     for k, f in enumerate(_frames(PE.get("far_pick_9"))):
@@ -1520,7 +2016,7 @@ def cues():
     for f in _frames(PE["stopwatch_9"]):
         ev("stopwatch_9", f, "stopwatch_far", "the assistant far back on the LONG LOGS path holds up the stopwatch and clicks it", one(G.stopwatch), -29, p=-0.3, lpf=6500, send=0.15)
     for f in _frames(PE["readerB_pats_9"]):
-        ev("readerB_pats_9", f, "pocket_pat", "reader B pats his hip pocket on 'removed'", one(lambda r: G.cloth_pat(r, 0.75)), -27, p=0.25)
+        ev("readerB_pats_9", f, "pocket_pat", "reader B pats his hip pocket on 'take'", one(lambda r: G.cloth_pat(r, 0.75)), -27, p=0.25)
 
     # ---------------- 10 RESULTS
     def roll(spec, r):
@@ -1536,17 +2032,23 @@ def cues():
         if spec:
             fs = _led_ticks(float(spec["target"]), int(spec["land"]))
             ev(key, spec["land"], key, f"LED counter rolls 0.00% -> {spec['target']:.2f}%: {len(fs)} relay ticks (one per digit change, {fs[0]}-{fs[-1]}), lock ON the beat",
-               lambda r=rr(), s=spec: roll(s, r)[:2], -18, p=pn, send=0.04, group="counters")   # A4 P2: -3 dB (the results' 1-4 kHz margin was 9.9 dB)
-    ev("touristA_pick_10", PE["touristA_pick_10"], "chip_pick", "under Sign A a tourist picks up a chip (tiny gravel scrape)", one(G.stone_pick), -24, p=0.45)
+               lambda r=rr(), s=spec: roll(s, r)[:2], -18, p=pn, send=0.04, group="counters",   # A4 P2: -3 dB (the results' 1-4 kHz margin was 9.9 dB)
+               # r8: the relay ticks rolled under 'only' / 'almost' (margins 7.8 / 14.9 dB): -8 dB at 1-5 kHz, -3 dB broadband while words sound
+               wcarve=dict(db=-8.0, lo=1000.0, hi=5000.0, broad=-3.0))
+    ev("touristA_pick_10", PE["touristA_pick_10"], "chip_pick", "under Sign A a tourist picks up a chip (tiny gravel scrape)", one(G.stone_pick), -24, p=0.45,
+       wcarve=dict(db=-8.0, lo=1000.0, hi=4000.0, broad=-2.0))
     ev("touristA_put_10", PE["touristA_put_10"], "chip_back", "...sees the red bar and puts it back (stone tick + gravel crunch)", one(G.chip_putback), -20, p=0.45)
     for f in _frames(PE["shutter_10"]):
         ev("shutter_10", f, "shutter", "one of the crowd photographs the sign panel itself (the irony)", one(G.shutter), -26, p=0.45, lpf=7000, send=0.12)
     for f in _frames(PE["glint_10"]):
         ev("glint_10", f, "chip_glint", "one holds his chip up to the sun: a tiny glint ting", one(lambda r: G.tiny_ting(r, 4400.0, 0.1)), -30, p=0.15, send=0.1)
-    for k, f in enumerate(_frames(PE["whistle_10"])):
-        nt = [[(0.0, 0.08, 1318.5, 1568.0)], [(0.0, 0.08, 1568.0, 1318.5)], [(0.0, 0.11, 1318.5, 1174.7)]][k % 3]
-        ev("whistle_10", f, "whistle_soft", "...and walks it off with an innocent little whistle (a note per drawn note)",
-           one(lambda r, n=nt: G.whistle(r, n, 0.14)), -29, p=0.55, lpf=6500, send=0.1)
+    for k, f in enumerate(_frames(PE["whistle_10"])):        # A6 P2: three innocent two-tone chirps, pure, 1.8-2.6 kHz, the last rising
+        nt = [(1975.5, 2349.3), (2349.3, 1975.5), (1975.5, 2637.0)][k % 3]
+        add(Cue(fr(f) + 1.5 / T.FPS, "whistle_chirp", f"tourist A whistles innocently: chirp {k + 1} on the drawn note (pure tone {nt[0]:.0f} -> {nt[1]:.0f} Hz, above the "
+                "voice formants)", lambda r=rr(), n=nt, k=k: (G.chirp(r, n[0], n[1], 0.09 if k < 2 else 0.12), 0.0), -35, p=0.5, send=0.1, pe="whistle_10", wcarve=0.0))
+    if PE.get("bang_10") is not None:
+        ev("bang_10", PE["bang_10"], "pip", "tourist A's '!' card: a tiny cartoon 'pip!' sting (r8: -4 dB, carved -9 dB under 'only')", one(lambda r: G.pip(r, 1480.0)), -34,
+           p=0.45, send=0.08, wcarve=dict(db=-9.0, lo=1000.0, hi=4000.0, broad=-2.0))
     if PE["crowd_squat_10"] is not None:
         def squat(r, f0=float(PE["crowd_squat_10"])):
             y = np.zeros((2, ns(0.6)))
@@ -1576,11 +2078,45 @@ def cues():
         # A4 ADD: a soft, wordless multi-voice 'ooh' / guilty murmur from the five as the chips go in, kept in the word gap
         tpk = fr(float(PE["crowd_pocket_10"]))
         ga, gb = T.gap_after(tpk - 0.2, 0.2)
-        if gb > ga and gb - tpk < 1.2:
-            dur_ = float(np.clip(gb - ga + 0.12, 0.3, 0.55))
+        tpat = fr(float(PE["crowd_pocket_10"]) + 5.5)              # A6 ADD: just after the hip pats
+        # r8: the pats now land at the very end of the pause before 'almost' - the murmur goes right after the pocketing (in the
+        # gap) or nowhere, and the snap only if it still fits before the word
+        ga = max(ga, tpk + 0.06)
+        if gb - ga >= 0.22 and gb - tpk < 1.2:
+            dur_ = float(np.clip(gb - ga - 0.02, 0.2, 0.45))
+            if gb - max(ga, tpat) >= 0.2:
+                add(Cue(max(ga, tpat) + 0.02, "pocket_snap", "...one of them snaps his pocket shut (a tiny zip + press-stud click, in the gap before 'almost')",
+                        lambda r=rr(): (G.pocket_snap(r), 0.0), -31, p=-0.35, send=0.05, pe="crowd_pocket_10 -> the gap before 'almost'"))
             add(Cue(ga + 0.01, "crowd_ooh", f"the five tourists' soft wordless 'ooh' (a guilty little murmur) as they pocket together, in the {ga:.2f}-{gb:.2f} s gap",
                     lambda r=rr(), d_=dur_: (G.ooh_crowd(r, d_, 5), 0.0), -30, send=0.08, pe="crowd_pocket_10 -> next word gap"))
-    ev("cha_ching", PE["cha_ching"], "cha_ching", "cash-register 'ka-CHING' - the bell lands ON '8%'", lambda r=rr(): (G.cha_ching(r), 0.09), -9.5, p=0.1, send=0.1)   # A4 P2: -1.5 dB (the results' 1-4 kHz margin)
+    if PE["cha_ching"] is not None:
+        # A6 P1: 'almost EIGHT PERCENT' was masked by the bell. The register's 'ka-' (drawer / relay clunk, all below 800 Hz)
+        # lands ON the counter landing; the bell 'CHING' blooms in the stop-time gap after '8%.' (natural ring, +3 dB)
+        ev("cha_ching", PE["cha_ching"], "cha_ka", "the counter locks on 7.92 %: the register's low 'ka-' (drawer + relay clunk, < 800 Hz, under 'eight')",
+           one(G.ka_thunk), -15, p=0.1, send=0.06, post=lambda x: body(x, 2.0, 90.0))
+        try:
+            w8_ = T.word("8", T.bt("pct8") - 0.4)
+            t_ching = float(w8_["e"]) + 0.015
+        except KeyError:
+            t_ching = fr(PE["cha_ching"]) + 0.6
+        # A7 P2/P3: the ring still sounded under the pivot 'You see,' (1-4 kHz margin 3.5 dB on 'see'): it keeps its moment
+        # alone in the stop-time, then fades to -60 dB over 120 ms ending 0.13 s before 'You' (and a drier send)
+        try:
+            t_you = float(T.word("you", T.bt("youSee") - 0.3)["s"])
+        except KeyError:
+            t_you = t_ching + 0.62
+        t_ring_end = max(t_ching + 0.25, t_you - 0.13)
+
+        def ching_cut(x, t0=t_ching, te=t_ring_end):
+            n_ = x.shape[-1]
+            tq = t0 + np.arange(n_) / SR
+            g_db = np.interp(tq, [te - 0.12, te], [0.0, -60.0], left=0.0, right=-60.0)
+            y = x * dbg(g_db)[None, :] if x.ndim > 1 else x * dbg(g_db)
+            y[..., tq > te] = 0.0
+            return y
+        add(Cue(t_ching, "cha_ching", f"...'CHING!' - the register bell blooms in the stop-time silence right after '8%.' ({t_ching:.2f} s), natural ring, "
+                f"faded to -60 dB by {t_ring_end:.2f} s (0.13 s before 'You see,')",
+                lambda r=rr(): (G.ching(r), 0.0), -6.5, p=0.1, send=0.05, pe="cha_ching -> the end of '8%.'", wcarve=0.0, post=ching_cut))
     if PE.get("raven_bolt_10") is not None:
         def bolt(r):                                 # A5 ADD: two fast flaps + two lighter beats under the bell's tail
             y = np.zeros(ns(0.8))
@@ -1606,7 +2142,7 @@ def cues():
        one(lambda r: G.chalk_glyph_strokes(r, [(k * 0.02, k * 0.02 + 0.014, "I") for k in range(20)])), -30, p=0.1, **bl)
     ev("bp_rule_11", PE["bp_rule_11"], "chalk_line", "'THE RULE' arrow draws itself (junction + thin arrow, 18 f)",
        one(lambda r: G.chalk_line(r, 0.6)), -21, p=-0.35, **bl)
-    ev("bp_rule_label_11", PE["bp_rule_label_11"], "label_tok", "'THE RULE' label pops up (chalk tok)", one(lambda r: G.chalk_tap(r, 980.0)), -25, p=-0.35, **bl)
+    ev("bp_rule_label_11", PE["bp_rule_label_11"], "label_tok", "'THE RULE' label pops up (chalk tok; A6: -4 dB, it lands on 'rules.')", one(lambda r: G.chalk_tap(r, 980.0)), -29, p=-0.35, **bl)
     ev("bp_crowd_11", PE["bp_crowd_11"], "chalk_line_wide", "'EVERYONE ELSE' arrow draws itself (wide: a broader double stroke, 19 f)",
        one(lambda r: G.chalk_line(r, 0.64) + 0.6 * G.chalk_line(r, 0.64)), -20, p=0.35, **bl)
     ev("bp_crowd_label_11", PE["bp_crowd_label_11"], "label_tok", "'EVERYONE ELSE' label pops up", one(lambda r: G.chalk_tap(r, 880.0)), -24, p=0.35, **bl)
@@ -1642,6 +2178,43 @@ def cues():
             return y * e[None, :], 0.0
         ev("bp_crowd_walk_11", cw["start"], "chalk_crowd", f"the EVERYONE ELSE chalk crowd streams along the wide arrow ({float(cw['start']):.0f}-{float(cw['end']):.0f}): "
            "a very soft papery shuffle of many chalk feet (vs the lonely single steps of the rule-follower)", lambda r=rr(): crowd_walk(r), -40, space="blue", send=0.1)
+
+        def boil(r, a=float(cw["start"]), b=float(cw["end"])):
+            d = max(0.3, dfr(b, a))
+            y = G.paper_boil(ns(d), r, 55.0)
+            e = np.clip(np.minimum(np.arange(ns(d)) / SR / 0.4, (d - np.arange(ns(d)) / SR) / 0.4), 0, 1)
+            return y * e[None, :], 0.0
+        ev("bp_crowd_walk_11", cw["start"], "paper_boil", "...a faint papery 'boil' crackle under the line-boiling chalk crowd while it marches",
+           lambda r=rr(): boil(r), -43, space="blue", send=0.08, wcarve=-6.0)
+    for k, (fa_, du_, txt_) in enumerate(PE.get("pct_notes_11") or []):    # A6 ADD: the % chalk notes write themselves in
+        gl_ = [(dfr(fa_ + du_ * j / len(txt_), fa_), dfr(fa_ + du_ * (j + 1) / len(txt_), fa_), ch) for j, ch in enumerate(txt_) if ch != " "]
+        ev("pct_notes_11", fa_, "pencil_note", f"the '{txt_}' chalk note writes itself in ({fa_:.0f}-{fa_ + du_:.0f}): a tiny scratch per glyph",
+           lambda r=rr(), g=gl_: (lp(G.chalk_glyph_strokes(r, g, ()), 1000, 4), 0.0), -36, p=-0.3 if k == 0 else 0.35, space="blue", send=0.1)
+    for k, (fa_, du_) in enumerate(PE.get("draft_11") or []):              # A6 ADD: the drafting furniture draws itself
+        ev("draft_11", fa_, "draft", "a line of the drafting furniture draws itself (soft pencil-on-paper, kept low)",
+           one(lambda r, d=dfr(fa_ + du_, fa_): lp(G.pencil_scratch(r, max(0.15, d)), 1100, 2)), -35 - k, p=[-0.4, 0.4, -0.2, 0.1, -0.5][k % 5],
+           space="blue", send=0.1, group="draft")
+    dr7 = PE.get("bp_draft7_11")
+    if dr7:                                                  # carry-over: the drafting marks draw / ring / get rubbed out
+        def vcue(key, cue, desc, gen, lvl, pn, **kw):
+            a_, b_ = [float(x) / T.FPS for x in dr7[key]]
+            add(Cue(a_, cue, desc, (lambda r=rr(), d_=b_ - a_: (gen(r, d_), 0.0)), lvl, p=pn, space="blue", send=0.1, pe=f"bp_draft7_11.{key}", **kw))
+        strip_g = lambda r, d_: lp(G.chalk_glyph_strokes(r, [(d_ * k / 16, d_ * (k + 1) / 16, "A") for k in range(16)], ()), 6000, 2)
+        vcue("strip", "chalk_strip", "the 'PROBLEM: WHY DO PEOPLE STEAL?' strip writes itself in chalk (soft per-glyph scratches)", strip_g, -36, 0.05,
+             wcarve=dict(db=-8.0, lo=1000.0, hi=6000.0, broad=-3.0))
+        vcue("compass", "chalk_compass", "a compass rose spins in (a quick circular chalk stroke)", lambda r, d_: lp(G.chalk_line(r, max(0.2, d_ * 0.8)), 5000, 2), -38, -0.45,
+             wcarve=dict(db=-8.0, lo=1000.0, hi=6000.0, broad=-3.0))
+        vcue("dim", "chalk_dim", "the dimension arrow grows under the strip (one long thin chalk line)", lambda r, d_: lp(G.chalk_line(r, max(0.2, d_)), 5000, 2), -37, 0.1,
+             wcarve=dict(db=-8.0, lo=1000.0, hi=6000.0, broad=-3.0))
+        vcue("heads", "chalk_tick", "...its end ticks and arrowheads (two tiny chalk taps)", lambda r, d_: G.chalk_tap(r, 1100.0, 0.5), -38, 0.25,
+             wcarve=dict(db=-8.0, lo=1000.0, hi=6000.0, broad=-3.0))
+        vcue("ring", "red_pencil", "a red-pencil ring circles STEAL? (a waxy pencil loop)", lambda r, d_: lp(G.pencil_scratch(r, max(0.15, d_)), 4500, 2), -36, 0.2,
+             wcarve=dict(db=-8.0, lo=1000.0, hi=6000.0, broad=-3.0))
+        vcue("rub", "rub_out", "the drafting marks are rubbed out as THE RULE takes over (a soft eraser whisk)",
+             lambda r, d_: lp(G.sand_gust(r, max(0.18, d_ + 0.05), max(0.06, d_ * 0.4), 0.2), 3500, 2), -38, -0.1, wcarve=dict(db=-8.0, lo=1000.0, hi=6000.0, broad=-3.0))
+        vcue("underline", "red_pencil", "on 'Many' a red-pencil double underline draws itself under EVERYONE ELSE (two quick strokes)",
+             lambda r, d_: lp(np.concatenate([G.pencil_scratch(r, max(0.08, d_ * 0.45)), np.zeros(ns(0.03)), G.pencil_scratch(r, max(0.06, d_ * 0.3))]), 4500, 2),
+             -37, 0.35, wcarve=dict(db=-8.0, lo=1000.0, hi=6000.0, broad=-3.0))
     fa = PE["sign_float_11"]
     if fa is not None:
         ev("sign_float_11", fa, "float_in", "the 'MANY PAST VISITORS' panel flies in (soft fly-in air, peaks mid-flight)",
@@ -1654,37 +2227,49 @@ def cues():
         land = tp.get("land")
 
         def multiply(r):
+            # A6 P2: the pops were ~24 LU under the voice (inaudible on a phone): normalised on the POPS (not the tail), +10 dB;
+            # the last ~9 land as a light paper patter; the 2-5 kHz band 3 dB lower while words sound (wcarve)
             times = [dfr(f0 + i / rate, f0) for i in range(cnt)]
             span = max(times) + 0.5 + (dfr(f0 + cnt / rate + float(land), f0 + cnt / rate) + 0.1 if land else 0.0)
             y = np.zeros((2, ns(span)))
+            n_pat = min(10, max(0, cnt // 3))
             for i, tm in enumerate(times):
                 u = i / max(1, cnt - 1)
-                f_pop = 520 * (2.4 ** u) * r.uniform(0.92, 1.08)        # the multiplication 'grows': pitch climbs ~1.3 octaves
-                p_ = G.pop(r, f_pop, True, 0.07, 0.4) * r.uniform(0.55, 1.0) * (0.8 + 0.3 * u)
                 pn = r.uniform(-0.75, 0.75)
+                if i < cnt - n_pat:
+                    f_pop = 430 * (2.0 ** u) * r.uniform(0.92, 1.08)    # the multiplication 'grows': pitch climbs an octave (A6: kept < 1 kHz)
+                    p_ = G.pop(r, f_pop, True, 0.07, 0.4) * r.uniform(0.55, 1.0) * (0.8 + 0.3 * u)
+                else:                                                     # ...then a paper patter as the last ones land
+                    p_ = G.chalk_tap(r, r.uniform(800, 1300), 0.5) * r.uniform(0.35, 0.6)
                 place(y, pan(p_, pn), tm)
                 if land:                                                 # ...and lands standing on the paper 9 f later
                     tap = G.chalk_tap(r, r.uniform(700, 1100), 0.6) * r.uniform(0.18, 0.3)
                     fi = f0 + i / rate
                     place(y, pan(tap, pn * 1.15), tm + dfr(fi + float(land), fi) + r.uniform(0, 0.3 * FR))
-            # A5 P3: a soft rising 'bwoop' tail as the multiplication completes (the pitch keeps climbing)
-            tail_ = G.pop(r, 900.0, True, 0.22, 0.7) * 0.7
+            pops_ml = momentary_max(y)
+            tail_ = G.pop(r, 900.0, True, 0.22, 0.7) * 0.45                   # A5 P3: a soft rising 'bwoop' (kept under the pops)
             place(y, pan(tail_, 0.0), max(times) + 0.04)
-            return y, 0.0
+            return y * dbg(momentary_max(y) - pops_ml), 0.0
         ev("thief_pops_11", f0, "thief_pops", f"the three thieves multiply into dozens: {cnt} tiny pops, {rate:g} per frame, pitch rising"
            + (f", each landing with a soft paper tap {land} f later" if land else ""),
-           lambda r=rr(): multiply(r), -13, space="blue", send=0.12)   # A5 P3: +5 dB (they were inaudible), the music dips 3 dB on the line
+           lambda r=rr(): multiply(r), -8, space="blue", send=0.12, wcarve=dict(db=-9.0, lo=1000.0, hi=5000.0))   # A6 P2: normalised on the pops
 
     # ---------------- 12 CLASSROOM: chalk letter by letter, the bubble, the shifty eyes
     gl = PE["chalk_12"]
     if gl:
         g0 = float(gl[0][0])
         rel = [((T.fr(float(a)) - T.fr(g0)), (T.fr(float(b)) - T.fr(g0)), ch) for a, b, ch in gl]
-        sq = [i for i, (_, _, ch) in enumerate(rel) if ch in "CS"][::3][:3]
+        # A6 P2: the squeaks only where a glyph is drawn in a WORD GAP (63.93-64.15 / 65.75-66.06); the rest is softer (below)
+        t_g = T.fr(g0)
+        gp12 = [(a_, b_) for a_, b_ in T.gaps(0.08)]
+        sq = [i for i, (a_, b_, ch) in enumerate(rel) if ch not in ". " and any(ga_ <= t_g + 0.5 * (a_ + b_) <= gb_ - 0.03 for ga_, gb_ in gp12)][:3]
         dot = [0.5 * (a + b) for a, b, ch in rel if ch == "."]
         ev("chalk_12", g0, "chalk_write", f"the teacher writes 'HALF THIS CLASS CHEATED.' letter by letter ({len(rel)} glyphs, {float(gl[0][0]):.0f}-{float(gl[-1][1]):.0f}): "
            f"chalk strokes per letter, squeaks, full-stop tap at {T.sec_to_old(T.fr(g0) + dot[0]):.1f}" if dot else "chalk writing",
-           lambda r=rr(), g=rel, s=sq: (G.chalk_glyph_strokes(r, g, s), 0.0), -12, p=-0.2, space="class", send=0.14)
+           lambda r=rr(), g=rel, s=sq: (G.chalk_glyph_strokes(r, g, s), 0.0), -10, p=-0.2, space="class", send=0.14,
+           # A7 P3: the chalk sat ~28 dB under the voice (inaudible): +6 dB, and under the quote only -3 dB broadband with its
+           # 2-6 kHz band (the consonants) -8 dB -> strokes ~10-12 dB under the voice
+           wcarve=dict(db=-8.0, lo=2000.0, hi=6000.0, broad=-3.0))
     ev("bubble_12", PE["bubble_12"], "bubble_pop", "the honest student's thought bubble pops in (little crowd of cheaters)", one(lambda r: G.pop(r, 470, True)),
        -17.5, p=0.1, space="class", send=0.1)
     ev("bubble_12", PE["bubble_12"], "bubble_ding", "...with a tiny echo of the hook's glint ding (the callback)",
@@ -1694,7 +2279,11 @@ def cues():
            -30, p=0.1 + (0.15 if k % 2 else -0.15), space="class", send=0.08)
 
     w12 = PE.get("whip_12")
-    if w12:
+    if w12 and w12.get("vf"):                              # A6 P3: +6 dB, peaks on the arc's fastest frames, 3 kHz LP under 'half' / 'hears:'
+        add(Cue(w12["vf"][0] / T.FPS, "arc_air", f"the camera's fast arc from the board to the honest student (video {w12['vf'][0]}-{w12['vf'][2]}, fastest "
+                f"{w12['vf'][1]}): a soft air pass following its speed", lambda r=rr(), w=w12: (cam_air(r, w["curve"], w["lat"], lo=300, hi=1800), 0.0), -24, space="class",
+                send=0.05, pe="whip_12 (camera probe)", wcarve=dict(db=-8.0, lo=3000.0, hi=12000.0)))
+    elif w12:
         c12, h12 = float(w12["center"]), float(w12["half"])
 
         def arc_air(r, c=c12, h=h12):
@@ -1706,11 +2295,31 @@ def cues():
         ev("pencils_12", f, "pencil", "a seated pupil scratches with a pencil", one(lambda r: G.pencil_scratch(r, r.uniform(0.22, 0.4))), -34 - k,
            p=[-0.5, 0.45, -0.15][k % 3], space="class", send=0.1, group="pencils")
     if PE.get("chalk_dot_12") is not None:
-        ev("chalk_dot_12", PE["chalk_dot_12"], "chalk_snap", "the full stop of 'CHEATED.' - a hard chalk tok with a tiny snap", one(G.chalk_snap), -25, p=-0.2,
+        ev("chalk_dot_12", PE["chalk_dot_12"], "chalk_snap", "the full stop of 'CHEATED.' - a hard chalk tok with a tiny snap (A7 P3: +3 dB)", one(G.chalk_snap), -22, p=-0.2,
            space="class", send=0.12)
+    if PE.get("react_12"):                                 # A6 ADD: the room reacts in the gap after the quote
+        try:
+            ch_ = T.word("cheated", T.bt("half"))
+            ga_, gb_ = T.gap_after(float(ch_["e"]) - 0.01, 0.15)
+        except KeyError:
+            ga_ = gb_ = 0.0
+        if gb_ - ga_ >= 0.18:
+            add(Cue(ga_ + 0.01, "pencil_drop", "a pupil drops a pencil on the desk (tick + two bounces)", lambda r=rr(): (G.pencil_drop(r), 0.0), -31, p=0.45,
+                    space="class", send=0.12, pe="react_12 (gap)"))
+            add(Cue(ga_ + 0.04, "page_turn", "...a pupil turns a notebook page (A7 ADD; replaces the desk scrape)", lambda r=rr(): (G.page_turn(r, 0.24), 0.0), -36, p=-0.5,
+                    space="class", send=0.12, pe="react_12 (gap)"))
+            add(Cue(ga_ + 0.09, "gasp", "...and one wordless little gasp from the back row", lambda r=rr(), d_=min(0.2, gb_ - ga_ - 0.1): (G.gasp(r, d_, 1.18), 0.0),
+                    -35, p=-0.25, space="class", send=0.1, pe="react_12 (gap)"))
     if PE.get("chair_12") is not None:
         ev("chair_12", PE["chair_12"], "chair_creak", "a pupil shifts on a wooden chair on 'everybody'", one(lambda r: G.chair_creak(r)), -32, p=0.5,
            space="class", send=0.12)
+    if 12 in T.SHOTS:                                        # A7 ADD: a far corridor bell tone through the wall, once, in a word gap
+        a12_, b12_ = T.shot_t(12)
+        gc_ = [(a_, b_) for a_, b_ in T.gaps(0.2) if a12_ + 0.5 <= a_ <= b12_ - 1.5 and T.shot_at(a_ + 0.02) == 12]
+        if gc_:
+            ga_, gb_ = gc_[0]
+            add(Cue(ga_ + 0.02, "school_bell", f"a far school-corridor bell tone rings once through the wall (in the {ga_:.2f}-{gb_:.2f} s gap, muffled)",
+                    lambda r=rr(): (G.school_bell(r, 1.3), 0.0), -42, p=0.6, send=0.2, space="class", pe="classroom word gap", wcarve=dict(db=-6.0, broad=-3.0)))
 
     # ---------------- 13 PERMISSION
     for k, f in enumerate(_frames(PE["thieves_pocket_13"])):
@@ -1720,8 +2329,8 @@ def cues():
     if tp_ is not None:
         tp = fr(tp_)
         dfall = dfr(tp_, tp_ - 4)
-        add(Cue(tp, "stamp_fall", "giant stamp falls the last 4-5 f (air swish peaking on impact)", lambda r=rr(), d_=dfall: (G.stamp_fall(r, d_), d_), -16.5,
-                send=0.05, group="stamp", pe="stamp"))
+        add(Cue(tp, "stamp_fall", "giant stamp falls the last 4-5 f (air swish peaking on impact; r8: its 1-4 kHz band -6 dB under the tail of 'them')",
+                lambda r=rr(), d_=dfall: (G.stamp_fall(r, d_), d_), -16.5, send=0.05, group="stamp", pe="stamp", wcarve=dict(db=-6.0, lo=1000.0, hi=4000.0)))
         add(Cue(tp, "stamp_slam", "STAMP slams 'PERMISSION GRANTED' onto Sign B: deep thoom + block knock + rubber thwap + panel ring; "
                 "the 0.6-4 kHz band dips -7 dB for 150 ms so 'per-' stays clear",
                 one(G.stamp_hit), -4.5, send=0.14, group="stamp", post=lambda x: body(carve_mid(x), 1.5), pe="stamp"))   # +1.5 (not 2.5): the stamp already drives the limiter hardest
@@ -1729,10 +2338,15 @@ def cues():
                 send=0.08, group="stamp", pe="stamp"))
     for f in _frames(PE["photo_13"]):
         pre = PE.get("stamp") is not None and f < float(PE["stamp"])
-        ev("photo_13", f, "shutter", "the back-lit silhouette photographs Sign B (white flash) before the stamp" if pre else
-           "the pigtail tourist photographs the stamped sign (flash)", one(G.shutter), -23 if pre else -20, p=0.0 if pre else 0.4, lpf=7000 if pre else 8000)
+        onw = in_word(fr(f), 0.02, 0.02)              # A7 P3: the click-clack on the 'th' of 'them' (1-4 kHz margin 2-4.5 dB)
+        ev("photo_13", f, "shutter", ("the back-lit silhouette photographs Sign B (white flash) before the stamp" if pre else
+           "the pigtail tourist photographs the stamped sign (flash)") + (" - A7 P3: on a word, -8 dB and its 1-6 kHz band -8 dB" if onw else ""),
+           one(G.shutter), (-23 if pre else -20) - (8 if onw else 0), p=0.0 if pre else 0.4, lpf=7000 if pre else 8000,
+           wcarve=dict(db=-8.0, lo=1000.0, hi=6000.0) if onw else None)
         if not pre:
-            ev("photo_13", float(f) + 1, "flash_whine", "...her flash recharges (a thin rising whine)", one(lambda r: G.flash_whine(r)), -31, p=0.4, send=0.05)
+            # A7 P3: a bright thin 4 -> 8 kHz sweep in the one clean pause before the twist: -6 dB, 6 kHz low-pass, 0.2 s
+            ev("photo_13", float(f) + 1, "flash_whine", "...her flash recharges (a short, soft rising whine, low-passed at 6 kHz)",
+               one(lambda r: lp(G.flash_whine(r, 0.2), 6000, 4)), -37, p=0.4, send=0.03)
     def flap_away(r):                                # A4 P3: two fast flaps at the slam, then 3 lighter beats as it flies off (heard in the ring tail)
         y = np.zeros(ns(0.85))
         G._place_mono(y, G.wing_ruffle(r, 2, 0.075, 0.045, 0.95), 0.0)
@@ -1742,6 +2356,9 @@ def cues():
        one(flap_away), -27, p=-0.3, lpf=8000, send=0.1)
     ev("feathers_13", PE["feathers_13"], "feather_flutter", "two loose feathers flutter down past the LED box",
        one(lambda r: G.feather_flutter(r, 3, 0.55)), -33, p=-0.25, lpf=7000, send=0.12)
+    if PE.get("chip_pop_13") is not None:
+        ev("chip_pop_13", PE["chip_pop_13"], "glass_tink", "a chip popped off by the slam glints as it tumbles: a tiny 'tink'", one(lambda r: G.glass_tink(r, 4300.0)),
+           -40, p=-0.2, send=0.1)
     ch13 = PE.get("chuckle_13")
     if ch13 and ch13.get("after_s"):
         ga, gb = T.gap_after(float(ch13["after_s"]) - 0.02, 0.2)
@@ -1774,7 +2391,7 @@ def cues():
             s = np.zeros(L)
             s[: len(hit)] += hit
             s[: len(ring)] += ring
-            s = s * dbg(g_db) if g_db >= -5.5 else lp(s, 3500, 1) * dbg(g_db)
+            s = (s * dbg(g_db) if g_db >= -5.5 else lp(s, 3500, 1) * dbg(g_db)) * dbg(-3.0)   # A6 P3: the clinks 3 dB lower
             place(y, pan(s, pn_bucket), dfr(fs + fc, f_first) + r.uniform(0, 0.3 * FR))
         return y, dfr(fs, f_first)                       # anchor: the cue time is fs
     for k, sc in enumerate(PE.get("scoops_14") or []):
@@ -1786,33 +2403,67 @@ def cues():
             continue
         ev("scoops_14", fs, "scoop", f"scoop at {fs:.1f}: " + (f"bites the CONSCIENCE PILE at {fs - 6:.0f}, " if dig_on else "(the bite is off screen) ")
            + ("the chips clink into the BAIT pail at " + ", ".join(f"{fs + c:.1f}{'' if g_ == 0 else f' ({g_:+.0f} dB, just off the frame edge)'}" for c, g_ in chips) if chips else "no clink (the pail is off screen)"),
-           lambda r=rr(), fs=fs, ch=chips, dg=dig_on: scoop(r, fs, chips=ch, dig_on=dg), -15 - 1.5 * k, **st_, group="scoop")
-        if dig_on:                                       # A4 ADD: the pile settles after each VISIBLE bite
-            ev("rocks_14", fs + 2, "rocks_settle", "a few chips slide and settle on the CONSCIENCE PILE after the scoop bites it", one(lambda r: G.rock_settle(r)),
-               -33, p=-0.25, space="store", send=0.12, group="rocks")
+           lambda r=rr(), fs=fs, ch=chips, dg=dig_on: scoop(r, fs, chips=ch, dig_on=dg), -15 - 1.5 * k, **st_, group="scoop",
+           wcarve=dict(db=-4.0, lo=1000.0, hi=4000.0, broad=-4.0))       # A6 P3: -4 dB while 'pieces people stole' sound
     for f in _frames(PE["bait_scoop_14"]):
         # A5 P3: the insert opens on the LOADED scoop (trowel first seen at video 2136): no dig; the blade tips at fs+4 and its
         # 4 chips land fs+10.6 .. +13.6 (cast.ts: chip k arrives at fs+10+k; preview5 video 2149-2153)
         ev("bait_scoop_14", f, "scoop", "the insert: the loaded scoop tips over the BAIT bucket on 'the bait wood?' and 4 chips clink in",
            lambda r=rr(), f=f: scoop(r, f, 0.1, 0.0, [(10.6 + k, 0.0) for k in range(4)], dig_on=False, tilt=True), -22, **st_, group="scoop")   # A4 P2: -6 dB (it sits on 'wood?')
-    ev("letter_pick_14", PE["letter_pick_14"], "letter_pick", "he lifts a 'SORRY!' letter off the pile (paper crinkle)",
-       one(lambda r: G.paper_rustle(r, 0.4)), -20, p=-0.2, **st_)
-    ev("mail_flap_14", PE["mail_flap_14"], "mail_flap", "the brass mail-slot flap snaps open", one(G.brass_flap), -17, p=0.45, **st_)
-    ev("parcel_14", PE["parcel_14"], "parcel_thump", "a returned parcel drops onto the pile ON 'mailed' (cardboard thud + rocks shift; the camera kicks)",
-       one(G.parcel_thump), -13, p=-0.1, space="store", send=0.16, post=lambda x: carve_mid(body(x, 2.5), depth_db=-6.0, back=0.3))   # A4 P3
-    ev("envelope_14", PE["envelope_14"], "envelope_slap", "...an envelope flops down after it", one(G.envelope_slap), -19, p=-0.25, **st_)
+    ev("letter_pick_14", PE["letter_pick_14"], "letter_pick", "he lifts a 'SORRY!' letter off the pile (paper crinkle; A6: -5 dB, carved under 'with')",
+       one(lambda r: G.paper_rustle(r, 0.4)), -25, p=-0.2, wcarve=-8.0, **st_)
+    if PE.get("letter_pick_14") is not None:               # A6 ADD: ...and the sheet sighs as it lifts to the lens
+        ev("letter_pick_14", float(PE["letter_pick_14"]) + 2, "paper_sigh", "...the sheet gives a soft paper 'sigh' as it is lifted to the lens",
+           one(lambda r: G.paper_sigh(r, 0.32)), -30, p=-0.15, **st_)
+    for k, f in enumerate(_frames(PE.get("mail_knock_14"))):  # A6 (WORLD-INT r6): knock-knock from outside the slot
+        ev("mail_knock_14", f, "slot_knock", "knock-knock: something pushes at the brass mail slot from outside (the flap jolts)" if k == 0 else "...knock",
+           one(lambda r, k=k: G.slot_knock(r, 330.0 if k == 0 else 300.0, 0.8)), -27 - 2 * k, p=0.45, **st_)
+    ev("mail_flap_14", PE["mail_flap_14"], "mail_flap", "the brass mail-slot flap snaps open (A6 P2: -6 dB)", one(G.brass_flap), -24, p=0.45, **st_)
+    # A6 P3 (the reveal line was cluttered): the flap's shut slap / swing tap and the tear-off rip land on 'mailed' with the
+    # parcel thump (the one accent) - only a shut tap that falls in a word gap sounds
+    for k, f in enumerate(_frames(PE.get("mail_shut_14"))):
+        if in_word(fr(f)):
+            continue
+        ev("mail_shut_14", f, "slot_knock", "the flap slaps shut behind the mail" if k == 0 else "...and taps once more on its swing back",
+           one(lambda r, k=k: G.slot_knock(r, 360.0, 0.6 - 0.3 * k)), -33 - 6 * k, p=0.45, **st_)
+    ms_ = _frames(PE.get("mail_shut_14"))
+    if ms_ and 15 in T.SHOTS:                                # A7 ADD: the mail truck pulls away outside the night window
+        t0_ = fr(ms_[0]) + 0.35
+        t1_ = T.xfade(15)[0]
+        if t1_ - t0_ >= 0.8:
+            add(Cue(t0_, "mail_truck", f"outside the night window the mail truck pulls away ({t0_:.2f}-{t1_:.2f} s: a muffled diesel rev receding, tyres; < 1 kHz)",
+                    lambda r=rr(), d_=min(2.4, t1_ - t0_): (G.mail_truck(r, d_), 0.0), -42, p=-0.6, send=0.18, space="store", pe="mail_shut_14 + 0.35 s"))
+    m2 = PE.get("mail2_14")
+    if m2:
+        ev("mail2_14", m2["snap"], "mail_flap", "the slot flaps open again: a second parcel squeezes through (soft)", one(G.brass_flap), -33, p=0.45, **st_)
+        ev("mail2_14", m2["land"], "parcel_soft", "...and flops onto the pile (a soft cardboard thud)", one(lambda r: lp(G.parcel_thump(r), 1800, 2)), -27, p=-0.1,
+           space="store", send=0.14, wcarve=-6.0)
+    if PE.get("snap_band_14"):                             # A6 ADD: a rubber band on a parcel, in the gap after 'apology letters.'
+        try:
+            le_ = T.word("letters", T.bt("apology"))
+            ga_, gb_ = T.gap_after(float(le_["e"]) - 0.01, 0.15)
+        except KeyError:
+            ga_ = gb_ = 0.0
+        if gb_ - ga_ >= 0.15 and T.shot_at(ga_ + 0.02) == 14:
+            add(Cue(max(ga_ + 0.03, gb_ - 0.13), "rubber_snap", f"a rubber band snaps off a returned parcel ('never even kept a borrowed paperclip'), in the {ga_:.2f}-{gb_:.2f} s gap",
+                    lambda r=rr(): (G.rubber_snap(r), 0.0), -31, p=-0.3, space="store", send=0.12, pe="snap_band_14 (gap)"))
+    ev("parcel_14", PE["parcel_14"], "parcel_thump", "a returned parcel drops onto the pile ON 'mailed' (cardboard thud + rocks shift; the camera kicks) - "
+       "THE accent of the line; A6: its 1-4 kHz band -10 dB under 'mailed' (the body stays)",
+       one(G.parcel_thump), -15, p=-0.1, space="store", send=0.16, post=lambda x: carve_mid(body(x, 3.5), depth_db=-6.0, back=0.3),
+       wcarve=dict(db=-10.0, lo=800.0, hi=4500.0))
+    ev("envelope_14", PE["envelope_14"], "envelope_slap", "...an envelope flops down after it (A6: -5 dB, -8 dB at 1-4 kHz under the words)", one(G.envelope_slap), -24,
+       p=-0.25, wcarve=-8.0, **st_)
     for k, f in enumerate(_frames(PE["letters_hop_14"])):
-        ev("letters_hop_14", f, "letter_hop", "the apology letters hop on 'apology' (paper flutter)", one(lambda r: G.paper_rustle(r, 0.2, 0.8)), -25 - k,
-           p=-0.3 + 0.3 * k, **st_)
+        ev("letters_hop_14", f, "letter_hop", "the apology letters hop on 'apology' (a soft paper flutter, A6: -6 dB, carved under the word)",
+           one(lambda r: lp(G.paper_rustle(r, 0.2, 0.8), 5000, 1)), -31 - k, p=-0.3 + 0.3 * k, wcarve=-8.0, **st_)
     if PE.get("bulb_14") is not None:
         def tink(r):
             y = np.zeros(ns(0.4))
             G._place_mono(y, G.clink(r, r.uniform(3600, 4200), 0.09, 0.7), 0.0)
             G._place_mono(y, G.clink(r, r.uniform(3000, 3500), 0.06, 0.5) * 0.4, 0.11)
             return y
-        ev("bulb_14", PE["bulb_14"], "chain_tink", "the hanging bulb's pull-chain tinks as the bulb swings (the parcel landed)", one(tink), -32, p=0.25, **st_)
-        ev("bulb_14", PE["bulb_14"], "bulb_hum", "...and its mains hum swells and wanes with the swing, decaying over 1.5 s",
-           one(lambda r: G.bulb_swing(r, 1.5)), -37, p=0.25, send=0.06, space="store")
+        ev("bulb_14", PE["bulb_14"], "bulb_hum", "...and its mains hum swells and wanes with the swing, decaying over 1.5 s (A6: lower, its 3 kHz sing off)",
+           one(lambda r: lp(G.bulb_swing(r, 1.5), 1500, 2)), -42, p=0.25, send=0.06, space="store")
     if PE.get("owl_14") is not None:
         ts_ = fr(float(PE["owl_14"]))
         g_ = [(a_, b_) for a_, b_ in T.gaps(0.25) if abs(b_ - ts_) < 0.15 and b_ - a_ <= 1.2]
@@ -1825,14 +2476,17 @@ def cues():
     if PE["pocket_15"] is not None:
         lead = dfr(float(PE["pocket_15"]), float(PE["pocket_15"]) - 4)   # the rustle starts 4 f early (CHAR r3: slides in 1821-1825), the tick lands ON the entry frame
         add(Cue(fr(PE["pocket_15"]), "pocket", "the dusk tourist slips the tagged chip into his shirt pocket (tick ON the entry frame)",
-                lambda r=rr(), L=lead: (G.chip_pocket(r, L, 0.38), L), -17, p=0.15, pe="pocket_15"))
+                lambda r=rr(), L=lead: (G.chip_pocket(r, L, 0.38), L), -20, p=0.15, pe="pocket_15", wcarve=-8.0))   # A6: it lands on 'stolen'
     ev("tag_sparkle_15", PE["tag_sparkle_15"], "chip_glint", "the blue-quartz chip sparkles in his hand (a tiny callback to the hook's glint)",
        one(lambda r: G.tiny_ting(r, 3520.0, 0.12)), -29, p=0.2, send=0.12)
-    ev("tag_ding_15", PE["tag_ding_15"], "bright_ding", "the tag's '2' card opens ('TIMES STOLEN: 1' -> '2'): one bright ding D7 (tuned to the final D-major chord), ON the opening frame",
-       one(lambda r: G.ding(r, 2349.3, 0.26, 0.8, dur=0.85)), -8, p=0.1, send=0.08)   # A5 P2: +3 dB (it was the quietest final accent)
+    ev("tag_ding_15", PE["tag_ding_15"], "bright_ding", "the tag's '2' card opens ('TIMES STOLEN: 1' -> '2'): one bright ding D8 (4.7 kHz, above the consonant band of "
+       "'twice'; a D6 body at -13 dB), ON the opening frame", one(lambda r: G.tag_ding(r)), -11, p=0.1, send=0.08)   # A6 P1: an octave up, -3 dB
     if PE.get("card_flick_15") is not None:
         ev("card_flick_15", PE["card_flick_15"], "card_flick", "the tag card flicks over in the pocket (2 f), just ahead of the ding",
            one(lambda r: G.card_flick(r)), -34, p=0.12, send=0.05)
+    for k, f in enumerate(_frames(PE.get("kiosk_lamp_15"))[:2]):   # A6: the kiosk post lamp flicks on behind the dusk tourist
+        ev("kiosk_lamp_15", f, "relay_click", "the kiosk post lamp flicks on in the dusk (relay click + filament buzz)" if k == 0 else "...and on again for good",
+           one(lambda r, k=k: G.relay_click(r, 0.07 if k else 0.03)), -43 - 2 * k, p=-0.5, send=0.08)
     if PE.get("nighthawk_15") is not None:
         def peent(r):
             c = G.nighthawk_peent(r)
@@ -1861,19 +2515,26 @@ def cues():
            lambda r=rr(): flutter(r), -36, p=0.2, lpf=9000, send=0.08)
     car = PE.get("car_15")
     if car:
-        d0, c0, aw = float(car["door"]), float(car["crank"]), float(car["away_by"])
-
-        def car_start(r, d0=d0, c0=c0, aw=aw):
-            idle = 0.5
-            away = max(0.4, (T.fr(aw) - T.fr(c0)) - 0.42 - idle)
-            door = G.car_door(r, 1.5)
-            eng = G.engine_start(r, 0.42, idle, away, 1.3)
-            y = np.zeros(ns(dfr(max(aw, c0), d0) + 0.8))
-            G._place_mono(y, door * 1.0, 0.0)
-            G._place_mono(y, eng * 0.55, (T.fr(c0) - T.fr(d0)))
-            return y, 0.0
-        ev("car_15", d0, "car_far", "far off in the parking lot a car door shuts under 'So', the starter grinds under 'some of it', the engine catches "
-           "and drives away before 'twice' (dusk life)", lambda r=rr(): car_start(r), -31, p=-0.55, lpf=2600, send=0.2)
+        # A7 P3: no car is on screen in the dusk MCU, and the starter + engine put mid-band clutter under the payoff line:
+        # only ONE far door thunk, and only in a real word gap (>= 0.12 s) between 'So' and 'twice' in shot 15 (else none)
+        a15_ = fr(float(car["door"])) - 0.2
+        try:
+            tw_ = float(T.word("twice", T.bt("twice") - 0.4)["s"])
+        except KeyError:
+            tw_ = fr(float(car["away_by"]))
+        g15 = [(a_, b_) for a_, b_ in T.gaps(0.12) if a15_ <= a_ and b_ <= tw_ - 0.25 and T.shot_at(a_ + 0.02) == 15]
+        if g15:
+            ga_, gb_ = g15[0]
+            add(Cue(ga_ + 0.03, "car_door_far", f"far off in the parking lot a car door thunks shut in the dusk (in the {ga_:.2f}-{gb_:.2f} s gap)",
+                    lambda r=rr(): (lp(G.car_door(r, 1.6), 1800, 2), 0.0), -36, p=-0.55, send=0.2, pe="car_15 -> word gap"))
+    for g_ in (PE.get("cam_moves") or []):                 # A6 P3: the camera's other fast moves (whip back in shot 4, the truck in 10, ...)
+        ext = T.SHOTS[g_["shot"]]["set"] in T.EXTERIOR
+        lvl = float(np.clip(-34.0 + 4.0 * np.log2(max(g_["peak"], 1.0) / 2.0), -36.0, -29.5)) - (0.0 if ext else 3.0)
+        add(Cue(g_["a"] / T.FPS, "camera_air", f"the camera {'whips' if g_['peak'] >= 4 else 'trucks'} (shot {g_['shot']}, video {g_['a']}-{g_['b']}, fastest {g_['pk']}): "
+                + ("a light wind gust + a whisper of sand" if ext else "a soft air pass") + f" following its speed, panned {'L -> R' if g_['lat'] > 0 else 'R -> L'}",
+                lambda r=rr(), w=g_, e=ext: (cam_air(r, w["curve"], w["lat"], sand=e, lo=400, hi=2000), 0.0), lvl, send=0.03,
+                space="out" if ext else ("class" if T.SHOTS[g_["shot"]]["set"] == "classroom" else ("store" if T.SHOTS[g_["shot"]]["set"] == "storeroom" else "blue")),
+                pe="cam_moves (camera probe)"))
     for a, b, kind, sid, x, px in (PE.get("raven_auto") or []):
         pn_ = float(np.clip((x / 1080.0 - 0.5) * 1.4, -0.8, 0.8))
         if kind == "hop":
@@ -1884,13 +2545,40 @@ def cues():
                 return y, 0.0
             ev("raven_auto", a, "raven_hop", f"the raven hops on its perch (shot {sid}, {a}-{b}: wing flick, claws land on {b})", lambda r=rr(), h=hop: h(r),
                -35, p=pn_, lpf=7500, send=0.1, group="raven_auto")
-            if T.SHOTS[sid]["set"] == "trailhead":
+            if T.SHOTS[sid]["set"] == "trailhead" and sid not in RAVEN_AUTO_SHOT:
                 ev("raven_auto", b, "board_creak", f"...the sign board creaks faintly under its landing (shot {sid})",
                    one(lambda r: G.creak(0.18, r, 260, 340, G.WOOD, None, 0.15, 0.03, 1.3)), -39, p=pn_, lpf=6000, send=0.1, group="raven_auto")
         else:
             ev("raven_auto", a, "raven_ruffle", f"the raven shakes out its feathers (shot {sid}, {a}-{b})",
                one(lambda r: G.wing_ruffle(r, 2, 0.045, 0.035, 1.0)), -35, p=pn_, lpf=7000, send=0.1, group="raven_auto")
     return C
+
+
+def cam_air(r, curve, lat, sand=False, lo=400.0, hi=2000.0):
+    """A6 P3: an air swish that FOLLOWS the camera's speed (curve = deg / video f per video frame of the move): band-passed
+    air (lo..hi), envelope = speed^1.3 (so it peaks on the fastest frame) with a 2 f fade after the landing; a whisper of
+    sand on the top of the swell outdoors; panned across the move (lat > 0: the view travels screen-right -> L -> R). (2, n)"""
+    cv = np.asarray(curve, float)
+    cv = np.concatenate([cv, [cv[-1] * 0.5, 0.0, 0.0]])            # the landing + 2 f
+    n = ns(len(cv) / T.FPS)
+    tq = np.arange(n) / SR * T.FPS
+    env = np.interp(tq, np.arange(len(cv)), cv / max(1e-6, cv.max())) ** 1.3
+    env = np.convolve(env, np.ones(ns(0.02)) / ns(0.02), mode="same")
+    y = bp(colored(n, r, 0.9), lo, hi, 1) * env
+    if sand:
+        gr = np.zeros(n)
+        k = r.random(n) < 1600 / SR
+        gr[k] = r.uniform(0.2, 1.0, k.sum())
+        y = y + bp(gr, 3000, 8000, 1) * env ** 2 * 0.6 * np.std(y) / max(1e-9, np.std(bp(gr, 3000, 8000, 1)) + 1e-9)
+    y = fades(y, 0.004, 0.02)
+    a0, a1 = (-0.45, 0.45) if lat > 0 else (0.45, -0.45)
+    th = (np.linspace(a0, a1, n) + 1) * np.pi / 4
+    return np.stack([y * np.cos(th), y * np.sin(th)]) * np.sqrt(2)
+
+
+def _carve_mono(x, t0, depth_db, lo=1000.0, hi=4000.0):
+    """dip the lo..hi band of a mono event (placed at t0) while words sound (keeps its low clack)"""
+    return carve_words(np.asarray(x, float)[None, :], t0, depth_db, lo, hi)[0]
 
 
 def _thump(r, f0=70.0, tau=0.05):
@@ -1920,13 +2608,34 @@ def write_used():
         json.dump(out, f, indent=1)
 
 
+RAVEN_VARY = ("raven_hop", "raven_ruffle", "raven_wings", "raven_land", "raven_takeoff", "board_creak", "claw_tick")
+
+
+def _vary(x, k):
+    """A7 ADD: the ~25 recurring raven hops / ruffles / board creaks never sound identical - per instance k a pitch +-2 st
+    (resampled, so the length follows: a higher one is a smaller, quicker move), a low-pass 5-8.5 kHz and a body tilt"""
+    from scipy import signal as _sg
+    h1, h2, h3 = T.hh(k, 3.1), T.hh(k, 7.7), T.hh(k, 11.3)
+    st_ = -2.0 + 4.0 * h1
+    up, down = 200, int(round(200 * 2 ** (st_ / 12.0)))
+    y = _sg.resample_poly(x, up, down, axis=-1)
+    y = lp(y, 5000.0 + 3500.0 * h2, 2)
+    y = peq(y, 900.0 + 900.0 * h3, -3.0 + 6.0 * T.hh(k, 5.5), 1.0)
+    return fades(y, 0.001, 0.01)
+
+
 def render_events(v_ref, on_event=None):
     C = cues()
     out = np.zeros((2, N))
     sends = {k: np.zeros(N) for k in SPACES}
+    nvar = 0
     for c in C:
         x, anchor = c.gen()
         x = np.asarray(x, float)
+        if c.name in RAVEN_VARY:
+            nvar += 1
+            x = _vary(x, nvar)
+            anchor = anchor * 1.0
         x = pan(x, c.p) if x.ndim == 1 else x
         tgt = v_ref + c.level
         cur = momentary_max(x)
@@ -1938,7 +2647,9 @@ def render_events(v_ref, on_event=None):
             x = c.post(x)
         t0 = c.t - anchor
         wc = c.wcarve if c.wcarve is not None else _WCARVE.get(c.name)
-        if wc:
+        if isinstance(wc, dict):
+            x = carve_words(x, t0, wc.get("db", -6.0), wc.get("lo", 1000.0), wc.get("hi", 4000.0), broad_db=wc.get("broad", 0.0))
+        elif wc:
             x = carve_words(x, t0, wc)
         c.measured = momentary_max(x) - v_ref
         place(out, x, t0)
