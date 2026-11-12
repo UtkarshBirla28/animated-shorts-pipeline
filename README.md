@@ -41,7 +41,7 @@ PYTHONNOUSERSITE=1 tools/.venv/Scripts/python.exe -s tools/new_short.py moon_hei
 Renders, audio takes and mixes, reference videos and frames (private study material), the Python venv,
 node_modules, the Kokoro model, and any API key. See `.gitignore`.
 
-Status: the example's code is the state after fix round 4 + LEAD fixes (audit A5: shots 7.1, film 7.0, sound 6.5).
-It will be updated when the example finishes at >= 8.
+Status: the example is the FINAL antitheft short (2026-11-12): audit A8 film 7.8, sound 7.8, shots 7.1 (user ended the loop there).
+
 
 Credits: [THIRD_PARTY.md](THIRD_PARTY.md). It builds on mromidev/claude-animated-shorts (MIT).
