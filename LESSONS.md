@@ -100,3 +100,35 @@ Each lesson is a real failure from the antitheft build, its cause, and the rule 
     - Cost per loop: a fix round ~2.5-3.4 M subagent tokens, an audit ~2.1-2.6 M; one loop ~5-6 M.
     - The weekly limit stopped audit A8 mid-way, with 3 of 10 auditors failed. Plan the rounds you can afford.
     - Keep HANDOFF.md + args files current, so the loop resumes exactly after the reset.
+
+## From the salad oil short (2026-11-14, `saladoil`)
+34. **The bar is the AVERAGE.** The user's rule: keep looping audit -> fix until the average shot score is >= 8, with film
+    and sound >= 8 each. Report the score table after every audit. Typical gain per round: +0.7 early, +0.2-0.4 later.
+    If two rounds in a row gain < 0.2, tell the user honestly instead of looping forever.
+35. **The user's pacing direction overrides the style bible's cut rhythm.** Dissolves stay 10-12 f (not 6-9 f). Camera
+    moves are slow bells (peak <= ~45 px/f at 1080), with distance / zoom interpolated so the screen-scale change is
+    even (log distance for pull-outs: a linear distance move whips at the start). Every board the viewer must read has
+    caps >= 40 px, stays whole in frame and >= 1.5-2.5 s on screen. Faces AND boards stay out of the caption band (y 1280-1440 at 1080x1920).
+    One deliberate hard cut per film is fine. Tell the auditors in the args `user_decisions`.
+36. **ElevenLabs eleven_v4 ignores the `speed` setting** (1.08-1.15 gave LONGER takes). Delivery tags such as
+    [quietly], [hushed] and [curious] make James whisper or creak: use UNTAGGED text and punctuation (`...`, `!`) for
+    delivery. A rising question end could not be produced in 30+ takes: accept it rather than burn credits.
+37. **To lengthen a pause, do not re-record:** run `tools/insert_pause.py` on a COPY of the installed voice folder
+    (voice.wav, words.json, phrases.json, voice_info.json). Every hand-fixed onset is kept and shifted, and Whisper never re-runs.
+38. **After any voice change, run the steps in this order:** `gen_words_ts.py` -> `export_timeline.mjs` -> `voice_warp.py --identity`
+    (it reads the total from timeline.json) -> `export_timeline.mjs` again. Then check `VOICE_TOTAL` == the timeline total,
+    or the loop seam breaks. Write an `audit_A<n>/old_to_new_frames.json` map for the fixers.
+39. **Whisper onset errors recur on the same takes.** Check the energy profile of key words ('against', 'full!',
+    'inside?', the reveal) after every reassembly and re-patch words.json by hand.
+40. **16 GB RAM: never run a render and `mix.py` at the same time.** Claude Code reaps background jobs under memory
+    pressure. Chain them in ONE background command: render chunks -> mix -> mux. Use 6 chunks of ~460 f at
+    concurrency 2. After a reaped render, kill its leftover node / chrome (user-data-dir under the studio) BEFORE relaunching.
+    The killed shell's script can keep rendering and corrupt the chunk list: rebuild `<prefix>_chunks.txt` and check the frame count.
+41. **The LEAD settles cross-owner requests at every merge** (plan.ts anchors, small cross-file edits, `picture_events.json`
+    overrides for sounds whose picture source moved or does not exist) and writes them at the top of `carryover_r<n>.md`
+    with the binding decisions. Then the next fix round's agents agree.
+42. **Look at merged stills before every preview render** (2-3 per shot, plus frame 0 vs the last frame). A P1 that
+    did not land (a cropped head, a board cut by the frame) is cheaper to fix by hand than to send through another audit round.
+43. **Check the mix probes after the merge** (`picture_events_used.json` `_probes`). When an owner rewrites a function,
+    a probe falls back to old frames: override that cue in `picture_events.json` with the real frames.
+44. **Inline `//` comments swallow code in one-line edits.** In scripted replacements use `/* */` mid-line.

@@ -12,7 +12,7 @@ const [prefix, frames, scale = "0.5"] = process.argv.slice(2);
 const { COMP_ID } = await import("./short.mjs");
 const id = process.env.COMP || COMP_ID;
 const inputProps = process.env.PROPS ? JSON.parse(process.env.PROPS) : {};
-const browserExecutable = process.env.CHROME || "C:/Program Files/Google/Chrome/Application/chrome.exe";  // env CHROME = another Chrome path
+const browserExecutable = "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const chromiumOptions = { gl: "angle" };
 fs.mkdirSync(path.dirname(path.resolve(prefix)), { recursive: true });
 const t0 = Date.now();

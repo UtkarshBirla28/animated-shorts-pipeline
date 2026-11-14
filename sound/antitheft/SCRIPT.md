@@ -1,6 +1,6 @@
 # The Anti-Theft Sign That Made People Steal
 
-Real video (not a test). Built in `<ROOT>` (picture: `studio\src\videos\antitheft\`,
+Real video (not a test). Built in `C:\Users\utkar\Desktop\animated-shorts-studio` (picture: `studio\src\videos\antitheft\`,
 sound: `sound\antitheft\`), following `study\CHANNEL_STYLE_BIBLE.md`.
 
 ## Facts and sources (checked)

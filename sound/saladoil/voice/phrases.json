@@ -1,0 +1,274 @@
+[
+ {
+  "i": 0,
+  "beat": 1,
+  "s": 0.03,
+  "e": 4.938,
+  "markup": "By {1963,|nineteen sixty-three,} a man had borrowed over {$150 million...|a hundred and fifty million dollars...}",
+  "style": null
+ },
+ {
+  "i": 1,
+  "beat": 1,
+  "s": 4.938,
+  "e": 8.098,
+  "markup": "against tanks that were mostly water.",
+  "style": null
+ },
+ {
+  "i": 2,
+  "beat": 2,
+  "s": 8.422,
+  "e": 12.242,
+  "markup": "Meet Tino {De Angelis,|Dee An-jeh-lis,} New Jersey's salad oil king.",
+  "style": null
+ },
+ {
+  "i": 3,
+  "beat": 2,
+  "s": 12.525,
+  "e": 15.045,
+  "markup": "His giant tanks were full of cooking oil.",
+  "style": null
+ },
+ {
+  "i": 5,
+  "beat": 3,
+  "s": 15.378,
+  "e": 17.518,
+  "markup": "Banks lent him money against it.",
+  "style": null
+ },
+ {
+  "i": 6,
+  "beat": 3,
+  "s": 17.978,
+  "e": 20.178,
+  "markup": "American Express sent inspectors to check.",
+  "style": null
+ },
+ {
+  "i": 7,
+  "beat": 4,
+  "s": 20.435,
+  "e": 24.955,
+  "markup": "But Tino's own men would climb up, drop a tape inside, and shout down:",
+  "style": null
+ },
+ {
+  "i": 8,
+  "beat": 4,
+  "s": 25.315,
+  "e": 26.515,
+  "markup": "{\"90%|Ninety percent} full!\"",
+  "style": "shout"
+ },
+ {
+  "i": 35,
+  "beat": 5,
+  "s": 26.839,
+  "e": 30.269,
+  "markup": "And the inspector, on the ground... believed them.",
+  "style": null
+ },
+ {
+  "i": 9,
+  "beat": 5,
+  "s": 30.656,
+  "e": 32.196,
+  "markup": "So the banks lent more.",
+  "style": null
+ },
+ {
+  "i": 10,
+  "beat": 5,
+  "s": 32.662,
+  "e": 33.422,
+  "markup": "And more.",
+  "style": null
+ },
+ {
+  "i": 11,
+  "beat": 5,
+  "s": 33.746,
+  "e": 38.446,
+  "markup": "Soon, his papers showed more of that oil than the entire United States had.",
+  "style": null
+ },
+ {
+  "i": 13,
+  "beat": 6,
+  "s": 38.805,
+  "e": 41.185,
+  "markup": "But what if someone did look inside?",
+  "style": null
+ },
+ {
+  "i": 14,
+  "beat": 7,
+  "s": 41.9,
+  "e": 46.738,
+  "markup": "Then, in November {1963,|nineteen sixty-three,} his big bet on oil prices crashed.",
+  "style": null
+ },
+ {
+  "i": 15,
+  "beat": 7,
+  "s": 47.045,
+  "e": 48.285,
+  "markup": "His company went bust.",
+  "style": null
+ },
+ {
+  "i": 16,
+  "beat": 7,
+  "s": 48.872,
+  "e": 50.632,
+  "markup": "Lenders finally checked the tanks.",
+  "style": null
+ },
+ {
+  "i": 17,
+  "beat": 8,
+  "s": 51.088,
+  "e": 51.768,
+  "markup": "Inside...",
+  "style": null
+ },
+ {
+  "i": 18,
+  "beat": 8,
+  "s": 51.768,
+  "e": 53.808,
+  "markup": "was mostly water.",
+  "style": null
+ },
+ {
+  "i": 19,
+  "beat": 9,
+  "s": 54.64,
+  "e": 56.92,
+  "markup": "You see, oil floats on water.",
+  "style": null
+ },
+ {
+  "i": 20,
+  "beat": 9,
+  "s": 57.132,
+  "e": 58.512,
+  "markup": "Ever left salad dressing out?",
+  "style": null
+ },
+ {
+  "i": 21,
+  "beat": 9,
+  "s": 59.025,
+  "e": 60.985,
+  "markup": "The oil always rises to the top.",
+  "style": null
+ },
+ {
+  "i": 22,
+  "beat": 10,
+  "s": 61.288,
+  "e": 64.216,
+  "markup": "Fill a tank with water, add a thin layer of oil,",
+  "style": null
+ },
+ {
+  "i": 23,
+  "beat": 10,
+  "s": 64.598,
+  "e": 67.066,
+  "markup": "and from the hatch, it looks full.",
+  "style": null
+ },
+ {
+  "i": 24,
+  "beat": 11,
+  "s": 67.36,
+  "e": 68.3,
+  "markup": "And the real oil?",
+  "style": null
+ },
+ {
+  "i": 25,
+  "beat": 11,
+  "s": 68.568,
+  "e": 70.806,
+  "markup": "He pumped it through pipes, tank to tank,",
+  "style": null
+ },
+ {
+  "i": 26,
+  "beat": 11,
+  "s": 70.972,
+  "e": 73.832,
+  "markup": "so the same oil got counted again and again.",
+  "style": null
+ },
+ {
+  "i": 27,
+  "beat": 11,
+  "s": 74.224,
+  "e": 76.084,
+  "markup": "The hardest-working oil in America.",
+  "style": null
+ },
+ {
+  "i": 28,
+  "beat": 12,
+  "s": 76.609,
+  "e": 79.869,
+  "markup": "When it came out, American Express shares crashed.",
+  "style": null
+ },
+ {
+  "i": 29,
+  "beat": 13,
+  "s": 80.243,
+  "e": 82.983,
+  "markup": "But one young investor bought those shares cheap.",
+  "style": null
+ },
+ {
+  "i": 30,
+  "beat": 13,
+  "s": 83.235,
+  "e": 85.375,
+  "markup": "He bet people still trusted the brand.",
+  "style": null
+ },
+ {
+  "i": 31,
+  "beat": 13,
+  "s": 85.666,
+  "e": 86.226,
+  "markup": "His name?",
+  "style": null
+ },
+ {
+  "i": 32,
+  "beat": 13,
+  "s": 86.899,
+  "e": 87.659,
+  "markup": "Warren Buffett.",
+  "style": null
+ },
+ {
+  "i": 33,
+  "beat": 14,
+  "s": 88.02,
+  "e": 89.38,
+  "markup": "The oil was fake.",
+  "style": null
+ },
+ {
+  "i": 34,
+  "beat": 14,
+  "s": 89.962,
+  "e": 91.182,
+  "markup": "The trust was real.",
+  "style": null
+ }
+]

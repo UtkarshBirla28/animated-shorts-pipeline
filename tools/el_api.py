@@ -1,6 +1,6 @@
 """Tiny ElevenLabs REST helper for what the ElevenLabs MCP server cannot do (list premade voices with previews, read
 shared-voice owner ids, add a shared library voice to My Voices, remove it again, TTS with timestamps).
-The API key is read at run time from env ELEVENLABS_API_KEY or the Claude Code config (~/.claude.json -> mcpServers.elevenlabs.env) and is
+The API key is read at run time from the user's Claude Code config (~/.claude.json -> mcpServers.elevenlabs.env) and is
 NEVER printed, logged or written anywhere.
 Usage:
   python -s el_api.py voices                      # my voices (premade + added) with labels + preview_url  -> JSON
@@ -22,12 +22,6 @@ API = "https://api.elevenlabs.io/v1"
 
 
 def key():
-    # 1) env ELEVENLABS_API_KEY (e.g. set once with `setx ELEVENLABS_API_KEY ...` on Windows), 2) the ElevenLabs MCP entry
-    # in ~/.claude.json (user or project scope). Never printed or written anywhere.
-    if os.environ.get("ELEVENLABS_API_KEY"):
-        return os.environ["ELEVENLABS_API_KEY"]
-    if not os.path.exists(os.path.expanduser("~/.claude.json")):
-        sys.exit("no ElevenLabs key: set ELEVENLABS_API_KEY or add the elevenlabs MCP server (see SETUP.md)")
     cfg = json.load(open(os.path.expanduser("~/.claude.json"), encoding="utf-8"))
     k = cfg.get("mcpServers", {}).get("elevenlabs", {}).get("env", {}).get("ELEVENLABS_API_KEY")
     if not k:

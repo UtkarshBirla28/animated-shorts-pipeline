@@ -1,12 +1,15 @@
-"""Start a NEW short from the worked example (antitheft): picture engine + sound engine + voice tools, ready for the
+"""Start a NEW short from a worked example (default: saladoil, the newest engine; or --from=antitheft): picture engine +
+sound engine + voice tools, ready for the
 LEAD to write the story contract (BUILD_PLAN.md, plan.ts, story.ts) and for the build workflow to fill the sets/cast.
 
-Usage:  python tools/new_short.py <slug> <CompName> ["Video title"]
+Usage:  python tools/new_short.py <slug> <CompName> ["Video title"] [--from=saladoil|antitheft]
    e.g. python tools/new_short.py moon_heist MoonHeist "The Heist That Stole the Moon"
+   saladoil (2026-11-14) has the newer engine: picture probes in the sound mix, the smoothed DOF racks, the grain
+   pass, readable split-flap boards. antitheft is the first finished example (A8: film 7.8, sound 7.8).
 
 Creates
-  studio/src/videos/<slug>/        copy of studio/src/videos/antitheft with AntiTheft.tsx -> <CompName>.tsx,
-                                   AntiTheftShort -> <CompName>Short, ANTITHEFT_FRAMES -> <COMPNAME>_FRAMES
+  studio/src/videos/<slug>/        copy of studio/src/videos/<example> with <ExComp>.tsx -> <CompName>.tsx,
+                                   <ExComp>Short -> <CompName>Short, <EXCOMP>_FRAMES -> <COMPNAME>_FRAMES
   studio/src/Root.tsx              + <Composition id="<CompName>Short" ...>
   sound/<slug>/audio/              sound engine code (timeline, sfx, sfx_gen, music, instruments, dsp, mix) + cues.md
   sound/<slug>/voice/              voice tools (voice_build.py = script/phrase table, eleven_build.py, refine_onsets.py)
@@ -22,15 +25,21 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-if len(sys.argv) < 3:
+EXAMPLES = {"saladoil": "SaladOil", "antitheft": "AntiTheft"}
+frm = [a for a in sys.argv[1:] if a.startswith("--from=")]
+args = [a for a in sys.argv[1:] if not a.startswith("--from=")]
+EX = frm[0].split("=", 1)[1] if frm else "saladoil"
+if EX not in EXAMPLES:
+    sys.exit(f"--from must be one of {list(EXAMPLES)}")
+EXC = EXAMPLES[EX]
+if len(args) < 2:
     sys.exit(__doc__)
-slug, comp = sys.argv[1], sys.argv[2]
-title = sys.argv[3] if len(sys.argv) > 3 else slug.replace("_", " ").title()
+slug, comp = args[0], args[1]
+title = args[2] if len(args) > 2 else slug.replace("_", " ").title()
 if not re.fullmatch(r"[a-z][a-z0-9_]*", slug):
     sys.exit("slug must be lower_snake_case (a-z, 0-9, _)")
 if not re.fullmatch(r"[A-Z][A-Za-z0-9]*", comp):
     sys.exit("CompName must be PascalCase, e.g. MoonHeist")
-EX, EXC = "antitheft", "AntiTheft"
 src_v, dst_v = ROOT / "studio/src/videos" / EX, ROOT / "studio/src/videos" / slug
 if dst_v.exists():
     sys.exit(f"{dst_v} already exists")
@@ -41,20 +50,20 @@ shutil.copytree(src_v, dst_v)
 for p in dst_v.iterdir():
     if p.suffix in (".ts", ".tsx"):
         s = p.read_text(encoding="utf-8")
-        t = (s.replace(f"{EXC}Short", f"{comp}Short").replace("ANTITHEFT_FRAMES", f"{comp.upper()}_FRAMES")
-              .replace('delayRender("antitheft kit")', f'delayRender("{slug} kit")'))
+        t = (s.replace(f"{EXC}Short", f"{comp}Short").replace(f"{EXC.upper()}_FRAMES", f"{comp.upper()}_FRAMES")
+              .replace(f'delayRender("{EX} kit")', f'delayRender("{slug} kit")'))
         if t != s:
             p.write_text(t, encoding="utf-8")
-(dst_v / "STARTED_FROM.md").write_text(f"""# {title} ({slug}) -- started from the antitheft example
+(dst_v / "STARTED_FROM.md").write_text(f"""# {title} ({slug}) -- started from the {EX} example
 
 ENGINE (keep, extend; owners may improve them): {comp}.tsx (composer: ink -> lens -> bloom -> tone map -> grade, dissolves,
 per-layer lights, voice clock), Captions.tsx, ink.ts, grade.ts, lensblur.ts, build.ts, world.ts (set/cast dispatch),
 ctx.ts, shade.ts (two-tone + light pools), cardshade.ts, toon.ts (Pen drawing system: faces, outlines, expressions --
-the antitheft CHARACTER designs inside it are story content), voicewarp.ts + words.ts (GENERATED, never hand-edit).
+the {EX} CHARACTER designs inside it are story content), voicewarp.ts + words.ts (GENERATED, never hand-edit).
 
 STORY CONTENT (replace for this short): BUILD_PLAN.md (LEAD), plan.ts (anchors, LightName list), story.ts (BEAT words,
 SHOTS, CAMS, DOFS, KICKS, XFADE, lights/relights), sets_ext.ts + paint.ts (WORLD-EXT), sets_int.ts + lights.ts
-(WORLD-INT), cast.ts + the character designs in toon.ts (CHAR). Until replaced they still draw the Petrified Forest.
+(WORLD-INT), cast.ts + the character designs in toon.ts (CHAR). Until replaced they still draw the {EX} story.
 """, encoding="utf-8")
 root_tsx = ROOT / "studio/src/Root.tsx"
 r = root_tsx.read_text(encoding="utf-8")

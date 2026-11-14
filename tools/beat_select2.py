@@ -35,6 +35,12 @@ dst.mkdir(parents=True, exist_ok=True)
 take_dirs = [src] + sorted(p for p in src.iterdir() if p.is_dir() and p.name.startswith("t"))
 BRISK = {2, 6, 7, 8}
 QUESTION_END = {5}
+try:  # per-script acting checks: sound/<short>/voice/acting.py (BRISK, QUESTION_END, TARGET_ST, HIGH_OK, acting(bn, r, H))
+    import acting as _ACT
+except ImportError:
+    _ACT = None
+if _ACT is not None:
+    BRISK, QUESTION_END = set(getattr(_ACT, "BRISK", BRISK)), set(getattr(_ACT, "QUESTION_END", QUESTION_END))
 
 
 def med(a):
@@ -124,18 +130,24 @@ def acting(bn, r):
     return band(r["rng"], 10, 18, 6)
 
 
+from types import SimpleNamespace as _NS
+H = _NS(st=st, med=med, f0_track=f0_track, rms_db=rms_db, band=band, voiced_ratio=voiced_ratio, DB=DB)
 report = []
 for bn, rs in rows.items():
-    tgt = TARGET * (2 ** (-5 / 12)) if bn == 3 else TARGET
+    if _ACT is not None:
+        tgt = TARGET * (2 ** (getattr(_ACT, "TARGET_ST", {}).get(bn, 0) / 12))
+    else:
+        tgt = TARGET * (2 ** (-5 / 12)) if bn == 3 else TARGET
+    HIGH = set(getattr(_ACT, "HIGH_OK", {8})) if _ACT is not None else {8}
     for r in rs:
         dev = abs(st(r["f0"], tgt)) if r["f0"] else 9
         sc = {
             "clarity": max(0.0, 10 * (r["acc"] - 0.8) / 0.2) - 2.5 * len(r["lowp"]) - 4 * len(r["leaked"]) - 1.5 * max(0, r["extra"] - 1),
-            "narrator": 0.65 * (10.0 if bn == 8 and st(r["f0"], tgt) > 0 else band(dev, 0, 3, 3)) + 0.35 * band(abs(r["db"] - DB), 0, 2, 4),
+            "narrator": 0.65 * (10.0 if bn in HIGH and st(r["f0"], tgt) > 0 else band(dev, 0, 3, 3)) + 0.35 * band(abs(r["db"] - DB), 0, 2, 4),
             "contour": band(r["end_st"], 1, 9, 4) if bn in QUESTION_END else band(r["end_st"], -9, -0.5, 3),
             "tail": band(r["tail"], 0, 0.08, 0.2),
             "pace": band(r["wps"], 2.9, 4.2, 1.0) if bn in BRISK else band(r["wps"], 2.5, 3.8, 1.0),
-            "acting": acting(bn, r),
+            "acting": (_ACT.acting(bn, r, H) if _ACT is not None else acting(bn, r)),
         }
         sc = {k: round(max(0.0, min(10.0, v)), 1) for k, v in sc.items()}
         W = {"clarity": 3, "narrator": 2, "contour": 1, "tail": 1, "pace": 1, "acting": 3}

@@ -1,0 +1,15 @@
+{
+ "_doc": "NOT READ by the code. Copy the keys you need into picture_events.json (same folder) when a picture action lands on a different frame after the merge, then run `python mix.py`. Values: a frame (30 fps, may be fractional), a list of frames, the same dict shape as in picture_events_used.json, a BEAT expression ('bust-2', 'S9.a+4'), or null to drop that cue. Keys starting with '_' are ignored. Every default and its source formula is listed in picture_events_used.json and at the end of cues.md.",
+ "_climb_4_if_CHAR_keeps_its_own_step_rhythm": "the tank man's foot contacts on the top flight (default = the score's climb beats 628.5 / 642 / 655.5, rim on 'up' 669)",
+ "climb_4": [628.5, 642, 655.5],
+ "_stamps_5_if_CHAR_keeps_its_own_cycle": "the banker's stamp landings in shot 5 (default = the score's beats 929.1 / 959.4 / 989.6)",
+ "stamps_5": [929.1, 959.4, 989.6],
+ "_plunk_4": "the plumb weight touching the oil in shot 4 (default 705)",
+ "plunk_4": 705,
+ "_valves_13": "the frames a pump worker starts turning a valve wheel (default: shot 13 start + 10, pipes + 18, tankTo + 28; each squeak is moved into the nearest word gap)",
+ "valves_13": ["S13.a+10", "pipes+18", "tankTo+28"],
+ "_spin_14": "the newspaper spin-in: first frame it is seen and the frame it lands on the stand",
+ "spin_14": {"a": "cameOut-7", "land": "cameOut+9"},
+ "_horn_1_if_no_ship_in_frame": "drop the far ship horn if WORLD-EXT's harbour has no ship in the shot-1 pull-out",
+ "horn_1": null
+}

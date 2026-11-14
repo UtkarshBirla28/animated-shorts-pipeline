@@ -13,10 +13,7 @@ Outputs:
            one is kept as timeline_old.json), maps EVERY cue in picture_events_used.json (old frames, from an old-unit
            mix run) into picture_events.json (new frames; old file kept as picture_events_old.json), and maps
            picture_probe.json (tumbleweed windows / contacts / paths).
-v3 (2026-11-12): the new script may CHANGE words: pairs by text + beat edges + sound/<short>/audio/warp_anchors.json.
 Usage: python -s voice_warp.py <old words.json> <new voice dir (voice.wav, words.json, phrases.json)> [--audio]
-       python voice_warp.py sound/<short>/voice/words.json sound/<short>/voice --identity   (new short: voice made FIRST,
-       picture timed from it -> identity map, so AntiTheft-style components work unchanged)
 """
 import json
 import os

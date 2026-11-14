@@ -8,7 +8,7 @@ import { bundle } from "@remotion/bundler";
 import { renderStill, selectComposition } from "@remotion/renderer";
 import path from "node:path";
 const [prefix, frames, scale = "0.5"] = process.argv.slice(2);
-const browserExecutable = process.env.CHROME || "C:/Program Files/Google/Chrome/Application/chrome.exe";  // env CHROME = another Chrome path
+const browserExecutable = "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const chromiumOptions = { gl: "angle" };
 const serveUrl = await bundle({ entryPoint: path.resolve(process.env.BRIDGE_ENTRY || "src/index.ts"), publicDir: path.resolve("public") });
 const composition = await selectComposition({ serveUrl, id: "BridgeShort", browserExecutable, chromiumOptions });

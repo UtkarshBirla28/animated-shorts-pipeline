@@ -1,0 +1,22 @@
+{
+ "take": "eleven:james_s3_final:tempo1.0",
+ "stats": {
+  "duration_s": 88.76,
+  "last_word_end_s": 88.502,
+  "n_words": 215,
+  "words_per_s": 2.43,
+  "tempo": 1.0,
+  "thr": 0.1
+ },
+ "inserted_pauses": [
+  {
+   "at_s": 32.253,
+   "added_s": 0.19
+  },
+  {
+   "at_s": 58.396,
+   "added_s": 0.24
+  }
+ ],
+ "duration_s": 91.442
+}

@@ -1,32 +1,43 @@
 ---
 name: animated-story-short
-description: Make a release-quality ~60-90 s vertical animated story short (2D bean-head cartoon cards in a painted 3D three.js world, rendered in Remotion, ElevenLabs narration, synthesized music/SFX) from a NEW script, with the full multi-agent build -> audit -> fix loop until every shot scores >= 8/10 and the sound passes. Use when the user gives a script/brief and asks for a short "like the anti-theft video", "same process / same quality", or "use the animated story short pipeline".
+description: Make a release-quality ~60-90 s vertical animated story short (2D bean-head cartoon cards in a painted 3D three.js world, rendered in Remotion, ElevenLabs narration, synthesized music/SFX) from a NEW script, with the full multi-agent build -> audit -> fix loop until the AVERAGE shot score is >= 8/10 and film and sound are >= 8. Use when the user gives a script/brief and asks for a short "like the anti-theft video", "same process / same quality", or "use the animated story short pipeline".
 ---
 
 # Animated story short: the full process
 
 You are the **LEAD**. Run it end to end in this repo, following **`PIPELINE.md`** stage by stage. **`LESSONS.md`** holds
-the hard-won rules: read it before you start and obey it. The worked example (`antitheft`) is in
-`studio/src/videos/antitheft/`, `sound/antitheft/` and `examples/antitheft/` (HANDOFF log, carryover notes, audits,
-the original workflows). When unsure how something was done, look there first.
+the hard-won rules: read it before you start and obey it (rules 34-44 are the newest). Two worked examples:
+- `saladoil` (newest engine, 2026-11-14): `studio/src/videos/saladoil/`, `sound/saladoil/`, `examples/saladoil/`
+  (HANDOFF log, every args JSON, carryover notes with the LEAD's merge decisions, an audit's SCORES + fixes files).
+- `antitheft` (first finished short): `studio/src/videos/antitheft/`, `sound/antitheft/`, `examples/antitheft/`.
+When unsure how something was done, look there first.
 
 ## Order (never skip a gate)
-0. `tools/new_short.py <slug> <CompName> "<title>"`, then start `studio/out/<slug>/HANDOFF.md`.
+0. `tools/new_short.py <slug> <CompName> "<title>"` (copies the saladoil engine; `--from=antitheft` for the older one),
+   then start `studio/out/<slug>/HANDOFF.md`.
 1. Brief + facts + script. Verify facts at the primary source, add safety rules, and split the script into phrases
    (`voice_build.py P`) and beats (`eleven_build.py BEATS`, `takes/<set>/bNN.txt`).
 2. **Voice first** (ElevenLabs James / eleven_v4, best of 4 takes per beat, `beat_select2.py`,
    `eleven_build.py --breath`, `voice_accept.py`). **The user listens and approves** the voice-only mp3 before any
-   picture work. Tell the user the credit cost before generating.
+   picture work. Tell the user the credit cost before generating. Untagged text reads best (tags make James whisper),
+   `speed` is ignored by eleven_v4, and pauses are lengthened with `insert_pause.py`, never by stretching (LESSONS 36-38).
 3. Story contract: BUILD_PLAN.md (with the QUALITY BAR section), plan.ts, story.ts. Then tsc, export_timeline, and
    `voice_warp.py --identity`.
 4. Build round 1: sandboxes, then `workflows/build.js` (5 owners in parallel), then merge, lead_requests, mix.
 5. Preview render (`render_chunks.sh`, scale 0.5, concurrency 2), then mux.
 6. Loop: `workflows/audit.js` -> `tools/audit_digest.py` -> **report the score table** -> LEAD fixes (voice re-takes,
-   plan/story/world) -> carryover notes -> `workflows/fix.js` -> merge -> mix -> render -> audit ... until every shot
-   >= 8, film (id 0) >= 8, sound (id 99) >= 8.
+   plan/story/world) -> carryover notes -> `workflows/fix.js` -> merge (settle cross-owner requests, check merged
+   stills, check the mix probes) -> render -> mix -> mux (ONE chained background job, never in parallel) -> audit ...
+   until the AVERAGE shot score >= 8, film (id 0) >= 8, sound (id 99) >= 8.
 7. Final render at scale 1, then mux, QA (`short_qa.py`, loudness, loop seam), and delivery (description credits the sources).
 
 ## The user's standing rules (binding)
+- **The loop bar:** keep going on your own (no approvals needed between rounds) until the average shot score is >= 8
+  with film and sound >= 8. Post the score table after each audit. If it plateaus, say so honestly.
+- **Calm pacing (overrides the style bible's rhythm):** framings hold 2.5-4 s with a gentle creep; slow bell moves
+  (peak <= ~45 px/f at 1080), no whips or crash zooms; dissolves 10-12 f; gestures >= 12-18 f; boards short (<= 6-8
+  words), caps >= 40 px, on screen >= 1.5-2.5 s; faces and boards never under the captions; one funny beat and one
+  mystery beat on purpose, each landing on a held, settled frame.
 - **Quality bar:** product-level, never prototype-grade. The bar is the reference channel: living animation, changing
   expressions, nothing frozen, rich detail, correct light and colour, a distinct main character, natural camera work.
 - **Voice quality first.** Never time-stretch or speed up the narration. The video may run a little longer.
@@ -60,6 +71,6 @@ the original workflows). When unsure how something was done, look there first.
 - Workflow sizes: build 5 agents, audit (shots/2 + 2) agents, fix up to 6 agents.
 
 ## Style references
-`study/CHANNEL_STYLE_BIBLE.md` holds the measured rules: captions spec (section 7), dissolves 6-9 f, camera, colour,
+`study/CHANNEL_STYLE_BIBLE.md` holds the measured rules: captions spec (section 7), dissolves (the user's 10-12 f wins), camera, colour,
 characters, voice (section 9), sound (section 10), and the production recipe (section 13). Also see
 `study/CHANNEL_NUMBERS.md` and `study/REPO_KNOWLEDGE.md` (the template code, line by line) with `study/repo/*.md`.

@@ -1,0 +1,31 @@
+{
+ "_doc": "fix1 LEAD overrides (2026-11-14): shot 4 is a hard cut at 804 (no crane), so the yard bed swaps on the cut; cues with no picture source are nulled or moved onto the real picture frames; fix2 AUDIO (2761 f clock): the cafe patrons stay on their video-clock loops, the bike bell and the far carriage bell follow the words they sit beside | fix2 LEAD: car_14 null (WORLD-EXT's car is OFF: no source), fence_2 null (no fence in the landing), flags_2 only the gate-wide snap, gull_7 on WORLD-EXT's roof gull shadow (soHow+2..+30), pour_12 on WORLD-INT's new fill (fill+2..+53).",
+ "yard_4": [
+  801,
+  809
+ ],
+ "vendor_14": null,
+ "pigeons_14": "crashed2+2",
+ "blub_10": "waterEnd+3",
+ "cafe_life_15": {
+  "laugh": 2551,
+  "cup": 2572,
+  "card": "trusted+10",
+  "bike": "brand+11",
+  "carriage": "bought+17"
+ },
+ "car_14": null,
+ "fence_2": null,
+ "flags_2": [
+  307
+ ],
+ "gull_7": "soHow+4",
+ "pour_12": [
+  "fill+2",
+  "fill+53"
+ ],
+ "flaps_1": {
+  "a": 105,
+  "lock": 130
+ }
+}

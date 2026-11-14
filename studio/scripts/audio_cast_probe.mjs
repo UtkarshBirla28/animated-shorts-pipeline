@@ -156,6 +156,8 @@ if (process.argv.includes("--census")) {
 const fam = (k) => k.replace(/^\d+x\d+\|/, "").split("|")[0].replace(/[-\d.]+$/g, "").replace(/\d+$/, "");
 const inside = (q) => q.d > 0.05 && q.x > -20 && q.x < 1100 && q.y > -20 && q.y < 1940;
 const facts = {};
+// cast.ts notes(): `if (t < 0 || t >= LIFE ...)` - read the note lifetime from the source (A6: 14 f; it was 12)
+const NOTE_LIFE = (() => { try { const c = fs.readFileSync(path.resolve(`${storyDir}/cast.ts`), "utf8"), i = c.indexOf("const notes = "), mm = /t >= (\d+)/.exec(c.slice(i, i + 600)); return mm ? +mm[1] : 14; } catch { return 14; } })();
 const KEYED = new Set(["tag", "chiptag", "bubbleClip", "bubbleCheat"]);   // families whose key changes are recorded (tag 1 -> 2)
 for (const s of SHOTS) {
   const F = { fx: {}, keys: {}, notes: [], holds: [], modes: [], walks: {}, hands: [], pocketHands: {}, vis: {}, props: {} };
@@ -168,7 +170,7 @@ for (const s of SHOTS) {
     for (const x of st.fx) {
       if (x.key.startsWith("blob|")) continue;
       const k = fam(x.key), q = proj(cam, [x.x, x.y, x.z]);
-      if (k === "note") nn++;
+      if (k.startsWith("note")) nn++;          // A6 P2: notes() cards are keyed note#<colour> now (they were never counted)
       if (!famRows.has(k)) famRows.set(k, new Map());
       const fm = famRows.get(k);
       if (!fm.has(f)) fm.set(f, { f, x: Math.round(q.x), y: Math.round(q.y), on: inside(q), key: x.key.replace(/^\d+x\d+\|/, "").slice(0, 24), rot: x.rot ?? 0 });
@@ -220,10 +222,10 @@ for (const s of SHOTS) {
       return [a, b, r.x, r.y, r.on, r.key, on_.length ? on_[0] : null, on_.length ? on_[on_.length - 1] : null]; });
     if (k === "tag" && s.id === 15) F.tag_rot = fr.map((f) => [f, +fm.get(f).rot.toFixed(4)]);
   }
-  // note births from the per-frame note count (cast.ts notes(): each note lives exactly 12 f)
+  // note births from the per-frame note count (cast.ts notes(): each note lives exactly NOTE_LIFE frames; A6: 14)
   const births = new Map();
   for (let i = 0; i < noteN.length; i++) {
-    const [f, n] = noteN[i], p = i ? noteN[i - 1][1] : 0, dead = births.get(f - 12) ?? 0;
+    const [f, n] = noteN[i], p = i ? noteN[i - 1][1] : 0, dead = births.get(f - NOTE_LIFE) ?? 0;
     const b = n - p + dead; if (b > 0) { births.set(f, b); for (let j = 0; j < b; j++) F.notes.push(f); }
   }
   // raven moves: runs where hop / ruffle / wing > 0.05 (first frame, last frame, peak, x, y, in frame, size px), head snaps

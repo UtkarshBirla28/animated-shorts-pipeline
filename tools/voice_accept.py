@@ -24,7 +24,7 @@ for a in range(0, len(x), 24000 * 20):
         if not heard or w["s"] > heard[-1]["s"] + 0.05:
             heard.append(w)
 keys = [vb.key(w["w"]) for w in heard]
-FLAG = ["fourteen", "14", "psychologist", "tested", "please", "visitors", "twice", "permission", "gave", "steal"]
+FLAG = ["1963", "150", "angelis", "ninety", "90%", "percent", "inside", "water", "buffett", "salad", "hatch", "hardest", "trust", "tino's", "inspector", "ground", "believed"]
 print("flagged words (Whisper p):")
 for f in FLAG:
     ps = [round(w["p"], 2) for w, k in zip(heard, keys) if k.startswith(f)]
