@@ -36,6 +36,19 @@
 # sparrow's hops, a tube radio's hiss, the blob's squeaks at the pipe mouths, a steam puff, sweat flecks, a far tram bell,
 # the pigeons' flutter, the investor's pencil taps, an oily glop as the gold re-seals.
 #
+# FIX ROUND 3 (audit A3): the shot-12 pour was only ~0.5 s long (its lambda read `Lw` LATE, after the shot-13 brow wipe
+# had reused the name): every generator lambda now binds its length when the cue is made, and the pour is a sustained
+# filling stream 1842-1893 (ducked 3 dB under 'Fill a tank with water,') with the fish's 'blub' as it drops in; the
+# shot-4 yard bed swaps ON the hard cut (the roof tinks, the rail gull's squawk and wings stop at it); the shot-3 register
+# keeps only a soft bell (no visible drawer); the stamps sit on cast.ts STAMPS5.R with a paper 'thup'; the shot-6 rustle
+# swells to the top of the probed raise; the ticker bell drops to bed level (no machine in frame); the storm and the
+# cutaway beds come up in the breaths; the newspaper's whoosh starts on the paper's entry and its slap is its own low-mid
+# transient; the scribble +4 dB; the cafe register ding on the probed card take, in the 'brand.' breath. New life: a
+# second far ship horn and a halyard clink at the gate (shot 2), the inspector's pencil tap-tap in the deadpan silence,
+# a felt-marker squeak on the chart, a hollow drip echo in the empty tank, a chalk squeal on the diving line, a gutter
+# splash under the BANKRUPT slap and the umbrellas' fabric flutter on the gusts, the blob's wet squelch on each COUNTED
+# plate and the pump-room clock, a far tyre hiss on the grey street, the cafe's espresso wand on 'trusted'.
+#
 # Rules kept from the engine: SFX only on physical actions whose source is on screen, synced 0-3 f to the picture; small
 # actions that land ON words get their 1-4 kHz band carved under the words; no whoosh on any plain dissolve (the only
 # whoosh is the spinning newspaper, a real on-screen fly-in); nothing but the dawn bed crosses the loop point.
@@ -43,11 +56,13 @@ import os
 import re
 import json
 import numpy as np
+from scipy import signal as _sig
 from dsp import (SR, ns, tt, rng, dbg, lp, hp, bp, peq, pan, st, place, fades, widen, make_ir, convolve_st,
                  momentary_max, integrated, colored, smooth_noise, shelf)
 import sfx_gen as G
 import sfx_gen_r1 as G2
 import sfx_gen_r2 as G3
+import sfx_gen_r3 as G4
 import instruments as I
 import timeline as T
 import probe as PR
@@ -198,6 +213,14 @@ def picture_events():
     put("wings_1", B["water1"] + 9, "shot 1: the rail gull's wing flaps as it takes off (CHAR cast.ts gull(..., 150, 238))")
     put("wings_1_land", 143, "shot 1: the rail gull flutters down onto the rail (CHAR: flies in 136 -> lands 150)")
     put("flags_2", [307, B["king"] + 15], "shot 2: the gate flag snaps on the gust peaks in the word gaps ('Angelis,|New' 307, 'king.|His')")
+    try:                                     # A3 ADD: the waterfront placed by ear, far under 'New Jersey's'
+        put("horn_2", float(T.word("New", T.bt("tino"))["s"]) * T.FPS, "A3 ADD: a far ship's horn across the harbour, deep under "
+                                                                          "'New Jersey's' (1-4 kHz carved)")
+    except KeyError:
+        put("horn_2", None, "A3 ADD: no 'New' word")
+    gk = gap_at(float(T.word("king", T.bt("king") - 0.2)["e"]) + 0.01, 0.1, 0.2) if "king" in B else None
+    put("halyard_2", (gk[0] + 0.015) * T.FPS if gk else None, "A3 ADD: the gate flagpole's halyard clinks on the pole in the "
+                                                             "'king.|His' breath (the gust that snaps the flag)")
     put("gull_2", B["king"] + 14, "shot 2: a gull over the tank farm in the gap after 'king.'")
     put("fence_2", None, "A2 P3: dropped - no gate leaf is in the shot-2 frame (the gate shiver had no source)")
     put("clank_2", B["giant"] + 10, "shot 2: a far clank across the tank farm (under 'giant tanks')")
@@ -225,7 +248,8 @@ def picture_events():
     put("gulls_4", [B["men"] - 5, B["up"] + 10], "shot 4 A: far gulls circling the tank top (soft, -38 / -28 LU; 'up,|drop' gap)")
     put("gull_perch_4", pr.get("perch_off", B["fullShout"] + 3), "sets_ext.ts tOff (probed): the gull perched on the rail by the shout spot is "
                                                                   "startled into the air by 'full!' (wings; a squawk in the breath after the shout)")
-    put("gull_far_4", B["inspectorG"] + 5, "shot 4 crane down: a far gull cries in the 'inspector,|on' gap")
+    put("gull_far_4", B["inspectorG"] + 5, "shot 4B (the ground two-shot after the hard cut): a far gull wheels over the yard in the "
+                                           "'inspector,|on' gap")
     if s4 and s4.get("stand") is not None:
         put("stand_4", [s4["stand"]] + [s4["stand"] + 3 + 6.5 * n for n in range(1, 8) if s4["stand"] + 3 + 6.5 * n <= s4["rail"] - 3],
             "cast.ts S4.stand + scurry (probed): he rises, then scurries round to the rail (a footfall every 6.5 f)")
@@ -234,20 +258,36 @@ def picture_events():
         put("stand_4", [B["shout"] - 4, B["shout"] + 3], "cast.ts: stands on tStand = shout - 8, steps to the rail by tRail = down + 6")
         put("rail_4", B["down"] + 6, "cast.ts: leans over the rail by tRail = down + 6 (hand on the rail)")
     put("shout_4", [B["ninety"], B["shoutEnd"]], "the shout 'Ninety percent full!' (lip flaps ninety .. shoutEnd): mix.py's metal-tank echo")
-    put("yard_4", [B["andInspector"] - 10, B["andInspector"] + 62], "story.ts R4_V = andInspector - 10, 72 f crane down: the tank-top wind "
-                                                                    "crossfades to the ground-level yard (gravel, a far idling forklift, the harbour lapping)")
+    put("yard_4", [B["andInspector"] - 6, B["andInspector"] + 2], "A3 P2: story.ts R4_CUT_V = andInspector - 3 is the film's one HARD "
+                                                                  "cut (tank top -> ground): the tank-top wind swaps to the ground-level yard (gravel, a far "
+                                                                  "idling forklift, the harbour lapping) over 8 f centred on the cut; the roof tinks stop on it")
     tk = pr.get("tick")
     put("tick_4", [tk[0] + 2, tk[1]] if tk else [B["believed"] + 4, 8.0],
         "cast.ts tick = clamp01((f - X) / L) (probed): the graphite check mark from the stroke's first visible frame (X + 2), "
         "L f long [onset, length]")
-    put("stamps_5", [round(t * T.FPS, 1) for t in ms.get("stamps", [])] or [B["soBanks"] + 15, B["soBanks"] + 45, B["soBanks"] + 75],
-        "shot 5: the banker's right hand stamps ON the score's beats (music.sync_points 'stamps' = cast.ts STAMPS5.R)")
+    try:                                     # A3 ADD: the deadpan's tiny rhythm: tap-tap, then the tick
+        gg = gap_at(float(T.word("ground", T.bt("ground") - 0.2)["e"]) + 0.01, 0.2, 0.2)
+    except KeyError:
+        gg = None
+    tk_on = (tk[0] + 2) if tk else B["believed"] + 4
+    taps4 = [round((gg[0] + d) * T.FPS, 1) for d in (0.05, 0.18)] if gg else []
+    put("taps_4", [x for x in taps4 if x < tk_on - 3] or None,
+        "A3 ADD: the inspector taps his pencil twice on the clipboard in the 'ground...|believed' silence, one beat before the tick "
+        "(CHAR: two 2-3 f pencil dips on these frames)")
     st5 = pr.get("stamps5")
+    if st5 and st5.get("R"):                 # A3 P3: exactly on the picture's landings (cast.ts STAMPS5.R), not the score's beats
+        put("stamps_5", [round(x, 2) for x in st5["R"] if S[5]["a"] - 4 <= x < S[5]["b"] - 4],
+            "cast.ts STAMPS5.R (probed): the banker's right hand stamps (the picture's landing frames)")
+    else:
+        put("stamps_5", [round(t * T.FPS, 1) for t in ms.get("stamps", [])] or [B["soBanks"] + 15, B["soBanks"] + 45, B["soBanks"] + 75],
+            "shot 5: the banker's right hand stamps ON the score's beats (music.sync_points 'stamps' = cast.ts STAMPS5.R)")
     put("stamps_5L", [round(x, 2) for x in st5["L"] if S[5]["a"] - 4 <= x < S[5]["b"] - 4] if st5 else
         [B["soBanks"] + 30.25, B["soBanks"] + 60.5], "cast.ts STAMPS5.L (probed): the left hand's stamps, half way between the beats")
     put("dings_5", [B["more1"] + 3, B["more2"] + 3], "sets_int.ts: the cash stacks pop taller on more1 / more2 (smooth((f - more) / 8)): "
                                                     "the register bells from 3 f after, the top bell in the breath after 'more.'")
     put("ratchet_6", [B["moreOf"], B["united"]], "sets_int.ts: TINO'S OIL pile grows: stage 1 on moreOf, stage 2 on united")
+    put("marker_6", [B["moreOf"] - 2, B["united"] - 2], "A3 ADD: a felt-marker squeak as each stage of TINO'S OIL is drawn onto the chart "
+                                                        "(under the ratchet)")
     pp = pr.get("papers6")
     put("papers_6", [pp[0], pp[0] + pp[1]] if pp else [B["papers"] - 2, B["papers"] + 10],
         "cast.ts pap = gest2(f, X, L, ...) (probed): Tino raises the fan of OIL RECEIPTS on 'papers' (the paper rustle, A2 P3)")
@@ -266,19 +306,33 @@ def picture_events():
     else:
         put("bloop_7", B["insideQEnd"] + 2, "shot 7: the bubble pops in the gap after 'inside?' (insideQEnd + 2; CHAR / WORLD-EXT: key the "
                                             f"pop + ring here - the picture ring is still at {ring})")
+    put("drip_7", D["bloop_7"] + 7 if D.get("bloop_7") is not None else None,
+        "A3 ADD: after the bloop, one drop falls from the hatch rim into the near-empty tank: a hollow drip and the steel cavity's "
+        "1.2 s answer, faded under 'Then,' (the 'inside?|Then' gap)")
     put("phones_8", [S[8]["a"] + 3, B["november"] + 43, B["bet"] + 6], "shot 8: desk phones ringing on the trading floor (one in the "
                                                                        "'1963,|his' breath)")
     put("crash_8", B["crashed1"], "sets_int.ts: the chalk line dives on 'crashed' (dive = f >= crashed1) + story KICK")
     put("groan_8", B["crashed1"] + 9, "shot 8: the traders' dismayed 'ohhh' under the THOOM's tail (CHAR: the staggered shock); A2: "
                                       "it rises at the END of the word 'crashed.' (never on it)")
-    put("tickbell_8", B["november"], "A2 ADD: a ticker machine's bell on 'November' (a quote comes in)")
-    put("handset_8", B["november"] + 48, "A2 ADD: a handset slammed onto its cradle in the breath after '1963,' (the true silence nearest)")
+    put("tickbell_8", B["november"], "A2 ADD: a ticker machine's bell on 'November' (a quote comes in); A3 P3: at bed level, carved "
+                                     "(no ticker machine's hammer in frame yet)")
+    try:                                     # A3 ADD: the chalk line's own sound, in the breath after 'crashed.'
+        gc = gap_at(float(T.word("crashed", T.bt("crashed1") - 0.3)["e"]) + 0.01, 0.1, 0.2)
+    except KeyError:
+        gc = None
+    put("chalk_8", (gc[0] + 0.01) * T.FPS if gc else None, "A3 ADD: a short chalk squeal on the diving line in the breath after "
+                                                           "'crashed.' (under the THOOM's tail)")
+    if pr.get("slam8") is not None:          # A3 (found in fix r3): the picture slams it at SLAM + 5 (cast.ts), 23 f before the old cue
+        put("handset_8", pr["slam8"], "cast.ts SLAM + gest2 rise (probed): trader 3 slams his handset down onto the phone base at his hip")
+    else:
+        put("handset_8", B["november"] + 48, "A2 ADD: a handset slammed onto its cradle in the breath after '1963,' (the true silence nearest)")
     fl = pr.get("flashes")
     put("lightning_9", [[round(a, 1), 1 if far else 0] for a, far in fl] if fl else [[S[9]["a"] - 7, 0], [B["bust"] - 2, 0], [B["checked"] - 8, 1]],
         "SaladOil.tsx FLASHES / sets_ext.ts flashAt (probed): [flash frame, far]: a near flash in a breath gets its crack ON the flash; "
         "one that lands on a word ('bust') gets its thunder late, in the next breath (light first, sound after); a far flash's roll "
         "4 f after it")
     put("slap_9", B["bust"] - 2, "sets_ext.ts: the BANKRUPT notice appears at f >= bust - 2")
+    put("splash_9", B["bust"] - 1, "A3 ADD: the slap knocks the water off the sign's gutter lip: a short splash under the BANKRUPT notice")
     put("lenders_9", {"t0": [B["lenders"] - 6 + 6 * (k - 1 if k > 1 else k) for k in (0, 2, 3)], "step": 10.0, "end": B["inside"] - 2},
         "cast.ts shot 9 (CHAR): lenders 0 / 2 / 3 of TF.lenderFile start walking in through the gate at lenders - 6 + 6 k' (a footfall every "
         "10 f: walk phase / 20, a step per half cycle) - wet steps + rain on their umbrellas")
@@ -291,11 +345,17 @@ def picture_events():
     put("shake_11", [sh["a"], sh["a"] + sh["len"], sh["w"]] if sh else [B["ever"], B["ever"] + 22, 1.9],
         "cast.ts bottleShake (probed): the hand shakes the bottle from 'Ever' (amplitude sin(pi t / len), sin(w t) strokes)")
     put("glug_11", [B["theOilRises"], B["top"] + 8], "sets_int.ts: the oil rises smooth((f - theOilRises) / (top + 8 - theOilRises))")
-    put("clunk_11", B["ever"] + 28, "cast.ts kitchen: after the shake the hand lifts the bottle (pop, ever + 24 .. 29) and sets it down: a "
+    put("clunk_11", pr["setdown11"] if pr.get("setdown11") is not None else B["ever"] + 28, "cast.ts kitchen: after the shake the hand lifts the bottle (pop, ever + 24 .. 29) and sets it down: a "
                                     "soft glass clunk on the table")
     put("chirps_11", [f + 1 for f in range(int(np.ceil(S[11]["a"] / 45.0)) * 45, S[11]["b"] - 4, 45)],
         "sets_int.ts kitchen: the sparrow on the fence hops every 45 f of the video clock (VF % 45 < 9): one chirrup per hop")
     put("pour_12", [B["waterIn"] - 6, B["add"] + 4], "sets_int.ts: the water stream pw = waterIn - 6 .. add + 4")
+    try:                                     # A3 P2: the fish drops out of the pipe into the water (~1879-1882)
+        gw = gap_at(float(T.word("water", T.bt("waterIn") - 0.3)["e"]) + 0.01, 0.1, 0.2)
+    except KeyError:
+        gw = None
+    put("fish_12", round((gw[0] + 0.07) * T.FPS, 1) if gw else B["add"] - 4,
+        "A3 P2: the fish drops from the pipe into the rising water: one small 'blub' in the 'water,|add' breath")
     put("trickle_12", [B["thin"] - 2, B["oilIn"] + 12], "sets_int.ts: the oil stream po = thin - 2 .. oilIn + 12")
     try:
         fe = float(T.word("full", T.bt("looksFull") - 0.1)["e"]) * T.FPS
@@ -327,18 +387,34 @@ def picture_events():
     put("plates_13", [B["tankTo"] + 6, B["got"], B["again2"]], "story.ts COUNT_AT = [tankTo + 6, got, again2]: each COUNTED plate ticks over")
     put("squeak_13", [B["tankTo"] + 2, B["got"] - 4, B["again2"] - 4], "A2 ADD: the blob squeezes out of each pipe mouth into the tank "
                                                                        "(COUNT_AT - 4): a rubbery squeak")
-    put("steam_13", B["got"] + 2, "A2 ADD: a steam puff from a valve on the second COUNTED plate")
+    put("steam_13", B["got"] + 2 if pr.get("steam_puff13") else None,
+        "A2 ADD: a steam puff from a valve on the second COUNTED plate; A3 P3: only when WORLD-INT's puff on 'got' is in the picture "
+        "(probed: " + ("found" if pr.get("steam_puff13") else "not found - dropped") + ")")
+    put("squelch_13", [B["tankTo"] + 6 - 2, B["got"] - 2, B["again2"] - 2], "A3 ADD: the blob lands at each COUNTED plate with a tiny wet "
+                                                                            "squelch, 1 f before the plate's bell (COUNT_AT - 2)")
+    put("pclock_13", [f for f in range(int(np.ceil((S[13]["a"] + 6) / 30.0)) * 30, S[13]["b"] - 6, 30)],
+        "A3 ADD: the pump-room wall clock (sets_int.ts prClock) ticks on every whole second of the film clock, very low under the night bed")
     put("sweat_13", B["hardestW"], "cast.ts: tired = f >= hardestW - 2 (a sweat drop) ...")
     wp = pr.get("wipe13")
     put("wipe_13", [wp[0], wp[0] + wp[1]] if wp else [B["hardestW"] + 20, B["hardestW"] + 38],
         "cast.ts wipe = clamp01((f - X) / L) (probed, X = PW(27, 'oil')): the brow wipe X .. X + L (A2 P1: the swipe ON the arm), "
         "its sweat flecks flicked off 2 f after it ends")
     put("sigh_13", None, "the blob's tired sigh: in the true silence after 'America.' (computed)")
-    put("spin_14", {"a": B["cameOut"] - 7, "land": B["cameOut"] + 9}, "BUILD_PLAN shot 14: a newspaper spins in onto the stand on 'came out'")
+    put("spin_14", {"a": B["cameOut"] - 2, "land": B["cameOut"] + 11}, "A3 P3: the newspaper enters the frame at cameOut and lands at "
+                                                                     "cameOut + 10..11: the whoosh from 2 f before its entry, its own slap on the landing")
     put("vendor_14", B["cameOut"] + 16, "CHAR: the newsstand vendor squares the stack after the paper lands (paper rustle)")
-    put("car_14", {"a": B["amex2"] - 8, "peak": B["amex2"] + 11, "b": B["amex2"] + 30},
-        "A2 P2: WORLD-EXT's VISIBLE sedan crossing the bottom of frame L -> R (amex2 - 8 .. amex2 + 30, closest at amex2 + 11; the old "
-        "shop-window reflection is hidden by the kiosk); no horn")
+    if "car" in pr and pr["car"] is None:
+        put("car_14", None, "sets_ext.ts CAR14_ON = false (probed): no car in the picture, no car sound")
+    else:
+        put("car_14", {"a": B["amex2"] - 8, "peak": B["amex2"] + 11, "b": B["amex2"] + 30},
+            "A2 P2: WORLD-EXT's VISIBLE sedan crossing the bottom of frame L -> R (amex2 - 8 .. amex2 + 30, closest at amex2 + 11; the old "
+            "shop-window reflection is hidden by the kiosk); no horn")
+    try:                                     # A3 ADD: a far car hisses past on the wet street in the 'crashed.|But' breath
+        gt = gap_at(float(T.word("crashed", T.bt("crashed2") - 0.3)["e"]) + 0.01, 0.15, 0.2)
+    except KeyError:
+        gt = None
+    put("tyre_14", round(0.5 * (gt[0] + gt[1]) * T.FPS, 1) if gt else None,
+        "A3 ADD: a far 1960s car's tyres hiss past on the grey street (off screen, two blocks down), peaking in the 'crashed.|But' breath")
     put("clack_14", B["shares"] - 2, "sets_ext.ts: the CLOSED sign is visible from shares - 2")
     put("bwomp_14", B["crashed2"] - 2, "sets_ext.ts: the SHARES arrows drop at f >= crashed2 - 2")
     put("pigeons_14", B["crashed2"] - 1, "CHAR: the awning pigeons flutter up on the bwomp (A2 ADD: their flutter carries on under 'crashed')")
@@ -353,6 +429,15 @@ def picture_events():
                          "carriage": B["bought"] + 17},
         "CHAR cafe patrons: a laugh head-bob as the focus racks, a cup set down, the card handed over (a soft register ding); a "
         "bicycle bell down the street ('brand.|His'); a typewriter bell in the next office")
+    c15 = pr.get("card15")
+    if c15:                                  # A3 P3: the register ding on the waiter's visible take of the card (probed: it follows
+        tk15 = T.fr(c15[0] + c15[1] + 2)     # CHAR's re-time), moved into the breath when the take lands on a word ('brand.': under
+        wk = next((w for w in T.WORDS if float(w["s"]) - 0.02 <= tk15 < float(w["e"])), None)   # the word its 2.6 kHz bell was carved away)
+        if wk is not None and float(wk["e"]) - tk15 < 0.4:
+            tk15 = float(wk["e"]) + 0.02
+        put("card_15", round(tk15 * T.FPS, 1), "cast.ts take = gest2(f, X, L, ...) (probed): the waiter takes the card at X + L; the cafe "
+                                                "register rings it up 2 f later, or in the breath after the word it would land on")
+    put("espresso_15", B["trusted"] + 2, "A3 ADD: the focus racks to the cafe on 'trusted': its espresso wand hisses across the street")
     put("part_16", [B["fake"], B["fake"] + 16], "sets_ext.ts: the reveal disc opens smooth((f - fake) / 16)")
     put("gull_16", B["fake"] + 17, "shot 16: a far gull in the gap 'fake.|The' (WORLD-EXT's gull shadow is gone by then)")
     put("settle_16", [B["trust"], B["trust"] + 24], "sets_ext.ts: ... and closes 1 - smooth((f - trust) / 24)")
@@ -401,6 +486,7 @@ def _frames(v):
 
 
 # ================================================================ the cue list
+THUNDER_FIRST = -14.0            # A3 P3: the storm's first crack (was -11 LU); back to -11 if POST makes the 1406 flash read strongly
 _WCARVE = {"flap": -5.0, "reel": -6.0, "steel_step": -5.0, "roof_step": -5.0, "knee": -6.0, "plunk": -5.0, "rail": -6.0,
            "cash_slide": -6.0, "ka": -4.0, "stamp": dict(db=-6.0, lo=700.0, hi=4000.0), "stamp5": dict(db=-6.0, lo=700.0, hi=4000.0),
            "ding5": -6.0, "ratchet": -4.0, "boing": -4.0, "bloop": -4.0, "phone": -1.0, "slap": -5.0, "ladder_far": -4.0,
@@ -439,8 +525,9 @@ def cues():
     if r0 is not None:
         L = T.fr(r1) - T.fr(r0)
         env = np.concatenate([np.linspace(0.6, 1.0, ns(0.2)), np.ones(max(1, ns(L) - ns(0.2)))])
+        # A3 P3 (hook onset): +2 dB and 2 dB brighter, so frames 0-4 already hold a clear diegetic sound before 'By'
         ev("reel", r0 + 0.2, f"the tape reel's ratchet whirr as the tape slides into the oil ({r0:.0f}-{r1:.0f})",
-           one(lambda r: G.reel_whirr(r, L, 30, 22, env)), -27, pe="reel_1", p=0.1)
+           one(lambda r, L=L, env=env: G.reel_whirr(r, L, 30, 22, env)), -25, pe="reel_1", p=0.1, post=hishelf(3000, 2.0))
     fl = D.get("flaps_1")
     if fl:
         a, lock = float(fl["a"]), float(fl["lock"])
@@ -483,6 +570,12 @@ def cues():
            pe="fence_2", p=-0.3)
     if D.get("clank_2") is not None:
         ev("clank", D["clank_2"], "a far clank across the tank farm", one(lambda r: G.far_clank(r)), -33, pe="clank_2", p=0.45)
+    if D.get("horn_2") is not None:          # A3 ADD: the harbour placed by ear (far, 1-4 kHz carved under the words)
+        ev("horn", D["horn_2"], "a far ship's horn across the harbour, deep under 'New Jersey's'", one(lambda r: G.ship_horn(r, 1.0)), -36,
+           pe="horn_2", p=0.5, lpf=2500, send=0.15, wcarve=-6.0, post=ring_cut(1.0, 0.15))
+    if D.get("halyard_2") is not None:
+        ev("halyard", D["halyard_2"], "the gate flagpole's halyard clinks on the pole (the 'king.|His' breath)", one(lambda r: G4.halyard_clink(r)),
+           -30, pe="halyard_2", p=-0.45, lpf=7000, send=0.06, wcarve=-5.0)
     if D.get("plip_2") is not None:
         ev("plip", D["plip_2"], "the ONE water drop from the valve lands: a tiny clear 'plip' (in the band's stop-time)",
            one(lambda r: G.drop_plip(r, 1050.0)), -21, pe="plip_2", p=-0.25, send=0.12)
@@ -517,10 +610,9 @@ def cues():
             t_ka = max(tk, float(w_it["e"]) + 0.005)
         except KeyError:
             t_ka = tk + 0.3
-        ev_t("ka", t_ka, "the register's 'ka-' (drawer) in the breath after 'it.'", one(lambda r: G.ka_thunk(r)), -21, pe="register_3", p=0.3,
-             space="room")
-        ev_t("ching", t_ka + 0.06, "... and its 'CHING' bell rings into 'American' (carved under it)", one(lambda r: G.ching(r, 1.2)), -18,
-             pe="register_3", p=0.3, space="room", send=0.1, post=ring_cut(0.32, 0.1))
+        # A3 P3: no drawer moves on the desk, so the drawer 'ka-' is gone: only a soft bell as the cash lands (the money 'ching')
+        ev_t("ching", t_ka + 0.02, "the cash lands: a soft register bell in the breath after 'it.', ringing into 'American' (carved under it)",
+             one(lambda r: G.ching(r, 1.2)), -24, pe="register_3", p=0.3, space="room", send=0.1, post=ring_cut(0.32, 0.1))
     # ---------------- 4 THE INSPECTION (tank top, noon)
     for j, f in enumerate(_frames(D.get("climb_4"))):
         if f < T.SHOTS[4]["a"] - 3:
@@ -540,7 +632,7 @@ def cues():
         Lq = T.fr(q1) - T.fr(q0)
         envq = np.interp(np.arange(ns(Lq)) / SR, [0, Lq * 0.15, Lq * 0.7, Lq], [0.6, 1.0, 0.9, 0.25])
         ev("reel", q0, "'drop a tape inside': the reel pays the weighted tape out (fast, then slowing)",
-           one(lambda r: G.reel_whirr(r, Lq, 34, 14, envq)), -25, pe="reel_4", p=0.0)
+           one(lambda r, Lq=Lq, envq=envq: G.reel_whirr(r, Lq, 34, 14, envq)), -25, pe="reel_4", p=0.0)
     if D.get("plunk_4") is not None:
         # A2 P3: the plunk + ring were inaudible under 'inside,' (-37 dBFS): +6 dB when the picture lands it in the breath, +3 on a word
         gpk = in_gap(D["plunk_4"], 0.0)
@@ -554,12 +646,18 @@ def cues():
     for j, f in enumerate(gl4):
         ev("gull", f, "far gulls circling over the tank top", one(lambda r, j=j: G.gull(r, 1 + j, 640.0 + 60 * j, 1.8)), -38 if j == 0 else -29,
            pe="gulls_4", p=(-0.5 if j == 0 else 0.5), lpf=5500)
+    # A3 P2: the film's one HARD cut (tank top -> ground, story.ts R4_CUT_V = andInspector - 3): only the shout's echo tail may
+    # ring across it - the rail gull's wings and squawk end on the cut (25 ms)
+    t_cut4 = T.bt("andInspector", -3) if "andInspector" in T.BEAT else None
     if D.get("gull_perch_4") is not None:
         f = D["gull_perch_4"]
-        ev("wings", f, "'full!' startles the perched gull off the rail (a burst of wing flaps)", one(lambda r: G2.wing_flaps(r, 6, 10.0, 1.1)), -27,
-           pe="gull_perch_4", p=-0.3)
-        ev("gull", T.BEAT["shoutEnd"] + 4, "... and it squawks as it flees (in the breath after the shout, under the echo)",
-           one(lambda r: G.gull(r, 1, 820.0, 1.1)), -31, pe="gull_perch_4", p=-0.45, lpf=6500)
+        cut_w = ring_cut(max(0.05, t_cut4 - 0.025 - T.fr(f)), 0.008) if t_cut4 else None
+        ev("wings", f, "'full!' startles the perched gull off the rail (a burst of wing flaps, gone on the cut)",
+           one(lambda r: G2.wing_flaps(r, 6, 10.0, 1.1)), -27, pe="gull_perch_4", p=-0.3, post=cut_w)
+        f_sq = T.BEAT["shoutEnd"] + 1
+        cut_s = ring_cut(max(0.05, t_cut4 - 0.025 - T.fr(f_sq)), 0.008) if t_cut4 else None
+        ev("gull", f_sq, "... and it squawks as it flees (in the breath after the shout, under the echo; gone on the cut)",
+           one(lambda r: G.gull(r, 1, 820.0, 1.1)), -31, pe="gull_perch_4", p=-0.45, lpf=6500, post=cut_s)
     if D.get("gull_far_4") is not None:
         f = D["gull_far_4"]
         gp = gap_at(T.fr(f), 0.1, 0.5)
@@ -576,14 +674,20 @@ def cues():
         # silence before 'believed' it is the joke's only sound (about -26 dBFS), on the word a little hotter (its band exempt)
         f_t, L_t = (tkv[0], tkv[1]) if isinstance(tkv, (list, tuple)) else (tkv, 8.0)
         ing = in_gap(f_t, 0.0) and in_gap(f_t + 0.7 * L_t, 0.0)
+        # A3 P3: about -11 LU in the silence too (CHAR moves the stroke into it: the probe follows cast.ts)
         ev("tick", f_t, "the inspector ticks the clipboard WITHOUT LOOKING UP: a graphite check mark (touch, down-stroke, flick)" +
            (" in the silence before 'believed'" if ing else " on 'believed'"),
-           one(lambda r, L_t=L_t: G3.graphite_tick(r, max(0.2, L_t * FR + 0.03))), -13 if ing else -11, pe="tick_4", p=0.1, space="out",
+           one(lambda r, L_t=L_t: G3.graphite_tick(r, max(0.2, L_t * FR + 0.03))), -11, pe="tick_4", p=0.1, space="out",
            send=0.03, wcarve=0.0)
+    for j, f in enumerate(_frames(D.get("taps_4"))):
+        ev("cliptap", f, f"A3 ADD: the inspector's pencil taps the clipboard ({'tap' if j == 0 else '-tap'}) in the deadpan silence, before the tick",
+           one(lambda r: G4.clipboard_tap(r)), -25 - 2 * j, pe="taps_4", p=0.1, space="out", send=0.03, wcarve=-4.0)
     # ---------------- 5 MORE LOANS (bank)
     for j, f in enumerate(_frames(D.get("stamps_5"))):
-        ev("stamp5", f, f"the banker stamps happily, eyes closed (stamp {j + 1}, on the beat)",
+        ev("stamp5", f, f"the banker stamps happily, eyes closed (stamp {j + 1}, on the picture's landing)",
            lambda j=j: (lambda xa: (xa[0], xa[1]))(G.desk_stamp(rng(55 + j), 0.85)), -16, pe="stamps_5", space="room", send=0.1, p=0.05)
+        ev("thup", f + 1, "... the stamp pad's soft paper 'thup' on the bundle of bills it lands on", one(lambda r: G4.paper_thup(r)), -34,
+           pe="stamps_5", space="room", send=0.05, p=0.05, wcarve=-4.0)
     for j, f in enumerate(_frames(D.get("stamps_5L"))):
         ev("stamp5", f, f"the banker's left hand stamps between the beats (stamp {j + 1})",
            lambda j=j: (lambda xa: (xa[0], xa[1]))(G.desk_stamp(rng(75 + j), 0.7)), -20, pe="stamps_5L", space="room", send=0.1, p=-0.15)
@@ -613,9 +717,18 @@ def cues():
            pe="ratchet_6", p=0.25, space="room")
     pp6 = _frames(D.get("papers_6"))
     if len(pp6) == 2:                     # A2 P3: the rustle on the visible fan of receipts ('papers'), not on the ratchet
+        # A3 P3: on the probed raise window, swelling to its peak AT THE TOP of the raise, then settling; -31 LU, 1-4 kHz carved
         Lp = (pp6[1] - pp6[0]) * FR
-        ev("paper", pp6[0], "Tino raises the fan of OIL RECEIPTS on 'papers': the sheets rustle", one(lambda r, Lp=Lp: G.paper_rustle(r, Lp + 0.08, 1.0)),
-           -17, pe="papers_6", p=0.3, space="room", wcarve=-3.0)
+
+        def rustle6(r, Lp=Lp):
+            y = G.paper_rustle(r, Lp + 0.22, 1.0)
+            t = np.arange(len(y)) / SR
+            return y * np.interp(t, [0.0, Lp, Lp + 0.05, Lp + 0.22], [0.35, 1.0, 0.8, 0.0])
+        ev("paper", pp6[0], "Tino raises the fan of OIL RECEIPTS on 'papers': the sheets rustle, loudest at the top of the raise", one(rustle6),
+           -31, pe="papers_6", p=0.3, space="room", wcarve=-6.0)
+    for f in _frames(D.get("marker_6")):  # A3 ADD
+        ev("marker", f, "a felt-marker squeak as the next stage of TINO'S OIL is drawn onto the chart (under the ratchet)",
+           one(lambda r: G4.marker_squeak(r, 2)), -28, pe="marker_6", p=0.2, space="room", wcarve=-5.0)
     dr = D.get("drums_6")
     if dr:
         allf = [(f, 1) for f in dr["st1"]] + [(f, 2) for f in dr["st2"]]
@@ -675,6 +788,20 @@ def cues():
     if D.get("bloop_7") is not None:
         ev("bloop", D["bloop_7"] - 4.5, "one soft 'bloop' as 'inside?' ends: the bubble rises and pops at the reflection's chin (the pop ON "
                                         "the picture's pop)", one(lambda r: G.bloop(r)), -19, pe="bloop_7", p=0.0, send=0.15)
+    if D.get("drip_7") is not None:      # A3 ADD: how hollow the tank is - one drip and its 1.2 s steel answer, gone under 'Then,'
+        t_d7 = T.fr(D["drip_7"])
+        try:
+            t_th = float(T.word("Then", t_d7 - 0.1)["s"])
+        except KeyError:
+            t_th = t_d7 + 0.6
+        Ld7 = max(0.3, t_th + 0.12 - t_d7)
+
+        def drip7(r, Ld7=Ld7, t_th=t_th, t_d7=t_d7):
+            y = G4.drip_echo(r, 1.2)[: ns(Ld7)]
+            t = np.arange(len(y)) / SR
+            return y * np.clip((Ld7 - t) / 0.28, 0, 1) ** 1.5
+        ev("drip", D["drip_7"], "one drop falls from the hatch rim into the near-empty tank: a hollow drip and the steel cavity's long answer "
+                                "(the 'inside?|Then' gap, faded under 'Then,')", one(drip7), -34, pe="drip_7", p=-0.1, send=0.0, wcarve=-6.0)
     # ---------------- 8 THE CRASH (trading floor)
     for j, f in enumerate(_frames(D.get("phones_8"))):
         ev("phone", f, "a desk phone rings on the trading floor", one(lambda r, j=j: G.phone_ring(r, 0.7 + 0.25 * (j % 2), 1.0 + 0.3 * j)),
@@ -706,11 +833,17 @@ def cues():
         ev_t("groan", tg8, "the traders' dismayed 'ohhhh' as the word 'crashed.' ends, under the THOOM's tail", one(lambda r: G2.crowd_groan(r, 0.95, 9)),
              -26, pe="groan_8", p=0.0, space="hall", send=0.14)
     if D.get("tickbell_8") is not None:
-        ev("ticker_bell", D["tickbell_8"], "a ticker machine's bell on 'November' (a quote line comes in)", one(lambda r: G3.ticker_bell(r)), -27,
-           pe="tickbell_8", p=0.4, space="hall", send=0.1, post=ring_cut(0.18, 0.06), wcarve=-3.0)
+        # A3 P3: no ticker machine's hammer is in frame yet: the bell drops to bed level, 1-4 kHz carved under 'November'
+        hm = bool(picture_probes()[0].get("ticker_hammer"))      # back to -27 LU once WORLD-INT's hammer flicks on 'November'
+        ev("ticker_bell", D["tickbell_8"], "a ticker machine's bell on 'November' (a quote line comes in" + ("; the hammer flicks)" if hm else "; bed level)"),
+           one(lambda r: G3.ticker_bell(r)), -27 if hm else -38, pe="tickbell_8", p=0.4, space="hall", send=0.1, post=ring_cut(0.18, 0.06),
+           wcarve=-3.0 if hm else -6.0)
+    if D.get("chalk_8") is not None:      # A3 ADD: the board dive gets its own sound in the breath after 'crashed.'
+        ev("chalk", D["chalk_8"], "the chalk line dives: a short chalk squeal on the slate (the breath after 'crashed.', under the THOOM's tail)",
+           one(lambda r: G4.chalk_squeal(r, 0.12)), -24, pe="chalk_8", p=0.05, space="hall", send=0.1, wcarve=-6.0)
     if D.get("handset_8") is not None:
-        gph = gap_at(T.fr(D["handset_8"]), 0.05, 0.3)
-        th8 = (gph[0] + 0.005) if gph else T.fr(D["handset_8"])
+        gph = gap_at(T.fr(D["handset_8"]), 0.05, 0.3) if picture_probes()[0].get("slam8") is None else None
+        th8 = (gph[0] + 0.005) if gph else T.fr(D["handset_8"])           # (on the probed slam it stays ON the picture)
         ev_t("handset", th8, "a trader slams his handset onto its cradle (the breath after '1963,')", one(lambda r: G3.handset_slam(r)), -24,
              pe="handset_8", p=-0.35, space="hall", send=0.12, wcarve=-5.0)
     # ---------------- 9 THE STORM (tank farm)
@@ -730,13 +863,17 @@ def cues():
             ev_t("thunder", gp[0] + 0.03, "the flash on 'bust' is seen first: its thunder booms in the breath after 'bust.'",
                  one(lambda r: G2.lightning_crack(r, 1.9, 1.6)), -15, pe="lightning_9", p=-0.15, send=0.0)
         else:
+            # A3 P3: the first crack sat a little hot for its faint flash: -11 -> -14 LU (the roll kept)
             ev("thunder", f, "the lightning strike: a crack + roll ON the flash" + (" (through the 8 -> 9 dissolve, into the storm)" if near_done == 0 else ""),
-               one(lambda r, k=near_done: G2.lightning_crack(r, 2.4 if k == 0 else 1.8, 1.0 if k == 0 else 1.2)), -11 if near_done == 0 else -15,
+               one(lambda r, k=near_done: G2.lightning_crack(r, 2.4 if k == 0 else 1.8, 1.0 if k == 0 else 1.2)), THUNDER_FIRST if near_done == 0 else -15,
                pe="lightning_9", p=0.0, send=0.0)
             near_done += 1
     if D.get("slap_9") is not None:
         ev("slap", D["slap_9"], "BANKRUPT: the notice slapped onto the wet gate sign ('bust')", one(lambda r: G.paper_slap(r)), -16,
            pe="slap_9", p=-0.1, wcarve=-6.0)
+    if D.get("splash_9") is not None:     # A3 ADD
+        ev("splash", D["splash_9"], "... the slap knocks the water off the sign's gutter lip: a short splash onto the wet ground",
+           one(lambda r: G4.splash(r)), -27, pe="splash_9", p=0.3, lpf=8000, send=0.05, wcarve=-5.0)
     lw = D.get("lenders_9")
     if isinstance(lw, dict) and lw.get("t0"):
         t0s, stp, lend = [float(x) for x in lw["t0"]], float(lw.get("step", 10.0)), float(lw.get("end", T.BEAT["inside"] - 2))
@@ -749,9 +886,22 @@ def cues():
                 f += stp
         la = min(t0s)
         Lu = T.fr(lend + 6) - T.fr(la - 4)
-        ev("umbrella", la - 4, "rain drumming on the lenders' black umbrellas as they walk in", one(lambda r, Lu=Lu: G2.umbrella_patter(ns(Lu), r) *
-                                                                                                   np.interp(np.arange(ns(Lu)) / SR, [0, 0.3, Lu - 0.4, Lu], [0, 1, 0.75, 0])),
-           -31, pe="lenders_9", p=0.0)
+        t_u0 = T.fr(la - 4)
+
+        def umb(r, Lu=Lu, t_u0=t_u0):         # A3 P3: the rain on the umbrellas swells +3 dB in the word gaps
+            n = ns(Lu)
+            t = np.arange(n) / SR
+            y = G2.umbrella_patter(n, r) * np.interp(t, [0, 0.3, Lu - 0.4, Lu], [0, 1, 0.75, 0])
+            return y * dbg(3.0 * (1 - word_env(t_u0 + t, pre=0.1, post=0.1, tau=0.12)) - 1.0)
+        ev("umbrella", la - 4, "rain drumming on the lenders' black umbrellas as they walk in (swelling +3 dB in the breaths)", one(umb),
+           -28, pe="lenders_9", p=0.0)
+
+        def flutter(r, Lu=Lu, t_u0=t_u0):     # A3 ADD: the gusts catch the canopies (the shared gust curve)
+            n = ns(Lu)
+            t = np.arange(n) / SR
+            return G4.umbrella_flutter(n, r, T.gust(t_u0 + t)) * np.interp(t, [0, 0.4, Lu - 0.4, Lu], [0, 1, 1, 0])
+        ev("umbrella", la - 4, "the wind gusts catch the lenders' umbrella canopies: soft fabric flutter on the gust peaks", one(flutter), -38,
+           pe="lenders_9", p=0.15, lpf=4000, wcarve=-5.0)
     ld = D.get("ladder_9")
     if isinstance(ld, dict):
         f = float(ld["a"]) + float(ld.get("land", 6.0))
@@ -801,17 +951,33 @@ def cues():
     g0, g1 = _frames(D.get("glug_11")) or [None, None]
     if g0 is not None:
         Lg = T.fr(g1) - T.fr(g0)
-        ev("glug", g0, "the oil rises and settles: a few soft slow glugs", one(lambda r: G.glug(r, Lg, 3)), -17, pe="glug_11", p=0.1, space="room")
+        ev("glug", g0, "the oil rises and settles: a few soft slow glugs", one(lambda r, Lg=Lg: G.glug(r, Lg, 3)), -17, pe="glug_11", p=0.1, space="room")
     # ---------------- 12 HOW IT LOOKS FULL (cutaway)
     w0, w1 = _frames(D.get("pour_12")) or [None, None]
     if w0 is not None:
+        # A3 P2: the pour lasted ~0.5 s (the lambda read Lw LATE: the shot-13 wipe reused the name) - now the whole visible fill,
+        # a sustained stream whose cavity note rises with the level, 3 dB under 'Fill a tank with water,', full in the breath after
         Lw = T.fr(w1) - T.fr(w0)
-        ev("pour", w0, "the water pours in (the tank fills, its note rising)", one(lambda r: G.water_pour(r, Lw, (0.3, 0.9))), -12,
-           pe="pour_12", p=-0.15, space="tank", send=0.1, post=hishelf(3500, 2.5))
+        t_w0 = T.fr(w0)
+        try:
+            t_wa = float(T.word("water", t_w0 - 0.3)["e"]) - t_w0
+        except KeyError:
+            t_wa = Lw * 0.6
+
+        def pour(r, Lw=Lw, t_wa=t_wa):
+            y = G.water_pour(r, Lw + 0.12, (0.2, 1.0))           # (+0.12 s: its 0.15 s end fade lands as the stream stops)
+            t = np.arange(len(y)) / SR
+            return y * dbg(np.interp(t, [0.0, t_wa, t_wa + 0.1], [-3.0, -3.0, 0.0]))
+        ev("pour", w0, "the water pours in for the whole fill (a sustained stream, the tank's note rising with the level; 3 dB under "
+                       "'Fill a tank with water,')", one(pour), -13.5, pe="pour_12", p=-0.15, space="tank", send=0.1, post=hishelf(3500, 2.5),
+           wcarve=dict(db=-2.0, lo=900.0, hi=5000.0))
+    if D.get("fish_12") is not None:      # A3 P2: the gag's sound - the fish drops out of the pipe into the water
+        ev("blub", D["fish_12"], "the fish drops from the pipe into the rising water: one small 'blub' (the 'water,|add' breath)",
+           one(lambda r: G.bloop(r, 300.0)), -21, pe="fish_12", p=-0.1, space="tank", send=0.15)
     o0, o1 = _frames(D.get("trickle_12")) or [None, None]
     if o0 is not None:
         Lo = T.fr(o1) - T.fr(o0)
-        ev("trickle", o0, "a thin pour of oil onto the water", one(lambda r: G.oil_trickle(r, Lo)), -16, pe="trickle_12", p=-0.15, space="tank",
+        ev("trickle", o0, "a thin pour of oil onto the water", one(lambda r, Lo=Lo: G.oil_trickle(r, Lo)), -16, pe="trickle_12", p=-0.15, space="tank",
            post=hishelf(2500, 4.0))
     if D.get("ding_12") is not None:
         ev("ding12", D["ding_12"], "'it looks full.': a tiny bright ding in the breath after 'full.'", one(lambda r: G.ding(r, 3135.96, 0.3, 0.8)),
@@ -853,7 +1019,7 @@ def cues():
     b0_, b1_ = _frames(D.get("blob_13")) or [None, None]
     if b0_ is not None:
         Lb = T.fr(b1_) - T.fr(b0_)
-        ev("gurgle", b0_, "the oil blob riding the glass pipe tank to tank (gurgle)", one(lambda r: G.blob_gurgle(r, Lb)), -27,
+        ev("gurgle", b0_, "the oil blob riding the glass pipe tank to tank (gurgle)", one(lambda r, Lb=Lb: G.blob_gurgle(r, Lb)), -27,
            pe="blob_13", p=0.0, space="pump")
     for j, f in enumerate(_frames(D.get("plates_13"))):
         f0 = (783.99, 880.0, 987.77)[min(j, 2)]
@@ -882,6 +1048,12 @@ def cues():
     if D.get("steam_13") is not None:
         ev("steam", D["steam_13"], "a valve lets off a small steam puff on the second COUNTED plate", one(lambda r: G3.steam_puff(r)), -30,
            pe="steam_13", p=0.45, space="pump", send=0.1, wcarve=-4.0)
+    for j, f in enumerate(_frames(D.get("squelch_13"))):      # A3 ADD
+        ev("squelch", f, f"the blob lands at COUNTED plate {j + 1}: a tiny wet squelch, 1 f before the plate's bell",
+           one(lambda r: G4.squelch(r)), -27, pe="squelch_13", p=-0.35 + 0.35 * j, space="pump", send=0.06, wcarve=-4.0)
+    for j, f in enumerate(_frames(D.get("pclock_13"))):       # A3 ADD
+        ev("clock", f, "the pump-room wall clock ticks (very low, under the night bed)", one(lambda r, j=j: G.clock_tick(r, j % 2 == 1)), -40,
+           pe="pclock_13", p=0.45, space="pump", send=0.05, lpf=6000)
     t_am = None
     try:
         t_am = float(T.word("America", T.bt("america") - 0.1)["e"])
@@ -909,12 +1081,22 @@ def cues():
         except KeyError:
             t_cm = Ls * 0.7
 
+        # A3 P3: the whoosh from 2 f before the paper enters the frame; the landing is its OWN transient ~6 dB over the whoosh
+        # body, its energy at 0.2-1 kHz (it falls under 'out,': the 1-4 kHz band is carved 4 dB there)
         def spin(r, Ls=Ls, t_cm=t_cm):
-            y = G.newspaper_spin(r, Ls)[0]
+            y = G4.spin_whoosh(r, Ls)
             t = np.arange(y.shape[-1]) / SR
             return y * dbg(np.interp(t, [0, min(t_cm, Ls - 0.06), min(t_cm, Ls - 0.06) + 0.05], [-4.0, -4.0, 0.0]))
-        ev("spin", a, "the newspaper spins in and slaps onto the stand ('came out'): the whoosh soft under 'When it came', the slap full",
-           one(spin), -16, pe="spin_14", p=0.1)
+        ev("spin", a, "the newspaper spins in over the stand ('came out'): the whoosh, soft under 'When it came'", one(spin), -19, pe="spin_14", p=0.1)
+        ev("slap14", land, "... and SLAPS flat onto the stand's stack (a separate low-mid transient)", one(lambda r: G4.paper_slap_low(r)), -26,
+           pe="spin_14", p=0.1, send=0.05, wcarve=-4.0)
+    if D.get("tyre_14") is not None:      # A3 ADD: hands the ear over to the office
+        f_ty = D["tyre_14"]
+
+        def tyre(r):
+            return G2.car_pass(r, 1.3, 0.5)
+        ev_t("tyre", T.fr(f_ty) - 0.65, "a far car's tyres hiss past on the grey street (off screen), peaking in the 'crashed.|But' breath",
+             one(tyre), -34, pe="tyre_14", p=0.35, lpf=3200, wcarve=-6.0)
     if D.get("vendor_14") is not None:
         ev("paper", D["vendor_14"], "the vendor squares the newspaper stack", one(lambda r: G.paper_rustle(r, 0.45, 1.1)), -28, pe="vendor_14", p=0.2)
     cr = D.get("car_14")
@@ -943,7 +1125,8 @@ def cues():
     s0, s1 = _frames(D.get("scribble_15")) or [None, None]
     if s0 is not None:
         # A2 P3: the scribble sat ~25 dB under the voice (inaudible on a phone): +9 dB (its own 2-6 kHz band, no extra carve)
-        ev("scribble", s0, "the investor writes BUY ('bought')", one(lambda r: G.scribble(r, 3, (s1 - s0) * FR)), -9, pe="scribble_15",
+        # A3 P3: +4 dB (it measured 18 dB under the voice: faint on a phone)
+        ev("scribble", s0, "the investor writes BUY ('bought')", one(lambda r, d=(s1 - s0) * FR: G.scribble(r, 3, d)), -5, pe="scribble_15",
            p=-0.15, space="room", post=bandpass_post(2000, 6000, 0.8), wcarve=-2.0)
     if D.get("chaching_15") is not None:
         # A2 P3 / LEAD: the cha-ching's source is the BUY slip: the drawer 'ka' as the pencil finishes BUY and lifts ('cheap', the smug
@@ -972,9 +1155,13 @@ def cues():
            pe="cafe_life_15", p=0.45, lpf=3200)
     if cl.get("cup") is not None:
         ev("cup", cl["cup"], "a cup set down on its saucer in the cafe", one(lambda r: G2.cup_clink(r)), -28, pe="cafe_life_15", p=0.35, lpf=6000)
-    if cl.get("card") is not None:
-        ev("reg_ding", cl["card"], "the customer hands over a card: the cafe register's soft ding", one(lambda r: G2.register_bell(r, 2637.0, 0.3)),
-           -28, pe="cafe_life_15", p=0.4, lpf=6500, post=ring_cut(0.35, 0.1))
+    card = D.get("card_15") if D.get("card_15") is not None else cl.get("card")
+    if card is not None:                  # A3 P3: on the visible take (probed), audible: ~-30 dBFS RMS in the 'brand.' breath
+        ev("reg_ding", card, "the waiter rings up the customer's card: the cafe register's ding across the street", one(lambda r: G2.register_bell(r, 2637.0, 0.3)),
+           -16, pe="card_15" if D.get("card_15") is not None else "cafe_life_15", p=0.4, lpf=6500, post=ring_cut(0.35, 0.1))
+    if D.get("espresso_15") is not None:  # A3 ADD
+        ev("espresso", D["espresso_15"], "the focus racks to the cafe on 'trusted': the espresso machine's steam wand hisses across the street",
+           one(lambda r: G4.espresso_hiss(r, 0.9)), -33, pe="espresso_15", p=0.45, lpf=6000, wcarve=-6.0)
     if cl.get("bike") is not None:
         ev("bike", cl["bike"], "a bicycle bell down the street ('brand.|His')", one(lambda r: G2.bike_bell(r, 2)), -30, pe="cafe_life_15", p=0.55,
            lpf=6000)
@@ -1064,7 +1251,7 @@ BED_DESC = {
     "kitchen": "the sunny kitchen: warm room tone, a fridge's soft hum, a kettle simmering (it swells in the 'top.|Fill' breath), "
                "sparrows outside the window, the counter radio's faint warm hiss",
     "pump": "the Saturday-night pump room: the motor hum and its whine (dipping as each valve wheel is heaved), the pump's chug "
-            "(one per turn of the visible flywheel, in phase with it), oil moving in the pipes",
+            "(one per turn of WORLD-INT's flywheel, in phase with it), oil moving in the pipes",
     "street": "the grey 1963 city street: traffic passing, footsteps, a city hum",
     "office": "the small warm office: room tone, the street below, the cafe across the street through the window "
               "(+7 dB while the focus racks to the cafe on 'trusted')",
@@ -1125,6 +1312,9 @@ def bed_signal(key, t0, t1, r):
             y4 = _frames(D.get("yard_4"))
             u = _smoothstep((tabs - T.fr(y4[0])) / max(0.1, T.fr(y4[1]) - T.fr(y4[0]))) if len(y4) == 2 else np.zeros(n)
             u = u * (tabs < T.fr(T.SHOTS[4]["b"] + 8))
+            # A3 P2: the roof's own sounds stop ON the hard cut (story.ts R4_CUT_V = andInspector - 3), 10 ms
+            t_c = T.bt("andInspector", -3) if "andInspector" in T.BEAT else (T.fr(y4[0]) if len(y4) == 2 else T.DUR)
+            roof_g = 1 - np.clip((tabs - (t_c - 0.012)) / 0.01, 0, 1) * (tabs < T.fr(T.SHOTS[4]["b"] + 8))
             yard = G2.gravel_yard(n, r)
             # A2 ADD: the sun-warmed roof plates expand - a sparse dry steel 'tink' every 1.4-3.2 s while we are up on the roof
             tinks = np.zeros(n)
@@ -1139,9 +1329,10 @@ def bed_signal(key, t0, t1, r):
             sing = np.clip(np.minimum((tabs - wa) / 0.6, (wb - tabs) / 0.4), 0, 1)
             gg_ = np.clip(g, 0.0, 1.3)
             whis = st(G.reson(colored(n, r, 0.5), 960.0, 45) * (0.4 + 0.6 * gg_) + 0.6 * G.reson(colored(n, r, 0.5), 1310.0, 55) * (0.3 + 0.7 * gg_ ** 2))
-            return (_lvl(wind, 0.0) * dbg(-6.0 * u)[None, :] + _lvl(lap, -6.0) * dbg(3.0 * u)[None, :] + _lvl(steam, -14.0)
-                    + _lvl(gulls, -12.0) + _lvl(flag, -11.0) * dbg(-4.0 * u)[None, :] + _lvl(yard, -9.0) * u[None, :]
-                    + _lvl(pan(lp(tinks, 7000, 1), 0.3), -11.0) + _lvl(whis, -9.0) * sing[None, :])
+            # A3 P2: on the ground the high wind is 9 dB down (was 6) and the windsock 6 dB (was 4), so the cut reads by ear too
+            return (_lvl(wind, 0.0) * dbg(-9.0 * u)[None, :] + _lvl(lap, -6.0) * dbg(3.0 * u)[None, :] + _lvl(steam, -14.0)
+                    + _lvl(gulls, -12.0) + _lvl(flag, -11.0) * dbg(-6.0 * u)[None, :] + _lvl(yard, -9.0) * u[None, :]
+                    + _lvl(pan(lp(tinks, 7000, 1), 0.3), -11.0) * roof_g[None, :] + _lvl(whis, -9.0) * (sing * roof_g)[None, :])
         out = _mix([(wind, 0.0), (lap, -6.0), (steam, -14.0), (gulls, -12.0), (flag, -13.0)])
         # the loop tail (shot 16 -> frame 0): one far gull call and one wave slap at the pilings, inside the folded bed
         tail_g, tail_l = T.DUR - 0.55, T.DUR - 0.32
@@ -1272,7 +1463,9 @@ def bed_mod_db(key, t):
     if key == "farm_storm":              # the rain swells up through 'Lenders finally checked the tanks.' and is cut by 'Inside...';
         g += np.interp(t, [T.bt("lenders"), T.bt("tanksEnd")], [0.0, 2.0], left=0.0, right=2.0)
         we_ = word_env(t, pre=0.12, post=0.1, tau=0.16)     # A2 P2 / P3: -3 dB under the words, +4 dB in every word gap
-        g += 4.0 * (1 - we_) - 4.5 * we_
+        # A3 P3 (the downpour near-inaudible on a phone): +5 dB under the words (its 1-4 kHz band carved 4 dB more there, in
+        # render_beds, so the consonants keep their room) and +3 dB more in the gaps (+7)
+        g += 7.0 * (1 - we_) + 0.5 * we_
     if key == "trading":                 # A1 P2: the floor shouts in every breath, 2 dB under the words
         g += -2.0 * word_env(t) + 2.0 * (1 - word_env(t))
     if key == "cutaway":                 # A1 P3: the reveal (shot 10) holds its breath audibly, swelling into the slosh
@@ -1283,10 +1476,23 @@ def bed_mod_db(key, t):
         try:                              # A2 P3: the breath after 'Inside...' read as a dropout on a phone: +6 dB more in it
             wi_ = T.word("Inside", T.bt("inside") - 0.3)
             gp_ = gap_at(float(wi_["e"]) + 0.02, 0.2, 0.3)
-            if gp_:
-                g += np.interp(t, [gp_[0] - 0.05, gp_[0] + 0.12, gp_[1] - 0.12, gp_[1] + 0.03], [0, 6.0, 6.0, 0], left=0, right=0)
+            if gp_:                       # A3 P3: the lift is full over the WHOLE breath (it reached +6 only mid-gap)
+                g += np.interp(t, [gp_[0] - 0.14, gp_[0] + 0.01, gp_[1] - 0.02, gp_[1] + 0.1], [0, 8.0, 8.0, 0], left=0, right=0)
         except KeyError:
             pass
+        try:                              # A3 P3: ... and the tail after the slosh / blub, before 'You see,' (the same +6 dB)
+            ww_ = T.word("water", T.bt("water") - 0.3)
+            gq_ = gap_at(float(ww_["e"]) + 0.02, 0.3, 0.3)
+            if gq_:
+                g += np.interp(t, [gq_[0] + 0.15, gq_[0] + 0.32, gq_[1] - 0.04, gq_[1] + 0.08], [0, 6.0, 6.0, 0], left=0, right=0)
+        except KeyError:
+            pass
+        # A3 P3 (shot 12, the diagram's hollow water was ~44 dB under the voice): +11 dB in the breaths, +5 under the words
+        a12, b12 = T.fr(T.SHOTS[12]["a"] - 6), T.fr(T.SHOTS[12]["b"] + 6)
+        win12 = np.interp(t, [a12 - 0.2, a12, b12, b12 + 0.2], [0, 1, 1, 0], left=0, right=0)
+        if np.any(win12 > 0):
+            we12 = word_env(t, pre=0.03, post=0.05, tau=0.05)
+            g += win12 * (5.0 + 7.0 * (1 - we12))
     if key == "office":
         D, _ = picture_events()
         fr_ = _frames(D.get("cafe_rack_15"))
@@ -1323,6 +1529,10 @@ def render_beds(v_ref, seed=1963):
         g = dbg(v_ref + BED_LEVEL[k] - ref)
         md = bed_mod_db(k, t[a:z])
         x = x * g * w[None, a:z] * dbg(md)[None, :]
+        if k == "farm_storm":                    # A3 P3: the louder rain keeps the consonant band clear: 1-4 kHz -4 dB more under the words
+            we_s = word_env(t[a:z], pre=0.1, post=0.08, tau=0.08)
+            band = _sig.sosfiltfilt(_sig.butter(2, [1000.0, 4000.0], btype="bandpass", fs=SR, output="sos"), x, axis=-1)   # zero-phase
+            x = x - band * (1 - dbg(-4.0 * we_s))[None, :]
         out[:, a:z] += x
         spans = []
         on = np.flatnonzero(np.diff(np.concatenate([[0], (w > 0.5).astype(int), [0]])))

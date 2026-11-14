@@ -19,6 +19,11 @@
 // floor's THOOM ("crashed", shot 8), the lightning's cool bounce on the wet ground and three raindrops sliding down the lens
 // in the storm (shot 9), a fine grain on the navy blueprint + a cool underwater edge on the reveal cutaway (shot 10), a front-loaded
 // dissolve 13 -> 14 (the gold blob never muddies olive over the green kiosk), the office_glow bloom eased (0.7 -> 0.6).
+// FIX ROUND 3 (audit A3): the trading-floor lightning at the crack (1406) is a real +~12 L* strike (3 f + a 6 f decay);
+// per-frame grade adjustments (gradeAdjust: shot 7's late vignette closes on the hatch, the loop's warm vignette tightens on
+// 'real.' and lets go on frame 0+, a lamp dip on the THOOM); the pump room's work lamps breathe (bloom); a rain streak on
+// the lens catches the far flash (shot 9); the gold glows harder on the thin layer (shot 12) and the settled bottle oil
+// (shot 11); grade.ts re-measured on preview3 (late / trading / kitchen / office / office_glow).
 // QA toggles (inputProps.post): ink, lens, pre, bloom, grade, grain, captions, world (false = flat card behind the
 // captions), dpr, layer ("base" | "over": draw only that layer of a dissolve at full opacity), inkDebug (1 = ink mask,
 // 2 = world normals, 3 = contact shadow), ao (contact-shadow multiplier, 0 = off), atmos, mblur, lensfx (false = off),
@@ -38,7 +43,7 @@ import { GradeEffect, GRADES, gradeFor } from "./grade";
 import { Kit } from "./build";
 import { VOICE_TOTAL, WARP, toNew } from "./voicewarp";
 import { SHOTS, FPS, LAST, XFADE, XPAD, BEAT, V, shotAt, dofAt, camAt, camMotion, lightAt, smooth } from "./story";
-import { TK, CU, KI, type LightName, type V3 } from "./plan";
+import { TK, CU, KI, BK, type LightName, type V3 } from "./plan";
 import { Captions } from "./Captions";
 
 // the video is as long as the final narration + the loop tail (voicewarp.ts VOICE_TOTAL = story.ts TOTAL)
@@ -88,17 +93,23 @@ const bloomPulse = (id: number, f: number) => (id === 12 ? 1 + 0.25 * pulseAt(f,
 // the orange fish ~19, the red cut edges ~0-10, sunny wall yellows ~40-48 at a lower saturation
 const GOLD_CUT = (): [number, number, number, number, number] => [0.6, 0.45, 24, 47, 0.7];
 const kiPts: V3[] = [-0.11, 0.11].flatMap((dx) => [0.02, 0.36].map((dy) => [KI.base[0] + KI.bottle.c[0] + dx, KI.base[1] + KI.bottle.c[1] + dy, KI.base[2] + KI.bottle.c[2]] as V3));
-const goldKeyAt = (id: number, f: number, cam: THREE.PerspectiveCamera): GoldKey | null => {
+const goldKeyAt = (id: number, f: number, cam: THREE.PerspectiveCamera, vf = f): GoldKey | null => {
   // shot 10: the thin gold band over the huge blue body glows a little, so the eye goes to it ("Inside...")
-  if (id === 10) return { k: GOLD_CUT() };
+  // fix r3 (ADD life: "the final diagram 1622-1637 is frozen apart from the fish"): the thin gold band's glow breathes
+  // +-22 % on a slow 48-frame swell (video clock), so the hold lives and the eye keeps going back to the gold
+  if (id === 10) { const k = GOLD_CUT(); k[0] *= 1 + 0.22 * Math.sin((2 * Math.PI * vf) / 48); return { k }; }
   // shot 12: the poured gold and the hatch disc, with a swell on the "ding" (the sparkle) of "it looks FULL."
-  if (id === 12) return { k: [0.4 + 0.5 * pulseAt(f, BEAT.looksFull - 1, 4, 22), 0.45, 24, 47, 0.7] };
+  // fix r3 (audit A3 shot 12: "the THIN OIL LAYER is a ~10 px line pressed against the red roof eave, it reads as part of
+  // the roof"): while the oil goes in and the crane rises past the cut face ('oil in' .. 'the hatch'), the gold glows
+  // harder (0.4 -> 0.62): the thin layer separates from the red eave (red lies outside the gold key's hue window)
+  if (id === 12) return { k: [0.4 + 0.22 * smooth((f - (BEAT.oilIn - 16)) / 14) * (1 - smooth((f - (BEAT.hatch - 4)) / 16)) + 0.5 * pulseAt(f, BEAT.looksFull - 1, 4, 22), 0.45, 24, 47, 0.7] };
   // shot 11: once the oil has risen and settles ("...to the top."), the gold layer glints like the tank oil; confined to
   // the bottle (the sunny yellow walls never key)
   if (id === 11) {
     // fix r2 (audit A2 P3: keep the bottle's gold vivid against the calmer kitchen grade): a soft glow already from "The oil
     // always rises" (x0.35), swelling to the full glint as it settles at the top
-    const g = 0.35 * smooth((f - BEAT.theOilRises) / 24) + 0.4 * smooth((f - (BEAT.top - 24)) / 30);
+    // fix r3 (audit A3 shot 11: "the gold oil never glows, even at its 'aha' moment ('top')"): 0.35 + 0.4 -> 0.42 + 0.55
+    const g = 0.42 * smooth((f - BEAT.theOilRises) / 24) + 0.55 * smooth((f - (BEAT.top - 24)) / 30);
     if (g <= 0.005) return null;
     let x0 = 1, y0 = 1, x1 = 0, y1 = 0;
     for (const p of kiPts) { const q = project(cam, p); x0 = Math.min(x0, q.uv[0]); x1 = Math.max(x1, q.uv[0]); y0 = Math.min(y0, q.uv[1]); y1 = Math.max(y1, q.uv[1]); }
@@ -119,9 +130,15 @@ const bloomRadius = (id: number) => (id >= 10 && id <= 13 ? 0.82 : 0.6);
 // Each: 1 f of sky-only pre-glow, a 1 f peak, a 2-3 f decay (never a white-out: +15 L* at most on the mids).
 const FLASH_COL: [number, number, number] = [0.875, 0.902, 1.0];
 const FLASH_PEAK = 0.1;     // display units added on bright mids at k = 1 (~ +15 luma on 0..255 over the frame)
-type Flash = { ids: number[]; f: number; k: number; far?: boolean; sky?: number };
+type Flash = { ids: number[]; f: number; k: number; far?: boolean; sky?: number; env?: Record<number, [number, number]> };
+// fix r3 (audit A3 P3 FILM 1403-1412: "the first lightning flash at 1406 is barely visible, +3.6 L* during the dissolve,
+// while its thunder crack is one of the loudest hits in the film"): the trading-floor strike is now a real flash, about
+// +12 L* on the frame for 3 f (n 0..2) with a 6 f decay (n 3..8), the upper frame (the tall rain windows, the ceiling)
+// leading by 1 f and lingering as it fades; same frame as the crack (shot 9's a - 7), carried by both dissolve layers
+const ENV_BIG: Record<number, [number, number]> = { [-1]: [0.25, 1], 0: [1, 0.25], 1: [1, 0.2], 2: [0.92, 0.2], 3: [0.66, 0.3], 4: [0.44, 0.4],
+  5: [0.27, 0.5], 6: [0.14, 0.6], 7: [0.06, 0.7], 8: [0.02, 0.8] };
 const FLASHES: Flash[] = [
-  { ids: [8, 9], f: SHOTS[8].a - 7, k: 0.75, sky: 0.45 },   // indoors: the tall windows and the ceiling light first
+  { ids: [8, 9], f: SHOTS[8].a - 7, k: 2.5, sky: 0.2, env: ENV_BIG },   // indoors: the tall windows and the ceiling light first
   { ids: [9], f: BEAT.bust - 2, k: 1.0 },
   { ids: [9], f: BEAT.checked - 8, k: 0.47, far: true },
 ];
@@ -139,7 +156,7 @@ const groundAt = (id: number, vf: number): number => {
   for (const F of FLASHES) {
     if (!F.ids.includes(9)) continue;
     const e = ENV_G[Math.round(vf) - Math.round(V(F.f))];
-    if (e) k = Math.max(k, e * F.k * (F.far ? 0.5 : 1));
+    if (e) k = Math.max(k, e * Math.min(1, F.k) * (F.far ? 0.5 : 1));   // (fix r3: the bounce keeps its A2 level)
   }
   return k * GROUND_PEAK;
 };
@@ -148,7 +165,7 @@ const flashAt = (id: number, vf: number): [number, number] => {
   let k = 0, sky = 0;
   for (const F of FLASHES) {
     if (!F.ids.includes(id)) continue;
-    const n = Math.round(vf) - Math.round(V(F.f)), e = (F.far ? ENV_FAR : ENV_NEAR)[n];
+    const n = Math.round(vf) - Math.round(V(F.f)), e = (F.env ?? (F.far ? ENV_FAR : ENV_NEAR))[n];
     if (e && e[0] * F.k > k) { k = e[0] * F.k; sky = Math.max(e[1], F.sky ?? 0); }
   }
   return [k * FLASH_PEAK, sky];
@@ -169,6 +186,41 @@ const motesAt = (id: number, f: number): Motes | null => {
   if (id === 6) return { k: 0.3, n: 20, size: 1.25, region: [0.02, 0.3, 0.98, 0.97], col: [1.0, 0.9, 0.74] };
   if (id === 11) return { k: 0.34, n: 22, size: 1.3, region: [0.02, 0.4, 0.98, 0.98], col: [1.0, 0.94, 0.78] };
   return null;
+};
+
+// ---------------- per-frame grade adjustments (fix r3; grade.ts GradeEffect.adjust, called on EVERY frame) ----------------
+// 1. shot 7 (audit A3 ADD: "a soft vignette that tightens toward the hatch as the light turns late, framing the reflected
+//    face as the mystery image"): the late preset's warm vignette (grade.ts: .15 / r .42 at noon -> .30 / r .30 late) moves
+//    its centre onto the hatch (the oil disc, projected) with the relight, 70 % of the way, so the frame closes in on the
+//    face in the gold while the lender's face at the top stays lit.
+// 2. shots 16 + 1, the LOOP (audit A3 ADD shot 16: "a very soft warm vignette, corner / centre ~0.78, that tightens on
+//    'real.', drawing the eye into the gold for the loop"): +.06 strength and a .06 smaller start radius ease in over 24 f
+//    from 'real.' - 6 and hold to the last frame; shot 1 starts from exactly that state on frame 0 and lets it out over its
+//    first 40 video frames (loop clock), so frame 0 = the last frame bit for bit (the factor is exactly 1 on both).
+// 3. shot 8 (ADD: the THOOM jolts the room): the pendant-lit floor flickers on the crash: a 2-step lamp dip (-0.26 stop on
+//    the first frame after the hit, a second -0.17 dip 3 f later; measured -2.5 / -1.7 L*), like the wiring took the shock.
+const LOOP_VIG = 0.06;
+const loopVig = (id: number, f: number, vf: number) =>
+  id === LAST ? smooth((f - (BEAT.real - 6)) / 24) : id === 1 ? 1 - smooth(vf / 40) : 0;
+const DIP8: Record<number, number> = { 1: -0.26, 2: -0.12, 3: -0.02, 4: -0.17, 5: -0.05 };
+const gradeAdjust = (id: number, f: number, vf: number, cam: THREE.PerspectiveCamera): [number, number, number, [number, number] | null, number] => {
+  if (id === 7) {
+    const m = lightMix(7, f), k = m.b === "late" ? m.k : m.a === "late" ? 1 : 0;
+    const p = project(cam, OILC);
+    return [0, 0, 0, p.on ? [p.uv[0], p.uv[1]] : null, 0.7 * k];
+  }
+  if (id === 1 || id === LAST) { const e = loopVig(id, f, vf); return [0, LOOP_VIG * e, -LOOP_VIG * e, null, 0]; }
+  if (id === 8) return [DIP8[Math.round(vf) - Math.round(V(BEAT.crashed1))] ?? 0, 0, 0, null, 0];
+  return [0, 0, 0, null, 0];
+};
+/** fix r3 (ADD shot 13, audit A3 "the punch-line hold is close to locked"): the pump room's bare work lamps buzz: the bloom
+ *  on the bulbs breathes +-6 % with a rare quick dip (an old filament on a night shift), on the video clock; shot 13 only */
+const lampFlicker = (id: number, vf: number) => {
+  if (id !== 13) return 1;
+  const t = vf, d = (n: number) => { const x = Math.sin(n * 91.7 + 13.1) * 43758.5453; return x - Math.floor(x); };
+  const slow = 0.04 * Math.sin(t * 0.21 + 0.6) + 0.025 * Math.sin(t * 0.53 + 2.1);
+  const c = Math.floor(t / 37), u = t - c * 37, dip = d(c) > 0.55 && u >= 11 && u < 15 ? [0, -0.16, -0.08, -0.03][u - 11] : 0;
+  return 1 + slow + dip;
 };
 
 // ---------------- focus-jump smoothing (fix r1, audit A1 P1 shots 3 / 15: 1-frame focus snaps) ----------------
@@ -201,14 +253,19 @@ const smoothFocus = (id: number, f: number): V3 | null => {
 type ShotPost = { dehaze?: [number, number, number, number]; dehazeFar?: [number, number]; haze?: [number, number, number];
   hazeCol?: [number, number, number]; skySat?: number; skyDeep?: [number, number, number];
   /** fix r2: blueprint paper fibres + mottling on WORLD surfaces (world-anchored, never on character cards) */
-  paper?: number };
+  paper?: number;
+  /** fix r3: heat shimmer over the far band at the horizon [amp px @1080, distance ramp start m, end m, band half height uv] */
+  shimmer?: [number, number, number, number] };
 // the dawn tank top (shot 1 AND the loop shot 16: identical, the seam): the pale peach band over the harbour gets a
 // little richer and deeper, the far tanks a little less milky (both are no-ops on the near hatch view of frame 0)
 const DAWN_POST: ShotPost = { dehaze: [0.2, 60, 260, 0.8], dehazeFar: [480, 760], skyDeep: [0.45, 0.1, 0.22] };
 const SHOT_POST: Record<number, ShotPost> = {
   1: DAWN_POST, 16: DAWN_POST,
-  2: { dehaze: [0.25, 60, 240, 0.9], dehazeFar: [300, 500], skySat: 1.05 },   // the tank-farm noon wide keeps its contrast
-  4: { dehaze: [0.18, 60, 260, 0.8], dehazeFar: [480, 760], skySat: 1.04 },   // the noon tank top: the harbour rows less milky
+  // fix r3 (ADD life, audit A3 shot 2 life 6.5: the noon landing "nearly frozen"): a faint noon HEAT SHIMMER over the far
+  // band at the horizon (the far tank rows, the harbour, the skyline; 1.2-1.4 px @1080, depth-gated so nothing near ever
+  // wobbles, on the video clock): the summer air over the waterfront moves while the characters hold
+  2: { dehaze: [0.25, 60, 240, 0.9], dehazeFar: [300, 500], skySat: 1.05, shimmer: [1.3, 70, 180, 0.07] },   // the tank-farm noon wide keeps its contrast
+  4: { dehaze: [0.18, 60, 260, 0.8], dehazeFar: [480, 760], skySat: 1.04, shimmer: [1.2, 90, 220, 0.06] },   // the noon tank top: the harbour rows less milky
   9: { haze: [0.12, 40, 260] },                                                // the rain: a little more grey veil far out
   14: { haze: [0.08, 40, 300] },                                               // the grey street
 };
@@ -265,10 +322,10 @@ const loopTau = (id: number, vf: number) => (id === LAST ? vf - (VOICE_TOTAL - 1
 /** shot 16: the oil parts on "fake." (16 f) and settles back by "real.": the glints dim out while it is open */
 const partHide = (f: number) => smooth((f - (BEAT.fake - 4)) / 8) * (1 - smooth((f - (BEAT.real - 8)) / 12));
 /** one glint = a 4-point star (thin arms, a hot core) over a small warm halo */
-const glintSrc = (cam: THREE.PerspectiveCamera, w: V3, k: number, rot: number): LensSrc[] => {
+const glintSrc = (cam: THREE.PerspectiveCamera, w: V3, k: number, rot: number, size = 0.05): LensSrc[] => {
   const p = project(cam, w);
   if (!p.on || k <= 0.01) return [];
-  const R = Math.min(46, Math.max(5, pxOf(cam, 0.05, p.dist)));
+  const R = Math.min(46, Math.max(5, pxOf(cam, size, p.dist)));
   return [{ uv: p.uv, dist: p.dist, kind: 0, col: [0.5 * k, 0.32 * k, 0.08 * k], p: [R * 0.42, R * 0.42], minVis: 0, occ: 0.12 },
     { uv: p.uv, dist: p.dist, kind: 1, col: [1.5 * k, 1.15 * k, 0.55 * k], rot, p: [R * 0.85, R * 0.2, Math.max(0.9, R * 0.055)], minVis: 0, occ: 0.12 }];
 };
@@ -301,6 +358,23 @@ const lensSources = (id: number, f: number, vf: number, cam: THREE.PerspectiveCa
       const tw = 0.62 + 0.38 * (0.5 + 0.5 * Math.cos((2 * Math.PI * vf) / 64 + g.ph)) * (0.7 + 0.3 * Math.cos((2 * Math.PI * vf) / 151 + 1.3 * i));
       out.push(...glintSrc(cam, [CU.base[0] + CU.hatch.c[0] + g.o[0], CU.oil + 0.002, CU.base[2] + CU.hatch.c[2] + g.o[1]], 1.3 * g.s * tw * hk, 0.35 + 0.0035 * vf + 0.6 * i));
     }
+  }
+  // fix r3 (ADD life, audit A3 shot 10: "the holds are frozen: the hatch frames 1544-1552 differ only by codec noise"): the
+  // opening golden hatch ('Inside...') carries the same two slow breathing glints as the real tank's oil (shots 1 / 4 / 16,
+  // the far half of the disc), fading out as the camera pulls away to show the dark body under it
+  if (id === 10) {
+    const hk = 1 - smooth((f - (BEAT.inside + 22)) / 16);
+    if (hk > 0.01) for (const [i, g] of GLINT12.entries()) {
+      const tw = 0.62 + 0.38 * (0.5 + 0.5 * Math.cos((2 * Math.PI * vf) / 64 + g.ph)) * (0.7 + 0.3 * Math.cos((2 * Math.PI * vf) / 151 + 1.3 * i));
+      out.push(...glintSrc(cam, [CU.base[0] + CU.hatch.c[0] + g.o[0], CU.oil + 0.002, CU.base[2] + CU.hatch.c[2] + g.o[1]], 1.4 * g.s * tw * hk, 0.35 + 0.0035 * vf + 0.6 * i, 0.085));
+    }
+  }
+  // fix r3 (audit A3 shot 3: "the 'ka-ching' at 525-527 has no visible source"): the cash bundles land at 'against it' + 16
+  // (register_3) and the top bill's paper band catches the light: a sparkle pops as they settle and a second, smaller one
+  // on the bell's 'CHING' ~9 f later (the same 4-point star as the shot-12 'ding')
+  if (id === 3) {
+    const t0 = BEAT.againstIt + 17, k = pulseAt(f, t0, 3, 12) + 0.75 * pulseAt(f, t0 + 9, 3, 14);
+    if (k > 0.01) out.push(...glintSrc(cam, [BK.base[0] + BK.cashTo[0] + 0.035, BK.base[1] + BK.cashTo[1] + 0.106, BK.base[2] + BK.cashTo[2] + 0.012], 1.5 * k, 0.5 + 0.03 * (f - t0)));
   }
   // ---- 2. practical bulbs: halo in focus, bokeh disc when the lens dissolves them ----
   const found: { p: Proj; c: THREE.Color; r: number }[] = [];
@@ -420,13 +494,15 @@ const Inner: React.FC<{ id: number; kit: Kit; f: number; vf: number; rate: numbe
   fx.ink.look(m.a, m.b, m.k);
   fx.ink.lens(focus, on.lens ? d.cInf : 0);
   const BA = BLOOM[m.a], BB = BLOOM[m.b], L = (x: number, y: number) => x + (y - x) * m.k;
-  const gk = on.bloom && on.gold > 0 ? goldKeyAt(id, f, cam) : null;
+  const gk = on.bloom && on.gold > 0 ? goldKeyAt(id, f, cam, vf) : null;
   if (gk) gk.k[0] *= on.gold;
   fx.bright(L(BA.th, BB.th), 0.3, L(BA.maxK, BB.maxK), gk);
   fx.bloom.intensity = L(BA.i, BB.i) * bloomPulse(id, f);
   fx.bloom.mipmapBlurPass.radius = bloomRadius(id);
   fx.hot.set(L(BA.th, BB.th), L(BA.maxK, BB.maxK));
   gradeFor(fx.grade, m.a, m.b, m.k, id, f);
+  fx.grade.adjust(...gradeAdjust(id, f, vf, cam));   // fix r3: every frame (zeros = the preset as cached)
+  fx.bloom.intensity *= lampFlicker(id, vf);
   fx.grade.rays(null);
   const fl = flashAt(id, vf);
   fx.grade.flash(FLASH_COL, fl[0], fl[1]);
@@ -442,7 +518,9 @@ const Inner: React.FC<{ id: number; kit: Kit; f: number; vf: number; rate: numbe
   const sp = SHOT_POST[id] ?? {};
   const proj: [number, number] = [cam.projectionMatrix.elements[0], cam.projectionMatrix.elements[5]];
   const fog = scene.fog && (scene.fog as THREE.Fog).isFog ? (scene.fog as THREE.Fog) : null;
-  fx.atmos.set({ dehaze: sp.dehaze, dehazeFar: sp.dehazeFar, haze: sp.haze, hazeCol: sp.hazeCol, skySat: sp.skySat, skyDeep: sp.skyDeep, skyHorizon: horizonY(cam), paper: sp.paper },
+  const hz = horizonY(cam), shm = sp.shimmer;
+  fx.atmos.set({ dehaze: sp.dehaze, dehazeFar: sp.dehazeFar, haze: sp.haze, hazeCol: sp.hazeCol, skySat: sp.skySat, skyDeep: sp.skyDeep, skyHorizon: hz, paper: sp.paper,
+    shimmer: shm ? { amp: shm[0], d0: shm[1], d1: shm[2], band: shm[3], horizon: hz, t: vf / 30 } : undefined },
     fog, cam.matrixWorld, proj, on.ink ? fx.ink.worldDepth ?? null : null);
   // ---- camera motion blur: a camera sampled inside the SAME integer frame as f (the impact kicks flip on integer
   // frames), half a frame ahead when there is room, else behind; its step is scaled to one VIDEO frame of motion ----
@@ -583,6 +661,30 @@ const LensDrops: React.FC<{ id: number; vf: number }> = ({ id, vf }) => {
   );
 };
 
+// ---------------- a rain streak lit by the far flash (fix r3, audit A3 ADD shot 9) ----------------
+// "A faint diagonal rain-streak run down one lens edge during the 1488 flash only, 6 f": on the far flash before 'checked'
+// (FLASHES[2], the same video frame) a water run on the glass at the RIGHT edge (over the tanker / tank wall, clear of the
+// lenders, the BANKRUPT plate and the caption band) catches the light: its bright head runs down ~0.27 H in 6 f, a
+// fading cool-white trail behind it, then it is dark glass again. Pure function of the video frame.
+const STREAK9 = { x0: 1040, y0: 470, x1: 996, y1: 980, op: [0.8, 1, 0.78, 0.52, 0.3, 0.12] };
+const RainStreak: React.FC<{ id: number; vf: number }> = ({ id, vf }) => {
+  if (id !== 9) return null;
+  const n = Math.round(vf) - Math.round(V(BEAT.checked - 8));
+  if (n < 0 || n > 5) return null;
+  const S = STREAK9, u = smooth((n + 1.5) / 6.5), hx = S.x0 + (S.x1 - S.x0) * u, hy = S.y0 + (S.y1 - S.y0) * u;
+  const len = Math.hypot(hx - S.x0, hy - S.y0), ang = (Math.atan2(S.x0 - hx, hy - S.y0) * 180) / Math.PI, o = S.op[n];
+  const g = (w: number, a: number, blur: number) => (
+    <div style={{ position: "absolute", left: S.x0 - w / 2, top: S.y0, width: w, height: len, transformOrigin: "50% 0%", transform: `rotate(${ang.toFixed(3)}deg)`,
+      borderRadius: w / 2, filter: blur > 0 ? `blur(${blur}px)` : undefined, opacity: o,
+      background: `linear-gradient(to bottom, rgba(214,228,255,0) 0%, rgba(214,228,255,${(0.35 * a).toFixed(3)}) 55%, rgba(236,244,255,${a.toFixed(3)}) 96%, rgba(236,244,255,0) 100%)` }} />
+  );
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "screen" }}>
+      {g(16, 0.36, 4)}{g(4, 0.8, 0.6)}
+    </AbsoluteFill>
+  );
+};
+
 const dprOverride = () => (getInputProps() as { post?: { dpr?: number } }).post?.dpr;
 const ShotView: React.FC<{ id: number; kit: Kit; alpha: number; f: number; vf: number; rate: number }> = ({ id, kit, alpha, f, vf, rate }) => (
   <AbsoluteFill style={{ opacity: alpha, transform: shakeAt(id, vf) }}>
@@ -591,6 +693,7 @@ const ShotView: React.FC<{ id: number; kit: Kit; alpha: number; f: number; vf: n
       <Inner id={id} kit={kit} f={f} vf={vf} rate={rate} />
     </ThreeCanvas>
     <LensDrops id={id} vf={vf} />
+    <RainStreak id={id} vf={vf} />
   </AbsoluteFill>
 );
 

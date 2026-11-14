@@ -1271,7 +1271,8 @@ export const roofDiscTex = (R: number, hx: number, hz: number, lx: number, lz: n
       g.save(); g.translate(x, y); g.rotate(Math.atan2(y1 - y0, x1 - x0) + (r() - 0.5) * 0.6); g.fillStyle = "rgba(96,80,66,0.16)"; g.beginPath(); g.ellipse(0, 0, 22, 9, 0, 0, TAU); g.fill(); g.restore(); } }
   // the soaked ring round the hatch: golden-brown oil stains + drips radiating out
   { const x = X(hx), y = Z(hz), rh = 0.42 * k;
-    blotch(g, x, y, rh * 2.6, 1.15, "170,112,30", 0.38); blotch(g, x, y, rh * 1.7, 1.1, "128,78,22", 0.4);
+    // fix r3 (audit A3 P2 shot 16: two big soft brown wavy blobs across the top of the loop frame): a tighter soaked ring
+    blotch(g, x, y, rh * 1.55, 1.15, "170,112,30", 0.34); blotch(g, x, y, rh * 1.25, 1.1, "128,78,22", 0.36);
     for (let i = 0; i < 26; i++) { const a = r() * TAU, d0 = rh * 1.05, d1 = rh * (1.5 + 1.6 * r()), w = 4 + 8 * r();
       const gr = g.createLinearGradient(x + Math.cos(a) * d0, y + Math.sin(a) * d0, x + Math.cos(a) * d1, y + Math.sin(a) * d1);
       gr.addColorStop(0, "rgba(150,92,20,0.55)"); gr.addColorStop(1, "rgba(150,92,20,0)"); g.strokeStyle = gr; g.lineWidth = w; g.lineCap = "round";
@@ -1301,6 +1302,13 @@ export const collarTex = () => ptex("sxCollar2", 1024, 256, (g, r) => {
     const gg = g.createLinearGradient(0, 20, 0, 20 + L); gg.addColorStop(0, `rgba(226,166,50,${0.35 + 0.4 * d})`); gg.addColorStop(1, "rgba(226,166,50,0.05)");
     wrapX(1024, x - w, w * 2, (X0) => { const X = X0 + w; g.fillStyle = gg; g.beginPath(); g.moveTo(X - w / 2, 20); g.lineTo(X + w / 2, 20); g.lineTo(X + w * 0.3, 20 + L); g.lineTo(X - w * 0.3, 20 + L); g.closePath(); g.fill();
       g.fillStyle = `rgba(255,214,110,${0.4 + 0.3 * d})`; g.beginPath(); g.arc(X, 20 + L, w * 0.42, 0, TAU); g.fill(); }); }
+  // fix r3 (audit A3 P2 shot 7): three FRESH oil runs glinting down the -x inner wall (u ~0.72-0.8, the wall the lender's
+  // camera looks at): bright gold with a white specular line and a fat bead
+  for (const [u, L, w] of [[0.715, 150, 11], [0.758, 196, 14], [0.8, 120, 10]] as const) { const X = u * 1024;
+    const gg = g.createLinearGradient(0, 14, 0, 14 + L); gg.addColorStop(0, "rgba(255,196,64,0.95)"); gg.addColorStop(1, "rgba(214,150,40,0.7)");
+    g.fillStyle = gg; g.beginPath(); g.moveTo(X - w / 2, 14); g.lineTo(X + w / 2, 14); g.lineTo(X + w * 0.32, 14 + L); g.lineTo(X - w * 0.32, 14 + L); g.closePath(); g.fill();
+    g.fillStyle = "rgba(255,248,214,0.9)"; g.fillRect(X - w * 0.18, 18, 2.5, L * 0.85);
+    g.fillStyle = "rgba(255,206,90,1)"; g.beginPath(); g.arc(X, 14 + L, w * 0.55, 0, TAU); g.fill(); g.fillStyle = "rgba(255,255,240,0.95)"; g.beginPath(); g.arc(X - w * 0.18, 14 + L - w * 0.2, w * 0.17, 0, TAU); g.fill(); }
   g.fillStyle = "#cdb490"; g.fillRect(0, 0, 1024, 10); g.fillStyle = "rgba(60,44,34,0.8)"; g.fillRect(0, 10, 1024, 4);
 });
 /** the weighted measuring tape: bright yellow steel tape with black graduations (v along the tape) */
@@ -1838,16 +1846,17 @@ export const hatchZoneTex = () => ptex("sxHatchZone4", 2048, 2048, (g, r) => {
   const ragR = (a: number, base: number, ph: number) => base * (1 + 0.13 * Math.sin(a * 3 + ph) + 0.07 * Math.sin(a * 7 + ph * 2.3) + 0.04 * Math.sin(a * 13 + ph * 0.7));
   const ragPath = (base: number, ph: number) => { g.beginPath(); for (let a = 0; a <= TAU + 0.001; a += 0.03) { const rr0 = ragR(a, base, ph) * k, x = C + Math.cos(a) * rr0, y = C + Math.sin(a) * rr0; if (a) g.lineTo(x, y); else g.moveTo(x, y); } g.closePath(); };
   g.save(); g.filter = "blur(3px)";
-  g.fillStyle = "rgba(74,46,20,0.24)"; ragPath(1.02, 0.6); g.fill();
-  g.fillStyle = "rgba(74,46,20,0.1)"; ragPath(1.2, 2.2); g.fill();
-  g.fillStyle = "rgba(96,58,18,0.18)"; ragPath(0.7, 4.1); g.fill();
+  // fix r3 (audit A3 P2 shot 16): the stain ring stays inside ~0.8 m (its ragged outer edge no longer crosses the top of P0
+  // as two soft brown blobs)
+  g.fillStyle = "rgba(74,46,20,0.22)"; ragPath(0.8, 0.6); g.fill();
+  g.fillStyle = "rgba(96,58,18,0.18)"; ragPath(0.66, 4.1); g.fill();
   g.restore();
   // a few fresh darker spatters on the stain (oil splashed from the tape)
   for (let i = 0; i < 16; i++) { const a = r() * TAU, d = (0.55 + 0.5 * r()) * k; g.fillStyle = `rgba(70,40,14,${0.25 + 0.2 * r()})`; g.beginPath(); g.ellipse(C + Math.cos(a) * d, C + Math.sin(a) * d, 6 + 12 * r(), 4 + 8 * r(), r() * 3, 0, TAU); g.fill(); }
   // the iridescent film: broken thin arcs ON the stain edge only, <= 20 %, 6-8 px
   g.save(); g.filter = "blur(1.5px)"; g.lineCap = "round";
   for (const [a0, a1, c] of [[0.3, 1.25, "rgba(220,90,170,0.18)"], [2.0, 2.7, "rgba(90,200,150,0.18)"], [3.6, 4.5, "rgba(250,206,80,0.2)"], [5.1, 5.7, "rgba(100,130,230,0.16)"]] as const) {
-    g.strokeStyle = c; g.lineWidth = 7; g.beginPath(); for (let a = a0; a <= a1; a += 0.03) { const rr0 = ragR(a, 1.02, 0.6) * k - 6, x = C + Math.cos(a) * rr0, y = C + Math.sin(a) * rr0; if (a > a0) g.lineTo(x, y); else g.moveTo(x, y); } g.stroke(); }
+    g.strokeStyle = c; g.lineWidth = 7; g.beginPath(); for (let a = a0; a <= a1; a += 0.03) { const rr0 = ragR(a, 0.8, 0.6) * k - 6, x = C + Math.cos(a) * rr0, y = C + Math.sin(a) * rr0; if (a > a0) g.lineTo(x, y); else g.moveTo(x, y); } g.stroke(); }
   g.restore();
   // three drip runs from the collar lip (wide, darker golden-brown, wobbly, a bead at the end)
   // (r2 check: long wobbly runs read as worms): short fat tapering runs, soft, the bead just a little wider than the tip
@@ -1869,6 +1878,15 @@ export const hatchZoneTex = () => ptex("sxHatchZone4", 2048, 2048, (g, r) => {
   // an oil-can ring stain + boot scuffs on the walking side (-x, +z)
   g.strokeStyle = "rgba(96,62,22,0.45)"; g.lineWidth = 9; g.beginPath(); g.arc(C - 0.95 * k, C + 0.55 * k, 0.09 * k, 0, TAU); g.stroke();
   for (let i = 0; i < 14; i++) { const x = C - (0.6 + 0.6 * r()) * k, y = C + (r() - 0.3) * 1.0 * k; g.save(); g.translate(x, y); g.rotate(r() * TAU); g.fillStyle = "rgba(90,74,60,0.2)"; g.beginPath(); g.ellipse(0, 0, 34, 14, 0, 0, TAU); g.fill(); g.restore(); }
+  // fix r3 (audit A3 P2 shot 16): 2-3 SMALL ragged oil stains (darker golden-brown, 0.15-0.3 m) toward the far side (the top
+  // of P0), one fed by a drip run from the collar
+  for (const [a, d, rad] of [[-1.95, 0.8, 0.085], [-1.15, 0.86, 0.06], [-2.45, 0.9, 0.05]] as const) {
+    const x = C + Math.cos(a) * d * k, y = C + Math.sin(a) * d * k; g.save(); g.filter = "blur(1.5px)";
+    g.fillStyle = "rgba(150,96,28,0.26)"; g.beginPath(); for (let t = 0; t <= TAU + 0.01; t += 0.15) { const rr0 = rad * k * (1 + 0.28 * Math.sin(t * 3 + a) + 0.16 * Math.sin(t * 5 + 2 * a) + 0.1 * Math.sin(t * 11 + a)); g.lineTo(x + Math.cos(t) * rr0, y + Math.sin(t) * rr0 * 0.8); } g.closePath(); g.fill();
+    g.fillStyle = "rgba(196,138,36,0.35)"; g.beginPath(); g.ellipse(x - rad * k * 0.25, y - rad * k * 0.2, rad * k * 0.35, rad * k * 0.18, 0.4, 0, TAU); g.fill(); g.restore(); }
+  { const a = -1.95, d0 = Rh + 10, d1 = 0.74 * k, ca = Math.cos(a), sa = Math.sin(a), w = 11;
+    const gr = g.createLinearGradient(C + ca * d0, C + sa * d0, C + ca * d1, C + sa * d1); gr.addColorStop(0, "rgba(160,104,28,0.34)"); gr.addColorStop(1, "rgba(160,104,28,0.14)");
+    g.save(); g.filter = "blur(1.2px)"; g.strokeStyle = gr; g.lineWidth = w; g.lineCap = "round"; g.beginPath(); g.moveTo(C + ca * d0, C + sa * d0); g.quadraticCurveTo(C + Math.cos(a + 0.05) * (d0 + d1) / 2, C + Math.sin(a + 0.05) * (d0 + d1) / 2, C + ca * d1, C + sa * d1); g.stroke(); g.restore(); }
   // fade the outer edge into the roof disc
   g.globalCompositeOperation = "destination-in";
   const m = g.createRadialGradient(C, C, 1.35 * k, C, C, 1.69 * k); m.addColorStop(0, "rgba(0,0,0,1)"); m.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = m; g.fillRect(0, 0, S, S);
@@ -2135,4 +2153,183 @@ export const alliedTransomTex = () => ptex("sxAlliedTransom", 768, 230, (g) => {
   g.font = `bold ${px}px ${fam}`; g.textAlign = "center"; g.textBaseline = "middle";
   g.lineWidth = 10; g.strokeStyle = "rgba(40,24,10,0.95)"; g.strokeText("ALLIED", 384, 122);
   const gr = g.createLinearGradient(0, 40, 0, 200); gr.addColorStop(0, "#fff2b8"); gr.addColorStop(0.5, "#e6b84a"); gr.addColorStop(1, "#a8761e"); g.fillStyle = gr; g.fillText("ALLIED", 384, 122);
+});
+
+// =====================================================================================================================
+// WORLD-EXT fix round 3 (audit A3, 2026-11-14): the shot-4 tape + hazard band + chalk tally, the hatch lid face, the loop
+// frame's rail-bar shadow + crisp sun patch + logbook page, thin rain crowns, the storm road marks + the puddle's sign
+// reflection, huddled gulls, the kiosk's pegged papers, the inspection slip.
+// =====================================================================================================================
+/** shot 4's tape (v along): a saturated #F2C21B steel tape with navy ink edges (~2 px at 1080) that reads on the cream
+ *  roof, black ticks on one side, red decimetre marks */
+export const measureTape4Tex = () => ptex("sxTape4", 64, 1024, (g) => {
+  g.fillStyle = "#f2c21b"; g.fillRect(0, 0, 64, 1024);
+  g.fillStyle = "#1a2350"; g.fillRect(0, 0, 9, 1024); g.fillRect(55, 0, 9, 1024);
+  g.fillStyle = "#1e1a16"; for (let y = 0; y < 1024; y += 16) { const w = y % 128 === 0 ? 30 : y % 64 === 0 ? 22 : 13; g.fillRect(9, y, w, 4); }
+  g.fillStyle = "#c8261e"; for (let y = 0; y < 1024; y += 128) g.fillRect(40, y + 40, 11, 40);
+  g.fillStyle = "rgba(255,250,220,0.45)"; g.fillRect(48, 0, 4, 1024);
+});
+/** yellow / black hazard stripes (u repeats along a band): worn, a little grime */
+export const hazardTex = () => ptex("sxHazard", 256, 64, (g, r) => {
+  g.fillStyle = "#e8b81e"; g.fillRect(0, 0, 256, 64);
+  g.fillStyle = "#1c1a1e"; for (let x = -64; x < 320; x += 64) { g.beginPath(); g.moveTo(x, 64); g.lineTo(x + 32, 64); g.lineTo(x + 64, 0); g.lineTo(x + 32, 0); g.closePath(); g.fill(); }
+  for (let i = 0; i < 40; i++) blotch(g, r() * 256, r() * 64, 6 + 14 * r(), 1.4, r() < 0.6 ? "90,70,50" : "240,230,200", 0.12);
+  g.fillStyle = "rgba(40,30,24,0.35)"; g.fillRect(0, 56, 256, 8);
+});
+/** the hatch lid's face (a cylinder cap: centred disc): cream steel, a rivet ring every ~6 cm, a rust bloom, a small
+ *  stencilled No. 7, an oil drip run toward the hinge side (canvas bottom), scuffs */
+export const lidTex = () => ptex("sxLidFace", 512, 512, (g, r) => {
+  const C = 256;
+  g.fillStyle = "#cbbfa6"; g.fillRect(0, 0, 512, 512);
+  for (let i = 0; i < 70; i++) blotch(g, r() * 512, r() * 512, 20 + 50 * r(), 1.2, r() < 0.5 ? "120,104,84" : "250,244,228", 0.08);
+  for (let i = 0; i < 9000; i++) { g.fillStyle = `rgba(${r() < 0.5 ? "96,84,70" : "255,250,236"},${0.05 + 0.08 * r()})`; g.fillRect(r() * 512, r() * 512, 1.5 + 2 * r(), 1.5 + 2 * r()); }
+  // rust bloom (#8A4A2A ~30 %) off-centre + a few rust pits
+  blotch(g, 330, 170, 90, 1.3, "138,74,42", 0.3); blotch(g, 350, 150, 40, 1.2, "110,56,30", 0.35);
+  for (let i = 0; i < 18; i++) { g.fillStyle = `rgba(120,60,30,${0.3 + 0.3 * r()})`; g.beginPath(); g.arc(250 + 160 * r(), 90 + 160 * r(), 2 + 4 * r(), 0, TAU); g.fill(); }
+  // the oil drip run from the centre toward the hinge (canvas bottom), golden-brown, a bead at its end
+  { const gr = g.createLinearGradient(C, C, C, 470); gr.addColorStop(0, "rgba(120,74,20,0.7)"); gr.addColorStop(1, "rgba(150,96,24,0.45)");
+    g.fillStyle = gr; g.beginPath(); g.moveTo(C - 16, C + 10); g.quadraticCurveTo(C - 4, 380, C - 8, 455); g.lineTo(C + 6, 455); g.quadraticCurveTo(C + 10, 380, C + 16, C + 10); g.closePath(); g.fill();
+    g.fillStyle = "rgba(196,140,40,0.85)"; g.beginPath(); g.arc(C - 1, 458, 11, 0, TAU); g.fill(); g.fillStyle = "rgba(255,236,170,0.8)"; g.beginPath(); g.arc(C - 4, 454, 3.5, 0, TAU); g.fill();
+    blotch(g, C, C, 70, 1.1, "110,70,24", 0.28); }
+  // the small stencil (rotated with the cap mapping; never mirrored)
+  { g.save(); g.translate(C - 70, C - 10); g.rotate(-Math.PI / 2); const fam = '"Arial Black", Arial, sans-serif'; g.font = `bold 52px ${fam}`; g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillStyle = "rgba(42,46,70,0.8)"; g.fillText("No. 7", 0, 0); g.globalCompositeOperation = "destination-out"; for (let x = -90; x < 90; x += 22) g.fillRect(x, -30, 3, 60); g.restore(); }
+  // the rivet ring every ~6 cm round the rim (54 rivets) + the rim's dark lip
+  g.strokeStyle = "rgba(84,70,58,0.7)"; g.lineWidth = 10; g.beginPath(); g.arc(C, C, 250, 0, TAU); g.stroke();
+  for (let i = 0; i < 54; i++) { const a = (i / 54) * TAU, x = C + Math.cos(a) * 226, y = C + Math.sin(a) * 226;
+    g.fillStyle = "rgba(70,58,48,0.75)"; g.beginPath(); g.arc(x + 1.5, y + 1.5, 6.5, 0, TAU); g.fill(); g.fillStyle = "#e2d8c2"; g.beginPath(); g.arc(x, y, 5.5, 0, TAU); g.fill();
+    g.fillStyle = "rgba(255,252,240,0.9)"; g.beginPath(); g.arc(x - 1.6, y - 1.6, 2, 0, TAU); g.fill(); }
+});
+/** the logbook's loose top page (right half): cream with ruled lines, a column of pencil tallies (no words) */
+export const logPageTex = () => ptex("sxLogPage", 256, 352, (g, r) => {
+  g.fillStyle = "#f2ead6"; g.fillRect(0, 0, 256, 352);
+  g.strokeStyle = "rgba(90,120,170,0.45)"; g.lineWidth = 2; for (let y = 40; y < 340; y += 22) { g.beginPath(); g.moveTo(12, y); g.lineTo(244, y); g.stroke(); }
+  g.strokeStyle = "rgba(190,60,50,0.5)"; g.beginPath(); g.moveTo(40, 0); g.lineTo(40, 352); g.stroke();
+  g.strokeStyle = "rgba(60,56,60,0.75)"; g.lineWidth = 2.5; g.lineCap = "round";
+  for (let k = 0; k < 12; k++) { const y = 34 + k * 22; let x = 52; for (let j = 0; j < 3 + Math.floor(r() * 5); j++) { g.beginPath(); g.moveTo(x, y); g.lineTo(x + 3, y - 14); g.stroke(); x += 9; }
+    g.beginPath(); g.moveTo(x + 8, y - 6); for (let t = 0; t < 6; t++) g.lineTo(x + 14 + t * 14 + 6 * r(), y - 4 - 8 * r()); g.stroke(); }
+  g.fillStyle = "rgba(140,110,70,0.18)"; g.fillRect(0, 0, 10, 352);
+  blotch(g, 190, 280, 40, 1.2, "160,110,40", 0.2);
+});
+/** a CRISP sun patch (white, alpha; tinted honey by the material): a parallelogram whose long sides run along the dawn
+ *  shadow direction (canvas down-left), cut clean by the two post shadows either side */
+export const sunPatchCrispTex = () => ptex("sxSunPatchCrisp", 256, 128, (g) => {
+  g.clearRect(0, 0, 256, 128); g.save(); g.filter = "blur(1.2px)"; g.fillStyle = "rgba(255,255,255,1)";
+  const dx = (-0.45 * 128) / 0.89;  // the side direction over the full height
+  g.beginPath(); g.moveTo(70 - dx / 2, 4); g.lineTo(206 - dx / 2, 4); g.lineTo(206 + dx / 2, 124); g.lineTo(70 + dx / 2, 124); g.closePath(); g.fill(); g.restore();
+  g.globalCompositeOperation = "destination-out"; const gr = g.createLinearGradient(0, 0, 0, 128); gr.addColorStop(0, "rgba(0,0,0,0)"); gr.addColorStop(0.75, "rgba(0,0,0,0)"); gr.addColorStop(1, "rgba(0,0,0,0.55)"); g.fillStyle = gr; g.fillRect(0, 0, 256, 128);
+  g.globalCompositeOperation = "source-over";
+});
+/** the loop frame's railing shadow (white, alpha; tinted violet by the material). The plane spans 1.6 m x 0.5 m (canvas
+ *  top = far, -z): ONE continuous band (the top bar's shadow, ~14 px here = 18-22 px at 1080 on P0) curving gently, and
+ *  two thin post shadows running from it up-right (toward the low sun) off the frame top, at ~55 % (30 % on screen) */
+export const railShadowTex = () => ptex("sxRailShadow", 1024, 320, (g) => {
+  g.clearRect(0, 0, 1024, 320); g.save(); g.filter = "blur(1.5px)";
+  const by = (x: number) => 262 - 7 * ((x - 512) / 512) ** 2 + 3 * Math.sin(x * 0.006);
+  g.fillStyle = "rgba(255,255,255,1)"; g.beginPath(); for (let x = 0; x <= 1024; x += 16) g.lineTo(x, by(x) - 10); for (let x = 1024; x >= 0; x -= 16) g.lineTo(x, by(x) + 10); g.closePath(); g.fill();
+  g.fillStyle = "rgba(255,255,255,0.55)";
+  for (const x0 of [330, 770]) { const y0 = by(x0) - 9, L = y0 + 10, ex = x0 + (0.45 / 0.89) * L; g.beginPath(); g.moveTo(x0 - 8, y0); g.lineTo(x0 + 8, y0); g.lineTo(ex + 8, y0 - L); g.lineTo(ex - 8, y0 - L); g.closePath(); g.fill(); }
+  g.restore();
+  g.globalCompositeOperation = "destination-out";
+  for (const [x0, x1, fadeRight] of [[0, 120, false], [904, 1024, true]] as const) { const gr = g.createLinearGradient(x0, 0, x1, 0);
+    gr.addColorStop(0, fadeRight ? "rgba(0,0,0,0)" : "rgba(0,0,0,1)"); gr.addColorStop(1, fadeRight ? "rgba(0,0,0,1)" : "rgba(0,0,0,0)"); g.fillStyle = gr; g.fillRect(x0, 0, x1 - x0, 320); }
+  g.globalCompositeOperation = "source-over";
+});
+/** the tank man's chalk tally on the roof plates (white chalk, alpha): a big '90', four strokes struck through, a tick */
+export const chalkTallyTex = () => ptex("sxChalk90", 512, 320, (g, r) => {
+  g.clearRect(0, 0, 512, 320); g.strokeStyle = "rgba(250,248,240,0.92)"; g.fillStyle = "rgba(250,248,240,0.92)"; g.lineCap = "round"; g.lineJoin = "round";
+  g.font = 'bold 170px "Trebuchet MS", Arial, sans-serif'; g.textAlign = "left"; g.textBaseline = "middle"; g.lineWidth = 6; g.strokeText("90", 26, 150); g.globalAlpha = 0.55; g.fillText("90", 26, 150); g.globalAlpha = 1;
+  g.lineWidth = 10; for (let k = 0; k < 4; k++) { g.beginPath(); g.moveTo(290 + k * 36, 92); g.lineTo(296 + k * 36, 210); g.stroke(); } g.beginPath(); g.moveTo(272, 196); g.lineTo(436, 104); g.stroke();
+  g.lineWidth = 12; g.beginPath(); g.moveTo(330, 268); g.lineTo(358, 296); g.lineTo(426, 236); g.stroke();
+  g.globalCompositeOperation = "destination-out"; for (let i = 0; i < 2600; i++) { g.fillStyle = `rgba(0,0,0,${0.3 + 0.6 * r()})`; g.fillRect(r() * 512, r() * 320, 1 + 3 * r(), 1 + 2 * r()); }
+  g.globalCompositeOperation = "source-over";
+});
+/** a deck stencil 'No. 7' (dark navy, alpha, stencil bridges + wear) by the ladder top */
+export const deckStencilTex = () => ptex("sxDeckNo7", 768, 256, (g, r) => {
+  g.clearRect(0, 0, 768, 256);
+  const fam = '"Arial Black", Arial, sans-serif', px = fitPx(g, ["No. 7"], fam, 720, 210, 1);
+  g.font = `bold ${px}px ${fam}`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = "rgba(34,40,72,0.9)"; g.fillText("No. 7", 384, 132);
+  g.globalCompositeOperation = "destination-out"; for (let x = 40; x < 768; x += 58) g.fillRect(x, 0, 7, 256);
+  for (let i = 0; i < 1600; i++) { g.fillStyle = `rgba(0,0,0,${0.3 + 0.6 * r()})`; g.fillRect(r() * 768, r() * 256, 1 + 5 * r(), 1 + 3 * r()); }
+  g.globalCompositeOperation = "source-over";
+});
+/** a pale khaki inspection slip with a big pencil tick (no words), creased, an oily thumbprint */
+export const inspectSlipTex = () => ptex("sxSlip7", 256, 176, (g, r) => {
+  g.fillStyle = "#e4d6aa"; g.fillRect(0, 0, 256, 176);
+  for (let i = 0; i < 20; i++) blotch(g, r() * 256, r() * 176, 10 + 30 * r(), 1.3, "150,126,80", 0.1);
+  g.strokeStyle = "rgba(120,100,70,0.5)"; g.lineWidth = 2; for (let y = 40; y < 170; y += 20) { g.beginPath(); g.moveTo(16, y); g.lineTo(150, y); g.stroke(); }
+  g.strokeStyle = "rgba(40,40,46,0.9)"; g.lineWidth = 9; g.lineCap = "round"; g.lineJoin = "round"; g.beginPath(); g.moveTo(170, 96); g.lineTo(196, 128); g.lineTo(240, 46); g.stroke();
+  g.strokeStyle = "rgba(120,104,80,0.45)"; g.lineWidth = 3; g.beginPath(); g.moveTo(128, 0); g.lineTo(122, 176); g.stroke();
+  blotch(g, 60, 140, 18, 1.3, "70,50,30", 0.35);
+});
+/** a thin rain splash crown (white, alpha; anchored on its ring): a flat ellipse ring + 3-5 thin rising spikes with
+ *  droplet tips (no soft puff) */
+export const crownThinTex = () => ptex("sxCrownThin", 128, 128, (g, r) => {
+  g.clearRect(0, 0, 128, 128); g.lineCap = "round";
+  g.strokeStyle = "rgba(255,255,255,0.85)"; g.lineWidth = 3; g.beginPath(); g.ellipse(64, 112, 40, 8, 0, 0, TAU); g.stroke();
+  const n = 5; for (let k = 0; k < n; k++) { const t = (k + 0.5) / n, x0 = 64 + (t - 0.5) * 72, ang = -Math.PI / 2 + (t - 0.5) * 1.5, L = 30 + 26 * (1 - Math.abs(t - 0.5) * 1.4) + 8 * r();
+    const x1 = x0 + Math.cos(ang) * L, y1 = 108 + Math.sin(ang) * L;
+    g.strokeStyle = "rgba(255,255,255,0.9)"; g.lineWidth = 3.2; g.beginPath(); g.moveTo(x0, 108); g.quadraticCurveTo((x0 + x1) / 2, (108 + y1) / 2 + 4, x1, y1); g.stroke();
+    g.fillStyle = "rgba(255,255,255,0.95)"; g.beginPath(); g.arc(x1 + Math.cos(ang) * 5, y1 + Math.sin(ang) * 5, 3.6, 0, TAU); g.fill(); }
+});
+/** a herring gull huddled on a bar in the rain (bottom-anchored): round wet body, head tucked, a short yellow beak */
+export const gullHuddleTex = () => ptex("sxGullHuddle", 256, 256, (g) => {
+  g.clearRect(0, 0, 256, 256); g.lineJoin = "round"; g.strokeStyle = "#2e3040"; g.lineWidth = 6;
+  g.fillStyle = "#f2f2ee"; g.beginPath(); g.ellipse(128, 176, 70, 56, 0, 0, TAU); g.fill(); g.stroke();
+  g.fillStyle = "#9ea6b4"; g.beginPath(); g.moveTo(70, 160); g.quadraticCurveTo(128, 112, 196, 150); g.quadraticCurveTo(210, 196, 186, 214); g.quadraticCurveTo(126, 200, 76, 196); g.closePath(); g.fill(); g.stroke();
+  g.fillStyle = "#1e1e26"; g.beginPath(); g.moveTo(186, 190); g.lineTo(226, 214); g.lineTo(190, 216); g.closePath(); g.fill();
+  g.fillStyle = "#f2f2ee"; g.beginPath(); g.arc(86, 132, 30, 0, TAU); g.fill(); g.stroke();
+  g.fillStyle = "#f2c230"; g.beginPath(); g.moveTo(58, 138); g.lineTo(30, 146); g.lineTo(60, 150); g.closePath(); g.fill();
+  g.fillStyle = "#1a1a1a"; g.beginPath(); g.arc(76, 128, 4, 0, TAU); g.fill();
+  g.strokeStyle = "#e08a7a"; g.lineWidth = 5; g.beginPath(); g.moveTo(112, 228); g.lineTo(110, 250); g.moveTo(146, 228); g.lineTo(148, 250); g.stroke();
+  g.strokeStyle = "rgba(220,232,250,0.8)"; g.lineWidth = 2.5; for (const [x, y] of [[100, 150], [150, 140], [170, 170]] as const) { g.beginPath(); g.moveTo(x, y); g.lineTo(x - 2, y + 9); g.stroke(); }
+});
+/** a worn painted dash (white, alpha; v along the road) with chipped holes */
+export const dashWornTex = () => ptex("sxDashWorn", 64, 512, (g, r) => {
+  g.clearRect(0, 0, 64, 512); g.fillStyle = "rgba(255,255,255,0.95)"; g.fillRect(6, 10, 52, 492);
+  g.globalCompositeOperation = "destination-out"; for (let i = 0; i < 900; i++) { g.fillStyle = `rgba(0,0,0,${0.3 + 0.7 * r()})`; g.beginPath(); g.ellipse(r() * 64, r() * 512, 1 + 4 * r(), 1 + 6 * r(), r() * 3, 0, TAU); g.fill(); }
+  g.globalCompositeOperation = "source-over";
+});
+/** a swirl of water into a drain (white, alpha): thin spiral arcs fading outward */
+export const swirlTex = () => ptex("sxSwirl", 256, 256, (g) => {
+  g.clearRect(0, 0, 256, 256); g.lineCap = "round";
+  for (let k = 0; k < 4; k++) { g.beginPath(); for (let t = 0; t < 1; t += 0.01) { const a = k * (TAU / 4) + t * 5.5, rr0 = 18 + 100 * t; const x = 128 + Math.cos(a) * rr0, y = 128 + Math.sin(a) * rr0; if (t) g.lineTo(x, y); else g.moveTo(x, y); }
+    g.strokeStyle = "rgba(255,255,255,0.7)"; g.lineWidth = 3; g.stroke(); }
+  g.globalCompositeOperation = "destination-in"; const m = g.createRadialGradient(128, 128, 10, 128, 128, 126); m.addColorStop(0, "rgba(0,0,0,1)"); m.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = m; g.fillRect(0, 0, 256, 256);
+  g.globalCompositeOperation = "source-over";
+});
+/** shot 9's near puddle: dark navy water (soft lobed edge) mirroring the lit gate sign upside down, broken into ripple
+ *  bands: the navy beam + the two warm lamps nearest the viewer (canvas bottom), the cream panel with navy / red letter
+ *  smears (no legible letters) and the red BANKRUPT block on the right, the sign's lower edge at the far side (top) */
+export const signReflTex = () => ptex("sxSignRefl", 1024, 512, (g, r) => {
+  g.clearRect(0, 0, 1024, 512);
+  const lobes = [[512, 256, 470, 200], [300, 300, 260, 170], [760, 230, 240, 160], [520, 360, 300, 140]];
+  g.save(); g.beginPath(); for (const [x, y, rx, ry] of lobes) { g.moveTo(x + rx, y); g.ellipse(x, y, rx, ry, 0, 0, TAU); } g.clip();
+  g.fillStyle = "rgba(14,22,52,0.82)"; g.fillRect(0, 0, 1024, 512);
+  // the reflection, drawn in horizontal strips with a ripple shift each
+  const off = document.createElement("canvas"); off.width = 1024; off.height = 512; const o = off.getContext("2d")!;
+  o.filter = "blur(6px)";
+  o.fillStyle = "rgba(34,49,78,0.9)"; o.fillRect(120, 40, 784, 360);        // the navy back panel
+  o.fillStyle = "rgba(226,214,186,0.62)"; o.fillRect(150, 60, 724, 290);   // the cream face
+  o.fillStyle = "rgba(190,52,40,0.6)"; o.fillRect(220, 90, 520, 44);       // VEGETABLE OIL (red smear, near the far side: flipped)
+  o.fillStyle = "rgba(40,52,96,0.62)"; o.fillRect(250, 190, 520, 92);      // ALLIED (navy smear)
+  o.fillStyle = "rgba(200,40,36,0.72)"; o.fillRect(600, 64, 300, 110);     // BANKRUPT block (right)
+  o.fillStyle = "rgba(255,240,220,0.5)"; o.fillRect(630, 98, 240, 40);
+  o.filter = "blur(18px)"; o.fillStyle = "rgba(255,170,70,0.75)"; for (const x of [300, 724]) { o.beginPath(); o.arc(x, 440, 46, 0, TAU); o.fill(); }
+  for (let y = 0; y < 512; y += 6) { const sh = 14 * Math.sin(y * 0.11) + 8 * Math.sin(y * 0.29 + 1.3) + (r() - 0.5) * 10, a = 0.55 + 0.45 * Math.abs(Math.sin(y * 0.07)); g.globalAlpha = a; g.drawImage(off, 0, y, 1024, 6, sh, y, 1024, 6); }
+  g.globalAlpha = 1;
+  // dark ripple breaks + a few bright wind streaks
+  for (let i = 0; i < 40; i++) { const y = r() * 512; g.fillStyle = `rgba(10,16,40,${0.25 + 0.3 * r()})`; g.fillRect(0, y, 1024, 2 + 3 * r()); }
+  for (let i = 0; i < 26; i++) { const y = r() * 512, x = r() * 1024; g.fillStyle = `rgba(210,226,255,${0.15 + 0.2 * r()})`; g.fillRect(x, y, 40 + 120 * r(), 2); }
+  g.restore();
+  g.globalCompositeOperation = "destination-in"; const m = g.createRadialGradient(512, 256, 300, 512, 256, 520); m.addColorStop(0, "rgba(0,0,0,1)"); m.addColorStop(1, "rgba(0,0,0,0.4)"); g.fillStyle = m; g.fillRect(0, 0, 1024, 512);
+  g.globalCompositeOperation = "source-over";
+});
+/** a folded newspaper hung on a peg (opaque): masthead bar, a photo block, columns, the fold */
+export const foldedPaperTex = () => ptex("sxFoldedPaper", 128, 224, (g, r) => {
+  g.fillStyle = "#ece6d4"; g.fillRect(0, 0, 128, 224);
+  g.fillStyle = "#1a1a1a"; g.fillRect(8, 10, 112, 16); g.fillStyle = "rgba(30,30,30,0.85)"; g.fillRect(8, 32, 112, 8);
+  g.fillStyle = "rgba(60,60,60,0.55)"; g.fillRect(8, 48, 52, 60);
+  g.fillStyle = "rgba(30,30,30,0.5)"; for (let c = 0; c < 2; c++) for (let k = 0; k < 14; k++) { const x = c ? 66 : 8, y = (c ? 48 : 116) + k * 7; if (y < 214) g.fillRect(x, y, 52 * (0.6 + 0.4 * r()), 3); }
+  g.fillStyle = "rgba(120,110,90,0.25)"; g.fillRect(0, 110, 128, 3);
 });

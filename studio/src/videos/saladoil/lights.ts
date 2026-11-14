@@ -72,7 +72,11 @@ const ROOM: LightPreset = {
 export const KEY_BANK: C3 = [-0.45, 0.75, 0.48];     // soft daylight from camera-left-front: stacks / stamp / easel shadows fall back-right
 export const KEY_TRADING: C3 = [0.78, 0.5, 0.38];    // the tall east windows (stormy daylight, screen right)
 export const KEY_CUTAWAY: C3 = [-0.35, 0.75, 0.56];  // flat diagram key from the front-top-left
-export const KEY_KITCHEN: C3 = [0.79, 0.57, 0.2];    // fix r1: low golden sun (~35 deg) through the side window, screen right: the bottle's shadow falls LEFT across the cloth (walls still lit)
+/** fix r3 (A3 P2 shot 11: soft and even, no directional sun): a low warm sun at azimuth ~+140 deg from the shot-11 lens
+ *  axis (camera-right, in front of the table) and ~30 deg up, so the bottle, bowl and shakers throw LONG shadows back-left
+ *  across the visible gingham (the lens is only ~1 m from the bottle: a shadow toward the lens would leave the frame) and
+ *  the back wall stays sun-lit yellow */
+export const KEY_KITCHEN: C3 = [0.7, 0.5, 0.52];
 export const KEY_PUMP: C3 = [0.1, 0.95, 0.3];        // the two work lamps over the pipes (shade.ts ZONE 0 / 1 limit it to their spots)
 export const KEY_OFFICE: C3 = [-0.6, 0.55, 0.58];    // a side window at camera-left-front; the back window is a warm pool + shafts
 /** fix r1 (A1 P2 shot 14): the overcast street had NO directional component (its pinned sun sat behind the facade, so
@@ -85,7 +89,9 @@ export const LIGHTS: Record<LightName, LightPreset> = {
   // long violet shadows toward the lens), a warm peach key, violet shade, a warm rim on the rails and the tank edge.
   // fix r2 (A2 P3 shot 1: the criss-cross rail shadows read cold cobalt #564F95 against the dawn gold): the shade moves
   // toward PLUM-violet (#5F4757..#6A4E7E class: more red, less blue) and lifts a little (rail-shadow contrast ~-15 %)
-  dawn_gold: { ...GOLD, shade: [0.27, 0.2, 0.34], lift: [0.052, 0.042, 0.1] },
+  // fix r3 (A3 P3 shot 1: the lower third still read cold cobalt #564F95): the shade a step further to plum-violet
+  // (#6A4E7E class: R up, B down) and the lift less blue, so the long rail shadows stay but stop reading cobalt
+  dawn_gold: { ...GOLD, shade: [0.3, 0.215, 0.33], lift: [0.062, 0.044, 0.084] },
   // bright noon: high side-back sun, crisp blue-violet ground shade, cream tanks with blue shade sides.
   // fix r2 (carryover / A2 P3 shots 2 + 4: noon measured L* 67-72, chroma 23.6, b* +1): exposure -5 %, the tank-wall
   // shade ~28 % darker toward #6E73B8, less lift, so noon lands at L* 58-64 with chroma >= 27
@@ -95,9 +101,13 @@ export const LIGHTS: Record<LightName, LightPreset> = {
   // fix r2 (A2 P2 shot 7: one beige-sepia wash, the turn unread): the key warmer (#FFB066 class) and ~0.12 EV lower so
   // the gold oil pops by contrast; a deeper saturated violet shade (#5A4A9A class); el 20 (the noon -> late blend drops
   // the sun ~38 deg with the fast-out ease, so the rail shadows stretch)
-  late: { ...DAY, az: 32, el: 20, lit: [1.64, 1.12, 0.62], shade: [0.27, 0.22, 0.6], lift: [0.01, 0.006, 0.03], term: 0.12,
-    charTint: [1.0, 0.89, 0.74], sideTint: [0.84, 0.8, 0.96], fog: "#ecc9a8", fogNear: 70, fogFar: 820, sunCol: "#ffc684", blob: [0.56, 0.5, 0.72],
-    rim: [1.8, 1.0, 0.42], woodShade: [0.42, 0.3, 0.42], woodLift: [0.02, 0.016, 0.045], woodK: 0.85 },
+  // fix r3 (A3 P2 shot 7: a saturated purple crayon lattice of rail shadows over a muddy khaki roof, the frame drifting to
+  // mauve 131/86/90): the key moves to honey #FFB866 at ~+20 % (the lit roof lands ~#E6B47E), the shade is ~40 % less
+  // dark and bluer-violet (#6A5490 class instead of #5B366C), a touch more lift; el 20 -> 25 so the rail shadows stop
+  // short of the hatch rim (fewer crossings over the hatch), still long and low. Target frame mean ~R150 G110 B95
+  late: { ...DAY, az: 32, el: 27, lit: [1.95, 1.4, 0.78], shade: [0.43, 0.39, 0.76], lift: [0.03, 0.024, 0.05], term: 0.16,
+    charTint: [1.0, 0.9, 0.76], sideTint: [0.86, 0.82, 0.96], fog: "#ecc9a8", fogNear: 70, fogFar: 820, sunCol: "#ffb866", blob: [0.62, 0.56, 0.76],
+    rim: [1.8, 1.0, 0.42], woodShade: [0.46, 0.34, 0.44], woodLift: [0.024, 0.018, 0.045], woodK: 0.85 },
   // the rain. fix r1 (A1 P1 shot 9: washed grey daylight, L* 50 C* 13): a saturated blue storm (bible #343FAA / #3852CE
   // family), darker key, deep blue shade, a cool lift; WORLD-EXT darkens the wet albedo. Target L* 40-46, C* 24-30, b* -15..-22
   // fix r2 (carryover, WORLD-EXT's numbers for a saturated blue storm on the real set): a brighter cool key over a
@@ -107,18 +117,22 @@ export const LIGHTS: Record<LightName, LightPreset> = {
     fog: "#6f80a8", fogNear: 22, fogFar: 330, sunCol: "#c8d2ea", sunI: 1.0, sky: "#7a86a6", ground: "#3a4058", rim: [0, 0, 0], woodK: 0.4 },
   // warm wood-panelled bank office. fix r1 (A1 P2 shot 5: one flat orange wash, chroma 42 / b* +29): a less orange key,
   // plum-brown shade, a cool window counter-light from screen left + the green lamp pool (sets_int.ts pools)
+  // fix r3 (A3 P3 #26: a* +18 one red-orange note): a touch less red in the key and the shade (target a* +12..+14)
   // fix r2 (A2 P2 shots 3 / 5: still one orange note, b* +24, chroma 35-37; target b* +17..+20, chroma ~32): a cooler
   // key (blue +9 %), the shade pulled to PLUM (#3A2030 class), wood shade plum-brown; the cool window light and the
   // venetian-blind stripes are sets_int.ts pools / decals
-  bank_warm: { ...ROOM, el: 48, key: KEY_BANK, lit: [1.38, 1.17, 0.98], shade: [0.41, 0.28, 0.42], lift: [0.026, 0.014, 0.034], lambert: 0.34, sideK: 0.86, term: 0.16,
+  bank_warm: { ...ROOM, el: 48, key: KEY_BANK, lit: [1.34, 1.19, 1.0], shade: [0.4, 0.3, 0.42], lift: [0.026, 0.014, 0.034], lambert: 0.34, sideK: 0.86, term: 0.16,
     charTint: [1.0, 0.96, 0.91], sideTint: [0.9, 0.87, 0.97], blob: [0.54, 0.4, 0.5], woodShade: [0.47, 0.31, 0.38], woodLift: [0.026, 0.012, 0.02], woodK: 0.7 },
   // the trading floor. fix r1 (A1 P2 shot 8: neutral grey, ceiling #717171): cool stormy daylight key, LAVENDER shade
   // (#5E5A78 class) on green-grey walls, the warm globe pools + cool window shafts in sets_int.ts
   // fix r2 (A2 P2 shot 8: a flat teal-grey haze; white shirts lavender, Tino's grey suit blue): a whiter key from the
   // tall windows (#B8C8D8 class, 30 deg, screen right), the card tint ~30 % less cool (shirts >= 85 % luminance, the
   // grey suit neutral), deeper lavender shade for contrast; the warm pendant POOLS on desks + floor are sets_int.ts
-  trading: { ...ROOM, el: 30, key: KEY_TRADING, lit: [1.2, 1.23, 1.26], shade: [0.36, 0.34, 0.54], lift: [0.014, 0.012, 0.032], lambert: 0.38, term: 0.2, charTint: [1.0, 0.99, 1.0],
-    sideTint: [0.92, 0.91, 0.97], blob: [0.44, 0.42, 0.6], fog: "#7e8a90", woodShade: [0.46, 0.34, 0.38], woodLift: [0.02, 0.012, 0.018], woodK: 0.6 },
+  // fix r3 (A3 P2 shot 8: a flat dark teal monochrome, mean luma ~93, desks near-black): +0.3 EV on key AND shade, a
+  // slightly warmer-neutral key so the green walls stop reading teal, a lavender (not teal) shade with more lift; the
+  // warm pendant POOLS are ~2x stronger in sets_int.ts and the floor tile is desaturated toward #6E7E70 there
+  trading: { ...ROOM, el: 30, key: KEY_TRADING, lit: [1.68, 1.64, 1.6], shade: [0.53, 0.48, 0.7], lift: [0.03, 0.026, 0.048], lambert: 0.36, term: 0.2, charTint: [1.0, 0.99, 1.0],
+    sideTint: [0.94, 0.93, 0.97], blob: [0.5, 0.47, 0.62], fog: "#8a9090", woodShade: [0.56, 0.42, 0.44], woodLift: [0.03, 0.02, 0.024], woodK: 0.6 },
   // the cutaway diagram: cool flat light on the shell / floor (the water and oil are self-lit shaders), soft navy shade
   // fix r2 (A2 P2 #22 shot 12: the hatch hold washed + the collar shadow faint): a slightly warm key from the upper left,
   // a ~50 % lavender shade so the collar / lid / sign posts cast readable shadows on the cream roof
@@ -129,8 +143,10 @@ export const LIGHTS: Record<LightName, LightPreset> = {
   // fix r2 (A2: the kitchen ran too hot, b* +37 / chroma 48; A2 P2: no readable sun direction): a stronger, LESS orange
   // key (b 0.98 -> 1.16) against a darker violet-plum shade, so the window side reads as a sun and the shadow side cools;
   // the sun patch on the cloth + the warm bounce round the window are sets_int.ts pools
-  kitchen: { ...ROOM, el: 35, key: KEY_KITCHEN, lit: [1.84, 1.64, 1.3], shade: [0.48, 0.42, 0.66], lift: [0.026, 0.02, 0.036], lambert: 0.34, term: 0.12, charTint: [1.0, 0.96, 0.9],
-    blob: [0.56, 0.44, 0.6], woodShade: [0.56, 0.42, 0.44], woodK: 0.5 },
+  // fix r3 (A3 P2 shot 11): a warm #FFD8A0 key +25 % from the back window (KEY_KITCHEN), the fill / shade -15 % (a real
+  // key / shade split on the cloth), violet-plum shade kept; b* stays in the +17..+21 band (sat 0.94)
+  kitchen: { ...ROOM, el: 30, key: KEY_KITCHEN, lit: [1.96, 1.73, 1.4], shade: [0.42, 0.36, 0.57], lift: [0.024, 0.018, 0.034], lambert: 0.3, term: 0.12, charTint: [1.0, 0.96, 0.9],
+    blob: [0.5, 0.4, 0.56], woodShade: [0.52, 0.4, 0.42], woodK: 0.5 },
   // the pump room at night. fix r1 (A1 P1 shot 13: read as dusk, lavender walls L* 65-75): a much darker ROYAL-BLUE
   // shade (#2E3A8E-#45509E on screen) and almost no lift; the warmth lives ONLY in the lamp spots (shade.ts ZONE) and in
   // tight, strong amber pools (sets_int.ts), so the darks stay blue and the pools read warm (no lavender mix)
@@ -149,14 +165,19 @@ export const LIGHTS: Record<LightName, LightPreset> = {
   // fix r2 (A2 P2 shot 15: one orange note, b* +31 vs the bible's +17-21 / A2 colour: office runs hot): a less orange
   // key, the shade pushed toward PLUM ([0.52, 0.44, 0.5]) so the shadows carry violet; the mullion light patch + the sun
   // shaft are sets_int.ts shapes
-  office_sun: { ...ROOM, el: 33, key: KEY_OFFICE, lit: [1.56, 1.4, 1.18], shade: [0.52, 0.44, 0.5], lift: [0.03, 0.024, 0.03], lambert: 0.32, term: 0.15, charTint: [1.0, 0.95, 0.88],
-    blob: [0.6, 0.5, 0.54], woodShade: [0.56, 0.42, 0.44], woodK: 0.55 },
+  // fix r3 (A3 P2 shot 15: even warm ambient, one orange note b* +22, C* 28): a less orange key, the shade pushed to
+  // PLUM ([0.5, 0.42, 0.5]) with a little less lift (p5 L* <= 18), world saturation up so C* stays >= 32 while b*
+  // drops to ~+16; the room's light SHAPES (sun shaft, window-grid patches, blind stripes on the chair) are sets_int.ts
+  office_sun: { ...ROOM, el: 33, key: KEY_OFFICE, lit: [1.48, 1.42, 1.36], shade: [0.48, 0.42, 0.52], lift: [0.026, 0.02, 0.03], lambert: 0.34, term: 0.15, charTint: [1.0, 0.95, 0.89],
+    blob: [0.56, 0.46, 0.54], woodShade: [0.54, 0.4, 0.44], woodK: 0.55 },
   // ... warmed and brightened on "Warren Buffett" (the music swell). fix r1 (A1 P3: +7 % only): a clearly warmer key
   // (toward #FFD9A0) and warmer shade; sets_int.ts adds the sun shaft + motes as a SHAPE
   // fix r2 (A2 P1 shot 15: the swell turned into a milky wash, L* 56 -> 69, p5 L* 21 -> 26): NO extra lift (the same as
   // office_sun), a gentler key, a less hot card tint; the warmth shows as LIGHT (the shaft, the window rim, motes)
-  office_glow: { ...ROOM, el: 33, key: KEY_OFFICE, lit: [1.62, 1.38, 1.04], shade: [0.54, 0.45, 0.5], lift: [0.03, 0.024, 0.026], lambert: 0.32, term: 0.15, charTint: [1.0, 0.93, 0.82],
-    blob: [0.6, 0.5, 0.52], woodShade: [0.6, 0.45, 0.44], woodK: 0.55 },
+  // fix r3 (measured on preview3: the glow landed at b* +28, past the +17..+21 band): a less orange key (the warmth
+  // shows as the brighter shaft / window light), the shade kept plum, no extra lift
+  office_glow: { ...ROOM, el: 33, key: KEY_OFFICE, lit: [1.58, 1.46, 1.26], shade: [0.5, 0.43, 0.52], lift: [0.026, 0.02, 0.028], lambert: 0.34, term: 0.15, charTint: [1.0, 0.94, 0.85],
+    blob: [0.58, 0.47, 0.52], woodShade: [0.58, 0.43, 0.44], woodK: 0.55 },
 };
 
 const CLOUD_DAY = { lit: "#fbf8f1", mid: "#e1e5f3", shade: "#bcc4ea" };     // lavender undersides
@@ -175,7 +196,8 @@ export const LOOK: Record<LightName, WorldLook> = {
   // fix r2 (carryover, WORLD-EXT's storm numbers): sky #8f9cb8 (horizon) -> #45557d, sat 1.05
   storm: { sky: { c: ["#8f9cb8", "#7f8eae", "#6a7aa0", "#56678f", "#45557d"], e: [0, 4, 10, 20, 40] }, cloud: { lit: "#8f9bb8", mid: "#5a6688", shade: "#333d5e" }, bounce: [0, 0, 0.012], sat: 1.05 },
   bank_warm: { sky: SKY_NOON, cloud: CLOUD_DAY, bounce: [0.03, 0.02, 0.016], sat: 0.95 },
-  trading: { sky: { c: ["#a7b0bf", "#98a2b3", "#858fa2", "#6f7a8e", "#5a6479"], e: [0, 4, 10, 20, 40] }, cloud: { lit: "#b9c0cc", mid: "#8e97a8", shade: "#5f687c" }, bounce: [0.01, 0.01, 0.02], sat: 1.08 },
+  // fix r3 (A3 P2 shot 8: teal monochrome): world saturation 1.08 -> 0.98, a warm-neutral bounce
+  trading: { sky: { c: ["#a7b0bf", "#98a2b3", "#858fa2", "#6f7a8e", "#5a6479"], e: [0, 4, 10, 20, 40] }, cloud: { lit: "#b9c0cc", mid: "#8e97a8", shade: "#5f687c" }, bounce: [0.03, 0.024, 0.02], sat: 0.98 },
   // the diagram backdrop: deep water blue (#153A81 / #224974 family)
   cutaway: { sky: { c: ["#2c4f86", "#2a4a80", "#244274", "#1d3966", "#163058"], e: [0, 4, 10, 20, 40] }, cloud: CLOUD_DAY, bounce: [0, 0, 0], sat: 1.04 },
   // fix r2 (A2: kitchen b* +37, chroma 48): world saturation 1.1 -> 1.0, a cooler bounce
@@ -184,8 +206,9 @@ export const LOOK: Record<LightName, WorldLook> = {
   // fix r2 (A2 P2 shot 14: C* ~22, flat milky): sat 1.0 -> 1.08 (the brick toward C* ~35)
   street_grey: { sky: { c: ["#c4c9d1", "#b4bac4", "#a2a9b6", "#8f98a8", "#7c8698"], e: [0, 4, 10, 20, 40] }, cloud: { lit: "#d6dae0", mid: "#b2b8c2", shade: "#8a92a2" }, bounce: [0.01, 0.01, 0.02], sat: 1.08 },
   // fix r2 (A2: office b* +32): sat 1.08 / 1.12 -> 1.0 / 1.04, a cooler bounce
-  office_sun: { sky: SKY_NOON, cloud: CLOUD_DAY, bounce: [0.03, 0.03, 0.025], sat: 0.95 },
-  office_glow: { sky: SKY_NOON, cloud: CLOUD_DAY, bounce: [0.04, 0.035, 0.022], sat: 0.98 },
+  // fix r3: sat up (C* >= 32 with a cooler key), a neutral-cool bounce
+  office_sun: { sky: SKY_NOON, cloud: CLOUD_DAY, bounce: [0.028, 0.03, 0.032], sat: 1.04 },
+  office_glow: { sky: SKY_NOON, cloud: CLOUD_DAY, bounce: [0.036, 0.034, 0.028], sat: 1.04 },
 };
 
 // ---------------- blending (in-shot relights) ----------------

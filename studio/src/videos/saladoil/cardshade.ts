@@ -111,16 +111,35 @@ if ( uModeK > 0.0 ) {
     vec2 dirM = normalize( duvM + vec2( 1e-9 ) );
     float solidM = step( 0.5, texture2D( map, vMapUv - dirM * vec2( 0.027, 0.016 ) ).a );
     outgoingLight = mix( outgoingLight, uRimCol2, edgeM * solidM * uModeK * 0.92 );
+    // fix r3 (office window, shot 15): a warm gold rim along every UPWARD contour (head, hair, shoulders) from the bright
+    // window behind the figure, ~3.5 px at 1080 (the face is not darkened, unlike the sunset backlight)
+    if ( uTopRim > 0.0 ) {
+      vec2 dup2 = 3.6 * uPx * dFdy( vMapUv );
+      float e3 = step( texture2D( map, vMapUv + dup2 ).a, 0.5 ) * step( 0.5, texture2D( map, vMapUv - normalize( dup2 + vec2( 1e-9 ) ) * vec2( 0.0, 0.016 ) ).a );
+      outgoingLight = mix( outgoingLight, uRimCol2 * 1.08, e3 * uTopRim );
+    }
   }
   #endif
 }
 #endif
 `;
 
+/** fix r3 (A3 P2, shot 9): characters never go ghost-like in the haze: the fog mix on a card is capped at 0.3 (alpha
+ *  stays 1: the cards are alpha-tested), so distant figures tint toward the horizon colour instead of fading out */
+const FOG_CARD = /* glsl */ `
+#ifdef USE_FOG
+  #ifdef FOG_EXP2
+    float fogFactor = 1.0 - exp( - fogDensity * fogDensity * vFogDepth * vFogDepth );
+  #else
+    float fogFactor = smoothstep( fogNear, fogFar, vFogDepth );
+  #endif
+  gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, min( fogFactor, 0.3 ) );
+#endif
+`;
 const DECL = "#include <common>\nuniform vec3 uCharTint; uniform float uCharShade; uniform float uGrad; uniform float uBodyGrad; uniform vec3 uSideTint;"
   + " uniform float uGradK; uniform float uGradKB; uniform float uTintK; uniform float uTintWarm; uniform float uFarK; uniform float uNorm; uniform float uGain; uniform float uPx; uniform float uRimK;"
   + " uniform float uBack; uniform float uDuo; uniform float uFlat;"
-  + " uniform float uModeK; uniform vec3 uFaceMul; uniform vec3 uBodyMul; uniform vec3 uFarMul; uniform float uFarW; uniform vec3 uRimCol2; uniform float uRimW2; uniform float uDarkK;";
+  + " uniform float uModeK; uniform vec3 uFaceMul; uniform vec3 uBodyMul; uniform vec3 uFarMul; uniform float uFarW; uniform vec3 uRimCol2; uniform float uRimW2; uniform float uDarkK; uniform float uTopRim;";
 /** card-only constants (not per light): gradient share, tint share (day / warm light), lavender far-side extra,
  *  overall gain (calibrated: faces ~.93 V) */
 export const CARD_K = { uGradK: { value: GRAD_K }, uGradKB: { value: GRAD_KB }, uTintK: { value: TINT_K }, uTintWarm: { value: 0.9 }, uFarK: { value: 1.0 },
@@ -130,10 +149,10 @@ export const CARD_K = { uGradK: { value: GRAD_K }, uGradKB: { value: GRAD_KB }, 
 /** per-card light mode uniforms (each Actor owns its material): uBack = backlit low sun, uDuo = lamp duotone.
  *  cast.ts sets them per card from its draw key, so two dissolving shots never share one value */
 type U1 = { value: number }; type U3 = { value: THREE.Vector3 };
-export type CardU = { uBack: U1; uDuo: U1; uFlat: U1; uModeK: U1; uFaceMul: U3; uBodyMul: U3; uFarMul: U3; uFarW: U1; uRimCol2: U3; uRimW2: U1; uDarkK: U1 };
+export type CardU = { uBack: U1; uDuo: U1; uFlat: U1; uModeK: U1; uFaceMul: U3; uBodyMul: U3; uFarMul: U3; uFarW: U1; uRimCol2: U3; uRimW2: U1; uDarkK: U1; uTopRim: U1 };
 const v3 = (x: number, y: number, z: number) => ({ value: new THREE.Vector3(x, y, z) });
 export const cardU = (m: THREE.Material): CardU => (m.userData.cardU ??= { uBack: { value: 0 }, uDuo: { value: 0 }, uFlat: { value: 0 },
-  uModeK: { value: 0 }, uFaceMul: v3(1, 1, 1), uBodyMul: v3(1, 1, 1), uFarMul: v3(1, 1, 1), uFarW: { value: 0.45 }, uRimCol2: v3(1, 1, 1), uRimW2: { value: 3 }, uDarkK: { value: 1 } }) as CardU;
+  uModeK: { value: 0 }, uFaceMul: v3(1, 1, 1), uBodyMul: v3(1, 1, 1), uFarMul: v3(1, 1, 1), uFarW: { value: 0.45 }, uRimCol2: v3(1, 1, 1), uRimW2: { value: 3 }, uDarkK: { value: 1 }, uTopRim: { value: 0 } }) as CardU;
 /** sRGB hex -> linear rgb */
 const lin = (h: string): [number, number, number] => {
   const n = parseInt(h.slice(1), 16), f = (v: number) => { const s = v / 255; return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
@@ -142,7 +161,7 @@ const lin = (h: string): [number, number, number] => {
 /** the screen colour a key-side face should read as -> the multiply on the pale face fill (#F8F3EE), share k */
 const faceTo = (h: string, k: number): [number, number, number] => { const a = lin(h), s = lin("#f8f3ee"); return [0, 1, 2].map((i) => 1 + (Math.min(1.05, a[i] / s[i]) - 1) * k) as [number, number, number]; };
 /** A4 per-light card modes (the 4th LX digit): 1 morning, 2 dusk, 3 sunset (backlit), 4 blueprint */
-type Mode = { face: [number, number, number]; body: [number, number, number]; far: [number, number, number]; farW: number; rim: [number, number, number]; rimW: number; darkK?: number };
+type Mode = { face: [number, number, number]; body: [number, number, number]; far: [number, number, number]; farW: number; rim: [number, number, number]; rimW: number; darkK?: number; top?: number };
 const MODES: Record<number, Mode> = {
   1: { face: [1.0, 0.995, 0.985], body: [1.0, 0.99, 0.97], far: [0.9, 0.88, 1.03], farW: 0.42, rim: lin("#ffc46e"), rimW: 5.2 }, // (measured: the morning grade already warms the face to ~#FBE4B5)
   // A5 P3 (dusk far side measured #8E7BD2, ~45 % darker and strongly violet): the base far-side darkening x0.5 and a
@@ -154,12 +173,16 @@ const MODES: Record<number, Mode> = {
   4: { face: [1, 1, 1], body: [1, 1, 1], far: [0.86, 0.91, 1.0], farW: 0.4, rim: lin("#bff3ff"), rimW: 2.6 },
   // saladoil storm (shot 9): rain light, no sun: faces a touch cool and flat, a soft blue-grey far side, a thin cool rim
   5: { face: [0.93, 0.95, 1.0], body: [0.9, 0.92, 0.98], far: [0.84, 0.87, 0.98], farW: 0.5, rim: lin("#dbe6f4"), rimW: 2.2, darkK: 0.6 },
+  // fix r3: the investor at his desk with the sunny window BEHIND him (office_sun / office_glow): faces unchanged, a soft
+  // warm far side, a gold key-side rim + the gold top-contour window rim (head, hair, shoulders)
+  6: { face: [1.0, 0.99, 0.97], body: [1.0, 0.98, 0.95], far: [0.93, 0.9, 1.0], farW: 0.4, rim: lin("#ffc46e"), rimW: 3.6, top: 0.95 },
 };
 /** set a card's per-light mode uniforms (0 = off) */
 export const setCardMode = (U: CardU, mode: number) => {
   const M = MODES[mode];
   U.uModeK.value = M ? 1 : 0;
   U.uDarkK.value = M?.darkK ?? 1;
+  U.uTopRim.value = M?.top ?? 0;
   if (!M) return;
   U.uFaceMul.value.set(...M.face); U.uBodyMul.value.set(...M.body); U.uFarMul.value.set(...M.far); U.uFarW.value = M.farW;
   U.uRimCol2.value.set(...M.rim); U.uRimW2.value = M.rimW;
@@ -172,9 +195,10 @@ export function cardShade(m: THREE.MeshLambertMaterial) {
     sh.fragmentShader = sh.fragmentShader
       .replace("#include <common>", DECL)
       .replace("#include <lights_fragment_begin>", "float sunVis = 1.0;\n" + LFB)
-      .replace("vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + totalEmissiveRadiance;", CARD);
+      .replace("vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + totalEmissiveRadiance;", CARD)
+      .replace("#include <fog_fragment>", FOG_CARD);
   };
-  m.customProgramCacheKey = () => "card15";
+  m.customProgramCacheKey = () => "card16";
   return m;
 }
 

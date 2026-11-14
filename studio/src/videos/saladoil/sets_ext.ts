@@ -84,6 +84,16 @@ class Helix extends THREE.Curve<THREE.Vector3> {
   constructor(private cx: number, private cz: number, private R: number, private a0: number, private a1: number, private y0: number, private y1: number) { super(); }
   getPoint(t: number, target = new THREE.Vector3()) { const a = this.a0 + (this.a1 - this.a0) * t; return target.set(this.cx + this.R * Math.sin(a), this.y0 + (this.y1 - this.y0) * t, this.cz + this.R * Math.cos(a)); }
 }
+/** fix r3 (audit A3 P3 shot 9: no barbed wire read on the fence): a concertina coil of razor wire along x (overlapping
+ *  loops, radius r, one loop per `pitch` m) at height y, depth z */
+class CoilX extends THREE.Curve<THREE.Vector3> {
+  constructor(private x0: number, private x1: number, private y: number, private z: number, private r: number, private turns: number) { super(); }
+  getPoint(t: number, target = new THREE.Vector3()) { const a = TAU * this.turns * t; return target.set(this.x0 + (this.x1 - this.x0) * t + 0.4 * this.r * Math.sin(a), this.y + this.r * Math.cos(a), this.z + this.r * Math.sin(a)); }
+}
+const coil = (b: Batch, mat: THREE.Material, x0: number, x1: number, y: number, z: number, r: number, pitch: number) => {
+  const turns = Math.max(1, Math.round(Math.abs(x1 - x0) / pitch));
+  b.add(new THREE.TubeGeometry(new CoilX(x0, x1, y, z, r, turns), turns * 14, 0.007, 3, false), mat);
+};
 /** a pipe run through points (elbow balls, flanges every ~5 m, little ground stands under low horizontal runs) */
 const pipeRun = (b: Batch, mat: THREE.Material, pts: V3[], r: number, stands = true) => {
   const flange = col("flange", "#6c6a68"), stand = col("pipeStand", "#5d5a58");
@@ -140,7 +150,7 @@ const TOP_TINT: Partial<Record<LightName, [number, number, number]>> ={ dawn_gol
 const OIL_VERT = /* glsl */ `uniform float uR; varying vec2 vP; void main(){ vP = position.xz / uR; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;
 const OIL_FRAG = /* glsl */ `
 uniform float uPh, uRipK, uRing, uRingK, uOpen, uSwell, uT, uDrift, uSpark, uBub;
-uniform float uFlash, uFilm, uPop, uCloud, uDrip, uDripK;
+uniform float uFlash, uFilm, uPop, uCloud, uDrip, uDripK, uFat;
 uniform vec3 uGold, uDeep, uSky, uSun, uWater, uWaterE;
 uniform vec2 uRip, uGlint;
 varying vec2 vP;
@@ -198,6 +208,12 @@ void main(){
   if (uPop > -0.5) { for (int k = 0; k < 3; k++) { float fk = float(k), tb = uPop - fk * 4.0;
       if (tb > 0.0 && tb < 9.0) { vec2 bc = uRip + vec2(0.14 * sin(fk * 2.1 + 0.4), 0.12 * cos(fk * 1.7 + 0.9)); float br = 0.012 + 0.03 * tb / 9.0, bd = length(p - bc);
         c += vec3(1.0, 0.92, 0.7) * (exp(-pow((bd - br) * 160.0, 2.0)) * 0.8 + (1.0 - smoothstep(br * 0.2, br * 0.5, bd)) * 0.25) * (1.0 - smoothstep(7.0, 9.0, tb)); } } }
+  // fix r3 (audit A3 ADD shot 7): one FAT bubble swells up through the gold toward the reflection's chin from 1226 and is
+  // gone as the 1238 pop ring starts (the pop is anticipated)
+  if (uFat > 0.0 && uFat < 12.0) { float tb = uFat / 12.0; vec2 bc = uRip + vec2(-0.03, 0.08) * (1.0 - tb); float br = 0.022 + 0.06 * tb, bd = length(p - bc);
+    float body = 1.0 - smoothstep(br * 0.88, br, bd), rimL = exp(-pow((bd - br) * 120.0, 2.0));
+    c = mix(c, c * 0.8 + vec3(1.0, 0.9, 0.6) * 0.3, body * 0.55); c += vec3(1.0, 0.95, 0.78) * rimL * 0.8;
+    vec2 hl = p - bc + vec2(0.35, 0.35) * br; c += vec3(1.0) * exp(-dot(hl, hl) / (br * br * 0.05)) * 0.9 * body; }
   // ripple crests: thin light lines, troughs a touch darker (toon)
   float crest = smoothstep(0.66, 0.9, sin(ph)) * fall + smoothstep(0.3, 0.8, ring);
   c = mix(c, uSky * 0.85 + uGold * 0.45, clamp(crest, 0.0, 1.0) * 0.85);
@@ -296,7 +312,7 @@ const spiralStair = (b: Batch, cx: number, cz: number, r: number, s: StairDef, d
 };
 /** one storage tank (wall, foundation, wind girder, top angle, roof, rim rail with a gap at the stair top, the stair, a
  *  stencilled number, and at detail >= 1 a manway, a base nozzle + valve and a roof vent) */
-const tank = (b: Batch, O: V3, t: TankDef) => {
+const tank = (b: Batch, O: V3, t: TankDef, sb?: Batch) => {
   const cx = O[0] + t.c[0], cz = O[2] + t.c[2], { r, h } = t;
   const shell = lam(t.mat ?? `sx_shell${t.shell}`, () => ({ map: P.rep(P.tankShellTex(t.shell, [0.55, 0.75, 0.9, 0.65][t.shell % 4], ["#ece3cf", "#e8e0cc", "#efe8d6", "#e4dac4"][t.shell % 4]), 4, 1) }));
   b.add(cyl(r, h, t.detail > 1 ? 128 : t.detail > 0 ? 80 : 56, true), shell, M(cx, 0, cz, hash(t.c[0], t.c[2]) * TAU));
@@ -313,7 +329,7 @@ const tank = (b: Batch, O: V3, t: TankDef) => {
     for (let k = 0; k < np; k++) { const a = (k / np) * TAU; if (t.stair && angDist(a, gapA) < gw * 0.9) continue;
       const [x, z] = pol(cx, cz, Rr, a); box(b, red, x - 0.025, yr, z - 0.025, x + 0.025, yr + 1.03, z + 0.025); }
   }
-  if (t.stair) spiralStair(b, cx, cz, r, t.stair, t.detail);
+  if (t.stair) spiralStair(sb ?? b, cx, cz, r, t.stair, t.detail);  // fix r3: sb = a non-casting batch (no saw-tooth stair shadows)
   if (t.num) {
     const a = t.numA ?? 0.3, w = Math.min(4.2, r * 0.62), hgt = w / 3;
     const g = new THREE.CylinderGeometry(r + 0.015, r + 0.015, hgt, 24, 1, true, a - w / (2 * r), w / r).translate(0, t.numY ?? h * 0.62, 0);
@@ -471,7 +487,9 @@ const SPOUT: V3 = [TF.valve[0] - 0.3, TF.valve[1] - 0.17, TF.valve[2]];
 const NOTICE: V3 = [1.33, 3.2, TF.notice[2]], NOTICE_W = 1.3, NOTICE_H = 0.5, NOTICE_ROT = 0.02;
 /** the farm's foreground storm puddles (set-local x, z, w, d, seed) and the guard hut (inside the fence, left of the gate;
  *  fix r2: 0.35 m nearer the gate, still left of the shot-2 drip's fall line so the drop never falls against its white wall) */
-const STORM_PUDDLES: [number, number, number, number, number][] = [[-0.5, 18.4, 4.8, 2.5, 1], [1.3, 13.7, 2.6, 1.3, 2], [-1.7, 11.0, 2.2, 1.1, 3], [2.1, 21.0, 2.6, 1.2, 4]];
+const STORM_PUDDLES: [number, number, number, number, number][] = [[-0.5, 18.4, 4.8, 2.5, 1], [1.3, 13.7, 2.6, 1.3, 2], [-1.7, 11.0, 2.2, 1.1, 3], [2.1, 21.0, 2.6, 1.2, 4], [1.85, 16.55, 1.1, 0.55, 5]];
+/** fix r3: shot 9's sign-end pour (x, z) and the near puddle that mirrors the lit sign + BANKRUPT (x, z, w, d) */
+const POUR9: [number, number] = [1.76, TF.gate.z + 0.12], REFL9: [number, number, number, number] = [-0.6, 20.55, 1.7, 0.85];
 const HUT: V3 = [-3.6, 0, 14.2];
 /** fix r2 (audit A2 P2 shot 2 / P3 shot 9): the gate leaves swing OUT toward the street as soft foreground framers; their
  *  opening angle (rad from closed) per shot: shot 2 left 58 deg / right 68 deg (both edges of the gate wide, out of the
@@ -512,6 +530,16 @@ const sedan = (b: Batch, m: THREE.Matrix4, key: string, body: string, roofC: str
   for (const s of [-1, 1]) b.add(new THREE.SphereGeometry(0.1, 10, 6).translate(2.64, 0.72, s * 0.7), col("carLamp", "#f6eed6"), m);
   for (const s of [-1, 1]) b.add(boxGeo(V(-2.7, 0.72, s * 0.72 - 0.1), V(-2.62, 0.95, s * 0.72 + 0.1), 0, true), col("carTail", "#d8281e"), m);
   b.add(boxGeo(V(2.66, 0.5, -0.55), V(2.7, 0.72, 0.55), 0, true), col("carGrille", "#b8bcc4"), m);
+  // fix r3 (audit A3 P2 shot 14: from 2.6 m up only a teal box corner showed): the cues that say '1960s sedan' at a crop:
+  // big chrome-bezelled round headlights on the front corners, a rounded chrome bumper wrapping the corners, a chrome
+  // side spear down the flank, a fat whitewall front tyre arch
+  const chrome = col("carChrome2", "#e2e4e8");
+  for (const s of [-1, 1]) { b.add(new THREE.SphereGeometry(0.135, 14, 10).scale(0.6, 1, 1).translate(2.62, 0.74, s * 0.68), col("carLamp", "#f6eed6"), m);
+    b.add(new THREE.TorusGeometry(0.14, 0.03, 6, 18).rotateY(Math.PI / 2).translate(2.64, 0.74, s * 0.68), chrome, m);
+    b.add(new THREE.CapsuleGeometry(0.085, 0.42, 4, 10).rotateZ(Math.PI / 2).translate(2.42, 0.46, s * 0.97), chrome, m);
+    b.add(boxGeo(V(-2.1, 0.69, s * 0.935 - 0.012), V(2.35, 0.725, s * 0.935 + 0.012), 0, true), chrome, m);
+    b.add(new THREE.TorusGeometry(0.44, 0.06, 6, 20, Math.PI).translate(1.62, 0.36, s * 0.9), col("carArch", "#2a3a42"), m); }
+  b.add(new THREE.CapsuleGeometry(0.09, 1.7, 4, 10).rotateX(Math.PI / 2).translate(2.74, 0.46, 0), chrome, m);
 };
 /** lightning (shot 9): flash 1 crosses the 8 -> 9 dissolve (the crack of thunder_8: AUDIO, please set thunder_8 to
  *  SHOTS[8].a - 1), flash 2 is a far sheet flash + a bolt just before the far roll thunder_9 (checked - 8) */
@@ -525,7 +553,9 @@ const flashAt = (f: number) => {
 };
 
 type Gull = { s: THREE.Sprite; i: number };
-type Puff = { s: THREE.Sprite; src: THREE.Vector3; n: number; ph: number; rise: number; drift: number; size: number; set: "tanktop" | "tankfarm" | "street"; alpha: number };
+type Puff = { s: THREE.Sprite; src: THREE.Vector3; n: number; ph: number; rise: number; drift: number; size: number; set: "tanktop" | "tankfarm" | "street"; alpha: number;
+  /** fix r3: only in these shots (all shots of the set when absent); a drift direction of its own (the harbour WIND when absent) */
+  ids?: number[]; dir?: THREE.Vector3 };
 
 export class Exterior {
   private g = new THREE.Group();
@@ -547,6 +577,7 @@ export class Exterior {
   private perch!: THREE.Sprite; private flags: { m: THREE.Mesh; base: Float32Array; storm: number }[] = []; private workers: { s: THREE.Sprite; c: V3; r: number; n: number; ph: number }[] = [];
   private smoke: { s: THREE.Sprite; ship: THREE.Group; off: V3; vx: number; k: number }[] = [];
   // fix r1: tank farm extras (the riser's gauge, the fat drip, its puddle, the storm kit, lightning, the hut window)
+  private dripCrown!: THREE.Sprite; private dripWet!: THREE.Sprite;
   private needle!: THREE.Mesh; private drop!: THREE.Sprite; private bead!: THREE.Sprite; private dropKids: THREE.Sprite[] = []; private dripPuddle!: THREE.Mesh;
   private hutWin!: THREE.MeshBasicMaterial; private stormOnly = new THREE.Group(); private crowns!: THREE.InstancedMesh; private ripples!: THREE.InstancedMesh;
   private curtains: THREE.Mesh[] = []; private cloudBand!: THREE.Mesh; private bolt!: THREE.Sprite; private flash!: THREE.Mesh; private haze!: THREE.Mesh;
@@ -569,6 +600,18 @@ export class Exterior {
   private gulls: Gull[] = []; private puffs: Puff[] = []; private boards: { m: THREE.MeshBasicMaterial; set: string; k: number }[] = [];
   private m4 = new THREE.Matrix4(); private q = new THREE.Quaternion(); private v = new THREE.Vector3(); private sc = new THREE.Vector3(); private c = new THREE.Color();
   private gullC = new Map<number, THREE.Vector3[]>();
+  // fix r3 (audit A3): tank top (the counter's own rail group, the rim rail posts as their own caster group, the shot-4
+  // tape texture + plunk ring + its droplets, the P0 rail-bar shadow, dew glints, the loop logbook page + pencil, shot-4 B
+  // gulls on the fire-bucket stand, the shot-7 fat bubble), tank farm (the SLOW decal, the storm road marks + sign
+  // reflection puddle, the shot-9 stencil, the lamp's wall pool + light cone, tread splashes, the sign-end pour, huddled
+  // gulls, the tanker beacon, the soggy page), street (hanging papers, the kiosk valance)
+  private counterRail = new THREE.Group(); private railPosts = new THREE.Group(); private tape4Tex!: THREE.Texture; private plunkRing!: THREE.Mesh;
+  private railShadow!: THREE.Mesh; private dew: THREE.Sprite[] = []; private logPage = new THREE.Group(); private pencil = new THREE.Group(); private standGulls: THREE.Sprite[] = [];
+  private gullShadow3!: THREE.Mesh; private skyPuddle!: THREE.Mesh;
+  private slow!: THREE.Mesh; private stencil9!: THREE.Mesh; private wallPool!: THREE.Mesh; private lampCone!: THREE.Mesh; private treadSplash: THREE.Sprite[] = [];
+  private signPour!: THREE.Mesh; private signPourSplash: THREE.Sprite[] = []; private huddle: THREE.Sprite[] = []; private beacon!: THREE.MeshBasicMaterial; private beaconHalo!: THREE.Sprite;
+  private soggy!: THREE.Mesh; private reflPuddle!: THREE.Mesh; private reflTex!: THREE.Texture;
+  private drainSwirl!: THREE.Mesh; private streamLand: THREE.Mesh[] = []; private hangPapers: THREE.Mesh[] = []; private kioskVal!: THREE.Mesh; private kioskValBase!: Float32Array;
 
   private board(m: THREE.Mesh, set: string, k = 1) { this.boards.push({ m: m.material as THREE.MeshBasicMaterial, set, k }); m.layers.set(NOINK); return m; }
   private spr(tex: THREE.Texture, parent: THREE.Object3D, colr: THREE.ColorRepresentation = "#ffffff", additive = false, fog = true) {
@@ -648,11 +691,14 @@ export class Exterior {
     }
     // rim rail (posts every ~1 m, top + mid rail, a toe board), open at the ladder top
     {
-      const red = RAIL_RED(), Rr = TK.rail.r, gw = 0.5 / Rr, a = LAD_A + gw, bb = LAD_A + TAU - gw;
-      arcRing(b, red, O[0], O[2], Rr, 0.032, H + TK.rail.h, a, bb, 200); arcRing(b, red, O[0], O[2], Rr, 0.024, H + TK.rail.h * 0.52, a, bb, 200);
-      b.add(new THREE.CylinderGeometry(Rr, Rr, 0.1, 160, 1, true, a, bb - a).translate(0, H + 0.05, 0), lam("sx_toe", () => ({ color: "#c84a26", side: THREE.DoubleSide })), M(O[0], 0, O[2]));
+      const red = RAIL_RED(), Rr = TK.rail.r, gw = 0.5 / Rr, a = LAD_A + gw, bb = LAD_A + TAU - gw, rpb = new Batch();
+      arcRing(rpb, red, O[0], O[2], Rr, 0.032, H + TK.rail.h, a, bb, 200); arcRing(rpb, red, O[0], O[2], Rr, 0.024, H + TK.rail.h * 0.52, a, bb, 200);
+      rpb.add(new THREE.CylinderGeometry(Rr, Rr, 0.1, 160, 1, true, a, bb - a).translate(0, H + 0.05, 0), lam("sx_toe", () => ({ color: "#c84a26", side: THREE.DoubleSide })), M(O[0], 0, O[2]));
+      // fix r3 (audit A3 shot 7: a lattice of long violet rail shadows crossed the lender and the hatch under the low late
+      // sun): the whole rim rail (rings, toe board, posts) is its own group, so shot 7 can drop its shadows
       const np = Math.round((TAU * Rr) / 1.0);
-      for (let k = 0; k < np; k++) { const t = a + ((bb - a) * k) / (np - 1), [x, z] = pol(O[0], O[2], Rr, t); box(b, red, x - 0.028, H, z - 0.028, x + 0.028, H + TK.rail.h + 0.02, z + 0.028); }
+      for (let k = 0; k < np; k++) { const t = a + ((bb - a) * k) / (np - 1), [x, z] = pol(O[0], O[2], Rr, t); box(rpb, red, x - 0.028, H, z - 0.028, x + 0.028, H + TK.rail.h + 0.02, z + 0.028); }
+      buildInk(rpb, this.railPosts, 1, true); T.add(this.railPosts);
       // grab rails at the ladder top: the ladder stiles rise over the rim and bend back to the rail
       for (const s of [-0.23, 0.23]) { const tx = Math.cos(LAD_A) * s, tz = -Math.sin(LAD_A) * s, [x0, z0] = pol(O[0], O[2], R + 0.28, LAD_A), [x1, z1] = pol(O[0], O[2], Rr, LAD_A);
         rod(b, red, V(x0 + tx, H - 0.1, z0 + tz), V(x0 + tx, H + 1.1, z0 + tz), 0.025); rod(b, red, V(x0 + tx, H + 1.1, z0 + tz), V(x1 + tx, H + 1.1, z1 + tz), 0.025); }
@@ -690,7 +736,15 @@ export class Exterior {
       const hy = rim + 0.02, lr = rh + 0.1, LA = 25 * D2R;  // the hinge line faces 115 deg (+x, a little -z)
       const hinge = new THREE.Matrix4().makeTranslation(x, hy, z).multiply(new THREE.Matrix4().makeRotationY(LA)).multiply(new THREE.Matrix4().makeTranslation(rh + 0.075, 0, 0))
         .multiply(new THREE.Matrix4().makeRotationZ(-(Math.PI + 0.25))).multiply(new THREE.Matrix4().makeTranslation(-lr, 0.018, 0));
-      b.add(new THREE.CylinderGeometry(lr, lr, 0.036, 40), col("lid", "#b9ae96"), hinge);
+      // fix r3 (audit A3 P3 shot 7: the lid was the biggest dead area, a plain cream disc): a painted face (a rivet ring every
+      // ~6 cm, a rust bloom, a small stencilled No. 7, an oil drip run toward the hinge), a hinge strap across it and a
+      // padlock hasp at its free edge (static: frame 0 = the last frame)
+      b.add(new THREE.CylinderGeometry(lr, lr, 0.036, 40), texM("lidFace", () => P.lidTex()), hinge);
+      b.add(new THREE.BoxGeometry(lr + 0.02, 0.012, 0.075).translate(lr / 2 + 0.02, -0.024, 0), col("hingeStrap", "#5a5048"), hinge);
+      for (const dz of [-0.022, 0.022]) b.add(new THREE.CylinderGeometry(0.009, 0.009, 0.014, 6).translate(lr * 0.55 + dz * 2, -0.031, dz), col("bolt", "#4a4038"), hinge);
+      b.add(new THREE.BoxGeometry(0.07, 0.012, 0.07).translate(-lr + 0.05, -0.024, 0), col("hingeStrap", "#5a5048"), hinge);
+      b.add(new THREE.TorusGeometry(0.022, 0.006, 4, 10, Math.PI).rotateY(Math.PI / 2).translate(-lr - 0.004, -0.03, 0), col("hingeK", "#5a5048"), hinge);
+      b.add(new THREE.BoxGeometry(0.035, 0.05, 0.06).translate(-lr - 0.03, -0.045, 0), col("padlock", "#c9a24a"), hinge);
       b.add(new THREE.TorusGeometry(lr * 0.78, 0.018, 5, 40).rotateX(Math.PI / 2), col("gasket", "#2e2a2c"), hinge.clone().multiply(new THREE.Matrix4().makeTranslation(0, -0.02, 0)));
       b.add(new THREE.CylinderGeometry(0.09, 0.09, 0.03, 16), col("lidBoss", "#8d826e"), hinge.clone().multiply(new THREE.Matrix4().makeTranslation(0, -0.03, 0)));
       for (const dz of [-0.2, 0.2]) b.add(new THREE.CylinderGeometry(0.032, 0.032, 0.12, 10).rotateX(Math.PI / 2), col("hingeK", "#5a5048"),
@@ -700,9 +754,14 @@ export class Exterior {
       const cc = TK.counter, red = RAIL_RED(), cyw = cc.yaw, ux = Math.cos(cyw), uz = -Math.sin(cyw), nx = Math.sin(cyw), nz = Math.cos(cyw);
       // fix r2 (audit A2 P2 shot 16: broad violet post shadows read as rain streaks at the loop frame): slim 1.8 cm steel
       // posts and bars, so their long dawn shadows land as thin lines (<= ~30 px at P0) joined by the bar's shadow
-      for (const s of [-0.45, 0.45]) { const px = O[0] + cc.c[0] + ux * s - nx * 0.1, pz = O[2] + cc.c[2] + uz * s - nz * 0.1; box(b, red, px - 0.009, H, pz - 0.009, px + 0.009, cc.c[1] + 0.1, pz + 0.009); }
+      // fix r3 (audit A3 P2 shot 16 / frame 0: their long dawn shadows crossed the loop frame as loose violet diagonals; P3
+      // shot 4: the frame read as an orphan goalpost): the counter's posts + bars are their own NON-casting group, shown
+      // with the counter only (shot 1); the loop frame gets a designed rail-bar shadow instead (railShadow)
+      const crb = new Batch();
+      for (const s of [-0.45, 0.45]) { const px = O[0] + cc.c[0] + ux * s - nx * 0.1, pz = O[2] + cc.c[2] + uz * s - nz * 0.1; box(crb, red, px - 0.009, H, pz - 0.009, px + 0.009, cc.c[1] + 0.1, pz + 0.009); }
       { const p0 = V(O[0] + cc.c[0] - ux * 0.45 - nx * 0.1, cc.c[1] - 0.05, O[2] + cc.c[2] - uz * 0.45 - nz * 0.1), p1 = V(O[0] + cc.c[0] + ux * 0.45 - nx * 0.1, cc.c[1] - 0.05, O[2] + cc.c[2] + uz * 0.45 - nz * 0.1);
-        rod(b, red, p0, p1, 0.011); rod(b, red, p0.clone().setY(H + 0.5), p1.clone().setY(H + 0.5), 0.01); }
+        rod(crb, red, p0, p1, 0.011); rod(crb, red, p0.clone().setY(H + 0.5), p1.clone().setY(H + 0.5), 0.01); }
+      buildInk(crb, this.counterRail, 1, false); T.add(this.counterRail);
       const C = this.counter; C.position.set(O[0] + cc.c[0], cc.c[1], O[2] + cc.c[2]); C.rotation.y = cyw; T.add(C);
       const cb = new Batch(), w = cc.w, h = cc.h;
       cb.add(boxGeo(V(-w / 2 - 0.05, -h / 2 - 0.05, -0.14), V(w / 2 + 0.05, h / 2 + 0.05, -0.005), 0, true), col("counterBox", "#1d3329"));
@@ -746,11 +805,22 @@ export class Exterior {
     {
       // P0 / shot 16 lower left: a coiled rope + an oily rag; lower right: a small oil can (static: the loop frame = frame 0)
       for (let k = 0; k < 4; k++) b.add(new THREE.TorusGeometry(0.15 - k * 0.022, 0.02, 6, 24).rotateX(Math.PI / 2), col("rope", "#c9b080"), M(O[0] - 0.42, H + 0.022 + k * 0.03, O[2] + 6.2));
+      // fix r3 (audit A3 ADD shot 16): the rope's loose end trails off the coil with a frayed tip (a few splayed strands)
+      { const rope = col("rope", "#c9b080"), a0 = V(O[0] - 0.42 + 0.15, H + 0.03, O[2] + 6.2), a1 = V(O[0] - 0.42 + 0.27, H + 0.022, O[2] + 6.29), a2 = V(O[0] - 0.42 + 0.34, H + 0.021, O[2] + 6.42);
+        rod(b, rope, a0, a1, 0.018, 8); rod(b, rope, a1, a2, 0.017, 8); b.add(new THREE.SphereGeometry(0.018, 8, 6), rope, M(a1.x, a1.y, a1.z));
+        for (let k = 0; k < 5; k++) { const ang = Math.atan2(a2.z - a1.z, a2.x - a1.x) + (k - 2) * 0.32, L = 0.035 + 0.012 * (k % 2);
+          rod(b, col("ropeFray", "#d8c498"), a2, V(a2.x + Math.cos(ang) * L, H + 0.015, a2.z + Math.sin(ang) * L), 0.0035, 4); } }
       // fix r2 (audit A2 P2 shot 16: a grey mat and a red can-on-a-stick read as nothing from above): an OPEN LOGBOOK with a
       // pencil (the tank man's readings) and a SPARE TAPE REEL lying flat (red flanges, 4 spokes, the yellow coil, a crank)
       b.add(new THREE.BoxGeometry(0.3, 0.018, 0.2), texM("logbook", () => P.logbookTex()), M(O[0] - 0.12, H + 0.01, O[2] + 6.3, 0.42));
-      rod(b, col("pencil", "#e8b830"), V(O[0] - 0.24, H + 0.025, O[2] + 6.4), V(O[0] - 0.03, H + 0.025, O[2] + 6.44), 0.006);
-      rod(b, col("pencilTip", "#3a2a20"), V(O[0] - 0.03, H + 0.025, O[2] + 6.44), V(O[0] - 0.012, H + 0.025, O[2] + 6.445), 0.004);
+      // fix r3 (audit A3 ADD shot 16): the logbook's top right page lifts 2-3 deg in the harbour wind and the pencil rolls a
+      // few mm and back (posed on tau, whole cycles: frame 0 = the last frame)
+      { this.logPage.position.set(O[0] - 0.12, H + 0.0195, O[2] + 6.3); this.logPage.rotation.y = 0.42; T.add(this.logPage);
+        const pg = new THREE.Mesh(new THREE.PlaneGeometry(0.142, 0.19).rotateX(-Math.PI / 2).translate(0.073, 0, 0), lam("sx_logPage", () => ({ map: P.logPageTex(), side: THREE.DoubleSide })));
+        pg.castShadow = true; pg.receiveShadow = true; this.logPage.add(pg);
+        const pb = new Batch(); rod(pb, col("pencil", "#e8b830"), V(-0.105, 0, 0), V(0.105, 0, 0), 0.006); rod(pb, col("pencilTip", "#3a2a20"), V(0.105, 0, 0), V(0.123, 0, 0), 0.004);
+        pb.add(new THREE.CylinderGeometry(0.0062, 0.0062, 0.016, 8).rotateZ(Math.PI / 2).translate(-0.11, 0, 0), col("pencilEraser", "#d86a6a"));
+        pb.build(this.pencil, true); this.pencil.position.set(O[0] - 0.135, H + 0.0255, O[2] + 6.42); this.pencil.rotation.order = "YXZ"; this.pencil.rotation.y = -Math.atan2(0.04, 0.21); T.add(this.pencil); }
       { const rx = O[0] + 0.32, rz = O[2] + 6.2, red = col("reel", "#b8472e");
         b.add(new THREE.CylinderGeometry(0.1, 0.1, 0.012, 32), red, M(rx, H + 0.006, rz));
         b.add(new THREE.CylinderGeometry(0.075, 0.075, 0.04, 28), col("reelTape2", "#f2c230"), M(rx, H + 0.03, rz));
@@ -765,8 +835,28 @@ export class Exterior {
           bd.add(new THREE.PlaneGeometry(0.34, L).rotateX(-Math.PI / 2), fp, M(O[0] + (x0 + x1) / 2, H + 0.007, O[2] + (z0 + z1) / 2, Math.atan2(x0 - x1, z0 - z1))); } }
       // a warm dawn sun patch on the near plates (light through the gap under the propped lid): breaks the collar's shade
       // (r2 check: additive light went beige over the violet shade): a honey patch laid OVER the shade, normal blending
-      { const sp = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.34).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: P.sunPatchTex(), color: "#e6a24a", transparent: true, opacity: 0.5, depthWrite: false, fog: false }));
-        sp.position.set(O[0] + 0.42, H + 0.009, O[2] + 6.02); sp.rotation.y = 0.5; sp.layers.set(NOINK); sp.renderOrder = 1.6; T.add(sp); this.sunPatch = sp; }
+      // fix r3 (audit A3 P3 shot 16: a soft orange blob read as a lens smudge): a CRISP light patch between two rail-post
+      // shadows (its sides run along the dawn shadow direction), nearer the collar on the in-focus plates, honey over the shade
+      { const sp = new THREE.Mesh(new THREE.PlaneGeometry(0.4, 0.2).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: P.sunPatchCrispTex(), color: "#f0b468", transparent: true, opacity: 0.66, depthWrite: false, fog: false }));
+        sp.position.set(O[0] + 0.24, H + 0.009, O[2] + 5.98); sp.scale.set(1.15, 1, 0.8); sp.layers.set(NOINK); sp.renderOrder = 1.6; T.add(sp); this.sunPatch = sp; }
+      // fix r3 (audit A3 P2 shot 16 / frame 0): the dawn shadow of the rail's TOP BAR as ONE continuous violet band across the
+      // top of the loop frame (curving gently with the roof), with thin post shadows running up from it to the posts' feet
+      // beyond the frame top: the stray diagonals of the counter posts are gone (they no longer cast), so the top of P0 reads
+      // as 'a railing behind us in the low sun'; dawn shots only, faded out as shot 1's crane lifts (frame 0 = the last frame)
+      { const rs = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 0.5).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: P.railShadowTex(), color: "#4b3c8c", transparent: true, opacity: 0.5, depthWrite: false, fog: false }));
+        rs.position.set(O[0] + HC[0] + 0.02, H + 0.0085, O[2] + HC[2] - 0.95); rs.layers.set(NOINK); rs.renderOrder = 1.55; T.add(rs); this.railShadow = rs; }
+      // fix r3 (audit A3 ADD shot 16): dew beads on a few doubler-ring rivets catch the dawn sparkle in step with the oil's star
+      // glint (tau, whole cycles); a faint steam wisp curls off the lid hinge
+      for (const [rr0, a] of [[0.6, -1.95], [0.84, -1.35], [0.6, 2.35], [0.84, 1.95], [0.6, 0.45]] as const) {
+        const s = this.spr(P.glintStarTex(), T, new THREE.Color(1.5, 1.3, 1.0), true, false); s.position.set(O[0] + HC[0] + rr0 * Math.cos(a), H + 0.03, O[2] + HC[2] + rr0 * Math.sin(a)); s.renderOrder = 5.5; this.dew.push(s); }
+      { const hx = O[0] + HC[0] + 0.45, hz = O[2] + HC[2] - 0.21;
+        this.puffs.push(...[0, 1, 2].map((k) => ({ s: this.spr(P.puffTex(), T, "#fff4e8"), src: V(hx, H + 0.3, hz), n: 61 + k * 7, ph: k / 3, rise: 0.38, drift: 0.32, size: 0.16, set: "tanktop" as const, alpha: 0.2,
+          ids: [1, 16], dir: V(-0.5, 0, 0.86) }))); }
+      // fix r3 (audit A3 ADD shot 4): the tank man's chalk tally on the plates beside the hatch ('90' + four strokes and a
+      // tick), an oil-sheen puddle by the collar, a stencilled 'No. 7' on the deck at the ladder top (all off the P0 frame)
+      flat(bd, decalM("chalk90", () => P.chalkTallyTex(), { opacity: 0.9 }), O[0] - 0.98, O[2] + 4.95, 0.46, 0.3, 0.35, H + 0.0075);
+      flat(bd, decalM("puddleOil", () => P.puddleTex(true, 1)), O[0] - 0.86, O[2] + 5.8, 0.42, 0.3, 0.9, H + 0.0078);
+      flat(bd, decalM("deckNo7", () => P.deckStencilTex(), { opacity: 0.85 }), O[0] + 1.22, O[2] + 6.2, 0.62, 0.21, 0.52, H + 0.0076);
       // shot 7 lower right: a gauge stand-pipe (dial toward the camera side) and a gooseneck vent that steams
       const gx = O[0] + 1.55, gz = O[2] + 4.75, steel = col("roofFit", "#a99f8b");
       rod(b, col("pipeGrey", "#7f8a86"), V(gx, H, gz), V(gx, H + 0.62, gz), 0.035); b.add(cyl(0.07, 0.03, 12), col("flangeRim", "#857a68"), M(gx, H, gz));
@@ -785,6 +875,11 @@ export class Exterior {
       // shot 4 A (audit ADD): a catwalk bridge from the hero roof's far rim down to the neighbouring tank (depth)
       const t1 = TK.tanks[1], th0 = Math.atan2(t1.c[0], t1.c[2]), th1 = Math.atan2(-t1.c[0], -t1.c[2]), [ax, az] = pol(O[0], O[2], R - 0.1, th0), [cx2, cz2] = pol(O[0] + t1.c[0], O[2] + t1.c[2], t1.r - 0.2, th1);
       catwalk(b, [ax, H + 0.04, az], [cx2, t1.h + 0.04, cz2]);
+      // fix r3 (audit A3 ADD shot 4): a short steam stub by the ladder top whose thin wisp drifts across the top rungs while
+      // he climbs (shot 4 only)
+      { const sx = O[0] + 2.35, sz = O[2] + 6.05; b.add(cyl(0.04, 0.3, 10), col("pipeGrey", "#7f8a86"), M(sx, H, sz)); b.add(cyl(0.06, 0.03, 10), col("ventLip", "#7a705e"), M(sx, H + 0.3, sz));
+        this.puffs.push(...[0, 1, 2, 3].map((k) => ({ s: this.spr(P.puffTex(), T, "#ffffff"), src: V(sx, H + 0.34, sz), n: 71 + k * 6, ph: k / 4, rise: 0.9, drift: 1.1, size: 0.42, set: "tanktop" as const, alpha: 0.42,
+          ids: [4], dir: V(-0.45, 0, 0.9) }))); }
     }
     // shot 7 (audit ADD): the lender's leather briefcase (brass clasps) and folded black umbrella on the roof beside him
     {
@@ -805,6 +900,23 @@ export class Exterior {
       rod(pb, col("pencil", "#e8b830"), V(lx + 0.15, H + 0.008, lz + 0.35), V(lx + 0.31, H + 0.008, lz + 0.28), 0.007);
       { const ck = new THREE.IcosahedronGeometry(0.045, 0).scale(1.3, 0.5, 0.9); pb.add(ck, col("cigPack", "#e8e2d2"), M(lx - 0.48, H + 0.02, lz + 0.78, 0.6)); pb.add(new THREE.IcosahedronGeometry(0.03, 0).scale(1.2, 0.5, 0.8), col("cigPackR", "#c4321f"), M(lx - 0.45, H + 0.028, lz + 0.8, 0.9)); }
       { const vx = O[0] - 1.25, vz = O[2] + 3.4; pb.add(cyl(0.12, 0.32, 12), col("roofFit", "#a99f8b"), M(vx, H, vz)); pb.add(new THREE.ConeGeometry(0.22, 0.14, 12).translate(0, 0.07, 0), texM("rustCap", () => P.drumTex("#9a6a4a")), M(vx, H + 0.34, vz)); }
+      // fix r3 (audit A3 ADD shot 7): a crumpled khaki inspection slip (a pale card with a tick, no text) by the toolbox; a
+      // black lunch pail with its lid ajar and a thermos cup that steams, beside the briefcase; a roof vent stub beyond him
+      // whose thin wisp drifts through the frame's top-left corner
+      { const tx = O[0] - 1.5, tz = O[2] + 4.5;
+        pb.add(new THREE.PlaneGeometry(0.16, 0.11).rotateX(-Math.PI / 2), lam("sx_slip7", () => ({ map: P.inspectSlipTex(), side: THREE.DoubleSide })), M(tx + 0.36, H + 0.012, tz + 0.3, 0.7, [1, 1, 1], 0.08, 0.12));
+        pb.add(new THREE.IcosahedronGeometry(0.045, 1).scale(1.2, 0.55, 1), col("slipCrumple", "#c8b88a"), M(tx + 0.5, H + 0.025, tz + 0.12, 0.4)); }
+      { const px = lx - 0.62, pz = lz + 0.95;
+        pb.add(new THREE.BoxGeometry(0.3, 0.14, 0.18), col("lunchPail", "#1e1e24"), M(px, H + 0.07, pz, 0.3));
+        pb.add(new THREE.CylinderGeometry(0.09, 0.09, 0.3, 14, 1, false, 0, Math.PI).rotateZ(Math.PI / 2).rotateY(0.3 + Math.PI / 2), col("lunchPail", "#1e1e24"), M(px - 0.02, H + 0.2, pz - 0.05, 0, [1, 1, 1], 0, 0.5));
+        pb.add(new THREE.TorusGeometry(0.07, 0.008, 4, 12, Math.PI).rotateY(0.3), col("pailHandle", "#8a8a90"), M(px, H + 0.15, pz));
+        pb.add(cyl(0.045, 0.26, 12), col("thermos", "#2f6a4a"), M(px + 0.24, H, pz - 0.14));
+        pb.add(new THREE.CylinderGeometry(0.05, 0.04, 0.07, 14, 1, true).translate(0, 0.035, 0), lam("sx_thermosCup", () => ({ color: "#d8d2c4", side: THREE.DoubleSide })), M(px + 0.12, H, pz - 0.26));
+        pb.add(new THREE.CircleGeometry(0.046, 14).rotateX(-Math.PI / 2), col("coffee", "#3a2416"), M(px + 0.12, H + 0.06, pz - 0.26));
+        this.puffs.push(...[0, 1, 2].map((k) => ({ s: this.spr(P.puffTex(), T, "#ffffff"), src: V(px + 0.12, H + 0.09, pz - 0.26), n: 83 + k * 7, ph: k / 3, rise: 0.32, drift: 0.12, size: 0.1, set: "tanktop" as const, alpha: 0.38, ids: [7] }))); }
+      { const vx = O[0] - 1.95, vz = O[2] + 6.55; pb.add(cyl(0.06, 0.4, 10), col("roofFit", "#a99f8b"), M(vx, H, vz)); pb.add(cyl(0.085, 0.035, 10), col("ventLip", "#7a705e"), M(vx, H + 0.4, vz));
+        this.puffs.push(...[0, 1, 2, 3].map((k) => ({ s: this.spr(P.puffTex(), T, "#fff6ec"), src: V(vx, H + 0.45, vz), n: 67 + k * 6, ph: k / 4, rise: 0.9, drift: 1.3, size: 0.34, set: "tanktop" as const, alpha: 0.42,
+          ids: [7], dir: V(0.25, 0, -1) }))); }
       pb.build(this.s7props, true); T.add(this.s7props);
     }
     // gull shadow (shots 1 / 7 / 16) + a slow cloud shadow (shot 7), the shot-1 dawn sun glow + rays, motes (shot 7)
@@ -825,8 +937,11 @@ export class Exterior {
       this.hatchGlow = this.spr(P.softDotTex(), T, new THREE.Color("#ffc54a"), true, false); this.hatchGlow.renderOrder = 4.5;
       this.gullShadow2 = new THREE.Mesh(new THREE.PlaneGeometry(1, 0.5).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: P.gullShadowTex(), color: "#2a1a4a", transparent: true, opacity: 0.5, depthWrite: false, fog: false }));
       this.gullShadow2.layers.set(NOINK); this.gullShadow2.renderOrder = 2; T.add(this.gullShadow2);
+      // fix r3 (audit A3 ADD shot 16): the loop shot's early gull shadow glides across the roof AND the gold before "fake"
+      this.gullShadow3 = new THREE.Mesh(new THREE.PlaneGeometry(0.44, 0.22).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: P.gullShadowTex(), color: "#1c1236", transparent: true, opacity: 0.5, depthWrite: false, fog: false }));
+      this.gullShadow3.layers.set(NOINK); this.gullShadow3.renderOrder = 2; T.add(this.gullShadow3);
       this.scrap4 = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.26), lam("sx_sheet", () => ({ map: P.newsSheetTex(), side: THREE.DoubleSide }))); this.scrap4.castShadow = true; T.add(this.scrap4);
-      for (let k = 0; k < 4; k++) this.horn.push(this.spr(P.puffTex(), T, "#ffffff", false, false));
+      for (let k = 0; k < 7; k++) this.horn.push(this.spr(P.puffTex(), T, "#ffffff", false, false));
       { const t = TK.tanks[1], a = 2.6, rr = t.r * 0.55, wx = O[0] + t.c[0] + rr * Math.sin(a), wz = O[2] + t.c[2] + rr * Math.cos(a);
         const kneel = P.ptex("sxTinyKneel", 64, 96, (g) => { g.clearRect(0, 0, 64, 96); g.fillStyle = "#2a2a3a"; g.strokeStyle = "#2a2a3a"; g.lineCap = "round";
           g.beginPath(); g.arc(30, 22, 9, 0, TAU); g.fill(); g.fillRect(20, 13, 22, 5); g.beginPath(); g.ellipse(30, 52, 12, 18, 0.25, 0, TAU); g.fill();
@@ -846,7 +961,7 @@ export class Exterior {
       this.oil = new THREE.ShaderMaterial({ vertexShader: OIL_VERT, fragmentShader: OIL_FRAG, fog: false,
         uniforms: { uR: { value: rh }, uPh: { value: 0 }, uRipK: { value: 1 }, uRing: { value: 9 }, uRingK: { value: 0 }, uOpen: { value: 0 }, uSwell: { value: 0.3 },
           uT: { value: 0 }, uDrift: { value: 0 }, uSpark: { value: 0 }, uBub: { value: -1 },
-          uFlash: { value: 0 }, uFilm: { value: 0 }, uPop: { value: -1 }, uCloud: { value: 0 }, uDrip: { value: 0 }, uDripK: { value: 0 },
+          uFlash: { value: 0 }, uFilm: { value: 0 }, uPop: { value: -1 }, uCloud: { value: 0 }, uDrip: { value: 0 }, uDripK: { value: 0 }, uFat: { value: -1 },
           uGold: { value: new THREE.Color() }, uDeep: { value: new THREE.Color() }, uSky: { value: new THREE.Color() }, uSun: { value: new THREE.Color() },
           uWater: { value: new THREE.Color("#3ba4e0") }, uWaterE: { value: new THREE.Color("#0e4c8a") },
           uRip: { value: new THREE.Vector2() }, uGlint: { value: new THREE.Vector2(0.18, -0.2) } } });
@@ -871,7 +986,13 @@ export class Exterior {
       rb.build(this.reel, true); T.add(this.reel);
       this.bob = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.15, 14).rotateX(Math.PI), lam("sx_bob", () => ({ color: "#e0b040" }))); T.add(this.bob);
       this.bobGlint = this.spr(P.glintStarTex(), T, new THREE.Color(1.6, 1.35, 0.8), true, false); this.bobGlint.visible = false;
-      for (let k = 0; k < 5; k++) { const s = this.spr(P.softDotTex(), T, new THREE.Color(1.6, 1.0, 0.3)); s.visible = false; this.splash4.push(s); }
+      for (let k = 0; k < 5; k++) { const s = this.spr(P.dripDropTex(), T, new THREE.Color(1.25, 0.95, 0.4)); s.visible = false; this.splash4.push(s); }
+      // fix r3 (audit A3 P2 shot 4: the tape blended into the cream roof; no source for the plunk): a saturated #F2C21B tape
+      // with navy ink edges for shot 4 (the loop shots keep theirs: frame 0 = the last frame), and a bright gold impact ring
+      // on the oil at the plunk
+      this.tape4Tex = P.measureTape4Tex().clone(); this.tape4Tex.needsUpdate = true; this.tape4Tex.wrapS = this.tape4Tex.wrapT = THREE.RepeatWrapping;
+      this.plunkRing = new THREE.Mesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: P.rippleTex(), color: new THREE.Color(1.7, 1.25, 0.45), transparent: true, depthWrite: false, fog: false, blending: THREE.AdditiveBlending }));
+      this.plunkRing.layers.set(NOINK); this.plunkRing.renderOrder = 3; this.plunkRing.visible = false; T.add(this.plunkRing);
     }
     // ---- the ground at the tank foot (shot 4 B two-shot) ----
     {
@@ -882,7 +1003,9 @@ export class Exterior {
         rod(b, col("gaugeCable", "#3a3a40"), V(gx, 1.0, gz), V(gx, H + 0.2, gz), 0.008);
         cbox(b, col("gaugePointer", "#c0241c"), gx + Math.sin(ga) * 0.05, 10.25, gz + Math.cos(ga) * 0.05, 0.34, 0.06, 0.05, ga); }
       // NO SMOKING plate + the tank number stencil (as decals on the shell)
-      { const pa = 9 * D2R, g = new THREE.CylinderGeometry(R + 0.02, R + 0.02, 0.36, 8, 1, true, pa - 0.055, 0.11).translate(0, 2.25, 0); b.add(g, texM("noSmoke", () => P.plateTex("nosmoke", ["NO", "SMOKING"], "#c4281e", "#f6f0e2", 512, 256)), M(O[0], 0, O[2])); }
+      // fix r3 (audit A3 P3 shot 4: the ladder's violet shadow tinted 'ING' and read as a glitch): the plate is an UNLIT board
+      { const pa = 9 * D2R, g = new THREE.CylinderGeometry(R + 0.02, R + 0.02, 0.36, 8, 1, true, pa - 0.055, 0.11).translate(0, 2.25, 0);
+        const ns = this.board(new THREE.Mesh(g, new THREE.MeshBasicMaterial({ map: P.plateTex("nosmoke", ["NO", "SMOKING"], "#c4281e", "#f6f0e2", 512, 256) })), "tanktop", 0.92); ns.position.set(O[0], 0, O[2]); T.add(ns); }
       // fix r2 (audit A2 ADD shot 4): the hero is "No. 7" here too (the same tank as the shot-2 gate wide), and a smaller
       // stencil in the ground two-shot B above the NO SMOKING plate
       { const na = -24 * D2R, w = 3.6, g = new THREE.CylinderGeometry(R + 0.015, R + 0.015, 1.2, 24, 1, true, na - w / (2 * R), w / R).translate(0, 6.7, 0); b.add(g, decalM("stencilNo7", () => P.stencilTex("No. 7"), { side: THREE.FrontSide }), M(O[0], 0, O[2])); }
@@ -926,8 +1049,21 @@ export class Exterior {
       // the DOF); the tank man's black lunch pail + a thermos sit on the lying drum by the pipe run
       const stain = decalM("oilStainB", () => P.puddleTex(true, 3), { color: "#5a4a48", opacity: 0.32 });
       for (const [x, z, s, r0] of [[-0.6, 11.3, 1.0, 0.4], [2.2, 9.4, 0.85, 1.2], [-1.4, 10.0, 0.7, 0.7]] as const) flat(bd, stain, O[0] + x, O[2] + z, s, s * 0.8, r0);
-      flat(bd, texM("drain", () => P.drainTex()), O[0] + 1.05, O[2] + 12.6, 0.5, 0.5, 0.15, 0.014); flat(bd, stain, O[0] + 1.15, O[2] + 12.45, 0.8, 0.5, 2.2);
-      pallet(b, O[0] + 0.45, O[2] + 13.15, 0.3); drum(b, O[0] + 0.22, O[2] + 13.0, "#2f5f8a", 0.7); drum(b, O[0] + 0.78, O[2] + 13.35, "#b8432e", 1.9);
+      // fix r3 (audit A3 P3 shot 4: a dark out-of-focus stain at the bottom read as a lens smudge, a cut-off red drum at the
+      // bottom-left): the near stain is gone (the grate stays), the pallet + its two drums slide 0.6 m into frame
+      flat(bd, texM("drain", () => P.drainTex()), O[0] + 1.6, O[2] + 13.7, 0.5, 0.5, 0.15, 0.014);  // (r3 check: off B's bottom edge, no near-lens blot)
+      pallet(b, O[0] + 0.8, O[2] + 13.15, 0.3); drum(b, O[0] + 0.57, O[2] + 13.0, "#2f5f8a", 0.7); drum(b, O[0] + 1.13, O[2] + 13.35, "#b8432e", 1.9);
+      // fix r3 (audit A3 ADD shot 4 B colour): a blue drum beside Tino's side of the pipe run, yellow-black hazard stripes on
+      // the camera side of the foundation ring, the noon sky reflected bright in the near puddle
+      drum(b, O[0] + 1.95, O[2] + 8.8, "#2a6ab8", 0.9); flat(bd, decalM("aoTop", () => P.aoTex(), { color: "#3a3044", opacity: 0.45 }), O[0] + 1.95, O[2] + 8.8, 0.9, 0.8, 0, 0.013);
+      { const a0 = -28 * D2R, a1 = 34 * D2R, hz = new THREE.CylinderGeometry(R + 0.39, R + 0.39, 0.2, 64, 1, true, a0, a1 - a0).translate(0, 0.13, 0);
+        const uv = hz.attributes.uv as THREE.BufferAttribute; for (let i = 0; i < uv.count; i++) uv.setX(i, uv.getX(i) * ((a1 - a0) * (R + 0.39)) / 0.8);
+        b.add(hz, decalM("hazard", () => { const t = P.hazardTex(); t.wrapS = THREE.RepeatWrapping; return t; }, { side: THREE.FrontSide, transparent: false, depthWrite: true }), M(O[0], 0, O[2])); }
+      { const sp = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: P.puddleTex(false, 2), color: "#cfe6ff", transparent: true, opacity: 0.55, depthWrite: false, fog: false }));
+        sp.position.set(O[0] + 1.0, 0.018, O[2] + 11.3); sp.rotation.y = 0.3; sp.layers.set(NOINK); sp.renderOrder = 1.2; T.add(sp); this.skyPuddle = sp; }
+      // fix r3 (audit A3 ADD shot 4): two gulls perched on the fire-bucket stand's top rail lift off at the echo, just after
+      // the cut to B
+      for (let k = 0; k < 2; k++) this.standGulls.push(this.spr(P.gullPerchTex(), T, "#ffffff", false, true));
       { const lx = O[0] + 3.9, lz = O[2] + 9.6, ly = 0.58;
         b.add(new THREE.BoxGeometry(0.3, 0.14, 0.18), col("lunchPail", "#1e1e24"), M(lx, ly + 0.07, lz, 0.4));
         b.add(new THREE.CylinderGeometry(0.09, 0.09, 0.3, 14, 1, false, 0, Math.PI).rotateZ(Math.PI / 2).rotateY(0.4 + Math.PI / 2), col("lunchPail", "#1e1e24"), M(lx, ly + 0.14, lz));
@@ -1014,8 +1150,12 @@ export class Exterior {
       this.stairBulb = new THREE.MeshBasicMaterial({ color: "#d8d0b8" });
       const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.07, 12, 8), this.stairBulb); bulb.position.set(bx + 0.12 * Math.sin(A0), FARM_LAND_Y + 1.6, bz + 0.12 * Math.cos(A0)); bulb.layers.set(NOINK); F.add(bulb);
     }
+    // fix r3 (audit A3 P3 shot 2: the neighbours' spiral-stair shadows lay on their curved walls as big jagged violet
+    // triangles, 'torn paint'): their stairs no longer cast (the hero's clean diagonal stripes stay)
+    const bns = new Batch();
     TF.tanks.forEach((t, i) => tank(b, O, { c: t.c, r: t.r, h: t.h, roof: "cone", stair: { a0: (60 + i * 53) * D2R, a1: (60 + i * 53) * D2R - (t.h - 0.2) / 5.6, y0: 0.2, y1: t.h },
-      shell: 1 + (i % 3), detail: i < 4 ? 1 : 0, num: i < 3 ? `No. ${3 + i * 5}` : undefined, numA: (i % 2 ? -30 : 20) * D2R }));
+      shell: 1 + (i % 3), detail: i < 4 ? 1 : 0, num: i < 3 ? `No. ${3 + i * 5}` : undefined, numA: (i % 2 ? -30 : 20) * D2R }, bns));
+    buildInk(bns, F, 1, false);
     for (let i = 0; i < 22; i++) { const side = i % 2 ? 1 : -1, row = Math.floor(i / 2), x = side * (18 + (row % 4) * 15 + hash(i, 21) * 4), z = -42 - Math.floor(row / 4) * 18 + hash(i, 22) * 6;
       const r = 6 + hash(i, 23) * 1.8, h = 10 + hash(i, 24) * 3; tank(bfar, O, { c: [x, 0, z], r, h, roof: "cone", stair: { a0: hash(i, 25) * TAU, a1: hash(i, 25) * TAU - (h - 0.2) / 5.6, y0: 0.2, y1: h }, shell: 1 + (i % 3), detail: 0 }); }
     buildInk(bfar, F, 0.6);
@@ -1079,6 +1219,7 @@ export class Exterior {
         for (const y of [2.33, 2.47]) { const bg = new THREE.PlaneGeometry(Lw, 0.07); const u2 = bg.attributes.uv as THREE.BufferAttribute; for (let i = 0; i < u2.count; i++) u2.setX(i, (u2.getX(i) * Lw) / 12);
           fb.add(bg.translate(Lw / 2, y, 0), barbM, m); }
         fb.add(new THREE.CylinderGeometry(0.015, 0.015, 0.5, 6).translate(Lw - 0.12, 0.05, 0.05), tube, m);
+        const cb2 = new Batch(); coil(cb2, col("barbCoil", "#646a72"), 0.06, Lw - 0.06, 2.66, 0, 0.17, 0.15); buildInk(cb2, grp, 0, true);
         buildInk(fb, grp, 0.5);
         if (s > 0) { const ko = this.board(faceMesh(P.plateTex("keepout", ["KEEP", "OUT"], "#f2ece0", "#b8241c", 512, 300), 0.72, 0.42), "tankfarm", 0.92);
           ko.position.set(Lw * 0.5, 1.35, -0.04); ko.rotation.y = Math.PI; grp.add(ko); } }
@@ -1100,6 +1241,7 @@ export class Exterior {
         for (let x = x0; s * x <= s * x1; x += s * 3) { box(b, post, O[0] + x - 0.04, 0, O[2] + gz - 0.04, O[0] + x + 0.04, 2.45, O[2] + gz + 0.04);
           rod(b, post, V(O[0] + x, 2.4, O[2] + gz), V(O[0] + x, 2.85, O[2] + gz + 0.42), 0.022); }
         rod(b, post, V(O[0] + x0, 2.42, O[2] + gz), V(O[0] + x1, 2.42, O[2] + gz), 0.025);
+        coil(fb, col("barbCoil", "#646a72"), O[0] + s * (gh + 0.3), O[0] + s * (gh + 26), 2.7, O[2] + gz + 0.12, 0.2, 0.17);
         for (let k = 0; k < 3; k++) { const y = 2.55 + k * 0.14, zz = O[2] + gz + 0.13 + k * 0.13; const bg = new THREE.PlaneGeometry(L, 0.07); const u2 = bg.attributes.uv as THREE.BufferAttribute; for (let i = 0; i < u2.count; i++) u2.setX(i, u2.getX(i) * L / 12);
           fb.add(bg, barb, M(cxm, y, zz)); }
       }
@@ -1175,8 +1317,12 @@ export class Exterior {
     this.needle = new THREE.Mesh(new THREE.BoxGeometry(0.007, 0.06, 0.004).translate(0, 0.026, 0), lam("sx_needle", () => ({ color: "#1e1e24" })));
     this.needle.position.set(vx, vy - 0.38, vz + 0.178); F.add(this.needle);
     // the drip puddle beside Tino's feet (grows when the drop lands) + the fat drop, its bead, three splash droplets
-    this.dripPuddle = new THREE.Mesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), decalM("dripPuddle", () => P.puddleTex(false, 6)));
-    this.dripPuddle.position.set(O[0] + SPOUT[0] + 0.05, 0.017, vz + 0.04); this.dripPuddle.renderOrder = 1; F.add(this.dripPuddle);
+    // fix r3 (audit A3 ADD shot 2): the puddle the valve has fed for weeks is OILY (a rainbow sheen), spread in front of the
+    // pipe where the run-off lands
+    this.dripPuddle = new THREE.Mesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), decalM("dripPuddleOil", () => P.puddleTex(true, 6)));
+    this.dripPuddle.position.set(O[0] + SPOUT[0] + 0.12, 0.017, vz + 0.32); this.dripPuddle.renderOrder = 1; F.add(this.dripPuddle);
+    this.dripCrown = this.spr(P.crownThinTex(), F, "#eef6ff", false, false); this.dripCrown.center.set(0.5, 0.12); this.dripCrown.renderOrder = 6;
+    this.dripWet = this.spr(P.glintStarTex(), F, new THREE.Color(1.3, 1.4, 1.6), true, false); this.dripWet.renderOrder = 6;
     this.drop = this.spr(P.dripDropTex(), F, "#ffffff", false, false); this.drop.center.set(0.5, 0.94);
     this.bead = this.spr(P.dripDropTex(), F, "#ffffff", false, false); this.bead.center.set(0.5, 0.94);
     for (let k = 0; k < 3; k++) this.dropKids.push(this.spr(P.dripDropTex(), F, "#ffffff", false, false));
@@ -1198,7 +1344,11 @@ export class Exterior {
     flat(bd, decalM("tyre", () => P.rep(P.tyreTrackTex(), 1, 8)), O[0] + 0.05, O[2] + 17, 2.9, 26, 0, 0.0135);
     // fix r2 (audit A2 LEAD P2: a giant blurred 'SLOW' fragment filled the landing's foreground): the marking moves out to
     // the street apron (whole at the bottom of the gate wide, behind the lens before the landing)
-    flat(bd, decalM("slow", () => P.slowTex()), O[0] + 0.1, O[2] + 19.6, 1.15, 2.1, 0, 0.0145);
+    // fix r3 (A3 P1 shot 9 + P3 shot 2): the SLOW marking is its own mesh, shown in shot 2 only (never in the storm, where it
+    // read as part of the caption), 3.4 m further out on the apron so it leaves the glide's frame by ~305 (whole and low in
+    // the gate wide, y ~1720-1910 at 1080)
+    this.slow = new THREE.Mesh(new THREE.PlaneGeometry(1.15, 2.1).rotateX(-Math.PI / 2), decalM("slow", () => P.slowTex()));
+    this.slow.position.set(O[0] + 0.1, 0.0145, O[2] + 23.0); this.slow.receiveShadow = true; this.slow.userData.ink = 0; F.add(this.slow);
     // fix r2 (audit A2 ADD shot 2): the gate threshold: a steel trench drain across the drive, an oil puddle with a sheen,
     // a dropped work glove, grit and leaves at the kerb, weeds at the post feet; VEG OIL stencils on the right-hand drums
     { const tr = new THREE.Mesh(new THREE.PlaneGeometry(6.0, 0.32).rotateX(-Math.PI / 2), new THREE.MeshLambertMaterial({ map: P.rep(P.drainTex(), 18, 1) }));
@@ -1247,7 +1397,22 @@ export class Exterior {
       const pool = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.0).rotateX(-Math.PI / 2), basic({ map: P.softDotTex(), color: new THREE.Color(0.55, 0.32, 0.12), blending: THREE.AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -6, polygonOffsetUnits: -6 }));
       pool.position.set(lx, 0.035, lz); add(pool, 2.7); this.stairPool = pool;
       const [bx, bz] = pol(O[0] + TFH.c[0], O[2] + TFH.c[2], TFH.r + 0.35, FARM_LAD_A + 0.1);
-      const halo = this.spr(P.softDotTex(), W, new THREE.Color(0.9, 0.55, 0.22), true, false); halo.position.set(bx, FARM_LAND_Y + 1.6, bz); halo.scale.setScalar(1.6); }
+      const halo = this.spr(P.softDotTex(), W, new THREE.Color(1.1, 0.66, 0.26), true, false); halo.position.set(bx, FARM_LAND_Y + 1.6, bz); halo.scale.setScalar(2.4);
+      // fix r3 (audit A3 P3 / P1 place shot 9: the climber had nothing to read against): the caged lamp throws a warm amber
+      // POOL on the wet wall round the landing (~1.2 m round the climber's head and shoulders), a cone of light whose rain
+      // streaks glint as they fall through it, water sheeting off the landing's edge, splashes on the treads
+      const A0 = FARM_LAD_A, cx0 = O[0] + TFH.c[0], cz0 = O[2] + TFH.c[2];
+      { const g = new THREE.CylinderGeometry(TFH.r + 0.06, TFH.r + 0.06, 4.2, 24, 1, true, A0 + 0.1 - 0.24, 0.48).translate(0, FARM_LAND_Y + 1.15, 0);
+        this.wallPool = new THREE.Mesh(g, basic({ map: P.softDotTex(), color: new THREE.Color(0.95, 0.52, 0.16), blending: THREE.AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 }));
+        this.wallPool.position.set(cx0, 0, cz0); add(this.wallPool, 1.3); }
+      { const t = P.rainSheetTex().clone(); t.needsUpdate = true; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(3, 2);
+        this.lampCone = new THREE.Mesh(new THREE.ConeGeometry(0.95, 1.9, 24, 1, true).translate(0, -0.95, 0), basic({ map: t, color: new THREE.Color(0.9, 0.55, 0.2), blending: THREE.AdditiveBlending, side: THREE.DoubleSide, fog: false }));
+        this.lampCone.position.set(bx + 0.35 * Math.sin(A0), FARM_LAND_Y + 1.62, bz + 0.35 * Math.cos(A0)); add(this.lampCone, 4); }
+      { const [px, pz] = pol(cx0, cz0, TFH.r + 0.95, A0 - 0.3 / 7.5);
+        for (let k = 0; k < 3; k++) { const t = P.rainSheetTex().clone(); t.needsUpdate = true; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(0.2, 3);
+          const m = new THREE.Mesh(new THREE.PlaneGeometry(0.05, FARM_LAND_Y - 0.05).translate(0, -(FARM_LAND_Y - 0.05) / 2, 0), basic({ map: t, color: new THREE.Color(0.7, 0.8, 1.0), blending: THREE.AdditiveBlending }));
+          const dx = (k - 1) * 0.55; m.position.set(px + Math.cos(A0) * dx, FARM_LAND_Y - 0.05, pz - Math.sin(A0) * dx); add(m, 7); this.streamLand.push(m); } }
+      for (let k = 0; k < 8; k++) this.treadSplash.push(this.spr(P.crownThinTex(), W, "#e8f2ff", false, true)); }
     // rain drips off the swung left gate leaf's top wire (shot 9)
     for (let k = 0; k < 7; k++) this.wireDrips.push(this.spr(P.softDotTex(), W, "#e8f0fa"));
     // the gate lamps' warm light on the wet apron (long streaks toward the lens) and the hut window's pool
@@ -1267,11 +1432,13 @@ export class Exterior {
     this.rain = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1).translate(0, -0.5, 0), basic({ map: P.rainTex(), color: "#c8d6f0", blending: THREE.AdditiveBlending }), 1500);
     this.rain.frustumCulled = false; add(this.rain, 8);
     for (let i = 0; i < 1500; i++) this.rain.setColorAt(i, new THREE.Color(0, 0, 0));
-    this.crowns = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1).translate(0, 0.5, 0), basic({ map: P.crownTex(), color: "#dfe8f8", opacity: 0.9 }), 240);
+    // fix r3 (audit A3 P2 shot 9: the splashes read as cotton / popcorn puffs): thin crown splashes (3-5 spikes + a flat
+    // ring, alpha ~0.55), sized per distance to 16-28 px at 1080, living 4-6 f
+    this.crowns = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1).translate(0, 0.375, 0), basic({ map: P.crownThinTex(), color: "#e6eefa", opacity: 0.6 }), 240);
     this.crowns.frustumCulled = false; add(this.crowns, 7);
-    this.ripples = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), basic({ map: P.rippleThinTex(), color: "#ffffff", blending: THREE.AdditiveBlending }), 48);
+    this.ripples = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), basic({ map: P.rippleThinTex(), color: "#ffffff", blending: THREE.AdditiveBlending }), 72);
     this.ripples.frustumCulled = false; add(this.ripples, 3);
-    for (let i = 0; i < 48; i++) this.ripples.setColorAt(i, new THREE.Color(0, 0, 0));
+    for (let i = 0; i < 72; i++) this.ripples.setColorAt(i, new THREE.Color(0, 0, 0));
     // far rain curtains (scrolling streak sheets at 14 / 28 / 46 m), posed facing the lens
     for (const k of [0, 1, 2]) { const t = P.rainSheetTex().clone(); t.needsUpdate = true; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set([4, 6, 8][k], [2, 3, 4][k]);
       const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), basic({ map: t, color: new THREE.Color(0.2, 0.22, 0.27).multiplyScalar([0.55, 0.8, 0.9][k]), blending: THREE.AdditiveBlending, fog: false }));
@@ -1300,8 +1467,12 @@ export class Exterior {
       this.rivulets.position.set(O[0] + TFH.c[0], 0, O[2] + TFH.c[2]); add(this.rivulets, 1.2); }
     // water pouring off the right end of the gate beam (posed facing the lens) + drips along the sign's bottom edge
     { const t = P.rainSheetTex().clone(); t.needsUpdate = true; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(0.25, 5);
-      this.gutter = new THREE.Mesh(new THREE.PlaneGeometry(0.09, sg.cy + sg.h / 2 + 0.3).translate(0, -(sg.cy + sg.h / 2 + 0.3) / 2, 0), basic({ map: t, color: new THREE.Color(0.75, 0.85, 1.0), blending: THREE.AdditiveBlending }));
-      this.gutter.position.set(O[0] + gh + 0.12, sg.cy + sg.h / 2 + 0.3, O[2] + gz + 0.12); add(this.gutter, 7); }
+      // fix r3 (audit A3 ADD shot 9: the pour off the beam's end was off-frame): the water pours off the SIGN's right end into
+      // a splashing puddle at the post foot (AUDIO's gutter cue)
+      const top = sg.cy - sg.h / 2 - 0.04;
+      this.gutter = new THREE.Mesh(new THREE.PlaneGeometry(0.075, top).translate(0, -top / 2, 0), basic({ map: t, color: new THREE.Color(0.8, 0.9, 1.05), blending: THREE.AdditiveBlending }));
+      this.gutter.position.set(O[0] + POUR9[0], top, O[2] + POUR9[1]); add(this.gutter, 7);
+      for (let k = 0; k < 3; k++) this.signPourSplash.push(this.spr(P.crownThinTex(), W, "#eef4ff", false, true)); }
     for (const [y, w] of [[sg.cy - sg.h / 2 - 0.075, sg.w + 0.14], [sg.cy + sg.h / 2 + 0.275, gh * 2]] as const) {
       const m = new THREE.Mesh(new THREE.PlaneGeometry(w, 0.028), basic({ color: new THREE.Color(0.86, 0.92, 1.05), opacity: 0.75 })); m.position.set(O[0], y, O[2] + gz + 0.1); add(m, 6); }
     for (let k = 0; k < 10; k++) this.signDrips.push(this.spr(P.softDotTex(), W, "#e8f0fa"));
@@ -1311,6 +1482,39 @@ export class Exterior {
     // a newspaper sheet tumbling across the yard in a gust
     this.farmSheet = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.38), lam("sx_wetPaper", () => ({ map: P.wetPaperTex(), side: THREE.DoubleSide })));
     this.farmSheet.castShadow = false; W.add(this.farmSheet);
+    // ---- fix r3 (audit A3 P1 / P3 / ADD shot 9) ----
+    // the hero's 'No. 7' stencilled low on the wall left of the stair, whole between the sign and the umbrellas (the high
+    // stencil hides behind the sign from this camera), so the storm tank is the same No. 7 as the sunny gate shot
+    { const a0 = -18 * D2R, a1 = 4 * D2R, g = new THREE.CylinderGeometry(TFH.r + 0.03, TFH.r + 0.03, 0.92, 24, 1, true, a0, a1 - a0).translate(0, 3.9, 0);
+      this.stencil9 = new THREE.Mesh(g, lam("sx_stencil9", () => ({ map: P.stencilTex("No. 7"), transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3 })));
+      this.stencil9.position.set(O[0] + TFH.c[0], 0, O[2] + TFH.c[2]); this.stencil9.receiveShadow = true; this.stencil9.userData.ink = 0; W.add(this.stencil9); }
+    // three gulls huddled on the gate's crossbar, hunched against the rain
+    for (let k = 0; k < 3; k++) this.huddle.push(this.spr(P.gullHuddleTex(), W, "#c9d2e2", false, true));
+    // a slowly blinking amber beacon on the parked tanker's tank top
+    { const bx = O[0] + 5.6, bz = O[2] + 4.3; this.beacon = new THREE.MeshBasicMaterial({ color: "#ffb040" });
+      const bm = new THREE.Mesh(new THREE.SphereGeometry(0.11, 12, 8, 0, TAU, 0, Math.PI / 2), this.beacon); bm.position.set(bx, 3.05, bz); bm.layers.set(NOINK); W.add(bm);
+      const base = new THREE.Mesh(cyl(0.12, 0.06, 12), new THREE.MeshLambertMaterial({ color: "#2a2a30" })); base.position.set(bx, 2.99, bz); W.add(base);
+      this.beaconHalo = this.spr(P.softDotTex(), W, new THREE.Color(1.4, 0.75, 0.2), true, false); this.beaconHalo.position.set(bx, 3.12, bz); }
+    // a soggy newspaper page plastered flat on the swung left leaf's chain-link
+    { const g = new THREE.PlaneGeometry(0.46, 0.34, 6, 4); const pa = g.attributes.position as THREE.BufferAttribute;
+      for (let i = 0; i < pa.count; i++) pa.setZ(i, 0.012 * Math.sin(pa.getX(i) * 14 + pa.getY(i) * 9));
+      this.soggy = new THREE.Mesh(g, lam("sx_soggy", () => ({ map: P.wetPaperTex(), side: THREE.DoubleSide, color: "#9aa2b4" })));
+      this.soggy.position.set(1.45, 1.05, 0.03); this.soggy.rotation.z = 0.18; this.leaves[0].add(this.soggy); this.soggy.visible = false; }
+    // text-free road marks on the apron in place of SLOW: a worn dashed centre line toward the gate, glossy tyre-track sheen,
+    // a kerb drain swallowing a swirl of water
+    { const dm = basic({ map: P.dashWornTex(), color: "#c9d0dc", opacity: 0.42, polygonOffset: true, polygonOffsetFactor: -5, polygonOffsetUnits: -5 });
+      for (let z = 16.9; z < 24; z += 1.8) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.13, 0.95).rotateX(-Math.PI / 2), dm); m.position.set(O[0] + 0.05, 0.034, O[2] + z); add(m, 2.1); }
+      for (const x of [-0.75, 0.8]) { const t = P.wetStreakTex().clone(); t.needsUpdate = true; t.wrapT = THREE.RepeatWrapping; t.repeat.set(1, 3); this.streaks.push(t);
+        const m = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 7.5).rotateX(-Math.PI / 2), basic({ map: t, color: new THREE.Color(0.32, 0.4, 0.55), blending: THREE.AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -5, polygonOffsetUnits: -5 }));
+        m.position.set(O[0] + x, 0.035, O[2] + 20.0); add(m, 2.4); }
+      const dr = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.4).rotateX(-Math.PI / 2), new THREE.MeshLambertMaterial({ map: P.drainTex(), polygonOffset: true, polygonOffsetFactor: -5, polygonOffsetUnits: -5 }));
+      dr.position.set(O[0] + 2.15, 0.036, O[2] + 19.2); dr.receiveShadow = true; W.add(dr);
+      this.drainSwirl = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.9).rotateX(-Math.PI / 2), basic({ map: P.swirlTex(), color: new THREE.Color(0.55, 0.65, 0.85), blending: THREE.AdditiveBlending }));
+      this.drainSwirl.position.set(O[0] + 2.15, 0.04, O[2] + 19.2); add(this.drainSwirl, 2.5); }
+    // the near puddle mirroring the lit sign and the red notice, upside down and broken by rain rings
+    { this.reflTex = P.signReflTex().clone(); this.reflTex.needsUpdate = true; this.reflTex.wrapS = THREE.ClampToEdgeWrapping;
+      this.reflPuddle = new THREE.Mesh(new THREE.PlaneGeometry(REFL9[2], REFL9[3]).rotateX(-Math.PI / 2), basic({ map: this.reflTex, polygonOffset: true, polygonOffsetFactor: -6, polygonOffsetUnits: -6 }));
+      this.reflPuddle.position.set(O[0] + REFL9[0], 0.037, O[2] + REFL9[1]); add(this.reflPuddle, 2.2); }
   }
 
   // ============================================ STREET ============================================
@@ -1370,9 +1574,11 @@ export class Exterior {
       const of2 = this.board(faceMesh(P.officesTex(), 0.66, 0.138, true), "street", 1.05); of2.position.set(O[0] + dr.c[0], 2.04, O[2] + dr.c[2] - 0.03); S.add(of2);
       // fix r2 (audit A2 P3: whose door is CLOSED?): a dark glass transom over the door with "ALLIED" in gold leaf (the name
       // on the shot-2 gate; plain letters, no mark), ~47 px tall at 1080, clear of the CLOSED card
-      { box(b, stone, O[0] + 0.55, dr.h + 0.35, O[2] + dr.c[2] - 0.02, O[0] + 2.05, 2.95, O[2] + dr.c[2] + 0.06);
-        box(b, col("transomGlass", "#1e2430"), O[0] + 0.6, dr.h + 0.38, O[2] + dr.c[2] + 0.06, O[0] + 2.0, 2.92, O[2] + dr.c[2] + 0.07);
-        const al = this.board(faceMesh(P.alliedTransomTex(), 1.36, 0.46, true), "street", 1.08); al.position.set(O[0] + 1.3, (dr.h + 0.38 + 2.92) / 2, O[2] + dr.c[2] + 0.075); S.add(al); }
+      // fix r3 (audit A3 P2 shot 14: its 'A' was hidden by the kiosk roof, it read 'LLIED'): the fascia panel runs 0.3 m
+      // further right over the pier, so the whole ALLIED clears the (trimmed) kiosk roof
+      { box(b, stone, O[0] + 0.83, dr.h + 0.35, O[2] + dr.c[2] - 0.02, O[0] + 2.33, 2.95, O[2] + dr.c[2] + 0.06);
+        box(b, col("transomGlass", "#1e2430"), O[0] + 0.88, dr.h + 0.38, O[2] + dr.c[2] + 0.06, O[0] + 2.28, 2.92, O[2] + dr.c[2] + 0.07);
+        const al = this.board(faceMesh(P.alliedTransomTex(), 1.32, 0.45, true), "street", 1.08); al.position.set(O[0] + 1.58, (dr.h + 0.38 + 2.92) / 2, O[2] + dr.c[2] + 0.075); S.add(al); }
       box(b, brass, O[0] + dr.c[0] + dr.w / 2 + 0.03, 1.32, O[2] + dr.c[2] + 0.1, O[0] + dr.c[0] + dr.w / 2 + 0.16, 1.58, O[2] + dr.c[2] + 0.115);
       // a striped awning over the neighbour's shop + a brass plate
       for (let k = 0; k < 7; k++) box(b, col(k % 2 ? "awnW" : "awnG", k % 2 ? "#ece6d6" : "#2f6a4a"), O[0] + 4.0 + k * 0.9, 2.9, O[2] - 7.1 + 1.1, O[0] + 4.9 + k * 0.9, 3.0, O[2] - 6.0 + 1.1, M(0, 0, 0));
@@ -1384,8 +1590,22 @@ export class Exterior {
       box(b, dk, x - 0.92, 1.25, z - 0.55, x + 0.92, 1.32, z + 0.5);
       for (const s of [-0.84, 0.84]) box(b, dk, x + s - 0.04, 1.32, z + 0.36, x + s + 0.04, 2.62, z + 0.44);
       box(b, dk, x - 0.84, 1.32, z - 0.5, x + 0.84, 2.62, z - 0.42);
-      box(b, col("kioskRoof", "#2c4a34"), x - 1.05, 2.62, z - 0.7, x + 1.05, 2.74, z + 0.66);
-      for (let k = 0; k < 12; k++) box(b, col(k % 2 ? "valW" : "valG", k % 2 ? "#ece6d6" : "#2f6a4a"), x - 1.05 + k * 0.175, 2.46, z + 0.66, x - 0.875 + k * 0.175, 2.62, z + 0.68);
+      // fix r3 (audit A3 P2 shot 14: the kiosk roof's right overhang hid the 'A' of the ALLIED fascia): the roof stops 3 cm past
+      // the right post; its striped valance is one cloth that ripples in the wind (+-2 cm, ~0.4 Hz)
+      box(b, col("kioskRoof", "#2c4a34"), x - 1.05, 2.62, z - 0.7, x + 0.87, 2.74, z + 0.66);
+      { const vg = new THREE.PlaneGeometry(1.92, 0.16, 24, 1).translate(0.96, -0.08, 0);
+        const vt = P.ptex("sxKioskVal", 512, 64, (g) => { for (let k = 0; k < 11; k++) { g.fillStyle = k % 2 ? "#ece6d6" : "#2f6a4a"; g.fillRect((k * 512) / 11, 0, 512 / 11 + 1, 64); } g.fillStyle = "rgba(0,0,0,0.18)"; g.fillRect(0, 56, 512, 8); });
+        this.kioskVal = new THREE.Mesh(vg, new THREE.MeshLambertMaterial({ map: vt, side: THREE.DoubleSide })); this.kioskVal.position.set(x - 1.05, 2.62, z + 0.675); this.kioskVal.castShadow = true; S.add(this.kioskVal);
+        this.kioskValBase = Float32Array.from(vg.attributes.position.array as ArrayLike<number>); }
+      // fix r3 (audit A3 ADD shot 14): newspapers clipped with pegs on a line beside the bill (they sway), a coin cup on the
+      // counter
+      { const line = col("twine", "#8a6a3a"); rod(b, line, V(x + 0.47, 2.44, z + 0.43), V(x + 0.82, 2.44, z + 0.43), 0.006); rod(b, line, V(x - 0.83, 2.44, z + 0.43), V(x - 0.47, 2.44, z + 0.43), 0.006);
+        for (const [px, k] of [[x + 0.56, 0], [x + 0.74, 1], [x - 0.66, 2]] as const) {
+          const pm = new THREE.Mesh(new THREE.PlaneGeometry(0.17, 0.3).translate(0, -0.16, 0), lam("sx_hangPaper", () => ({ map: P.foldedPaperTex(), side: THREE.DoubleSide })));
+          pm.position.set(px, 2.44, z + 0.44 + 0.004 * k); pm.castShadow = true; S.add(pm); this.hangPapers.push(pm);
+          b.add(new THREE.BoxGeometry(0.018, 0.05, 0.02), col("peg", "#c9a87a"), M(px, 2.43, z + 0.45)); }
+        b.add(new THREE.CylinderGeometry(0.05, 0.045, 0.1, 14, 1, true).translate(0, 0.05, 0), lam("sx_coinCup", () => ({ color: "#8a8f98", side: THREE.DoubleSide })), M(x + 0.6, 1.32, z + 0.22));
+        for (let k = 0; k < 3; k++) b.add(new THREE.CylinderGeometry(0.012, 0.012, 0.004, 10), col("coin", "#d8c06a"), M(x + 0.53 + k * 0.03, 1.322, z + 0.32 - k * 0.01)); }
       const rack = this.board(faceMesh(P.newsRackTex(), 1.6, 0.78), "street", 0.9); rack.position.set(x, 0.75, z + 0.41); S.add(rack);
       const side = this.board(faceMesh(P.newsRackTex(), 0.9, 0.9), "street", 0.85); side.position.set(x - 0.86, 1.7, z - 0.0); side.rotation.y = -Math.PI / 2; S.add(side);
       for (let k = 0; k < 4; k++) { const sx = x - 0.7 + k * 0.38, h0 = 1.32, hh = 0.06 + 0.05 * hash(k, 61); box(b, col("paperStack", "#e8e2d0"), sx - 0.15, h0, z + 0.05, sx + 0.15, h0 + hh, z + 0.38); box(b, col("paperBand", "#1a1a1a"), sx - 0.151, h0 + hh * 0.4, z + 0.05, sx + 0.151, h0 + hh * 0.55, z + 0.381); }
@@ -1397,7 +1617,7 @@ export class Exterior {
     }
     // street furniture: hydrant, mailbox, a wire bin, a lamp post, a parked 1960s car at the kerb, litter
     {
-      const hx = O[0] - 0.85, hz = O[2] - 0.7, red = col("hydrant", "#c4321f");
+      const hx = O[0] - 0.55, hz = O[2] - 0.65, red = col("hydrant", "#c4321f");  // fix r3: 0.3 m right, clear of the lamp post
       b.add(cyl(0.12, 0.55, 14), red, M(hx, 0.15, hz)); b.add(new THREE.SphereGeometry(0.13, 14, 8, 0, TAU, 0, Math.PI / 2), red, M(hx, 0.7, hz));
       b.add(new THREE.CylinderGeometry(0.05, 0.05, 0.36, 10).rotateZ(Math.PI / 2), red, M(hx, 0.5, hz)); b.add(cyl(0.16, 0.06, 14), red, M(hx, 0.15, hz));
       const mb = col("mailbox", "#2f4a8a"); box(b, mb, O[0] + 2.1, 0.55, O[2] - 5.6, O[0] + 2.6, 1.3, O[2] - 5.15); b.add(new THREE.CylinderGeometry(0.25, 0.25, 0.45, 16, 1, false, 0, Math.PI).rotateZ(Math.PI / 2).rotateY(Math.PI / 2), mb, M(O[0] + 2.35, 1.3, O[2] - 5.375));
@@ -1410,11 +1630,17 @@ export class Exterior {
       // lower RIGHT (tail fins toward us, roof + glass + chrome soft in the DOF), a lamp post at the kerb lower LEFT (a tall
       // framer), gutter litter (leaves, butts, grit) both sides of the kerb, a puddle with a grey-sky sheen, a round iron
       // coal-hole cover in the slabs, a road manhole off the bottom edge breathing steam, an AO band at the wall foot
-      sedan(b, M(O[0] + 3.72, 0, O[2] + 1.55, 0), "Park", "#4f8a9a", "#eeeae0");
-      flat(bd, decalM("aoCar", () => P.aoTex(), { color: "#22202e", opacity: 0.6 }), O[0] + 3.72, O[2] + 1.55, 5.8, 2.5, 0, 0.012);
-      { const lpx = O[0] - 1.0, lpz = O[2] + 0.18, lp2 = col("lampPost", "#3a4048");
-        b.add(cyl(0.2, 0.5, 14), lp2, M(lpx, 0.15, lpz)); b.add(cyl(0.085, 7.0, 12), lp2, M(lpx, 0.6, lpz)); b.add(cyl(0.13, 0.2, 12), col("lampCollar", "#4a525c"), M(lpx, 1.1, lpz));
+      // fix r3 (audit A3 P2 + carry-over CAM numbers: the cropped teal tail fins read as an unreadable slab): the parked
+      // teal / cream sedan now noses in from the LOWER LEFT, its rounded chrome front (bonnet, grille, headlight, bumper)
+      // ending at x ~ -0.1, in front of the hydrant and below the caption band; the lamp post stands at the kerb at the left
+      // edge (base x -0.78, z -0.45), a tall dark framer
+      sedan(b, M(O[0] - 2.36, 0, O[2] + 1.6, 0), "Park", "#4f8a9a", "#eeeae0");
+      flat(bd, decalM("aoCar", () => P.aoTex(), { color: "#22202e", opacity: 0.6 }), O[0] - 2.36, O[2] + 1.6, 5.8, 2.5, 0, 0.012);
+      { const lpx = O[0] - 0.78, lpz = O[2] - 0.45, lp2 = col("lampPost2", "#4a5260");
+        b.add(cyl(0.16, 0.5, 14), lp2, M(lpx, 0.15, lpz)); b.add(cyl(0.058, 7.0, 12), lp2, M(lpx, 0.6, lpz)); b.add(cyl(0.1, 0.2, 12), col("lampCollar", "#4a525c"), M(lpx, 1.1, lpz));
         rod(b, lp2, V(lpx, 7.4, lpz), V(lpx, 7.7, lpz + 1.6), 0.05); b.add(new THREE.SphereGeometry(0.3, 12, 8).scale(1, 0.4, 1.6), col("lampHead", "#9aa0a8"), M(lpx, 7.65, lpz + 1.9));
+        for (let y = 1.6; y < 6.5; y += 0.9) b.add(new THREE.TorusGeometry(0.062, 0.01, 4, 14).rotateX(Math.PI / 2), col("lampCollar", "#4a525c"), M(lpx, y, lpz));
+        b.add(cyl(0.08, 0.08, 12), col("lampCollar", "#4a525c"), M(lpx, 3.2, lpz)); cbox(b, col("lampCollar", "#4a525c"), lpx, 3.1, lpz, 0.4, 0.035, 0.035);
         flat(bd, decalM("aoLamp", () => P.aoTex(), { color: "#22202e", opacity: 0.55 }), lpx, lpz, 0.7, 0.5, 0, 0.156); }
       flat(bd, decalM("gutterLitter", () => P.gutterLitterTex()), O[0] - 0.4, O[2] + 0.22, 3.4, 0.34, 0, 0.157);
       flat(bd, decalM("gutterLitter", () => P.gutterLitterTex()), O[0] + 0.6, O[2] + 0.78, 3.6, 0.36, Math.PI, 0.008);
@@ -1422,6 +1648,8 @@ export class Exterior {
       flat(bd, texM("coalHole", () => P.manholeTex()), O[0] - 0.05, O[2] - 0.95, 0.55, 0.55, 0.3, 0.156);
       flat(bd, texM("manholeRoad", () => P.manholeTex()), O[0] + 0.5, O[2] + 1.35, 0.75, 0.75, 0, 0.006);
       this.puffs.push(...[0, 1, 2].map((k) => ({ s: this.spr(P.puffTex(), S, "#ffffff"), src: V(O[0] + 0.5, 0.15, O[2] + 1.35), n: 43 + k * 5, ph: k / 3, rise: 2.2, drift: 0.7, size: 0.75, set: "street" as const, alpha: 0.16 })));
+      // fix r3 (audit A3 ADD shot 14): a thin steam wisp breathes out of the sidewalk grate (a 60 f loop: 46 whole cycles)
+      this.puffs.push(...[0, 1, 2].map((k) => ({ s: this.spr(P.puffTex(), S, "#f4f4f6"), src: V(O[0] - 0.05, 0.2, O[2] - 0.95), n: 46, ph: k / 3, rise: 1.3, drift: 0.45, size: 0.5, set: "street" as const, alpha: 0.22 })));
       { const band = P.ptex("sxWallFoot", 64, 128, (g) => { const gr = g.createLinearGradient(0, 0, 0, 128); gr.addColorStop(0, "rgba(255,255,255,0.9)"); gr.addColorStop(1, "rgba(255,255,255,0)"); g.fillStyle = gr; g.fillRect(0, 0, 64, 128); });
         const fm = new THREE.Mesh(new THREE.PlaneGeometry(40, 0.7).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: band, color: "#2a2640", transparent: true, opacity: 0.45, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3 }));
         fm.position.set(O[0], 0.156, O[2] - 5.7); fm.layers.set(NOINK); fm.renderOrder = 1; S.add(fm); }
@@ -1431,13 +1659,16 @@ export class Exterior {
       b.add(new THREE.PlaneGeometry(0.34, 0.26), lam("sx_sheet", () => ({ map: P.newsSheetTex(), side: THREE.DoubleSide })), M(O[0] - 1.22, 1.08, O[2] - 3.28, 0.3, [1, 1, 1], -0.25, 0.4));
       this.binPage = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.26), lam("sx_sheet", () => ({ map: P.newsSheetTex(), side: THREE.DoubleSide }))); this.binPage.castShadow = true; S.add(this.binPage);
       this.kerbSheet = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.38), lam("sx_sheet", () => ({ map: P.newsSheetTex(), side: THREE.DoubleSide }))); this.kerbSheet.castShadow = true; S.add(this.kerbSheet);
+      // fix r3 (audit A3 ADD shot 14): bread crumbs by the paper bundles where the pigeon pecks
+      flat(bd, decalM("crumbs", () => P.ptex("sxCrumbs", 256, 256, (g, r) => { g.clearRect(0, 0, 256, 256); for (let i = 0; i < 70; i++) { g.fillStyle = r() < 0.5 ? "rgba(236,214,160,0.95)" : "rgba(200,160,100,0.9)"; g.beginPath(); g.ellipse(128 + (r() - 0.5) * 200, 128 + (r() - 0.5) * 160, 2 + 4 * r(), 2 + 3 * r(), r() * 3, 0, TAU); g.fill(); } })),
+        O[0] - 0.3, O[2] - 1.42, 0.5, 0.4, 0.3, 0.158);
       for (let k = 0; k < 9; k++) flat(bd, decalM("gum", () => P.puddleTex(false, 9), { color: "#3a3a40", opacity: 0.35 }), O[0] - 3 + hash(k, 71) * 7, O[2] - 5 + hash(k, 72) * 5, 0.25, 0.18, k, 0.153);
       // fix r1 (audit A1 P2: no shadows): contact shade under the kiosk, mailbox, bin, hydrant; a blue-violet shadow band
       // under the shop awning (on the sidewalk and down the facade); wet patches with the window's warm streaks and the
       // SHARES arrows' red ones (red from "crashed"); bundled papers tied with twine at the kiosk foot
       const aoM = (k: number) => new THREE.MeshBasicMaterial({ map: P.aoTex(), color: "#2a2840", transparent: true, opacity: k, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3 });
       const aoAt = (x: number, z: number, w: number, d: number, k: number, y = 0.155) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, d).rotateX(-Math.PI / 2), aoM(k)); m.position.set(O[0] + x, y, O[2] + z); m.layers.set(NOINK); m.renderOrder = 1; S.add(m); };
-      aoAt(ST.stand[0], ST.stand[2] - 0.05, 2.5, 1.6, 0.55); aoAt(2.35, -5.38, 0.9, 0.7, 0.45); aoAt(-1.25, -3.3, 0.8, 0.6, 0.45); aoAt(-0.85, -0.7, 0.55, 0.45, 0.45);
+      aoAt(ST.stand[0], ST.stand[2] - 0.05, 2.5, 1.6, 0.55); aoAt(2.35, -5.38, 0.9, 0.7, 0.45); aoAt(-1.25, -3.3, 0.8, 0.6, 0.45); aoAt(-0.55, -0.65, 0.55, 0.45, 0.45);
       { const band = P.ptex("sxAwnBand", 64, 256, (g) => { const gr = g.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, "rgba(255,255,255,0.95)"); gr.addColorStop(1, "rgba(255,255,255,0)"); g.fillStyle = gr; g.fillRect(0, 0, 64, 256); });
         const v = new THREE.Mesh(new THREE.PlaneGeometry(4.1, 0.75), new THREE.MeshBasicMaterial({ map: band, color: "#3a3468", transparent: true, opacity: 0.42, depthWrite: false })); v.position.set(O[0] - 1.55, 2.08, O[2] - 5.9); v.layers.set(NOINK); v.renderOrder = 2; S.add(v);
         const h = new THREE.Mesh(new THREE.PlaneGeometry(4.1, 1.0).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: band, color: "#3a3468", transparent: true, opacity: 0.32, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3 }));
@@ -1466,6 +1697,11 @@ export class Exterior {
       rod(b, iron, V(O[0] + 3.2, yL, z0 + 0.8), V(O[0] + 3.2, 3.25, z0 + 0.8), 0.02); rod(b, iron, V(O[0] + 3.48, yL, z0 + 0.8), V(O[0] + 3.48, 3.25, z0 + 0.8), 0.02);
       for (let y = 3.4; y < yL; y += 0.3) rod(b, iron, V(O[0] + 3.2, y, z0 + 0.8), V(O[0] + 3.48, y, z0 + 0.8), 0.012);
       for (const x of [2.0, 3.45]) rod(b, iron, V(O[0] + x, yL - 0.05, z0 + 0.9), V(O[0] + x, yL - 0.65, z0 + 0.02), 0.02);
+      // fix r3 (audit A3 ADD shot 14): washing pegged on a line across the fire-escape landing, stirring in the wind
+      rod(b, col("twine", "#8a6a3a"), V(O[0] + 1.95, yL + 0.95, z0 + 0.55), V(O[0] + 3.5, yL + 0.95, z0 + 0.55), 0.006);
+      for (const [x, w, h, c0] of [[2.2, 0.36, 0.42, "#f2efe6"], [2.68, 0.3, 0.5, "#3e5f8a"], [3.12, 0.32, 0.3, "#c8452c"]] as const) {
+        const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h).translate(0, -h / 2, 0), lam("sx_wash" + c0, () => ({ color: c0, side: THREE.DoubleSide })));
+        m.position.set(O[0] + x, yL + 0.95, z0 + 0.55); m.castShadow = true; S.add(m); this.hangPapers.push(m); }
       cbox(b, col("windowBox", "#6a3a24"), O[0] - 0.28, 5.3, O[2] - 5.92, 1.3, 0.2, 0.26);
       const gm = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 0.48), lam("sx_geranium", () => ({ map: P.geraniumTex(), transparent: true, alphaTest: 0.4, side: THREE.DoubleSide })));
       gm.position.set(O[0] - 0.28, 5.56, O[2] - 5.86); gm.castShadow = true; S.add(gm);
@@ -1517,6 +1753,10 @@ export class Exterior {
     // ---- the LOANS counter: shot 1 only (A1 decision: never in shot 16; it casts no shadow, and at P0 it is out of the
     // frustum, so frame 0 = the last frame); it rolls from "borrowed" and lands on "$150 million" ----
     this.counter.visible = id === 1;
+    // fix r3: the counter's own rail shows with it (shot 1 only: no orphan goalpost in shots 4 / 7); the rim posts cast
+    // except in shot 7 (their late-sun lattice crossed the lender and the hatch)
+    this.counterRail.visible = id === 1;
+    { const cast = id !== 7; for (const c of this.railPosts.children) (c as THREE.Mesh).castShadow = cast; }
     if (id === 1) this.flaps.forEach((F, i) => {
       const st = flapState(i, f);
       if (st.p < 0) { setHalf(F.top.geometry.attributes.uv as THREE.BufferAttribute, st.cur, true); setHalf(F.bot.geometry.attributes.uv as THREE.BufferAttribute, st.cur, false); F.flap.visible = false; }
@@ -1536,40 +1776,54 @@ export class Exterior {
       U.uFlash.value = id === 1 ? Math.max(bellF((f - (BEAT.y1963 - 4)) / 8), 0.8 * bellF((f - 46) / 8)) : 0;
       U.uCloud.value = loop ? 0.85 : 0;
       const dp = fract((30 * tau) / VOICE_TOTAL + 0.6); U.uDrip.value = loop && dp < 0.35 ? dp / 0.35 : 0; U.uDripK.value = loop ? 1 : 0;
-      U.uFilm.value = id === 7 ? 1 : 0; U.uPop.value = id === 7 ? f - (BEAT.insideQEnd - 16) : -1; }
+      U.uFilm.value = id === 7 ? 1 : 0; U.uPop.value = id === 7 ? f - (BEAT.insideQEnd - 16) : -1; U.uFat.value = id === 7 ? f - (BEAT.insideQEnd - 12) : -1; }
     const rip = (p: V3) => [(p[0] - HC[0]) / TK.hatch.r, (p[2] - HC[2]) / TK.hatch.r] as [number, number];
     const PLUNK = BEAT.drop + 36;  // fix2 LEAD (AUDIO): the plunk lands in the 'inside,|and' breath
     // the loop tape sways +-1 deg in the harbour wind (whole cycles on tau: the loop frame matches frame 0)
     const sway: V3 = loop ? [0.014 * cyc(9, tau, 0.4) * gust(tau, 0.7), 0, 0.009 * cyc(7, tau, 1.1)] : [0, 0, 0];
     const tapeIn: V3 = [TK.tapeIn[0] + sway[0], TK.tapeIn[1], TK.tapeIn[2] + sway[2]];
     if (loop) { U.uRip.value.set(...rip(tapeIn)); U.uRipK.value = 1; U.uRingK.value = 0; U.uGlint.value.set(0.36, -0.42); }
-    else if (id === 4) { U.uRip.value.set(...rip(TK.tape4In)); U.uRipK.value = 0.15 + 0.85 * smooth((f - PLUNK) / 10) * (1 - 0.5 * smooth((f - PLUNK - 60) / 80)); U.uRing.value = Math.max(0, (f - PLUNK) * 0.045); U.uRingK.value = f >= PLUNK ? 1 : 0; U.uGlint.value.set(0.34, -0.4); }
+    else if (id === 4) { U.uRip.value.set(...rip(TK.tape4In)); U.uRipK.value = 0.15 + 0.85 * smooth((f - PLUNK) / 10) * (1 - 0.5 * smooth((f - PLUNK - 60) / 80)) * (1 - 0.7 * smooth((f - (BEAT.shout + 2)) / 30)); U.uRing.value = Math.max(0, (f - PLUNK) * 0.045); U.uRingK.value = f >= PLUNK ? 1 : 0; U.uGlint.value.set(0.34, -0.4); }
     else { const BL = BEAT.insideQEnd; /* fix1 LEAD (AUDIO): one pop, with the bubble */ U.uRip.value.set(0.05, 0.05); U.uRipK.value = 0.12; U.uRing.value = Math.max(0, (f - BL) * 0.035); U.uRingK.value = f >= BL ? 0.7 : 0; U.uGlint.value.set(-0.36, -0.4); }
     // the loop shot: the gold parts on "fake" (16 f) and settles from "trust" (24 f); exactly 0 well before the last frame
     // fix r2 (audit A2 P2): the parting starts 2 f before "fake" and eases open over 18 f (it was 4 f late and 12 f fast)
     U.uOpen.value = id === LAST ? 0.74 * smooth((f - (BEAT.fake - 2)) / 18) * (1 - smooth((f - BEAT.trust) / 24)) : 0;
     // ---- the tape: shots 1 / 16 the loop pose (from CHAR's card tape at TK.tapeTop into the oil; NO world reel there, the
     // belt reel is CHAR's); shot 4 it pays out from his hand from "drop" with the reel in his hand, shot 7 none ----
-    const showTape = loop || (id === 4 && f >= BEAT.drop + 12);
+    // fix r3 (audit A3 P2 shot 4: after he stood, the tape stayed a rigid yellow stick standing out of the hatch): he REELS IT
+    // IN as he stands (RIN0..RIN1, with the whirr): the top end follows his hand to his hip, the plumb comes up out of the oil
+    // with it, the hatch is empty by RIN1
+    const RIN0 = BEAT.shout - 6, RIN1 = RIN0 + 12;
+    const showTape = loop || (id === 4 && f >= BEAT.drop + 12 && f < RIN1);
     const reel4 = id === 4 && f >= BEAT.drop + 12 && f < BEAT.shout - 8;
-    this.tape.visible = showTape; this.reel.visible = reel4; this.bob.visible = id === 4 && f >= BEAT.drop + 12 && f < PLUNK + 2;
+    this.tape.visible = showTape; this.reel.visible = reel4; this.bob.visible = id === 4 && ((f >= BEAT.drop + 12 && f < PLUNK + 2) || (f >= RIN0 + 2 && f < RIN1));
     this.tape90.visible = loop;
     for (const s of this.splash4) s.visible = false;
+    this.plunkRing.visible = false;
     if (showTape) {
-      const a = V(...(loop ? TK.tapeTop : TK.tape4Top)), end = V(...(loop ? tapeIn : TK.tape4In)), d = end.clone().sub(a), Lf = d.length();
-      const k = loop ? 1 : clamp01((f - BEAT.drop - 12) / (PLUNK - BEAT.drop - 12)) ** 1.6, L = Math.max(0.01, Lf * k);
+      const hip = smooth((f - (BEAT.shout - 8)) / 8), top4 = V(...TK.tape4Top).lerp(V(TK.tapeKneel[0] + 0.1, 11.62, TK.tapeKneel[2] + 0.08), id === 4 ? hip : 0);
+      const a = loop ? V(...TK.tapeTop) : top4, end = V(...(loop ? tapeIn : TK.tape4In)), d = end.clone().sub(a), Lf = d.length();
+      const k = loop ? 1 : clamp01((f - BEAT.drop - 12) / (PLUNK - BEAT.drop - 12)) ** 1.6 * (1 - smooth((f - RIN0) / (RIN1 - RIN0))), L = Math.max(0.01, Lf * k);
       const dir = d.normalize(), tip = a.clone().addScaledVector(dir, L);
       const yv = dir.clone().negate(), toCam = ctx.cam.position.clone().sub(a), zv = toCam.addScaledVector(yv, -toCam.dot(yv)).normalize(), xv = new THREE.Vector3().crossVectors(yv, zv);
-      this.m4.makeBasis(xv, yv, zv).setPosition(a); this.tape.matrixAutoUpdate = false; this.tape.matrix.copy(this.m4).multiply(new THREE.Matrix4().makeScale(1, L, 1)); this.tape.matrixWorldNeedsUpdate = true;
+      this.m4.makeBasis(xv, yv, zv).setPosition(a); this.tape.matrixAutoUpdate = false; this.tape.matrix.copy(this.m4).multiply(new THREE.Matrix4().makeScale(id === 4 ? 1.35 : 1, L, 1)); this.tape.matrixWorldNeedsUpdate = true;
+      { const tm = this.tape.material as THREE.MeshBasicMaterial, want = id === 4 ? this.tape4Tex : this.tapeTex; if (tm.map !== want) { tm.map = want; tm.needsUpdate = true; } }
       if (loop) { const c90 = end.clone().addScaledVector(dir, -0.085).addScaledVector(zv, 0.002); this.tape90.matrix.makeBasis(xv, yv, zv).setPosition(c90); this.tape90.matrixWorldNeedsUpdate = true; }
-      this.tapeTex.repeat.set(1, L / 0.5); this.tapeTex.offset.set(0, loop ? fract((55 * tau) / VOICE_TOTAL) : -(L / 0.5));
+      { const tt = id === 4 ? this.tape4Tex : this.tapeTex; tt.repeat.set(1, L / 0.5); tt.offset.set(0, loop ? fract((55 * tau) / VOICE_TOTAL) : -(L / 0.5)); }
       if (this.bob.visible) { this.bob.position.copy(tip).addScaledVector(dir, 0.05); }
       // fix r2 (audit A2 ADD shot 4): the brass bob catches the noon sun for 3 f as it drops
       { const gk = (f - (BEAT.drop + 17)) / 3; this.bobGlint.visible = id === 4 && gk >= 0 && gk < 1;
         if (this.bobGlint.visible) { this.bobGlint.position.copy(tip).addScaledVector(dir, 0.02); this.bobGlint.scale.setScalar(0.09 * Math.sin(Math.PI * gk) + 0.03); } }
       if (reel4) { this.reel.position.set(TK.tape4Top[0] + 0.03, TK.tape4Top[1] + 0.1, TK.tape4Top[2]); this.reel.rotation.set(0, Math.PI / 2, -L * 9); }
-      if (id === 4 && f >= PLUNK && f < PLUNK + 16) this.splash4.forEach((s, i) => { const u = (f - PLUNK) / 16, a0 = (i / 5) * TAU + 0.4; s.visible = true;
-        s.position.set(end.x + Math.cos(a0) * 0.06 * (0.4 + u), TK.hatch.oil + 0.16 * Math.sin(Math.PI * u) * (0.7 + 0.3 * hash(i, 81)), end.z + Math.sin(a0) * 0.06 * (0.4 + u)); s.scale.setScalar(0.035 * (1 - u * 0.5)); });
+      // fix r3: the plunk reads at phone size: 4 fat gold droplets thrown up 0.24 m and out (12 f) + a bright gold ring (8 f)
+      // (r3 check: from the high 3/4 the oil sits 0.63 m down the neck, out of sight): the droplets LEAP out of the hatch
+      // mouth (up to ~0.35 m over the rim) and fall back, 16 f; a gold glow pulses up the neck (8 f)
+      if (id === 4 && f >= PLUNK && f < PLUNK + 16) this.splash4.forEach((s, i) => { const u = (f - PLUNK) / 16, a0 = (i / 5) * TAU + 0.6, hk = 0.8 + 0.2 * hash(i, 81); s.visible = true;
+        s.position.set(end.x + Math.cos(a0) * 0.2 * u, TK.hatch.oil + 0.03 + 0.95 * hk * 4 * u * (1 - u), end.z + Math.sin(a0) * 0.16 * u); s.scale.set(0.06 * (1 - 0.25 * u), 0.09 * (1 - 0.25 * u), 1); });
+      { const gk = (f - PLUNK) / 8; this.bobGlint.visible = this.bobGlint.visible || (id === 4 && gk >= 0 && gk < 1);
+        if (id === 4 && gk >= 0 && gk < 1) { this.bobGlint.position.set(end.x, TK.hatch.rim - 0.05, end.z); this.bobGlint.scale.setScalar(0.5 * Math.sin(Math.PI * gk) + 0.05); } }
+      { const ru = (f - PLUNK) / 8; this.plunkRing.visible = id === 4 && ru >= 0 && ru < 1;
+        if (this.plunkRing.visible) { this.plunkRing.position.set(end.x, TK.hatch.oil + 0.004, end.z); this.plunkRing.scale.setScalar(0.1 + 0.6 * Math.sqrt(ru)); (this.plunkRing.material as THREE.MeshBasicMaterial).opacity = 1 - ru * ru; } }
     }
     // ---- the windsock: points downwind, droops with the gusts, flutters ----
     {
@@ -1596,15 +1850,36 @@ export class Exterior {
       }
       // fix r2 (audit A2 P3 shot 1): the tug in the harbour gap blows its whistle (AUDIO horn_1 ~165): a white steam burst
       // from beside its funnel, 4 puffs 3 f apart from 160, each rising and swelling over 26 f (unfogged so it reads)
-      this.horn.forEach((s, k) => { const u = (f - (160 + 3 * k)) / 26; s.visible = id === 1 && u >= 0 && u < 1; if (!s.visible) return;
-        s.position.set(this.tug.position.x + 1.4 + WIND.x * 4 * u, 7.0 + 6 * u, this.tug.position.z + WIND.z * 4 * u);
-        s.scale.setScalar(3.2 + 6.5 * u); const mat = s.material as THREE.SpriteMaterial; mat.opacity = 0.9 * Math.sin(Math.PI * Math.min(1, u * 1.6)) ** 0.6 * (1 - u * 0.5); mat.color.set(dawn ? "#fff2e8" : "#ffffff"); });
+      // fix r3 (audit A3 P3 shot 1: nothing synced to the horn at 165): bigger bursts (~60-150 px), and the freighter's
+      // whistle answers beside its funnel (3 white puffs from 162), both rising in the harbour band
+      this.horn.forEach((s, k) => { const fr = k >= 4, kk = fr ? k - 4 : k, u = (f - (160 + 3 * kk + (fr ? 2 : 0))) / (fr ? 32 : 26); s.visible = id === 1 && u >= 0 && u < 1; if (!s.visible) return;
+        const sh = fr ? this.freighter : this.tug, ox = fr ? -37.3 : 1.4, oy = fr ? 24.5 : 7.0;
+        s.position.set(sh.position.x + ox + WIND.x * (fr ? 9 : 5) * u, oy + (fr ? 11 : 7) * u, sh.position.z + WIND.z * 4 * u);
+        s.scale.setScalar(fr ? 7 + 15 * u : 5 + 10 * u); const mat = s.material as THREE.SpriteMaterial; mat.opacity = 0.95 * Math.sin(Math.PI * Math.min(1, u * 1.6)) ** 0.6 * (1 - u * 0.5); mat.color.set(dawn ? "#fff2e8" : "#ffffff"); });
     }
     // ---- fix r2: shot 1's warm glow over the hatch mouth (fades in as the crane lifts, so frame 0 is untouched); the dawn
     // sun patch on the loop frame's near plates; the far tank man with his own tape (shot 4 A only) ----
     { const k = id === 1 ? smooth((f - 60) / 40) : 0; this.hatchGlow.visible = k > 0.001;
       if (this.hatchGlow.visible) { this.hatchGlow.position.set(O[0] + HC[0], TK.hatch.rim + 0.06, O[2] + HC[2]); this.hatchGlow.scale.setScalar(1.05); (this.hatchGlow.material as THREE.SpriteMaterial).opacity = 0.26 * k; } }
     this.sunPatch.visible = ctx.light.name === "dawn_gold";
+    // ---- fix r3: the loop frame's rail-bar shadow (dawn shots; it fades as shot 1's crane lifts, untouched at frame 0 and
+    // through shot 16); dew glints on the rivets in step with the oil's star glint; the logbook page + pencil in the wind;
+    // the sky in shot 4 B's puddle (all tau / whole cycles: frame 0 = the last frame) ----
+    { const k = id === LAST ? 1 : id === 1 ? 1 - smooth((f - 22) / 26) : 0; this.railShadow.visible = k > 0.001; (this.railShadow.material as THREE.MeshBasicMaterial).opacity = 0.62 * k; }
+    { const dr = (TAU * 3 * tau) / VOICE_TOTAL;
+      this.dew.forEach((s, i) => { s.visible = loop; if (!loop) return; const tw = Math.max(0, Math.sin(dr * 23 + i * 1.9)) ** 6;
+        s.scale.setScalar(0.03 + 0.05 * tw); (s.material as THREE.SpriteMaterial).opacity = 0.25 + 0.75 * tw; }); }
+    { const lift = Math.max(0, cyc(17, tau, 0.3)) ** 2 * gust(tau, 2.1); this.logPage.children[0].rotation.z = (2.6 * lift * Math.PI) / 180;
+      const roll = 0.004 * cyc(13, tau, 1.2), yw = this.pencil.rotation.y; this.pencil.position.set(O[0] - 0.135 + Math.sin(yw) * roll, H + 0.0255, O[2] + 6.42 + Math.cos(yw) * roll);
+      this.pencil.rotation.x = -roll / 0.006; }
+    this.skyPuddle.visible = id === 4;
+    this.standGulls.forEach((g, k) => { const on = id === 4 && f >= SHOTS[3].a + 150; g.visible = on; if (!on) return;
+      const mat = g.material as THREE.SpriteMaterial, t0 = BEAT.andInspector + 2 + 4 * k, u = (f - t0) / 24, sx = O[0] - 0.85 + (k ? 0.32 : -0.28), sz = O[2] + 7.8;
+      if (u < 0) { if (mat.map !== P.gullPerchTex()) { mat.map = P.gullPerchTex(); mat.needsUpdate = true; } g.center.set(0.5, 0.08);
+        g.position.set(sx, 1.33 + 0.01 * Math.abs(Math.sin(ctx.vf * 0.4 + k)), sz); g.scale.set((k ? -0.4 : 0.4), 0.4, 1); }
+      else if (u < 1.2) { const fr = Math.floor(f / 2 + k) % 3, tx = P.gullTex(fr === 1 ? 1 : fr === 2 ? 2 : 0); if (mat.map !== tx) { mat.map = tx; mat.needsUpdate = true; } g.center.set(0.5, 0.5);
+        g.position.set(sx - (1.2 + 0.4 * k) * u - 0.8 * u * u, 1.5 + 1.0 * u + 2.2 * u * u, sz - 0.6 * u); g.scale.set(0.8 + 0.3 * u, 0.4 + 0.15 * u, 1); }
+      else g.visible = false; });
     this.tapeMan.visible = this.tapeLine.visible = id === 4;
     if (id === 4) { this.tapeMan.position.y = TK.tanks[1].h + 0.75 + 0.02 * Math.sin(ctx.vf * 0.31); this.tapeLine.scale.y = 0.85 + 0.15 * Math.sin(ctx.vf * 0.11); }
     // ---- shot 1 / 7 / 16: a gull's shadow flicks across the roof and the gold; shot 7: a slow cloud shadow as the light turns
@@ -1620,15 +1895,21 @@ export class Exterior {
         this.gullShadow.scale.setScalar(1 + 0.12 * Math.sin(gu * 9)); }
       // the big gull shadow: shot 7 across the roof (BEAT.soHow + 2 .. + 30), shot 4 B across the gravel yard (the far gull's
       // cry ~825) right to left
-      { const p7 = id === 7 ? (f - (BEAT.soHow + 2)) / 28 : -1, p4 = id === 4 ? (f - 818) / 16 : -1, on7 = p7 >= 0 && p7 <= 1, on4 = p4 >= 0 && p4 <= 1;
+      // fix r3 (audit A3 P2 shot 7: gull_7 played with no gull in frame): the shadow now crosses the roof BEHIND the lender,
+      // screen left -> right (+z -> -z), 1176 -> 1214, a 0.85 m wingspan, a slight wobble as it banks
+      { const p7 = id === 7 ? (f - (BEAT.soHow + 10)) / 38 : -1, p4 = id === 4 ? (f - 818) / 16 : -1, on7 = p7 >= 0 && p7 <= 1, on4 = p4 >= 0 && p4 <= 1;
         this.gullShadow2.visible = on7 || on4;
-        if (on7) { this.gullShadow2.position.set(O[0] + 2.4 - 4.6 * p7, H + 0.02, O[2] + 7.0 - 2.6 * p7); this.gullShadow2.rotation.set(0, Math.atan2(4.6, 2.6) + Math.PI, 0); this.gullShadow2.scale.setScalar(1.15 * (1 + 0.1 * Math.sin(p7 * 11))); }
+        if (on7) { this.gullShadow2.position.set(O[0] - 1.7 + 0.25 * p7, H + 0.02, O[2] + 6.7 - 2.6 * p7); this.gullShadow2.rotation.set(0, Math.atan2(0.25, -2.6) + Math.PI, 0); this.gullShadow2.scale.setScalar(0.85 * (1 + 0.1 * Math.sin(p7 * 11))); }
         if (on4) { this.gullShadow2.position.set(O[0] + 3.6 - 4.8 * p4, 0.025, O[2] + 12.4 - 2.4 * p4); this.gullShadow2.rotation.set(0, Math.atan2(4.8, 2.4) + Math.PI, 0); this.gullShadow2.scale.setScalar(1.3 * (1 + 0.1 * Math.sin(p4 * 9))); } }
       // shot 4 B: a newspaper scrap skitters across the gravel in a gust (830-872), tumbling and settling
       { const u = (f - 830) / 42; this.scrap4.visible = id === 4 && u >= 0 && u < 1.6;
         if (this.scrap4.visible) { const uu = Math.min(1, u), hop = 0.18 * Math.abs(Math.sin(uu * Math.PI * 3.2)) * (1 - uu);
           this.scrap4.position.set(O[0] + 3.2 - 3.0 * (1 - (1 - uu) ** 2), 0.03 + hop, O[2] + 12.2 - 0.9 * uu);
           this.scrap4.rotation.set(-Math.PI / 2 + (1 - uu) * 1.4 * Math.sin(uu * 17), uu * 6 + (1 - uu) * Math.sin(uu * 9), 0.5 * (1 - uu) * Math.sin(uu * 13)); } }
+      // fix r3 (audit A3 ADD shot 16): before "fake", one gull shadow glides left -> right across the plates and the gold
+      { const u = id === LAST ? (f - (SHOTS[LAST - 1].a + 1)) / 32 : -1; this.gullShadow3.visible = u >= 0 && u <= 1;
+        if (this.gullShadow3.visible) { const x = -0.95 + 1.9 * u, z = 4.95 + 0.75 * u; this.gullShadow3.position.set(O[0] + x, H + 0.3, O[2] + z);
+          this.gullShadow3.rotation.set(0, Math.atan2(-1.9, -0.75), 0); this.gullShadow3.scale.setScalar(1 + 0.1 * Math.sin(u * 9)); } }
       const cu = (f - BEAT.soHow - 28) / 80;
       this.cloudShadow.visible = id === 7 && cu > 0;
       if (this.cloudShadow.visible) { this.cloudShadow.position.set(O[0] + 3.2 - 5.4 * cu, H + 0.014, O[2] + 8.2 - 4.4 * cu); (this.cloudShadow.material as THREE.MeshBasicMaterial).opacity = 0.2 * smooth(cu * 4); }
@@ -1688,34 +1969,40 @@ export class Exterior {
           this.signGull.position.set(gx, gy + bob, gz0); this.signGull.scale.set(0.46 * turn, 0.46, 1); }
         else { const fr = Math.floor(f / 2) % 3, tx = P.gullTex(fr === 1 ? 1 : fr === 2 ? 2 : 0); if (mat.map !== tx) { mat.map = tx; mat.needsUpdate = true; } this.signGull.center.set(0.5, 0.5);
           this.signGull.position.set(gx - 1.4 * u - 0.6 * u * u, gy + 0.25 + 1.2 * u + 1.6 * u * u, gz0 + 0.8 * u); this.signGull.scale.set(0.95 + 0.25 * u, 0.48 + 0.12 * u, 1); } } }
-    if (id === 9) this.stairBulb.color.setRGB(2.6, 1.7, 0.85); else this.stairBulb.color.setRGB(0.85, 0.82, 0.74);
+    if (id === 9) this.stairBulb.color.setRGB(3.6, 2.3, 1.05); else this.stairBulb.color.setRGB(0.85, 0.82, 0.74);
+    this.slow.visible = id === 2; this.soggy.visible = id === 9;  // fix r3 (A3 P1): no SLOW in the storm
     // ---- the riser's pressure gauge needle jitters (idle life, video clock) ----
     this.needle.rotation.set(0, 0, -(0.45 + 0.07 * cyc(31, vf) + 0.04 * cyc(73, vf, 1.3) + 0.025 * cyc(151, vf, 0.5)));
-    // ---- the drip (shot 2): a fat glinting drop swells on the spout for 8 f, lets go as "oil." ends, falls 12 f and
-    // lands on oil1End + 6 (the plip) with a splash ring + 3 droplets; the puddle grows a little ----
+    // ---- the drip (shot 2). fix r3 (audit A3 P2: a detached speck hung under the spout for 2 s; the drop fell BEHIND the
+    // green pipe and the 'plip' played over nothing): a bead GROWS on the spout lip from t0 - 16 (attached, its body over
+    // the lip), lets go as "oil." ends (t0) 1.3x fatter, falls 12 f in front of the pipe's axis and lands ON the pipe's top
+    // at t0 + 12 = oil1End + 6 (the plip, AUDIO unchanged) with a thin splash crown, 3 droplets (12 f) and a wet glint that stays; then a fresh bead
+    // slowly regrows ----
     {
-      const s2 = id === 2, t0 = BEAT.oil1End - 6, land = t0 + 12, mx = O[0] + SPOUT[0], my = SPOUT[1], mz = O[2] + SPOUT[2];
+      const s2 = id === 2, t0 = BEAT.oil1End - 6, land = t0 + 12, mx = O[0] + SPOUT[0], my = SPOUT[1] + 0.025, mz = O[2] + SPOUT[2], fz = mz + 0.12, pipeY = 0.405;
       const fw = new THREE.Vector3(); cam.getWorldDirection(fw);
       const depth = Math.max(0.5, this.v.set(mx, my, mz).sub(cam.position).dot(fw)), ppm = 1920 / (2 * depth * Math.tan((cam.fov * Math.PI) / 360));
-      // fix r2 (audit A2 P1): a 44 px clear-white drop (2.5x), a 3 f glint on the spout as it lets go, a 0.3 m ripple ring
-      // and 3 splash droplets on landing that read for 10-12 f
-      const dropH = Math.max(0.11, 44 / ppm), sh = dropH / 0.84, sw = sh * (128 / 192);
-      const swell = smooth((f - (t0 - 8)) / 8);
-      this.drop.visible = s2 && f >= t0 - 8 && f < land;
+      const dropH = 1.3 * Math.max(0.11, 44 / ppm), sh = dropH / 0.84, sw = sh * (128 / 192), CY = 0.85;
+      this.drop.center.set(0.5, CY); this.bead.center.set(0.5, CY);
+      this.drop.visible = s2 && f >= t0 - 16 && f < land;
       if (this.drop.visible) {
-        if (f < t0) { const k = 0.42 + 0.58 * swell; this.drop.position.set(mx, my, mz); this.drop.scale.set(sw * k, sh * k, 1); }
-        else { const u = (f - t0) / 12; this.drop.position.set(mx, my - (my - dropH) * u * u, mz); this.drop.scale.set(sw * (1 - 0.08 * u), sh * (1 + 0.22 * u), 1); }
+        if (f < t0) { const k = 0.18 + 0.82 * smooth((f - (t0 - 16)) / 16), wob = 1 + 0.04 * Math.sin((f - t0) * 1.3) * (f > t0 - 5 ? 1 : 0); this.drop.position.set(mx, my, fz - 0.06); this.drop.scale.set(sw * k / wob, sh * k * wob, 1); }
+        else { const u = (f - t0) / 12, yEnd = pipeY + 0.777 * sh; this.drop.position.set(mx, my - (my - yEnd) * u * u, fz - 0.06 + 0.06 * u); this.drop.scale.set(sw * (1 - 0.08 * u), sh * (1 + 0.22 * u), 1); }
       }
-      this.bead.visible = s2 && (f < t0 - 8 || f >= t0 + 2);
-      if (this.bead.visible) { const k = f < t0 ? 0.42 : 0.42 * smooth((f - t0 - 2) / 24); this.bead.position.set(mx, my, mz); this.bead.scale.set(sw * k, sh * k, 1); }
+      this.bead.visible = s2 && f >= t0 + 3;
+      if (this.bead.visible) { const k = 0.4 * smooth((f - t0 - 3) / 30); this.bead.position.set(mx, my, fz - 0.06); this.bead.scale.set(sw * k, sh * k, 1); }
       { const gu = (f - (t0 - 1)) / 3.5; this.spoutGlint.visible = s2 && gu >= 0 && gu < 1;
-        if (this.spoutGlint.visible) { this.spoutGlint.position.set(mx + 0.03, my + 0.02, mz + 0.06); this.spoutGlint.scale.setScalar(dropH * 1.8 * Math.sin(Math.PI * gu)); } }
-      const ru = (f - land) / 12;
-      this.dripRing.visible = s2 && ru >= 0 && ru < 1;
-      if (this.dripRing.visible) { this.dripRing.position.set(mx, 0.035, mz); this.dripRing.scale.setScalar(0.08 + 0.52 * Math.sqrt(ru)); (this.dripRing.material as THREE.MeshBasicMaterial).opacity = 1 - ru * ru; }
-      this.dropKids.forEach((s, i) => { const v = (f - land) / 11; s.visible = s2 && v >= 0 && v < 1; if (!s.visible) return; const a = 0.6 + i * 2.1, k = Math.max(0.03, dropH * 0.34) * (1 - 0.3 * v);
-        s.position.set(mx + Math.cos(a) * 0.16 * v, 0.03 + 0.7 * dropH * 4 * v * (1 - v), mz + Math.sin(a) * 0.12 * v); s.scale.set(k * (128 / 192), k, 1); });
-      const g = smooth((f - land) / 8); this.dripPuddle.scale.set(0.72 + 0.2 * g, 1, 0.52 + 0.14 * g);
+        if (this.spoutGlint.visible) { this.spoutGlint.position.set(mx + 0.03, my - 0.02, mz + 0.08); this.spoutGlint.scale.setScalar(dropH * 1.8 * Math.sin(Math.PI * gu)); } }
+      // (r3 check: the splash has only ~3 f before the 10 f dissolve into shot 3): a BIG crown (~90 px) that pops in on the plip
+      const cu = (f - land + 1) / 9; this.dripCrown.visible = s2 && cu >= 0 && cu < 1;
+      if (this.dripCrown.visible) { this.dripCrown.position.set(mx, pipeY - 0.01, fz); const w = Math.max(0.26, 90 / ppm) * (0.75 + 0.45 * Math.sqrt(cu)); this.dripCrown.scale.set(w, w * 0.7, 1);
+        (this.dripCrown.material as THREE.SpriteMaterial).opacity = 1 - cu * cu; }
+      const wk = (f - land) / 40; this.dripWet.visible = s2 && wk >= 0 && wk < 1;
+      if (this.dripWet.visible) { this.dripWet.position.set(mx + 0.01, pipeY + 0.01, fz); this.dripWet.scale.setScalar(Math.max(0.05, 16 / ppm) * (0.6 + 0.4 * Math.cos(wk * 9))); (this.dripWet.material as THREE.SpriteMaterial).opacity = 0.9 * (1 - wk); }
+      this.dripRing.visible = false;
+      this.dropKids.forEach((s, i) => { const v = (f - land + 1) / 12; s.visible = s2 && v >= 0 && v < 1; if (!s.visible) return; const a = [0.5, 2.6, 1.6][i], k = Math.max(0.05, dropH * 0.5) * (1 - 0.3 * v);
+        s.position.set(mx + Math.cos(a) * 0.26 * v, pipeY + 0.03 + 0.24 * 4 * v * (1 - v) - 0.15 * v * v, fz + 0.02 + Math.sin(a) * 0.05 * v); s.scale.set(k * (128 / 192), k, 1); });
+      this.dripPuddle.scale.set(0.75, 1, 0.5);
     }
     // ---- BANKRUPT (shot 9): slapped onto the sign on "bust" (a 6 f overshoot settle, a spray burst off the wet sign); its
     // half-glued lower corner flutters in the wind ----
@@ -1756,30 +2043,50 @@ export class Exterior {
         this.rain.setColorAt(i, this.c.setScalar((0.3 + 0.3 * clamp01((d - 2.5) / 18)) * (1 + 1.4 * fl.all)));
       }
       this.rain.instanceMatrix.needsUpdate = true; if (this.rain.instanceColor) this.rain.instanceColor.needsUpdate = true;
-      // splash crowns: 0.15-0.3 m, full white for ~5 f, about a third alive each frame, denser near the lens
+      // fix r3 (audit A3 P2): thin crown splashes, 16-28 px at 1080 whatever the distance, alpha ~0.55, life 4-6 f, at seeded
+      // spots (denser near the lens); fix r3 puddle rings: 2 -> ~32 px over 10-12 f, hairline, in every puddle + the pour
+      const ppmAt = (d: number) => 1920 / (2 * d * tv);
       for (let i = 0; i < this.crowns.count; i++) {
-        const per = 14 + 10 * hash(i, 101), uu = fract(vf / per + hash(i, 102)), c0 = Math.floor(vf / per + hash(i, 102)), life = 5 / per;
+        const per = 13 + 9 * hash(i, 101), uu = fract(vf / per + hash(i, 102)), c0 = Math.floor(vf / per + hash(i, 102)), life = (4 + 2 * hash(i, 106)) / per;
         const d = 1.6 + 19 * Math.pow(hash(i, 103 + c0 * 7), 1.5), x = (hash(i, 104 + c0 * 5) - 0.5) * d * 0.66;
         const px = cam.position.x + fw.x * d + rt.x * x, pz = cam.position.z + fw.z * d + rt.z * x, v = uu / life;
-        const sz = uu < life ? (0.1 + 0.1 * hash(i, 105 + c0 * 3)) * Math.sin(Math.PI * v) ** 0.6 : 0;
+        const sz = uu < life ? (((16 + 12 * hash(i, 105 + c0 * 3)) * clamp01(Math.max(0.45, 4 / d))) / ppmAt(d)) * (0.55 + 0.45 * Math.sin(Math.PI * Math.min(1, v * 1.3)) ** 0.5) : 0;
         this.q.setFromEuler(_e.set(0, Math.atan2(cam.position.x - px, cam.position.z - pz), 0, "YXZ"));
-        this.m4.compose(this.v.set(px, 0.012, pz), this.q, this.sc.set(sz * 1.3, sz, 1)); this.crowns.setMatrixAt(i, this.m4);
+        this.m4.compose(this.v.set(px, 0.012, pz), this.q, this.sc.set(sz * 1.4, sz, 1)); this.crowns.setMatrixAt(i, this.m4);
       }
       this.crowns.instanceMatrix.needsUpdate = true;
-      // fix r2 (audit A2 P3: big even concentric circles): raindrop rings in the puddles: life 18-22 f, radius 8 -> 60 px at
-      // 1080 (sized by distance), a hairline, alpha 0.6 -> 0, at most 8 in the puddles + 6 under the beam's pour
-      const gx = TF.gate.half + 0.12, ppmK = 1920 / (2 * tv);
+      const gx = POUR9[0], ppmK = 1920 / (2 * tv);
       for (let i = 0; i < this.ripples.count; i++) {
-        const pour = i >= 40, act = pour ? i < 46 : i < 8;
+        const pour = i >= 64, refl = i >= 48 && i < 64, act = pour ? i < 70 : refl ? true : i < 30;
         if (!act) { this.m4.makeScale(0, 0, 0); this.ripples.setMatrixAt(i, this.m4); this.ripples.setColorAt(i, this.c.setScalar(0)); continue; }
-        const per = 18 + 4 * hash(i, 121), uu = fract(vf / per + hash(i, 122)), c0 = Math.floor(vf / per + hash(i, 122));
+        const per = (pour ? 9 : 11) + 3 * hash(i, 121), uu = fract(vf / per + hash(i, 122)), c0 = Math.floor(vf / per + hash(i, 122));
         const pd = STORM_PUDDLES[i % STORM_PUDDLES.length];
-        const cx = pour ? gx + (hash(i, 123 + c0) - 0.5) * 0.25 : pd[0] + (hash(i, 124 + c0 * 3) - 0.5) * pd[2] * 0.7, cz = pour ? TF.gate.z + 0.25 + (hash(i, 125 + c0) - 0.5) * 0.25 : pd[1] + (hash(i, 126 + c0 * 5) - 0.5) * pd[3] * 0.6;
-        const d = Math.max(1, this.v.set(O[0] + cx, 0.04, O[2] + cz).distanceTo(cam.position)), rpx = 8 + 52 * Math.sqrt(uu), diam = (2 * rpx * d) / ppmK;
-        this.m4.compose(this.v.set(O[0] + cx, 0.04, O[2] + cz), this.q.identity(), this.sc.setScalar(diam)); this.ripples.setMatrixAt(i, this.m4);
-        this.ripples.setColorAt(i, this.c.setScalar(0.6 * (1 - uu)));
+        const cx = pour ? gx + (hash(i, 123 + c0) - 0.5) * 0.25 : refl ? REFL9[0] + (hash(i, 127 + c0 * 3) - 0.5) * REFL9[2] * 0.85 : pd[0] + (hash(i, 124 + c0 * 3) - 0.5) * pd[2] * 0.7;
+        const cz = pour ? POUR9[1] + 0.2 + (hash(i, 125 + c0) - 0.5) * 0.25 : refl ? REFL9[1] + (hash(i, 128 + c0 * 5) - 0.5) * REFL9[3] * 0.8 : pd[1] + (hash(i, 126 + c0 * 5) - 0.5) * pd[3] * 0.6;
+        const d = Math.max(1, this.v.set(O[0] + cx, 0.04, O[2] + cz).distanceTo(cam.position)), rpx = 2 + 30 * Math.sqrt(uu), diam = (2 * rpx * d) / ppmK;
+        this.m4.compose(this.v.set(O[0] + cx, 0.042, O[2] + cz), this.q.identity(), this.sc.setScalar(diam)); this.ripples.setMatrixAt(i, this.m4);
+        this.ripples.setColorAt(i, this.c.setScalar((refl ? 0.75 : 0.6) * (1 - uu)));
       }
       this.ripples.instanceMatrix.needsUpdate = true; if (this.ripples.instanceColor) this.ripples.instanceColor.needsUpdate = true;
+      // fix r3: the climber's lamp: the wall pool breathes a little, rain streaks fall through its cone, water sheets off the
+      // landing, splashes pop on the treads; the sign-end pour splashes at the post foot; the huddled gulls shuffle; the
+      // tanker's beacon blinks slowly; the drain swallows its swirl; the puddle's sign reflection wobbles
+      (this.wallPool.material as THREE.MeshBasicMaterial).opacity = 0.62 + 0.06 * cyc(37, vf) + 0.25 * fl.all;
+      { const t = (this.lampCone.material as THREE.MeshBasicMaterial).map!; t.offset.set(fract(vf * 0.013), fract(vf * 0.11)); (this.lampCone.material as THREE.MeshBasicMaterial).opacity = 0.55; }
+      this.streamLand.forEach((m, k) => { const t = (m.material as THREE.MeshBasicMaterial).map!; t.offset.set(k * 0.3, fract(vf * 0.08 + k * 0.37)); m.rotation.y = Math.atan2(cam.position.x - m.position.x, cam.position.z - m.position.z); });
+      { const cx0 = O[0] + TFH.c[0], cz0 = O[2] + TFH.c[2];
+        this.treadSplash.forEach((sp, i) => { const per = 8 + 5 * hash(i, 201), uu = fract(vf / per + hash(i, 202)), c0 = Math.floor(vf / per + hash(i, 202)), on = uu < 0.45; sp.visible = on; if (!on) return;
+          const t = hash(i, 203 + c0 * 3) * 0.35, th = FARM_STAIR.a0 + (FARM_STAIR.a1 - FARM_STAIR.a0) * t, y = FARM_STAIR.y0 + (FARM_STAIR.y1 - FARM_STAIR.y0) * t;
+          const [x, z] = i < 3 ? pol(cx0, cz0, TFH.r + 0.5 + (hash(i, 204 + c0) - 0.5) * 0.6, FARM_LAD_A - 0.03 + (hash(i, 205 + c0) - 0.5) * 0.18) : pol(cx0, cz0, TFH.r + 0.43, th);
+          sp.position.set(x, (i < 3 ? FARM_LAND_Y : y) + 0.02, z); const sz = 0.16 * Math.sin(Math.PI * (uu / 0.45)) ** 0.6; sp.scale.set(sz * 1.4, sz, 1); sp.center.set(0.5, 0.12); }); }
+      this.signPourSplash.forEach((sp, k) => { const per = 7 + 2 * k, uu = fract(vf / per + k * 0.33); sp.visible = true; sp.center.set(0.5, 0.12);
+        sp.position.set(O[0] + POUR9[0] + (k - 1) * 0.07, 0.03, O[2] + POUR9[1] + 0.06); const sz = 0.2 * (0.5 + 0.5 * Math.sin(Math.PI * uu)); sp.scale.set(sz * 1.4, sz, 1); (sp.material as THREE.SpriteMaterial).opacity = 0.75 * (1 - uu * 0.6); });
+      this.huddle.forEach((g, k) => { const sg = TF.gate.sign, x = [-0.62, -0.34, 0.55][k], fluff = Math.max(0, cyc(5 + 2 * k, vf, k * 2.1)) ** 12;
+        g.center.set(0.5, 0.06); g.position.set(O[0] + x + 0.02 * cyc(3 + k, vf, k), sg.cy + sg.h / 2 + 0.47, O[2] + TF.gate.z); const sz = 0.42 + 0.04 * fluff; g.scale.set((k === 1 ? -1 : 1) * sz * 1.1, sz * (0.92 + 0.06 * fluff), 1); });
+      { const bl = Math.max(0, Math.sin((TAU * 46 * vf) / VOICE_TOTAL)) ** 3; this.beacon.color.setRGB(0.6 + 2.6 * bl, 0.32 + 1.3 * bl, 0.08 + 0.3 * bl);
+        this.beaconHalo.scale.setScalar(0.6 + 1.0 * bl); (this.beaconHalo.material as THREE.SpriteMaterial).opacity = 0.15 + 0.85 * bl; }
+      this.drainSwirl.rotation.y = -vf * 0.09;
+      this.reflTex.offset.set(0.006 * Math.sin(vf * 0.9) + 0.004 * Math.sin(vf * 2.3), 0); (this.reflPuddle.material as THREE.MeshBasicMaterial).opacity = 0.74 + 0.16 * fl.all;
       // the far rain curtains face the lens at 14 / 28 / 46 m and fall ~1.2 m per frame
       this.curtains.forEach((m, k) => { const D = [14, 28, 46][k], hgt = 2 * D * tv * 1.35, wdt = hgt * ASPECT * 1.2;
         m.position.copy(cam.position).addScaledVector(fwd, D); m.quaternion.copy(cam.quaternion); m.scale.set(wdt, hgt, 1);
@@ -1858,7 +2165,9 @@ export class Exterior {
       const flap = f >= t0, tx = P.pigeonTex(flap ? (Math.floor((f - t0) / 2) % 2 ? 3 : 2) : peck ? 1 : 0), mat = p.material as THREE.SpriteMaterial; if (mat.map !== tx) { mat.map = tx; mat.needsUpdate = true; }
       const sz = flap ? 0.44 : k > 4 ? 0.3 : 0.34; p.scale.set((flap ? (ax < 0 ? 1 : -1) : k % 2 ? -1 : 1) * sz, sz, 1); });
     { const u = (f - (BEAT.crashed2 + 4)) / 34; this.feather.visible = u >= 0 && u < 1.3;
-      if (this.feather.visible) { this.feather.position.set(O[0] - 0.5 + 0.18 * Math.sin(u * 7), 3.0 - 1.6 * u, O[2] - 1.9 + 0.1 * u); this.feather.scale.setScalar(0.12);
+      // fix r3 (audit A3 P3 shot 14: the falling feather crossed the 'I' of OIL as a white streak): it drifts down right of the
+      // bill, in front of the kiosk's dark interior
+      if (this.feather.visible) { this.feather.position.set(O[0] + 0.33 + 0.08 * Math.sin(u * 7), 3.0 - 1.6 * u, O[2] - 1.9 + 0.1 * u); this.feather.scale.setScalar(0.12);
         (this.feather.material as THREE.SpriteMaterial).rotation = 0.8 * Math.sin(u * 7 + 0.5); (this.feather.material as THREE.SpriteMaterial).opacity = Math.min(1, (1.3 - u) * 3); } }
     // ---- a newspaper page tumbles along the kerb on "crashed"; the bin's page skitters 0.4 m in a gust ----
     { const u = (f - (BEAT.crashed2 - 2)) / 40; this.kerbSheet.visible = u >= 0 && u < 1;
@@ -1872,6 +2181,11 @@ export class Exterior {
       for (let i = 0; i < pos.count; i++) { const x = b0[i * 3], y = b0[i * 3 + 1], t = clamp01(-y / 1.1); pos.setXYZ(i, x + 0.03 * t * cyc(23, vf, x * 3), y, 0.05 * t * t * (0.5 + 0.5 * cyc(17, vf, 0.4 + x)) * gust(vf, 2)); }
       pos.needsUpdate = true; }
     this.valance.rotation.x = 0.1 * gust(vf, 0.8) * (0.6 + 0.4 * cyc(31, vf, 1.1));
+    // fix r3: the kiosk's striped valance ripples (+-2 cm, ~0.4 Hz travelling wave), the pegged papers sway in the gusts
+    { const pos = this.kioskVal.geometry.attributes.position as THREE.BufferAttribute, b0 = this.kioskValBase, ph = (TAU * 37 * vf) / VOICE_TOTAL;
+      for (let i = 0; i < pos.count; i++) { const x = b0[i * 3], y = b0[i * 3 + 1], t = clamp01(-y / 0.16); pos.setXYZ(i, x, y, (0.012 + 0.02 * t) * Math.sin(x * 5.5 - ph) * gust(vf, 0.4)); }
+      pos.needsUpdate = true; this.kioskVal.geometry.computeVertexNormals(); }
+    this.hangPapers.forEach((m, k) => { m.rotation.set(0.12 * gust(vf, k * 1.3) * (0.5 + 0.5 * cyc(23 + 4 * k, vf, k)), 0.15 * cyc(11 + k, vf, k * 2), 0.05 * cyc(29 + 3 * k, vf, k)); });
     { const t = fract(vf / 150 + 0.23), x = -1.4 + 3.8 * t, y = 0.2 + 0.28 * Math.abs(Math.sin(t * Math.PI * 4)), z = -1.75 + 0.25 * Math.sin(t * 7);
       this.sheet.position.set(O[0] + x, y, O[2] + z); this.sheet.rotation.set(-1.2 + 0.9 * Math.sin(t * 17), t * 9, 0.6 * Math.sin(t * 13)); }
     void ctx; void id;
@@ -1897,10 +2211,10 @@ export class Exterior {
     });
     const wet = ctx.light.name === "storm";
     for (const p of this.puffs) {
-      const on = p.set === set; p.s.visible = on; if (!on) continue;
+      const on = p.set === set && (!p.ids || p.ids.includes(id)); p.s.visible = on; if (!on) continue;
       const u = fract((p.n * tau) / VOICE_TOTAL + p.ph), gk = gust(tau, p.ph * 4);
       // in the storm the steam is knocked flat and torn sideways by the rain
-      p.s.position.copy(p.src).addScaledVector(WIND, p.drift * u * gk * (wet ? 2.4 : 1)).setY(p.src.y + p.rise * u * (wet ? 0.35 : 1));
+      p.s.position.copy(p.src).addScaledVector(p.dir ?? WIND, p.drift * u * gk * (wet ? 2.4 : 1)).setY(p.src.y + p.rise * u * (wet ? 0.35 : 1));
       p.s.scale.setScalar(p.size * (0.4 + 1.1 * u)); (p.s.material as THREE.SpriteMaterial).opacity = p.alpha * Math.sin(Math.PI * u) ** 0.8;
     }
   }

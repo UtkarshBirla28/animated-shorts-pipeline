@@ -13,7 +13,7 @@
 // point onto the card along the camera ray (toCard); arms that reach ACROSS A DESK (the banker's stamp and cash, the
 // investor's pencil) are drawn on their own lit card standing at the hand (reachArm), joined to the body card's shoulder.
 import * as THREE from "three";
-import { Pen, drawPerson, drawLoneArm, shoulderAt, bodyAt, handAt, fxShadow, fxContact, fxSweat, fxShout, fxBubbles, drawBlob, drawFish, drawClipboard,
+import { Pen, drawPerson, drawLoneArm, fxManShadow, fxMotion, shoulderAt, bodyAt, handAt, fxShadow, fxContact, fxSweat, fxShout, fxBubbles, drawBlob, drawFish, drawClipboard,
   drawReflection, drawShakeHand, drawCat, CatSt, fxBeam, fxSpot, fxBubble, fxDust, drawGull, drawTopFist, fxBill, fxSlip, fxDrip,
   drawHandTruck, fxGullShadow, fxGlint, fxSteam, fxSplash, drawCashCart, headAt, reelKnobAt,
   Outfit, PersonOpts, Expr, Hand, P2, Hold, BlobSt,
@@ -206,7 +206,7 @@ const blob = (out: Stage, x: number, y: number, z: number, sc = 1, k = 1, tail =
 export let VF = 0;
 /** a frequency (Hz) rounded to a whole number of cycles over the film's VIDEO length (loop seam rule) */
 const hz = (v: number) => (Math.max(1, Math.round((v * VOICE_TOTAL) / FPS)) * FPS) / VOICE_TOTAL;
-const HZ = { b: hz(0.25), s1: hz(0.3), s2: hz(0.73), h1: hz(0.2), h2: hz(0.55), w1: hz(0.13), w2: hz(0.41), fl: hz(1.3), ws: hz(0.09), rip: hz(0.64), bob: hz(0.9), ub: hz(0.6) };
+const HZ = { b: hz(0.25), s1: hz(0.3), s2: hz(0.73), h1: hz(0.2), h2: hz(0.55), w1: hz(0.13), w2: hz(0.41), fl: hz(1.3), ws: hz(0.09), rip: hz(0.64), bob: hz(0.9), ub: hz(0.6), cat: hz(0.4) };
 const LID = [0.5, 1, 1, 0.5];
 const wave = (v: number, f: number, ph = 0) => Math.sin(TAU * f * (v / FPS) + ph);
 /** idle life at video frame v: breathing (-1..1), sway (deg), head bob (deg), weight shift (-1..1) */
@@ -248,6 +248,19 @@ const gest = (f: number, f0: number, dur: number) => {
 };
 /** a gesture up at f0 (dur) and back down at f1 (dur2) */
 const gest2 = (f: number, f0: number, dur: number, f1: number, dur2 = dur) => gest(f, f0, dur) * (1 - gest(f, f1, dur2));
+/** fix r3: an EASE-OUT sweep (a big arm sweep that launches and then glides into place): a 3 f anticipation dip, the move
+ *  (half ease-out, half smoothstep, so it never snaps through the middle), a 2 f overshoot (1.06) and a 5 f settle */
+const gestO = (f: number, f0: number, dur: number) => {
+  const a = (f - (f0 - 3)) / 3; if (a < 0) return 0;
+  if (a < 1) return -0.08 * Math.sin((Math.PI / 2) * a);
+  const u = (f - f0) / dur;
+  if (u < 1) return -0.08 + 1.14 * (0.5 * smooth(u) + 0.5 * (1 - (1 - u) ** 2.2));
+  const s = (f - f0 - dur) / 5; return s < 1 ? 1.06 - 0.06 * smooth(s) : 1;
+};
+/** a soft bump 0 -> 1 -> 0: up over a frames from f0, down over b frames */
+const bump = (f: number, f0: number, a: number, b: number) => { const t = f - f0; return t < 0 ? 0 : t < a ? smooth(t / a) : t < a + b ? 1 - smooth((t - a) / b) : 0; };
+/** a forced blink of n frames from f0 (half, shut, ..., half) */
+const blinkN = (f: number, f0: number, n = 3) => { const t = Math.floor(f - f0); return t < 0 || t >= n ? 0 : t === 0 || t === n - 1 ? 0.5 : 1; };
 
 // ---------------- people ----------------
 type Act = { i: number; o: Outfit; key: string };
@@ -356,26 +369,30 @@ const loopTankman = (out: Stage, cam: CamInfo, id: number, f: number) => {
     const bob = 0.5 * L.breath, grip = lerp3(TK.tapeTop, TK.tapeIn, 0.1), B = camB(id, f), A = 0.36;
     const sway = 1.5 * wave(tau, HZ.s1, 0);
     const sqPh = ((tau % 75) + 75) % 75, sqz = sqPh >= 30 && sqPh < 40 ? Math.sin((Math.PI * (sqPh - 30)) / 10) : 0;
-    const tw = id === LAST ? gest2(f, BEAT.fake + 2, 3, BEAT.fake + 5, 3) : 0;
+    const tw = id === LAST ? gest2(f, BEAT.fake, 4, BEAT.fake + 8, 9) : 0;   // fix r3: a 10-12 f startle, settled by ~fake + 29
     // the card's fist sits at (200, 64) of 256 x 128: shift it along the camera's right so the fist lands on the tape
     const c0: V3 = [0, 1, 2].map((k) => grip[k] - B.R[k] * ((200 - 128) / 256) * A + B.F[k] * -0.02 + B.U[k] * 0.012 * tw) as V3;
-    fx(out, `toparm|${q(bob, 8)}|${q(sqz + 0.6 * tw, 6)}`, 256, 128, (p) => drawTopFist(p, bob, Math.min(1, sqz + 0.6 * tw)), c0, A, A / 2, { rot: rad(sway + 3 * tw) });
+    fx(out, `toparm|${q(bob, 8)}|${q(sqz + 0.6 * tw, 6)}`, 256, 128, (p) => drawTopFist(p, bob, Math.min(1, sqz + 0.6 * tw)), c0, A, A / 2, { rot: rad(sway + 3.5 * tw) });
+    manShadow(out, id, f, L.breath, tw);
     return;
   }
   // gaze keys (shot 1): tape -> the counter landing -> tape (a reel crank) -> DOWN into the hatch on "against tanks" (a tape
   // tug) -> up to us 3 f before "mostly" -> the wink on "water." -> back to the tape. Every look held >= 24 f.
   type K = [number, Expr, number, number, number, number]; // frame, expr, look, lookY, head tilt, feature drop (fdy)
-  const keys: K[] = [[0, "focus", 0.7, 1.0, 5, 2], [BEAT.million + 4, "smug", 1.1, -1.0, -3, -2], [BEAT.million + 44, "focus", 0.7, 1.05, 5, 2],
-    [BEAT.against - 2, "focus", 0.45, 1.7, 11, 5], [BEAT.mostly1 - 3, "wink", 0, 0, 2, 0], [BEAT.water1 + 16, "smug", 0.7, 0.9, 4, 2]];
+  // fix r3 (A3 P2): the eyes are DIRECTED (white eyes, pupils on the target): down-right on the tape; a 20 f glance up-right
+  // at the LOANS counter as its digits lock; back to the tape for the reel crank; DOWN into the hatch on "against tanks"
+  // (head tilted 6 deg more, a tape tug on "tanks"); to us for the wink on "water."; then back to the tape
+  const keys: K[] = [[0, "gazeFocus", 0.9, 1.0, 5, 2], [BEAT.million + 19, "gazeSmug", 1.0, -1.25, -4, -3], [BEAT.million + 40, "gazeFocus", 0.9, 1.0, 5, 2],
+    [BEAT.against - 2, "gazeFocus", 0.65, 1.4, 11, 5], [BEAT.mostly1 - 3, "wink", 0, 0, 2, 0], [BEAT.water1 + 16, "gazeFocus", 0.9, 1.0, 4, 2]];
   let k0 = keys[0]; for (const k of keys) if (f >= k[0]) k0 = k;
   const kf: [number, Expr][] = keys.map((k) => [k[0] + 2, k[1]]);
   const wink = f >= BEAT.water1 - 2 && f < BEAT.water1 + 16;
   // a blink in the long tape look (life), the 18 f reel crank of the free hand in "$150 million...", the 2-px tape tug on
   // "tanks" (the hand dips and comes back)
-  const bl2 = f >= BEAT.million + 58 && f < BEAT.million + 62 ? LID[Math.floor(f - BEAT.million - 58)] : 0;
-  const crank = gest2(f, BEAT.million + 46, 8, BEAT.million + 68, 8), turn = clamp01((f - (BEAT.million + 50)) / 18);
+  const bl2 = blinkN(f, BEAT.million + 71, 3);
+  const crank = gest2(f, BEAT.million + 44, 8, BEAT.million + 62, 8), turn = clamp01((f - (BEAT.million + 47)) / 18);
   const tug = gest2(f, BEAT.tanks1 - 2, 3, BEAT.tanks1 + 3, 4);
-  const opts: PersonOpts = { breath: L.breath, tilt: 0.6 * L.sway, headTilt: 0.6 * L.head + k0[4], mode: "kneel", facing: 1, view: "front",
+  const opts: PersonOpts = { breath: L.breath, tilt: 0.95 * L.sway, headTilt: 0.6 * L.head + k0[4], mode: "kneel", facing: 1, view: "front", hatLag: 1.5 * flutAt(tau, i),
     expr: k0[1], look: k0[2], lookY: k0[3], nod: k0[4] > 8 ? 0.8 : 0, blink: Math.max(blinkAt(tau, i), swapLid(f, kf), bl2), face: { ...(wink ? { wink: 1 } : {}), fdy: k0[5] },
     wind: 0.8 * windAt(tau, i), flutter: 1.2 * flutAt(tau, i), reelSide: -1, reelSpin: (TAU * 25 * tau) / VOICE_TOTAL + TAU * smooth(turn), tapeHand: 1, light: 0, seed: seedOf(i) };
   const tapeHand = toCard(ref, P, yaw, 1, TK.tapeTop);
@@ -387,13 +404,34 @@ const loopTankman = (out: Stage, cam: CamInfo, id: number, f: number) => {
   if (id === 1) { const C = TK.counter, cy = Math.cos(C.yaw), sy = Math.sin(C.yaw);
     gull(out, f, [C.c[0] + cy * 0.42, C.c[1] + C.h / 2 + 0.085, C.c[2] - sy * 0.42 - 0.05], 150, 238); }
 };
+/** fix r3 (A3 P2): in the near top-down hatch view the tank man is more than a mitten: his dawn SILHOUETTE SHADOW (head,
+ *  cap peak, shoulder, the reaching arm; violet #5A4A8A at ~34 %) falls across the gold from the left, in world space, so
+ *  frame 0 and the last frame match; it breathes with his idle on tau; the startle on "fake" jerks it 3-4 deg; in shot 1
+ *  it fades out as his upright card is about to take over */
+const SHADOW16 = (() => {
+  // the loop framing sits 1.8 m over the hatch: the collar fills the width and no roof shows left of it, so his low-sun
+  // shadow (head, cap peak, shoulder and the reaching arm) falls INTO the hatch across the upper-left of the gold, the arm's
+  // shadow along his tape; its feet end runs under the neck wall
+  const y = TK.reflect[1] + 0.006, head: V3 = [0.02, y, 5.16], tail: V3 = [-0.66, y, 5.38];   // just over the oil surface
+  const dx = head[0] - tail[0], dz = head[2] - tail[2], L = Math.hypot(dx, dz);
+  return { c: [(head[0] + tail[0]) / 2, y, (head[2] + tail[2]) / 2] as V3, L, rot: Math.atan2(-dz, dx) };
+})();
+const manShadow = (out: Stage, id: number, f: number, breath: number, tw: number) => {
+  const k = id === LAST ? 1 : clamp01((-1.3 - scr(1, f, [TK.kneel[0], TK.kneel[1] + 0.95, TK.kneel[2]])[0]) / 0.35);
+  if (k <= 0.01) return;
+  // (a SOFT see-through violet card: the oil is drawn by a transparent shader, so a multiply blob under it would not show)
+  const al = q(0.5 * k, 40), S = SHADOW16, th = (S.L * 192) / 512;
+  out.fx.push({ key: `mansh|${al}`, cw: 512, ch: 192, draw: (p) => fxManShadow(p, "#5a4a8a", al), x: S.c[0], y: S.c[1], z: S.c[2], w: S.L * (1 + 0.006 * breath), h: th * (1 + 0.02 * breath),
+    flat: true, soft: true, rot: S.rot + rad(3.5 * tw) });
+};
 /** a gull that glides in, lands (wings fold over 6 f), turns its head twice, then flaps off up-left: [land, leave] frames */
 const gull = (out: Stage, f: number, at: V3, f0: number, f1: number) => {
   if (f < f0 - 14 || f > f1 + 26) return;
   const inA = clamp01((f - (f0 - 14)) / 14), outA = clamp01((f - f1) / 26);
   const pos: V3 = [at[0] + 1.6 * (1 - smooth(inA)) - 2.2 * outA * outA, at[1] + 0.9 * (1 - smooth(inA)) ** 2 + 1.6 * outA * outA, at[2] - 0.4 * (1 - smooth(inA)) + 0.3 * outA];
-  const flying = f < f0 || f > f1, wing = flying ? 0.5 + 0.5 * Math.sin(f * 1.1) : f < f0 + 6 ? 1 - (f - f0) / 6 : 0;
-  const head = f >= f0 + 22 && f < f0 + 44 ? -1 : f >= f0 + 58 && f < f0 + 74 ? -1 : 1;
+  const flying = f < f0 || f > f1, ruffle = !flying && f >= f1 - 12 && f < f1 - 6 ? 0.35 * Math.sin((Math.PI * (f - (f1 - 12))) / 6) : 0;
+  const wing = flying ? 0.5 + 0.5 * Math.sin(f * 1.1) : f < f0 + 6 ? 1 - (f - f0) / 6 : ruffle;
+  const head = f >= f0 + 22 && f < f0 + 40 ? -1 : f >= f0 + 50 && f < f1 - 14 ? -1 : 1;
   fx(out, `gull|${q(wing, 8)}|${head}|${flying ? 1 : 0}`, 256, 256, (p) => drawGull(p, wing, head, flying), [pos[0], pos[1] + 0.14, pos[2]], 0.36, 0.36);
 };
 
@@ -440,15 +478,15 @@ const scurry = (f: number, f0: number, f1: number, stride = 13) => { const u = c
 const kneelDown = (f: number, f0: number, dur: number) => {
   const t = f - f0; if (t < 0) return 0;
   if (t < 3) return -0.12 * Math.sin((Math.PI / 2) * (t / 3));
-  if (t < dur) return -0.12 + 1.18 * smooth((t - 3) / (dur - 3));
-  return 1.06 - 0.06 * smooth((t - dur) / 2);
+  if (t < dur) return -0.12 + 1.18 * (0.5 * smooth((t - 3) / (dur - 3)) + 0.5 * ((t - 3) / (dur - 3)));
+  return 1.06 - 0.06 * smooth((t - dur) / 3);
 };
 /** ...and up: a 3 f deeper dip (1 -> 1.1), up over the rest of `dur` to a 2 % overshoot (-0.08), a 2 f settle to 0 */
 const kneelUp = (f: number, f0: number, dur: number) => {
   const t = f - f0; if (t < 0) return 1;
-  if (t < 3) return 1 + 0.1 * Math.sin((Math.PI / 2) * (t / 3));
-  if (t < dur) return 1.1 - 1.18 * smooth((t - 3) / (dur - 3));
-  return -0.08 + 0.08 * smooth((t - dur) / 2);
+  if (t < 2) return 1 + 0.1 * Math.sin((Math.PI / 2) * (t / 2));
+  if (t < dur) return 1.1 - 1.18 * (0.5 * smooth((t - 2) / (dur - 2)) + 0.5 * ((t - 2) / (dur - 2)));
+  return -0.08 + 0.08 * smooth((t - dur) / 4);
 };
 /** which screen side the pair below is on, seen from the shout camera (-1 left / 1 right) */
 const sxRail4 = () => { const pair = scr(4, BEAT.ninety, [TK.inspGround[0] + 0.6, 1.2, TK.inspGround[2]]), me = scr(4, BEAT.ninety, [TK.shout[0], 12.4, TK.shout[2]]); return pair[0] < me[0] ? -1 : 1; };
@@ -457,7 +495,7 @@ const shot4 = (out: Stage, cam: CamInfo, f: number) => {
   const base: PersonOpts = { breath: L.breath, tilt: L.sway, headTilt: L.head, shift: L.shift, blink: blinkAt(v, i), wind: 1.1 * windAt(v, i), flutter: 1.3 * flutAt(v, i), reelSide: 1,
     noReel: f >= REEL4_A && f < REEL4_B };
   const LO = TK.ladderOut, LT = TK.ladderTop, K = TK.tapeKneel, Sh = TK.shout, sxR = sxRail4(), SH4: V3 = [Sh[0] + 0.17, Sh[1] + 0.03, Sh[2] - 0.55];
-  const kA = S4.kneel - 10, uA = S4.stand - 12;   // the kneel-down starts, the stand-up starts
+  const kA = S4.kneel - 11, uA = S4.stand - 10;   // fix r3: the kneel-down starts (12 f), the stand-up starts (12 f, on the plunk)
   if (f < S4.rim) {
     // the climb: a reach on each rung clang (6 f reach + 2 f settle), the body pulled up 0.6 m after each grab
     let y = 8.2, side = 1, reach = 0;
@@ -482,13 +520,16 @@ const shot4 = (out: Stage, cam: CamInfo, f: number) => {
     // reel in one hand (the world's reel), the other feeds the tape down INTO the hatch hand over hand; head and eyes DOWN
     // into the hatch the whole time (no lens look); then UP over 12 f (a 3 f dip, a 2 % overshoot) onto his feet on
     // "shout", the reel swinging back to his hip over 8 f, his eyes going to the rail and down
+    // fix r3 (A3 P1): from the kneel to the plunk his eyes are ON THE TAPE (white eyes, pupils at the bottom, aimed down the
+    // hatch), the head pitched down 8 deg toward it; a 8 f satisfied nod as the plumb plunks; then a smug look to us as he
+    // rises (12 f), and his eyes go to the rail for the dash
     const P = K, yaw = yawFrom(refA, P), pay = f >= BEAT.drop && f < S4.tapeEnd;
-    const kk = f < uA ? kneelDown(f, kA, 10) : kneelUp(f, uA, 12);
-    const keys: [number, Expr][] = [[kA, "focus"], [uA - 2, "smug"]];
+    const kk = f < uA ? kneelDown(f, kA, 12) : kneelUp(f, uA, 12);
+    const keys: [number, Expr][] = [[kA, "gazeFocus"], [uA + 3, "gazeSmug"]];
     const feed = pay ? 0.05 * Math.sin((f - BEAT.drop) * 0.7) : 0, rk = smooth((f - REEL4_B) / 8);
-    const lookDown = 1 - smooth((f - (uA + 2)) / 8);
-    const o: PersonOpts = { ...base, mode: "kneel", kneelK: kk, facing: 0, expr: exprAt(f, keys), look: lerp(0.5 * sxR, 0.15, lookDown), lookY: lerp(1.0, 1.7, lookDown),
-      blink: Math.max(base.blink ?? 0, swapLid(f, keys)), headTilt: (base.headTilt ?? 0) + 8 * lookDown, nod: lerp(0.4, 1.3, lookDown), face: { fdy: lerp(2, 6, lookDown) } };
+    const lookDown = 1 - smooth((f - (uA + 2)) / 6), plunkNod = bump(f, uA - 6, 4, 5);
+    const o: PersonOpts = { ...base, mode: "kneel", kneelK: kk, facing: 0, expr: exprAt(f, keys), look: lerp(0.35 * sxR, -0.25, lookDown), lookY: lerp(0.2, 1.3, lookDown),
+      blink: Math.max(base.blink ?? 0, swapLid(f, keys)), headTilt: (base.headTilt ?? 0) - 6 * lookDown, nod: lerp(0.4, 1.4, lookDown) + 0.9 * plunkNod, face: { fdy: lerp(1, 6, lookDown) + 2 * plunkNod, fdx: -2 * lookDown } };
     const reelW: V3 = [TK.tape4Top[0] + 0.03, TK.tape4Top[1] + 0.06, TK.tape4Top[2] + 0.02], feedW: V3 = [TK.tape4Top[0] - 0.04, TK.tape4Top[1] - 0.12 + feed, TK.tape4Top[2] + 0.03];
     const feedH = toCard(refA, P, yaw, 1, feedW), reelH = toCard(refA, P, yaw, 1, reelW), free = smooth((f - (S4.tapeEnd - 2)) / 10), grab = smooth((f - (REEL4_A - 8)) / 8);
     o.hands = [{ a: "chest", dx: -8, b: feedH, k: grab * (1 - free) }, f < REEL4_B ? { a: "hip", b: reelH, k: grab } : { a: reelH, b: "hip", k: rk }];
@@ -497,7 +538,7 @@ const shot4 = (out: Stage, cam: CamInfo, f: number) => {
   } else if (f < S4.rail) {
     // up and a dash round the hatch to the rail, toward the lens (big strides), eyes on the rail and down
     const s = scurry(f, S4.stand + 2, S4.rail - 1, 8), xz = roundHatch([K[0], K[2]], [SH4[0], SH4[2]], s.u), pump = Math.sin(TAU * s.ph);
-    put(out, cam, TANKMAN, [xz[0], 11 + 0.03 * s.u, xz[1]], { ...base, mode: s.u < 0.98 ? "walk" : "stand", phase: s.ph, lift: 1.6, facing: 1, expr: "smug", look: 0.6 * sxR, lookY: 1.0,
+    put(out, cam, TANKMAN, [xz[0], 11 + 0.03 * s.u, xz[1]], { ...base, mode: s.u < 0.98 ? "walk" : "stand", phase: s.ph, lift: 1.6, facing: 1, expr: "gazeSmug", look: 0.9 * sxR, lookY: 1.0,
       tilt: (base.tilt ?? 0) + 4 * Math.sin(TAU * s.ph), hands: [{ a: "chest", dx: -10, dy: 9 * pump }, { a: "chest", dx: 10, dy: -9 * pump }] }, { noTail: true });
     if (s.ph % 0.5 < 0.12 && f > S4.stand + 4) dust(out, [xz[0], 11.02, xz[1]], f);
   } else {
@@ -507,25 +548,27 @@ const shot4 = (out: Stage, cam: CamInfo, f: number) => {
     // fix r2: he stands 0.55 m back from the old mark (just clear of the hatch collar) so his mouth and the cupped hand stay
     // well clear ABOVE the near rail's top bar through every flap
     const P: V3 = SH4, ref = camRef(4, BEAT.ninety), yaw = yawFrom(ref, P), talk = shoutShape(f), shouting = talk >= 0, sx = sxR;
-    const inhale = gest2(f, S4.rail, 3, S4.rail + 5, 3), lean = smooth((f - (S4.rail + 2)) / 10) * (1 - 0.7 * smooth((f - BEAT.shoutEnd - 1) / 12));
+    const inhale = gest2(f, S4.rail, 3, S4.rail + 5, 3), lean = smooth((f - (S4.rail + 1)) / 9) * (1 - smooth((f - BEAT.shoutEnd - 1) / 10));
+    const pulse = 0.6 * Math.sin((TAU * (f - S4.rail)) / 16) * lean;
     const dip = gest2(f, BEAT.fullShout - 2, 2, BEAT.fullShout + 2, 4);
     const pump = shouting ? 0.06 * Math.abs(Math.sin((f - FLAP0) * 0.55)) : 0, cup = gest2(f, BEAT.ninety - 12, 8, BEAT.shoutEnd + 3, 12);
     const sly = f >= BEAT.shoutEnd + 1 ? smooth((f - BEAT.shoutEnd - 1) / 4) : 0;
     const keys: [number, Expr][] = [[S4.rail - 1, "inhale"], [FLAP0, "shout"], [BEAT.shoutEnd + 1, "smug"]];
     const railPt = toCard(ref, P, yaw, 1, [P[0] + 0.12 * sx * -1, TK.tank.h + TK.rail.h, TK.rail.r * 0.999]), grip = smooth((f - S4.rail + 1) / 4);
     const o: PersonOpts = { ...base, facing: sx as -1 | 1, expr: exprAt(f, keys), lookY: lerp(1.0, 1.9, lean) * (1 - sly) - 0.3 * inhale, look: lerp(0.9 * sx * lean, 0, sly), talk, yell: true,
-      nod: 0.3 + 1.0 * lean + 0.4 * dip + 0.3 * pump - 0.4 * inhale, crouch: 0.03 + 0.07 * lean + 0.6 * pump + 0.04 * dip - 0.1 * inhale,
-      tilt: (base.tilt ?? 0) * 0.5 + sx * (7 * lean + 2 * dip), breath: (base.breath ?? 0) + 3 * inhale,
-      headTilt: (base.headTilt ?? 0) * 0.5 + sx * (6 * lean + 2 * pump) - sx * 3 * inhale, face: { fdy: 4 * lean + 2 * dip - 2 * inhale, fdx: 4 * sx * lean },
+      nod: 0.3 + 1.2 * lean + 0.4 * dip + 0.3 * pump - 0.4 * inhale, crouch: 0.03 + 0.1 * lean + 0.6 * pump + 0.04 * dip - 0.1 * inhale,
+      tilt: (base.tilt ?? 0) * 0.5 + sx * (19 * lean + 3 * dip + pulse), breath: (base.breath ?? 0) + 3 * inhale + 1.3 * pulse,
+      headTilt: (base.headTilt ?? 0) * 0.5 + sx * (12 * lean + 2 * pump) - sx * 3 * inhale, face: { fdy: 5 * lean + 2 * dip - 2 * inhale, fdx: 5 * sx * lean },
       blink: shouting || inhale > 0.3 ? 0 : Math.max(base.blink ?? 0, swapLid(f, keys)),
       hands: sx < 0 ? [cup > 0.02 ? { a: railPt, b: "mouth", k: cup, dx: -6 * cup, dy: 10 * cup, shape: "mitten", sz: 0.26, ang: -150 * cup, front: true } : { a: railPt, dx: -28 }, { a: railPt, dx: 16 }]
         : [{ a: railPt, dx: -16 }, cup > 0.02 ? { a: railPt, b: "mouth", k: cup, dx: 6 * cup, dy: 10 * cup, shape: "mitten", sz: 0.26, ang: 150 * cup, front: true } : { a: railPt, dx: 28 }] };
     if (grip < 1) o.hands = o.hands!.map((h) => (h && h.b === undefined ? { a: "chest", b: h.a, k: grip, dx: (h.dx ?? 0) * grip } : h)) as [Hand, Hand];
     put(out, cam, TANKMAN, P, o, { noTail: true, yaw });
-    if (shouting) { // shout lines fanning DOWN toward the pair below (pulsing on the syllables)
+    if (shouting) { // fix r3 (A3 P2): three curved sound arcs from the cupped hand, opening DOWN toward the pair below, refreshed
+      // every 6 f (a pulse on the syllables)
       const mo = handAt(TANKMAN_FIT, { ...o, seed: seedOf(i) }, sx < 0 ? 0 : 1);
-      const mp = toward(fromCard(P, yaw, 1, mo), vec(cam.pos), 0.25), k = Math.abs(Math.sin((f - FLAP0) * 0.5));
-      fx(out, `shout|${q(k, 6)}|${sx}`, 256, 256, (p) => { if (sx < 0) { p.g.translate(256, 0); p.g.scale(-1, 1); } fxShout(p, k); }, [mp[0], mp[1] - 0.12, mp[2]], 0.95, 0.95);
+      const mp = toward(fromCard(P, yaw, 1, mo), vec(cam.pos), 0.25), k = q(((f - FLAP0) % 6) / 6, 6);
+      fx(out, `shout|${k}|${sx}`, 256, 256, (p) => { if (sx < 0) { p.g.translate(256, 0); p.g.scale(-1, 1); } fxShout(p, k); }, [mp[0], mp[1] - 0.03, mp[2]], 0.95, 0.95);
     }
   }
   // ---- the ground pair (framing B) ----
@@ -534,15 +577,15 @@ const shot4 = (out: Stage, cam: CamInfo, f: number) => {
   // weight sway, the cap peak + the sheet's corner fluttering in the gust), a blink, then a SLOW blink in the silence;
   // the pencil comes from behind his ear (12 f), he licks its tip (6 f), brings it to the board (12 f), taps twice, ticks
   // on "believed" WITHOUT LOOKING UP, then a slow deadpan blink (the button)
-  const P_EAR = BEAT.ground - 14, P_MOUTH = P_EAR + 18, P_LICK = P_MOUTH + 6, P_BOARD = P_LICK + 12;
-  const tick = clamp01((f - BEAT.believed - 2) / 8), lift = clamp01((f - BEAT.believed - 12) / 8);
+  const TICK0 = BEAT.believed - 9, P_BOARD = TICK0 - 9, P_LICK = P_BOARD - 12, P_MOUTH = P_LICK - 8, P_EAR = P_MOUTH - 18;
+  const tick = clamp01((f - TICK0) / 8), lift = clamp01((f - TICK0 - 10) / 8);
   const slow = (f0: number) => (f >= f0 && f < f0 + 6 ? [0.5, 1, 1, 1, 1, 0.5][Math.floor(f - f0)] : 0);
   const quick = f >= BEAT.andInspector + 11 && f < BEAT.andInspector + 15 ? LID[Math.floor(f - BEAT.andInspector - 11)] : 0;
   const licking = f >= P_MOUTH && f < P_LICK;
-  const io: PersonOpts = { breath: IL.breath, tilt: 0.9 * IL.sway, headTilt: -3 + 0.3 * IL.head, shift: IL.shift, facing: 1, expr: licking ? "lick" : "readDown", look: 0.3, lookY: 1.0, nod: 1.3,
-    face: { fdy: 6 }, blink: licking ? 0 : Math.max(slow(BEAT.ground - 10), slow(BEAT.believed + 20), quick), wind: 0.9 * windAt(v, ii), flutter: 1.2 * flutAt(v, ii), seed: seedOf(ii),
+  const io: PersonOpts = { breath: IL.breath, tilt: 0.9 * IL.sway, headTilt: -7 + 0.3 * IL.head, shift: IL.shift, facing: 1, expr: licking ? "lickLow" : "readLow", look: 0.35, lookY: 1.2, nod: 1.4,
+    face: { fdy: 6, fdx: 1.5 }, blink: licking ? 0 : Math.max(slow(BEAT.believed + 20), quick, blinkN(f, TICK0 - 7, 3)), wind: 0.9 * windAt(v, ii), flutter: 1.2 * flutAt(v, ii), seed: seedOf(ii),
     earPencil: f < P_EAR + 12 };
-  const cb = bodyAt(INSP_FIT, io, 0.06, 0.5), CW = 0.5, CH = 0.41 * 0.94;
+  const cb = bodyAt(INSP_FIT, io, 0.06, 0.58), CW = 0.5 * 1.32, CH = 0.41 * 0.94 * 1.32;   // fix r3 (A3 P3): the board 1.32x ("90% FULL" >= 40 px)
   const cw = toward(fromCard(IP, iy, 1, cb), refB, 0.14);
   const rIn = (dx: number, dy: number): P2 => toCard(refB, IP, iy, 1, [cw[0] + Math.cos(iy) * dx, cw[1] + dy, cw[2] - Math.sin(iy) * dx]);
   const earHand = bodyAt(INSP_FIT, io, 0.75, -0.55), mouthHand = bodyAt(INSP_FIT, io, 0.42, -0.1), board = rIn(0.1, -0.04);
@@ -551,18 +594,22 @@ const shot4 = (out: Stage, cam: CamInfo, f: number) => {
   const pen = f >= P_BOARD ? 1 : 0, holding = f >= P_EAR + 12;
   io.hands = [{ a: rIn(-0.2, -0.03) }, pen ? { a: rIn(0.1, -0.06 + 0.02 * tick) } : { a: handPt, hold: holding ? "pencil" : null, ang: licking ? -10 : -30, front: true }];
   put(out, cam, INSP, IP, io, { yaw: iy });
-  const tap = f >= P_BOARD && f < BEAT.believed ? Math.max(0, Math.sin(Math.PI * clamp01((f - P_BOARD) / 3.5))) + Math.max(0, Math.sin(Math.PI * clamp01((f - P_BOARD - 4.5) / 3.5))) : 0;
-  const ant = f >= BEAT.believed && f < BEAT.believed + 2 ? 1 : 0, cfl = flutAt(v, ii) + 0.6 * (windAt(v, ii) - 0.45);
+  const tap = f >= P_BOARD && f < TICK0 ? Math.max(0, Math.sin(Math.PI * clamp01((f - P_BOARD) / 3.5))) + Math.max(0, Math.sin(Math.PI * clamp01((f - P_BOARD - 4.5) / 3.5))) : 0;
+  const ant = f >= TICK0 - 2 && f < TICK0 ? 1 : 0, cfl = flutAt(v, ii) + 0.6 * (windAt(v, ii) - 0.45) + 1.4 * bump(f, P_LICK + 2, 4, 8);
   fx(out, `clip|${q(tick, 20)}|${q(tap, 4)}|${q(lift, 8)}|${pen}|${ant}|${q(cfl, 6)}`, 512, 420, (p) => drawClipboard(p, tick, tap + ant, lift, pen, cfl), cw, CW, CH, { rot: 0.12 + 0.012 * IL.breath });
   // Tino: tugs both lapels proudly as the shout's echo dies, then grins UP at his man (head tilted up-left, eyes up), a
   // rock onto his heels in the pause, raises a big thumbs-up over 13 f (a dip, an overshoot) while still looking up,
   // turns to us on "believed" with a wink, then the beam; the thumb pumps; his gold tie flicks in the harbour wind
   const TP = TK.tinoBelow, ti = TINO.i, TL = life(v, ti), tb = BEAT.believed;
   const lap = gest2(f, BEAT.andInspector - 1, 7, BEAT.andInspector + 13, 8), rock = gest2(f, BEAT.ground - 8, 6, BEAT.ground + 2, 8);
-  const tkeys: [number, Expr][] = [[0, "chinUp"], [BEAT.andInspector + 14, "beam"], [tb + 2, "wink"], [tb + 16, "beam"]];
-  const thumb = gest(f, tb - 11, 13), pumpT = f > tb + 4 ? 3 * Math.sin((TAU * (f - tb - 4)) / 30) : 0, toUs = f >= tb;
-  put(out, cam, TINO, TP, { breath: 1.5 * TL.breath, tilt: TL.sway - 3 * rock, headTilt: TL.head + (toUs ? 3 : -8) + 4 * rock, shift: TL.shift, facing: toUs ? 0 : -1,
-    expr: exprAt(f, tkeys), look: toUs ? 0 : -1.0, lookY: toUs ? 0 : -1.5, face: toUs ? (f < tb + 14 ? { wink: 1 } : undefined) : { fdy: -4, fdx: -3 },
+  // fix r3 (A3 P2): Tino RELATES: a proud grin UP-LEFT at his man on the roof (white eyes, head tilted 6 deg up-left) to
+  // "ground...", the ^^ beam to us on "ground", a 14 f side-glance at the inspector as the tick lands, then the wink + the
+  // thumbs-up at us (the thumb rises 15 f from a 3 f dip and peaks ON "believed", held to the dissolve)
+  const TK0 = tb - 9, tkeys: [number, Expr][] = [[0, "gazeProud"], [BEAT.ground, "beam"], [TK0 - 1, "sideGrin"], [tb + 5, "wink"], [tb + 21, "beam"]];
+  const thumb = gest(f, tb - 15, 15), pumpT = f > tb + 6 ? 3 * Math.sin((TAU * (f - tb - 6)) / 30) : 0;
+  const ex4 = exprAt(f, tkeys), upMan = ex4 === "gazeProud", side = ex4 === "sideGrin", toUs = !upMan && !side;
+  put(out, cam, TINO, TP, { breath: 1.5 * TL.breath, tilt: TL.sway - 3 * rock, headTilt: TL.head + (upMan ? -6 : side ? -3 : 3) + 4 * rock, shift: TL.shift, facing: upMan ? -1 : 0,
+    expr: ex4, look: upMan ? -0.9 : side ? -1.3 : 0, lookY: upMan ? -1.3 : side ? 0.2 : 0, face: ex4 === "wink" ? { wink: 1 } : upMan ? { fdy: -4, fdx: -3 } : side ? { fdx: -2 } : undefined,
     blink: Math.max(blinkAt(v, ti), swapLid(f, tkeys)), crouch: -0.08 * rock - 0.05 * lap, wind: 0.95 * windAt(v, ti), flutter: 1.3 * flutAt(v, ti),
     hands: [lap > 0.02 ? { a: "hip", b: "chestPocket", k: lap, dx: 4, dy: -6 } : { a: "hip" },
       thumb > 0.01 ? { a: "hip", b: "show", k: thumb, dx: 12, dy: -22 + pumpT, shape: thumb > 0.5 ? "thumb" : "ball", sz: 0.4, front: true }
@@ -582,32 +629,46 @@ const dust = (out: Stage, p: V3, f: number) => { const k = q(((f * 0.37) % 1), 4
 const PEER7: V3 = [TK.peer[0] - 0.3, TK.peer[1], TK.peer[2]];
 const shot7 = (out: Stage, cam: CamInfo, f: number) => {
   const A = LENDER(0), i = A.i, Lf = life(VF, i);
-  const lean = gest(f, BEAT.someone - 1, 16), did = PW(13, "did");
-  const keys: [number, Expr][] = [[0, "suspicious"], [BEAT.someone, "intrigued"], [did, "peer"], [BEAT.insideQ - 1, "ohWide"]];
-  const ex = exprAt(f, keys), bl = Math.max(blinkAt(VF, i), swapLid(f, keys)), wide = ex === "ohWide";
+  // fix r3 (A3 P1): CURIOUS from the first frame: one brow up, white eyes with the pupils down on the hatch, the head tilted
+  // toward it (a 3 f blink at ~1180); a 3 f up-anticipation, then he LEANS IN over the hatch (10 f, the torso sinks behind the
+  // lip, the head drops toward the hole, a 4 f overshoot) through the creak on "someone"; a narrowed PEER (heavy lids, the
+  // pupils visible at the bottom) from ~1203; the wide white-eyed "O" on "inside?" with a hat-pop double-take. Both hands
+  // are ON the far collar lip (the torch in one, the other gripping, knuckles up). Wind: the tie flutters, one gust lifts
+  // the brim
+  const lean = gest(f, BEAT.someone - 5, 10);
+  const keys: [number, Expr][] = [[0, "curiousLow"], [BEAT.someone + 14, "peerLow"], [BEAT.insideQ - 1, "ohWide"]];
+  const ex = exprAt(f, keys), bl = Math.max(blinkAt(VF, i), swapLid(f, keys), blinkN(f, BEAT.someone - 12, 3)), wide = ex === "ohWide", peer = ex === "peerLow";
   const pop = wide ? Math.max(0, Math.sin(Math.PI * clamp01((f - (BEAT.insideQ - 3)) / 4))) : 0;
   const torchA = gest(f, BEAT.someone - 2, 12);
-  const o: PersonOpts = { breath: Lf.breath, tilt: 0.5 * Lf.sway + 3 + 4 * lean, headTilt: 0.4 * Lf.head + 4 + 2 * lean + Math.sin(VF * 0.15), mode: "kneel", facing: 1, expr: ex,
-    look: wide ? 0.05 : 0.3, lookY: wide ? 0.6 : lerp(1.3, 1.9, lean), nod: 1.6 + 1.2 * lean - 0.8 * pop, face: { fdy: lerp(4, 8, lean) - 3 * pop }, brimShade: 0.95,
-    blink: bl, wind: 1.2 * windAt(VF, i), flutter: 1.5 * flutAt(VF, i), hatLag: 0.8 * flutAt(VF, i), crouch: 0, seed: seedOf(i) };
-  o.hands = [{ a: "head", dx: -12, dy: 2 + 4 * lean }, { a: "hip", hide: true }];
-  // the far collar lip seen from this frame's camera, and the card lowered until its belt sits 10 px under it
   const C = TK.hatch.c, cp = cam.pos, dh = Math.hypot(C[0] - cp.x, C[2] - cp.z) || 1;
   const lip: V3 = [C[0] + ((C[0] - cp.x) / dh) * 0.67, TK.hatch.rim, C[2] + ((C[2] - cp.z) / dh) * 0.67];
+  // which way the hole is on screen from his head (the head tilts toward it)
+  const hs = Math.sign(scr(7, f, [C[0], TK.hatch.oil, C[2]])[0] - scr(7, f, [PEER7[0], PEER7[1] + 1.3, PEER7[2]])[0]) || 1;
+  const o: PersonOpts = { breath: Lf.breath, tilt: 0.5 * Lf.sway + 3 * hs + 5 * hs * lean, headTilt: 0.4 * Lf.head + 6 * hs + 3 * hs * lean + Math.sin(VF * 0.15), mode: "kneel", facing: 1, expr: ex,
+    look: wide ? 0.05 : 0.25 * hs, lookY: wide ? 0.6 : 1.4, nod: 1.6 + 1.4 * lean - 0.8 * pop, face: { fdy: lerp(4, 8, clamp01(lean)) - 3 * pop }, brimShade: 0.95,
+    blink: bl, wind: 1.2 * windAt(VF, i), flutter: 2.4 * flutAt(VF, i), hatLag: 0.8 * flutAt(VF, i) + 2.5 * bump(f, BEAT.insideQEnd - 8, 5, 10), hatLift: 34 * bump(f, BEAT.insideQ - 2, 3, 9), crouch: 0, seed: seedOf(i) };
+  o.hands = [{ a: "chest", hide: true }, { a: "hip", hide: true }];
+  // the card lowered until its belt sits 10 px under the far lip; the lean sinks it a further ~0.12 m (the torso folds over
+  // the hole, foreshortened from above)
   const belt = bodyAt(A.o, o, 0, 0.86), sl = scr(7, f, lip)[1] + 10 / 960;
-  let P: V3 = [PEER7[0] + 0.14 * lean, PEER7[1], PEER7[2]], yaw = yawFrom(vec(cam.pos), P);
+  let P: V3 = [PEER7[0] + 0.1 * lean, PEER7[1], PEER7[2]], yaw = yawFrom(vec(cam.pos), P);
   for (let it = 0; it < 3; it++) {
     const bw = fromCard(P, yaw, 1, belt), s0 = scr(7, f, bw), s1 = scr(7, f, [bw[0], bw[1] - 0.05, bw[2]]);
     const dsd = (s1[1] - s0[1]) / 0.05; if (Math.abs(dsd) < 1e-4) break;
     P = [P[0], P[1] + (s0[1] - sl) / dsd, P[2]];
   }
-  P = [P[0], Math.min(P[1], PEER7[1] + 0.05), P[2]];
+  P = [P[0], Math.min(P[1], PEER7[1] + 0.05) - 0.12 * lean, P[2]];
   o.cutY = belt[1] + 6;
   put(out, cam, A, P, o, { yaw, noBlob: true });
-  // the flashlight hand resting ON the far lip (its own card, in front of the collar), the torch pointing down the shaft
-  const hw: V3 = [lip[0] + (C[0] - lip[0]) * 0.22, TK.hatch.rim + 0.03, lip[2] + (C[2] - lip[2]) * 0.22];
-  const torchAng = lerp(120, 172, torchA);
-  reachArm(out, cam, A, P, yaw, o, 1, lerp3([P[0] + 0.12, P[1] + 0.45, P[2]], hw, smooth(clamp01((f - (SHOTS[6].a - 8)) / 10))), { hold: "flashlight", ang: torchAng, n: torchA > 0.5 ? 1 : 0, elbow: 0.22, up: 6 });
+  // the hands on the far lip: the torch hand (the beam down the shaft) and the gripping hand on the other side of it
+  const tg: V3 = [-((C[2] - lip[2])), 0, C[0] - lip[0]], tn = Math.hypot(tg[0], tg[2]) || 1;
+  const onLip = (k: number, s2: number): V3 => [lip[0] + (C[0] - lip[0]) * k + (tg[0] / tn) * s2, TK.hatch.rim + 0.03, lip[2] + (C[2] - lip[2]) * k + (tg[2] / tn) * s2];
+  const hw = onLip(0.22, 0), gA = onLip(0.1, 0.3), gB = onLip(0.1, -0.3), grip = scr(7, f, gA)[0] < scr(7, f, gB)[0] ? gA : gB;
+  const torchAng = lerp(120, 172, torchA), arrive = smooth(clamp01((f - (SHOTS[6].a - 8)) / 10));
+  reachArm(out, cam, A, P, yaw, o, 1, lerp3([P[0] + 0.12, P[1] + 0.45, P[2]], hw, arrive), { hold: "flashlight", ang: torchAng, n: torchA > 0.5 ? 1 : 0, elbow: 0.22, up: 6 });
+  reachArm(out, cam, A, P, yaw, o, 0, lerp3([P[0] - 0.12, P[1] + 0.45, P[2]], grip, arrive), { elbow: 0.2, up: 4 });
+  { const on = BEAT.someone + 3, gk = f >= on && f < on + 3 ? [0.7, 1, 0.5][Math.floor(f - on)] : 0; // the torch clicks on: a 2-3 f flare
+    if (gk > 0) fx(out, `glow|glint|${q(gk, 8)}`, 128, 128, (pp) => fxGlint(pp, gk), toward([hw[0] + (C[0] - hw[0]) * 0.18, hw[1] - 0.06, hw[2] + (C[2] - hw[2]) * 0.18], vec(cam.pos), 0.08), 0.18, 0.18, { soft: true }); }
   // the beam: from the lens down the shaft wall (on "someone") to the oil (on "inside"), dust motes drifting in it
   if (torchA > 0.4) {
     const lens: V3 = [hw[0] + (C[0] - hw[0]) * 0.18, hw[1] - 0.08, hw[2] + (C[2] - hw[2]) * 0.18];
@@ -621,13 +682,15 @@ const shot7 = (out: Stage, cam: CamInfo, f: number) => {
       fx(out, `glow|mote|${n}`, 128, 128, (p) => fxSpot(p, 0.9), toward([m[0] + 0.03 * Math.sin(VF * 0.07 + n), m[1], m[2] + 0.03 * Math.cos(VF * 0.05 + n * 2)], vec(cam.pos), 0.02), 0.035, 0.035, { soft: true });
     }
   }
-  // the reflection: a soft card lying on the oil, turned so it reads upright from the lens, the SAME man; a bubble rises
-  // and pops at its CHIN (toward the lens side of the card) as the question ends, its ring wobbling the face
-  const R = TK.reflect, rip = wave(VF, HZ.rip), rot = Math.atan2(-(R[0] - cam.pos.x), -(R[2] - cam.pos.z));
-  const rc = Math.hypot(cam.pos.x - R[0], cam.pos.z - R[2]) || 1, chin: V3 = [R[0] + ((cam.pos.x - R[0]) / rc) * 0.13, R[1], R[2] + ((cam.pos.z - R[2]) / rc) * 0.13];
-  const ring = f >= BEAT.insideQEnd ? clamp01((f - BEAT.insideQEnd) / 24) : 0, bub = clamp01((f - (BEAT.insideQEnd - 9)) / 9);
-  fx(out, `reflect|${ex}|${q(bl, 2)}|${q(rip, 6)}|${q(ring, 24)}`, 512, 512, (p) => drawReflection(p, rip, ex, bl, ring), R, 0.6, 0.6, { flat: true, soft: true, rot });
-  if (bub > 0 && bub < 1) fx(out, `bub7|${q(bub, 9)}`, 128, 128, (p) => fxBubble(p, bub), [chin[0], R[1] + 0.012 + 0.02 * bub, chin[2]], 0.07, 0.07);
+  // fix r3 (A3 P2): the reflection 1.37x (the face ~160 px at 1080), a gentle ripple (<= 2 px at the silhouette); the bloop
+  // bubble rises at the chin 0.6 face widths to the RIGHT and its ring grows 0 -> 1.5 face widths over 12 f, fading (it
+  // never frames the mouth). WORLD-EXT's oil ring: same centre (RING7 below, hatch-normalised in lead_requests)
+  const R = TK.reflect, rip = wave(VF, HZ.rip), rot = Math.atan2(-(R[0] - cam.pos.x), -(R[2] - cam.pos.z)), RS = 0.82;
+  const right: V3 = [Math.cos(rot), 0, -Math.sin(rot)], down: V3 = [Math.sin(rot), 0, Math.cos(rot)], fw = (214 / 512) * RS, chinD = (110 / 512) * RS;
+  const ringC: V3 = [R[0] + right[0] * 0.6 * fw + down[0] * chinD, R[1], R[2] + right[2] * 0.6 * fw + down[2] * chinD];
+  const ring = f >= BEAT.insideQEnd ? clamp01((f - BEAT.insideQEnd) / 12) : 0, bub = clamp01((f - (BEAT.insideQEnd - 9)) / 9);
+  fx(out, `reflect|${ex}|${q(bl, 2)}|${q(rip, 6)}|${q(ring, 24)}`, 512, 512, (p) => drawReflection(p, rip, ex, bl, ring), R, RS, RS, { flat: true, soft: true, rot });
+  if (bub > 0 && bub < 1) fx(out, `bub7|${q(bub, 9)}`, 128, 128, (p) => fxBubble(p, bub), [ringC[0], R[1] + 0.012 + 0.02 * bub, ringC[2]], 0.07, 0.07);
 };
 
 const tanktop = (out: Stage, cam: CamInfo, id: number, f: number) => {
@@ -644,24 +707,33 @@ const tanktop = (out: Stage, cam: CamInfo, id: number, f: number) => {
  *  back to us on "full"; the arm comes down over 14 f to the hip so the smug half-lid lands just before "oil."; then a
  *  sideways glance at the valve as it drips. His gold tie flips on the gust peaks. */
 const tino2 = (out: Stage, cam: CamInfo, f: number) => {
-  const P = add(TF.base, TF.tino), i = TINO.i, L = life(VF, i), dea = PW(2, "De Angelis");
+  const P0 = add(TF.base, TF.tino), i = TINO.i, L = life(VF, i), dea = PW(2, "De Angelis");
+  // fix r3 (A3 P1/P2): the "giant" sweep is an EASE-OUT open-palm sweep up at the No. 7 rim (a 3 f dip at giant - 8, 15 f,
+  // a 2 f overshoot + settle) with the head turned + tilted up at the tank and the eyes UP-RIGHT on it for ~28 f, back to
+  // us by "full"; the arm comes down over 14 f into hands-on-hips so the smug lands on "oil."; the ta-da gets two real
+  // HOPS (6 % of his height, 10 f, a 2 f squash on landing) on "Tino" and "De Angelis", a shoulder shimmy and a blink
   const keys: [number, Expr][] = [[0, "beam"], [BEAT.tino + 16, "proud"], [PW(2, "Jersey's"), "smile"], [BEAT.king - 2, "beam"], [BEAT.his, "smile"],
-    [BEAT.giant - 1, "thrill"], [BEAT.full1 - 2, "grin"], [BEAT.oil1 - 1, "smug"], [BEAT.oil1End + 2, "shifty"]];
+    [BEAT.giant + 2, "gazeGrin"], [BEAT.full1 - 3, "grin"], [BEAT.oil1 - 1, "smug"], [BEAT.oil1End + 2, "shifty"]];
   const wide = gest2(f, BEAT.meet - 4, 12, PW(2, "New") - 6, 14), lapel = gest2(f, BEAT.king - 4, 10, BEAT.king + 18, 12);
-  const sweep = gest2(f, BEAT.giant - 12, 16, BEAT.full1 + 5, 14), up = smooth((f - (BEAT.giant + 1)) / 6) * (1 - smooth((f - (BEAT.full1 - 6)) / 6));
-  const bounce = (f0: number) => { const t = f - f0; return t < 0 || t > 10 ? 0 : Math.sin((Math.PI * t) / 5) * Math.exp(-t / 6); };
-  const hop = 0.07 * bounce(BEAT.tino - 1) + 0.06 * bounce(dea - 1), rock = gest2(f, BEAT.king + 2, 6, BEAT.king + 14, 8);
+  const sweep = gestO(f, BEAT.giant - 5, 15) * (1 - gest(f, BEAT.full1 + 3, 14));
+  const up = smooth((f - (BEAT.giant + 2)) / 5) * (1 - smooth((f - (BEAT.full1 - 9)) / 6));
+  const hopAt = (f0: number) => { const t = f - f0; return t < 0 || t > 10 ? 0 : Math.sin((Math.PI * t) / 10); };
+  const squashAt = (f0: number) => { const t = f - f0; return t >= -2 && t < 0 ? 0.08 * ((t + 2) / 2) : t >= 10 && t < 13 ? 0.12 * Math.sin((Math.PI * (t - 10)) / 3) : 0; };
+  const hopY = 0.1 * hopAt(BEAT.tino - 1) + 0.09 * hopAt(dea - 1), squash = squashAt(BEAT.tino - 1) + squashAt(dea - 1);
+  const shim = 3 * Math.sin((TAU * (f - dea)) / 8) * bump(f, dea, 4, 14);
+  const rock = gest2(f, BEAT.king + 2, 6, BEAT.king + 14, 8);
   const pop = gest2(f, BEAT.meet - 4, 8, BEAT.meet + 10, 10), glance = f >= BEAT.oil1End + 2;
   const ex = exprAt(f, keys);
-  const o: PersonOpts = { breath: L.breath, tilt: L.sway + 2 * sweep - 3 * rock, headTilt: L.head + (glance ? -6 : 0) + 7 * up - 3 * lapel + 3 * rock, shift: L.shift, expr: ex,
-    blink: Math.max(blinkAt(VF, i), swapLid(f, keys)), look: glance ? -1.3 : 1.0 * up, lookY: glance ? 0.4 : -1.4 * up, face: { fdy: -3 * up - 3 * lapel, fdx: 3 * up },
-    crouch: -0.14 * pop - 0.08 * lapel - 0.06 * rock + hop, wind: 0.95 * windAt(VF, i), flutter: 1.4 * flutAt(VF, i), seed: seedOf(i) };
-  const [shx, shy, uu] = shoulderAt(TINO_FIT, o, 1), reachD = 76 * uu, tankHand: P2 = [shx + reachD * 1.05, shy - reachD * 0.95];
+  const P: V3 = [P0[0], P0[1] + hopY, P0[2]];
+  const o: PersonOpts = { breath: 1.5 * L.breath, tilt: L.sway + 2 * sweep - 3 * rock + shim, headTilt: L.head + (glance ? -6 : 0) + 7 * up - 3 * lapel + 3 * rock - 0.6 * shim, shift: L.shift, expr: ex,
+    blink: Math.max(blinkAt(VF, i), swapLid(f, keys), blinkN(f, dea + 9, 3)), look: glance ? -1.3 : 1.0 * up, lookY: glance ? 0.4 : -1.3 * up, face: { fdy: -3 * up - 3 * lapel, fdx: 3 * up },
+    crouch: -0.14 * pop - 0.08 * lapel - 0.06 * rock + squash, wind: 0.95 * windAt(VF, i), flutter: 1.4 * flutAt(VF, i), seed: seedOf(i) };
+  const [shx, shy, uu] = shoulderAt(TINO_FIT, o, 1), reachD = 76 * uu, tankHand: P2 = [shx + reachD * 0.62, shy - reachD * 1.15];
   o.hands = [wide > 0.02 ? { a: "hip", b: "raise", k: wide, dx: -16 * wide, shape: wide > 0.4 ? "palm" : "ball", sz: 0.22 } : lapel > 0.02 ? { a: "hip", b: "chestPocket", k: lapel, dx: 4, dy: -6 } : { a: "hip" },
     wide > 0.02 ? { a: "hip", b: "raise", k: wide, dx: 16 * wide, shape: wide > 0.4 ? "palm" : "ball", sz: 0.22 }
-      : sweep > 0.02 ? { a: "hip", b: tankHand, k: sweep, shape: sweep > 0.35 ? "palm" : "ball", sz: 0.32, ang: 50 * clamp01(sweep), front: true, maxLen: 1.3 }
+      : sweep > 0.02 ? { a: "hip", b: tankHand, k: sweep, shape: sweep > 0.35 ? "palm" : "ball", sz: 0.3, ang: 25 * clamp01(sweep), front: true, maxLen: 1.3 }
       : lapel > 0.02 ? { a: "hip", b: "chestPocket", k: lapel, dx: -4, dy: -6 } : { a: "hip" }];
-  put(out, cam, TINO, P, o);
+  put(out, cam, TINO, P, o, { blobAt: P0 });
 };
 /** shot 2 background life (fix r2, A2 P2): one of Tino's men strolls along the tank wall with a wrench on his shoulder;
  *  another stands at the pipe run tightening a flange (a 24 f wrench loop, blinks) and rolls his eyes at the boss on
@@ -674,7 +746,7 @@ const farmhands = (out: Stage, cam: CamInfo, f: number) => {
       hands: [{ a: "hang" }, { a: "raise", dx: -6, dy: 14, hold: "wrench", ang: -150 }] }); }
   { const A = WORKER(1), L = life(VF, A.i), roll = gest2(f, BEAT.king - 2, 8, BEAT.king + 14, 8), ph = (TAU * VF) / 24, turn = Math.sin(ph), push = Math.max(0, Math.sin(ph));
     const keys: [number, Expr][] = [[0, "effort"], [BEAT.king - 2, "skeptic"], [BEAT.king + 16, "focus"]];
-    put(out, cam, A, add(O, [-3.1, 0, 5.4]), { breath: L.breath, tilt: L.sway + 3 * push * (1 - roll), headTilt: L.head - 4 + 8 * roll, shift: L.shift, facing: 1, expr: exprAt(f, keys),
+    put(out, cam, A, add(O, [-3.9, 0, 5.4]), { breath: L.breath,   /* fix r3 (A3 P3): 0.8 m left, clear of Tino */ tilt: L.sway + 3 * push * (1 - roll), headTilt: L.head - 4 + 8 * roll, shift: L.shift, facing: 1, expr: exprAt(f, keys),
       lookY: roll > 0.3 ? -1.5 : 1.2, look: roll > 0.3 ? 1.1 : 0.4, blink: Math.max(blinkAt(VF, A.i), swapLid(f, keys)), wind: 0.4 * windAt(VF, A.i), crouch: 0.05 * push,
       hands: [{ a: "chest", dx: 4, dy: 6, front: true }, { a: "chest", dx: 14 + 6 * turn, dy: 2 - 5 * turn, hold: "wrench", ang: 90 + 40 * turn, front: true }] }); }
   // two gulls gliding across the sky band (a slow wing beat, then a glide)
@@ -720,23 +792,28 @@ const lenders9 = (out: Stage, cam: CamInfo, f: number) => {
     const to = FILE9_TO[k], x = lerp(F.x, to[0], smooth(s)), z = lerp(F.z, to[1], smooth(s));
     const jolt = gest2(f, BEAT.bust + (k % 2), 4, BEAT.bust + 10, 10), face0 = (k % 2 ? -1 : 1) as -1 | 1, walkDir = 1 as -1 | 1;
     const upNotice = f >= BEAT.bust + 2 && f < BEAT.bust + 20, atEach = f >= BEAT.bust + 20 && f < BEAT.lenders;
-    const keys: [number, Expr][] = stay ? [[0, "stern"], [BEAT.bust, "gasp"], [BEAT.bust + 20, "worry"], [BEAT.lenders - 2, "alert"], [fin, "browsUp"], [tks, "squint"]]
-      : [[0, k ? "stern" : "skeptic"], [BEAT.bust + (k % 2), "gasp"], [BEAT.bust + 20, "worry"]];
+    // fix r3 (A3 P2): white-eyed looks: UP-RIGHT at BANKRUPT (heads back, pupils at the top), then worried at each other; the
+    // brown one points up at the climber (40 deg, clear of the canopy) on "Lenders" AND on "checked"
+    const chk = BEAT.checked;
+    const keys: [number, Expr][] = stay ? [[0, "stern"], [BEAT.bust, "gazeGasp"], [BEAT.bust + 20, "gazeWorry"], [BEAT.lenders - 2, "gazeAlert"], [fin, "browsUp"], [chk - 4, "gazeAlert"], [tks, "squint"]]
+      : [[0, k ? "stern" : "skeptic"], [BEAT.bust + (k % 2), "gazeGasp"], [BEAT.bust + 20, "gazeWorry"]];
     // the turn: front (0-4 f) -> a 3/4 front toward the walk (4-8 f) -> a 3/4 BACK (from 8 f); the lead lender (k 0)
     // keeps the 3/4 front profile as he walks (one more face through "checked")
-    const lead = k === 0, view: "front" | "back" = !stay && !lead && tt >= 8 ? "back" : "front";
-    const facing: -1 | 0 | 1 = stay ? (f >= fin - 2 && f < tks - 6 ? 1 : f >= BEAT.lenders - 4 && f < BEAT.lenders + 18 ? -1 : atEach ? face0 : 0)
-      : tt >= 4 ? walkDir : upNotice ? 0 : atEach ? face0 : 0;
-    const point = stay ? gest2(f, BEAT.lenders - 4, 10, BEAT.lenders + 14, 10) : 0, clamp = k === 2 ? gest2(f, BEAT.bust + 8, 6, BEAT.bust + 22, 8) : 0;
+    const lead = k === 0, view: "front" | "back" = !stay && !lead && tt >= 12 ? "back" : "front";   // fix r3: a 12 f turn
+    const facing: -1 | 0 | 1 = stay ? (f >= fin - 2 && f < chk - 6 ? 1 : f >= BEAT.lenders - 4 && f < BEAT.lenders + 18 ? 1 : atEach ? face0 : 0)
+      : tt >= 6 ? walkDir : upNotice ? 0 : atEach ? face0 : 0;
+    const point = stay ? Math.max(gest2(f, BEAT.lenders - 4, 12, BEAT.lenders + 16, 10), gest2(f, chk - 6, 12, chk + 12, 10)) : 0, clamp = k === 2 ? gest2(f, BEAT.bust + 8, 6, BEAT.bust + 22, 8) : 0;
+    const dip9 = gest2(f, BEAT.bust + 1, 2, BEAT.bust + 3, 3);
     const inv = k === 3 ? gest2(f, fin - 2, 4, fin + 12, 6) : 0;
-    const o: PersonOpts = { breath: L.breath, tilt: L.sway + (walking ? 2 * Math.sin(TAU * (s * 4)) : 0) + 4 * inv, headTilt: L.head + (upNotice ? 4 : 0) + (f >= BEAT.checked ? -7 : 0) + 6 * point,
+    const [psx, psy, pu] = shoulderAt(A.o, { mode: "stand", facing: 0 }, 1), ptAt: P2 = [psx + 0.766 * 92 * pu, psy - 0.643 * 92 * pu];
+    const o: PersonOpts = { breath: L.breath, tilt: L.sway + (walking ? 2 * Math.sin(TAU * (s * 4)) : 0) + 4 * inv, headTilt: L.head + (upNotice ? 5 : 0) + (f >= BEAT.checked ? -7 : 0) + 6 * point,
       shift: L.shift, mode: walking ? "walk" : "stand", phase: (s * (end - t0)) / 20, lift: 0.9, view, facing,
-      expr: exprAt(f, keys), look: upNotice ? 0.6 : atEach ? face0 * 1.0 : stay ? (f >= fin - 2 && f < tks - 6 ? 1.0 : point > 0.3 ? -0.6 : 0) : walking ? 0.8 : 0,
-      lookY: upNotice ? -1.4 : stay ? (point > 0.3 ? -1.5 : f >= tks - 2 ? -1.6 : 0.2) : f >= BEAT.checked ? -1.4 : 0.1,
-      face: upNotice || point > 0.3 || (stay && f >= tks - 2) ? { fdy: -3 } : undefined, blink: Math.max(blinkAt(VF, A.i), swapLid(f, keys)), crouch: -0.14 * jolt, wind: 0.8 * windAt(VF, A.i), flutter: 1.4 * flutAt(VF, A.i),
+      expr: exprAt(f, keys), look: upNotice ? 0.9 : atEach ? face0 * 1.0 : stay ? (f >= fin - 2 && f < chk - 6 ? 1.0 : point > 0.3 ? 0.6 : 0) : walking ? 0.8 : 0,
+      lookY: upNotice ? -1.4 : stay ? (point > 0.3 ? -1.4 : f >= tks - 2 ? -1.6 : 0.2) : f >= BEAT.checked ? -1.4 : 0.1,
+      nod: upNotice ? -0.7 : 0, face: upNotice || point > 0.3 || (stay && f >= tks - 2) ? { fdy: -4, fdx: upNotice ? 2 : 0 } : undefined, blink: Math.max(blinkAt(VF, A.i), swapLid(f, keys)), crouch: -0.14 * jolt + 0.05 * dip9, wind: 0.8 * windAt(VF, A.i), flutter: 1.4 * flutAt(VF, A.i),
       umbTilt: F.tilt + 3 * windAt(VF, A.i) + 18 * inv, umbInv: inv, rain: rainPh + k * 3,
       hands: [{ a: view === "front" ? [148, 335] : [300 - 60 * face0, 330], hold: "umbrella", ...umb(k), front: false },
-        point > 0.02 ? { a: "hang", b: "up", k: point, dx: -18 * point, shape: point > 0.5 ? "f1" : "ball", front: true, over: true }
+        point > 0.02 ? { a: "hang", b: ptAt, k: point, shape: point > 0.5 ? "f1" : "ball", front: true, over: true, maxLen: 1.25 }
         : clamp > 0.02 ? { a: "hang", b: "head", k: clamp, dy: -6 * clamp, shape: "mitten", sz: 0.2, front: true }
         : inv > 0.02 ? { a: "hang", b: "raise", k: inv, dx: 10, front: true }
         : lead && walking ? { a: "reach", dy: -20, hold: "flashlight", ang: 70, n: 1 } : { a: "hang" }] };
@@ -761,7 +838,7 @@ const lenders9 = (out: Stage, cam: CamInfo, f: number) => {
       // raised hand aimed UP at the roof rim (a long warm cone), the other hand on the handrail; 1.3x so he reads at phone size
       const tA = BEAT.lenders - 6, tB = BEAT.checked, u1 = clamp01((f - tA) / (tB - tA)), y = f < tA ? 0.2 : f < tB ? 0.2 + 2.2 * (u1 * u1 * (3 - 2 * u1)) : 2.4 + 0.022 * (f - tB);
       const pos = stairAt(Math.min(y, 4.0)), steps = (y - 0.2) / 0.21, bob = 0.04 * Math.abs(Math.sin(Math.PI * steps));
-      const P: V3 = add(O, [pos[0], pos[1] + bob - 0.02, pos[2]]), SC = 1.6;
+      const P: V3 = add(O, [pos[0], pos[1] + bob - 0.02, pos[2]]), SC = 2.0;   // fix r3 (A3 P2): 1.25x (he is the hero of "checked")
       const co: PersonOpts = { breath: L.breath, view: "back", facing: -1, mode: "walk", phase: steps / 2, lift: 1.5, tilt: 3 * Math.sin(Math.PI * steps) + 2 * flutAt(VF, A.i),
         headTilt: -6, lookY: -1.4, wind: windAt(VF, A.i), flutter: 1.4 * flutAt(VF, A.i), rain: rainPh + 9,
         hands: [{ a: "up", dx: -6, dy: 10, hold: "flashlight", ang: -10, n: 1, front: true, over: true }, { a: "reach", dy: -40 - 8 * Math.sin(Math.PI * steps) }] };
@@ -770,8 +847,11 @@ const lenders9 = (out: Stage, cam: CamInfo, f: number) => {
         // the cone is aimed UP the stair at the tank wall (a hot spot above-left of him, under the gate sign)
         const up2 = stairAt(Math.min(y, 4.0) + 2.6), wl = Math.hypot(up2[0] - STAIR9.c[0], up2[2] - STAIR9.c[2]) || 1;
         const hand: V3 = fromCard(P, yawFrom(vec(cam.pos), P), SC, handAt(A.o, { ...co, seed: seedOf(A.i) }, 0)), rim: V3 = add(O, [STAIR9.c[0] + ((up2[0] - STAIR9.c[0]) * (TF.hero.r + 0.05)) / wl, up2[1] + 0.6, STAIR9.c[2] + ((up2[2] - STAIR9.c[2]) * (TF.hero.r + 0.05)) / wl]);
-        beam(out, 9, f, hand, rim, 0.04, 0.8, 0.85 * smooth((f - tA) / 8), "climb9");
-        fx(out, `glow|spot9c`, 128, 128, (p) => fxSpot(p, 1), toward(rim, vec(cam.pos), 0.4), 1.6, 1.1, { soft: true });
+        // fix r3: a 1.4 m warm cone from his torch toward the roof rim, sweeping ~10 deg once on "checked"
+        const dv = sub3(rim, hand), dl = Math.hypot(dv[0], dv[1], dv[2]) || 1, sw9 = 0.18 * Math.sin(Math.PI * clamp01((f - (BEAT.checked - 6)) / 16));
+        const tgt9: V3 = [hand[0] + (dv[0] / dl) * 1.4 + sw9 * 0.5, hand[1] + (dv[1] / dl) * 1.4 + 0.1 * sw9, hand[2] + (dv[2] / dl) * 1.4];
+        beam(out, 9, f, hand, tgt9, 0.05, 0.75, 0.9 * smooth((f - tA) / 8), "climb9");
+        fx(out, `glow|spot9c`, 128, 128, (p) => fxSpot(p, 1), toward(rim, vec(cam.pos), 0.4), 1.3, 0.9, { soft: true });
       }
       continue;
     }
@@ -805,15 +885,16 @@ export const STAMPS5 = { R: [BEAT.soBanks + 15.1 - 30.25, BEAT.soBanks + 15.1, B
   L: [BEAT.soBanks, BEAT.soBanks + 30.25, BEAT.soBanks + 60.5, BEAT.soBanks + 90.75] };
 /** a stamping hand's height over the desk (m) round its landings: hover 0.30, a 3 f anticipation lift (+10 %), the slam
  *  (ease-in, 3 f), 2 f squashed on the paper, then up again over 12 f */
+const SH5 = 0.18;   // fix r3 (A3 P2): the hover (was 0.30: the stamps waved above his head instead of stamping the cash)
 const stampH = (f: number, lands: number[]) => {
   for (const c of lands) {
     const t = f - c;
-    if (t >= -6 && t < -3) return 0.3 + 0.03 * smooth((t + 6) / 3);
-    if (t >= -3 && t < 0) return lerp(0.33, 0.085, ((t + 3) / 3) ** 2.2);
+    if (t >= -6 && t < -3) return SH5 + 0.03 * smooth((t + 6) / 3);
+    if (t >= -3 && t < 0) return lerp(SH5 + 0.03, 0.085, ((t + 3) / 3) ** 2.2);
     if (t >= 0 && t < 2) return 0.085;
-    if (t >= 2 && t < 14) return lerp(0.085, 0.3, smooth((t - 2) / 12));
+    if (t >= 2 && t < 14) return lerp(0.085, SH5, smooth((t - 2) / 12));
   }
-  return 0.3;
+  return SH5;
 };
 /** shot 5 (fix r2, A2 P2): the top of an OUTER cash stack (si 0 / 2) at frame f, as sets_int.ts stacks its bundles
  *  (4 to start, +4 on "more", +5 on the second "more", 0.0295 m each, each lands at its t0) */
@@ -841,9 +922,12 @@ const bank = (out: Stage, cam: CamInfo, id: number, f: number) => {
     const park = W(STAMP_PARK, 0.085), t = f - m;
     const sp = t < -16 ? park : t < -6 ? lerp3(park, over(0.3), smooth((t + 16) / 10)) : t < -3 ? over(0.3 + 0.03 * smooth((t + 6) / 3))
       : t < 0 ? over(lerp(0.33, 0.085, ((t + 3) / 3) ** 2.2)) : t < 6 ? over(0.085) : t < 16 ? over(lerp(0.085, 0.25, smooth((t - 6) / 10))) : lerp3(over(0.25), park, smooth((t - 16) / 12));
-    const o: PersonOpts = { breath: L.breath, tilt: 0.7 * L.sway + (t >= -1 && t < 6 ? -3 : 0), headTilt: L.head * 0.7 + (down ? -3 : toCash ? 4 : win ? 6 : 0), shift: L.shift * 0.5, expr: ex,
-      blink: Math.max(blinkAt(VF, i), swapLid(f, keys)), look: down ? -0.6 : toCash ? 1.0 : win ? 1.3 : 0, lookY: down ? 1.5 : toCash ? 1.0 : win ? -0.4 : 0,
-      nod: t >= 0 && t < 8 ? 0.6 : down ? 0.9 : 0.1 * pat, crouch: t >= 0 && t < 2 ? 0.04 : 0, face: { fdy: down ? 4 : 0, glint: t >= 1 && t < 4 ? 1 : 0 },
+    // fix r3 (A3 P3): the last 2 s live: a blink at ~585, a small knowing NOD (head down 4 deg over 10 f) with a brow lift on
+    // "check.", 1.5 % breathing and a 1-2 deg sway the whole time
+    const kn = gest2(f, BEAT.check - 4, 8, BEAT.check + 8, 10);
+    const o: PersonOpts = { breath: 1.5 * L.breath, tilt: 1.1 * L.sway + (t >= -1 && t < 6 ? -3 : 0), headTilt: L.head * 0.7 + (down ? -3 : toCash ? 4 : win ? 6 : 0) - 4 * kn, shift: L.shift * 0.5, expr: ex,
+      blink: Math.max(blinkAt(VF, i), swapLid(f, keys), blinkN(f, 584, 3)), look: down ? -0.6 : toCash ? 1.0 : win ? 1.3 : 0, lookY: down ? 1.5 : toCash ? 1.0 : win ? -0.4 : 0,
+      nod: (t >= 0 && t < 8 ? 0.6 : down ? 0.9 : 0.1 * pat) + 0.6 * kn, crouch: t >= 0 && t < 2 ? 0.04 : 0, face: { fdy: (down ? 4 : 0) + 2 * kn, glint: t >= 1 && t < 4 ? 1 : 0, browUp: [4 * kn, 4 * kn] },
       hands: [{ a: "chest", hide: true }, { a: "chest", hide: true }] };
     put(out, cam, BANKER, P, o, { noBlob: true, yaw });
     reachArm(out, cam, BANKER, P, yaw, o, 0, sp, { hold: "stamp", n: t >= 0 ? 1 : 0, ang: -6, elbow: 0.24, up: 10 });
@@ -859,11 +943,15 @@ const bank = (out: Stage, cam: CamInfo, id: number, f: number) => {
     // contented nod + a 2 f shoulder squash on every landing. fix r2 (A2 P2): from ~"more" the stamps hit the CASH itself
     // (the top of each outer stack, which grows), so every thump visibly makes money; a happy shoulder shimmy on the
     // second "more"; bills flutter down beside him (never across his face); a banknote tucked behind his ear by the end
+    // fix r3 (A3 P3): on "And" one eye pops OPEN and peeks at the growing right stack (head tilted toward it, brows up),
+    // then snaps back to the ^^ bliss with the beam on "more"; the banknote sits in his breast pocket (no ear to tuck it behind)
     const keys: [number, Expr][] = [[0, "bliss"], [BEAT.more1, "beam"], [BEAT.more1 + 16, "bliss"], [BEAT.more2, "beam"], [BEAT.more2 + 16, "bliss"]];
+    const peek = f >= BEAT.andMore - 2 && f < BEAT.more2 - 2, pk = bump(f, BEAT.andMore - 3, 4, 14);
     const all = [...STAMPS5.R, ...STAMPS5.L], near = Math.min(...all.map((x) => (f - x >= 0 ? f - x : 99)));
     const shim = f >= BEAT.more2 + 2 && f < BEAT.more2 + 14 ? 2 * Math.sin((TAU * 2 * (f - BEAT.more2 - 2)) / 30) : 0;
-    const o: PersonOpts = { breath: L.breath, tilt: 0.5 * L.sway + 2.5 * Math.sin((TAU * (f - STAMPS5.R[1])) / 30.25) + shim, headTilt: L.head * 0.6 + 3 * Math.sin((TAU * (f - STAMPS5.R[1])) / 30.25) - shim,
-      expr: exprAt(f, keys), blink: 0, nod: near < 4 ? 0.7 : 0.1, crouch: near < 2 ? 0.05 : 0, earNote: f >= BEAT.more2 + 4, hands: [{ a: "chest", hide: true }, { a: "chest", hide: true }] };
+    const o: PersonOpts = { breath: L.breath, tilt: 0.5 * L.sway + 2.5 * Math.sin((TAU * (f - STAMPS5.R[1])) / 30.25) + shim, headTilt: L.head * 0.6 + 3 * Math.sin((TAU * (f - STAMPS5.R[1])) / 30.25) - shim + 4 * pk,
+      expr: exprAt(f, keys), blink: 0, nod: near < 4 ? 0.7 : 0.1, crouch: near < 2 ? 0.05 : 0, pocketNote: true, hands: [{ a: "chest", hide: true }, { a: "chest", hide: true }],
+      look: peek ? 1.0 : 0, lookY: peek ? 0.6 : 0, face: peek ? { open1: 1, browUp: [1, 5] } : undefined };
     put(out, cam, BANKER, P, o, { noBlob: true, yaw });
     const ret = smooth((f - (BEAT.more1 - 4)) / 8);   // the hands move over to the stacks while up, before the first "more" landing
     const tgt = (s: -1 | 1): V3 => { const top = stackTop5(s < 0 ? 0 : 2, f); return lerp3([0.5 * s, 0.785, -0.95], [0.42 * s, top, -0.52], ret); };
@@ -890,26 +978,33 @@ const TINO6: V3 = (() => { const a = BK.chart.yaw, ux = Math.cos(a), uz = -Math.
   return [BK.tinoChart[0] - 0.22 * ux + 0.25 * nx, 0, BK.tinoChart[2] - 0.22 * uz + 0.25 * nz]; })();
 const chart6 = (out: Stage, cam: CamInfo, f: number) => {
   const P = add(BK.base, TINO6), i = TINO.i, L = life(VF, i), ref = camRef(6, BEAT.moreOf), yaw = yawFrom(ref, P);
-  const pap = gest2(f, BEAT.papers - 2, 12, BEAT.papers + 26, 12), tap = gest2(f, BEAT.moreOf - 2, 6, BEAT.moreOf + 10, 8), flick = gest2(f, BEAT.entire - 2, 6, BEAT.entire + 8, 8);
-  const lb = gest2(f, BEAT.moreOf - 6, 3, BEAT.moreOf - 2, 3), lapT = gest2(f, BEAT.moreOf + 22, 7, BEAT.moreOf + 36, 8);
+  // fix r3 (A3 P1/P2): the OIL RECEIPTS fan rises over 13 f (a 3 f dip) to BESIDE his head (never on the face), held to
+  // ~1062, lowered over 12 f; then a lapel tug with a chest-out lean (12 f), a blink, bigger idle pointer taps
+  const pap = gest2(f, BEAT.papers - 4, 13, BEAT.moreOf + 6, 12), tap = gest2(f, BEAT.moreOf - 2, 6, BEAT.moreOf + 10, 8), flick = gest2(f, BEAT.entire - 2, 6, BEAT.entire + 8, 8);
+  const lb = gest2(f, BEAT.moreOf - 6, 3, BEAT.moreOf - 2, 3), lapT = gest2(f, BEAT.moreOf + 18, 5, BEAT.moreOf + 25, 6);
+  // the free palm opens in front of his belly and the pointer taps into it (8 f down, 6 f up) before the "entire" flick
+  const palmK = gest2(f, BEAT.moreOf + 30, 5, BEAT.moreOf + 41, 5), tapB = bump(f, BEAT.moreOf + 30, 8, 6);
   const sw = clamp01((f - (BEAT.united - 2)) / 18), sweepOn = f >= BEAT.united - 5 && f < BEAT.had - 4, polish = gest2(f, BEAT.had - 2, 8, BEAT.had + 18, 10);
-  const keys: [number, Expr][] = [[0, "smug"], [BEAT.papers - 2, "chinUp"], [BEAT.moreOf - 2, "brag"], [BEAT.entire - 2, "shifty"], [BEAT.united - 2, "thrill"], [BEAT.had - 2, "beam"], [BEAT.had + 12, "wink"]];
+  const keys: [number, Expr][] = [[0, "smug"], [BEAT.papers - 2, "chinUp"], [BEAT.moreOf - 2, "brag"], [BEAT.entire - 2, "shifty"], [BEAT.united, "gazeGrin"], [BEAT.had - 2, "beam"], [BEAT.had + 12, "wink"]];
   const ex = exprAt(f, keys), toChart = (f >= BEAT.moreOf - 2 && f < BEAT.moreOf + 30) || sweepOn;
   // where the pointer goes: resting down by his side; the tap on TINO'S OIL; the flick at the US pile; the sweep up the pyramid
   const pyr = chartPt(0.45, lerp(-0.62, 0.15, smooth(sw))), us = chartPt(-0.42, -0.5), tino = chartPt(0.45, -0.25);
   const tgtW = sweepOn ? pyr : flick > 0.05 ? us : tino, aim = Math.max(tap, flick, sweepOn ? smooth(clamp01((f - (BEAT.united - 5)) / 4)) * (1 - smooth(clamp01((f - (BEAT.had - 8)) / 4))) : 0);
-  const idleTap = (1 - aim) * Math.max(0, Math.sin((TAU * VF) / 24)) ** 4;
-  const o: PersonOpts = { breath: L.breath, tilt: L.sway - 3 * aim + 4 * lb, headTilt: L.head + (ex === "shifty" ? -5 : sweepOn ? -4 - 4 * sw : toChart ? -6 : 0) + 5 * pap, shift: L.shift, facing: -1, expr: ex,
+  const idleTap = (1 - aim) * Math.max(0, Math.sin((TAU * VF) / 24)) ** 3 * 1.8;
+  const o: PersonOpts = { breath: 1.5 * L.breath, tilt: 1.2 * L.sway - 3 * aim + 4 * lb + 2.5 * lapT, headTilt: L.head + (ex === "shifty" ? -5 : sweepOn ? -4 - 4 * sw : toChart ? -6 : 0) + 5 * pap - 2 * lapT, shift: L.shift, facing: -1, expr: ex,
     look: ex === "shifty" ? -1.3 : toChart ? -1.0 : pap > 0.3 ? 0.2 : 0, lookY: sweepOn ? lerp(0.8, -1.3, smooth(sw)) : ex === "shifty" ? 0.6 : pap > 0.3 ? -0.3 : 0,
     face: f >= BEAT.had + 12 ? { wink: -1 } : pap > 0.3 ? { fdy: -3 } : undefined,
-    blink: Math.max(blinkAt(VF, i), swapLid(f, keys), f >= BEAT.had + 4 && f < BEAT.had + 6 ? 1 : 0), crouch: -0.1 * pap - 0.08 * polish, flutter: 0.5 * Math.sin(VF * 0.5) * aim, wind: 0.25 * aim, seed: seedOf(i) };
+    blink: Math.max(blinkAt(VF, i), swapLid(f, keys), f >= BEAT.had + 4 && f < BEAT.had + 6 ? 1 : 0, blinkN(f, BEAT.moreOf + 25, 3)), crouch: -0.1 * pap - 0.08 * polish - 0.06 * lapT, flutter: 0.5 * Math.sin(VF * 0.5) * aim, wind: 0.25 * aim, seed: seedOf(i) };
+  const [hx6, hy6] = headAt(TINO_FIT, o), fanAt: P2 = [hx6 + 172, hy6 + 70];
   const hand0: P2 = lerp2(toCard(ref, P, yaw, 1, add(P, [-0.42, 1.05 + 0.03 * idleTap, 0.1])), toCard(ref, P, yaw, 1, lerp3(add(P, [-0.3, 1.25, 0]), tgtW, 0.32)), aim);
   o.hands = [{ a: hand0, hold: "pointer" }, polish > 0.02 ? { a: "hip", b: "chestPocket", k: polish, dx: -16 - 5 * Math.sin(f * 1.1) * polish, dy: -4 + 3 * Math.cos(f * 1.1) * polish, front: true }
-    : pap > 0.02 ? { a: "hip", b: "raise", k: pap, dx: -26 * pap, dy: -6 * pap, hold: pap > 0.3 ? "papers" : null, ang: -8, front: true }
-    : lapT > 0.02 ? { a: "hip", b: "chestPocket", k: lapT, dx: -10, dy: -8 } : { a: "hip" }];
+    : pap > 0.02 ? { a: "hip", b: fanAt, k: pap, hold: pap > 0.3 ? "papers" : null, ang: 14, front: true, maxLen: 1.3 }
+    : lapT > 0.02 ? { a: "hip", b: "chestPocket", k: lapT, dx: -10, dy: -8 }
+    : palmK > 0.02 ? { a: "hip", b: "waist", k: palmK, dx: -14 * palmK, dy: -4 * palmK, shape: palmK > 0.4 ? "palm" : "ball", sz: 0.2, ang: -70 * palmK, front: true } : { a: "hip" }];
   // aim the pointer from the hand at the target (its length reaches it, clamped to a ~1 m stick)
   const hd = handAt(TINO_FIT, o, 0), tg = toCard(ref, P, yaw, 1, tgtW), rest = toCard(ref, P, yaw, 1, add(P, [-0.62, 0.02 + 0.06 * idleTap, 0.15]));
-  const tip = lerp2(rest, tg, aim), [, , u] = shoulderAt(TINO_FIT, o, 0), dx = tip[0] - hd[0], dy = tip[1] - hd[1];
+  const pal = handAt(TINO_FIT, o, 1), palTip: P2 = [pal[0] - 10, pal[1] - 34 + 30 * tapB];
+  const tip = lerp2(lerp2(rest, tg, aim), palTip, palmK * (1 - aim)), [, , u] = shoulderAt(TINO_FIT, o, 0), dx = tip[0] - hd[0], dy = tip[1] - hd[1];
   o.hands[0]!.ang = (Math.atan2(dx, -dy) * 180) / Math.PI; o.hands[0]!.n = clamp(Math.hypot(dx, dy) / u, 60, 260);
   put(out, cam, TINO, P, o, { yaw, blobK: 0.8 });
 };
@@ -935,17 +1030,23 @@ const trading = (out: Stage, cam: CamInfo, _id: number, f: number) => {
     const cyc = Math.floor((VF + 23 * k) / 16) % 3, pump = Math.sin((TAU * (VF + 7 * k)) / (12 + 3 * (k % 3))), stroke = Math.sign(pump) * Math.abs(pump) ** 0.6;
     if (phone) { // front view: the receiver at the ear, the phone base low in the other hand, hollering; on the crash the receiver drops
       const drop = sh && k !== 5, two = k === 5, slam = k === 3 ? gest2(f, SLAM, 5, SLAM + 9, 8) : 0;
-      const keys: [number, Expr][] = [[0, (["holler", "shout", "alert"] as Expr[])[cyc]], [C1 - 1 + d + (two ? 9 : 0), "goggleO"]];
-      const ex: Expr = sh ? "goggleO" : slam > 0.3 ? "grimace" : (["holler", "shout", "alert"] as Expr[])[cyc];
+      // fix r3 (A3 P3): the crash take is WHITE wide eyes (thin outline, big pupils) + the O: never goggle rims that read as glasses
+      const keys: [number, Expr][] = [[0, (["holler", "shout", "alert"] as Expr[])[cyc]], [C1 - 1 + d + (two ? 9 : 0), "ohWide"]];
+      const ex: Expr = sh ? "ohWide" : slam > 0.3 ? "grimace" : (["holler", "shout", "alert"] as Expr[])[cyc];
       put(out, cam, A, P, { breath: L.breath, tilt: L.sway + 3 * stroke * (sh ? 0 : 1), headTilt: L.head + 2 * slam, shift: L.shift, facing: k === 1 ? 1 : -1, expr: ex, lookY: sh ? -1.2 : -0.6, look: sh ? 0 : (k === 1 ? 0.6 : -0.6),
         blink: sh ? 0 : Math.max(blinkAt(VF, A.i), swapLid(f, keys)), crouch: -0.15 * jolt + 0.06 * slam, face: sh ? { glassDy: 3 } : undefined, sweat: sh && k !== 3 ? 1 : 0,
         hands: two && !sh ? [{ a: "ear", hold: "handset", n: 0.6 * pump }, { a: "ear", hold: "handset", n: -0.6 * pump }]
           : [{ a: "hip", dx: -10, dy: 12, hold: "phone", n: drop ? swingAt(f - (C1 - 1 + d)) : 0 },
             drop ? { a: "head", dy: 4, shape: "palm", sz: 0.2 } : slam > 0.02 ? { a: "ear", b: "hip", k: slam, dx: -8 * slam, hold: "handset", n: 0.6 * pump } : { a: "ear", hold: "handset", n: 0.6 * pump }] });
+      // fix r3 (A3 P2): the ginger trader's order slips slip out of his fingers on the crash and flutter down (~30 f)
+      if (k === 1) for (let n = 0; n < 3; n++) { const t = f - (C1 + 3) - 3 * n; if (t < 0 || t > 32) continue;
+        const u = t / 32, sw = Math.sin(t * 0.35 + n * 2.2);
+        fx(out, `slipfly|${q(sw, 6)}`, 128, 128, (pp) => fxSlip(pp), [P[0] + 0.25 + 0.12 * n + 0.12 * sw, 1.15 - 1.05 * u, P[2] + 0.12], 0.13, 0.13, { rot: 0.9 * sw + t * 0.1 }); }
     } else { // back view: arms up pumping slips at the board; on the crash: hands to the head (the slips fly up), k 4 sits down hard
-      const sit = k === 4 && sh ? smooth((f - (C1 - 1 + d)) / 6) : 0;
-      put(out, cam, A, P, { breath: L.breath, tilt: L.sway + 4 * stroke * (sh ? 0 : 1), view: "back", facing: k === 2 ? 1 : -1, crouch: -0.15 * jolt + (sh ? 0.08 : 0) + 0.75 * sit, lookY: -0.8,
-        hands: sh ? [{ a: "head", dy: 4 + 10 * sit }, { a: "head", dy: 4 + 10 * sit }] : [{ a: "up", dy: 18 * stroke, hold: k === 0 ? "slip" : null }, { a: cyc === 1 ? "point" : "up", dy: -18 * stroke, hold: "slip" }] });
+      // fix r3 (A3 P2): the arms come DOWN from slip-waving to clutching the head over 12 f (no 1-frame pose pop)
+      const sit = k === 4 && sh ? smooth((f - (C1 - 1 + d)) / 12) : 0, cl = sh ? smooth((f - (C1 - 1 + d)) / 12) : 0, st0 = stroke * (1 - cl);
+      put(out, cam, A, P, { breath: L.breath, tilt: L.sway + 4 * st0, view: "back", facing: k === 2 ? 1 : -1, crouch: -0.15 * jolt + 0.08 * cl + 0.75 * sit, lookY: -0.8,
+        hands: [{ a: "up", b: "head", k: cl, dy: 18 * st0 + (4 + 10 * sit) * cl, hold: k === 0 && cl < 0.4 ? "slip" : null }, { a: cyc === 1 ? "point" : "up", b: "head", k: cl, dy: -18 * st0 + (4 + 10 * sit) * cl, hold: cl < 0.4 ? "slip" : null }] });
       if (sh && k !== 4) for (let n = 0; n < 2; n++) { const t = f - (C1 - 1 + d) - n * 2; if (t < 0 || t > 30) continue;
         const u = t / 30, sw = Math.sin(t * 0.5 + n * 2 + k);
         fx(out, `slipfly|${q(sw, 6)}`, 128, 128, (p) => fxSlip(p), [P[0] + (n ? 0.3 : -0.3) + 0.1 * sw, 2.1 + 1.6 * u - 1.4 * u * u, P[2] + 0.1], 0.13, 0.13, { rot: 1.2 * sw + t * 0.2 }); }
@@ -954,13 +1055,19 @@ const trading = (out: Stage, cam: CamInfo, _id: number, f: number) => {
   // Tino on the phone: hollering cheerfully at the board, smug at us from "his" through "oil", the crash: grimace, sweat,
   // the receiver drops and dangles on its coiled cord, his hand flies to his cheek; fix r2: the phone base hangs LOW at his
   // hip (the gold pin and tie stay clean)
-  const P = add(TR.base, TR_TINO), i = TINO.i, L = life(VF, i), sh = f >= C1 - 2, jolt = gest2(f, C1 - 2, 4, C1 + 8, 10), hol = Math.floor((VF + 11) / 36) % 2;
+  // fix r3 (A3 P2): the crash lands in his BODY: a 4 % anticipation squash, a 14 f recoil (pops up, head pulls back, a 3 f
+  // overshoot); the handset stays at his ear until it SLIPS (~1390) and dangles on its curly cord (decaying swings) while
+  // his hand flies out beside his head; a gulp + a second sweat drop at ~1398
+  const P = add(TR.base, TR_TINO), i = TINO.i, L = life(VF, i), sh = f >= C1 - 2, hol = Math.floor((VF + 11) / 36) % 2;
+  const ant = f >= C1 - 3 && f < C1 + 1 ? Math.sin((Math.PI / 2) * clamp01((f - (C1 - 3)) / 3)) : 0, rec = gest(f, C1 + 1, 6) * (1 - gest(f, C1 + 9, 8));
+  const SLIP = C1 + 8, slipped = f >= SLIP, gulp = bump(f, C1 + 14, 3, 5);
   const keys: [number, Expr][] = [[0, hol ? "holler" : "grin"], [PW(14, "his") - 2, "smug"], [C1 - 2, "grimace"]];
   const ex = f < PW(14, "his") - 2 ? (hol ? "holler" : "grin") : exprAt(f, keys);
-  put(out, cam, TINO, P, { breath: L.breath, tilt: L.sway + (sh ? -4 * jolt : 2 * Math.sin(VF * 0.3)), headTilt: L.head + (sh ? 5 : 0), shift: L.shift, facing: sh ? 0 : 1,
+  put(out, cam, TINO, P, { breath: L.breath, tilt: L.sway + (sh ? -3 * rec : 2 * Math.sin(VF * 0.3)), headTilt: L.head + (sh ? 3 + 5 * rec : 0), shift: L.shift, facing: sh ? 0 : 1,
     expr: ex, look: sh ? 0 : f >= PW(14, "his") - 2 ? 0 : 0.7, lookY: sh ? -0.4 : f >= PW(14, "his") - 2 ? 0 : -1.2, blink: Math.max(sh ? 0 : blinkAt(VF, i), swapLid(f, keys)),
-    crouch: -0.16 * jolt, sweat: sh ? 1 : 0, face: sh ? { browUp: [3, 3] } : undefined,
-    hands: [{ a: "hip", dx: -14, dy: 16, hold: "phone", n: sh ? swingAt(f - (C1 - 2)) : 0 }, sh ? { a: "chin", dx: 16, dy: -6, shape: "palm", sz: 0.2 } : { a: "ear", hold: "handset", n: 0.5 * Math.sin(VF * 0.3) }] });
+    crouch: 0.1 * ant - 0.18 * rec, nod: -0.5 * rec + 0.6 * gulp, sweat: sh ? 1 : 0, sweat2: f >= C1 + 16 ? smooth((f - (C1 + 16)) / 2) : 0, gulp, face: sh ? { browUp: [3 + 2 * rec, 3 + 2 * rec] } : undefined,
+    hands: [{ a: "hip", dx: -14, dy: 16, hold: "phone", n: slipped ? swingAt(f - SLIP) : 0 },
+      slipped ? { a: "ear", b: "raise", k: smooth((f - SLIP) / 8), dx: 14, shape: "palm", sz: 0.22 } : { a: "ear", hold: "handset", n: sh ? 0.8 * rec : 0.5 * Math.sin(VF * 0.3) }] });
 };
 
 // ---------------- the cutaway ----------------
@@ -988,11 +1095,12 @@ const cutaway = (out: Stage, _cam: CamInfo, id: number, f: number) => {
     const sl = f - (BEAT.waterEnd + 1);
     if (sl >= 0 && sl < 14) { wide = 1; tilt = 22 * Math.sin((Math.PI * Math.min(sl, 6)) / 6) * Math.exp(-sl / 8); y += 0.06 * Math.sin((Math.PI * Math.min(sl, 6)) / 6); }
     for (const d of [2, 6, 10]) if (sl >= d && sl < d + 22) blubs.push((sl - d) / 22);
+    const upG = bump(f, BEAT.waterEnd + 17, 4, 12); if (upG > 0) { up = upG; tilt += 10 * upG; lid = 1 - 0.85 * upG; }
   } else {
     const t0 = BEAT.waterIn + 4, drop = 12, land = t0 + 3 + drop; if (f < t0) return;
     const lv = lerp(0.75, CU.water, smooth((f - (BEAT.fill + 4)) / 45));  // fix2 LEAD: = sets_int's water level
     if (f < land) { // out of the spout (a 3 f pop-out), then straight down the water column with a spin
-      const u = clamp01((f - t0 - 3) / drop); sc = 0.4 + 0.6 * smooth((f - t0) / 3); x = CU.hatch.c[0]; y = lerp(10.0, Math.min(lv - 0.25, 6.6), u * u); spin = u * 4.2; lid = 0;
+      const u = clamp01((f - t0 - 3) / drop); sc = 0.4 + 0.6 * smooth((f - t0) / 3); x = CU.hatch.c[0]; y = lerp(10.0, Math.min(lv - 0.25, 6.6), u * u); spin = u * 4.2; lid = 0; wide = 1;
     } else {
       const sw = smooth((f - land - 20) / 40), out2 = smooth((f - (BEAT.hatch - 34)) / 30), y0 = Math.min(lv - 0.25, 6.6) - 0.3;
       x = lerp(CU.hatch.c[0], 0.9, sw) + 2.6 * out2; y = Math.min(lv - 0.45, lerp(y0, 7.25, sw)) + bob;
@@ -1021,8 +1129,11 @@ const loopExtras = (out: Stage, f: number) => {
   if (open > 0.05) {
     const u = clamp01((f - (BEAT.fake + 8)) / 30), flick = gest2(f, BEAT.trust - 8, 3, BEAT.trust - 2, 3), a = clamp01(open * 1.6 - 0.4);
     const C = TK.reflect, tail = Math.sin((VF * TAU * 3) / 30) + 1.2 * flick;
-    fx(out, `lfish|${q(tail, 6)}|${q(a, 10)}`, 512, 320, (p) => drawFish(p, tail * 0.9, false, 0.5 * tail, 1, 0, 0, 0, a),
-      [C[0] - 0.14 + 0.26 * u, TK.hatch.oil + 0.006, C[2] + 0.02 * Math.sin(u * 5)], 0.17, 0.106, { flat: true, rot: 0.12 * Math.sin(u * 5) });
+    const finW = 1.6 * gest2(f, BEAT.trust + 10, 3, BEAT.trust + 16, 4), fx0 = C[0] - 0.14 + 0.26 * u, fz0 = C[2] + 0.02 * Math.sin(u * 5);
+    fx(out, `lfish|${q(tail, 6)}|${q(a, 10)}|${q(finW, 6)}`, 512, 320, (p) => drawFish(p, tail * 0.9, false, 0.5 * tail + finW, 1, 0, 0, 0, a),
+      [fx0, TK.hatch.oil + 0.006, fz0], 0.17, 0.106, { flat: true, rot: 0.12 * Math.sin(u * 5) });
+    for (let n = 0; n < 2; n++) { const bt = (f - (BEAT.trust - 1 + 5 * n)) / 12; if (bt <= 0 || bt >= 1 || a < 0.3) continue;   // two tiny bubbles
+      fx(out, `lbub|${q(bt, 12)}`, 128, 128, (p) => fxBubble(p, 0.5 + 0.5 * bt), [fx0 + 0.05 + 0.01 * n, TK.hatch.oil + 0.01 + 0.03 * bt, fz0 - 0.02 + 0.01 * n], 0.022, 0.022); }
   }
   const g = clamp01((f - (BEAT.fake + 6)) / 36);
   if (g > 0 && g < 1) {
@@ -1038,26 +1149,34 @@ const loopExtras = (out: Stage, f: number) => {
  *  go with a 3 f overshoot and leaves over 18 f (a 3 f settle). sets_int.ts moves the bottle with the same offsets
  *  (bottleShake: x += dx, y += dy, rotation.z = rot about the base); shakeMix(f) = how cloudy it should be (one third per
  *  stroke). AUDIO: the shake runs from BEAT.ever to BEAT.ever + 24 */
+/** fix r3 (A3 P2): THREE clear shakes: a 12 f period (6 f strokes) x 3 = 36 f from "Ever" (BEAT.ever .. + 36), 0.30 rad,
+ *  a 4 f ease-in and a 6 f ease-out; the set-down pop at ~ever + 38 (AUDIO: shake_11 = [ever, ever + 36], clunk_11 ~ ever + 40) */
+export const SHAKE_T = 36;
 export const bottleShake = (f: number): { dx: number; dy: number; rot: number } => {
-  const t = f - BEAT.ever, env = t < 0 || t > 24 ? 0 : Math.min(1, t / 3, (24 - t) / 4);
-  const rk = env * 0.26 * Math.sin((TAU * t) / 8);
-  return { dx: 0.006 * env * Math.sin((TAU * t) / 4), dy: 0.03 * env * (0.5 + 0.5 * Math.sin((TAU * t) / 8 - Math.PI / 2)), rot: rk };
+  const t = f - BEAT.ever, env = t < 0 || t > SHAKE_T ? 0 : Math.min(1, smooth(t / 4), smooth((SHAKE_T - t) / 6));
+  const rk = env * 0.3 * Math.sin((TAU * t) / 12);
+  return { dx: 0.006 * env * Math.sin((TAU * t) / 6), dy: 0.03 * env * (0.5 + 0.5 * Math.sin((TAU * t) / 12 - Math.PI / 2)), rot: rk };
 };
 /** the cloudiness the shake has worked up (0 clear .. 1 fully mixed): about 35 / 70 / 100 % after the three strokes */
-export const shakeMix = (f: number) => { const t = f - BEAT.ever; return t < 0 ? 0 : Math.min(1, 0.35 * smooth(t / 8) + 0.35 * smooth((t - 8) / 8) + 0.3 * smooth((t - 16) / 8)); };
+export const shakeMix = (f: number) => { const t = f - BEAT.ever; return t < 0 ? 0 : Math.min(1, 0.35 * smooth(t / 12) + 0.35 * smooth((t - 12) / 12) + 0.3 * smooth((t - 24) / 12)); };
 const kitchen = (out: Stage, cam: CamInfo, _id: number, f: number) => {
-  const t = f - BEAT.ever, inn = smooth((t + 22) / 16) * (1 - smooth((t - 29) / 18));
+  const t = f - BEAT.ever, inn = smooth((t + 22) / 16) * (1 - smooth((t - 41) / 18));
   catOnTable(out, cam, f);
   catPeek(out, f);
   if (inn <= 0.001) return;
   const b = KI.bottle, sh = bottleShake(f), O = KI.base, off = (1 - inn) * 0.32, neck = 0.305;
-  const lift = t >= -6 && t < -2 ? 0.02 * Math.sin((Math.PI * (t + 6)) / 4) : 0, pop = t >= 24 && t < 29 ? 0.025 * Math.sin((Math.PI * (t - 24)) / 5) : 0, sq = t >= -2 && t < 2 ? 1 : 0;
-  const settle = t >= 47 && t < 50 ? 0.008 * Math.sin((Math.PI * (t - 47)) / 3) : 0;
+  const lift = t >= -6 && t < -2 ? 0.02 * Math.sin((Math.PI * (t + 6)) / 4) : 0, pop = t >= 36 && t < 41 ? 0.025 * Math.sin((Math.PI * (t - 36)) / 5) : 0, sq = t >= -2 && t < 2 ? 1 : 0;
+  const settle = t >= 59 && t < 62 ? 0.008 * Math.sin((Math.PI * (t - 59)) / 3) : 0;
   const nx = O[0] + b.c[0] + sh.dx - Math.sin(sh.rot) * neck, ny = O[1] + KI.table.top + 0.005 + sh.dy + Math.cos(sh.rot) * neck;
   const grip: V3 = [nx + off * 0.8, ny + off * 0.6 + lift + pop + settle, O[2] + b.c[2]];
   // the card's grip point is at (430, 640) of 1024: shift the card so that point sits on the neck
   const S = 0.42, c0: V3 = [grip[0] + ((512 - 430) / 1024) * S, grip[1] + ((640 - 512) / 1024) * S, grip[2]];
   fx(out, `shake|${q(sh.rot, 20)}|${sq}`, 1024, 1024, (p) => drawShakeHand(p, sh.rot * 5, sq), toward(c0, vec(cam.pos), 0.07), S, S, { rot: -sh.rot });
+  // fix r3: two curved motion arcs beside the bottle at every stroke extreme (3-4 f), on the side it swings to
+  for (let e = 3; e < SHAKE_T; e += 6) { const dt = t - e; if (dt < -1 || dt >= 3) continue;
+    const side = Math.sin((TAU * e) / 12) > 0 ? -1 : 1, k = 1 - Math.max(0, dt) / 3;
+    const mp: V3 = [O[0] + b.c[0] + side * 0.12, O[1] + KI.table.top + 0.17, O[2] + b.c[2] + 0.02];
+    fx(out, `motion|${side}|${q(k, 6)}`, 128, 128, (p) => { if (side < 0) { p.g.translate(128, 0); p.g.scale(-1, 1); } fxMotion(p, k); }, toward(mp, vec(cam.pos), 0.12), 0.13, 0.13); }
 };
 /** a small tabby cat sitting on the table edge, watching the bottle: its head follows the hand as it reaches in, eyes WIDE
  *  on "Ever", a paw lifts to bat at the bottle on the shake, the tail curls into a question mark on "out?", a slow
@@ -1065,11 +1184,15 @@ const kitchen = (out: Stage, cam: CamInfo, _id: number, f: number) => {
 const catOnTable = (out: Stage, cam: CamInfo, f: number) => {
   const P: V3 = add(KI.base, [KI.bottle.c[0] + 0.17, KI.table.top, KI.bottle.c[2] - 0.32]);
   const reachIn = f >= BEAT.ever - 24 && f < BEAT.ever - 2, shake = f >= BEAT.ever - 2 && f < BEAT.ever + 30, wide = f >= BEAT.ever - 2 && f < BEAT.ever + 40;
-  const outQ = PW(20, "out?"), bat = gest2(f, BEAT.ever + 4, 6, BEAT.ever + 18, 8), curl = gest2(f, outQ - 4, 10, outQ + 26, 12);
+  // fix r3 (A3 P2 / ADD): a visible tail swish (~0.4 Hz), an ear flick on "floats", a slow head turn bottle -> lens -> bottle
+  // with a blink across it; the paw bats the bottle on the LAST shake stroke and the cat recoils wide-eyed for 12 f
+  const outQ = PW(20, "out?"), bat = gest2(f, BEAT.ever + 25, 5, BEAT.ever + 32, 6), curl = gest2(f, outQ - 4, 10, outQ + 26, 12);
+  const turnC = bump(f, BEAT.floats - 12, 15, 15), recoil = bump(f, BEAT.ever + 32, 3, 12), flickC = f >= BEAT.floats && f < BEAT.floats + 4 ? 1 : 0;
   const bl = f >= BEAT.top + 2 && f < BEAT.top + 14 ? 3 : f >= BEAT.top - 2 && f < BEAT.top + 20 ? 2 : -1;
   const follow = reachIn ? smooth((f - (BEAT.ever - 24)) / 10) : 0;
-  const st: CatSt = { tilt: shake ? 8 * Math.sin((f - BEAT.ever) * 0.5) : -8 * follow + 4 * Math.sin(VF * 0.05) + (f > BEAT.theOilRises ? 6 : 0), eye: bl >= 0 ? bl : wide ? 1 : blinkAt(VF, 88) > 0.5 ? 3 : 0,
-    tail: Math.sin(VF * 0.12), look: follow > 0.3 ? 0.8 : -0.8, ear: shake ? 1 : 0, paw: bat, curl };
+  const st: CatSt = { tilt: (shake ? 8 * Math.sin((f - BEAT.ever) * 0.5) : -8 * follow + 4 * Math.sin(VF * 0.05) + (f > BEAT.theOilRises ? 6 : 0)) + 5 * turnC - 9 * recoil,
+    eye: bl >= 0 ? bl : wide || recoil > 0.1 ? 1 : blinkN(f, BEAT.floats + 2, 3) > 0.6 || blinkAt(VF, 88) > 0.5 ? 3 : 0,
+    tail: wave(VF, HZ.cat), look: follow > 0.3 ? 0.8 : lerp(-0.8, 0.5, turnC), ear: shake || flickC ? 1 : 0, paw: bat, curl };
   out.places.push({ key: `CAT|${fkey(st)}|LX${LX}`, x: P[0], y: P[1], z: P[2], scale: 0.2, size: [1080, 1800, 1.8], draw: (p) => drawCat(p, st, light2D(cam)) });
   blob(out, P[0], P[1] + 0.001, P[2], 0.2, 0.8, false);
 };
@@ -1097,7 +1220,9 @@ export const valveAngle = (k: number, f: number) => { let a = 0; for (const c of
 /** fix r2 (A2 P2): the C-wheel worker stands on the LEFT of his wheel (local anchor; LEAD: PR.workers[1]), so he is in the
  *  follow but never in the blob medium at tank C (no cap mass in the corner / caption band); the off-duty yawner moved in
  *  so his whole head is in frame A */
-const WORKERS13: V3[] = [PR.workers[0], PR.workers[1]], YAWNER: V3 = [-4.3, 0, -2.75];
+/** fix r3 (A3 P2): the off-duty yawner SITS on top of the drums (between the hard hat and the lunch box, legs hanging
+ *  behind the drum's front face), clear of the thermos and of the blob's pipe, his face above the captions */
+const WORKERS13: V3[] = [PR.workers[0], PR.workers[1]], YAWNER: V3 = [-4.68, 0.53, -2.95];
 /** shot 13 (fix r2): two workers heave their red valve wheels HAND OVER HAND (both mittens on the rim at 10 and 2 o'clock,
  *  riding the wheel 30 deg per pull, then re-gripping one hand after the other; a 2 f lean-back anticipation, a 3-5 deg
  *  heave and a cap bob per pull, synced to the squeaks); a third, off duty, yawns over a steaming thermos; moths circle
@@ -1123,9 +1248,13 @@ const pumproom = (out: Stage, cam: CamInfo, _id: number, f: number) => {
       hands: [{ a: h1, front: false, shape: "mitten", sz: 0.18, ang: -s * 20 }, { a: h2, front: false, shape: "mitten", sz: 0.18, ang: s * 20 }] }, { yaw });
   });
   // the off-duty worker: yawning over his thermos cup (a 40 f yawn every ~4 s), head nodding, steam off the cup
-  { const A = WORKER(2), L = life(VF, A.i), yt = VF % 120, yawn = yt < 40 ? Math.sin((Math.PI * yt) / 40) : 0;
-    put(out, cam, A, add(O, YAWNER), { breath: L.breath + 1.5 * yawn, tilt: L.sway, headTilt: L.head + 6 * yawn, nod: 0.3 + 0.5 * Math.max(0, Math.sin(VF * 0.05)), facing: 1,
-      expr: yawn > 0.3 ? "effort" : "neutral", blink: yawn > 0.3 ? 1 : blinkAt(VF, A.i), hands: [{ a: "chest", dx: 6, dy: -4, hold: "thermos", n: VF }, yawn > 0.3 ? { a: "mouth", dx: 4, shape: "palm", sz: 0.18 } : { a: "hip" }] }); }
+  // fix r3: a 14 f YAWN on "And the real oil?" (closed eyes, a big O, a hand patting the mouth), a SIP of his coffee on
+  // "pumped", a second yawn later; a cup with a steam curl at chest height
+  { const A = WORKER(2), L = life(VF, A.i), yawn = Math.max(bump(f, BEAT.realOil - 2, 5, 9), bump(f, BEAT.again1 + 4, 5, 9)), sip = gest2(f, BEAT.pumped - 6, 9, BEAT.pumped + 8, 9);
+    put(out, cam, A, add(O, YAWNER), { breath: L.breath + 1.5 * yawn, tilt: L.sway, headTilt: L.head + 6 * yawn, nod: 0.3 + 0.5 * Math.max(0, Math.sin(VF * 0.05)) - 0.5 * yawn, facing: 1, mode: "chair",
+      expr: yawn > 0.3 ? "yawn" : sip > 0.5 ? "content" : "calm", blink: yawn > 0.3 || sip > 0.5 ? 0 : blinkAt(VF, A.i),
+      hands: [sip > 0.02 ? { a: "chest", b: "mouth", k: sip, dx: 6 * (1 - sip), dy: -4 * (1 - sip) + 6 * sip, hold: "cup", n: VF } : { a: "chest", dx: 6, dy: -4, hold: "cup", n: VF },
+        yawn > 0.3 ? { a: "mouth", dx: 4, shape: "palm", sz: 0.18 } : { a: "lap" }] }, { noBlob: true }); }
   // moths circling the two caged work lamps (tiny warm specks)
   PR.lamps.forEach((l, li) => { for (let n = 0; n < 3; n++) { const a = VF * (0.16 + 0.03 * n) + n * 2.1 + li, r = 0.22 + 0.06 * n;
     fx(out, `glow|moth`, 128, 128, (p) => fxSpot(p, 0.9), [O[0] + l[0] + r * Math.cos(a), l[1] - 0.15 + 0.08 * Math.sin(a * 1.7), O[2] + l[2] + r * Math.sin(a)], 0.05, 0.05, { soft: true }); } });
@@ -1137,7 +1266,7 @@ const pumproom = (out: Stage, cam: CamInfo, _id: number, f: number) => {
   const arrIdx = f >= tC ? 2 : f >= tB ? 1 : f >= tA ? 0 : -1, arrF = [tA, tB, tC][Math.max(0, arrIdx)];
   const cheer = arrIdx >= 0 ? gest2(f, arrF, 5, arrF + (arrIdx === 2 ? 26 : 12), 8) : 0, huff = arrIdx >= 0 ? clamp01((f - arrF - 4) / 14) : 0;
   const droop = arrIdx === 2 ? smooth((f - (tC + 12)) / 10) : 0;
-  const oilW = PW(27, "oil"), pantOn = f >= BEAT.hardestW - 2 && f < oilW, wipeRaw = clamp01((f - oilW) / 24), wipe = wipeRaw > 0 && wipeRaw < 1 ? smooth(wipeRaw) : 0;
+  const oilW = PW(27, "oil"), pantOn = f >= BEAT.hardestW - 2 && f < oilW, wipeRaw = clamp01((f - oilW) / 17), wipe = wipeRaw > 0 && wipeRaw < 1 ? smooth(wipeRaw) : 0;
   const dipW = f >= oilW - 3 && f < oilW ? Math.sin((Math.PI * (f - oilW + 3)) / 3) : 0;
   const puff = gest2(f, oilW + 25, 6, oilW + 36, 6), sighAt = oilW + 40, sigh = smooth((f - sighAt) / 6), tired = f >= tC + 20;
   const mood: BlobSt["mood"] = f >= sighAt ? "sigh" : f >= oilW + 24 && f < sighAt ? "beam" : tired || arrIdx === 2 ? "tired" : cheer > 0.1 ? "proud" : "happy";
@@ -1147,7 +1276,7 @@ const pumproom = (out: Stage, cam: CamInfo, _id: number, f: number) => {
     blink: (f >= oilW + 30 && f < oilW + 33) || (!tired && blinkAt(VF, 60) > 0.5), mood, sweat: f >= BEAT.hardestW - 2 && f < oilW + 24 ? 1 : f >= oilW + 24 ? 0.6 * smooth((f - oilW - 40) / 10) : 0, wipe, cheer: pantOn || wipe > 0 ? 0 : cheer,
     pant: 0.5 + 0.5 * Math.sin(VF * 0.5), pose: arrIdx < 0 ? 0 : arrIdx, huff: arrIdx >= 0 && huff < 1 && !pantOn ? huff : 0,
     sweatY: clamp01((f - (BEAT.hardestW - 2)) / 20), huffOpen: pantOn ? Math.floor((f - BEAT.hardestW + 2) / 6) % 2 === 0 : undefined,
-    cheek: pantOn ? 0.5 + 0.5 * Math.sin((VF * TAU * 1.5) / 30) : 0, droop };
+    cheek: pantOn ? 0.5 + 0.5 * Math.sin((VF * TAU * 1.5) / 30) : 0, droop, dizzy: f >= BEAT.again2 - 2 && f < BEAT.again2 + 12 ? (f - BEAT.again2) * 0.6 : undefined };
   // 1.8x (it reads at phone size in the wide and the follow; CAM's medium at tank C frames it)
   const S = 0.42 * 1.8 * (1 + 0.06 * puff - 0.04 * sigh), hop = (moving ? 0.03 * Math.abs(Math.sin(VF * 0.3)) : 0) + 0.08 * Math.sin(Math.PI * clamp01(cheer)) * (arrIdx === 1 ? 0 : 1) * (pantOn ? 0 : 1);
   const bp: V3 = [O[0] + x, PR.blobY + 0.418 * S + hop, O[2] + PR.pipe.z + 0.2];
@@ -1164,7 +1293,7 @@ const pumproom = (out: Stage, cam: CamInfo, _id: number, f: number) => {
  *  an overshoot), then his newspaper droops in his hands; the woman stops under the SHARES board and clutches her
  *  handbag on "shares"; the comic button: a man with a briefcase hurrying along the facade stops dead after "crashed",
  *  looks up at the falling arrows, turns round (16 f) and hurries back the way he came */
-const READER: V3 = [1.55, 0, -2.45], WOMAN_TO: V3 = [0.7, 0, -3.9];
+const READER: V3 = [1.55, 0, -2.45], WOMAN_TO: V3 = [1.05, 0, -3.9];   // fix r3 (A3 P3): the woman 0.35 m right, clear of the kiosk post
 const hatPop = (t: number) => (t < 0 ? 0 : t < 6 ? 100 * Math.sin((Math.PI / 2) * (t / 6)) : t < 12 ? 100 - 108 * ((t - 6) / 6) ** 2 : t < 16 ? -8 + 8 * smooth((t - 12) / 4) : 0);
 const street = (out: Stage, cam: CamInfo, _id: number, f: number) => {
   const O = ST.base, s = SHOTS[13];
@@ -1178,17 +1307,14 @@ const street = (out: Stage, cam: CamInfo, _id: number, f: number) => {
     put(out, cam, A, add(O, p), { breath: L.breath, tilt: L.sway, headTilt: L.head, mode: walking ? "walk" : "stand", phase: (f - s.a) / 13, facing: -1, view: "front",
       expr: exprAt(f, keys), look: walking ? -1 : -0.3, lookY: walking ? 0 : -1.1, blink: Math.max(blinkAt(VF, A.i), swapLid(f, keys)), wind: 0.3 * windAt(VF, A.i), flutter: 0.3 * flutAt(VF, A.i),
       crouch: -0.1 * gest2(f, BEAT.shares - 2, 4, BEAT.shares + 8, 8), hands: [{ a: "hang" }, f >= BEAT.shares - 2 ? { a: "chest", dx: 2, dy: -6, hold: "handbag" } : { a: "chest", dy: 10, hold: "handbag" }] }); }
-  { // the briefcase man: hurries left along the facade, stops dead (crashed2 + 6), looks up at the arrows, turns round
-    // (16 f: 3/4 -> front -> 3/4 the other way) and hurries back to the right
-    const A = WALKER(2), L = life(VF, A.i), tA = BEAT.cameOut + 4, tStop = BEAT.crashed2 + 6, tTurn = tStop + 10, tBack = tTurn + 16;
-    const goU = smooth(clamp01((f - tA) / (tStop - tA))), backU = clamp01((f - tBack) / 40), x = lerp(4.4, 1.95, goU) + 1.6 * backU * backU;
-    const walking = (f >= tA && f < tStop - 2) || f >= tBack, turnU = clamp01((f - tTurn) / 16), lookUp = f >= tStop && f < tTurn + 6;
-    const facing = (f < tTurn ? -1 : turnU < 0.35 ? -1 : turnU < 0.7 ? 0 : 1) as -1 | 0 | 1;
-    const keys: [number, Expr][] = [[0, "focus"], [tStop - 1, "browsUp"], [tTurn + 4, "worry"]];
-    if (f >= tA) put(out, cam, A, add(O, [x, 0, -5.15]), { breath: L.breath, mode: walking ? "walk" : "stand", phase: (f - tA) / 10, lift: 1.2, facing, expr: exprAt(f, keys),
-      look: lookUp ? 0.2 : facing * 0.8, lookY: lookUp ? -1.5 : 0, face: lookUp ? { fdy: -3 } : undefined, blink: Math.max(blinkAt(VF, A.i), swapLid(f, keys)),
-      wind: 0.3 * windAt(VF, A.i), tilt: walking ? -4 * (facing || 1) : 0, crouch: -0.08 * gest2(f, tStop - 2, 3, tStop + 4, 6),
-      hands: [{ a: "hang", hold: "briefcase" }, lookUp ? { a: "hang", b: "head", k: smooth((f - tStop) / 6), shape: "palm", sz: 0.2 } : { a: "hang" }] });
+  { // fix r3 (A3 P2): the briefcase man (now in a flat cap) HURRIES past along the facade from the right while the paper
+    // "came out", glances up at the SHARES board with a worried brow as he passes, and is gone behind the kiosk before the
+    // arrows drop (~2370), so nobody stands behind the reader's hat in the reaction hold
+    const A = WALKER(2), L = life(VF, A.i), tA = BEAT.cameOut + 2, x = 4.7 - (5.9 * (f - tA)) / 56;
+    const lookUp = f >= tA + 22 && f < tA + 40, keys: [number, Expr][] = [[0, "focus"], [tA + 22, "worry"]];
+    if (f >= tA && x > -2.5) put(out, cam, { ...A, key: "walker2cap", o: { ...A.o, hat: "flatcap", hatCol: "#5a4a3a" } }, add(O, [x, 0, -5.6]), { breath: L.breath, mode: "walk", phase: (f - tA) / 10, lift: 1.2, facing: -1,
+      expr: exprAt(f, keys), look: lookUp ? 0.2 : -0.8, lookY: lookUp ? -1.4 : 0, face: lookUp ? { fdy: -3 } : undefined, blink: Math.max(blinkAt(VF, A.i), swapLid(f, keys)),
+      wind: 0.3 * windAt(VF, A.i), tilt: 4, hands: [{ a: "hang", hold: "briefcase" }, { a: "hang" }] });
   }
 };
 
@@ -1208,49 +1334,59 @@ const office = (out: Stage, cam: CamInfo, _id: number, f: number) => {
   const chin = gest(f, BEAT.buffett - 2, 12), nod = f >= PWE(32, "Buffett") ? 0.4 * Math.max(0, Math.sin(((f - PWE(32, "Buffett")) * Math.PI) / 14)) : 0;
   const glasses = gest2(f, BEAT.heBet - 4, 12, BEAT.heBet + 14, 12), cheapNod = 0.6 * gest2(f, BEAT.cheap, 6, BEAT.cheap + 10, 8);
   const ex = exprAt(f, keys);
-  const o: PersonOpts = { breath: L.breath, tilt: 0.6 * L.sway - 3 * back - 3 * lb + 3 * thumb, headTilt: L.head + 4 * chin - 3 * thumb, mode: "chair", expr: ex,
-    blink: Math.max(blinkAt(VF, i), swapLid(f, keys)), look: thumb > 0.4 ? -0.5 : 0, lookY: f < BEAT.heBet ? 1.2 : 0,
-    nod: cheapNod + nod - 0.5 * chin, facing: 0, face: { fdy: -3 * chin, glint: (f >= BEAT.warren && f < BEAT.warren + 16 ? 1 - (f - BEAT.warren) / 16 : 0) + (glasses > 0.92 && glasses < 1.06 ? 1 : 0), glassDy: 2 * glasses },
+  // fix r3 (A3 P2): the glint is 2 f at the top of the push; on "trusted" he looks back toward the window (look +0.5)
+  const o: PersonOpts = { breath: L.breath, tilt: 0.6 * L.sway - 3 * back - 3 * lb - 2 * thumb, headTilt: L.head + 4 * chin + 3 * thumb, mode: "chair", expr: ex,
+    blink: Math.max(blinkAt(VF, i), swapLid(f, keys)), look: thumb > 0.4 ? 0.5 : 0, lookY: f < BEAT.heBet ? 1.2 : 0,
+    nod: cheapNod + nod - 0.5 * chin, facing: 0, face: { fdy: -3 * chin, glint: (f >= BEAT.warren && f < BEAT.warren + 16 ? 1 - (f - BEAT.warren) / 16 : 0) + (f >= BEAT.heBet + 8 && f < BEAT.heBet + 10 ? 1 : 0), glassDy: 2 * glasses },
     hands: [{ a: "lap", hide: true }, { a: "lap", hide: true }] };
   const W = (p: V3, dy: number): V3 => [O[0] + p[0], O[1] + p[1] + dy, O[2] + p[2]];
-  const pap = OF.paper, write = gest2(f, BEAT.bought - 10, 8, BEAT.cheap + 4, 12), sc = f >= BEAT.bought - 2 && f < BEAT.cheap ? 1 : 0;
-  const scrib: V3 = [0.035 * Math.sin(f * 1.3) * sc, 0, 0.012 * Math.cos(f * 2.1) * sc], tap = (VF % 40) < 6 ? 0.025 * Math.sin((Math.PI * (VF % 40)) / 6) : 0;
+  const pap = OF.paper, write = gest2(f, BEAT.bought - 10, 8, BEAT.cheap + 4, 12), sc = f >= BEAT.bought - 2 && f < BEAT.cheap - 7 ? 1 : 0;
+  // the pencil writes ON the slip: a scribble, then a finishing UNDERLINE (6 f) and a pencil lift on "cheap" (AUDIO's 'ka')
+  const ul = clamp01((f - (BEAT.cheap - 7)) / 6), uline = f >= BEAT.cheap - 7 && f < BEAT.cheap + 4, plift = 0.03 * smooth((f - BEAT.cheap) / 4);
+  const scrib: V3 = uline ? [lerp(-0.05, 0.05, ul), 0, 0.024] : [0.035 * Math.sin(f * 1.3) * sc, 0, 0.012 * Math.cos(f * 2.1) * sc], tap = (VF % 40) < 6 ? 0.025 * Math.sin((Math.PI * (VF % 40)) / 6) : 0;
   const rest = (dx: number): V3 => W([pap[0] + dx, pap[1], pap[2] - 0.08], 0.06 - 0.03 * back);
-  const restL = lerp3(rest(0.05), W([pap[0] - 0.32, pap[1], pap[2] - 0.32], 0.05), back);
-  if (thumb > 0.02) { // the thumb over his shoulder (the body card's own arm, from where the reach arm rested)
-    o.hands![0] = { a: toCard(c, P, yaw, 1, restL), b: "raise", k: thumb, dx: -42 * thumb, dy: -12 * thumb, shape: thumb > 0.5 ? "thumb" : "ball", sz: 0.42, front: true, maxLen: 1.3 };
-  }
+  // fix r3 (A3 P2): the reading hand grips the paper's TOP-RIGHT corner on the masthead (its arm card stands just behind the
+  // top edge, so the arm never crosses OIL TANKS / FULL OF WATER); leaning back on "He bet" it goes to the desk left of it
+  const restL = lerp3(W([0.06, 0.985, -0.865], 0), W([pap[0] - 0.32, pap[1], pap[2] - 0.32], 0.05), back);
+  LX = LX.slice(0, 3) + "6";   // the warm window rim on the investor + his arms (cardshade mode 6)
   put(out, cam, INVESTOR, P, o, { noBlob: true, yaw });
-  if (thumb <= 0.02) reachArm(out, cam, INVESTOR, P, yaw, o, 0, restL, { ang: -8, bend: 0.7 });
-  // the pencil hand: writes, rests (a tap idle), once pushes the glasses up the nose on "He bet" (the hand comes up from
-  // BELOW to the bridge: the arm stays under the eye line), and taps the BUY slip once on "Buffett."
-  const eyeW = fromCard(P, yaw, 1, handAt(INVESTOR_FIT, { ...o, seed: seedOf(i), hands: [{ a: "lap" }, { a: "eye", dx: -12, dy: 6 }] }, 1));
+  reachArm(out, cam, INVESTOR, P, yaw, o, 0, restL, { ang: -8, bend: 0.7 });
+  // the pencil hand: writes, rests (a tap idle), pushes the glasses up from the SIDE on "He bet" (to the outer hinge of the
+  // screen-right lens, the arm in at ~60 deg, never across the mouth), jerks a THUMB back at the window on "trusted"
+  // (pencil down, the same white sleeve), and taps the BUY slip once on "Buffett."
+  const eyeW = fromCard(P, yaw, 1, handAt(INVESTOR_FIT, { ...o, seed: seedOf(i), hands: [{ a: "lap" }, { a: "eye", dx: 38, dy: -4 }] }, 1));
   const slipTap = gest2(f, BEAT.buffett + 2, 6, BEAT.buffett + 12, 6);
-  const desk = lerp3(lerp3(rest(0.2), W([OF.slip[0] + scrib[0], OF.slip[1], OF.slip[2] - 0.02 + scrib[2]], 0.075), write), W([0.42, 0.77, -1.0], 0.06 + tap), back * (1 - write));
+  const desk = lerp3(lerp3(rest(0.2), W([OF.slip[0] + scrib[0], OF.slip[1], OF.slip[2] - 0.02 + scrib[2]], 0.075 + plift), write), W([0.42, 0.77, -1.0], 0.06 + tap), back * (1 - write));
   const deskT = lerp3(desk, W([OF.slip[0], OF.slip[1], OF.slip[2] - 0.02], 0.03), slipTap);
-  const below = toward(lerp3(eyeW, [eyeW[0], eyeW[1] - 0.16, eyeW[2]], 1 - smooth(glasses)), c, 0.12);
-  reachArm(out, cam, INVESTOR, P, yaw, o, 1, lerp3(deskT, below, Math.min(1, glasses)), { hold: glasses > 0.5 ? null : "pencil", ang: 30 + 10 * sc * Math.sin(f * 1.3), bend: 0.7 });
-  // the cafe across the street, on the painted cafe layer (z -5.27): the hand-off pair in the clear right pane, keyed to
-  // "trusted"; the sipper + the laugher in the left pane (their idle loops), 0.58 scale (~290 px tall)
-  const z = O[2] - 5.27, floor = 1.0, sc2 = 0.58, tr = BEAT.trusted;
-  const reach = gest2(f, tr - 4, 14, tr + 16, 12), take = gest2(f, tr + 12, 6, tr + 24, 10), took = f >= tr + 14;
+  const R0: V3 = [cam.right.x, 0, cam.right.z], side: V3 = [eyeW[0] + R0[0] * 0.15, eyeW[1] - 0.1, eyeW[2] + R0[2] * 0.15];
+  const pushW = toward(lerp3(eyeW, side, 1 - smooth(glasses)), c, 0.12);
+  const shA = shoulderAt(INVESTOR_FIT, { ...o, seed: seedOf(i) }, 1), shW = fromCard(P, yaw, 1, [shA[0], shA[1]]);
+  const thumbW: V3 = toward([shW[0] + R0[0] * 0.36, shW[1] + 0.24, shW[2] + R0[2] * 0.36], c, 0.1);
+  const hand1 = lerp3(lerp3(deskT, pushW, Math.min(1, glasses)), thumbW, clamp01(thumb));
+  reachArm(out, cam, INVESTOR, P, yaw, o, 1, hand1, { hold: glasses > 0.5 || thumb > 0.1 ? null : "pencil", ang: 30 + 10 * sc * Math.sin(f * 1.3), bend: 0.7, ...(thumb > 0.45 ? { thumb: 28 } : {}) });
+  LX = LX.slice(0, 3) + "0";
+  // the cafe across the street, on the painted cafe layer (z -5.27): the hand-off pair in the clear right pane (0.70 scale),
+  // keyed to "trusted": fix r3 (A3 P2) the reach peaks with the focus rack (card held out sharp ~trusted + 18 .. + 26, a
+  // glint), a bigger pale green card; the sipper + the laugher in the left pane (their idle loops, 0.58)
+  const z = O[2] - 5.27, floor = 1.0, sc2 = 0.58, scH = 0.7, tr = BEAT.trusted;
+  const reach = gest2(f, tr + 4, 14, tr + 26, 12), take = gest2(f, tr + 20, 6, tr + 32, 10), took = f >= tr + 22;
   const after = f >= tr + 40, sip = after ? gest2((VF % 96), 30, 14, 62, 14) : 0, laugh = after && (VF % 150) < 30 ? Math.abs(Math.sin(((VF % 150) * Math.PI) / 7.5)) : 0;
-  const tkeys: [number, Expr][] = [[0, "calm"], [tr + 12, "smile"]];
-  const people: [number, number, PersonOpts][] = [
-    [1.18, 0, { expr: exprAt(f, tkeys), facing: -1, nod: 0.6 * take, blink: swapLid(f, tkeys), hands: [{ a: "chest", b: "show", k: take, dx: -12, hold: took && take > 0.3 ? "card" : null, n: 2.4 }, { a: "hip" }] }],
-    [0.74, 1, { expr: reach > 0.4 ? "proud" : "content", facing: 1, hands: [{ a: "hang" }, { a: "chest", b: "show", k: reach, dx: 12, hold: !took && reach > 0.15 ? "card" : null, n: 2.4 }] }],
-    [-1.5, 3, { expr: sip > 0.5 ? "content" : "smile", facing: 1, hands: [{ a: "hang" }, { a: "chest", b: "mouth", k: sip, hold: "cup", n: VF }] }],
-    [-1.1, 2, { expr: laugh > 0.2 ? "laugh" : "calm", facing: -1, nod: 0.6 * laugh, lookY: laugh > 0.2 ? 0 : 1, hands: [{ a: "chest", dx: -8, hold: "newspaper" }, { a: "chest", dx: 10 }] }],
+  const tkeys: [number, Expr][] = [[0, "calm"], [tr + 20, "smile"]];
+  const people: [number, number, PersonOpts, number][] = [
+    [1.18, 0, { expr: exprAt(f, tkeys), facing: -1, nod: 0.6 * take, blink: swapLid(f, tkeys), hands: [{ a: "chest", b: "show", k: take, dx: -12, hold: took && take > 0.3 ? "card" : null, n: 3.0 }, { a: "hip" }] }, scH],
+    [0.74, 1, { expr: reach > 0.4 ? "proud" : "content", facing: 1, hands: [{ a: "hang" }, { a: "chest", b: "show", k: reach, dx: 12, hold: !took && reach > 0.15 ? "card" : null, n: 3.0 }] }, scH],
+    [-1.5, 3, { expr: sip > 0.5 ? "content" : "smile", facing: 1, hands: [{ a: "hang" }, { a: "chest", b: "mouth", k: sip, hold: "cup", n: VF }] }, sc2],
+    [-1.1, 2, { expr: laugh > 0.2 ? "laugh" : "calm", facing: -1, nod: 0.6 * laugh, lookY: laugh > 0.2 ? 0 : 1, hands: [{ a: "chest", dx: -8, hold: "newspaper" }, { a: "chest", dx: 10 }] }, sc2],
   ];
-  for (const [dx, v, po] of people) {
+  for (const [dx, v, po, scP] of people) {
     const A = CAFE(v), Lc = life(VF, A.i);
-    put(out, cam, A, [O[0] + dx, floor, z], { ...po, breath: Lc.breath, tilt: Lc.sway, headTilt: Lc.head, blink: Math.max(po.blink ?? 0, blinkAt(VF, A.i)) }, { scale: sc2, noBlob: true });
+    put(out, cam, A, [O[0] + dx, floor, z], { ...po, breath: Lc.breath, tilt: Lc.sway, headTilt: Lc.head, blink: Math.max(po.blink ?? 0, blinkAt(VF, A.i)) }, { scale: scP, noBlob: true });
   }
-  // the card's glint as it is held out (6-8 f)
-  const gk = f >= tr + 8 && f < tr + 15 ? Math.sin((Math.PI * (f - tr - 8)) / 7) : 0;
+  // the card's glint as it is held out (7 f)
+  const gk = f >= tr + 18 && f < tr + 25 ? Math.sin((Math.PI * (f - tr - 18)) / 7) : 0;
   if (gk > 0.02) { const cp = CAFE(1), po = people[1][2], hd = handAt(cp.o, { ...po, seed: seedOf(cp.i) }, 1), at: V3 = [O[0] + 0.74, floor, z];
-    const hw = fromCard(at, yawFrom(c, at), sc2, [hd[0] + 18, hd[1] - 22]);
-    fx(out, `glow|glint|${q(gk, 8)}`, 128, 128, (p) => fxGlint(p, gk), toward(hw, c, 0.05), 0.16, 0.16, { soft: true }); }
+    const hw = fromCard(at, yawFrom(c, at), scH, [hd[0] + 22, hd[1] - 26]);
+    fx(out, `glow|glint|${q(gk, 8)}`, 128, 128, (p) => fxGlint(p, gk), toward(hw, c, 0.05), 0.2, 0.2, { soft: true }); }
 };
 
 /** keep the shout line the ONLY lip-flap line (a guard the audit can test against) */

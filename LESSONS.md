@@ -132,3 +132,6 @@ Each lesson is a real failure from the antitheft build, its cause, and the rule 
 43. **Check the mix probes after the merge** (`picture_events_used.json` `_probes`). When an owner rewrites a function,
     a probe falls back to old frames: override that cue in `picture_events.json` with the real frames.
 44. **Inline `//` comments swallow code in one-line edits.** In scripted replacements use `/* */` mid-line.
+
+45. Pace without re-takes: if the read feels slow, SHORTEN (never remove) the pauses with `tools/tighten_pauses.py <voice dir> <new dir> --factor 0.65 --floor 0.22 "a|b|0.5"` (keep the dramatic beats near 0.45-0.52 s), install it with gen_words_ts --force -> export_timeline -> voice_warp --identity -> export_timeline, and map any literal frames in picture_events.json. Salad oil went 92.0 -> 88.6 s and the auditor found no dead air left.
+46. One light whole-video audit (one agent, about 12 images) is a cheap final check when the token budget is low; the full 10-agent audit is for the improvement loop.

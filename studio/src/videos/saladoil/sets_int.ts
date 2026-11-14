@@ -37,7 +37,7 @@ import { BK, TR, CU, KI, PR, OF, V3 } from "./plan";
 import { BEAT, COUNT_AT, smooth, clamp01, SHOTS, lightMixAt, FPS, PW } from "./story";
 import { VOICE_TOTAL } from "./voicewarp";
 import type { SetCtx } from "./ctx";
-import { bottleShake, valveAngle, cashSlide, shakeMix } from "./cast";
+import { bottleShake, valveAngle, cashSlide, shakeMix, STAMPS5 } from "./cast";
 
 // ======================================================================================================== helpers
 type P3 = [number, number, number];
@@ -325,25 +325,61 @@ const blotterTex = () => tx("bkBlotter", 512, 288, (g, r) => {
   g.fillStyle = "#f4ecd8"; g.fillRect(150, 90, 200, 120); g.strokeStyle = "rgba(40,40,80,0.5)"; g.lineWidth = 2; for (let y = 110; y < 200; y += 16) { g.beginPath(); g.moveTo(165, y); g.lineTo(165 + 120 + r() * 50, y); g.stroke(); }
 });
 /** the OIL RECEIPT: a warehouse-receipt certificate (1200 x 880 = 0.6 x 0.44 m) */
-const RCPT = { w: 0.72, h: 0.48 };
+// fix r3 (A3 P2 shot 3: APPROVED printed across RECEIPT): the card is 8 cm taller and re-laid out: OIL / RECEIPT higher,
+// the seal + "1,000,000 LBS" up in the top corners, and the whole lower band left EMPTY for the red APPROVED mark
+const RCPT = { w: 0.72, h: 0.56 };
 /** condensed centred text: font px at full height, squeezed in x to fit maxW (cap height kept) */
 const ctextC = (g: G, s: string, x: number, y: number, px: number, col: string, maxW: number) => {
   font(g, px); const w = g.measureText(s).width, k = Math.min(1, maxW / w); g.save(); g.translate(x, y); g.scale(k, 1); g.textAlign = "center"; g.textBaseline = "alphabetic"; g.fillStyle = col; g.fillText(s, 0, 0); g.restore();
 };
-const receiptTex = () => tx("bkReceipt2", 1200, 800, (g, r) => {
-  g.fillStyle = "#f6efdc"; g.fillRect(0, 0, 1200, 800);
-  speck(g, r, 1200, 800, 2500, ["#c8b890", "#e8dcc0"], 1, 3, 0.25);
-  g.strokeStyle = "#2f5a7a"; g.lineWidth = 14; g.strokeRect(22, 22, 1156, 756); g.lineWidth = 4; g.strokeRect(46, 46, 1108, 708);
-  for (let x = 60; x < 1140; x += 26) { g.fillStyle = "rgba(47,90,122,0.5)"; g.beginPath(); g.arc(x + 13, 60, 6, 0, TAU); g.fill(); g.beginPath(); g.arc(x + 13, 740, 6, 0, TAU); g.fill(); }
-  for (const [x, y] of [[80, 80], [1120, 80], [80, 720], [1120, 720]]) { g.fillStyle = "#2f5a7a"; g.beginPath(); g.arc(x, y, 22, 0, TAU); g.fill(); g.fillStyle = "#f6efdc"; g.beginPath(); g.arc(x, y, 10, 0, TAU); g.fill(); }
-  ctextC(g, "OIL", 600, 300, 250, "#1c2c44", 1080);
-  ctextC(g, "RECEIPT", 600, 545, 250, "#1c2c44", 1090);
-  g.strokeStyle = "rgba(28,44,68,0.6)"; g.lineWidth = 3; g.beginPath(); g.moveTo(720, 690); g.lineTo(1080, 690); g.stroke();
-  g.strokeStyle = "rgba(28,44,68,0.8)"; g.lineWidth = 4; g.beginPath(); g.moveTo(740, 680); g.bezierCurveTo(780, 630, 820, 700, 860, 660); g.bezierCurveTo(900, 625, 920, 700, 980, 655); g.bezierCurveTo(1010, 640, 1030, 680, 1070, 662); g.stroke();
-  g.fillStyle = "#c9a14a"; g.beginPath(); for (let k = 0; k < 24; k++) { const a = (k / 24) * TAU, rr = k % 2 ? 54 : 64; g.lineTo(190 + Math.cos(a) * rr, 668 + Math.sin(a) * rr); } g.closePath(); g.fill();
-  g.fillStyle = "#e8c860"; g.beginPath(); g.arc(190, 668, 42, 0, TAU); g.fill(); g.fillStyle = "#a07a2a"; g.beginPath(); for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + (k / 10) * TAU, rr = k % 2 ? 12 : 30; g.lineTo(190 + Math.cos(a) * rr, 668 + Math.sin(a) * rr); } g.closePath(); g.fill();
+const receiptTex = () => tx("bkReceipt3", 1200, 934, (g, r) => {
+  const H = 934; g.fillStyle = "#f6efdc"; g.fillRect(0, 0, 1200, H);
+  speck(g, r, 1200, H, 2900, ["#c8b890", "#e8dcc0"], 1, 3, 0.25);
+  g.strokeStyle = "#2f5a7a"; g.lineWidth = 14; g.strokeRect(22, 22, 1156, H - 44); g.lineWidth = 4; g.strokeRect(46, 46, 1108, H - 92);
+  for (let x = 60; x < 1140; x += 26) { g.fillStyle = "rgba(47,90,122,0.5)"; g.beginPath(); g.arc(x + 13, 60, 6, 0, TAU); g.fill(); g.beginPath(); g.arc(x + 13, H - 60, 6, 0, TAU); g.fill(); }
+  for (const [x, y] of [[80, 80], [1120, 80], [80, H - 80], [1120, H - 80]]) { g.fillStyle = "#2f5a7a"; g.beginPath(); g.arc(x, y, 22, 0, TAU); g.fill(); g.fillStyle = "#f6efdc"; g.beginPath(); g.arc(x, y, 10, 0, TAU); g.fill(); }
+  ctextC(g, "OIL", 600, 288, 250, "#1c2c44", 1080);
+  ctextC(g, "RECEIPT", 600, 522, 250, "#1c2c44", 1090);
+  // the gold seal (upper left) + the weight (upper right), clear of the words and of the stamp band below
+  const sx = 175, sy = 190;
+  g.fillStyle = "#c9a14a"; g.beginPath(); for (let k = 0; k < 24; k++) { const a = (k / 24) * TAU, rr = k % 2 ? 54 : 64; g.lineTo(sx + Math.cos(a) * rr, sy + Math.sin(a) * rr); } g.closePath(); g.fill();
+  g.fillStyle = "#e8c860"; g.beginPath(); g.arc(sx, sy, 42, 0, TAU); g.fill(); g.fillStyle = "#a07a2a"; g.beginPath(); for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + (k / 10) * TAU, rr = k % 2 ? 12 : 30; g.lineTo(sx + Math.cos(a) * rr, sy + Math.sin(a) * rr); } g.closePath(); g.fill();
+  ctext(g, "1,000,000", 1030, 180, 50, "#2f5a7a", 250, "Georgia, serif", "bold"); ctext(g, "LBS", 1030, 236, 50, "#2f5a7a", 200, "Georgia, serif", "bold");
+  g.strokeStyle = "rgba(28,44,68,0.35)"; g.lineWidth = 3; g.beginPath(); g.moveTo(130, 568); g.lineTo(1070, 568); g.stroke();
 }, true);
 /** the red rubber-stamp mark (transparent background, ink voids) */
+/** fix r3: the big receipt's APPROVED mark (900 x 285 = 0.6 x 0.19 m): condensed letters ~52 % of its height (>= 40 px) */
+const approvedTex3 = () => tx("bkApproved3", 900, 285, (g, r) => {
+  g.clearRect(0, 0, 900, 285);
+  g.strokeStyle = "#c4201a"; g.lineWidth = 16; rrect(g, 12, 12, 876, 261, 28); g.stroke(); g.lineWidth = 5; rrect(g, 34, 34, 832, 217, 18); g.stroke();
+  ctextC(g, "APPROVED", 450, 216, 212, "#c4201a", 790);
+  g.globalCompositeOperation = "destination-out";
+  for (let i = 0; i < 900; i++) { g.fillStyle = `rgba(0,0,0,${0.3 + 0.6 * r()})`; g.beginPath(); g.arc(r() * 900, r() * 285, 1 + r() * 4, 0, TAU); g.fill(); }
+  g.globalCompositeOperation = "source-over";
+}, true);
+/** fix r3 (A3 P2 shot 3: the cash slide had no receiver): Tino's grey suit sleeve with a white cuff + gold cufflink and his
+ *  ball hand (left end) reaching in from frame right to take the cash (a generic cartoon arm, no likeness) */
+const sleeveTex = () => tx("bkSleeve3", 512, 128, (g) => {
+  g.clearRect(0, 0, 512, 128); const ink = "#2c1e2a";
+  g.fillStyle = "#8a8f99"; rrect(g, 120, 30, 400, 70, 28); g.fill(); g.strokeStyle = ink; g.lineWidth = 6; g.stroke();
+  g.strokeStyle = "rgba(60,64,74,0.5)"; g.lineWidth = 3; g.beginPath(); g.moveTo(200, 42); g.lineTo(500, 46); g.stroke();
+  g.fillStyle = "#f4f2ec"; rrect(g, 92, 36, 44, 58, 10); g.fill(); g.strokeStyle = ink; g.lineWidth = 5; g.stroke();
+  g.fillStyle = "#e0a92a"; g.beginPath(); g.arc(114, 64, 9, 0, TAU); g.fill(); g.strokeStyle = "#7a5410"; g.lineWidth = 2.5; g.stroke();
+  g.fillStyle = "#f8f3ee"; g.beginPath(); g.arc(58, 64, 40, 0, TAU); g.fill(); g.strokeStyle = ink; g.lineWidth = 6; g.stroke();
+  g.strokeStyle = "rgba(44,30,42,0.5)"; g.lineWidth = 3; g.beginPath(); g.arc(58, 64, 22, 2.2, 4.0); g.stroke();
+}, true);
+/** fix r3 (CHAR P2 shot 5): a cash bundle edge whose paper band is STAMPED red (APPROVED band, ~35 % of the width) */
+const billEdgeRedTex = () => tx("bkBillEdgeR3", 256, 64, (g) => {
+  g.fillStyle = "#b8d0a4"; g.fillRect(0, 0, 256, 64);
+  for (let y = 0; y < 64; y += 4) { g.fillStyle = y % 8 ? "rgba(70,100,60,0.35)" : "rgba(255,255,240,0.3)"; g.fillRect(0, y, 256, 2); }
+  g.fillStyle = "#c8322a"; g.fillRect(84, 0, 92, 64); g.fillStyle = "rgba(255,240,220,0.9)"; g.fillRect(92, 26, 76, 12);
+  g.strokeStyle = "#7a1410"; g.lineWidth = 3; g.strokeRect(85.5, 1.5, 89, 61);
+});
+const billRedTex = () => tx("bkBillR3", 256, 128, (g, r) => {
+  g.fillStyle = "#9ab98a"; g.fillRect(0, 0, 256, 128); g.strokeStyle = "#4e6e4a"; g.lineWidth = 6; g.strokeRect(8, 8, 240, 112);
+  speck(g, r, 256, 128, 300, ["#5e7e5a"], 1, 2, 0.3);
+  g.fillStyle = "#c8322a"; g.fillRect(84, 0, 92, 128); g.save(); g.translate(128, 64); g.rotate(-0.12); g.strokeStyle = "#fbe8e0"; g.lineWidth = 6; g.strokeRect(-36, -22, 72, 44); g.restore();
+});
 const approvedTex = () => tx("bkApproved", 900, 300, (g, r) => {
   g.clearRect(0, 0, 900, 300);
   g.strokeStyle = "#c4201a"; g.lineWidth = 18; rrect(g, 14, 14, 872, 272, 30); g.stroke(); g.lineWidth = 6; rrect(g, 40, 40, 820, 220, 20); g.stroke();
@@ -686,8 +722,10 @@ const shipTex = () => tx("bkShip", 256, 96, (g) => {
 // ======================================================================================================== TRADING painters
 /** grey-green linoleum tiles (0.5 m) with specks (2 m tile) */
 const trFloorTex = () => tx("trFloor", 1024, 1024, (g, r) => {
-  for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) { g.fillStyle = jit(r, (x + y) % 2 ? "#7c8270" : "#8a8a78", 0.05); g.fillRect(x * 256, y * 256, 256, 256); }
-  speck(g, r, 1024, 1024, 9000, ["#5a5e50", "#a8a894", "#6a6458"], 1, 4, 0.35);
+  // fix r3 (A3 P2 shot 8: the floor rendered a saturated green #5E875F): warm-grey linoleum tiles (~30 % less green), so
+  // the room's green lives in the walls and the board only
+  for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) { g.fillStyle = jit(r, (x + y) % 2 ? "#8a8478" : "#979080", 0.05); g.fillRect(x * 256, y * 256, 256, 256); }
+  speck(g, r, 1024, 1024, 9000, ["#635e54", "#b0aa98", "#6e6458"], 1, 4, 0.35);
   mottle(g, r, 1024, 1024, 120, ["#4e5248", "#9a9a88"], 20, 80, 0.08);
   for (let k = 0; k <= 4; k++) { g.fillStyle = "rgba(40,44,36,0.45)"; g.fillRect(k * 256 - 1, 0, 3, 1024); g.fillRect(0, k * 256 - 1, 1024, 3); }
 });
@@ -762,6 +800,30 @@ const slipTex = (k: number) => tx("trSlip" + k, 128, 96, (g, r) => {
   g.strokeStyle = "rgba(40,40,80,0.55)"; g.lineWidth = 3; for (let y = 22; y < 90; y += 16) { g.beginPath(); g.moveTo(10, y); g.lineTo(20 + r() * 90, y); g.stroke(); }
   g.fillStyle = "rgba(160,40,30,0.7)"; g.fillRect(96, 10, 20, 20);
 }, true);
+/** fix r3 (A3 P2 shot 8): the board boy on the rolling ladder (BACK view toward the board: white shirt + black sleeve
+ *  garters, a green eyeshade band, dark trousers); k = 0 his right hand on the ladder rail (the chalk arm is a separate
+ *  rod that rides the line tip), 1 = the crash: both hands clutching the rails, shoulders up */
+const boardBoyTex = (k: number) => tx("trBoy3_" + k, 128, 256, (g) => {
+  g.clearRect(0, 0, 128, 256); g.lineCap = "round"; g.lineJoin = "round"; const ink = "#2c1e2a", shirt = "#f6f4ee";
+  g.strokeStyle = "#2e3040"; g.lineWidth = 14; for (const a of [-10, 10]) { g.beginPath(); g.moveTo(64 + a * 0.5, 172); g.lineTo(64 + a, 244); g.stroke(); g.fillStyle = "#1e1a22"; g.beginPath(); g.ellipse(64 + a, 247, 11, 6, 0, 0, TAU); g.fill(); }
+  const arm = (x0: number, hx: number, hy: number) => { g.strokeStyle = shirt; g.lineWidth = 13; g.beginPath(); g.moveTo(x0, 108); g.lineTo(hx, hy); g.stroke(); g.strokeStyle = ink; g.lineWidth = 3; g.stroke();
+    g.strokeStyle = "#1e1a22"; g.lineWidth = 4; g.beginPath(); g.moveTo(x0 + (hx - x0) * 0.45 - 6, 108 + (hy - 108) * 0.45); g.lineTo(x0 + (hx - x0) * 0.45 + 6, 108 + (hy - 108) * 0.45); g.stroke();
+    g.fillStyle = "#f8f3ee"; g.beginPath(); g.arc(hx, hy, 8, 0, TAU); g.fill(); g.strokeStyle = ink; g.lineWidth = 3; g.stroke(); };
+  if (k === 1) { arm(40, 20, 52); arm(88, 108, 52); } else arm(90, 112, 138);
+  g.fillStyle = shirt; rrect(g, 36, 98, 56, 80, 15); g.fill(); g.strokeStyle = ink; g.lineWidth = 5; g.stroke();
+  g.strokeStyle = "#3a2a24"; g.lineWidth = 5; g.beginPath(); g.moveTo(46, 100); g.lineTo(46, 174); g.moveTo(82, 100); g.lineTo(82, 174); g.stroke();
+  const hy = k === 1 ? 62 : 68;
+  g.fillStyle = "#f8f3ee"; g.beginPath(); g.ellipse(64, hy, 28, 32, 0, 0, TAU); g.fill(); g.strokeStyle = ink; g.lineWidth = 5; g.stroke();
+  g.fillStyle = "#5a3a22"; g.beginPath(); g.ellipse(64, hy - 4, 27, 27, 0, Math.PI * 1.02, Math.PI * 1.98); g.lineTo(90, hy + 6); g.bezierCurveTo(78, hy + 22, 50, hy + 22, 38, hy + 6); g.closePath(); g.fill();
+  g.fillStyle = "#2f8a4a"; g.fillRect(36, hy - 14, 56, 10); g.strokeStyle = ink; g.lineWidth = 2.5; g.strokeRect(36, hy - 14, 56, 10);
+  for (const s2 of [-1, 1]) { g.fillStyle = "rgba(47,138,74,0.85)"; g.beginPath(); g.moveTo(64 + s2 * 28, hy - 14); g.lineTo(64 + s2 * 40, hy - 6); g.lineTo(64 + s2 * 28, hy - 4); g.closePath(); g.fill(); }
+  if (k === 1) { g.strokeStyle = ink; g.lineWidth = 2.5; for (const s2 of [-1, 1]) { g.beginPath(); g.moveTo(64 + s2 * 34, hy - 30); g.lineTo(64 + s2 * 42, hy - 40); g.stroke(); } }
+}, true);
+/** fix r3: the spooling ticker tape (its own texture so only this tape scrolls) */
+const tapeTex3 = () => tx("trTape3", 512, 32, (g, r) => {
+  g.fillStyle = "#f2ead2"; g.fillRect(0, 0, 512, 32);
+  for (let x = 6; x < 506; x += 9) if (r() < 0.6) { g.fillStyle = "rgba(40,40,60,0.75)"; g.fillRect(x, 10 + (r() < 0.5 ? 0 : 6), 5, 6); }
+});
 const tapeTex = () => tx("trTape", 512, 32, (g, r) => {
   g.fillStyle = "#f2ead2"; g.fillRect(0, 0, 512, 32);
   for (let x = 6; x < 506; x += 9) if (r() < 0.6) { g.fillStyle = "rgba(40,40,60,0.75)"; g.fillRect(x, 10 + (r() < 0.5 ? 0 : 6), 5, 6); }
@@ -871,7 +933,7 @@ const ut = (hex: string) => { const c = untone(hex); return new THREE.Vector3(c.
  *  (A1 P1) uDark = the 'unknown' state of shot 10: murky navy (#0B1638), no caustics, until "mostly" floods it clear;
  *  (A1 P2) uSl = the slosh tilt (m at x = R) after "water" */
 const waterMat = (front: boolean) => new THREE.ShaderMaterial({
-  uniforms: { uT: { value: 0 }, uLevel: { value: CU.water }, uR: { value: CU.tank.r }, uTop: { value: ut("#7fd3f5") }, uBot: { value: ut("#1f5fb0") },
+  uniforms: { uT: { value: 0 }, uLevel: { value: CUW }, uR: { value: CU.tank.r }, uTop: { value: ut("#7fd3f5") }, uBot: { value: ut("#1f5fb0") },
     uPour: { value: 0 }, uPourX: { value: CU.hatch.c[0] }, uFront: { value: front ? 1 : 0 }, uDark: { value: 0 }, uMurk: { value: ut("#0e3f78") }, uSl: { value: 0 }, uPh: { value: 0 } },
   vertexShader: `varying vec3 vP; void main(){ vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
   fragmentShader: /* glsl */ `uniform float uT, uLevel, uR, uPour, uPourX, uFront, uDark, uSl, uPh; uniform vec3 uTop, uBot, uMurk; varying vec3 vP;
@@ -890,10 +952,13 @@ const waterMat = (front: boolean) => new THREE.ShaderMaterial({
       float riv = step(0.5, fract(ang * uR / 0.11)) * (1.0 - smoothstep(0.03, 0.06, abs(fract(y / 1.36 + 0.5) - 0.5) * 1.36 - 0.05));
       c *= 1.0 - 0.28 * max(ring, vs) - 0.12 * riv * (1.0 - ring);
     } else c *= 1.0 - 0.18 * pow(ex, 4.0);
-    vec2 q = vec2(vP.x * 2.0, y * 1.5);
+    // fix r3 (A3 P2 shot 10: the held diagram read frozen): TWO caustic layers that scroll ~0.3 m/s (~1.5 px/f at 1080) in
+    // opposite directions, so the net always visibly moves
+    vec2 q = vec2((vP.x + uT * 0.3) * 2.0, y * 1.5), q2 = vec2((vP.x - uT * 0.27) * 2.6, (y + 0.4) * 1.9);
     float w1 = sin(q.x + uT * 0.9 + sin(q.y * 1.3 + uT * 0.6) * 1.5), w2 = sin(q.y * 1.15 - uT * 0.7 + sin(q.x * 0.9 - uT * 0.5) * 1.7);
-    float ca = pow(1.0 - abs(w1 * w2), 7.0) * smoothstep(0.15, 1.0, ty) * (1.0 - uDark);
-    c += vec3(0.22, 0.42, 0.52) * ca * (uFront > 0.5 ? 0.55 : 0.4);
+    float w3 = sin(q2.x - uT * 0.8 + sin(q2.y * 1.1 - uT * 0.5) * 1.4), w4 = sin(q2.y * 1.25 + uT * 0.6 + sin(q2.x * 0.8 + uT * 0.4) * 1.6);
+    float ca = pow(1.0 - abs(w1 * w2), 7.0) * smoothstep(0.15, 1.0, ty) * (1.0 - uDark), ca2 = pow(1.0 - abs(w3 * w4), 9.0) * smoothstep(0.1, 0.9, ty) * (1.0 - uDark);
+    c += vec3(0.22, 0.42, 0.52) * ca * (uFront > 0.5 ? 0.6 : 0.42) + vec3(0.2, 0.36, 0.44) * ca2 * (uFront > 0.5 ? 0.45 : 0.3);
     float ray = smoothstep(0.55, 1.0, sin(vP.x * 1.6 + y * 0.42 + uT * 0.12)) * smoothstep(0.0, 1.0, t) * smoothstep(lev, lev - 4.0, y);
     c += vec3(0.1, 0.2, 0.26) * ray * 0.55 * (1.0 - uDark);
     c += vec3(0.26, 0.48, 0.58) * smoothstep(lev - 0.22, lev, y) * 0.5;
@@ -918,6 +983,10 @@ const waterMat = (front: boolean) => new THREE.ShaderMaterial({
  *  radial gradient #FFC845 -> #E8961C, a sliding sky reflection band, a ripple ring every 40 f and the collar's violet
  *  crescent shadow on its upper-left */
 const OIL_HC = new THREE.Vector2(CU.hatch.c[0], CU.hatch.c[2]);
+/** fix r3 (A3 P2 shot 12: the thin gold line merged with the red eave): the diagram's water top and oil top (set-local;
+ *  lead_requests asks plan.ts CU.water / CU.oil to take the same values so cast.ts's fish + torch spot and story.ts's DOF
+ *  agree): a 0.38 m gold band with a 0.35 m navy air gap under the 8.5 m eave */
+const CUW = 7.77, CUO = 8.15;
 /** fix r2: the LOOKS FULL board (set-local; plan.ts CU.sign.c is still the old anchor, see lead_requests) */
 const SIGN12 = { c: [0, 9.24, -2.45] as P3, w: 0.8, h: 0.3, rx: -0.55 };
 const oilMat = (top: boolean) => new THREE.ShaderMaterial({
@@ -938,11 +1007,15 @@ const oilMat = (top: boolean) => new THREE.ShaderMaterial({
     float streak = exp(-pow((sv - 0.12) / (uHR * 0.17), 2.0)) * smoothstep(uHR * 1.02, uHR * 0.35, rr);
     c = mix(c, uHi, 0.6 * streak);
     vec2 dt = d2 - (uTape - uHC); float rt = length(dt);
+    // fix r3 (A3 P2 shots 10 / 12: the hatch holds read frozen): the tape's ripple rings at 2x contrast, a soft sheen band
+    // that drifts across the disc (~0.5 % W / f, fading in / out at the ends), the specular spot drifting ~0.5 px/f
     for (int k = 0; k < 3; k++) { float ph = fract(uRip + float(k) / 3.0), rad = 0.03 + ph * uHR * 1.5;
       float ring = 1.0 - smoothstep(0.0, 0.016, abs(rt - rad)), dark = 1.0 - smoothstep(0.0, 0.02, abs(rt - rad - 0.032));
-      c += vec3(0.3, 0.22, 0.07) * ring * (1.0 - ph) * 0.85; c -= vec3(0.12, 0.08, 0.02) * dark * (1.0 - ph); }
-    float gl = exp(-pow(length(d2 - vec2(0.15 + 0.06 * sin(uT * 0.5), -0.14 + 0.05 * cos(uT * 0.4))) / 0.07, 2.0));
-    c += vec3(1.0, 0.86, 0.5) * gl * 0.55;
+      c += vec3(0.6, 0.44, 0.14) * ring * (1.0 - ph) * 0.85; c -= vec3(0.24, 0.16, 0.04) * dark * (1.0 - ph); }
+    float shp = fract(uT * 0.3), sb = (d2.x * 0.83 + d2.y * 0.55) - mix(-0.6, 0.6, shp);
+    c += vec3(0.5, 0.38, 0.12) * exp(-pow(sb / 0.08, 2.0)) * sin(3.14159 * shp) * smoothstep(uHR * 1.02, uHR * 0.4, rr) * 0.6;
+    float gl = exp(-pow(length(d2 - vec2(0.12 + 0.09 * sin(uT * 0.6), -0.14 + 0.05 * cos(uT * 0.45))) / 0.07, 2.0));
+    c += vec3(1.0, 0.86, 0.5) * gl * 0.65;
     float men = smoothstep(uHR * 0.92, uHR * 0.985, rr) * step(rr, uHR + 0.02);
     c = mix(c, c * vec3(0.62, 0.48, 0.4), men * 0.8);
     vec2 dir = d2 / max(rr, 1e-4);
@@ -961,6 +1034,8 @@ const oilMat = (top: boolean) => new THREE.ShaderMaterial({
     c = mix(c, uHi, smoothstep(0.86, 0.97, y));
     c += vec3(0.4, 0.3, 0.1) * smoothstep(0.92, 1.0, sin(vP.x * 3.3 - uT * 0.9)) * 0.4;
     c = mix(c, uHi, men * 0.5);
+    // fix r3 (A3 P2 shot 10 / ADD #53): a slow shimmer (24 f) running along the top highlight + a brighter meniscus line
+    c += vec3(0.5, 0.42, 0.2) * smoothstep(0.9, 0.99, y) * (0.25 + 0.25 * sin(uT * 7.854 + vP.x * 2.2));
     gl_FragColor = vec4(c * uHot, 1.0);
   }`,
   side: THREE.DoubleSide, fog: false,
@@ -1002,6 +1077,38 @@ const ginghamTex = (key: string, col: string, base = "#fbf8f0", k1 = 0.3, k2 = 0
   for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) { g.fillStyle = rgba(col, k2); g.fillRect(x * 32, y * 32, 16, 16); }
   g.globalAlpha = 0.08; for (let y = 0; y < 256; y += 3) { g.fillStyle = "#000"; g.fillRect(0, y, 256, 1); } g.globalAlpha = 1;
 });
+/** fix r3 (LEAD P3 shot 11: hairline banding on the blurred drape): 2x larger checks, no thread lines, pre-softened edges */
+const drapeTex = () => tx("kiDrape3", 256, 256, (g) => {
+  g.fillStyle = "#f4e6c8"; g.fillRect(0, 0, 256, 256); g.filter = "blur(3px)";
+  for (let k = 0; k < 4; k++) { g.fillStyle = rgba("#c8452c", 0.26); g.fillRect(k * 64, -8, 32, 272); g.fillRect(-8, k * 64, 272, 32); }
+  for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) { g.fillStyle = rgba("#c8452c", 0.48); g.fillRect(x * 64, y * 64, 32, 32); }
+  g.filter = "none";
+});
+/** fix r3 (A3 P3 shot 11: the lettuce read as faceted gems): a ruffled lettuce leaf card (3 greens, a pale rib, plum ink) */
+const lettuceTex = (k: number) => tx("kiLeaf" + k, 96, 128, (g, r) => {
+  g.clearRect(0, 0, 96, 128); const cols = ["#7ac04a", "#5aa83a", "#9ad06a"], ink = "#2c1e2a";
+  g.beginPath(); g.moveTo(48, 124);
+  for (let i = 0; i <= 20; i++) { const a = Math.PI * (i / 20), rr = 40 + 7 * Math.sin(i * 2.6 + k) + 3 * r(); g.lineTo(48 - Math.cos(a) * rr * 0.95, 70 - Math.sin(a) * rr * 1.25); }
+  g.closePath(); g.fillStyle = cols[k % 3]; g.fill(); g.strokeStyle = ink; g.lineWidth = 3; g.stroke();
+  g.strokeStyle = "rgba(240,250,210,0.85)"; g.lineWidth = 4; g.beginPath(); g.moveTo(48, 122); g.quadraticCurveTo(46, 70, 50, 26); g.stroke();
+  g.strokeStyle = "rgba(240,250,210,0.5)"; g.lineWidth = 2; for (let i = 0; i < 4; i++) { const y = 100 - i * 18; g.beginPath(); g.moveTo(48, y); g.lineTo(26, y - 14); g.moveTo(48, y); g.lineTo(70, y - 14); g.stroke(); }
+}, true);
+/** fix r3 (ADD #55): a plain paper bottle label (cream, a hand-drawn olive sprig, NO brand / no words) */
+const bottleLabelTex = () => tx("kiLabel3", 256, 128, (g) => {
+  g.fillStyle = "#f4ead2"; g.fillRect(0, 0, 256, 128); g.strokeStyle = "#8a5a3a"; g.lineWidth = 4; g.strokeRect(6, 6, 244, 116); g.lineWidth = 1.5; g.strokeRect(14, 14, 228, 100);
+  g.strokeStyle = "#4a6a2a"; g.lineWidth = 4; g.beginPath(); g.moveTo(70, 92); g.quadraticCurveTo(128, 50, 190, 36); g.stroke();
+  for (let i = 0; i < 6; i++) { const t = 0.15 + i * 0.14, x = 70 + 120 * t, y = 92 - 56 * t - 8 * Math.sin(t * 3), s = i % 2 ? 1 : -1; g.fillStyle = "#6a8a3a"; g.beginPath(); g.ellipse(x + 4, y + s * 12, 14, 6, s * 0.7, 0, TAU); g.fill(); }
+  for (const [x, y] of [[112, 78], [160, 60]]) { g.fillStyle = "#3a4a1a"; g.beginPath(); g.ellipse(x, y, 7, 9, 0.3, 0, TAU); g.fill(); }
+}, true);
+/** fix r3 (A3 P2 shot 11): light through the dressing: the bottle's shadow carries a ruby (vinegar, near the base) -> gold
+ *  (oil, the far end) glow; drawn additively along the shadow (u = 0 at the base -> 1 at the tip) */
+const bottleTintTex = () => tx("kiBotTint3", 256, 64, (g) => {
+  g.clearRect(0, 0, 256, 64);
+  for (let x = 0; x < 256; x++) { const u = x / 255, a = Math.sin(Math.PI * Math.min(1, u * 1.15)) ** 0.7;
+    const c = u < 0.55 ? [150, 26, 46] : [255, 186, 70], k = u < 0.55 ? 0.55 : 0.9;
+    const gr = g.createLinearGradient(0, 0, 0, 64); gr.addColorStop(0, `rgba(${c[0]},${c[1]},${c[2]},0)`); gr.addColorStop(0.5, `rgba(${c[0]},${c[1]},${c[2]},${a * k})`); gr.addColorStop(1, `rgba(${c[0]},${c[1]},${c[2]},0)`);
+    g.fillStyle = gr; g.fillRect(x, 0, 1, 64); }
+}, true);
 const cabTex = (key: string, base: string, doors: number) => tx(key, 512, 256, (g, r) => {
   g.fillStyle = shadeHex(base, -0.08); g.fillRect(0, 0, 512, 256);
   const w = 512 / doors;
@@ -1054,10 +1161,10 @@ const catClockTex = () => tx("kiCatClock", 128, 192, (g) => {
  *  the vinegar ruby (#B0283A -> #8E1C2E), the cloud #D88A5A; (A1 P1) the herb flecks are tiny leaf shapes that drift,
  *  tiny bubbles rise through the vinegar, the interface wobbles at rest (uSlosh) */
 const liquidMat = () => new THREE.ShaderMaterial({
-  uniforms: { uT: { value: 0 }, uH: { value: 0.2 }, uSep: { value: 1 }, uOilF: { value: 0.38 }, uSlosh: { value: 0 },
+  uniforms: { uT: { value: 0 }, uH: { value: 0.2 }, uSep: { value: 1 }, uOilF: { value: 0.38 }, uSlosh: { value: 0 }, uGlow: { value: 0 },
     uOilL: { value: ut("#f7b733") }, uOilD: { value: ut("#e8a020") }, uVinL: { value: ut("#b0283a") }, uVinD: { value: ut("#8e1c2e") }, uEmu: { value: ut("#d88a5a") } },
   vertexShader: `varying vec3 vP; varying vec3 vN; varying vec3 vV; void main(){ vP = position; vec4 mv = modelViewMatrix * vec4(position, 1.0); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }`,
-  fragmentShader: /* glsl */ `uniform float uT, uH, uSep, uOilF, uSlosh; uniform vec3 uOilL, uOilD, uVinL, uVinD, uEmu; varying vec3 vP; varying vec3 vN; varying vec3 vV;
+  fragmentShader: /* glsl */ `uniform float uT, uH, uSep, uOilF, uSlosh, uGlow; uniform vec3 uOilL, uOilD, uVinL, uVinD, uEmu; varying vec3 vP; varying vec3 vN; varying vec3 vV;
   float h21(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
   void main(){
     float h = (vP.y + vP.x * uSlosh * 1.6) / uH, ang = atan(vP.z, vP.x);
@@ -1097,6 +1204,8 @@ const liquidMat = () => new THREE.ShaderMaterial({
     c *= 0.66 + 0.42 * frn;                                                  // round body: darker at the silhouette
     c += vec3(1.0, 0.85, 0.55) * smoothstep(0.985, 1.0, h) * 1.2 * step(topB, h); // the top meniscus glints
     c += vec3(0.5, 0.42, 0.3) * smoothstep(0.55, 0.0, abs(vN.x + 0.45)) * 0.35;  // a soft vertical sheen
+    // fix r3 (A3 P2 shot 11): the settled gold GLOWS on "top" (an emissive ramp, catches the bloom)
+    c += uOilL * uGlow * step(topB + wob, h) * (0.8 + 0.4 * frn);
     gl_FragColor = vec4(c, 1.0);
   }`,
   fog: false,
@@ -1116,8 +1225,11 @@ const glassMat = () => new THREE.ShaderMaterial({
     float g1 = smoothstep(0.09, 0.0, abs(n.x + 0.5 - 0.6 * (vY - 0.25))) * smoothstep(0.2, 0.225, vY) * smoothstep(0.31, 0.285, vY) * front;
     float g2 = smoothstep(0.06, 0.0, abs(n.x - 0.42 + 0.5 * (vY - 0.08))) * smoothstep(0.03, 0.05, vY) * smoothstep(0.14, 0.115, vY) * front;
     float g3 = smoothstep(0.07, 0.0, abs(n.x - uSlide)) * smoothstep(0.125, 0.145, vY) * smoothstep(0.215, 0.195, vY) * front;
-    float glint = 0.4 * (g1 + g2) + 0.35 * g3;
-    float a = 0.04 + 0.55 * pow(fr, 2.4) + glint;
+    // fix r3 (A3 P2 shot 11: the empty upper bottle had no volume): one white glare streak (6-8 px) down the NECK, a faint
+    // green glass tint (rgba 200,235,220,~0.12) above the liquid
+    float g4 = smoothstep(0.16, 0.0, abs(n.x + 0.38)) * smoothstep(0.255, 0.27, vY) * smoothstep(0.335, 0.32, vY) * front;
+    float glint = 0.4 * (g1 + g2) + 0.35 * g3 + 0.75 * g4;
+    float a = 0.04 + 0.08 * smoothstep(0.195, 0.215, vY) + 0.55 * pow(fr, 2.4) + glint;
     vec3 c = mix(vec3(0.75, 0.89, 0.84), vec3(1.25), clamp(glint * 2.2 + 0.25 * pow(fr, 2.0), 0.0, 1.0));
     float sil = smoothstep(0.62, 0.8, fr);
     c = mix(c, vec3(0.165, 0.1, 0.15), sil); a = mix(a, 0.97, sil);
@@ -1183,6 +1295,9 @@ const pegboardTex = () => tx("prPeg", 512, 320, (g) => {
 
 /** fix r1: two more caged work lamps (set-local): over the pump motor in frame A, by tank C behind the blob close-up */
 const PR_LAMPS2: P3[] = [[-4.1, 3.55, -2.3], [3.85, 3.6, -2.9]];
+/** fix r3: a chalk tally of n strokes (5 = four + a slash) */
+const tallyTex = (n: number) => tx("prTally3_" + n, 160, 128, (g2) => { g2.clearRect(0, 0, 160, 128); g2.strokeStyle = "rgba(240,240,232,0.92)"; g2.lineWidth = 7; g2.lineCap = "round";
+  for (let k = 0; k < Math.min(4, n); k++) { g2.beginPath(); g2.moveTo(20 + k * 24, 22); g2.lineTo(23 + k * 24, 106); g2.stroke(); } if (n > 4) { g2.beginPath(); g2.moveTo(8, 92); g2.lineTo(104, 34); g2.stroke(); } }, true);
 /** the night sky through the pump room's high window: deep blue, stars, a thin cloud, the moon's glow at one corner */
 const nightTex = () => tx("prNightSky", 512, 212, (g, r) => {
   const gr = g.createLinearGradient(0, 0, 0, 212); gr.addColorStop(0, "#0c1640"); gr.addColorStop(1, "#24366e"); g.fillStyle = gr; g.fillRect(0, 0, 512, 212);
@@ -1287,6 +1402,12 @@ const handCardTex = () => tx("ofHandCard", 256, 64, (g) => {
   g.fillStyle = "#f8f3ee"; g.beginPath(); g.arc(204, 34, 11, 0, TAU); g.fill(); g.lineWidth = 4; g.stroke();
 }, true);
 /** a small framed line chart for the office wall (no numbers, a rising line) */
+/** fix r3 (ADD #70): the same chart one green step higher (it ticks up on "Warren"; no numbers) */
+const ofChartTex2 = () => tx("ofChartT2", 360, 200, (g) => {
+  g.fillStyle = "#f4ecd8"; g.fillRect(0, 0, 360, 200); g.strokeStyle = "rgba(60,80,120,0.25)"; g.lineWidth = 2; for (let y = 30; y < 190; y += 32) { g.beginPath(); g.moveTo(20, y); g.lineTo(340, y); g.stroke(); }
+  g.strokeStyle = "#2a2a3a"; g.lineWidth = 4; g.beginPath(); g.moveTo(24, 20); g.lineTo(24, 180); g.lineTo(340, 180); g.stroke();
+  g.strokeStyle = "#1f7a3a"; g.lineWidth = 7; g.lineJoin = "round"; g.beginPath(); [[30, 160], [75, 150], [110, 158], [150, 120], [190, 128], [230, 80], [265, 88], [300, 46], [338, 22]].forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y))); g.stroke();
+}, true);
 const ofChartTex = () => tx("ofChartT", 360, 200, (g) => {
   g.fillStyle = "#f4ecd8"; g.fillRect(0, 0, 360, 200); g.strokeStyle = "rgba(60,80,120,0.25)"; g.lineWidth = 2; for (let y = 30; y < 190; y += 32) { g.beginPath(); g.moveTo(20, y); g.lineTo(340, y); g.stroke(); }
   g.strokeStyle = "#2a2a3a"; g.lineWidth = 4; g.beginPath(); g.moveTo(24, 20); g.lineTo(24, 180); g.lineTo(340, 180); g.stroke();
@@ -1341,7 +1462,17 @@ const LAMP: P3 = [-0.6, 0.785, -1.2];              // fix r1: the brass + green 
 /** fix r2: the banker's lamp is a movable group, placed per shot (x, z, yaw): shot 3 = 0.25 m right of r1 (its bulb + pool
  *  light the receipt and his hands, A2 P2); shot 5 = between the middle and right stacks (A2 P2: its green shade reads
  *  and it throws a warm pool on the blotter); shot 6 = hidden with the whole desk (A2 P1) */
-const BK_LAMP: Record<number, [number, number, number]> = { 3: [-0.35, -1.15, 0.12], 5: [0.24, -0.86, -0.55] };
+// fix r3 (A3 P2 shot 5: the lamp's shade sat across his mouth line and hid his stamping arm): no lamp in shot 5 (the
+// push leaves no clean spot for it); its warm pool stays on the blotter between the stacks (layoutPools)
+const BK_LAMP: Record<number, [number, number, number]> = { 3: [-0.35, -1.15, 0.12] };
+/** fix r3 (A3 P2 shot 3): the cash leaves with Tino's hand: it arrives at BK.cashTo (cast.ts cashSlide), the sleeve
+ *  reaches in from frame right (TINO_IN .. TINO_GRAB), grabs, and pulls it out of frame (TINO_GRAB + 2 .. TINO_OUT) */
+const TINO_IN = BEAT.againstIt + 5, TINO_GRAB = BEAT.againstIt + 14, TINO_OUT = BEAT.againstIt + 30;
+const CASH_OUT: P3 = [1.45, 0.93, -0.36];
+/** fix r3 (CHAR P2 / carryover shot 5): every stamp landing ON an outer stack (from "more" - 4 on) marks its top bundle
+ *  red 1 f later and pops ONE more bundle onto it at landing + 9 (cast.ts stackTop5 must count these: lead_requests) */
+const STAMP_ON: [number[], number[]] = [STAMPS5.L.filter((c) => c >= BEAT.more1 - 4), STAMPS5.R.filter((c) => c >= BEAT.more1 - 4)];
+const STAMP_POP = 9;
 /** the trading floor's pendant globes (x, z): the warm pools under them are per-set pools (layoutPools) */
 const TR_PEND: [number, number][] = [[-1.35, -1.7], [1.55, -2.6], [-2.6, -3.9], [2.0, -0.4], [-3.3, 1.0]];
 const FAN: P3 = [0.8, 0.935, -1.1];                // the oscillating desk fan (on the ledgers)
@@ -1354,6 +1485,10 @@ const STACKS: P3[] = [[-0.42, 0.785, -0.52], [0.0, 0.785, -0.47], [0.42, 0.785, 
 const NAMEPLATE: Record<number, P3> = { 5: [-0.21, 0.785, -0.38] };  // fix r2 (A2 P2 shot 3): the brass LOANS plate on the desk top edge in shot 3 too (y ~590-640 at 540p, above the captions)
 /** shot 3 window: the near gravel yard layer the inspectors walk on (bank-local z, ground y) */
 const YARD = { z: -3.92, y: 1.24, x0: 1.05, x1: 2.75 };
+/** fix r3 (kitchen): the bottle's shadow direction on the table (xz, unit) = -KEY_KITCHEN flattened (toward camera-left);
+ *  the contact-shadow decal's yaw for it; the kettle on the counter (kitchen-local) */
+const KI_SH = [-0.803, -0.596] as const, KI_SHA = -0.64;
+const KETTLE: P3 = [0.92, 0.93, -2.27];
 /** interior POOL slots this module writes (0..INT_POOLS-1); the rest are free for the exteriors */
 // fix r1: 18 slots (sets_ext.ts writes no pools, so slots 13..17 are taken over for the new practicals); one slot can
 // serve one place per shot (pose() rewrites the shared slots per set)
@@ -1385,6 +1520,9 @@ export class Interiors {
   private shafts: Shaft[] = [];
   // bank
   private stamp = new THREE.Group(); private rcG = new THREE.Group(); private approved!: THREE.Mesh; private rcN = new THREE.Vector3(); private rcP = new THREE.Vector3();
+  // fix r3 (bank): Tino's sleeve, the adding machine's cash drawer, stamped stack materials, front-falling bills, the vault door steel
+  private sleeve!: THREE.Mesh; private addDrawer = new THREE.Group(); private bmStack: THREE.Material[][] = []; private frontBills: { m: THREE.Mesh; t: number; x: number; ph: number }[] = [];
+  private vaultSteel!: THREE.MeshLambertMaterial; private vaultDoor!: THREE.Group;
   private cash = new THREE.Group(); private stacks: THREE.Mesh[][] = []; private drums: THREE.Mesh[] = []; private drumSlot: { u: number; v: number; t: number; row: number }[] = [];
   private insp: THREE.Mesh[] = []; private inspSh: THREE.Mesh[] = []; private fanHead = new THREE.Group(); private fanBlades = new THREE.Group(); private bkHands: THREE.Mesh[] = []; private bkMotes!: Motes;
   // fix r1 (bank): the second clock, the nameplate, the shot-5 piles + loose bills + tape, window life, cigar smoke, picture lamp
@@ -1396,6 +1534,8 @@ export class Interiors {
   private chalk!: THREE.Mesh; private chalkN = 0; private chalkT: number[] = []; private arrow!: THREE.Mesh; private rainMats: THREE.MeshBasicMaterial[] = [];
   private tape: { m: THREE.Mesh; x: number; z: number; y0: number; sp: number; ph: number; t0: number; spin: number }[] = []; private trHands: THREE.Mesh[] = [];
   private pendants: THREE.Object3D[] = []; private fans: THREE.Object3D[] = [];
+  // fix r3 (trading): the board boy + rolling ladder, the ticker's bell hammer
+  private ladder = new THREE.Group(); private boy!: THREE.Mesh; private boyMat!: THREE.MeshBasicMaterial; private boyArm!: THREE.Mesh; private boyHand!: THREE.Mesh; private tickHammer = new THREE.Group();
   // fix r2 (trading): the painted pit crowd, the dangling handset, the FG desk's cigarette smoke
   private trCards: { m: THREE.Mesh; mat: THREE.MeshLambertMaterial; v: number; ph: number; per: number; base: number; phone: boolean }[] = []; private handset = new THREE.Group(); private trSmoke: THREE.Mesh[] = [];
   private trWinMats: THREE.MeshBasicMaterial[] = []; private chalkPts: THREE.Vector3[] = []; private dust: THREE.Sprite[] = []; private gobo!: THREE.Mesh;
@@ -1410,8 +1550,11 @@ export class Interiors {
   private hatchShafts: Shaft[] = []; private murk!: THREE.Mesh; private beam!: Shaft; private beamMotes!: Motes; private hatchGlow!: THREE.Sprite;
   private weeds: { m: THREE.Mesh; base: Float32Array; h: number; ph: number }[] = []; private silt!: Motes; private tapeG = new THREE.Group();
   private gullSh!: THREE.Mesh; private wallGl: THREE.Sprite[] = []; private waterTag!: THREE.Mesh; private waterLead!: THREE.Mesh;
+  // fix r3 (cutaway): the top phantom rim, slosh droplets, the OIL tag, the bob glint, the tyre's bubble, rust flecks
+  private topRim!: THREE.Mesh; private sloshDrops: THREE.Sprite[] = []; private oilTag!: THREE.Mesh; private bobGlint!: THREE.Sprite; private tyreBub!: THREE.Sprite; private rust!: Motes;
   // kitchen
   private caustic!: THREE.Mesh; private botShadow!: THREE.Mesh; private botContact!: THREE.Mesh; private radioDial!: THREE.Sprite; private sparrow!: THREE.Mesh; private sheet!: THREE.Mesh; private sheetBase!: Float32Array; private catTail!: THREE.Mesh;
+  private botInk = new THREE.Group(); private botTint!: THREE.Mesh; private kiSteam: THREE.Mesh[] = [];
   private bottle = new THREE.Group(); private liquid!: THREE.ShaderMaterial; private glassM = glassMat(); private kiHands: THREE.Mesh[] = []; private kiMotes!: Motes; private curtainsK: THREE.Mesh[] = [];
   // pump room
   private plates: { dash: THREE.Mesh; n: THREE.Mesh; base: THREE.Vector3 }[] = []; private wheels: THREE.Object3D[] = []; private needles: { m: THREE.Object3D; base: number; amp: number; ph: number; tank: number }[] = [];
@@ -1419,9 +1562,13 @@ export class Interiors {
   private prMotes!: Motes; private moths: THREE.Sprite[] = [];
   private pipeOil: { m: THREE.ShaderMaterial; x0: number; x1: number }[] = []; private flywheel = new THREE.Group(); private drip!: THREE.Sprite;
   private prSteam: { m: THREE.Mesh; x: number; y: number; z: number; k: number }[] = []; private mcuNeedle!: THREE.Object3D; private drip2!: THREE.Sprite;
+  // fix r3 (pump): the COUNTED: 2 steam puff, chalk tallies by B / C, the gold smear in the glass
+  private puff: THREE.Mesh[] = []; private tallies: { m: THREE.Mesh; i: number }[] = []; private smears: { m: THREE.Mesh; x0: number; x1: number }[] = [];
   // office
   private buy: THREE.Mesh[] = []; private pencil = new THREE.Group(); private steam: THREE.Mesh[] = []; private people: { arm: THREE.Mesh; sx: number; sy: number; reach: number; ang0: number; ang1: number; ph: number; per: number; body: THREE.Mesh; by: number }[] = [];
   private ofHands: THREE.Mesh[] = []; private ofCord = new THREE.Group();
+  // fix r3 (office): the rug pane patch, the chair stripes, the ceiling-fan shadow, the framed chart
+  private rugPatch!: THREE.Mesh; private chairStripes!: THREE.Mesh; private fanSh!: THREE.Mesh; private ofChart!: THREE.Mesh;
   private sunPatch!: THREE.Mesh; private ofMotes2!: Motes; private ofView: THREE.MeshBasicMaterial[] = []; private sunGlow!: THREE.Sprite; private curtainsO: THREE.Mesh[] = []; private ofMotes!: Motes;
 
   constructor(root: THREE.Object3D) {
@@ -1450,13 +1597,15 @@ export class Interiors {
     const P = (i: number, o: V3, p: P3, col: P3, r: number) => this.setPool(i, o, p, col, r);
     if (set === "bank") {
       const L = BK_LAMP[id] ?? BK_LAMP[3];
-      P(PO.bkLamp, BK.base, [L[0] + 0.1, 0.98, L[1] + 0.22], id === 5 ? [2.0, 1.2, 0.42] : [1.9, 1.12, 0.4], id === 5 ? 0.85 : 1.0);
+      if (id === 5) P(PO.bkLamp, BK.base, [0.2, 0.98, -0.78], [1.7, 1.02, 0.36], 0.8);   // fix r3: the (hidden) lamp's warm pool between the stacks
+      else P(PO.bkLamp, BK.base, [L[0] + 0.1, 0.98, L[1] + 0.22], [1.9, 1.12, 0.4], 1.0);
       if (id === 3) { P(3, BK.base, [0.75, 1.05, -0.75], [0.11, 0.15, 0.24], 1.3); P(4, BK.base, [1.3, 1.6, -2.3], [0.1, 0.13, 0.2], 2.2); }   // A2 P2: the cool window wedge across the desk's right half
       if (id === 5) { P(3, BK.base, [-0.95, 1.35, -1.0], [0.12, 0.16, 0.27], 1.5); P(4, BK.base, [-0.75, 1.6, -3.2], [0.1, 0.14, 0.22], 1.4); } // A2 P2: the cool blind light from screen left (cheek + back wall)
       if (id === 6) { P(3, BK.base, [-3.35, 1.7, -1.4], [0.1, 0.13, 0.22], 2.4); P(4, BK.base, [-1.25, 0.9, -2.0], [0.32, 0.22, 0.1], 0.9); }   // A2 ADD: the left-wall window's cool counter-light; a warm spill round Tino's feet
     } else if (set === "trading") {
       // A2 P2 shot 8: a warm POOL under each pendant globe on the desks and the floor (#FFD38A class)
-      TR_PEND.forEach(([x, z], k) => P(5 + k, TR.base, [x, 0.95, z + 0.2], [0.62, 0.42, 0.17], 1.75));
+      // fix r3 (A3 P2: the pendants bloomed but threw no warm pools): ~1.8x stronger, wider warm pools (#FFD38A class)
+      TR_PEND.forEach(([x, z], k) => P(5 + k, TR.base, [x, 1.0, z + 0.2], [1.12, 0.76, 0.3], 2.1));
       P(10, TR.base, [3.6, 2.2, -1.4], [0.06, 0.08, 0.12], 3.4);    // the cool window key's spill on the right
     } else if (set === "kitchen") {
       // A2 P2 shot 11: the raking sun patch on the cloth right of the bottle (#FFD27A class) + the warm bounce round the window
@@ -1465,8 +1614,11 @@ export class Interiors {
       P(PO.kiGold, KI.base, [KI.bottle.c[0] - 0.12, KI.table.top + 0.03, KI.bottle.c[2] + 0.14], [1.3, 0.78, 0.12], 0.45);
     } else if (set === "pumproom") {
       // A2 P2 shot 13: a warm FLOOR pool under each caged lamp (r ~1.5 m, #FFB45A class): the floor reads lit, not a blue wash
-      [...PR.lamps, ...PR_LAMPS2].forEach((l, k) => P(k, PR.base, [l[0], 0.32, l[2] - 0.15], k < 2 ? [2.3, 1.05, 0.24] : [1.9, 0.88, 0.2], 1.55));
-      P(4, PR.base, [PR.blobCU[0] + 0.5, 0.3, -2.4], [1.4, 0.66, 0.16], 1.2);   // the MCU floor in front of tank C
+      // fix r3 (A3 P2 shot 13: the bottom band stayed navy): the lamp floor pools sit higher (0.9 m: they reach the floor at
+      // a useful angle) and wider, plus three warm floor pools along the follow path (the props there read)
+      [...PR.lamps, ...PR_LAMPS2].forEach((l, k) => P(k, PR.base, [l[0], 0.9, l[2] - 0.15], k < 2 ? [2.4, 1.1, 0.26] : [2.0, 0.92, 0.22], 2.0));
+      P(4, PR.base, [PR.blobCU[0] + 0.5, 0.8, -2.4], [1.5, 0.7, 0.18], 1.6);   // the MCU floor in front of tank C
+      for (const [i, x] of [[5, -1.3], [6, 0.4], [11, 2.2]] as number[][]) P(i, PR.base, [x, 0.9, -2.45], [2.8, 1.45, 0.38], 2.1);
     } else if (set === "office") {
       // A2 P2 shot 15: the sun's mullion patch carries a little real light on the desk + a window-side warm rim pool
       P(3, OF.base, [-0.1, 0.95, -1.05], [0.3, 0.22, 0.1], 0.8); P(4, OF.base, [0.0, 1.6, -2.2], [0.22, 0.16, 0.08], 1.3);
@@ -1695,8 +1847,10 @@ export class Interiors {
     stand.position.add(V(0, -Math.sin(-tilt) * 0, 0)); stand.rotation.x = tilt; stand.translateZ(-0.012); stand.castShadow = true; stand.receiveShadow = true; rc.add(stand);
     const lip = new THREE.Mesh(new THREE.BoxGeometry(RCPT.w + 0.05, 0.03, 0.04), mah); lip.position.set(0, -0.005, 0.01); lip.castShadow = true; rc.add(lip);
     const strut = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.02, 0.3), mahD); strut.position.set(0, -0.005, -0.15); rc.add(strut);
-    this.approved = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.167), basic("bkApproved", () => ({ map: approvedTex(), transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 })));
-    this.approved.position.set(0.044, -0.1, 0.003); this.approved.rotation.z = 0.12; this.approved.layers.set(NOINK); paper.add(this.approved);
+    // fix r3 (A3 P2): the mark sits in the card's empty lower band, centred under RECEIPT, rotated -3 deg (new RC_P for
+    // CHAR's stamp contact: bank-local [-0.410, 0.861, -0.554]; RC_N unchanged [-0.113, 0.899, 0.424])
+    this.approved = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.19), basic("bkApproved3", () => ({ map: approvedTex3(), transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 })));
+    this.approved.position.set(0.0, -0.147, 0.003); this.approved.rotation.z = -0.05; this.approved.layers.set(NOINK); paper.add(this.approved);
     rc.updateMatrixWorld(true);
     this.rcP.copy(this.approved.getWorldPosition(V(0, 0, 0))); this.rcN.set(0, 0, 1).applyQuaternion(paper.getWorldQuaternion(new THREE.Quaternion()));
     const wood = C("#6a3a1e");
@@ -1708,9 +1862,20 @@ export class Interiors {
     const bm = [TM("bkBillE", billEdgeTex), TM("bkBillE", billEdgeTex), TM("bkBill", billTex), TM("bkBillE", billEdgeTex), TM("bkBillE", billEdgeTex), TM("bkBillE", billEdgeTex)];
     for (let k = 0; k < 3; k++) { const m = new THREE.Mesh(new THREE.BoxGeometry(0.17, 0.034, 0.08).translate(0, 0.017, 0), bm); m.position.set(0.004 * (k - 1), k * 0.035, 0.003 * k); m.rotation.y = 0.05 * (k - 1); m.castShadow = true; m.receiveShadow = true; this.cash.add(m); }
     dg.add(this.cash);
+    // fix r3: Tino's sleeve (shot 3 only), faced to the lens in poseBank
+    this.sleeve = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.155).translate(0.31 - 0.07, 0, 0), basic("bkSleeveM", () => ({ map: sleeveTex(), transparent: true, alphaTest: 0.4, side: THREE.DoubleSide })));
+    this.sleeve.visible = false; g.add(this.sleeve);
+    // fix r3 (AUDIO P3 shot 3: the "ka-ching" had no source): the adding machine's cash drawer pops out on "it." and back
+    this.addDrawer.position.set(o[0] + 0.78, o[1] + 0.8, o[2] - 0.6); dg.add(this.addDrawer);
+    { const d = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.035, 0.12).translate(0, 0, -0.06), C("#4a5852")); d.castShadow = true; this.addDrawer.add(d);
+      const kn = new THREE.Mesh(new THREE.SphereGeometry(0.012, 8, 6), C("#d2a84e")); kn.position.set(0, 0, 0.004); this.addDrawer.add(kn);
+      for (let k = 0; k < 3; k++) { const b = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.008, 0.08), C(k === 1 ? "#9ab98a" : "#c8d8b8")); b.position.set(-0.09 + k * 0.09, 0.015, -0.06); this.addDrawer.add(b); } }
+    // fix r3: the outer stacks hold 2 more bundles (popped by the stamp landings); a stamped (red-band) bundle material
+    const bmR = [TM("bkBillER3", billEdgeRedTex), TM("bkBillER3", billEdgeRedTex), TM("bkBillR3", billRedTex), TM("bkBillE", billEdgeTex), TM("bkBillER3", billEdgeRedTex), TM("bkBillE", billEdgeTex)];
+    this.bmStack = [bm, bmR];
     STACKS.forEach((s, si) => {
       const list: THREE.Mesh[] = [];
-      for (let j = 0; j < (si === 1 ? 9 : 13); j++) { const m = new THREE.Mesh(new THREE.BoxGeometry(0.17, 0.028, 0.08).translate(0, 0.014, 0), bm); m.castShadow = true; m.receiveShadow = true; m.userData.base = V(o[0] + s[0], o[1] + s[1] + j * 0.0295, o[2] + s[2]); m.userData.yaw = (hash(si * 31 + j) - 0.5) * 0.14; dg.add(m); list.push(m); }
+      for (let j = 0; j < (si === 1 ? 9 : 13 + (si === 0 ? STAMP_ON[0] : STAMP_ON[1]).length); j++) { const m = new THREE.Mesh(new THREE.BoxGeometry(0.17, 0.028, 0.08).translate(0, 0.014, 0), bm); m.castShadow = true; m.receiveShadow = true; m.userData.base = V(o[0] + s[0], o[1] + s[1] + j * 0.0295, o[2] + s[2]); m.userData.yaw = (hash(si * 31 + j) - 0.5) * 0.14; dg.add(m); list.push(m); }
       this.stacks.push(list);
       contact(dg, [o[0] + s[0] + 0.03, o[1] + s[1] + 0.002, o[2] + s[2] - 0.02], 0.3, 0.17, 0.42);
     });
@@ -1767,7 +1932,8 @@ export class Interiors {
     drb.seg(brass, [-0.98, 0.075, -0.37], [0.98, 0.075, -0.37], 0.012);
     for (const x of [-0.98, -0.52, 0.52, 0.98]) { drb.geo(new THREE.SphereGeometry(0.019, 10, 8), brass, x, 0.075, -0.37); for (const y of [0.1, 0.68]) drb.geo(new THREE.CylinderGeometry(0.017, 0.017, 0.012, 12).rotateX(Math.PI / 2), brass, x + (x < 0 ? 0.03 : -0.03) * (Math.abs(x) > 0.9 ? 1 : -1), y, -0.392); }
     // a wicker waste basket of crumpled paper + loose money bands in front of the knee hole
-    { const bx = -0.22, bz = -0.08;
+    // fix r3 (A3 P2 shot 5: the basket was cut by the bottom edge): tucked 0.16 m back against the modesty panel
+    { const bx = -0.22, bz = -0.24;
       drb.geo(new THREE.CylinderGeometry(0.135, 0.11, 0.3, 20, 1, true).translate(0, 0.15, 0), lam("si:bkWicker", () => ({ map: wickerTex(), side: THREE.DoubleSide })), bx, 0, bz);
       drb.geo(new THREE.CircleGeometry(0.11, 20).rotateX(-Math.PI / 2), C("#5a3a1e"), bx, 0.01, bz);
       for (let k = 0; k < 6; k++) drb.geo(new THREE.IcosahedronGeometry(0.05 + 0.015 * hash(k), 0), C(k % 3 ? "#f2eee2" : "#e8dcc0"), bx + (hash(k + 1) - 0.5) * 0.14, 0.26 + hash(k + 2) * 0.06, bz + (hash(k + 3) - 0.5) * 0.14, hash(k) * 3, hash(k + 5) * 3);
@@ -1775,11 +1941,25 @@ export class Interiors {
       drb.geo(new THREE.IcosahedronGeometry(0.045, 0), C("#f2eee2"), bx + 0.22, 0.04, bz + 0.1, 1, 2);
       contact(dg, [o[0] + bx, o[1] + 0.004, o[2] + bz], 0.42, 0.36, 0.45); }
     // a canvas money sack (a stencilled $) leaning on the right pedestal
-    { const sx = 0.74, sz = -0.22;
+    // fix r3 (A3 P2 shot 5: the '$' sack sat outside the frame): in front of the right half of the modesty panel
+    { const sx = 0.36, sz = -0.25;
       drb.geo(new THREE.SphereGeometry(0.17, 20, 14), lam("si:bkSack", () => ({ map: sackTex() })), sx, 0.17, sz, -1.82, 0, -0.18, [1, 1.15, 0.85]);
       drb.geo(new THREE.CylinderGeometry(0.035, 0.06, 0.1, 12), C("#bca87e"), sx + 0.06, 0.38, sz - 0.02, 0, 0, -0.3);
       drb.geo(new THREE.TorusGeometry(0.04, 0.009, 6, 14).rotateX(Math.PI / 2), C("#7a5a2e"), sx + 0.055, 0.36, sz - 0.02, 0, 0, -0.3);
       contact(dg, [o[0] + sx, o[1] + 0.004, o[2] + sz + 0.02], 0.44, 0.36, 0.45); }
+    // fix r3 (A3 P2 shot 5 / ADD #36 shot 3): the right pedestal's top drawer stands half open, stuffed with OIL RECEIPTS
+    // and banded cash; a second brass FOOT rail higher on the modesty panel (y 0.2); bills that slide off the desk's front
+    // edge on each "more" and flutter down the desk front (shot 5, posed in poseBank)
+    { const dx = 0.75, dy = 0.62, dz = -0.38;
+      drb.box(C("#4e2414"), dx - 0.21, dy - 0.09, dz - 0.02, dx + 0.21, dy + 0.06, dz + 0.13); drb.panel(TM("bkDrawer", drawerTex), 0.42, 0.15, dx, dy - 0.015, dz + 0.131);
+      drb.geo(new THREE.CylinderGeometry(0.014, 0.014, 0.02, 10).rotateX(Math.PI / 2), brass, dx, dy - 0.01, dz + 0.14);
+      const bmE = [TM("bkBillE", billEdgeTex), TM("bkBillE", billEdgeTex), TM("bkBill", billTex), TM("bkBillE", billEdgeTex), TM("bkBillE", billEdgeTex), TM("bkBillE", billEdgeTex)];
+      for (let k = 0; k < 3; k++) { const m = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.026, 0.07), bmE); m.position.set(o[0] + dx - 0.12 + k * 0.1, o[1] + dy + 0.07 + 0.012 * hash(k), o[2] + dz + 0.05); m.rotation.set(0.25 * (hash(k + 2) - 0.5), 0.3 * (hash(k) - 0.5), 0.4 * (hash(k + 4) - 0.5)); m.castShadow = true; dg.add(m); }
+      for (let k = 0; k < 4; k++) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.13, 0.095), faceMat("bkReceipt", receiptTex, 0.9)); m.position.set(o[0] + dx - 0.15 + k * 0.09, o[1] + dy + 0.1 + 0.02 * hash(k + 9), o[2] + dz + 0.07 - 0.02 * k); m.rotation.set(-0.35, 0.2 * (hash(k + 5) - 0.5), 0.35 * (hash(k + 6) - 0.5)); dg.add(m); } }
+    drb.seg(brass, [-0.52, 0.2, -0.395], [0.52, 0.2, -0.395], 0.011); for (const x of [-0.52, 0, 0.52]) drb.geo(new THREE.SphereGeometry(0.017, 10, 8), brass, x, 0.2, -0.395);
+    { const billDS = lam("si:bkBillDS", () => ({ map: billTex(), side: THREE.DoubleSide }));
+      for (let k = 0; k < 6; k++) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.15, 0.068), billDS); m.castShadow = true; m.visible = false; dg.add(m);
+        this.frontBills.push({ m, t: (k < 3 ? BEAT.more1 : BEAT.more2) + 6 + (k % 3) * 6, x: [-0.3, 0.12, 0.34, 0.25, -0.12, -0.38][k], ph: hash(k * 7.7) * TAU }); } }
     // a brown leather briefcase leaning on the left pedestal (shot 3)
     { const bx = -0.76, bz = -0.31; drb.rbox(C("#5a3420"), 0.42, 0.3, 0.1, bx, 0.155, bz, 0.08, -0.16); drb.rbox(C("#4a2a18"), 0.43, 0.02, 0.105, bx, 0.25, bz, 0.08, -0.16);
       drb.geo(new THREE.TorusGeometry(0.05, 0.011, 6, 14, Math.PI), C("#3a2010"), bx, 0.31, bz + 0.03, 0.08, -0.16);
@@ -1792,7 +1972,8 @@ export class Interiors {
         contact(this.bkFloor5, [m.position.x, o[1] + 0.004, m.position.z], 0.2, 0.12, 0.22); }
       dg.add(this.bkFloor5); }
     // shot 5: a 1963 desk calendar beside the LOANS plaque (A2 P2 #10)
-    { const cg = new THREE.Group(); cg.position.set(o[0] + 0.585, o[1] + 0.785, o[2] - 0.42); cg.rotation.y = -0.25; dg.add(cg); this.calendar5 = cg;
+    // fix r3 (A3 P2 shot 5: cut to '196' at the right edge): 0.12 m screen-left
+    { const cg = new THREE.Group(); cg.position.set(o[0] + 0.465, o[1] + 0.785, o[2] - 0.42); cg.rotation.y = -0.2; dg.add(cg); this.calendar5 = cg;
       const f1 = new THREE.Mesh(new THREE.PlaneGeometry(0.1, 0.125).translate(0, 0.0625, 0), faceMat("bkDeskCal", deskCalTex, 0.88)); f1.rotation.x = -0.25; cg.add(f1);
       const b1 = new THREE.Mesh(new THREE.BoxGeometry(0.106, 0.132, 0.004).translate(0, 0.066, -0.004), C("#8a6a3a")); b1.rotation.x = -0.25; b1.castShadow = true; cg.add(b1);
       const b2 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.12, 0.004).translate(0, 0.06, 0), C("#8a6a3a")); b2.position.z = -0.06; b2.rotation.x = 0.32; b2.castShadow = true; cg.add(b2);
@@ -1806,8 +1987,13 @@ export class Interiors {
       rb.geo(new THREE.TorusGeometry(R + 0.13, 0.03, 8, 48), C("#8a8e94"), vx, vy, vz + 0.02);
       for (let k = 0; k < 12; k++) { const a = (k / 12) * TAU; rb.geo(new THREE.SphereGeometry(0.02, 8, 6), C("#6a6e74"), vx + Math.cos(a) * (R + 0.13), vy + Math.sin(a) * (R + 0.13), vz + 0.045); }
       const dgp = new THREE.Group(); dgp.position.set(o[0] + vx - R - 0.03, o[1] + vy, o[2] + vz + 0.07); dgp.rotation.y = -1.12; g.add(dgp);
-      const steel = C("#b4b8be"), add = (geo: THREE.BufferGeometry, m: THREE.Material, x: number, y: number, z: number, rz = 0) => { const me = new THREE.Mesh(geo, m); me.position.set(x, y, z); me.rotation.z = rz; me.castShadow = true; me.receiveShadow = true; dgp.add(me); return me; };
+      // fix r3 (A3 P2 shot 6: Tino's grey suit read grey-on-grey against the light door): the door's own steel material is
+      // darkened to #4E5562 in shot 6 (poseBank), with a brass rim on its edge in every shot
+      this.vaultSteel = lam("si:bkVaultSteel3", () => ({ color: "#b4b8be" })) as THREE.MeshLambertMaterial;
+      const steel = this.vaultSteel, add = (geo: THREE.BufferGeometry, m: THREE.Material, x: number, y: number, z: number, rz = 0) => { const me = new THREE.Mesh(geo, m); me.position.set(x, y, z); me.rotation.z = rz; me.castShadow = true; me.receiveShadow = true; dgp.add(me); return me; };
       add(new THREE.CylinderGeometry(R, R, 0.22, 44).rotateX(Math.PI / 2), steel, R + 0.03, 0, 0.11);
+      add(new THREE.TorusGeometry(R + 0.005, 0.02, 8, 48), brass, R + 0.03, 0, 0.222); add(new THREE.TorusGeometry(R + 0.005, 0.02, 8, 48), brass, R + 0.03, 0, 0.0);
+      this.vaultDoor = dgp;
       add(new THREE.TorusGeometry(R - 0.07, 0.014, 6, 44), C("#8a8e96"), R + 0.03, 0, 0.225); add(new THREE.TorusGeometry(R * 0.55, 0.012, 6, 36), C("#8a8e96"), R + 0.03, 0, 0.225);
       for (let k = 0; k < 16; k++) { const a = (k / 16) * TAU; add(new THREE.SphereGeometry(0.022, 8, 6), C("#d8dce0"), R + 0.03 + Math.cos(a) * (R - 0.035), Math.sin(a) * (R - 0.035), 0.222); }
       add(new THREE.TorusGeometry(0.17, 0.018, 8, 28), brass, R + 0.03, 0, 0.27); add(new THREE.CylinderGeometry(0.045, 0.045, 0.08, 14).rotateX(Math.PI / 2), brass, R + 0.03, 0, 0.25);
@@ -1891,6 +2077,18 @@ export class Interiors {
     // fix1 LEAD (CHAR): the leaning pointer is gone, Tino holds his own
     // fix r2 (A2 P3): the board white ~#F4EEE4, not blown (k 0.94)
     const face = new THREE.Mesh(new THREE.PlaneGeometry(ch.w, ch.h), faceMat("bkChart", chartTex, 0.94)); face.position.set(...at(0, 0, 0.004)); face.position.add(V(o[0], o[1], o[2])); face.rotation.y = ch.yaw; g.add(face);
+    // fix r3 (ADD #45 / #46 shot 6): the picture lamp's warm falloff on the board (top ~8 % brighter, the bottom edge ~10 %
+    // darker), a curled-over previous page along the pad's top, a chalk stick + an eraser + a box of pins on the tray, a
+    // small brass TINO plate on the tray front
+    { const ft = tx("bkChartFall3", 32, 256, (g2) => { g2.clearRect(0, 0, 32, 256); const gr = g2.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, "rgba(255,226,170,0.2)"); gr.addColorStop(0.3, "rgba(255,226,170,0)"); g2.fillStyle = gr; g2.fillRect(0, 0, 32, 256); }, true);
+      const bt = tx("bkChartDark3", 32, 256, (g2) => { g2.clearRect(0, 0, 32, 256); const gr = g2.createLinearGradient(0, 256, 0, 0); gr.addColorStop(0, "rgba(70,34,34,0.24)"); gr.addColorStop(0.16, "rgba(70,34,34,0)"); g2.fillStyle = gr; g2.fillRect(0, 0, 32, 256); }, true);
+      for (const [map, add] of [[ft, true], [bt, false]] as [THREE.Texture, boolean][]) { const m = new THREE.Mesh(new THREE.PlaneGeometry(ch.w, ch.h), new THREE.MeshBasicMaterial({ map, transparent: true, depthWrite: false, ...(add ? { blending: THREE.AdditiveBlending } : {}) }));
+        m.position.set(...at(0, 0, 0.03)); m.position.add(V(o[0], o[1], o[2])); m.rotation.y = ch.yaw; m.layers.set(NOINK); m.renderOrder = 5; g.add(m); }
+      rb.geo(new THREE.CylinderGeometry(0.028, 0.028, ch.w - 0.06, 16, 1, true, 0, Math.PI).rotateZ(Math.PI / 2), lam("si:bkPageCurl", () => ({ color: "#e8dec6", side: THREE.DoubleSide })), ...at(0, ch.h / 2 - 0.005, 0.012), ch.yaw);
+      const ty = -ch.h / 2 - 0.005; rb.geo(new THREE.CylinderGeometry(0.007, 0.007, 0.08, 8).rotateZ(Math.PI / 2), C("#f6f4ea"), ...at(-0.45, ty, 0.05), ch.yaw);
+      rb.geo(new THREE.BoxGeometry(0.1, 0.03, 0.045), C("#3a3a42"), ...at(-0.2, ty + 0.008, 0.05), ch.yaw); rb.geo(new THREE.BoxGeometry(0.1, 0.008, 0.047), C("#d8c8a8"), ...at(-0.2, ty + 0.027, 0.05), ch.yaw);
+      rb.geo(new THREE.BoxGeometry(0.06, 0.025, 0.04), C("#b8302a"), ...at(0.3, ty + 0.005, 0.05), ch.yaw);
+      const pl = new THREE.Mesh(new THREE.PlaneGeometry(0.16, 0.045), faceMat("bkTinoPlate", () => plaqueTex("bkTinoPlate", "TINO", 512, 144), 0.9)); pl.position.set(...at(0.55, -ch.h / 2 - 0.03, 0.098)); pl.position.add(V(o[0], o[1], o[2])); pl.rotation.y = ch.yaw; g.add(pl); }
     // drums: ALL US OIL = a 3-row pile of 6 on the map; TINO'S OIL = an 8-base pyramid that appears 3 -> 10 -> 36
     const dm = basic("bkDrum", () => ({ map: drumTex(), alphaTest: 0.4 })), DW = 0.08, DH = 0.1, base = -0.405;
     const mk = (u: number, v: number, row: number) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(DW, DH), dm); const p = at(u, v, 0.012 + row * 0.0015); m.position.set(o[0] + p[0], o[1] + p[1], o[2] + p[2]); m.rotation.y = ch.yaw; m.layers.set(NOINK); g.add(m); return m; };
@@ -2040,7 +2238,8 @@ export class Interiors {
       // fix r2 (A2 P2 #14 / #15): NOTHING falls before the crash (a pre-crash ribbon read as a chalk spike on the chart);
       // every piece starts on / after "crashed", and no piece falls through the SOYBEAN OIL title column (|x| is pushed
       // out past the title's screen extent at its depth from the shot-8 lens)
-      const near = i % 2 === 0, z = near ? -1.8 + hash(i * 5.7) * 4.2 : -4.6 + hash(i * 5.7) * 6.0;
+      // fix r3 (A3 P3 #27: far ribbons over the chart read as chalk strokes): every piece falls in FRONT of the traders
+      const near = i % 2 === 0, z = near ? -1.8 + hash(i * 5.7) * 4.2 : -2.7 + hash(i * 5.7) * 3.9;
       let x = (near ? -2.2 : -3.2) + hash(i * 3.1) * (near ? 4.6 : 6.8); const col = 1.45 * (5.6 - z) / 11.55 + 0.42;   // + the flutter drift and the ribbon half-length
       if (Math.abs(x - 0.05) < col) x = 0.05 + Math.sign(x - 0.05 || 1) * (col + 0.25 * hash(i * 8.3));
       this.tape.push({ m, x, z, y0: 2.9 + hash(i) * 2.9, sp: 0.38 + hash(i * 2.3) * 0.32, ph: hash(i * 9.1) * TAU,
@@ -2070,6 +2269,7 @@ export class Interiors {
       rb.box(C("#3a6a9a"), wx - 0.05, 0.66, wz + 0.18, wx + 0.05, 0.72, wz + 0.22); contact(g, [o[0] + wx, o[1] + 0.005, o[2] + wz], 0.6, 0.6, 0.4); }
     for (const [x, z] of [[-2.55 + 0.45, -2.9 + 0.25], [2.75 + 0.45, -2.1 + 0.25]]) for (let k = 0; k < 7; k++) rb.geo(new THREE.IcosahedronGeometry(0.045, 0), C("#f2eee2"), x + (hash(k + x) - 0.5) * (k < 4 ? 0.14 : 0.5), k < 4 ? 0.33 + hash(k) * 0.05 : 0.03, z + (hash(k + z) - 0.5) * (k < 4 ? 0.14 : 0.5), hash(k) * 3, hash(k + 1) * 3);
     this.buildTradingR2(rb, g);
+    this.buildTradingR3(rb, g);
     // cool storm-light shafts from the tall right window across the floor + a rain-streak gobo crawling on the floor
     for (const [x, w, ph] of [[3.25, 0.7, 0.4], [3.55, 0.45, 2.2], [-3.4, 0.5, 1.4]] as number[][]) this.addShaft(g, [o[0] + x, o[1] + 4.4, o[2] - Z + 0.08], [-0.42 * Math.sign(x), -0.62, 0.66], 6.0, w, new THREE.Color(0.1, 0.13, 0.19), ph);
     { const gt = tx("trGobo", 256, 256, (g2, r) => { g2.clearRect(0, 0, 256, 256); for (let i = 0; i < 70; i++) { const x = r() * 256, y = r() * 256, L = 20 + r() * 60; g2.strokeStyle = `rgba(190,215,255,${0.15 + 0.3 * r()})`; g2.lineWidth = 2 + r() * 3; g2.beginPath(); g2.moveTo(x, y); g2.lineTo(x - 4, y + L); g2.stroke(); } });
@@ -2150,6 +2350,61 @@ export class Interiors {
     TR.traders.forEach((t, k) => { const dz = t[2] - 0.62, x = t[0];
       rb.geo(cylY(0.038, 0.075, 14), C("#f4f0e6"), x + 0.05, 0.8, dz + 0.1); rb.geo(new THREE.CircleGeometry(0.032, 12).rotateX(-Math.PI / 2), C("#4a2a16"), x + 0.05, 0.873, dz + 0.1);
       if (k % 2) rb.rbox(C("#ece6d6"), 0.3, 0.01, 0.22, x - 0.3, 0.805, dz + 0.04, 0.25 * (k - 2)); });
+  }
+
+  /** fix r3 (A3 P2 shot 8: no sense of a busy 1963 trading floor; the chart drew itself; the ticker chatter + bell had no
+   *  source): a BOARD BOY on a rolling ladder whose chalk hand rides the line tip (the ladder rolls along with it; on
+   *  "crashed" he slips a rung and the ladder rolls off to the right with him clinging), a glass-dome TICKER on the
+   *  front-right desk whose tape spools into a wicker basket (its bell hammer flicks on "November"), a second BACK ROW
+   *  of smaller traders waving slips (heads just above the caption band) */
+  private buildTradingR3(rb: RB, g: THREE.Group) {
+    const o = TR.base, brass = C("#c9a14a"), oakD = C("#2e1e12");
+    // ---- the rolling ladder (moved per frame) + the boy card + his chalk arm
+    const lg = this.ladder; g.add(lg);
+    const rail = new THREE.Mesh(new THREE.BoxGeometry(0.045, 3.3, 0.05).translate(0, 1.65, 0), oakD);
+    for (const s2 of [-1, 1]) { const m = rail.clone(); m.position.x = s2 * 0.2; m.castShadow = true; lg.add(m); }
+    for (let n = 1; n <= 10; n++) { const r2 = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.4, 8).rotateZ(Math.PI / 2), brass); r2.position.y = n * 0.3; r2.castShadow = true; lg.add(r2); }
+    for (const s2 of [-1, 1]) { const w = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.03, 12).rotateZ(Math.PI / 2), C("#1e1a1e")); w.position.set(s2 * 0.2, 0.04, 0); lg.add(w); }
+    const hook = new THREE.Mesh(new THREE.TorusGeometry(0.05, 0.012, 6, 12, Math.PI), brass); hook.position.set(0, 3.3, 0); hook.rotation.y = Math.PI / 2; lg.add(hook);
+    this.boyMat = basic("trBoyM", () => ({ map: boardBoyTex(0), alphaTest: 0.5, side: THREE.DoubleSide }));
+    this.boy = new THREE.Mesh(new THREE.PlaneGeometry(0.58, 1.16), this.boyMat); g.add(this.boy);
+    this.boyArm = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 1, 8).translate(0, 0.5, 0), C("#f2efe8")); this.boyArm.castShadow = true; g.add(this.boyArm);
+    this.boyHand = new THREE.Mesh(new THREE.SphereGeometry(0.042, 12, 10), C("#f8f3ee")); g.add(this.boyHand);
+    const chalk = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.008, 0.06, 6).rotateZ(Math.PI / 2.6), C("#fbfbf4")); chalk.position.set(-0.03, 0.02, 0.02); this.boyHand.add(chalk);
+    // ---- the glass-dome ticker on trader 2's desk (right end) + its tape spooling down into a wicker basket
+    const t2 = TR.traders[2], tx0 = t2[0] + 0.48, tz0 = t2[2] - 0.62 - 0.05;
+    rb.box(C("#2e2e30"), tx0 - 0.11, 0.8, tz0 - 0.08, tx0 + 0.11, 0.86, tz0 + 0.08); rb.geo(cylY(0.03, 0.12, 12), brass, tx0, 0.86, tz0);
+    rb.geo(cylY(0.09, 0.025, 18), C("#3a3a3a"), tx0, 0.98, tz0); rb.geo(new THREE.CylinderGeometry(0.03, 0.03, 0.07, 14).rotateZ(Math.PI / 2), C("#f2ead2"), tx0, 1.04, tz0);
+    { const dm = new THREE.Mesh(new THREE.SphereGeometry(0.11, 18, 10, 0, TAU, 0, Math.PI / 2), basic("trDome3", () => ({ color: new THREE.Color(0.86, 0.93, 1.0), transparent: true, opacity: 0.3, depthWrite: false })));
+      dm.position.set(o[0] + tx0, o[1] + 1.0, o[2] + tz0); dm.layers.set(NOINK); g.add(dm);
+      const gl = new THREE.Mesh(new THREE.TorusGeometry(0.11, 0.008, 6, 24).rotateX(Math.PI / 2), brass); gl.position.set(o[0] + tx0, o[1] + 1.0, o[2] + tz0); g.add(gl); }
+    rb.geo(new THREE.SphereGeometry(0.035, 12, 8, 0, TAU, 0, Math.PI / 2), brass, tx0 + 0.15, 0.86, tz0);
+    this.tickHammer.position.set(o[0] + tx0 + 0.19, o[1] + 0.9, o[2] + tz0); g.add(this.tickHammer);
+    { const hm = new THREE.Mesh(new THREE.CylinderGeometry(0.005, 0.005, 0.07, 6).translate(0, 0.035, 0), C("#2a2a2a")); this.tickHammer.add(hm);
+      const hd = new THREE.Mesh(new THREE.SphereGeometry(0.012, 8, 6), C("#2a2a2a")); hd.position.y = 0.07; this.tickHammer.add(hd); }
+    const bx = tx0 + 0.25, bz = tz0 + 0.42;
+    rb.geo(new THREE.CylinderGeometry(0.17, 0.13, 0.36, 18, 1, true).translate(0, 0.18, 0), lam("si:trWicker3", () => ({ map: wickerTex(), side: THREE.DoubleSide })), bx, 0, bz);
+    contact(g, [o[0] + bx, o[1] + 0.005, o[2] + bz], 0.46, 0.46, 0.42);
+    { const P = [[0, 1.04, 0.03], [0.04, 1.0, 0.1], [0.08, 0.86, 0.14], [0.12, 0.8, 0.16], [0.16, 0.62, 0.22], [0.2, 0.42, 0.3], [0.24, 0.3, 0.38], [0.25, 0.22, 0.42]].map(([x, y, z]) => V(o[0] + tx0 + x, o[1] + y, o[2] + tz0 + z));
+      const pts = new THREE.CatmullRomCurve3(P).getSpacedPoints(30), pos: number[] = [], uv: number[] = [], idx: number[] = [];
+      pts.forEach((pp, i) => { pos.push(pp.x - 0.02, pp.y, pp.z, pp.x + 0.02, pp.y, pp.z); uv.push(0, i / 5, 1, i / 5); if (i < 30) idx.push(2 * i, 2 * i + 1, 2 * i + 2, 2 * i + 1, 2 * i + 3, 2 * i + 2); });
+      const tg = new THREE.BufferGeometry(); tg.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); tg.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2)); tg.setIndex(idx); tg.computeVertexNormals();
+      const tmesh = new THREE.Mesh(tg, lam("si:trTapeSpool", () => ({ map: tapeTex3(), side: THREE.DoubleSide }))); g.add(tmesh); }
+    for (let k = 0; k < 5; k++) rb.geo(new THREE.TorusGeometry(0.06 - k * 0.008, 0.01, 4, 16).rotateX(Math.PI / 2), lam("si:trTapeCoil", () => ({ map: tapeTex() })), bx + (hash(k + 61) - 0.5) * 0.08, 0.3 + k * 0.012, bz + (hash(k + 67) - 0.5) * 0.08, hash(k) * 3);
+    // ---- the second back row: 7 smaller painted traders between the pit and the desks, waving on 12-18 f clocks
+    const row: [number, number][] = [[-2.55, -2.55], [-1.85, -2.62], [-0.98, -2.48], [-0.2, -2.58], [0.55, -2.5], [1.38, -2.6], [2.25, -2.52]];
+    row.forEach(([x, z], k) => { const v = (k + 3) % 8, mat = lam("si:trRow3M" + k, () => ({ map: trTraderTex(v, 0), alphaTest: 0.5, side: THREE.DoubleSide }));
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(0.55, 1.1), mat); m.position.set(o[0] + x, o[1] + 0.552, o[2] + z); m.castShadow = true; m.receiveShadow = true; g.add(m);
+      this.trCards.push({ m, mat, v, ph: hash(k * 5.3 + 2) * 30, per: 12 + Math.floor(hash(k * 2.7 + 1) * 7), base: m.position.y, phone: k === 3 });
+      contact(g, [o[0] + x, o[1] + 0.006, o[2] + z + 0.04], 0.42, 0.22, 0.36); });
+  }
+  /** how many chalk segments are drawn at picture frame f (the pre-crash creep in 3 steps + the dive), as a float */
+  private chalkDrawn(f: number) {
+    const preQ = this.chalkT.filter((v) => v === 0).length, sub = 8, c1 = BEAT.crashed1;
+    const steps = [BEAT.november, PW(14, "big"), PW(14, "oil")], marks = [3 * sub, 5 * sub, 7 * sub, preQ];
+    let preDrawn = marks[0]; steps.forEach((st, i) => { preDrawn += (marks[i + 1] - marks[i]) * sm((f - st + 1) / 12); });
+    const dive = clamp01((f - c1 + 1) / 9);
+    return preDrawn + (this.chalkN - preQ) * (f >= c1 - 1 ? outCubic(dive) : 0);
   }
 
   // ================================================================================================ CUTAWAY
@@ -2243,8 +2498,11 @@ export class Interiors {
     const ghost = new THREE.Mesh(new THREE.CylinderGeometry(R, R, T.h - B, 64, 1, true, -Math.PI / 2, Math.PI).translate(0, (T.h - B) / 2 + B, 0),
       new THREE.MeshBasicMaterial({ color: new THREE.Color(0.75, 0.88, 1.0), transparent: true, opacity: 0.035, depthWrite: false, side: THREE.DoubleSide }));
     ghost.position.set(o[0], o[1], o[2]); ghost.layers.set(NOINK); ghost.renderOrder = 5; g.add(ghost);
+    // fix r3 (A3 P2 shot 10: a stray pale arc crossed the water on the pull-out): the phantom TOP rim (front half) is hidden
+    // whenever the lens is above the roof (seen from above it projects across the water body); the base rim stays
     for (const y of [B, T.h]) { const rim = new THREE.Mesh(new THREE.TorusGeometry(R, 0.014, 6, 72, Math.PI).rotateX(Math.PI / 2), new THREE.MeshBasicMaterial({ color: new THREE.Color(0.8, 0.9, 1.0), transparent: true, opacity: 0.22, depthWrite: false }));
-      rim.position.set(o[0], o[1] + y, o[2]); rim.layers.set(NOINK); rim.renderOrder = 5; g.add(rim); }
+      rim.position.set(o[0], o[1] + y, o[2]); rim.layers.set(NOINK); rim.renderOrder = 5; g.add(rim); if (y > 1) this.topRim = rim; }
+    this.buildCutR3(g);
     // bubbles (rising rings in front of the water face), the pour streams, splash rings, the "full" sparkle
     const n = 60, bp = new Float32Array(n * 3), bgeo = new THREE.BufferGeometry(); bgeo.setAttribute("position", new THREE.BufferAttribute(bp, 3));
     this.bubbles = new THREE.Points(bgeo, new THREE.PointsMaterial({ map: ringTex(), size: 0.16, sizeAttenuation: true, transparent: true, depthWrite: false, fog: false, color: new THREE.Color(0.9, 0.97, 1.0) }));
@@ -2271,7 +2529,8 @@ export class Interiors {
     this.beamMotes.pts.renderOrder = 7;
     // inside the tank (seen through the water face once it clears): swaying weed strands, a lost rubber boot, silt specks
     // fix r2 (A2 P3 #33: the diagram read as an aquarium): 5 strands, <= 0.75 m (~115 px in the wide)
-    for (let k = 0; k < 5; k++) { const x = -2.5 + k * 1.15 + (hash(k) - 0.5) * 0.3, h = 0.42 + 0.33 * hash(k + 3), wg = new THREE.PlaneGeometry(0.2, h, 1, 8).translate(0, h / 2, 0);
+    // fix r3 (A3 P3 #31: seaweed in a freshly filled tank): ONE sprig left as the gag (rust, a bolt and a tyre in buildCutR3)
+    for (let k = 2; k < 3; k++) { const x = -2.5 + k * 1.15 + (hash(k) - 0.5) * 0.3, h = 0.42 + 0.33 * hash(k + 3), wg = new THREE.PlaneGeometry(0.2, h, 1, 8).translate(0, h / 2, 0);
       const m = new THREE.Mesh(wg, lam("si:cuWeed2", () => ({ map: weedTex(), alphaTest: 0.4, side: THREE.DoubleSide }))); m.position.set(o[0] + x, o[1] + B, o[2] - 0.2 - hash(k + 9) * 0.5); g.add(m);
       this.weeds.push({ m, base: Float32Array.from((wg.attributes.position as THREE.BufferAttribute).array as Float32Array), h, ph: hash(k * 7) * TAU }); }
     // fix r2 (A2 P3 #33: the pink boot was unreadable; a drum read pink-purple too through the blue water face): the floor
@@ -2280,9 +2539,14 @@ export class Interiors {
     // shot 12: the weighted tape from a reel on the roof, over the collar, down into the gold skin (why it says FULL)
     { const tm = basic("cuTapeM", () => ({ color: new THREE.Color("#f2c230"), side: THREE.DoubleSide })), T2 = this.tapeG;
       const seg2 = (a: P3, b: P3) => { const A = V(...a), Bv = V(...b), d = Bv.clone().sub(A), m = new THREE.Mesh(new THREE.PlaneGeometry(0.045, d.length()), tm); m.position.copy(A.add(Bv).multiplyScalar(0.5)); m.quaternion.setFromUnitVectors(V(0, 1, 0), d.normalize()); m.layers.set(NOINK); T2.add(m); };
-      const rim = hy + 0.32; seg2([0.62, hy + 0.12, hc[2] + 0.42], [0.36, rim, hc[2] + 0.22]); seg2([0.36, rim, hc[2] + 0.22], [0.12, CU.oil - 0.06, hc[2] + 0.1]);
+      // fix r3 (A3 P3 #29: the plumb bob was unreadable): the tape runs on down through the gold and the bob (a big red-orange
+      // plumb, plum-inked) hangs JUST under the oil, in the water, where the cut face shows it: they only measured the top
+      const rim = hy + 0.32; seg2([0.62, hy + 0.12, hc[2] + 0.42], [0.36, rim, hc[2] + 0.22]); seg2([0.36, rim, hc[2] + 0.22], [0.12, CUW - 0.04, hc[2] + 0.1]);
       const reel = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.07, 20).rotateZ(Math.PI / 2), C("#b8472e")); reel.position.set(0.66, hy + 0.13, hc[2] + 0.46); reel.castShadow = true; T2.add(reel);
-      const bob = new THREE.Mesh(new THREE.ConeGeometry(0.035, 0.09, 12).rotateX(Math.PI), C("#3a3a42")); bob.position.set(0.12, CU.oil - 0.1, hc[2] + 0.1); T2.add(bob);
+      const bob = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.22, 14).rotateX(Math.PI), basic("cuBob3", () => ({ color: glowCol("#ff6a2a", 1.15) }))); bob.position.set(0.12, CUW - 0.42, hc[2] + 0.1); T2.add(bob);
+      const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.08, 0.05, 14), basic("cuBobCap3", () => ({ color: glowCol("#c8472e", 1.0) }))); cap.position.set(0.12, CUW - 0.29, hc[2] + 0.1); T2.add(cap);
+      { const A = V(0.12, CUW - 0.04, hc[2] + 0.1), Bv = V(0.12, CUW - 0.27, hc[2] + 0.1), m = new THREE.Mesh(new THREE.PlaneGeometry(0.045, A.distanceTo(Bv)), tm); m.position.copy(A.add(Bv).multiplyScalar(0.5)); m.layers.set(NOINK); T2.add(m); }
+      this.bobGlint = glowSprite(g, [o[0] + 0.16, o[1] + CUW - 0.36, o[2] + hc[2] + 0.2], 0.3, glowCol("#fff0c8", 1.6)); this.bobGlint.visible = false;
       T2.position.set(o[0], o[1], o[2]); g.add(T2); }
   }
 
@@ -2312,7 +2576,7 @@ export class Interiors {
     for (const [dx, w, L] of [[-0.24, 0.07, 0.75], [0.1, 0.05, 0.55], [0.3, 0.06, 0.65]] as number[][]) deco("rust" + dx, w, L, hc[0] + dx, hc[2] - hr - 0.18 - L / 2, 0, (g2) => {
       g2.clearRect(0, 0, 256, 256); const gr = g2.createLinearGradient(0, 256, 0, 0); gr.addColorStop(0, "rgba(160,84,40,0.75)"); gr.addColorStop(1, "rgba(160,84,40,0)"); g2.fillStyle = gr; g2.fillRect(70, 0, 116, 256); });
     deco("scuffs", 0.9, 0.6, hc[0] + 0.55, hc[2] + 0.55, 0.4, (g2, r) => { g2.clearRect(0, 0, 256, 256); for (let i = 0; i < 9; i++) { g2.strokeStyle = `rgba(80,60,50,${0.18 + 0.2 * r()})`; g2.lineWidth = 6 + r() * 8; g2.lineCap = "round"; const x = 30 + r() * 190, y = 30 + r() * 190; g2.beginPath(); g2.moveTo(x, y); g2.lineTo(x + 20 + r() * 30, y + (r() - 0.5) * 20); g2.stroke(); } });
-    deco("boot", 0.13, 0.3, hc[0] - 0.55, hc[2] + 0.5, -0.3, (g2) => { g2.clearRect(0, 0, 256, 256); g2.fillStyle = "rgba(70,52,44,0.5)"; g2.beginPath(); g2.ellipse(128, 70, 62, 62, 0, 0, TAU); g2.fill(); g2.beginPath(); g2.ellipse(128, 200, 48, 46, 0, 0, TAU); g2.fill();
+    deco("boot", 0.13, 0.3, hc[0] - 0.55, hc[2] + 0.5, -0.3, (g2) => { g2.clearRect(0, 0, 256, 256); g2.fillStyle = "rgba(70,52,44,0.66)"; g2.beginPath(); g2.ellipse(128, 70, 62, 62, 0, 0, TAU); g2.fill(); g2.beginPath(); g2.ellipse(128, 200, 48, 46, 0, 0, TAU); g2.fill();
       g2.strokeStyle = "rgba(240,230,210,0.5)"; g2.lineWidth = 6; for (let y = 30; y < 240; y += 26) { g2.beginPath(); g2.moveTo(80, y); g2.lineTo(176, y); g2.stroke(); } });
     { const rr = Math.hypot(hc[0] + 0.62, hc[2] + 0.38), yy = CU.tank.h + (CU.tank.r - rr) * SL; rb.geo(new THREE.CylinderGeometry(0.008, 0.008, 0.17, 6).rotateZ(Math.PI / 2), C("#f2c22a"), hc[0] + 0.62, yy + 0.01, hc[2] + 0.38, 0.6); rb.geo(new THREE.ConeGeometry(0.008, 0.025, 6).rotateZ(-Math.PI / 2), C("#e8c89a"), hc[0] + 0.62 + 0.095 * Math.cos(0.6), yy + 0.01, hc[2] + 0.38 - 0.095 * Math.sin(0.6), 0.6); }
     // the gull shadow (a soft dark bird silhouette) sliding across the roof
@@ -2323,9 +2587,61 @@ export class Interiors {
     const spT = tx("cuSpark", 128, 128, (g2) => { g2.clearRect(0, 0, 128, 128); g2.fillStyle = "#fff"; g2.beginPath(); for (let k = 0; k < 8; k++) { const a = (k / 8) * TAU, rr = k % 2 ? 10 : 62; g2.lineTo(64 + Math.cos(a) * rr, 64 + Math.sin(a) * rr); } g2.closePath(); g2.fill(); }, true);
     for (let k = 0; k < 2; k++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: spT, color: new THREE.Color(2.6, 2.1, 1.2), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false })); sp.layers.set(NOINK); sp.renderOrder = 7; g.add(sp); this.wallGl.push(sp); }
     // the WATER tag (ADD #65): green-frame board + a thin leader to the water body, pops on "water," (shot 12 wide)
-    { const tt = tx("cuWaterTag", 640, 240, (g2) => { g2.fillStyle = "#f6f1e2"; rrect(g2, 6, 6, 628, 228, 24); g2.fill(); g2.strokeStyle = "#1f5a9a"; g2.lineWidth = 14; rrect(g2, 15, 15, 610, 210, 18); g2.stroke(); ctext(g2, "WATER", 320, 168, 140, "#1f5a9a", 560); }, true);
-      this.waterTag = plane(g, faceMat("cuWaterTag", () => tt), 1.5, 0.56, [o[0] + 0.9, o[1] + 3.0, o[2] + 0.45], 0, 0, 0, true);
+    // fix r3 (A3 P2 shot 12: ~30 px letters right above the caption band): a 1.3x card with bigger letters (~46 px at 1080),
+    // INSIDE the water body on its left third, riding up with the rising water to ~0.42 H; the OIL tag (gold frame, a
+    // pointer up to the layer) replaces it on "oil,"
+    { const tt = tx("cuWaterTag3", 640, 240, (g2) => { g2.fillStyle = "#f6f1e2"; rrect(g2, 6, 6, 628, 228, 24); g2.fill(); g2.strokeStyle = "#1f5a9a"; g2.lineWidth = 14; rrect(g2, 15, 15, 610, 210, 18); g2.stroke(); ctextC(g2, "WATER", 320, 182, 172, "#1f5a9a", 560); }, true);
+      this.waterTag = plane(g, faceMat("cuWaterTag3", () => tt), 1.95, 0.73, [o[0] - 1.45, o[1] + 6.0, o[2] + 0.45], 0, 0, 0, true);
+      const ot = tx("cuOilTag3", 520, 300, (g2) => { g2.clearRect(0, 0, 520, 300); g2.fillStyle = "#e0a92a"; g2.beginPath(); g2.moveTo(232, 62); g2.lineTo(260, 4); g2.lineTo(288, 62); g2.closePath(); g2.fill();
+        g2.fillStyle = "#fbf3dc"; rrect(g2, 8, 56, 504, 236, 26); g2.fill(); g2.strokeStyle = "#e0a92a"; g2.lineWidth = 16; rrect(g2, 18, 66, 484, 216, 20); g2.stroke(); g2.strokeStyle = "#8a5a12"; g2.lineWidth = 3; rrect(g2, 30, 78, 460, 192, 14); g2.stroke();
+        ctextC(g2, "OIL", 260, 236, 190, "#b06a0a", 420); }, true);
+      this.oilTag = plane(g, faceMat("cuOilTag3", () => ot, 1, true), 1.25, 0.72, [o[0] + 1.55, o[1] + CUW - 0.52, o[2] + 0.46], 0, 0, 0, true); this.oilTag.visible = false; this.oilTag.renderOrder = 8;
       this.waterLead = plane(g, basic("cuWaterLead", () => ({ color: new THREE.Color("#1f5a9a") })), 0.001, 0.001, [o[0] + 0.9, o[1] + 2.5, o[2] + 0.44], 0, 0, 0, true); }
+  }
+
+  /** fix r3 (A3 P2 / P3 shots 10 + 12: the diagram backdrop was bare, the tank floor an aquarium): faint cyan BLUEPRINT
+   *  outlines of two neighbouring tanks (spiral stairs, roof rails) cut by the frame edges, the No. 7 stair drawn in outline
+   *  just outside the cut wall, a tick-only depth scale (no numbers) on the left cut edge, a hatched ground-section strip in
+   *  front of the base; on the tank floor ONE weed sprig, rust flakes, a sunken bolt and a half-buried tyre that lets out a
+   *  bubble every ~40 f; rust flecks drifting down through the water */
+  private buildCutR3(g: THREE.Group) {
+    const o = CU.base, T = CU.tank, R = T.r, B = 0.27;
+    const cyan = (key: string, w: number, h: number, draw: (g2: G) => void, p: P3, op: number) => {
+      const m = plane(g, basic("cuBP" + key, () => ({ map: tx("cuBPt" + key, Math.round(w * 64), Math.round(h * 64), (g2) => { g2.clearRect(0, 0, w * 64, h * 64); g2.strokeStyle = "rgba(150,215,255,1)"; g2.fillStyle = "rgba(150,215,255,1)"; g2.lineCap = "round"; g2.lineJoin = "round"; draw(g2); }, true), transparent: true, opacity: op, depthWrite: false })), w, h, [o[0] + p[0], o[1] + p[1], o[2] + p[2]], 0, 0, 0, true);
+      m.renderOrder = 0; return m; };
+    // two neighbour tanks (outline only), 6 m behind, centred 7.6 m left / right: shell, plate rings, cone roof + rail, a spiral stair
+    const nb = (g2: G, flip: boolean) => { const S = 64, W = 6 * S, X0 = 1 * S, top = 1.2 * S, bot = 10.4 * S;
+      g2.save(); if (flip) { g2.translate(8 * S, 0); g2.scale(-1, 1); }
+      g2.lineWidth = 4; g2.strokeRect(X0, top, W, bot - top);
+      g2.lineWidth = 2; for (let k = 1; k < 7; k++) { const y = top + ((bot - top) * k) / 7; g2.beginPath(); g2.moveTo(X0, y); g2.lineTo(X0 + W, y); g2.stroke(); }
+      g2.lineWidth = 3; g2.beginPath(); g2.moveTo(X0, top); g2.lineTo(X0 + W / 2, top - 0.55 * S); g2.lineTo(X0 + W, top); g2.stroke();
+      for (let k = 0; k <= 8; k++) { const x = X0 + (W * k) / 8, y = top - 0.55 * S * (1 - Math.abs(k / 4 - 1)); g2.beginPath(); g2.moveTo(x, y); g2.lineTo(x, y - 0.6 * S); g2.stroke(); }
+      g2.beginPath(); for (let k = 0; k <= 8; k++) { const x = X0 + (W * k) / 8, y = top - 0.55 * S * (1 - Math.abs(k / 4 - 1)) - 0.6 * S; if (k) g2.lineTo(x, y); else g2.moveTo(x, y); } g2.stroke();
+      g2.lineWidth = 2.5; for (let k = 0; k < 9; k++) { const y0 = bot - k * 1.02 * S, x0 = k % 2 ? X0 + W - 0.2 * S : X0 + 0.2 * S, x1 = k % 2 ? X0 + 0.2 * S : X0 + W - 0.2 * S; g2.beginPath(); g2.moveTo(x0, y0); g2.lineTo(x1, y0 - 1.02 * S); g2.stroke(); }
+      g2.restore(); };
+    cyan("nbL", 8, 12, (g2) => nb(g2, false), [-8.6, 5.6, -6.0], 0.2);
+    cyan("nbR", 8, 12, (g2) => nb(g2, true), [8.6, 5.6, -6.0], 0.2);
+    // the No. 7 stair outline just outside the right cut wall (a zig-zag of flights with landings), on the cut plane
+    cyan("stair", 1.0, 8.6, (g2) => { const S = 64; g2.lineWidth = 3; for (let k = 0; k < 8; k++) { const y0 = 8.6 * S - k * 1.04 * S, x0 = k % 2 ? 0.85 * S : 0.15 * S, x1 = k % 2 ? 0.15 * S : 0.85 * S; g2.beginPath(); g2.moveTo(x0, y0); g2.lineTo(x1, y0 - 1.04 * S); g2.stroke(); g2.beginPath(); g2.moveTo(0.1 * S, y0 - 1.04 * S); g2.lineTo(0.9 * S, y0 - 1.04 * S); g2.stroke(); }
+      g2.lineWidth = 2; g2.beginPath(); g2.moveTo(0.05 * S, 0); g2.lineTo(0.05 * S, 8.6 * S); g2.moveTo(0.95 * S, 0); g2.lineTo(0.95 * S, 8.6 * S); g2.stroke(); }, [R + 0.62, 4.3 + 0.1, 0.06], 0.26);
+    // a tick-only depth scale (no numbers) on the left cut edge: a long tick every metre, short ticks every 0.25 m
+    cyan("scale", 0.5, 8.4, (g2) => { const S = 64; g2.lineWidth = 3; g2.beginPath(); g2.moveTo(0.45 * S, 0); g2.lineTo(0.45 * S, 8.4 * S); g2.stroke();
+      for (let k = 0; k <= 33; k++) { const y = 8.4 * S - k * 0.25 * S, L = k % 4 === 0 ? 0.4 : 0.18; g2.lineWidth = k % 4 === 0 ? 3 : 2; g2.beginPath(); g2.moveTo(0.45 * S, y); g2.lineTo((0.45 - L) * S, y); g2.stroke(); } }, [-R - 0.42, 4.2 + 0.27, 0.06], 0.3);
+    // the hatched ground-section strip on the floor in front of the cut (a section through the ground)
+    { const m = new THREE.Mesh(new THREE.PlaneGeometry(13, 0.7).rotateX(-Math.PI / 2), basic("cuGroundSec", () => ({ map: tx("cuGroundSecT", 1024, 64, (g2) => { g2.clearRect(0, 0, 1024, 64); g2.strokeStyle = "rgba(150,215,255,1)"; g2.lineWidth = 3; for (let x = -64; x < 1088; x += 18) { g2.beginPath(); g2.moveTo(x, 64); g2.lineTo(x + 40, 0); g2.stroke(); } g2.lineWidth = 5; g2.beginPath(); g2.moveTo(0, 2); g2.lineTo(1024, 2); g2.stroke(); }, true), transparent: true, opacity: 0.18, depthWrite: false })));
+      m.position.set(o[0], o[1] + 0.006, o[2] + 0.42); m.layers.set(NOINK); m.renderOrder = 1; g.add(m); }
+    // the tank floor: rust flakes + a sunken bolt + a half-buried tyre (a bubble from it every ~40 f)
+    { const fl = tx("cuRustFl", 128, 64, (g2, r) => { g2.clearRect(0, 0, 128, 64); for (let i = 0; i < 14; i++) { g2.fillStyle = ["#8a4a2a", "#a8603a", "#6a3a22"][i % 3]; g2.beginPath(); const x = 10 + r() * 108, y = 10 + r() * 44; g2.ellipse(x, y, 3 + r() * 6, 2 + r() * 3, r() * 3, 0, TAU); g2.fill(); } }, true);
+      for (const x of [-1.6, 0.4, 1.9]) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.35).rotateX(-Math.PI / 2), basic("cuRustFlM", () => ({ map: fl, transparent: true, depthWrite: false }))); m.position.set(o[0] + x, o[1] + B + 0.006, o[2] - 0.4); m.layers.set(NOINK); m.renderOrder = 1; g.add(m); }
+      const bolt = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.3, 6).rotateZ(Math.PI / 2 - 0.2), C("#5a5e66")); bolt.position.set(o[0] - 0.7, o[1] + B + 0.05, o[2] - 0.5); g.add(bolt);
+      const nut = new THREE.Mesh(new THREE.CylinderGeometry(0.085, 0.085, 0.06, 6).rotateZ(Math.PI / 2 - 0.2), C("#4a4e56")); nut.position.set(o[0] - 0.84, o[1] + B + 0.08, o[2] - 0.5); g.add(nut);
+      const tyre = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.12, 10, 28), C("#22232a")); tyre.position.set(o[0] + 1.25, o[1] + B + 0.12, o[2] - 0.75); tyre.rotation.set(0.35, 0.3, 0.12); g.add(tyre);
+      this.tyreBub = new THREE.Sprite(new THREE.SpriteMaterial({ map: ringTex(), color: new THREE.Color(0.9, 0.97, 1.0), transparent: true, depthWrite: false, fog: false })); this.tyreBub.layers.set(NOINK); this.tyreBub.renderOrder = 4; g.add(this.tyreBub); }
+    // slosh droplets (shot 10): little gold drops flicked off the band at both walls
+    for (let k = 0; k < 8; k++) { const s = glowSprite(g, [0, 0, 0], 0.08, glowCol("#ffc23a", 1.0)); s.material.blending = THREE.NormalBlending; s.material.opacity = 1; s.visible = false; this.sloshDrops.push(s); }
+    // rust flecks drifting slowly DOWN through the water (normal blending, rust brown)
+    this.rust = new Motes(g, 12, 83, CU.base, [-2.7, 0.6, 0.08], [2.7, 7.2, 0.3], new THREE.Color(0.55, 0.3, 0.18), 0.05, -0.02);
+    (this.rust.pts.material as THREE.PointsMaterial).blending = THREE.NormalBlending; (this.rust.pts.material as THREE.PointsMaterial).opacity = 0.85;
   }
 
   // ================================================================================================ KITCHEN
@@ -2380,8 +2696,9 @@ export class Interiors {
     // the table: blue gingham cloth with a skirt, chrome legs; two chrome diner chairs with red seats
     const tb = KI.table, top = tb.top + 0.005, cloth = TM("kiGinghamRC2", () => ginghamTex("kiGRC2", "#c8452c", "#f4e6c8", 0.26, 0.48));   // fix r2: check contrast -20 %  // fix r1: red-cream (A1 P2)
     rb.box(cloth, -tb.w / 2 - 0.02, tb.top - 0.02, -tb.d / 2 - 0.02, tb.w / 2 + 0.02, top, tb.d / 2 + 0.02);
+    const drape = TM("kiDrape3", drapeTex);
     for (const [x0, z0, x1, z1] of [[-tb.w / 2 - 0.02, tb.d / 2 + 0.01, tb.w / 2 + 0.02, tb.d / 2 + 0.025], [-tb.w / 2 - 0.02, -tb.d / 2 - 0.025, tb.w / 2 + 0.02, -tb.d / 2 - 0.01], [-tb.w / 2 - 0.025, -tb.d / 2, -tb.w / 2 - 0.01, tb.d / 2], [tb.w / 2 + 0.01, -tb.d / 2, tb.w / 2 + 0.025, tb.d / 2]])
-      rb.box(cloth, x0, tb.top - 0.24, z0, x1, tb.top, z1);
+      rb.box(z0 > 0 ? drape : cloth, x0, tb.top - 0.24, z0, x1, tb.top, z1);
     for (const [sx, sz] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) rb.seg(chrome, [sx * (tb.w / 2 - 0.12), 0, sz * (tb.d / 2 - 0.12)], [sx * (tb.w / 2 - 0.12), tb.top - 0.24, sz * (tb.d / 2 - 0.12)], 0.02);
     for (const s of [-1, 1]) { const cx = s * 1.0; rb.box(C("#d83a3a"), cx - 0.22, 0.44, -0.22, cx + 0.22, 0.5, 0.22); rb.box(C("#d83a3a"), cx + s * 0.2 - 0.03, 0.55, -0.2, cx + s * 0.2 + 0.03, 0.92, 0.2);
       for (const [a, b] of [[-0.18, -0.18], [0.18, -0.18], [-0.18, 0.18], [0.18, 0.18]]) rb.seg(chrome, [cx + a, 0, b], [cx + a, 0.44, b], 0.013); rb.seg(chrome, [cx + s * 0.2, 0.5, -0.18], [cx + s * 0.2, 0.92, -0.18], 0.012); rb.seg(chrome, [cx + s * 0.2, 0.5, 0.18], [cx + s * 0.2, 0.92, 0.18], 0.012); }
@@ -2389,8 +2706,14 @@ export class Interiors {
     const wood = C("#a8703e");
     rb.geo(new THREE.SphereGeometry(0.16, 24, 10, 0, TAU, Math.PI / 2, Math.PI / 2).translate(0, 0.14, 0), lam("si:kiSalad", () => ({ color: "#a8703e", side: THREE.DoubleSide })), -0.22, top, -0.16, 0, 0, 0, [1, 0.85, 1]);
     rb.geo(cylY(0.07, 0.02, 16), wood, -0.22, top, -0.16);
-    for (let k = 0; k < 10; k++) rb.geo(new THREE.IcosahedronGeometry(0.05, 0), C(k % 4 ? "#7ac04a" : "#5aa83a"), -0.22 + (hash(k) - 0.5) * 0.2, top + 0.11 + hash(k + 1) * 0.04, -0.16 + (hash(k + 3) - 0.5) * 0.2, hash(k) * 3, hash(k + 2) * 3, 0, [1, 0.6, 1]);
-    for (let k = 0; k < 4; k++) rb.geo(cylY(0.028, 0.012, 14), C(k % 2 ? "#e83a3a" : "#9ad06a"), -0.22 + (hash(k + 20) - 0.5) * 0.16, top + 0.16, -0.16 + (hash(k + 30) - 0.5) * 0.14, 0, 0.4 * (hash(k) - 0.5), 0.3);
+    // fix r3 (A3 P3 #30: faceted green gems): ruffled leaf CARDS (3 greens, plum ink) fanned up out of the bowl, two tomato
+    // wedges, three cucumber rounds (pale centre, dark rind)
+    for (let k = 0; k < 13; k++) {
+      const a = (k / 13) * TAU + hash(k) * 0.4, rr = 0.03 + 0.07 * hash(k + 1), lm = lam("si:kiLeafM" + (k % 3), () => ({ map: lettuceTex(k % 3), alphaTest: 0.4, side: THREE.DoubleSide }));
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(0.11, 0.14).translate(0, 0.06, 0), lm); m.position.set(o[0] - 0.22 + Math.cos(a) * rr, o[1] + top + 0.09 + 0.02 * hash(k + 2), o[2] - 0.16 + Math.sin(a) * rr * 0.9);
+      m.rotation.set(-0.35 + 0.25 * (hash(k + 4) - 0.5), -a + Math.PI / 2, (hash(k + 5) - 0.5) * 0.9, "YXZ"); m.castShadow = true; m.receiveShadow = true; g.add(m); }
+    for (let k = 0; k < 2; k++) rb.geo(new THREE.SphereGeometry(0.032, 14, 8, 0, Math.PI * 0.6, 0, Math.PI / 2), C("#e0302a"), -0.25 + k * 0.08, top + 0.15, -0.1 + k * 0.03, 0.6 + k * 2.1, -0.3, 0, [1, 1.1, 1]);
+    for (let k = 0; k < 3; k++) { const x = -0.3 + k * 0.07, z = -0.2 + hash(k + 40) * 0.08; rb.geo(new THREE.CylinderGeometry(0.024, 0.024, 0.008, 18), C("#3a7a2a"), x, top + 0.16, z, 0, 0.5 * (hash(k) - 0.5), 0.35); rb.geo(new THREE.CylinderGeometry(0.019, 0.019, 0.009, 18), C("#d8eeb0"), x, top + 0.16, z, 0, 0.5 * (hash(k) - 0.5), 0.35); }
     for (const [x, z] of [[0.24, 0.33], [-0.3, 0.3]]) { rb.geo(cylY(0.12, 0.012, 32), C("#fbf8f0"), x, top, z); rb.geo(new THREE.TorusGeometry(0.105, 0.007, 6, 40).rotateX(Math.PI / 2), C("#3a7ad0"), x, top + 0.013, z);
       rb.box(chrome, x + 0.15, top, z - 0.08, x + 0.165, top + 0.006, z + 0.08); }
     rb.geo(new THREE.SphereGeometry(0.04, 14, 10, 0, TAU, 0, Math.PI / 2), C("#f6d84a"), 0.26, top + 0.012, 0.31); rb.geo(new THREE.CircleGeometry(0.036, 16).rotateX(-Math.PI / 2), C("#fbf0a0"), 0.26, top + 0.013, 0.31);
@@ -2415,13 +2738,25 @@ export class Interiors {
     this.liquid = liquidMat();
     const liq = new THREE.Mesh(new THREE.LatheGeometry(Lq.map(([r2, y]) => new THREE.Vector2(r2, y)), 48), this.liquid); liq.castShadow = true; liq.layers.set(NOINK); this.bottle.add(liq);  // fix r1: no ink on the liquid (it read as a separate glass of juice); the glass carries the silhouette
     const glass = new THREE.Mesh(new THREE.LatheGeometry(B.map(([r2, y]) => new THREE.Vector2(r2, y)), 48), this.glassM); glass.renderOrder = 3; glass.layers.set(NOINK); glass.castShadow = true; this.bottle.add(glass);
-    const cork = new THREE.Mesh(new THREE.CylinderGeometry(0.0225, 0.0185, 0.046, 16).translate(0, 0.336, 0), lam("si:kiCork", () => ({ map: tx("kiCork", 128, 64, (g2, r) => { g2.fillStyle = "#c89a62"; g2.fillRect(0, 0, 128, 64); speck(g2, r, 128, 64, 300, ["#8a6a3a", "#e8c08a"], 1, 3, 0.7); }) })));
+    // fix r3 (A3 P2 shot 11: the glass above the liquid vanished, the cork floated): a 3-4 px plum ink line along BOTH
+    // silhouette edges of the shoulders + neck + body (two thin tubes on the profile, turned to face the lens every frame
+    // in poseKitchen), the cork seated 9 mm deeper in the mouth, a plain label (no words) low on the body
+    { const pts = B.slice(2).map(([r2, y]) => new THREE.Vector3(r2 + 0.0007, y, 0)), crv = new THREE.CatmullRomCurve3(pts, false, "centripetal");
+      const im = basic("kiGlassInk", () => ({ color: new THREE.Color("#2a1a26"), transparent: true, opacity: 0.72, depthWrite: false }));
+      for (const sx of [1, -1]) { const tube = new THREE.Mesh(new THREE.TubeGeometry(crv, 60, 0.00075, 6, false), im); tube.scale.x = sx; tube.renderOrder = 5; tube.layers.set(NOINK); this.botInk.add(tube); }
+      this.bottle.add(this.botInk);
+      const lab = new THREE.Mesh(new THREE.CylinderGeometry(0.0618, 0.0618, 0.06, 32, 1, true, -0.95, 1.9), lam("si:kiLabel3", () => ({ map: bottleLabelTex() })));
+      lab.position.y = 0.062; lab.receiveShadow = true; this.bottle.add(lab); }
+    const cork = new THREE.Mesh(new THREE.CylinderGeometry(0.0225, 0.0185, 0.046, 16).translate(0, 0.327, 0), lam("si:kiCork", () => ({ map: tx("kiCork", 128, 64, (g2, r) => { g2.fillStyle = "#c89a62"; g2.fillRect(0, 0, 128, 64); speck(g2, r, 128, 64, 300, ["#8a6a3a", "#e8c08a"], 1, 3, 0.7); }) })));
     cork.castShadow = true; this.bottle.add(cork);
     const twine = new THREE.Mesh(new THREE.TorusGeometry(0.0225, 0.0025, 6, 20).rotateX(Math.PI / 2), C("#8a6440")); twine.position.y = 0.318; this.bottle.add(twine);
     const lip = new THREE.Mesh(new THREE.TorusGeometry(0.022, 0.0036, 8, 28).rotateX(Math.PI / 2), basic("kiLip", () => ({ color: new THREE.Color(0.3, 0.42, 0.42) }))); lip.position.y = 0.339; lip.layers.set(NOINK); this.bottle.add(lip);
     // fix r1 (A1 P2): a soft violet-plum bottle shadow (~1.5x the bottle width) across the cloth to the left, toward the
     // lens, + a contact ring under the base (they follow the shake)
-    this.botShadow = contact(g, [o[0] + bt.c[0] - 0.17, o[1] + top + 0.002, o[2] + bt.c[2] + 0.05], 0.44, 0.27, 0.45, 0.3);
+    this.botShadow = contact(g, [o[0] + bt.c[0] + KI_SH[0] * 0.24, o[1] + top + 0.002, o[2] + bt.c[2] + KI_SH[1] * 0.24], 0.5, 0.16, 0.42, KI_SHA);
+    // fix r3: the ruby -> gold light through the dressing inside that shadow (additive, follows the shake)
+    this.botTint = new THREE.Mesh(new THREE.PlaneGeometry(0.46, 0.1).translate(0.23, 0, 0).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: bottleTintTex(), transparent: true, opacity: 0.4, depthWrite: false, blending: THREE.AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -4 }));
+    this.botTint.rotation.y = Math.atan2(-KI_SH[1], KI_SH[0]); this.botTint.layers.set(NOINK); this.botTint.renderOrder = 3; g.add(this.botTint);
     // the golden caustic the sun throws through the oil: an additive dappled patch inside the shadow (dims while cloudy)
     { const ct = tx("kiCaustic", 128, 128, (g2, r) => { g2.clearRect(0, 0, 128, 128); for (let i = 0; i < 26; i++) { const a = r() * TAU, d = r() * 40, x = 64 + Math.cos(a) * d, y = 64 + Math.sin(a) * d * 0.7, rr = 5 + r() * 9;
         const gr = g2.createRadialGradient(x, y, 0, x, y, rr); gr.addColorStop(0, "rgba(255,200,90,0.9)"); gr.addColorStop(1, "rgba(255,200,90,0)"); g2.fillStyle = gr; g2.beginPath(); g2.arc(x, y, rr, 0, TAU); g2.fill(); }
@@ -2429,12 +2764,22 @@ export class Interiors {
       this.caustic = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 0.13).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: ct, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0.9, polygonOffset: true, polygonOffsetFactor: -3 }));
       this.caustic.layers.set(NOINK); this.caustic.renderOrder = 3; g.add(this.caustic); }
     this.botContact = contact(g, [o[0] + bt.c[0], o[1] + top + 0.0025, o[2] + bt.c[2]], 0.15, 0.15, 0.5);
-    // sun from the right: a warm shaft through the air onto the table + motes
-    this.addShaft(g, [o[0] + 2.6, o[1] + 2.3, o[2] + 0.4], [-0.72, -0.6, -0.34], 3.4, 1.4, new THREE.Color(0.2, 0.15, 0.06), 0.7);
-    this.addShaft(g, [o[0] + 2.7, o[1] + 2.1, o[2] - 0.3], [-0.72, -0.6, -0.34], 3.0, 0.7, new THREE.Color(0.14, 0.1, 0.04), 2.6);
-    this.kiMotes = new Motes(g, 60, 21, KI.base, [-0.35, 0.82, -0.25], [0.6, 1.45, 0.35], new THREE.Color(0.95, 0.8, 0.48), 0.006, 0.04);
+    // fix r3 (A3 P2 shot 11): two soft additive sun shafts from the low camera-right sun (KEY_KITCHEN) down across the
+    // table toward the back-left (~15 % at their core), motes drifting in them
+    this.addShaft(g, [o[0] + 1.75, o[1] + 2.0, o[2] + 1.35], [-0.7, -0.5, -0.52], 3.4, 0.8, new THREE.Color(0.2, 0.15, 0.065), 0.7);
+    this.addShaft(g, [o[0] + 1.9, o[1] + 1.95, o[2] + 1.0], [-0.7, -0.5, -0.52], 3.2, 0.45, new THREE.Color(0.13, 0.095, 0.04), 2.6);
+    this.kiMotes = new Motes(g, 70, 21, KI.base, [-0.45, 0.82, -0.6], [0.55, 1.55, 0.3], new THREE.Color(0.95, 0.8, 0.48), 0.007, 0.04);
+    // fix r3 (CHAR P2 / ADD #56): a red kettle on the counter right of the window with a looping steam wisp (the
+    // ambience simmer has a source)
+    { const kx = KETTLE[0], kz = KETTLE[2]; rb.geo(new THREE.SphereGeometry(0.1, 20, 12), C("#d83a2e"), kx, 0.93 + 0.085, kz, 0, 0, 0, [1, 0.82, 1]);
+      rb.geo(cylY(0.07, 0.02, 18), C("#c8ccd0"), kx, 0.93 + 0.16, kz); rb.geo(new THREE.SphereGeometry(0.018, 10, 8), C("#1e1a1e"), kx, 0.93 + 0.185, kz);
+      rb.seg(C("#d83a2e"), [kx - 0.08, 0.93 + 0.06, kz + 0.02], [kx - 0.15, 0.93 + 0.13, kz + 0.04], 0.012);
+      rb.geo(new THREE.TorusGeometry(0.075, 0.01, 6, 20, Math.PI), C("#1e1a1e"), kx, 0.93 + 0.19, kz, 0);
+      contact(g, [o[0] + kx, o[1] + 0.932, o[2] + kz], 0.26, 0.2, 0.35);
+      const stT = tx("kiSteam3", 64, 256, (g2) => { g2.clearRect(0, 0, 64, 256); for (let y = 0; y < 256; y++) { const a = Math.sin((y / 256) * Math.PI) * 0.6, x = 32 + Math.sin(y * 0.05) * 10; const gr = g2.createRadialGradient(x, y, 0, x, y, 10); gr.addColorStop(0, `rgba(255,255,255,${a * 0.3})`); gr.addColorStop(1, "rgba(255,255,255,0)"); g2.fillStyle = gr; g2.fillRect(x - 11, y, 22, 1); } }, true);
+      for (let k = 0; k < 3; k++) this.kiSteam.push(plane(g, new THREE.MeshBasicMaterial({ map: stT, transparent: true, depthWrite: false, opacity: 0.9 }), 0.08, 0.3, [o[0] + kx - 0.15, o[1] + 1.12, o[2] + kz + 0.04], 0, 0, 0, true)); }
     // life outside the window (A1 P1): a sparrow hopping along the picket fence, a sheet billowing on a washing line
-    this.sparrow = plane(g, basic("kiSparrowM", () => ({ map: sparrowTex(0), alphaTest: 0.4 })), 0.07, 0.05, [o[0] - 0.1, o[1] + 1.47, o[2] - Z + 0.016], 0, 0, 0, true);
+    this.sparrow = plane(g, basic("kiSparrowM", () => ({ map: sparrowTex(0), alphaTest: 0.4 })), 0.105, 0.075, [o[0] - 0.1, o[1] + 1.47, o[2] - Z + 0.016], 0, 0, 0, true);   // fix r3 (ADD #59): 1.5x
     { const sg = new THREE.PlaneGeometry(0.22, 0.17, 8, 4).translate(0, -0.085, 0); this.sheet = new THREE.Mesh(sg, basic("kiSheet", () => ({ color: new THREE.Color("#f6f2ea"), side: THREE.DoubleSide })));
       this.sheet.position.set(o[0] + 0.06, o[1] + 1.78, o[2] - Z + 0.014); this.sheet.layers.set(NOINK); g.add(this.sheet); this.sheetBase = Float32Array.from((sg.attributes.position as THREE.BufferAttribute).array as Float32Array);
       const ln = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 0.004), basic("kiLine", () => ({ color: new THREE.Color("#5a5a5a") }))); ln.position.set(o[0] + 0.3, o[1] + 1.785, o[2] - Z + 0.013); ln.layers.set(NOINK); g.add(ln); }
@@ -2583,7 +2928,11 @@ export class Interiors {
     // the pump motor in frame A: a green motor, a flywheel + belt that turn, a pump body piped into the main run
     { const mx = -4.55, mz = -1.45; rb.box(C("#3e6a52"), mx - 0.35, 0, mz - 0.25, mx + 0.35, 0.12, mz + 0.25); rb.geo(new THREE.CylinderGeometry(0.2, 0.2, 0.5, 20).rotateZ(Math.PI / 2), C("#4f7a5a"), mx, 0.34, mz);
       for (let k = 0; k < 6; k++) rb.geo(new THREE.CylinderGeometry(0.205, 0.205, 0.02, 20).rotateZ(Math.PI / 2), C("#3a5a46"), mx - 0.2 + k * 0.08, 0.34, mz);
-      rb.geo(new THREE.CylinderGeometry(0.17, 0.2, 0.3, 18), C("#7a3a2a"), mx + 0.5, 0.15, mz - 0.3); rb.seg(iron, [mx + 0.5, 0.3, mz - 0.3], [mx + 0.5, 1.2, mz - 0.3], 0.08); rb.seg(iron, [mx + 0.5, 1.2, mz - 0.3], [mx + 0.5, 1.2, -3.6], 0.08);
+      // fix r3 (A3 P2 shot 13: the outlet ran diagonally across worker 1's chin in S13A): the pump's outlet now runs along the
+      // FLOOR back to behind the workers (z -3.35), then rises straight up into the main run
+      rb.geo(new THREE.CylinderGeometry(0.17, 0.2, 0.3, 18), C("#7a3a2a"), mx + 0.5, 0.15, mz - 0.3); rb.seg(iron, [mx + 0.5, 0.17, mz - 0.3], [mx + 0.5, 0.17, -3.35], 0.075);
+      rb.geo(new THREE.TorusGeometry(0.12, 0.075, 8, 12, Math.PI / 2), iron, mx + 0.5, 0.29, -3.35, Math.PI / 2, 0, Math.PI); rb.seg(iron, [mx + 0.5, 0.29, -3.47], [mx + 0.5, 1.2, -3.47], 0.075); rb.seg(iron, [mx + 0.5, 1.2, -3.47], [mx + 0.5, 1.2, -3.6], 0.075);
+      for (const z of [-2.2, -2.9]) rb.geo(new THREE.CylinderGeometry(0.11, 0.11, 0.04, 14).rotateX(Math.PI / 2), C("#4a4e54"), mx + 0.5, 0.17, z);
       this.flywheel.position.set(o[0] + mx - 0.32, o[1] + 0.34, o[2] + mz); g.add(this.flywheel);
       const fw = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.025, 8, 28).rotateY(Math.PI / 2), C("#8a8e94")); fw.castShadow = true; this.flywheel.add(fw);
       for (let k = 0; k < 4; k++) { const sp = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.32, 0.02), C("#8a8e94")); sp.rotation.x = (k / 4) * Math.PI; this.flywheel.add(sp); }
@@ -2622,6 +2971,7 @@ export class Interiors {
     glowSprite(g, [o[0] + 3.15, o[1] + 2.35, o[2] - 4.05], 0.9, glowCol("#ffb860", 0.4));
     this.prMotes = new Motes(g, 90, 31, PR.base, [-4.2, 0.6, -3.6], [4.2, 3.6, -1.6], new THREE.Color(0.85, 0.6, 0.3), 0.016, 0.08);
     this.buildPumpR2(rb, g);
+    this.buildPumpR3(rb, g);
     for (let k = 0; k < 6; k++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: softDot(), color: new THREE.Color(1.4, 1.2, 0.9), transparent: true, depthWrite: false, fog: false })); s.scale.setScalar(0.035); s.layers.set(NOINK); s.renderOrder = 6; g.add(s); this.moths.push(s); }
     rb.done(g);
   }
@@ -2669,6 +3019,49 @@ export class Interiors {
       rb.geo(new THREE.CylinderGeometry(0.04, 0.04, 0.02, 14).rotateX(Math.PI / 2), C("#e8e4d8"), x, y + 0.02, -4.41); rb.seg(C("#1e1e22"), [x - 0.15, y - 0.1, -4.4], [x - 0.05, y - 0.6, -4.38], 0.006); }
   }
 
+  /** fix r3 (A3 P2 shot 13: the bottom 27 % of the follow + MCU was an empty navy floor; nothing moved in the MCU): the
+   *  floor 1-2 m in front of the back wall dressed along the follow path (stencilled olive / red drums, a drip tray with a
+   *  gold puddle that catches the lamp, a canvas hose, a pallet, floor grates, a mop + bucket), warm floor pools; in the
+   *  MCU a steam wisp at the flange right of the blob; a 20 f steam puff by COUNTED: 2 on its tick; chalk tallies by
+   *  plates B and C that gain a stroke as each plate flips; a gold smear left in the glass behind the blob */
+  private buildPumpR3(rb: RB, g: THREE.Group) {
+    const o = PR.base, iron = C("#5a5e64");
+    const drum = (x: number, z: number, col: string, tilt = 0) => { rb.geo(cylY(0.29, 0.88, 22), C(col), x, 0, z, 0, 0, tilt); for (const y of [0.3, 0.6]) rb.geo(new THREE.TorusGeometry(0.29, 0.016, 6, 28).rotateX(Math.PI / 2), C("#1e2a3a"), x, y, z); rb.geo(cylY(0.27, 0.01, 22), C("#3a3a3e"), x, 0.88, z);
+      rb.panel(lam("si:prDrumSt", () => ({ map: tx("prDrumSten", 128, 64, (g2) => { g2.clearRect(0, 0, 128, 64); ctext(g2, "OIL", 64, 50, 46, "rgba(240,236,220,0.85)", 110); }, true), alphaTest: 0.3 })), 0.34, 0.17, x, 0.5, z + 0.292); contact(g, [o[0] + x, o[1] + 0.006, o[2] + z], 0.8, 0.7, 0.45); };
+    drum(-0.85, -2.95, "#5e6a3a"); drum(-0.3, -3.05, "#a8382a"); drum(2.95, -2.7, "#5e6a3a");
+    // the drip tray under the main pipe with a gold puddle that catches the lamp
+    { const tx0 = 0.35, tz0 = -2.75; rb.box(C("#3a3a40"), tx0 - 0.35, 0, tz0 - 0.22, tx0 + 0.35, 0.06, tz0 + 0.22); rb.box(C("#2a2a2e"), tx0 - 0.31, 0.06, tz0 - 0.18, tx0 + 0.31, 0.062, tz0 + 0.18, false);
+      const pm = new THREE.Mesh(new THREE.CircleGeometry(0.2, 24).rotateX(-Math.PI / 2).scale(1.4, 1, 0.8), new THREE.MeshBasicMaterial({ color: glowCol("#f2b62e", 1.15), transparent: true, opacity: 0.95, depthWrite: false })); pm.position.set(o[0] + tx0, o[1] + 0.065, o[2] + tz0); pm.layers.set(NOINK); pm.renderOrder = 3; g.add(pm);
+      const hl = new THREE.Mesh(new THREE.PlaneGeometry(0.18, 0.035).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: glowCol("#fff2c8", 1.8), transparent: true, opacity: 0.85, depthWrite: false })); hl.position.set(o[0] + tx0 + 0.05, o[1] + 0.067, o[2] + tz0 - 0.04); hl.layers.set(NOINK); hl.renderOrder = 4; g.add(hl);
+      contact(g, [o[0] + tx0, o[1] + 0.005, o[2] + tz0], 0.95, 0.6, 0.45); }
+    // a pallet with a crate, a coiled canvas hose, floor grates, a mop in a bucket
+    { const px = 1.95, pz = -2.45; for (let k = 0; k < 5; k++) rb.box(C("#8a6a42"), px - 0.5, 0.1, pz - 0.4 + k * 0.2, px + 0.5, 0.13, pz - 0.31 + k * 0.2); for (const z of [-0.38, 0, 0.38]) rb.box(C("#6a4e2e"), px - 0.5, 0, pz + z - 0.05, px + 0.5, 0.1, pz + z + 0.05);
+      rb.box(C("#a07a4a"), px - 0.3, 0.13, pz - 0.25, px + 0.25, 0.48, pz + 0.22); rb.panel(lam("si:prCrateSt", () => ({ map: tx("prCrateSten", 128, 64, (g2) => { g2.clearRect(0, 0, 128, 64); ctext(g2, "FRAGILE", 64, 42, 26, "rgba(60,30,20,0.8)", 120); }, true), alphaTest: 0.3 })), 0.4, 0.2, px - 0.02, 0.32, pz + 0.222);
+      contact(g, [o[0] + px, o[1] + 0.005, o[2] + pz], 1.3, 1.0, 0.45); }
+    for (let k = 0; k < 4; k++) rb.geo(new THREE.TorusGeometry(0.24 - k * 0.04, 0.024, 6, 28).rotateX(Math.PI / 2), C("#c8b48a"), -1.55, 0.024 + k * 0.03, -2.55);
+    contact(g, [o[0] - 1.55, o[1] + 0.005, o[2] - 2.55], 0.65, 0.65, 0.4);
+    { const gm = TM("prGrate3", () => tx("prGrateT", 128, 128, (g2) => { g2.fillStyle = "#3a3e46"; g2.fillRect(0, 0, 128, 128); g2.fillStyle = "#14161c"; for (let k = 0; k < 8; k++) g2.fillRect(10 + k * 14, 8, 7, 112); g2.strokeStyle = "#5a5e66"; g2.lineWidth = 6; g2.strokeRect(3, 3, 122, 122); }));
+      for (const x of [-2.1, 1.0]) rb.panel(gm, 0.6, 0.6, x, 0.006, -2.25, 0, -Math.PI / 2); }
+    { const bx = -1.95, bz = -3.2; rb.geo(cylY(0.15, 0.3, 18, true, 0.13), C("#8a8e94"), bx, 0, bz); rb.geo(cylY(0.13, 0.01, 18), C("#3a4a5a"), bx, 0.25, bz); rb.seg(C("#c8a070"), [bx, 0.2, bz], [bx + 0.18, 1.2, bz - 0.12], 0.016);
+      for (let k = 0; k < 7; k++) rb.seg(C("#e8e0cc"), [bx + 0.01, 0.24, bz], [bx + (hash(k) - 0.5) * 0.18, 0.12, bz + (hash(k + 3) - 0.5) * 0.18], 0.012, true, 4);
+      contact(g, [o[0] + bx, o[1] + 0.005, o[2] + bz], 0.5, 0.45, 0.45); }
+    // a rag hanging off valve A's stem
+    rb.geo(new THREE.PlaneGeometry(0.16, 0.24).translate(0, -0.12, 0), lam("si:prRag", () => ({ color: "#c8452c", side: THREE.DoubleSide })), PR.valves[0][0] + 0.2, PR.valves[0][1] + 0.3, -3.42, 0.3, 0, 0.15);
+    // the MCU steam wisp at the flange right of the blob (a 60 f S-curl, ~15 %)
+    for (let k = 0; k < 2; k++) { const s2 = plane(g, basic("prSteamM3" + k, () => ({ map: wispTex(), transparent: true, depthWrite: false, opacity: 0.5 })), 0.12, 0.45, [o[0] + 2.45, o[1] + 1.4, o[2] - 3.45], 0, 0, 0, true); this.prSteam.push({ m: s2, x: 2.47, y: 1.2, z: -3.45, k }); }
+    // the COUNTED: 2 steam puff (shot 13 "got" + 2, 20 f), from a flange right of the plate
+    for (let k = 0; k < 3; k++) { const s2 = plane(g, basic("prPuff3", () => ({ map: softDot(), color: new THREE.Color(0.92, 0.94, 1.0), transparent: true, depthWrite: false, opacity: 0.8 })), 0.3, 0.3, [o[0] + 0.78, o[1] + 2.1, o[2] - 3.8], 0, 0, 0, true); s2.visible = false; this.puff.push(s2); }
+    rb.geo(new THREE.CylinderGeometry(0.13, 0.13, 0.05, 18).rotateZ(Math.PI / 2), C("#4a4e54"), 0.72, 2.0, -3.95);
+    // chalk tallies by B and C (4 strokes, + 1 when the plate flips)
+    const tally = tallyTex;
+    for (const i of [1, 2]) { const t0 = PR.tanks[i], dx = 0.8, sz = t0[2] + Math.sqrt(PR.tankR ** 2 - dx * dx);
+      const m = plane(g, basic("prTally3M" + i, () => ({ map: tally(4), transparent: true, depthWrite: false })), 0.25, 0.2, [o[0] + t0[0] + dx, o[1] + 2.05, o[2] + sz + 0.008], Math.atan2(dx, sz - t0[2]), 0, 0, true);
+      this.tallies.push({ m, i }); }
+    // the gold smear left in the glass behind the blob (fades over ~20 f of travel)
+    const sm = basic("prSmear3", () => ({ map: tx("prSmearT", 16, 128, (g2) => { const gr = g2.createLinearGradient(0, 0, 0, 128); gr.addColorStop(0, "rgba(255,190,60,0)"); gr.addColorStop(1, "rgba(255,190,60,0.75)"); g2.fillStyle = gr; g2.fillRect(0, 0, 16, 128); }, true), color: glowCol("#ffffff", 1.25), transparent: true, depthWrite: false }));
+    for (const [a, b] of [[-2.45, -0.55], [0.55, 2.45]]) { const m = new THREE.Mesh(new THREE.CylinderGeometry(0.125, 0.125, 1, 18, 1, true).rotateZ(-Math.PI / 2), sm); m.layers.set(NOINK); m.renderOrder = 4; m.visible = false; g.add(m); this.smears.push({ m, x0: a + 0.04, x1: b - 0.04 }); }
+  }
+
   // ================================================================================================ OFFICE
   private buildOffice() {
     const o = OF.base, g = this.office, rb = new RB(o), X = OF.room.w / 2, Z = OF.room.d / 2, H = OF.room.h, W = OF.window, WT = 0.85, RT = 0.9, CR = 2.82;
@@ -2699,7 +3092,7 @@ export class Interiors {
       for (let k = 0; k < 12; k++) { const a = (k / 12) * TAU; rb.seg(C("#c9a14a"), [sx + Math.cos(a) * 0.08, sy + Math.sin(a) * 0.08, -Z + 0.025], [sx + Math.cos(a) * (k % 2 ? 0.15 : 0.19), sy + Math.sin(a) * (k % 2 ? 0.15 : 0.19), -Z + 0.025], 0.006, false, 4); }
       plane(g, faceMat("ofClock", () => clockFaceTex("ofClock", "#2a2a30"), 0.92), 0.13, 0.13, [o[0] + sx, o[1] + sy, o[2] - Z + 0.047]);
       // a small framed line chart (no numbers) to the right
-      rb.box(C("#3a2414"), 0.42, 2.54, -Z, 0.82, 2.78, -Z + 0.025); plane(g, faceMat("ofChart", ofChartTex, 0.92), 0.36, 0.2, [o[0] + 0.62, o[1] + 2.66, o[2] - Z + 0.027]); }
+      rb.box(C("#3a2414"), 0.42, 2.54, -Z, 0.82, 2.78, -Z + 0.025); this.ofChart = plane(g, faceMat("ofChart", ofChartTex, 0.92), 0.36, 0.2, [o[0] + 0.62, o[1] + 2.66, o[2] - Z + 0.027]); }
     rb.box(C("#d8ccb0"), wx0 + 0.02, wy1 - 0.14, -Z - 0.065, wx1 - 0.02, wy1 - 0.12, -Z - 0.02);
     // fix r1 (A1 P2): the cactus + books moved off the sill onto the radiator top (the sill line stays clean)
     rb.geo(cylY(0.06, 0.08, 14, false, 0.075), C("#c86a3a"), W.c[0] + 0.5, 0.7, -Z + 0.09); rb.geo(new THREE.SphereGeometry(0.06, 10, 8), C("#4a8a4a"), W.c[0] + 0.5, 0.83, -Z + 0.09, 0, 0, 0, [0.8, 1.4, 0.8]);
@@ -2766,12 +3159,32 @@ export class Interiors {
     for (const [x, w, ph] of [[-0.55, 0.5, 0.3], [0.1, 0.65, 1.7], [0.7, 0.4, 3.1]]) this.addShaft(g, [o[0] + x, o[1] + 2.15, o[2] - Z + 0.02], [0.03, -0.42, 0.9], 3.0, w, new THREE.Color(0.17, 0.12, 0.05), ph);
     this.sunGlow = glowSprite(g, [o[0] - 0.75, o[1] + 2.35, o[2] - Z - 0.6], 1.7, new THREE.Color(0.5, 0.36, 0.18));
     this.addShaft(g, [o[0] + 0.85, o[1] + 2.35, o[2] - Z + 0.03], [-0.36, -0.6, 0.72], 2.7, 0.95, new THREE.Color(0.13, 0.095, 0.045), 0.9);   // fix r2 (A2 P2 #27): the diagonal sun shaft across the desk
+    this.buildOfficeR3(g);
     this.buildOfficeR2(rb, g);
     this.ofMotes = new Motes(g, 60, 41, OF.base, [-1.0, 0.8, -2.3], [1.0, 2.3, -0.3], new THREE.Color(0.42, 0.34, 0.2), 0.009, 0.05);
     this.ofMotes2 = new Motes(g, 30, 43, OF.base, [-0.7, 0.9, -2.2], [0.8, 2.2, -0.8], new THREE.Color(0.95, 0.78, 0.45), 0.014, 0.05);
     rb.done(g);
   }
 
+  /** fix r3 (A3 P2 shot 15: the sunny window threw no light into the room; the MS bottom third was a bare desk front):
+   *  a stronger soft sun SHAFT from the window's upper right down across the desk, a window-grid light patch on the rug,
+   *  blind-slat stripes on the back of his chair, a slow ceiling-fan shadow sweeping the desk, a CARDS WELCOME card on
+   *  the cafe glass (plain lettering, no logo), the framed chart's alternate (one step higher) for "Warren" */
+  private buildOfficeR3(g: THREE.Group) {
+    const o = OF.base, Z = OF.room.d / 2;
+    this.addShaft(g, [o[0] + 0.55, o[1] + 2.45, o[2] - Z + 0.03], [-0.3, -0.62, 0.72], 2.9, 0.75, new THREE.Color(0.16, 0.115, 0.05), 2.3);
+    this.addShaft(g, [o[0] + 1.0, o[1] + 2.3, o[2] - Z + 0.03], [-0.3, -0.62, 0.72], 2.6, 0.45, new THREE.Color(0.11, 0.08, 0.035), 4.1);
+    { const m = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 0.9).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: paneLightTex(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0.3, polygonOffset: true, polygonOffsetFactor: -3 }));
+      m.position.set(o[0] - 0.45, o[1] + 0.008, o[2] + 0.15); m.rotation.y = 0.35; m.layers.set(NOINK); m.renderOrder = 3; g.add(m); this.rugPatch = m; }
+    { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.54, 0.55), new THREE.MeshBasicMaterial({ map: blindStripeTex(), color: new THREE.Color(0.3, 0.22, 0.11), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+      m.position.set(o[0], o[1] + 0.83, o[2] - 1.977); m.rotation.z = -0.3; m.layers.set(NOINK); m.renderOrder = 3; g.add(m); this.chairStripes = m; }
+    { const ft = tx("ofFanSh3", 256, 256, (g2) => { g2.clearRect(0, 0, 256, 256); g2.translate(128, 128); for (let k = 0; k < 4; k++) { g2.save(); g2.rotate((k / 4) * TAU); const gr = g2.createLinearGradient(0, 0, 120, 0); gr.addColorStop(0, "rgba(40,22,30,0.9)"); gr.addColorStop(1, "rgba(40,22,30,0.25)"); g2.fillStyle = gr; g2.beginPath(); g2.ellipse(64, 0, 62, 15, 0, 0, TAU); g2.fill(); g2.restore(); } g2.setTransform(1, 0, 0, 1, 0, 0); g2.filter = "blur(6px)"; g2.drawImage(g2.canvas, 0, 0); g2.filter = "none"; }, true);
+      this.fanSh = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.5).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: ft, transparent: true, opacity: 0.1, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4 }));
+      this.fanSh.position.set(o[0] - 0.1, o[1] + 0.763, o[2] - 0.95); this.fanSh.layers.set(NOINK); this.fanSh.renderOrder = 3; g.add(this.fanSh); }
+    { const ct = tx("ofCardsSign3", 512, 300, (g2) => { g2.fillStyle = "#fbf6e8"; rrect(g2, 6, 6, 500, 288, 18); g2.fill(); g2.strokeStyle = "#2f6a4a"; g2.lineWidth = 10; rrect(g2, 14, 14, 484, 272, 14); g2.stroke();
+        ctextC(g2, "CARDS", 256, 130, 104, "#2f6a4a", 440); ctextC(g2, "WELCOME", 256, 252, 104, "#c8452c", 450); }, true);
+      plane(g, faceMat("ofCardsSign3", () => ct, 0.97), 0.7, 0.41, [o[0] + CAFE.cx - 1.3, o[1] + 1.8, o[2] + CAFE.z + 0.03]); }
+  }
   /** fix r2 (A2 P2 #26 / P3 #38 / ADD #71 #74 shot 15): the desk-front + floor dressing (a wire waste basket of crumpled
    *  paper, a leather briefcase on the right drawers, a string-tied stack of newspapers), a coat rack with a trilby at the
    *  left of the window and a low bookshelf with a globe at its right (the wall strips of the wide), clock hands with a
@@ -2779,17 +3192,21 @@ export class Interiors {
   private buildOfficeR2(rb: RB, g: THREE.Group) {
     const o = OF.base, Z = OF.room.d / 2, brass = C("#d2a84e");
     // wire waste basket (front left of the knee hole) + 3 paper balls
-    { const bx = -0.5, bz = -0.4; rb.geo(new THREE.CylinderGeometry(0.13, 0.1, 0.3, 16, 1, true).translate(0, 0.15, 0), lam("si:ofWire", () => ({ map: tx("ofWireT", 128, 64, (g2) => { g2.clearRect(0, 0, 128, 64); g2.strokeStyle = "#3a3a40"; g2.lineWidth = 2; for (let x = 0; x < 128; x += 8) { g2.beginPath(); g2.moveTo(x, 0); g2.lineTo(x, 64); g2.stroke(); } for (let y = 2; y < 64; y += 12) { g2.beginPath(); g2.moveTo(0, y); g2.lineTo(128, y); g2.stroke(); } }, false), alphaTest: 0.4, side: THREE.DoubleSide })), bx, 0, bz);
+    // fix r3 (A3 P2 shot 15: none of it showed in the MS): the basket is a soft foreground framer at the lower left of the MS,
+    // the briefcase at its lower right, the newspapers in front of the modesty panel, a brass key in its lock
+    { const bx = -0.3, bz = -0.3; rb.geo(new THREE.CylinderGeometry(0.13, 0.1, 0.3, 16, 1, true).translate(0, 0.15, 0), lam("si:ofWire", () => ({ map: tx("ofWireT", 128, 64, (g2) => { g2.clearRect(0, 0, 128, 64); g2.strokeStyle = "#3a3a40"; g2.lineWidth = 2; for (let x = 0; x < 128; x += 8) { g2.beginPath(); g2.moveTo(x, 0); g2.lineTo(x, 64); g2.stroke(); } for (let y = 2; y < 64; y += 12) { g2.beginPath(); g2.moveTo(0, y); g2.lineTo(128, y); g2.stroke(); } }, false), alphaTest: 0.4, side: THREE.DoubleSide })), bx, 0, bz);
       rb.geo(new THREE.TorusGeometry(0.13, 0.008, 6, 24).rotateX(Math.PI / 2), C("#3a3a40"), bx, 0.3, bz);
       for (let k = 0; k < 3; k++) rb.geo(new THREE.IcosahedronGeometry(0.05, 0), C("#f2eee2"), bx + (k - 1) * 0.06, 0.24 + (k % 2) * 0.05, bz + (hash(k) - 0.5) * 0.06, k, k * 2);
       rb.geo(new THREE.IcosahedronGeometry(0.045, 0), C("#f2eee2"), bx + 0.2, 0.04, bz + 0.12, 1, 2);
       contact(g, [o[0] + bx, o[1] + 0.006, o[2] + bz], 0.4, 0.34, 0.45); }
     // a brown leather briefcase leaning on the right drawers
-    { const bx = 0.58, bz = -0.48; rb.rbox(C("#6a3a1e"), 0.4, 0.3, 0.1, bx, 0.155, bz, -0.06, -0.16); rb.rbox(C("#5a2e18"), 0.41, 0.02, 0.105, bx, 0.25, bz, -0.06, -0.16);
+    { rb.geo(new THREE.CylinderGeometry(0.016, 0.016, 0.012, 12).rotateX(Math.PI / 2), brass, 0, 0.6, -0.592); rb.box(C("#1a0e08"), -0.003, 0.585, -0.594, 0.003, 0.598, -0.588, false);
+      rb.box(brass, -0.004, 0.57, -0.585, 0.004, 0.6, -0.578); rb.geo(new THREE.TorusGeometry(0.014, 0.004, 6, 14), brass, 0, 0.555, -0.578); }
+    { const bx = 0.27, bz = -0.47; rb.rbox(C("#6a3a1e"), 0.4, 0.3, 0.1, bx, 0.155, bz, -0.06, -0.16); rb.rbox(C("#5a2e18"), 0.41, 0.02, 0.105, bx, 0.25, bz, -0.06, -0.16);
       rb.geo(new THREE.TorusGeometry(0.05, 0.011, 6, 14, Math.PI), C("#3a2010"), bx, 0.31, bz + 0.03, -0.06, -0.16); for (const s2 of [-1, 1]) rb.rbox(brass, 0.03, 0.022, 0.012, bx + s2 * 0.12, 0.25, bz + 0.058, -0.06, -0.16);
       contact(g, [o[0] + bx, o[1] + 0.006, o[2] + bz + 0.08], 0.5, 0.26, 0.45); }
     // a string-tied stack of newspapers on the floor by the left pedestal
-    { const nx = -0.95, nz = -0.55; for (let k = 0; k < 6; k++) rb.rbox(C(k % 2 ? "#ece6d6" : "#e2dccc"), 0.42, 0.022, 0.3, nx + (hash(k) - 0.5) * 0.02, 0.011 + k * 0.022, nz, (hash(k + 4) - 0.5) * 0.08);
+    { const nx = 0.02, nz = -0.36; for (let k = 0; k < 6; k++) rb.rbox(C(k % 2 ? "#ece6d6" : "#e2dccc"), 0.42, 0.022, 0.3, nx + (hash(k) - 0.5) * 0.02, 0.011 + k * 0.022, nz, (hash(k + 4) - 0.5) * 0.08);
       for (const dx of [-0.1, 0.1]) rb.rbox(C("#b8945a"), 0.012, 0.14, 0.31, nx + dx, 0.07, nz, 0); rb.rbox(C("#b8945a"), 0.43, 0.006, 0.012, nx, 0.135, nz, 0);
       contact(g, [o[0] + nx, o[1] + 0.006, o[2] + nz], 0.6, 0.45, 0.45); }
     // the wall strips either side of the window (the wide): a coat rack with a trilby (left), a low bookshelf + globe (right)
@@ -2826,16 +3243,16 @@ export class Interiors {
       else { P.p.set(PR.base[0] - 5.2, PR.base[1] + 3.1, PR.base[2] - 3.6); P.c.set(0.06, 0.12, 0.34); P.r = 2.8; } }
     this.layoutPools(set, id);
     const t = vsec();
-    if (this.bank.visible) this.poseBank(id, f, t);
+    if (this.bank.visible) this.poseBank(id, f, t, cam);
     if (this.trading.visible) this.poseTrading(f, t, cam);
     if (this.cut.visible) this.poseCut(id, f, t, cam);
-    if (this.kitchen.visible) this.poseKitchen(f, t);
+    if (this.kitchen.visible) this.poseKitchen(f, t, cam);
     if (this.pump.visible) this.posePump(f, t, cam);
     if (this.office.visible) this.poseOffice(id, f, t, cam);
     this.poseShafts(cam, () => 1);
   }
 
-  private poseBank(id: number, f: number, t: number) {
+  private poseBank(id: number, f: number, t: number, cam: THREE.Camera) {
     const o = BK.base;
     // fix r2: the desk (+ everything on it) hides in shot 6 (A2 P1); the lamp moves per shot; the shot-5 floor bills
     this.deskG.visible = id !== 6; this.bkFloor5.visible = id === 5; this.box6.visible = id === 6;
@@ -2843,8 +3260,9 @@ export class Interiors {
     // the venetian-blind daylight: shot 5 on the back wall (drifts ~0.5 px/f, a passing cloud dims it ~10 % every ~2 s),
     // shot 3 across the desk's right half + the carpet
     { const dim = 0.9 + 0.1 * (0.5 + 0.5 * vs(3.1)), s5 = SHOTS[4].a;
-      this.blinds5.visible = id === 5; if (id === 5) { this.blinds5.position.x = o[0] - 0.55 + 0.0011 * (f - s5); (this.blinds5.material as THREE.MeshBasicMaterial).color.setRGB(0.17 * dim, 0.21 * dim, 0.29 * dim); }
-      this.blindsF.visible = this.blindsC.visible = id === 3; if (id === 3) { (this.blindsF.material as THREE.MeshBasicMaterial).color.setRGB(0.1 * dim, 0.13 * dim, 0.19 * dim); (this.blindsC.material as THREE.MeshBasicMaterial).color.setRGB(0.07 * dim, 0.09 * dim, 0.13 * dim); } }
+      // fix r3 (A3 P3 #26: the stripes read warm white): cool daylight #CFE0F5-class stripes (less red, more blue)
+      this.blinds5.visible = id === 5; if (id === 5) { this.blinds5.position.x = o[0] - 0.55 + 0.0011 * (f - s5); (this.blinds5.material as THREE.MeshBasicMaterial).color.setRGB(0.12 * dim, 0.19 * dim, 0.34 * dim); }
+      this.blindsF.visible = this.blindsC.visible = id === 3; if (id === 3) { (this.blindsF.material as THREE.MeshBasicMaterial).color.setRGB(0.07 * dim, 0.12 * dim, 0.22 * dim); (this.blindsC.material as THREE.MeshBasicMaterial).color.setRGB(0.05 * dim, 0.08 * dim, 0.15 * dim); } }
     // shot 3 window life: a pigeon hops along the outside sill; a far ship drifts with a smoking funnel
     { const on = id === 3; this.pigeon.visible = on; this.shipM.visible = on; this.funnel.forEach((m) => { m.visible = on; });
       if (on) { const cyc = 40, n = Math.floor(VF / cyc), ph = VF - n * cyc, hop = ph < 8 ? Math.sin((Math.PI * ph) / 8) : 0, pr = (n % 3) + sm(Math.min(1, ph / 8)), fw = n % 6 < 3;
@@ -2863,15 +3281,35 @@ export class Interiors {
     const np = NAMEPLATE[id]; this.nameplate.visible = !!np;
     if (np) { this.nameplate.position.set(o[0] + np[0], o[1] + np[1], o[2] + np[2]); this.nameplate.rotation.y = id === 3 ? -0.35 : -0.05; }
     // shot 3: the bundles slide across on "against it"
-    this.cash.visible = id === 3;
-    if (id === 3) { const u = cashSlide(f); /* fix1 LEAD: the banker's hand rides cast.ts cashSlide */ this.cash.position.set(o[0] + lerp(BK.cash[0], BK.cashTo[0], u), o[1] + BK.cash[1], o[2] + lerp(BK.cash[2], BK.cashTo[2], u)); this.cash.rotation.y = 0.12 * Math.sin(Math.PI * clamp01((f - BEAT.againstIt) / 16)); }
+    // fix r3 (A3 P2 shot 3): Tino's sleeve reaches in from frame right, takes the cash and pulls it out of frame
+    const tk3 = sm((f - (TINO_GRAB + 2)) / (TINO_OUT - TINO_GRAB - 2));
+    this.cash.visible = id === 3 && tk3 < 1;
+    if (id === 3) { const u = cashSlide(f); /* fix1 LEAD: the banker's hand rides cast.ts cashSlide */
+      const bx = lerp(BK.cash[0], BK.cashTo[0], u), bz = lerp(BK.cash[2], BK.cashTo[2], u);
+      this.cash.position.set(o[0] + lerp(bx, CASH_OUT[0], tk3), o[1] + lerp(BK.cash[1], CASH_OUT[1], tk3) + 0.05 * Math.sin(Math.PI * tk3), o[2] + lerp(bz, CASH_OUT[2], tk3));
+      this.cash.rotation.y = 0.12 * Math.sin(Math.PI * clamp01((f - BEAT.againstIt) / 16)) - 0.25 * tk3; }
+    { const on = id === 3 && f >= TINO_IN && f < TINO_OUT + 1; this.sleeve.visible = on;
+      if (on) { const c = this.cash.position, grip = V(c.x + 0.06, c.y + 0.05, c.z + 0.02), off = V(o[0] + CASH_OUT[0] + 0.25, o[1] + CASH_OUT[1] + 0.06, o[2] + CASH_OUT[2]);
+        const kin = sm((f - TINO_IN) / (TINO_GRAB - TINO_IN)), p = f < TINO_GRAB ? off.clone().lerp(grip, kin) : grip;
+        this.sleeve.position.copy(p); this.sleeve.quaternion.copy(cam.quaternion); this.sleeve.rotateZ(0.12 + 0.06 * Math.sin(Math.PI * kin)); } }
+    // the adding machine's cash drawer: out on the "ka-ching" (againstIt + 26, 4 f), held, back in 6 f
+    { const d = f - (BEAT.againstIt + 26), out = d < 0 ? 0 : d < 4 ? outBack(d / 4, 1.4) : d < 8 ? 1 : 1 - sm((d - 8) / 6);
+      this.addDrawer.position.z = o[2] - 0.6 + 0.075 * (id === 3 ? out : 0); }
     // shot 5 (A1 P1): 4 bundles each to start; on "more" +4 / +3 / +4, on the second "more" +5 / +2 / +5 (the middle stack
     // caps at 9, a V that frames his grin). The middle POPS onto its top (0 -> 1.12 -> 1 over 4 f); the outer stacks DROP
     // in from 0.40 m over 8 f, tilted 0.45 rad toward the lens (bill face + band show) easing flat, a 2 f squash on landing
+    // fix r3 (carryover + CHAR P2): the outer stacks also pop one bundle at each stamp landing on them (landing + 9) and the
+    // top bundle the stamp hits turns red-banded 1 f after the landing (stamp -> red mark -> the stack grows)
+    const sched = (si: number) => { const mid = si === 1, n1 = mid ? 7 : 8, off = mid ? 1 : si, ts: number[] = [];
+      for (let j = 0; j < (mid ? 9 : 13); j++) ts.push(j < 4 ? -1e9 : j < n1 ? BEAT.more1 - 2 + (j - 4) * 2.5 + off : BEAT.more2 - 2 + (j - n1) * 2.2 + off);
+      if (!mid) for (const c of STAMP_ON[si === 0 ? 0 : 1]) ts.push(c + STAMP_POP);
+      return ts.sort((a, b) => a - b); };
+    const S5 = [sched(0), sched(1), sched(2)];
     this.stacks.forEach((list, si) => list.forEach((m, j) => {
       if (id !== 5) { m.visible = false; return; }
-      const mid = si === 1, n1 = mid ? 7 : 8;
-      const t0 = j < 4 ? -1e9 : j < n1 ? BEAT.more1 - 2 + (j - 4) * 2.5 + (mid ? 1 : si) : BEAT.more2 - 2 + (j - n1) * 2.2 + (mid ? 1 : si);
+      const mid = si === 1, t0 = S5[si][j];
+      { const marks = mid ? [] : STAMP_ON[si === 0 ? 0 : 1].filter((c) => f >= c + 1 && S5[si].filter((x) => x <= c).length - 1 === j), mats = this.bmStack[marks.length ? 1 : 0];
+        if (mats && m.material !== mats) m.material = mats; }
       const b = m.userData.base as THREE.Vector3;
       // fix r2 (A2 P1 shot 5: the outer bundles fell as thin edge-on slats that read as glitches): EVERY stack pops its new
       // bundle onto its top (0 -> 1.12 -> 1 over 4 f) with a 0.06 m settle drop and a 2 f squash on landing; staggered
@@ -2888,6 +3326,14 @@ export class Interiors {
       // face the lens while they fall (a flat bill seen from desk height is edge-on), flattening only as they land
       B.m.rotation.set(lerp(-0.35 + 0.45 * Math.sin(d * 0.33 + B.ph), -Math.PI / 2, sm((u - 0.55) / 0.45)), (1 - u) * 0.6 * Math.sin(d * 0.21 + B.ph), (1 - u) * 0.7 * Math.cos(d * 0.29 + B.ph));
     }
+    // fix r3 (A3 P2 shot 5: the bottom third was a dead desk front): bills slide off the desk's front edge on each "more"
+    // and flutter down the desk front to the floor (30 f, rocking)
+    for (const B of this.frontBills) { const d = f - B.t, on = id === 5 && d >= 0 && d < 40; B.m.visible = on; if (!on) continue;
+      const u = clamp01(d / 30), y = lerp(0.79, 0.008, u * u * (3 - 2 * u)), z = lerp(-0.33, -0.05 + 0.1 * Math.sin(B.ph), u), sw = (1 - u) * 0.07 * Math.sin(d * 0.38 + B.ph);
+      B.m.position.set(o[0] + B.x + sw + 0.04 * u, o[1] + y, o[2] + z);
+      B.m.rotation.set(lerp(-0.2 + 0.5 * Math.sin(d * 0.31 + B.ph), -Math.PI / 2, sm((u - 0.7) / 0.3)), (1 - u) * 0.5 * Math.sin(d * 0.23 + B.ph), (1 - u) * 0.8 * Math.cos(d * 0.27 + B.ph)); }
+    // shot 6: the vault door's steel is a dark gunmetal behind Tino (his grey suit pops), light steel elsewhere
+    this.vaultSteel.color.set(id === 6 ? "#4e5562" : "#b4b8be");
     // the receipt piles: a fresh stamped sheet slides onto pile (i % 2) at each stamp landing
     for (const S of this.pileSheets) { const d = f - S.t; S.m.visible = id === 5 && d >= 0; if (S.m.visible && d < 6) { const k = sm(d / 6); S.m.position.y = o[1] + PILES[S.pile][1] + 0.003 + S.k * 0.0035 + 0.06 * (1 - k); } else if (S.m.visible) S.m.position.y = o[1] + PILES[S.pile][1] + 0.003 + S.k * 0.0035; }
     // the adding machine's tape grows +0.15 m on each "more" (base 0.32 m)
@@ -2902,17 +3348,23 @@ export class Interiors {
       const lift = (1 - u * u) * Math.min(0.32, Math.max(0.03, 0.29 - s.v)), sq = f >= s.t && f < s.t + 8 ? 1 - 0.2 * Math.exp(-(f - s.t) / 2) * Math.cos((f - s.t) * 1.5) : 1;
       const ch = BK.chart, at = (uu: number, v: number) => [o[0] + ch.c[0] + Math.cos(ch.yaw) * uu + Math.sin(ch.yaw) * (0.012 + s.row * 0.0015), o[1] + ch.c[1] + v, o[2] + ch.c[2] - Math.sin(ch.yaw) * uu + Math.cos(ch.yaw) * (0.012 + s.row * 0.0015)];
       const P = at(s.u, s.v + lift - (1 - sq) * 0.04); m.position.set(P[0], P[1], P[2]); m.scale.set(1 + (1 - sq) * 0.6, sq, 1);
-      m.rotation.set(0, BK.chart.yaw, s.row === 7 && f > s.t + 8 ? THREE.MathUtils.degToRad(4) * Math.sin((TAU * (f - s.t - 8)) / 40) * Math.min(1, (f - s.t - 8) / 10) : 0);
+      // fix r3 (carryover + ADD #44): ONE jelly wobble of the whole TINO'S OIL pyramid on "had" (rows lag 1 f each, a
+      // squash-stretch decaying over ~16 f), the top drum rocks +-4 deg for 12 f after it
+      const dh = f - BEAT.had - s.row, wob = dh >= 0 ? 0.07 * Math.exp(-dh / 5) * Math.sin(dh * 1.1) : 0;
+      if (wob !== 0 && f >= s.t) { m.scale.set(m.scale.x * (1 - 0.6 * wob), m.scale.y * (1 + wob), 1); m.position.y += 0.05 * wob * (1 + s.row * 0.4); }
+      const dr = f - BEAT.had - 8, rock = s.row === 7 && dr >= 0 && dr < 14 ? THREE.MathUtils.degToRad(4) * Math.sin((TAU * dr) / 12) * (1 - dr / 14) : 0;
+      m.rotation.set(0, BK.chart.yaw, rock);
     });
     if (id === 6) {
       // the tray stack of receipts grows with each pile stage; the tick draws itself under the pile on "had"
       const nTray = 3 + (f >= BEAT.moreOf ? 3 : 0) + (f >= BEAT.united ? 3 : 0); this.trayStack.forEach((m, k) => { m.visible = k < nTray; });
       const tk = clamp01((f - BEAT.had + 2) / 9); this.tick.visible = tk > 0; this.tick.scale.set(Math.max(0.001, tk), 1, 1);
       this.tick.position.copy(this.tickBase(tk));
-      const gk = (f - BEAT.had - 2) / 8; this.glint6.visible = gk > 0 && gk < 1;
-      if (this.glint6.visible) { const ch = BK.chart, uu = lerp(0.12, 0.66, gk), vv = lerp(-0.1, 0.26, Math.sin(Math.PI * gk) * 0.6 + gk * 0.4);
+      // fix r3 (ADD #44): a 4-point star glint pops ON the top drum after the wobble settles (had + 6, 8 f)
+      const gk = (f - BEAT.had - 6) / 8; this.glint6.visible = gk > 0 && gk < 1;
+      if (this.glint6.visible) { const ch = BK.chart, top = this.drumSlot.find((d) => d.row === 7), uu = (top?.u ?? 0.4) + 0.025, vv = (top?.v ?? 0.27) + 0.03;
         this.glint6.position.set(o[0] + ch.c[0] + Math.cos(ch.yaw) * uu + Math.sin(ch.yaw) * 0.04, o[1] + ch.c[1] + vv, o[2] + ch.c[2] - Math.sin(ch.yaw) * uu + Math.cos(ch.yaw) * 0.04);
-        this.glint6.scale.setScalar(0.22 * Math.sin(Math.PI * gk)); this.glint6.material.rotation = gk * 1.6; }
+        this.glint6.scale.setScalar(0.2 * Math.sin(Math.PI * gk)); this.glint6.material.rotation = 0.3 + gk * 0.8; }
     } else { this.tick.visible = false; this.glint6.visible = false; this.trayStack.forEach((m, k) => { m.visible = k < 9; }); }
     // shot 3 window (A1 P1): three khaki inspectors walk in from the gate side on "sent", the lead stops and points up at
     // the far tank on "check" (12 f raise); steps every 10 f with a 4 % bob; soft contact shadows on the yard
@@ -2978,7 +3430,28 @@ export class Interiors {
     const sec = Math.floor(t), tk = sec + Math.min(1, (t - sec) * 6);
     this.trHands[2].rotation.z = -((tk + 40) / 60) * TAU; this.trHands[1].rotation.z = -((52 + t / 60) / 60) * TAU; this.trHands[0].rotation.z = -((2 + 52 / 60) / 12) * TAU;
     this.fans.forEach((fg, i) => { fg.rotation.y = vph(1.6) + i * 0.7; });
-    this.pendants.forEach((pg, i) => { pg.rotation.z = 0.006 * vs(0.7, i * 1.3); pg.rotation.x = 0.005 * vs(0.55, i * 2.1); });
+    // fix r3 (ADD #48): on the THOOM ("crashed") the pendants swing ~3 deg and settle over ~40 f; their floor pools sway along
+    { const d = f - BEAT.crashed1, sw = d >= 0 ? 0.052 * Math.exp(-d / 18) * Math.sin(d * 0.11) : 0;
+      this.pendants.forEach((pg, i) => { pg.rotation.z = 0.006 * vs(0.7, i * 1.3) + sw * (1 - 0.15 * i); pg.rotation.x = 0.005 * vs(0.55, i * 2.1) + 0.4 * sw * Math.cos(i);
+        const P = this.pools[5 + i]; if (P) P.p.x -= 1.55 * pg.rotation.z; }); }
+    // fix r3: the board boy's ladder rolls along the line (5 f behind the tip), he climbs rung by rung, his chalk hand ON the
+    // tip; on "crashed" he slips a rung (6 f), clutches the rails and the ladder rolls off to the right with him
+    { const o = TR.base, c1 = BEAT.crashed1, tipOf = (ff: number) => this.chalkPts[Math.max(0, Math.min(this.chalkPts.length - 1, Math.floor(this.chalkDrawn(ff))))];
+      const tL = tipOf(Math.min(f - 5, c1 - 2)), tN = tipOf(Math.min(f, c1 - 2)), roll = 1.9 * sm((f - c1 - 2) / 16) ** 1.4;
+      const lx = tL.x + 0.44 + roll, rr = (tL.y - o[1] - 1.5) / 0.3, n0 = Math.floor(rr), rung = Math.max(3, Math.min(9, n0 + sm((rr - n0 - 0.3) / 0.4)));
+      const slip = f >= c1 ? 0.3 * sm((f - c1) / 6) - 0.03 * Math.sin(Math.PI * clamp01((f - c1 - 6) / 6)) : 0, feet = 0.42 + 0.3 * rung - slip;
+      const lean = (h: number) => lerp(-5.3, -5.86, h / 3.3);
+      this.ladder.position.set(lx, o[1] + 0.42, o[2] + lean(0) ); this.ladder.rotation.set(-Math.atan2(0.56, 3.3), 0, 0);
+      const bzz = o[2] + lean(feet - 0.42) + 0.14, shock = f >= c1;
+      this.boy.position.set(lx + 0.02, o[1] + feet + 0.58, bzz); this.boy.rotation.set(0, 0, shock ? 0.05 * Math.sin((f - c1) * 0.6) * Math.exp(-(f - c1) / 10) : 0);
+      const tex = boardBoyTex(shock ? 1 : 0); if (this.boyMat.map !== tex) { this.boyMat.map = tex; this.boyMat.needsUpdate = true; }
+      this.boyArm.visible = this.boyHand.visible = !shock;
+      if (!shock) { const sh = V(lx - 0.15, o[1] + feet + 0.93, bzz + 0.02), tip = V(tN.x, tN.y, tN.z + 0.03), d = tip.clone().sub(sh), L = d.length();
+        this.boyArm.position.copy(sh); this.boyArm.quaternion.setFromUnitVectors(V(0, 1, 0), d.normalize()); this.boyArm.scale.set(1, L, 1); this.boyHand.position.copy(tip); } }
+    // the ticker: tape spools (scrolls) on the video clock, the bell hammer flicks on "November" (tickbell_8) and idles
+    { const tm = TM("trTapeSpool", tapeTex3) as THREE.MeshLambertMaterial; if (tm.map) tm.map.offset.y = -((VF * 0.045) % 1);
+      const d = f - BEAT.november, flick = d >= -2 && d < 8 ? (d < 0 ? -0.25 * sm((d + 2) / 2) : -0.25 + 0.85 * Math.exp(-d / 2.5) * Math.cos(d * 1.4)) : 0;
+      this.tickHammer.rotation.z = 0.2 + flick; }
     // fix r2: the pit crowd waves slips on its own clocks (2-frame arm swaps, a small hop on each), phones stay at ears;
     // after "crashed" they clutch their heads (staggered 2-10 f); the dropped handset swings on its cord; ashtray smoke
     this.trCards.forEach((c) => {
@@ -3009,14 +3482,22 @@ export class Interiors {
     // curve: lead_requests), then a thin oil pour ("thin" .. "oil" + 10) whose LENS spreads from the centre to both walls
     // over 16 f once the stream lands (A2 P2 #21), with a glint at each wall
     const fill12 = smooth((f - (BEAT.fill + 4)) / 45);
-    const lv = id === 12 ? lerp(0.75, CU.water, fill12) : CU.water;
+    const lv = id === 12 ? lerp(0.75, CUW, fill12) : CUW;
     const ok = id === 12 ? clamp01((f - BEAT.thin) / (BEAT.oilIn + 14 - BEAT.thin)) : 1;
-    const thick = (CU.oil - CU.water) * (id === 12 ? 0.35 + 0.65 * ok : 1);
+    const thick = (CUO - CUW) * (id === 12 ? 0.35 + 0.65 * ok : 1);
     const tHit = BEAT.thin + 5, lens = clamp01((f - tHit) / 16), reach = (T.r - 0.075) * (lens * lens * (3 - 2 * lens) * 0.6 + lens * 0.4);
     const spread = id === 12 ? (f < BEAT.thin + 1 ? -1 : f < tHit ? 0.25 + 1.25 * sm((f - BEAT.thin - 1) / (tHit - BEAT.thin - 1)) : Math.hypot(reach, hc[2])) : 10;
     // the slosh after "water" (fix r2, A2 P2 #18: it tilted like a rigid plank and opened gaps at the walls): a travelling
     // wave on the band (2 crests, <= 0.03 m, decaying over ~20 f), pinned to both walls
-    const ds = f - BEAT.waterEnd + 1, sl = id === 10 && ds >= 0 ? 0.03 * Math.exp(-ds / 7) * sm(ds / 3) : 0, sph = ds * 0.45;
+    // fix r3 (A3 P2 shot 10: the slosh was ~2 px at 540): 0.10 m, e-fold ~10 f, 2 crests; gold droplets flick off at both
+    // walls (8-10 f arcs) and the tape line swings +-4 deg for 16 f
+    const ds = f - BEAT.waterEnd + 1, sl = id === 10 && ds >= 0 ? 0.1 * Math.exp(-ds / 10) * sm(ds / 3) : 0, sph = ds * 0.45;
+    this.sloshDrops.forEach((s, k) => { const wall = k < 4 ? -1 : 1, d0 = 2 + (k % 4) * 2.5, u = (ds - d0) / 9, on = id === 10 && u >= 0 && u < 1; s.visible = on; if (!on) return;
+      const vx = -wall * (0.25 + 0.12 * (k % 4)), vy = 0.55 + 0.18 * hash(k * 3.3);
+      s.position.set(o[0] + wall * (T.r - 0.16) + vx * u, CUO + 0.03 + vy * u - 1.1 * u * u, o[2] + 0.07); s.scale.setScalar(0.07 * (1 - 0.4 * u)); });
+    { const sw = id === 10 && ds >= 0 && ds < 16 ? THREE.MathUtils.degToRad(4) * Math.sin((TAU * ds) / 16) * (1 - ds / 16) : 0, pv = V(0.66, CU.tank.h + 0.4, CU.hatch.c[2] + 0.46);
+      this.tapeG.rotation.z = sw; const rp = pv.clone().applyAxisAngle(V(0, 0, 1), sw); this.tapeG.position.set(o[0] + pv.x - rp.x, o[1] + pv.y - rp.y, o[2]); }
+    this.topRim.visible = cam.position.y < o[1] + T.h - 0.2;
     for (const m of this.cuMats) m.uniforms.uT.value = t;
     const [wb, wf, ob, ot] = this.cuMats;
     const pourW = id === 12 && f >= BEAT.fill + 2 && f < BEAT.fill + 53, pourO = id === 12 && f >= BEAT.thin - 3 && f < BEAT.oilIn + 10;
@@ -3057,7 +3538,7 @@ export class Interiors {
     // the murk veil + the flashlight beam sweeping down from the hatch ("Inside..." .. "mostly"), dust in the beam
     this.murk.visible = dark > 0.01; this.murk.scale.y = Math.max(0.01, lv - B - 0.03); (this.murk.material as THREE.MeshBasicMaterial).opacity = 0.72 * dark;
     const sw = clamp01((f - BEAT.inside) / Math.max(1, BEAT.mostly - BEAT.inside)), ba = lerp(-0.42, 0.3, sm(sw)) + 0.04 * Math.sin(VF * 0.11);
-    this.beam.d.set(Math.sin(ba), -Math.cos(ba), 0.2).normalize(); this.beam.k.setRGB(0.2, 0.32, 0.36).multiplyScalar(id === 10 ? dark : 0);
+    this.beam.d.set(Math.sin(ba), -Math.cos(ba), 0.2).normalize(); this.beam.k.setRGB(0.2, 0.32, 0.36).multiplyScalar(id === 10 ? dark * (1 + 0.08 * Math.sin(VF * 0.31)) : 0);
     this.beam.mesh.visible = id === 10 && dark > 0.01;
     this.beamMotes.pts.visible = id === 10 && dark > 0.05; (this.beamMotes.pts.material as THREE.PointsMaterial).opacity = dark; this.beamMotes.pose(t, 9);
     this.hatchGlow.visible = id === 10 && dark > 0.01; this.hatchGlow.material.opacity = dark; this.hatchGlow.scale.setScalar(0.8 + 0.06 * Math.sin(VF * 0.4));
@@ -3066,9 +3547,19 @@ export class Interiors {
     this.glint10.visible = gk > 0; if (gk > 0) { const gx = f < BEAT.mostly ? lerp(-1.2, 1.4, (f - SHOTS[9].a - 1) / 10) : lerp(-2.2, 0.6, (f - BEAT.water + 3) / 10);
       this.glint10.position.set(o[0] + gx, lv + thick - 0.03 + 0.03 * Math.sin(gx * 4), o[2] + 0.06); this.glint10.scale.setScalar(0.55 * gk); this.glint10.material.rotation = f * 0.06; }
     this.looks.visible = id === 12 && f >= BEAT.hatch - 6;
-    if (this.looks.visible) this.looks.scale.setScalar(0.6 + 0.4 * outBack((f - BEAT.hatch + 6) / 8));
+    // fix r3 (A3 P2 shot 12): the LOOKS FULL sign settles with a 2-cycle 2 deg wobble as it pops in
+    if (this.looks.visible) { const u = clamp01((f - BEAT.hatch + 6) / 18); this.looks.scale.setScalar(0.6 + 0.4 * outBack((f - BEAT.hatch + 6) / 8)); this.looks.rotation.z = THREE.MathUtils.degToRad(2) * Math.sin(TAU * 2 * u) * (1 - u); }
+    // the "full" sparkle + (ADD #64) a slow 4-point glint on the gold disc every ~40 f through the hatch hold, at a new spot each time
     const spk = id === 12 ? clamp01(1 - Math.abs(f - BEAT.looksFull - 4) / 10) : 0;
-    this.sparkle.visible = spk > 0; this.sparkle.position.set(o[0] + 0.12, o[1] + CU.oil + 0.02, o[2] + hc[2] - 0.08); this.sparkle.scale.setScalar(0.35 * spk); this.sparkle.material.rotation = f * 0.05;
+    const pc = id === 12 && f >= BEAT.hatch + 4 ? (f - BEAT.hatch - 4) / 40 : -1, pn = Math.floor(pc), pu = (pc - pn) * 40, pk = pc >= 0 && pu < 9 ? Math.sin((Math.PI * pu) / 9) : 0;
+    const useP = pk > spk, gx = useP ? (hash(pn * 7.1) - 0.5) * 0.45 : 0.12, gz = useP ? (hash(pn * 3.7) - 0.5) * 0.35 : -0.08;
+    this.sparkle.visible = Math.max(spk, pk) > 0; this.sparkle.position.set(o[0] + hc[0] + gx, o[1] + CUO + 0.02, o[2] + hc[2] + gz); this.sparkle.scale.setScalar(0.35 * Math.max(spk, 0.7 * pk)); this.sparkle.material.rotation = useP ? 0.4 + pu * 0.03 : f * 0.05;
+    // the bob glints on "water" (shot 10)
+    { const bg = id === 10 ? clamp01(1 - Math.abs(f - BEAT.water - 4) / 5) : 0; this.bobGlint.visible = bg > 0; if (bg > 0) this.bobGlint.scale.setScalar(0.32 * bg); }
+    // the tyre lets out one bubble every ~40 f (video clock), wobbling up 0.9 m
+    { const ph = ((VF / 40) % 1 + 1) % 1, on = (id === 10 ? rev > 0.05 : lv > 1.4); this.tyreBub.visible = on && ph < 0.8;
+      this.tyreBub.position.set(o[0] + 1.25 + 0.04 * Math.sin(ph * 14), o[1] + 0.5 + 1.1 * ph, o[2] - 0.6); this.tyreBub.scale.setScalar(0.09 + 0.04 * ph); }
+    this.rust.pts.visible = (id === 10 ? rev > 0.05 : lv > 7); this.rust.pose(t, 13);
     // life inside: weed strands sway, silt drifts down (both hidden in the dark), the tape in the hatch (shot 12, after the oil)
     for (const w of this.weeds) { w.m.visible = rev > 0.05 && lv > B + w.h; const pa = w.m.geometry.attributes.position as THREE.BufferAttribute;
       for (let i = 0; i < pa.count; i++) { const yy = w.base[i * 3 + 1] / w.h; pa.setX(i, w.base[i * 3] + 0.1 * yy * yy * Math.sin(t * 1.3 + w.ph + yy * 2.2) + 0.04 * yy * Math.sin(t * 2.7 + w.ph)); } pa.needsUpdate = true; }
@@ -3083,13 +3574,17 @@ export class Interiors {
     // the lens meets each wall: a glint at both ends (8 f)
     { const gk = id === 12 ? clamp01(1 - Math.abs(f - (tHit + 15)) / 5) : 0; this.wallGl.forEach((sp, k) => { sp.visible = gk > 0; if (gk > 0) { sp.position.set(o[0] + (k ? 1 : -1) * (T.r - 0.12), lv + thick, o[2] + 0.07); sp.scale.setScalar(0.45 * gk); sp.material.rotation = f * 0.07 + k; } }); }
     // the WATER tag pops on "water," (outBack 8 f), holds, and shrinks away before the crane up (fix r2, ADD #65)
-    { const a0 = BEAT.waterIn - 1, k1 = clamp01((f - a0) / 8), out = clamp01((f - (BEAT.oilIn - 14)) / 8), on = id === 12 && f >= a0 && out < 1;
-      this.waterTag.visible = this.waterLead.visible = on; if (on) { const sc = (0.5 + 0.5 * outBack(k1)) * (1 - out); this.waterTag.scale.setScalar(Math.max(0.001, sc)); this.waterLead.scale.set(1, Math.max(0.001, k1 * (1 - out)), 1); } }
+    // fix r3 (A3 P2 shot 12): WATER pops in 1 f on "water," inside the water body (left third), rides up with the level to
+    // ~6 m, pops out in 1 f on "oil," as the OIL tag (pointer up to the layer) pops in and rides until the crane up
+    { const on = id === 12 && f >= BEAT.waterIn && f < BEAT.oilIn; this.waterTag.visible = on; this.waterLead.visible = false;
+      if (on) { this.waterTag.position.y = o[1] + Math.min(6.0, lv - 0.7); this.waterTag.scale.setScalar(1 + 0.06 * Math.exp(-(f - BEAT.waterIn) / 3) * Math.cos((f - BEAT.waterIn) * 1.2)); }
+      const onO = id === 12 && f >= BEAT.oilIn && f < BEAT.hatch - 12; this.oilTag.visible = onO;
+      if (onO) this.oilTag.scale.setScalar(1 + 0.06 * Math.exp(-(f - BEAT.oilIn) / 3) * Math.cos((f - BEAT.oilIn) * 1.2)); }
     { const hk = id === 12 ? sm((f - BEAT.add) / 20) : 0; for (const S of this.hatchShafts) { S.mesh.visible = hk > 0.01; S.k.setRGB(0.1, 0.12, 0.1).multiplyScalar(hk); } }
     void cam;
   }
 
-  private poseKitchen(f: number, t: number) {
+  private poseKitchen(f: number, t: number, cam: THREE.Camera) {
     const e = BEAT.ever, bt = KI.bottle, o = KI.base;
     // carryover r1 (binding): the whole bottle moves with CHAR's shaking hand (cast.ts bottleShake: x += dx, y += dy,
     // rotation.z about the base); the liquid clouds up from "Ever" and stays mixed until "The oil always rises", then
@@ -3097,8 +3592,12 @@ export class Interiors {
     const sh = bottleShake(f), after = f - e - 22, settle = after > 0 ? 0.03 * Math.exp(-after / 7) * Math.sin(after * 1.3) : 0;
     this.bottle.position.set(o[0] + bt.c[0] + sh.dx, o[1] + KI.table.top + 0.005 + sh.dy, o[2] + bt.c[2]);
     this.bottle.rotation.set(0, 0, sh.rot + settle);
-    this.botShadow.position.set(o[0] + bt.c[0] - 0.17 + sh.dx, o[1] + KI.table.top + 0.007, o[2] + bt.c[2] + 0.05);
-    this.caustic.position.set(o[0] + bt.c[0] - 0.13 + sh.dx * 0.5, o[1] + KI.table.top + 0.008, o[2] + bt.c[2] + 0.09); this.botContact.position.set(o[0] + bt.c[0] + sh.dx, o[1] + KI.table.top + 0.0075, o[2] + bt.c[2]);
+    // fix r3: the shadow, its ruby -> gold tint and the caustic lie toward camera-left (the sun is behind-right now)
+    this.botShadow.position.set(o[0] + bt.c[0] + KI_SH[0] * 0.24 + sh.dx, o[1] + KI.table.top + 0.007, o[2] + bt.c[2] + KI_SH[1] * 0.24);
+    this.botTint.position.set(o[0] + bt.c[0] + KI_SH[0] * 0.03 + sh.dx, o[1] + KI.table.top + 0.0085, o[2] + bt.c[2] + KI_SH[1] * 0.03);
+    this.caustic.position.set(o[0] + bt.c[0] + KI_SH[0] * 0.2 + sh.dx * 0.5, o[1] + KI.table.top + 0.008, o[2] + bt.c[2] + KI_SH[1] * 0.2); this.botContact.position.set(o[0] + bt.c[0] + sh.dx, o[1] + KI.table.top + 0.0075, o[2] + bt.c[2]);
+    // the glass ink silhouette faces the lens (about the bottle's own axis)
+    { const bw = this.bottle.position; this.botInk.rotation.y = Math.atan2(cam.position.x - bw.x, cam.position.z - bw.z); }
     (this.botShadow.material as THREE.MeshBasicMaterial).opacity = 0.45 * (1 - 0.5 * clamp01(sh.dy / 0.012));
     const mixIn = shakeMix(f) /* fix2 LEAD (CHAR): clouds a step per stroke */, rise = sm((f - BEAT.theOilRises) / (BEAT.top + 8 - BEAT.theOilRises));
     const sep = f < e ? 1 : f < BEAT.theOilRises ? 1 - mixIn : rise;
@@ -3107,14 +3606,23 @@ export class Interiors {
     const u = this.liquid.uniforms; u.uT.value = t; u.uSep.value = sep; u.uSlosh.value = (sh.rot + settle) * 2.2 + 0.04 * Math.sin(t * 2.5) + 0.02 * Math.sin(t * 4.1 + 1);
     // the golden caustic dims while the dressing is cloudy and brightens as the gold returns
     this.pools[PO.kiGold].c.multiplyScalar(0.3 + 0.7 * sep); (this.caustic.material as THREE.MeshBasicMaterial).opacity = 0.25 + 0.75 * sep * (0.9 + 0.1 * Math.sin(t * 3.1));
+    (this.botTint.material as THREE.MeshBasicMaterial).opacity = (0.22 + 0.2 * sep) * (1 - 0.5 * clamp01(sh.dy / 0.012));
+    // fix r3 (A3 P2): the settled gold glows a little in the bloom as it reaches the top ("top" - 14 .. "top")
+    u.uGlow.value = 0.16 * sm((f - (BEAT.top - 14)) / 14) * sep;
+    // the kettle steam: three S-wisps rising off the spout (a 60 f video-clock loop), facing the lens
+    this.kiSteam.forEach((s, i) => { const a = ((VF / 60 + i / 3) % 1 + 1) % 1; s.position.set(o[0] + KETTLE[0] - 0.16 - 0.06 * a + 0.015 * Math.sin(VF * 0.07 + i * 2), o[1] + 1.1 + 0.26 * a, o[2] + KETTLE[2] + 0.05); s.scale.set(0.8 + 0.9 * a, 0.7 + 0.5 * a, 1); (s.material as THREE.MeshBasicMaterial).opacity = 0.9 * Math.sin(Math.PI * a); s.quaternion.copy(cam.quaternion); });
     // (A1 P1) curtains sway 0.08 rad at ~0.3 Hz; the sparrow hops along the fence every ~1.5 s; the sheet billows; the cat
     // clock's tail swings; the radio dial glows
     this.curtainsK.forEach((m, i) => { m.rotation.x = 0.05 + 0.08 * vs(1.9, i * 1.7); m.rotation.y = 0.05 * vs(1.3, i); });
-    { const cyc = 45, n = Math.floor(VF / cyc), ph = VF - n * cyc, hop = ph < 9 ? Math.sin((Math.PI * ph) / 9) : 0;
-      const pr = (n % 4) + sm(Math.min(1, ph / 9)), x = n % 8 < 4 ? -0.3 + 0.08 * pr : 0.02 - 0.08 * pr;
-      this.sparrow.position.set(o[0] + x, o[1] + 1.47 + 0.035 * hop, o[2] - KI.room.d / 2 + 0.016);
+    // fix r3 (ADD #59): the sparrow's hops LAND on story beats (picture clock): a 9 f hop ending on each listed frame,
+    // 0.08 m a hop, turning round after every third; a little head-bob between hops
+    { const H = [SHOTS[10].a - 2, SHOTS[10].a + 18, BEAT.floats, BEAT.ever, BEAT.dressing + 8, BEAT.theOilRises + 6, BEAT.rises, BEAT.top, BEAT.top + 16];
+      let n = 0; for (const h of H) if (f >= h) n++;
+      const nxt = H[n] ?? 1e9, ph = f - (nxt - 9), hop = ph >= 0 && ph < 9 ? Math.sin((Math.PI * ph) / 9) : 0, pr = n + (ph >= 0 && ph < 9 ? sm(ph / 9) : 0);
+      const leg = Math.floor(pr / 3), dirR = leg % 2 === 0, w = pr - leg * 3, x = dirR ? -0.3 + 0.08 * w : -0.06 - 0.08 * w;
+      this.sparrow.position.set(o[0] + x, o[1] + 1.47 + 0.035 * hop + 0.004 * Math.max(0, vs(14.7)), o[2] - KI.room.d / 2 + 0.016);
       const mat = this.sparrow.material as THREE.MeshBasicMaterial, tex = sparrowTex(hop > 0.2 ? 1 : 0); if (mat.map !== tex) { mat.map = tex; mat.needsUpdate = true; }
-      this.sparrow.scale.x = n % 8 < 4 ? -1 : 1; }
+      this.sparrow.scale.x = dirR ? -1 : 1; }
     { const pa = this.sheet.geometry.attributes.position as THREE.BufferAttribute;
       for (let i = 0; i < pa.count; i++) { const x = this.sheetBase[i * 3], y = this.sheetBase[i * 3 + 1], k = -y / 0.17; pa.setX(i, x + 0.012 * k * vs(2.1, x * 20)); pa.setY(i, y + 0.01 * k * vs(1.7, x * 14 + 1)); pa.setZ(i, 0.02 * k * vs(2.4, x * 18)); } pa.needsUpdate = true; }
     this.catTail.rotation.z = 0.42 * vs(TAU * 0.5);
@@ -3138,14 +3646,22 @@ export class Interiors {
     }
     const bp = this.pools[PO.prBlob]; bp.p.set(o[0] + bx, o[1] + PR.blobY + 0.15, o[2] + PR.pipe.z + 0.15); bp.r = 1.15;
     // carryover r1 (binding): wheel k turns with CHAR's valveAngle(k, f) (the workers' hands are on its rim)
-    this.wheels.forEach((w, i) => { w.rotation.z = valveAngle(i, f); });
+    // fix r3 (A3 P2 MCU): wheel B keeps turning ~25 deg/s once the lens has left its worker (as if heaved off-screen)
+    this.wheels.forEach((w, i) => { w.rotation.z = valveAngle(i, f) - (i === 1 ? 0.44 * Math.max(0, f - (BEAT.hardest - 12)) / FPS : 0); });
+    // the COUNTED: 2 steam puff on its tick (got + 2, 20 f), the tallies by B / C gain a stroke as their plates flip
+    this.puff.forEach((s, k) => { const d = f - (COUNT_AT[1] + 2) - k * 3, u = d / 20, on = u >= 0 && u < 1; s.visible = on; if (!on) return;
+      s.position.set(o[0] + 0.8 + 0.25 * u + 0.05 * k, o[1] + 2.1 + 0.35 * u + 0.06 * k, o[2] - 3.75); s.scale.setScalar(0.5 + 1.6 * u); (s.material as THREE.MeshBasicMaterial).opacity = 0.75 * Math.sin(Math.PI * Math.min(1, u * 1.4)) * (1 - u * 0.3); s.quaternion.copy(cam.quaternion); });
+    for (const T of this.tallies) { const mt = T.m.material as THREE.MeshBasicMaterial, nt = tallyTex(f >= COUNT_AT[T.i] ? 5 : 4); if (mt.map !== nt) { mt.map = nt; mt.needsUpdate = true; } }
+    // the gold smear in the glass behind the blob: from where the blob was 20 f ago to just behind it
+    { const xa = blobX(f - 20) - 0.3, xb = bx - 0.4; for (const S of this.smears) { const a = Math.max(S.x0, xa), b = Math.min(S.x1, xb); S.m.visible = b > a + 0.05;
+      if (S.m.visible) { S.m.position.set(o[0] + (a + b) / 2, o[1] + PR.pipe.y, o[2] + PR.pipe.z); S.m.scale.set(1, b - a, 1); } } }
     // the gold in the glass flows (a scrolling highlight); a section brightens while the blob / the 'pumped' slug passes;
     // on "pumped" a slug of the real oil runs through glass 1 (30 f)
     for (const P of this.pipeOil) { P.m.uniforms.uT.value = t; const near = Math.max(bx > P.x0 - 0.3 && bx < P.x1 + 0.3 ? 1 : 0, su > 0 && su < 1 && P.x0 < -1 ? 1 : 0); P.m.uniforms.uK.value = 1 + 0.35 * near; }
     this.flywheel.rotation.x = -VF * 0.42;
     // fix r2 (A2 P2 #24): the MCU gauge needle twitches +-8 deg at ~2 Hz (the blob's weight on the line); the second gold
     // drip (into the tray at tank C) lands on the same 40 f phase as the first (drips_13)
-    this.mcuNeedle.rotation.z = 0.35 - 0.14 * vs(12.6) - 0.05 * vs(31, 1.3) - 0.4 * Math.exp(-(((bx - PR.blobCU[0]) / 0.8) ** 2));
+    this.mcuNeedle.rotation.z = 0.35 - 0.16 * vs(7.5) - 0.06 * vs(31, 1.3) - 0.4 * Math.exp(-(((bx - PR.blobCU[0]) / 0.8) ** 2));
     { const ph = ((VF % 40) + 40) % 40, fall = ph / 12; this.drip2.position.set(o[0] + 2.86, o[1] + (ph < 12 ? 1.03 - 0.97 * fall * fall : 1.03), o[2] - 3.28); this.drip2.scale.setScalar(ph < 12 ? 0.05 : 0.035 * (1 + 0.3 * Math.sin(ph * 0.2))); }
     { const ph = ((VF % 40) + 40) % 40, fall = ph / 12; this.drip.visible = true; this.drip.position.set(o[0] - 4.6, o[1] + (ph < 12 ? 1.0 - 0.95 * fall * fall : 1.0), o[2] - 3.6); this.drip.scale.setScalar(ph < 12 ? 0.05 : 0.035 * (1 + 0.3 * Math.sin(ph * 0.2))); }
     this.prSteam.forEach((S) => { const a = ((VF / 75 + S.k * 0.5 + S.x * 0.1) % 1 + 1) % 1; S.m.position.set(o[0] + S.x + 0.05 * Math.sin(VF * 0.06 + S.k) * a, o[1] + S.y + 0.1 + 0.45 * a, o[2] + S.z); S.m.scale.set(0.7 + a, 0.6 + 0.6 * a, 1); (S.m.material as THREE.MeshBasicMaterial).opacity = 0.5 * Math.sin(Math.PI * a); S.m.quaternion.copy(cam.quaternion); });
@@ -3171,7 +3687,7 @@ export class Interiors {
     this.pencil.position.set(o[0] + sl[0] + px, o[1] + sl[1] + (writing ? 0.085 + pyy : 0.012), o[2] + sl[2] + (writing ? 0.02 : 0.1));
     this.pencil.rotation.set(writing ? -0.35 : Math.PI / 2, 0.3, writing ? -0.45 : 0.25);
     const k = 1 + 0.07 * glow;   // fix r2 (A2 P1: the swell went milky): gentler view / pool / shaft gains
-    for (const m of this.ofView) m.color.setRGB(k, k * 0.98, k * 0.94);
+    for (const m of this.ofView) m.color.setRGB(k * 0.97, k * 0.97, k * 0.97);   // fix r3: the view no longer pushed orange (b* target +16..+21)
     this.sunGlow.material.color.setRGB(0.5 + 0.35 * glow, 0.36 + 0.24 * glow, 0.18 + 0.08 * glow);
     this.pools[PO.ofWin].c.multiplyScalar(1 + 0.22 * glow);
     this.steam.forEach((s, i) => { const a = (t * 0.35 + i / 3) % 1; s.position.set(o[0] + CUP_OF[0] + 0.02 * Math.sin(t * 1.3 + i * 2), o[1] + 0.86 + 0.18 * a, o[2] + CUP_OF[1]); s.scale.set(1 + a, 0.8 + a * 0.6, 1); (s.material as THREE.MeshBasicMaterial).opacity = Math.sin(Math.PI * a) * 0.9; s.quaternion.copy(cam.quaternion); });
@@ -3180,8 +3696,13 @@ export class Interiors {
     { const sec = Math.floor(t), tk = sec + Math.min(1, (t - sec) * 6); this.ofHands[2].rotation.z = -((tk + 23) / 60) * TAU; this.ofHands[1].rotation.z = -((17 + t / 60) / 60) * TAU; this.ofHands[0].rotation.z = -((10 + 17 / 60) / 12) * TAU; }
     this.ofCord.rotation.z = 0.06 * vs(2.4, 0.4) + 0.02 * vs(5.1); this.ofCord.rotation.x = 0.03 * vs(1.7, 1.1);
     // A1 P3: the "Warren" relight as a SHAPE: the striped sun patch on the desk + the window shafts brighten, motes appear
-    (this.sunPatch.material as THREE.MeshBasicMaterial).opacity = 0.22 + 0.2 * glow;
-    for (const S of this.shafts) if (S.mesh.parent === this.office) S.k.setRGB(0.15, 0.105, 0.045).multiplyScalar(1 + 0.8 * glow);
+    (this.sunPatch.material as THREE.MeshBasicMaterial).opacity = 0.3 + 0.2 * glow;
+    // fix r3: the rug's pane patch + the chair stripes warm with the glow; the ceiling-fan shadow turns slowly (2 whole turns
+    // a minute on the video clock); the chart ticks up a step on "Warren"
+    (this.rugPatch.material as THREE.MeshBasicMaterial).opacity = 0.28 + 0.16 * glow; (this.chairStripes.material as THREE.MeshBasicMaterial).color.setRGB(0.3 + 0.12 * glow, 0.22 + 0.08 * glow, 0.11 + 0.03 * glow);
+    this.fanSh.rotation.y = vph(0.21);
+    { const fm = this.ofChart.material as THREE.MeshBasicMaterial, ct = f >= BEAT.warren + 2 ? ofChartTex2() : ofChartTex(); if (fm.map !== ct) { fm.map = ct; fm.needsUpdate = true; } }
+    for (const S of this.shafts) if (S.mesh.parent === this.office) S.k.setRGB(0.17, 0.12, 0.052).multiplyScalar(1 + 0.6 * glow);
     this.ofMotes2.pts.visible = glow > 0.02; (this.ofMotes2.pts.material as THREE.PointsMaterial).opacity = glow; this.ofMotes2.pose(t, 8);
   }
 }

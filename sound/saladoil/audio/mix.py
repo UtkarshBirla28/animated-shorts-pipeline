@@ -32,6 +32,13 @@
 # 'had.' +1.5), the shout +6 dB with 2 dB more crest through the voice peak limiter and its echo 4 dB drier (comb fb 0.35)
 # until 'full!' ends; the de-esser up to 14 kHz; the voice tilt toward the references (90 Hz high-pass, -1.5 dB below 150 Hz,
 # +2.5 dB presence at 3 kHz).
+# FIX ROUND 3 (audit A3, SOUND 8.0 passed - nothing that measured well is re-balanced): the tag words of the comic beats
+# come up (WORD_RIDES, 20 ms ramps: 'them.' +3.5, 'America.' +3 in all) and 'believed them.' gets +2.5 dB at 2.5 kHz (SEG_EQ,
+# before the de-esser) so it is not dark and half-voiced on a phone; the moral payoff is no longer the quietest pair of lines
+# ('The oil was fake.' +1.5, 'The trust was real.' +2.5, 'fake.' / 'real.' +1.5 more each; its score -20 LU, the 'Buffett.'
+# bloom +6.5 -> +4 dB); 'And more.' +3, 'had.' +3, 'By' +2, 'Buffett.' +1.5; the second 'crashed.' gets a 3 dB score dip and a
+# 2 dB SFX dip; the shout +6 -> +5 dB and its presence +2.5 -> +1.5 dB (still ~+3.5 LU over the read, less piercing on a
+# phone speaker); the tone toward the references: +1.5 dB voice shelf at 4 kHz before the de-esser, +2 dB score shelf under 100 Hz.
 # Every run re-exports timeline.json from the merged story.ts (`--no-probe` skips it). The antitheft picture probes
 # (tumbleweeds, cast facts) do not exist for this short: every cue is keyed to BEAT / shot frames in sfx.py, the two
 # music-synced actions to music.sync_points().
@@ -79,7 +86,8 @@ BEAT_DUCKS = [("music", "ever", -1, "ever", 23, -3.0, 4)]       # A1 P2: the bot
 # anchor, +f, dB, ramp frames); an anchor is a BEAT or 'end:<word>@<beat>' (that word's end)
 # A2 P2: the +3 dB from 6 f before 'Warren' masked the name (margin 8.7 LU): capped at +1 dB under the name, the bloom kept
 BEAT_BOOSTS = [("music", "warren", -6, "end:Buffett@buffett", 0, +1.0, 6),          # registers (a little) from 6 f before 'Warren' ...
-               ("music", "end:Buffett@buffett", 1, "theOil", -5, +6.5, 3)]          # ... and blooms in the breath after 'Buffett.' (A2: its
+               ("music", "end:Buffett@buffett", 1, "theOil", -5, +4.0, 3)]          # ... and blooms in the breath after 'Buffett.' (A2: its
+                                                                                    # A3 P3: +6.5 -> +4 dB, a warm swell, not a sting)
                                                                                     # ramp is down before 'The oil', not on it)
 # the speech duck's depth scaled inside a window (anchor, +f, anchor, +f, factor): -2.5 -> -1 dB in the bloom only (A2: the full
 # duck stays under the name)
@@ -90,7 +98,9 @@ WORD_DUCKS = [("music", "would@men", "climb", -2.5),            # 'would climb' 
               ("music", "top@top", "top", -3.0),                # 'top.' (the climb's last notes, 7.1 LU)
               ("music", "And@realOil", "oil", -2.5),           # 'And the real oil?' (the pipes' first bar, 7.8 LU on 'the')
               ("music", "warren", "Buffett", -2.5),
-              ("music", "against@againstIt", "it", -5.0)]       # 'against it.' (the soft 'it.' sat 1.2 LU over the bed)             # 'Warren Buffett.' under the swell (8.4 LU; the bloom after it stays)
+              ("music", "against@againstIt", "it", -5.0),       # 'against it.' (the soft 'it.' sat 1.2 LU over the bed)
+              ("music", "crashed@crashed2", "crashed", -3.0),   # A3 P3: the soft second 'crashed.' had ~8.5 dB of margin over the
+              ("sfx", "crashed@crashed2", "crashed", -2.0)]     # tumbling bass + the bwomp             # 'Warren Buffett.' under the swell (8.4 LU; the bloom after it stays)
 # band-limited line ducks (stem, first word spec, last word, dB, lo Hz, hi Hz)
 WORD_BAND_DUCKS = [("music", "oil1", "oil", -4.5, 1000.0, 4000.0),                   # A1 P3: Tino's button word 'oil.'
                    ("music", "He@heBet", "people", -3.0, 1000.0, 4000.0),            # A1 P3: 'He bet people' over the warm trumpet
@@ -100,7 +110,7 @@ WORD_BAND_DUCKS = [("music", "oil1", "oil", -4.5, 1000.0, 4000.0),              
                    ("music", "crashed@crashed1", "crashed", -5.0, 1000.0, 4000.0),   # A2 P3: the trumpet rip off the consonants of 'crashed.'
                    ("sfx", "crashed@crashed1", "crashed", -6.0, 1000.0, 4000.0),     # A2 P1: the THOOM's band cut over the word
                    ("sfx", "crashed@crashed2", "crashed", -3.0, 1000.0, 4000.0)]     # A2 P3: the bwomp under the second 'crashed.'
-MUSIC_LOW_SHELF = None
+MUSIC_LOW_SHELF = (100.0, 2.0)   # A3 P3: the mix's 20-120 Hz read 4.8 dB thin vs the references: the upright bass / piano left hand
 STUDIO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "studio"))
 DUCK_DB = -2.5                   # music dip while the voice speaks (keyed from words.json, not the audio)
 CORR_MAX = 4.0                   # per-section level correction is clamped to +-4 dB around the global music gain
@@ -109,17 +119,18 @@ CORR_MAX = 4.0                   # per-section level correction is clamped to +-
 # reveal have no music at all (stop-time / silence), their entries only matter if a note ever leaks in
 MUSIC_TARGET = {"hook": -18.0, "setting": -17.5, "bank": -18.5, "climb": -18.0, "shout": -24.0, "deadpan": -20.0, "more": -17.5,
                 "mystery": -20.5, "crash": -17.0, "storm": -18.0, "reveal": -30.0, "pivot": -18.0, "explain": -18.5, "pipes": -17.5,
-                "tired": -19.0, "fallout": -17.5, "investor": -17.5, "swell": -17.0, "payoff": -19.0, "tail": -30.0}
+                "tired": -19.0, "fallout": -17.5, "investor": -17.5, "swell": -17.0, "payoff": -20.0, "tail": -30.0}   # A3 P2: payoff -19 -> -20
 # (A1: the swell's lift is BEAT_BOOSTS on top of its section level, so the rise starts ON 'Warren' instead of being smeared)
 GLOBAL_MUSIC = -18.0             # whole-score level vs the whole voice, before the per-section corrections
 # voice gain rides (gain only, ramped inside the word gaps): (first beat | 'word@beat' | '@0', last word of the line, dB)
-VOICE_RIDES = [("ninety", "full", +6.0),                 # the shout is louder than the read (A2 P2: +4 -> +6, target +4..+5 LU over the read)
+VOICE_RIDES = [("ninety", "full", +5.0),                 # the shout is louder than the read (A2 P2: +4 -> +6; A3 P3: +5, ~+3.5 LU over the read)
                ("was", "water", +1.0),                   # THE REVEAL (A1: re-voiced, low and VOICED now: the old +4.5 whisper ride -> +1; the
                                                          # 'Inside...' ride is gone, the new take reads +1.6 dB over the median)
-               ("andMore", "more", +2.0),                # A1 P2: 'And more.' must TOP 'So the banks lent more.' (A2: the new 0.38 s beat
+               ("andMore", "more", +3.0),                # A1 P2: 'And more.' must TOP 'So the banks lent more.' (A2: the new 0.38 s beat; A3 P3: +3)
                                                          # before it does part of the escalation: +2.5 -> +2)
                ("youSee", "see", +1.0),                  # the pivot word (the references punch it)
-               ("theTrust", "real", +1.5),               # the payoff line sat 2 dB under the median
+               ("theTrust", "real", +2.5),               # the payoff line sat 2 dB under the median (A3 P2: +1.5 -> +2.5)
+               ("The@theOil", "fake", +1.5),             # A3 P2: 'The oil was fake.' (-15.2 LUFS) to about -13.5
                ("warren", "Buffett", +1.0),              # the name, over the swell
                ("He@heBet", "bet", +1.5),                # A1 P3: 'He' (the take's join clips its /h/) was the weakest word
                # A2 (no re-takes: eleven_v4 ignores speed): the soft / fried sentence-end words ride up instead
@@ -128,11 +139,20 @@ VOICE_RIDES = [("ninety", "full", +6.0),                 # the shout is louder t
                ("it@againstIt", "it", +2.5),             # A2: the soft 'it.' after 'against' (the worst word margin of A2)
                ("crashed@crashed2", "crashed", +2.0),    # A2 P3 / LEAD: the second 'crashed.' (125 Hz, creaky)
                ("top@top", "top", +2.0),                 # A2 P3 / LEAD: 'top.' (83 Hz fry, -26.7 LUFS)
-               ("America@america", "America", +2.0),     # A2 P3 / LEAD: 'America.' (64 Hz fry, -26.5 LUFS)
+               # ('America.' moved to WORD_RIDES, A3 P2: +3 dB with 20 ms ramps)
                ("mostly@mostly1", "water", +1.5),        # A2 P3 / LEAD: the hook's twist 'mostly water.' was its quietest phrase
                ("inside@insideQ", "inside", +1.5),       # A2 P2: the mystery's 'inside?' (30 % voiced) must not fade away
-               ("had@had", "had", +1.5),                 # A2 P3: 'had.' (71 Hz fry) before the mystery
-               ("the@soBanks", "banks", +1.5)]          # A2 VOICE P2: the rushed 'the banks' (Whisper 0.60 on 'the' in the mix)
+               ("had@had", "had", +3.0),                 # A2 P3: 'had.' (71 Hz fry) before the mystery (A3 P3: +1.5 -> +3, it trailed 5 dB)
+               ("the@soBanks", "banks", +1.5),          # A2 VOICE P2: the rushed 'the banks' (Whisper 0.60 on 'the' in the mix)
+               ("By@by", "By", +2.0)]                   # A3 P3: the hook's first word reaches full level at once
+# A3 P2: single-word rides with exact 20 ms ramps (word, beat it follows, dB[, ramp-out s]) - the tag words of the comic
+# beats and the payoff's two punch words (the line rides above add to them); 'real.' ramps out over its own decay
+WORD_RIDES = [("them", "believedEnd", +3.5), ("America", "america", +4.0),   # (America: +3 left it 6.3 dB under its line; +4 -> ~5)
+               ("fake", "fake", +1.5), ("real", "real", +1.5, 0.15),
+              ("Buffett", "buffett", +1.5)]
+# A3 P2: a static EQ over one line only (first word spec, last word, chain), applied before the de-esser, 20 ms crossfades
+SEG_EQ = [("believed@believed", "them", [("bell", 2500.0, 3.0, 1.0)])]   # (+2.5 measured a 492 Hz centroid; +3 -> >= 500)
+VOICE_PRE_SHELF = (4000.0, 1.5)  # A3 P3: the voice 2.4 dB duller than the references at 3-8 kHz: a high shelf BEFORE the de-esser
 # voice-bus compressor: soft-knee, threshold at the loud-syllable level of this take, fast attack, speech release
 VCOMP = dict(ratio=2.0, knee_db=6.0, att=0.005, rel=0.1, thr_pct=60.0)
 VPEAK_CREST = 11.5               # voice-bus peak limiter: true peak at most this far above the voice's integrated loudness
@@ -142,7 +162,7 @@ SHOUT_CREST = 2.0                # A2 P2: ... and this much more on the shout (t
 # 8 dB whenever the dry shout is within 20 dB of its peak, so the repeats bloom in the breaths ('full... full...')
 # A2 P2: the echo smeared 'Ninety percent' (Whisper 0.90/0.99 dry -> 0.63/0.79): the comb feedback 0.35 on 'Ninety percent'
 # (0.5 on 'full!'), and the whole wet 4.2 dB down until 'full!' ends, so the repeats bloom only in the breath after it
-SHOUT = dict(semitones=0.9, presence=(2800.0, 2.5, 1.0), comb_ms=11.3, comb_fb=0.5, comb_fb_pre=0.35, band=(350.0, 5000.0),
+SHOUT = dict(semitones=0.9, presence=(2800.0, 1.5, 1.0), comb_ms=11.3, comb_fb=0.5, comb_fb_pre=0.35, band=(350.0, 5000.0),
              echo_s=0.19, echo_db=(-15.0, -21.0), verb_db=-20.0, verb_rt=0.5, clean_tol=0.10, wet_duck_db=-8.0, wet_duck_range=20.0,
              wet_pre_db=-4.2)
 
@@ -158,7 +178,7 @@ STUDIO_SRC = _PR.SRC
 STAGE_INPUTS = {
     "music": ["music.py", "instruments.py", "dsp.py", "timeline.py", "probe.py", T.TL_PATH, T.WORDS_PATH, T.VOICE_PATH, os.path.join(HERE, "warp.json"),
               os.path.join(STUDIO_SRC, "cast.ts"), os.path.join(STUDIO_SRC, "words.ts")],
-    "sfx": ["sfx.py", "sfx_gen.py", "sfx_gen_r1.py", "sfx_gen_r2.py", "probe.py", "instruments.py", "music.py", "dsp.py", "timeline.py", T.TL_PATH,
+    "sfx": ["sfx.py", "sfx_gen.py", "sfx_gen_r1.py", "sfx_gen_r2.py", "sfx_gen_r3.py", "probe.py", "instruments.py", "music.py", "dsp.py", "timeline.py", T.TL_PATH,
             T.WORDS_PATH, PE_JSON, T.VOICE_PATH, os.path.join(HERE, "warp.json"), os.path.join(ROOT, "voice", "phrases.json")]
            + [os.path.join(STUDIO_SRC, f) for f in ("sets_ext.ts", "sets_int.ts", "cast.ts", "SaladOil.tsx", "words.ts")],
 }
@@ -271,7 +291,8 @@ def span_curve(first, last, db):
 
 
 def voice_ride_db():
-    """per-sample voice gain (dB): each ride ramps up in the gap before its line and down in the gap after it"""
+    """per-sample voice gain (dB): each ride ramps up in the gap before its line and down in the gap after it; the
+    WORD_RIDES add on top with exact 20 ms ramps"""
     out = np.zeros(N)
     rows = []
     for beat, last, db in VOICE_RIDES:
@@ -280,7 +301,40 @@ def voice_ride_db():
             continue
         out += g
         rows.append((beat, last, az[0], az[1], db))
+    t = np.arange(N) / SR
+    for row in WORD_RIDES:
+        wd, after, db = row[:3]
+        ro = float(row[3]) if len(row) > 3 else 0.02
+        if after not in T.BEAT:
+            continue
+        try:
+            w = T.word(wd, T.bt(after) - 0.3)
+        except KeyError:
+            continue
+        a, z = float(w["s"]), float(w["e"])
+        i0, i1 = ns(max(0.0, a - 0.02)), min(N, ns(z + ro) + 1)
+        out[i0:i1] += np.interp(t[i0:i1], [a - 0.02, a, z, z + ro], [0.0, db, db, 0.0])
+        rows.append((f"{wd} (word)", wd, a, z, db))
     return out, rows
+
+
+def seg_eq(v):
+    """A3 P2: SEG_EQ - a static EQ over one line only, 20 ms raised-cosine crossfades (the filter runs from 0.3 s before)"""
+    rows = []
+    t = np.arange(v.shape[1]) / SR
+    for first, last, chain in SEG_EQ:
+        sp = line_span(first, last)
+        if sp is None:
+            continue
+        a, z = sp[0] - 0.04, sp[1] + 0.07
+        i0, i1 = max(0, ns(a - 0.3)), min(v.shape[1], ns(z + 0.3))
+        seg = eq_chain(v[:, i0:i1], chain)
+        u = np.clip(np.minimum((t[i0:i1] - (a - 0.02)) / 0.02, ((z + 0.02) - t[i0:i1]) / 0.02), 0, 1)
+        w = 0.5 - 0.5 * np.cos(np.pi * u)
+        v = v.copy()
+        v[:, i0:i1] = v[:, i0:i1] * (1 - w)[None, :] + seg * w[None, :]
+        rows.append((first, last, a, z, chain))
+    return v, rows
 
 
 def word_duck_db(stem):
@@ -448,7 +502,8 @@ VOICE_EQ = [("bell", 3200.0, 1.8, 0.7), ("high", 7000.0, 1.5, 0.7),   # (r8: +2.
             ("low", 240.0, 2.5, 0.7), ("bell", 1400.0, -1.6, 0.7), ("high", 8000.0, -2.5, 0.7),       # A1 P3: warmer, less airy (the mix read 3 dB mid-forward, 4 dB airy)
             ("low", 130.0, -2.5, 0.7),                                                                # A2 P3: the deep voice's sub band (wasted on a phone)
             ("high", 10000.0, -3.0, 0.7)]                                                             # A2 P3: the 9-16 kHz esses <= -22 dBFS
-DEESS = dict(lo=5000.0, hi=14000.0, ratio=3.0, max_db=6.0, thr_pct=96.0, att=0.001, rel=0.05, thr_off=-2.0)   # A1 P3: 2 dB tighter;
+DEESS = dict(lo=5000.0, hi=14000.0, ratio=3.0, max_db=6.0, thr_pct=96.0, att=0.001, rel=0.05, thr_off=-2.6)   # A3: -2 -> -2.6 (the 4 kHz shelf
+# before it must not raise the sibilance p95)   # A1 P3: 2 dB tighter;
 # A2 P3: up to 14 kHz (the 9-16 kHz esses of 'Soon,' / 'inspector' / 'Tino's' / 'So' peaked at -17.5..-20 dBFS)
 # A6 P2: beat 10 (the teacher analogy, take b10) is 5-7 dB brighter / more forward than beats 9 and 11: a matching EQ over
 # that beat's phrases only (voice/phrases.json 'beat'), 40 ms crossfades at its edges
@@ -1194,6 +1249,11 @@ def main():
     ride, ride_rows = voice_ride_db()                           # the line rides come after the compressor (fader moves) ...
     v_mid = integrated(v)
     v = v * dbg(lvl_curve + ride)[None, :]
+    v, seq_rows = seg_eq(v)                                     # A3 P2: 'believed them.' brighter (before the de-esser)
+    for f_, l_, a_, z_, ch_ in seq_rows:
+        log(f"segment EQ '{f_}' .. '{l_}' ({a_:.2f}-{z_:.2f} s): " + ", ".join(f"{k} {f0:.0f} Hz {db:+.1f} dB" for k, f0, db, q in ch_))
+    if VOICE_PRE_SHELF:                                         # A3 P3: a little more 3-8 kHz before the de-esser
+        v = shelf(v, VOICE_PRE_SHELF[0], VOICE_PRE_SHELF[1], "high")
     v, ds_stats = deess(v, ride)                                # A4 P3: split-band de-esser, then the presence shelf
     log("de-esser", {k: round(x, 2) for k, x in ds_stats.items()})
     if VOICE_SHELF:
@@ -1272,6 +1332,12 @@ def main():
     log("sfx rendered", f"events {lufs(ev):.2f} LUFS, beds {lufs(amb):.2f} LUFS")
     # key-word ducks (A2 P3): the ring tails of the stamp / the ding / the final chord dip under the stressed syllables
     kd_rows = []
+    try:                                  # A3: the score's hole under the bottle shake follows the probed shake (CHAR may re-time it)
+        sh_ = sfx.picture_events()[0].get("shake_11")
+        if sh_ and "ever" in T.BEAT:
+            BEAT_DUCKS[0] = ("music", "ever", int(round(sh_[0] - T.BEAT["ever"])) - 1, "ever", int(round(sh_[1] - T.BEAT["ever"])) - 1, -3.0, 4)
+    except Exception:  # noqa
+        pass
     for stem in ("music", "sfx"):
         g, rows_ = key_duck_db(stem)
         g2, rows2 = beat_duck_db(stem)

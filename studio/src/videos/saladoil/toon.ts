@@ -218,9 +218,13 @@ export type Expr = "neutral" | "read" | "calm" | "proud" | "browsUp" | "wide" | 
   | "squint" | "goggleO" | "warm" | "sigh" | "inhale" | "peek"
   // fix r2 (A2): the inspector reading DOWN at his board, his pencil lick; the lender's suspicious / intrigued / peering /
   // wide-eyed beats (white sclera, not goggles); Tino's brag grin, chin-up pride and thrill
-  | "readDown" | "lick" | "suspicious" | "intrigued" | "peer" | "ohWide" | "brag" | "chinUp" | "thrill";
+  | "readDown" | "lick" | "suspicious" | "intrigued" | "peer" | "ohWide" | "brag" | "chinUp" | "thrill"
+  // fix r3 (A3 ACTING): DIRECTED GAZE faces: white almond eyes whose big pupil is pushed toward the target (look / lookY),
+  // so "looking at the tape / the hatch / the tank / the board / each other" reads at phone size (never a lens stare)
+  | "gazeGrin" | "gazeSmile" | "gazeSmug" | "gazeFocus" | "readLow" | "lickLow" | "curiousLow" | "peerLow" | "gazeGasp" | "gazeWorry"
+  | "gazeO" | "sideGrin" | "gazeProud" | "gazeAlert" | "yawn";
 type EyeK = "dot" | "big" | "small" | "lid" | "slit" | "happy" | "dash" | "squeeze" | "shock" | "shockHalf" | "side" | "goggle" | "goggleHalf"
-  | "down" | "wideW";
+  | "down" | "wideW" | "gaze" | "gazeLow";
 type MouthK = "dash" | "frown" | "smirk" | "smile" | "smileWide" | "grin" | "o" | "O" | "wave" | "teeth" | "t0" | "t1" | "t2" | "pout" | "purse" | "smirk1"
   | "y0" | "y1" | "y2" | "pant" | "hmm" | "tight" | "lick";
 /** eyes [back, front], brows [inner, outer] offsets in u (+ = down), optional other brow, mouth kind */
@@ -318,8 +322,26 @@ const FACE: Record<Expr, { eye: [EyeK, EyeK]; brow: [number, number]; brow2?: [n
   brag: { eye: ["lid", "lid"], brow: [1, -2], brow2: [-7, -10], mouth: "grin" },
   chinUp: { eye: ["dot", "dot"], brow: [-6, -6], mouth: "smile" },
   thrill: { eye: ["big", "big"], brow: [-8, -7], mouth: "grin" },
+  // fix r3: directed-gaze faces (gaze = open white eyes, pupils pushed by look / lookY; gazeLow = a heavy lid over the
+  // top ~45 %, the pupil at the bottom: looking DOWN at the tape / the board / into the hatch)
+  gazeGrin: { eye: ["gaze", "gaze"], brow: [-6, -5], mouth: "grin" },
+  gazeSmile: { eye: ["gaze", "gaze"], brow: [-2, -3], mouth: "smile" },
+  gazeSmug: { eye: ["gaze", "gaze"], brow: [2, -2], brow2: [-5, -8], mouth: "smirk1" },
+  gazeFocus: { eye: ["gazeLow", "gazeLow"], brow: [2, -1], mouth: "pout" },
+  readLow: { eye: ["gazeLow", "gazeLow"], brow: [2.5, 2.5], mouth: "dash" },
+  lickLow: { eye: ["gazeLow", "gazeLow"], brow: [2.5, 2.5], mouth: "lick" },
+  curiousLow: { eye: ["gaze", "gaze"], brow: [1, 0], brow2: [-8, -11], mouth: "hmm" },
+  peerLow: { eye: ["gazeLow", "gazeLow"], brow: [4.5, 1], mouth: "tight" },
+  gazeGasp: { eye: ["gaze", "gaze"], brow: [-8, -7], mouth: "o" },
+  gazeWorry: { eye: ["gaze", "gaze"], brow: [-5, 3], mouth: "wave" },
+  gazeO: { eye: ["gaze", "gaze"], brow: [-9, -8], mouth: "O" },
+  sideGrin: { eye: ["side", "side"], brow: [-3, -4], mouth: "grin" },
+  gazeProud: { eye: ["gaze", "gaze"], brow: [-4, -5], mouth: "smileWide" },
+  gazeAlert: { eye: ["gaze", "gaze"], brow: [-7, -6], mouth: "dash" },
+  yawn: { eye: ["happy", "happy"], brow: [-4, -5], mouth: "O" },
 };
-const halfLid = (k: EyeK): EyeK => (k === "dot" || k === "small" || k === "big" || k === "side" ? "lid" : k === "lid" ? "slit" : k === "shock" ? "shockHalf" : k === "goggle" ? "goggleHalf" : k === "wideW" ? "lid" : k);
+const halfLid = (k: EyeK): EyeK => (k === "dot" || k === "small" || k === "big" || k === "side" ? "lid" : k === "lid" ? "slit" : k === "shock" ? "shockHalf" : k === "goggle" ? "goggleHalf" : k === "wideW" ? "lid"
+  : k === "gaze" ? "gazeLow" : k === "gazeLow" ? "slit" : k);
 const eyeKind = (k: EyeK, lid: number): EyeK =>
   lid >= 1 && k !== "happy" && k !== "squeeze" ? (k === "down" ? "down" : "dash") : lid > 0 ? halfLid(k) : k;
 
@@ -358,6 +380,31 @@ const eye = (p: Pen, kind: EyeK, x: number, ey: number, u: number, side: number,
       p.ell(x, ey - 0.5 * u, 10.5 * u, 11.5 * u, WHITE, 1.6 * u);
       const px = x + clamp(look, -1.4, 1.4) * 3.6 * u, py = ey - 0.5 * u + clamp(lookY, -1.2, 1.2) * 4.2 * u;
       p.dot(px, py, 4.6 * u, EYE); p.dot(px - 1.5 * u, py - 1.6 * u, 1.3 * u, WHITE);
+      break;
+    }
+    case "gaze": case "gazeLow": { // fix r3: a directed gaze (the style kit's side-eye, opened up): a white almond with a thin
+      // outline, a BIG dot pupil pushed up to ~85 % of the free room toward (look, lookY); gazeLow drops a heavy lid over
+      // the top ~45 % and keeps the pupil at the bottom (it reads as looking DOWN, never as shut, never at the lens)
+      const low = kind === "gazeLow", rx = (low ? 10.2 : 9.6) * u, ry = (low ? 9.4 : 8.8) * u, pr = (low ? 3.7 : 4.6) * u, cy0 = ey - 0.6 * u;
+      const lx2 = clamp(look, -1.4, 1.4) / 1.4, ly2 = low ? Math.max(0.8, clamp(lookY, -1.4, 1.4) / 1.4) : clamp(lookY, -1.4, 1.4) / 1.4;
+      const room = (r: number) => r - pr - 0.5 * u, n2 = Math.hypot(lx2, ly2) > 1 ? Math.hypot(lx2, ly2) : 1;
+      const px = x + (lx2 / n2) * room(rx) * 0.92, py = cy0 + (ly2 / n2) * room(ry) * 0.92;
+      const al = ellPts(x, cy0, rx, ry, 0, 360, 0, 32);
+      p.poly(al, WHITE, 0);
+      const yl = cy0 - 0.42 * ry;   // gazeLow: the lid covers the top ~30 %, a band of white shows ABOVE the low pupil
+      p.clip(al, () => {
+        p.dot(px, py, pr, EYE);
+        if (low) p.poly([[x - rx - 2 * u, cy0 - ry - 2 * u], [x + rx + 2 * u, cy0 - ry - 2 * u], [x + rx + 2 * u, yl], [x - rx - 2 * u, yl]], skin, 0);
+      });
+      if (low) {
+        p.arc(x, cy0, rx, ry, -6, 186, 1.5 * u, EYE);
+        const hw = rx * Math.sqrt(Math.max(0, 1 - ((yl - cy0) / ry) ** 2)) + 1.2 * u;
+        const tl = 1.2 * u * clamp(look, -1, 1); // the lid dips toward the look side
+        p.stroke([[x - hw, yl - tl], [x + hw, yl + tl]], lw * 1.05, EYE);
+      } else {
+        p.poly(al, null, 1.5 * u, EYE);
+        p.arc(x, cy0, rx, ry, 200, 340, lw * 0.8, EYE); // the upper lid line
+      }
       break;
     }
     case "happy": p.arc(x, ey + 3 * u, 7.5 * u, 6 * u, 200, 340, lw, EYE); break;
@@ -438,16 +485,20 @@ export type FaceX = { fdx?: number; fdy?: number; browUp?: [number, number]; win
   glassDy?: number; browMin?: number;
   /** lip flaps use the big shout shapes */
   yell?: boolean;
+  /** fix r3: one eye pops open into a directed gaze (screen side -1 / 1) while the other keeps the expression's eye */
+  open1?: number;
 };
 const faceFront = (p: Pen, cx: number, cy: number, W: number, expr: Expr, facing: number, look: number, lookY: number, lid: number,
   brim: boolean, skin: string, talk: number, glasses: string | null | undefined, X: FaceX = {}) => {
   const u = W / 100, F = FACE[expr], fx = cx + 7 * u * facing + (X.fdx ?? 0) * u, dy = (X.fdy ?? 0) * u;
   const gog = F.eye[0] === "goggle";
-  const ex = (F.eye[0] === "shock" ? 13 : gog ? 15.5 : F.eye[0] === "wideW" ? 13.5 : 12.5) * u, ey = cy + 2 * u + dy, bc = X.browCol ?? INK;
+  const gz = F.eye[0] === "gaze" || F.eye[0] === "gazeLow";
+  const ex = (F.eye[0] === "shock" ? 13 : gog ? 15.5 : F.eye[0] === "wideW" || gz ? 13.5 : 12.5) * u, ey = cy + 2 * u + dy, bc = X.browCol ?? INK;
   for (const side of [-1, 1]) {
     const x = fx + side * ex;
     let kind = eyeKind(F.eye[(facing ? side === facing : side > 0) ? 1 : 0], lid);
     if (X.wink && side === Math.sign(X.wink)) kind = "happy";
+    if (X.open1 && side === Math.sign(X.open1)) kind = "gaze";
     eye(p, kind, x, ey, u, side, look, lookY, skin);
     const [dI, dO] = side > 0 && F.brow2 ? F.brow2 : F.brow;
     const up = X.browUp ? X.browUp[side < 0 ? 0 : 1] : 0;
@@ -850,8 +901,9 @@ const holdProp = (p: Pen, kind: Hold, hx: number, hy: number, u: number, ang: nu
     }
     case "card": { // a plain payment card (no logo, no text): cream with a blue band; fix r2: n = size (default 1)
       const z = n > 0 ? n : 1;
-      p.poly(R(rrect(hx - 3 * u, hy - 4 * u - 11 * u * z, hx - 3 * u + 16 * u * z, hy - 4 * u, 1.2 * u * z)), "#f6f1e4", 1.3 * u * Math.sqrt(z));
-      p.poly(R(rrect(hx - 3 * u, hy - 4 * u - 8.4 * u * z, hx - 3 * u + 16 * u * z, hy - 4 * u - 5.6 * u * z, 0)), "#3f9a6a", 0);
+      // fix r3 (A3 P2): pale green with one white stripe (no logo, no text)
+      p.poly(R(rrect(hx - 3 * u, hy - 4 * u - 11 * u * z, hx - 3 * u + 16 * u * z, hy - 4 * u, 1.2 * u * z)), "#a8dcb0", 1.3 * u * Math.sqrt(z));
+      p.poly(R(rrect(hx - 3 * u, hy - 4 * u - 8.4 * u * z, hx - 3 * u + 16 * u * z, hy - 4 * u - 6.2 * u * z, 0)), "#ffffff", 0);
       p.dot(hx, hy, 5.6 * u);
       break;
     }
@@ -1016,6 +1068,9 @@ export type PersonOpts = {
    *  pencil behind the ear on / off (overrides outfit.pencil), a sweat drop on the brow (0..1 scale), the umbrella's
    *  canopy tilt (deg, + = toward screen right) */
   noReel?: boolean; earNote?: boolean; earPencil?: boolean; sweat?: number; umbTilt?: number;
+  /** fix r3: a banknote tucked into the breast pocket (40 % of it sticking up, angled 15 deg); a 2nd sweat drop (0..1);
+   *  a gulp (0..1: the chin dips, a throat bob line) */
+  pocketNote?: boolean; sweat2?: number; gulp?: number;
   /** fix r1: rain ticks bounce off the umbrella canopy (a video-frame phase; -1 = none) */
   rain?: number;
   /** fix r2: kneel mode blend 0 (standing) .. 1 (one knee down; > 1 = a deeper dip / anticipation), so kneeling down and
@@ -1531,6 +1586,9 @@ export const drawPerson = (p: Pen, o: Outfit, opts: PersonOpts) => {
     if (o.hairStyle === "bowl" && !o.hat) { X.fdy = (X.fdy ?? 0) + 7; X.browGap = 13.5; }
     // brows that rise into a dark fringe keep a skin-coloured halo so they always act
     if (!o.hat && o.hairStyle && o.hairStyle !== "none" && o.hairStyle !== "bob") X.browHalo = skin;
+    // fix r3 (A3 P2): slicked hair: the brow tops never rise past 3 % of the head height under the hairline (raised brows
+    // inside black hair read as goggles pushed up on the head); the hairline at the brows sits ~5.5 u above the cut
+    if (!o.hat && o.hairStyle === "slick") { const hl = ((0.19 + (o.fringeUp ?? 0)) * HH * 1.06) / u + 5.5; X.browMin = Math.max(X.browMin ?? -99, -(hl - 3)); }
     if (capLike) { X.browHalo = skin; X.browMin = X.browMin ?? -18.5; X.browGap = X.browGap ?? 14; }
     if (o.browCol) X.browCol = o.browCol;
     if (o.moustache) X.moustache = o.moustache;
@@ -1545,6 +1603,20 @@ export const drawPerson = (p: Pen, o: Outfit, opts: PersonOpts) => {
       g.save(); g.globalCompositeOperation = "multiply"; g.fillStyle = gr;
       p.path(rrect(300 - 1.3 * H.a, top - 0.2 * H.b, 300 + 1.3 * H.a, bot, 1), true); g.fill(); g.restore();
     });
+  }
+  if (opts.pocketNote && !back) { // fix r3 (A3 P3): the banknote tucked into the breast pocket (screen right), 40 % sticking up
+    const px = tcx + 0.5 * T.a, py = chin + 0.3 * HH, a = rad(15), R2 = (pts: P2[]) => rotPts(pts, a, px, py);
+    p.poly(R2(rrect(px - 9 * u, py - 18 * u, px + 9 * u, py + 6 * u, 1 * u)), "#9cc48a", 1.4 * u);
+    p.ell(...R2([[px, py - 10 * u]])[0], 3.2 * u, 3.2 * u, null, 1 * u, 0, 360, 0, "#4a7a3a");
+    p.poly(rrect(px - 12 * u, py - 1 * u, px + 12 * u, py + 9 * u, 1 * u), shade(o.shirt, 0.9), 1.4 * u); // the pocket welt over it
+  }
+  if (opts.gulp && !back) { // fix r3: a gulp: a small throat-bob tick under the chin
+    const k = clamp(opts.gulp, 0, 1); p.arc(300, hc + 1.02 * H.b + 2 * u * k, 5 * u, 3 * u * k, 20, 160, 1.6 * u, INK);
+  }
+  if (opts.sweat2 && !back) { // a second sweat drop on the far temple
+    const sx = 300 + 0.66 * H.a, sy = hc - 0.3 * H.b, k = opts.sweat2;
+    p.poly([[sx, sy - 11 * u * k], [sx + 5 * u * k, sy + 1 * u * k], [sx, sy + 5 * u * k], [sx - 5 * u * k, sy + 1 * u * k]], "#8fd0f0", 1.3 * u);
+    p.dot(sx, sy + 0.6 * u * k, 4.8 * u * k, "#8fd0f0"); p.arc(sx - 1.4 * u * k, sy, 2.2 * u * k, 3 * u * k, 160, 250, 1.1 * u, "#ffffff");
   }
   if (opts.earNote && !back) { // fix r1: a banknote tucked behind the ear (shot 5)
     const s = -1, px = 300 + s * 0.98 * H.a, py = hc - 0.2 * H.b;
@@ -1575,7 +1647,7 @@ export const drawPerson = (p: Pen, o: Outfit, opts: PersonOpts) => {
  *  arm in the outfit's sleeve colour from S (shoulder) to Hd (hand) in this card's design units, the hand (ball or
  *  thumb) and a held prop; k = stroke scale (the arm card sits nearer the lens than the body: k = its distance / the
  *  body's), u = the owner's head unit */
-export const drawLoneArm = (p: Pen, o: Outfit, S: P2, Hd: P2, side: number, u0: number, k: number, hand: { hold?: Hold; ang?: number; n?: number; bend?: number; elbow?: number; up?: number },
+export const drawLoneArm = (p: Pen, o: Outfit, S: P2, Hd: P2, side: number, u0: number, k: number, hand: { hold?: Hold; ang?: number; n?: number; bend?: number; elbow?: number; up?: number; thumb?: number; w?: number },
   light = DEF_LIGHT) => {
   const u = u0 * k, armCol = mix(o.cardigan ?? o.shirt, INK, 0.88), dx = Hd[0] - S[0], dy = Hd[1] - S[1], l = Math.hypot(dx, dy) || 1;
   const bulge = 0.2 * l * (hand.bend ?? 1);
@@ -1598,6 +1670,13 @@ export const drawLoneArm = (p: Pen, o: Outfit, S: P2, Hd: P2, side: number, u0: 
     p.band(arm.slice(0, 11), o.shirt, 9.5 * u, 1.3 * u, "round");
     const [cx2, cy2] = arm[10], [ax, ay] = arm[9], a2 = Math.atan2(cy2 - ay, cx2 - ax);
     p.band([[cx2, cy2], [cx2 + Math.cos(a2) * 3 * u, cy2 + Math.sin(a2) * 3 * u]], "#f6f3ec", 7.5 * u, 1.1 * u, "round");
+  }
+  if (hand.thumb !== undefined) { // fix r3: a fist with the thumb jerked out along `thumb` (deg, 0 = up)
+    const v = u * 1.9, R2 = (pts: P2[]) => rotPts(pts, rad(hand.thumb!), Hd[0], Hd[1]);
+    p.band(R2([[Hd[0], Hd[1] - 3 * v], [Hd[0], Hd[1] - 15 * v]]), HAND, 5 * v, 1.4 * u, "round");
+    p.ell(Hd[0], Hd[1], 7.5 * v, 6.5 * v, HAND, 1.5 * u);
+    for (const kk of [-1, 0, 1]) p.stroke(R2([[Hd[0] + 2 * v, Hd[1] + kk * 2.6 * v], [Hd[0] + 6 * v, Hd[1] + kk * 2.6 * v]]), 1 * u, HAND_L);
+    return;
   }
   p.dot(Hd[0], Hd[1], 5.6 * u);
   holdProp(p, hand.hold ?? null, Hd[0], Hd[1], u, hand.ang ?? 0, side, light, hand.n ?? 0);
@@ -1664,7 +1743,7 @@ export const fxContact = (p: Pen, col: string) => {
 // ---------------- the wardrobe (one body colour + one signature item each; generic cartoons, NO likenesses, NO logos) ----------------
 /** TINO (the main character): a round barrel of a man, slicked black hair, a double-breasted GREY suit, a GOLD tie with
  *  little oil drops, a gold pocket square and the gold oil-can lapel pin. Nobody else wears grey + gold. */
-export const TINO_FIT: Outfit = { shirt: "#8a8f99", pants: "#6f737c", shoes: "#3a2418", hair: "#141018", hairStyle: "slick", tie: "#e0a92a", tieDrops: "#8a5a0e",
+export const TINO_FIT: Outfit = { shirt: "#8a8f99", pants: "#6f737c", shoes: "#3a2418", hair: "#141018", hairStyle: "slick", fringeUp: 0.05, tie: "#e0a92a", tieDrops: "#8a5a0e",
   suit: { double: true, square: "#f2c230" }, pin: "oilcan", build: "round" };
 /** TINO'S TANK MAN: denim bib overalls over a cream work shirt (sleeves rolled), a red cap, the weighted measuring tape
  *  on a big red-orange reel clipped to his tool belt */
@@ -1721,7 +1800,9 @@ export type BlobSt = { sq: number; lean: number; look: number; blink: boolean; m
   pose?: number; huff?: number; lookY?: number;
   /** fix r2: the sweat drop slides down the temple (0..1), the pant mouth (true = the open huff, false = the tired smirk),
    *  cheeks puffing (0..1), the C thumbs-up drooping (0..1) */
-  sweatY?: number; huffOpen?: boolean; cheek?: number; droop?: number };
+  sweatY?: number; huffOpen?: boolean; cheek?: number; droop?: number;
+  /** fix r3: dizzy spiral eyes (the spin phase; undefined = off) */
+  dizzy?: number };
 export const drawBlob = (p: Pen, b: BlobSt) => {
   const g = p.g, cx = 256, base = 470, w = 128 * (1 + 0.16 * b.sq), h = 300 * (1 - 0.14 * b.sq), top = base - h;
   const pose = b.pose ?? 0, bow = pose === 1 ? b.cheer : 0, lean = b.lean + 0.55 * bow;
@@ -1739,7 +1820,8 @@ export const drawBlob = (p: Pen, b: BlobSt) => {
   };
   const wipeOn = b.wipe > 0 && b.wipe < 1;
   // fix r2: the wipe hand travels an arc ABOVE the brows (left -> right), the eyes squeezed shut ^^ while it passes
-  const wipeHand: P2 = [cx - 0.3 * w + 1.25 * w * b.wipe, base - 0.45 * h + bow * 22 - 66 - 10 * Math.sin(Math.PI * b.wipe)];
+  // fix r3 (A3 P2): the wipe goes ACROSS the brow at brow height, from the right temple to the left temple (16-18 f)
+  const wipeHand: P2 = [cx + 0.72 * w - 1.3 * w * b.wipe, base - 0.45 * h + bow * 22 - 38 - 6 * Math.sin(Math.PI * b.wipe)];
   // body: a warm radial gold (pale top-left, amber bottom-right) + a bright inner bounce on the lower right
   const gr = g.createRadialGradient(cx - 0.35 * w, top + 0.55 * h, 10, cx, base - 0.4 * h, 1.15 * h);
   gr.addColorStop(0, "#ffe9a0"); gr.addColorStop(0.35, "#f8c53e"); gr.addColorStop(0.75, "#e89a1c"); gr.addColorStop(1, "#b86a0c");
@@ -1752,7 +1834,10 @@ export const drawBlob = (p: Pen, b: BlobSt) => {
   // the face
   const ey = base - 0.45 * h + bow * 22, ex = 46, lx = b.look * 9 + lean * 22, ly = (b.lookY ?? 0) * 8;
   const tired = b.mood === "tired" || b.mood === "sigh", happyEyes = b.mood === "proud" || b.mood === "beam" || bow > 0.3;
-  if (b.blink || happyEyes || wipeOn) for (const s of [-1, 1]) p.arc(cx + s * ex + lx * 0.5, ey + 6, 18, 12, 200, 340, 9, INK);
+  if (b.dizzy !== undefined && !wipeOn) for (const s of [-1, 1]) { // fix r3: the dizzy "counted again and again" take
+    const sp: P2[] = []; for (let k = 0; k <= 40; k++) { const t = k / 40, a = t * Math.PI * 4.5 + b.dizzy * s; sp.push([cx + s * ex + lx * 0.5 + Math.cos(a) * 20 * t, ey + Math.sin(a) * 20 * t]); }
+    p.stroke(sp, 5.5, INK); }
+  else if (b.blink || happyEyes || wipeOn) for (const s of [-1, 1]) p.arc(cx + s * ex + lx * 0.5, ey + 6, 18, 12, 200, 340, 9, INK);
   else for (const s of [-1, 1]) {
     if (tired) { p.ell(cx + s * ex + lx, ey + 2 + ly * 0.4, 15, 13, INK, 0, 0, 180); p.stroke([[cx + s * ex - 20 + lx * 0.4, ey + 1], [cx + s * ex + 20 + lx * 0.4, ey + 1]], 8, INK); continue; }
     p.ell(cx + s * ex + lx, ey + ly, 14, 21, INK, 0);
@@ -1779,9 +1864,11 @@ export const drawBlob = (p: Pen, b: BlobSt) => {
   else if (b.cheer > 0 && pose === 2) { const dr = clamp(b.droop ?? 0, 0, 1); arm(-1, [cx - w - 18, base - 0.12 * h]); arm(1, lerp2([cx + w + 18, base - 0.16 * h], [cx + w + 34 + 14 * dr, top + 0.42 * h + 46 * dr], b.cheer), b.cheer > 0.5); }
   else {
     arm(-1, [cx - w - 18, base - 0.16 * h]);
-    if (wipeOn) { // the arm rises from the shoulder ABOVE the near eye first (a high control point), then sweeps the brow
-      const S = sh(1), H2 = wipeHand; p.stroke(curve(S, [S[0] + 14, H2[1] - 34], H2, 12), 15, INK);
-      p.ell(H2[0], H2[1], 24, 19, INK, 0); p.stroke([[H2[0] - 12, H2[1] + 4], [H2[0] + 10, H2[1] + 6]], 3, "#8a7590");
+    if (wipeOn) { // fix r3: the forearm comes in from the right side with the elbow BELOW the body's widest line (outside
+      // the silhouette), the mitten sweeping across the brow
+      const S = sh(1), H2 = wipeHand, E: P2 = [cx + w + 34, base - 0.42 * h];
+      p.stroke(curve(S, [S[0] + 30, S[1] + 4], E, 6).concat(curve(E, [(E[0] + H2[0]) / 2 + 20, (E[1] + H2[1]) / 2 + 10], H2, 10).slice(1)), 20, INK);
+      p.ell(H2[0], H2[1], 26, 20, INK, 0); p.stroke([[H2[0] - 12, H2[1] + 4], [H2[0] + 10, H2[1] + 6]], 3, "#8a7590");
     }
     else arm(1, [cx + w + 18, base - 0.16 * h]);
   }
@@ -1789,7 +1876,7 @@ export const drawBlob = (p: Pen, b: BlobSt) => {
   // fix r2: the drop is 1.7x (it reads at phone size) and slides down the temple (sweatY); the wipe takes it off at ~0.8
   if (b.sweat > 0 && !(b.wipe >= 0.78 && b.wipe < 1)) { const sy = top + 0.36 * h + 41 * clamp(b.sweatY ?? 0, 0, 1), sx = cx + 0.62 * w, z = 1.7 * b.sweat;
     p.rot = [0.35, sx, sy]; p.poly([[sx, sy - 34 * z], [sx + 15 * z, sy - 2 * z], [sx, sy + 24 * z], [sx - 15 * z, sy - 2 * z]], "#8fd0f0", 6); p.ell(sx, sy + 4 * z, 15 * z, 19 * z, "#8fd0f0", 0); p.arc(sx - 5 * z, sy, 5 * z, 10 * z, 160, 250, 4, "#ffffff"); p.rot = null; }
-  if (b.wipe >= 0.66 && b.wipe < 1) { const t = (b.wipe - 0.66) / 0.34, H2 = wipeHand; for (const [dx, dy, r] of [[1.3, -0.7, 13], [1.6, -0.25, 9], [1.15, 0.15, 7]] as const) p.ell(H2[0] + 20 + dx * 80 * t, H2[1] + dy * 70 * t + 70 * t * t, r, r * 1.3, "#8fd0f0", 4); }
+  if (b.wipe >= 0.66 && b.wipe < 1) { const t = (b.wipe - 0.66) / 0.34, H2 = wipeHand; for (const [dx, dy, r] of [[1.3, -0.7, 13], [1.6, -0.25, 9], [1.15, 0.15, 7]] as const) p.ell(H2[0] - 20 - dx * 80 * t, H2[1] + dy * 70 * t + 70 * t * t, r, r * 1.3, "#8fd0f0", 4); } // flung off to the left
 };
 /** the joke fish (shots 10 / 12) on a 512 x 320 canvas, facing right: a small orange cartoon fish, calm and unbothered,
  *  tail wag (tail -1..1), blink; fix r1: pectoral fin flutter (fin -1..1), lid 0 (eye open, looking up by `up` 0..1)
@@ -1858,7 +1945,7 @@ export const drawClipboard = (p: Pen, tick: number, tap: number, lift: number, p
   const A: P2 = [356, 282], B: P2 = [392, 330], C: P2 = [470, 204], L1 = Math.hypot(B[0] - A[0], B[1] - A[1]), L2 = Math.hypot(C[0] - B[0], C[1] - B[1]);
   const d = clamp(tick, 0, 1) * (L1 + L2), tip: P2 = d <= L1 ? lerp2(A, B, d / L1) : lerp2(B, C, (d - L1) / L2);
   if (tick > 0) {
-    g.strokeStyle = "#c0241c"; g.lineWidth = 24; g.lineCap = "round"; g.lineJoin = "round";
+    g.strokeStyle = "#d8342c"; g.lineWidth = 30; g.lineCap = "round"; g.lineJoin = "round"; // fix r3: a bolder red tick
     g.beginPath(); g.moveTo(...A); if (d > L1) g.lineTo(...B); g.lineTo(...tip); g.stroke();
   }
   // the left hand grips the board's left edge (thumb over the front)
@@ -1896,7 +1983,7 @@ export const drawReflection = (p: Pen, rip: number, expr: Expr, blink: number, r
   const hp = blobPts(cx, cy, H);
   q.shadedFill(hp, "#ffe8a8", "#f0bf5a", rad(-120), H.a);
   q.inkRing(hp, 9, thickAngle(DEF_LIGHT), 0.45, ink);
-  faceFront(q, cx, cy, W, expr, 0, 0, expr === "goggleO" || expr === "ohWide" ? -0.4 : 0.6, blink, false, "#ffe8a8", -1, null, { browCol: "#4a2a08", fdy: 3 });
+  faceFront(q, cx, cy, W, expr, 0, 0, expr === "goggleO" || expr === "ohWide" ? -0.4 : 0, blink, false, "#ffe8a8", -1, null, { browCol: "#4a2a08", fdy: 3 });
   // the fedora (as the real one: a pinched crown, a dark band, a curled snap brim) in dark bronze
   const HH = 2 * H.b, by = cy - 0.62 * H.b;
   const brim = ellPts(cx, by, 0.64 * W, 0.078 * HH, 0, 360, 0, 40).map(([x, y]) => [x, y - 3.6 * (W / 100) * (((x - cx) / (0.64 * W)) ** 2)] as P2);
@@ -1905,14 +1992,17 @@ export const drawReflection = (p: Pen, rip: number, expr: Expr, blink: number, r
   q.poly(crown, "#5a3812", 8, ink);
   q.clip(crown, () => { q.band([[cx - 0.4 * W, by - 0.055 * HH], [cx + 0.4 * W, by - 0.055 * HH]], "#2a1806", 0.085 * HH, 0); q.stroke(curve([cx - 0.24 * W, by - 0.12 * HH], [cx - 0.2 * W, by - 0.25 * HH], [cx - 0.08 * W, by - 0.31 * HH], 8), 5, "#a07a3a"); });
   // copy it in with a horizontal ripple (rows shift by a sine that travels with rip; the bubble ring adds a wobble)
-  const A = 5 + 9 * Math.sin(Math.PI * Math.min(1, ring));
-  g.save(); g.globalAlpha = 0.82;
-  for (let y = 0; y < 512; y += 4) { const dx = A * Math.sin(y * 0.055 + rip * 3.1) + 2 * Math.sin(y * 0.13 - rip * 2); g.drawImage(off, 0, y, 512, 4, dx, y, 512, 4); }
+  // fix r3 (A3 P2): the ripple is a gentle sway (<= ~2.5 canvas px: <= 2 px on screen), never a lumpy silhouette
+  const A = 1.3 + 0.9 * Math.sin(Math.PI * Math.min(1, ring));
+  g.save(); g.globalAlpha = 0.86;
+  for (let y = 0; y < 512; y += 4) { const dx = A * Math.sin(y * 0.035 + rip * 3.1) + 0.5 * Math.sin(y * 0.09 - rip * 2); g.drawImage(off, 0, y, 512, 4, dx, y, 512, 4); }
   g.restore();
   // ripple rings (the oil breathes) + the bubble's ring expanding from his chin; fix r2: every ring centred on the CHIN
   // (and starting outside the face), never round an eye
   for (let k = 0; k < 4; k++) { const r = 150 + 52 * k + 14 * rip; g.save(); g.globalAlpha = 0.4 - 0.08 * k; p.ell(cx, cy + 1.05 * H.b, r, r * 0.86, null, 5, 0, 360, 0, "#fff3c0"); g.restore(); }
-  if (ring > 0 && ring < 1) { g.save(); g.globalAlpha = 0.9 * (1 - ring); const r = 18 + 230 * ring; p.ell(cx, cy + 1.05 * H.b, r, r * 0.8, null, 7 * (1 - 0.5 * ring), 0, 360, 0, "#fffbe0"); g.restore(); }
+  // fix r3: the bloop ring starts at the chin 0.6 face widths to the RIGHT and grows 0 -> 0.75 W radius with a fade, so it
+  // never frames the mouth (no pacifier / nose-ring read)
+  if (ring > 0 && ring < 1) { g.save(); g.globalAlpha = 0.9 * (1 - ring) ** 1.3; const r = 6 + 0.75 * W * ring; p.ell(cx + 0.6 * W, cy + 1.0 * H.b, r, r * 0.62, null, 6 * (1 - 0.5 * ring), 0, 360, 0, "#fffbe0"); g.restore(); }
   // the edges dissolve into the oil
   g.save(); g.globalCompositeOperation = "destination-in";
   const fade = g.createRadialGradient(cx, cy + 20, 140, cx, cy + 20, 256); fade.addColorStop(0, "rgba(0,0,0,1)"); fade.addColorStop(1, "rgba(0,0,0,0)");
@@ -1922,11 +2012,13 @@ export const drawReflection = (p: Pen, rip: number, expr: Expr, blink: number, r
 /** shout lines on a 256 x 256 canvas: 3 thick strokes fanning out from the centre (the mouth): right / down-right / down
  *  (mirror the card for the other side); k 0..1 pulses their length */
 export const fxShout = (p: Pen, k: number) => {
-  for (const [a, l] of [[18, 0.85], [52, 1], [86, 0.8]] as const) {
-    const r = rad(a), r0 = 58 + 8 * k, r1 = r0 + (34 + 22 * k) * l, x0 = 128 + Math.cos(r) * r0, y0 = 128 + Math.sin(r) * r0, x1 = 128 + Math.cos(r) * r1, y1 = 128 + Math.sin(r) * r1;
-    // fix r1: plain ink emanation strokes, thin at the mouth end and thick at the far end (they read as sound, not as objects)
-    const nx = -(y1 - y0) / Math.hypot(x1 - x0, y1 - y0), ny = (x1 - x0) / Math.hypot(x1 - x0, y1 - y0);
-    p.poly([[x0 + nx * 2, y0 + ny * 2], [x1 + nx * 7, y1 + ny * 7], [x1 - nx * 7, y1 - ny * 7], [x0 - nx * 2, y0 - ny * 2]], INK, 0); p.dot(x1, y1, 7, INK);
+  // fix r3 (A3 P2): three short CURVED sound arcs, concentric round the mouth (the card centre), opening toward the
+  // down-right (mirror the card for down-left); they start a little in front of the mouth and pulse outward with k
+  const dir = 52, span = 30;
+  for (let i = 0; i < 3; i++) {
+    const r = 26 + 22 * i + 8 * k, w = 5.2 - 0.6 * i, a0 = dir - span + 4 * i, a1 = dir + span - 4 * i, pts: P2[] = [];
+    for (let j = 0; j <= 12; j++) { const a = rad(a0 + ((a1 - a0) * j) / 12); pts.push([128 + Math.cos(a) * r, 128 + Math.sin(a) * r]); }
+    p.stroke(pts, w, INK);
   }
 };
 /** shot 11 (fix r1): a FRIENDLY cartoon hand gripping the dressing bottle by its NECK (so the oil layer stays in view), on
@@ -1941,13 +2033,14 @@ export const drawShakeHand = (p: Pen, sw: number, sq = 0) => {
   p.stroke(curve([960, 60], [880, 200], [760, 300], 8), 8, "#6a6f79");                                       // a fold
   const cuffA: P2 = [wr[0] + 40, wr[1] - 36], cuffB: P2 = [wr[0] - 6, wr[1] + 8];
   p.band([cuffA, cuffB], "#f6f3ec", 150, 10, "round");
-  p.ell(wr[0] + 26, wr[1] - 30, 17, 12, "#f2c234", 6); p.dot(wr[0] + 21, wr[1] - 34, 5, "#fff6c8");         // the gold cufflink
+  pinOilcan(p, wr[0] + 24, wr[1] - 30, 3.2); p.dot(wr[0] + 20, wr[1] - 38, 4, "#fff6c8");                   // fix r3: the gold OIL-CAN cufflink
   // the glove: the palm + back of the hand behind the neck, the fingers wrapped across its front
   const s = 1 - 0.06 * sq;
   p.ell(G[0] + 70, G[1] - 40, 112 * s, 92, "#fbf8f2", 10);
   for (const k of [-1, 0, 1]) p.stroke(curve([G[0] + 40 + k * 26, G[1] - 100], [G[0] + 60 + k * 28, G[1] - 70], [G[0] + 70 + k * 30, G[1] - 30], 6), 6, "#d8d0c4");
   for (let k = 0; k < 4; k++) { const y = G[1] - 52 + k * 36 * s; p.band([[G[0] + 66, y], [G[0] - 74 * s, y + 10]], "#fbf8f2", 40, 9, "round"); p.stroke([[G[0] - 30, y + 2], [G[0] - 62 * s, y + 8]], 4, "#d8d0c4"); }
   p.band([[G[0] + 40, G[1] - 96], [G[0] - 56 * s, G[1] - 112]], "#fbf8f2", 44, 9, "round");                  // the thumb
+  p.band([[G[0] - 4, G[1] - 22], [G[0] - 2, G[1] + 4]], "#f2c234", 12, 4, "round"); p.dot(G[0] - 3, G[1] - 14, 4, "#fff6c8"); // a gold signet ring
 };
 /** shot 11 (fix r1): a small tabby cat sitting on the table (person-card design space 600 x 1000, sitting on the soles
  *  line y 975): tilt = head tilt (deg), eye 0 open / 1 wide / 2 half-lid / 3 shut, tail = swish (-1..1), look = pupils */
@@ -1967,7 +2060,7 @@ export const drawCat = (p: Pen, c: CatSt, light = DEF_LIGHT) => {
     // the tail curling round the front paws (swishing); fix r2: it can curl up into a question mark
     const tl = curl > 0.02
       ? curve([400, 930], [530 - 20 * curl, 860 - 120 * curl], [480 + 10 * c.tail, 760 - 200 * curl], 14)
-      : curve([400, 930], [520 + 30 * c.tail, 900 - 60 * c.tail], [470 + 70 * c.tail, 760 - 40 * c.tail], 14);
+      : curve([400, 930], [525 + 55 * c.tail, 890 - 80 * c.tail], [480 + 150 * c.tail, 760 - 70 * c.tail], 14); // fix r3: a wide, readable swish
     p.band(tl, fur, 44, 9, "round"); for (let k = 3; k < 13; k += 3) p.stroke([[tl[k][0] - 18, tl[k][1] - 6], [tl[k][0] + 18, tl[k][1] + 6]], 7, str);
     if (curl > 0.02) { const [ex, ey] = tl[tl.length - 1]; p.band(curve([ex, ey], [ex - 50 * curl, ey - 70 * curl], [ex - 96 * curl, ey - 10 * curl], 10), fur, 40, 9, "round"); }
     // body: a sitting pear
@@ -2068,6 +2161,30 @@ export const drawTopFist = (p: Pen, bob: number, sq = 0) => {
   for (const k of [-1, 0, 1]) p.stroke([[208 - 2 * sq, y - 2 + k * 10 * s], [226 - 3 * sq, y - 3 + k * 10 * s]], 4, "#9a86a2");
   p.band([[186, y - 24 * s + 3 * sq], [214 - 2 * sq, y - 30 * s + 5 * sq]], "#3e2c3c", 16, 6, "round");
   p.arc(192, y - 12, 16, 9, 200, 300, 4, "#b8a4c0");
+};
+/** fix r3 (A3 P2, the loop shot): the tank man's long dawn SILHOUETTE SHADOW lying on the roof, for a multiply blob card on
+ *  a 512 x 192 canvas (white = no shadow): his kneeling body from the left (off the frame edge) to the head at the right
+ *  end with the red cap's peak sticking out, and the reaching arm toward the hatch; soft edges; col = the shadow colour */
+export const fxManShadow = (p: Pen, col: string, alpha = 1) => {
+  // (alpha < 1: a see-through violet silhouette on a clear canvas for a SOFT card, drawn over the oil shader)
+  const g = p.g;
+  if (alpha >= 1) { g.fillStyle = "#ffffff"; g.fillRect(0, 0, 512, 192); }
+  g.save(); g.filter = "blur(5px)"; g.fillStyle = col; g.globalAlpha = Math.min(1, alpha);
+  const sil: P2[] = [];
+  for (let i = 0; i <= 24; i++) { const t = i / 24; sil.push([-20 + 330 * t, 96 - (40 + 14 * Math.sin(Math.PI * t)) * (0.85 + 0.15 * t)]); }   // the back
+  sil.push([330, 60], [352, 74]);                                                                                                         // the neck
+  for (let i = 0; i <= 24; i++) { const t = 1 - i / 24; sil.push([-20 + 330 * t, 96 + (36 + 10 * Math.sin(Math.PI * t)) * (0.85 + 0.15 * t)]); } // the knees / belly side
+  p.path(sil, true); g.fill();
+  g.beginPath(); g.ellipse(392, 94, 50, 46, 0, 0, Math.PI * 2); g.fill();                                                              // the head
+  g.beginPath(); g.moveTo(402, 50); g.quadraticCurveTo(452, 46, 470, 70); g.lineTo(506, 84); g.lineTo(468, 100); g.quadraticCurveTo(430, 104, 400, 96); g.closePath(); g.fill(); // cap + peak
+  g.lineCap = "round"; g.strokeStyle = col; g.lineWidth = 22; g.beginPath(); g.moveTo(300, 128); g.quadraticCurveTo(370, 150, 430, 146); g.stroke();             // the arm toward the hatch
+  g.restore();
+};
+/** fix r3 (shot 11): two short curved motion arcs beside the shaken bottle (k 0..1 fades them in / out) on a 128 x 128 card */
+export const fxMotion = (p: Pen, k: number) => {
+  const g = p.g; g.save(); g.globalAlpha = clamp(k, 0, 1);
+  for (const [r, w] of [[40, 7], [58, 5.5]] as const) p.arc(30, 64, r, r * 1.15, -38, 38, w, INK);
+  g.restore();
 };
 /** a single banknote (128 x 64) */
 export const fxBill = (p: Pen) => {

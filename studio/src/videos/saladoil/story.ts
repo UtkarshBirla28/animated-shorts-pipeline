@@ -318,14 +318,14 @@ const toOrb = (c: Shot): Orb => {
  *  on their own eases (ang: the elevation / bearing swing, so the lens can stay far out while it swings over a cut edge
  *  and only close in, or pull out, where the geometry allows). One smooth bell of screen motion, no crash zoom. */
 const orbitLog = (a: (f: number) => Shot, bF: (f: number) => Shot, f0: number, dur: number, ease: (u: number) => number,
-  ang: (u: number) => number = ease, tgt: (u: number) => number = ease) => (f: number): Shot => {
+  ang: (u: number) => number = ease, tgt: (u: number) => number = ease, fovE?: (u: number) => number) => (f: number): Shot => {
   const t = clamp01(vt(f, f0, dur));
   if (t <= 0) return full(a(f));
   if (t >= 1) return full(bF(f));
   const A = toOrb(a(f)), Bo = toOrb(bF(f)), s = ease(t), sa = ang(t), st = tgt(t);
   let db = Bo.b - A.b; if (db > 180) db -= 360; if (db < -180) db += 360;
   const d = A.d * Math.pow(Bo.d / A.d, s), el = A.el + (Bo.el - A.el) * sa, b = A.b + db * sa, T = lerp3(A.t, Bo.t, st);
-  return { pos: orbPos(T, d, el, b), look: T, fov: A.fov + (Bo.fov - A.fov) * s, roll: 0 };
+  return { pos: orbPos(T, d, el, b), look: T, fov: A.fov + (Bo.fov - A.fov) * (fovE ? fovE(t) : s), roll: 0 };
 };
 /** CAM r2: framing F exactly at fL with a push (rate) and a drift of the LENS only (dp, m per VIDEO frame; the look stays
  *  put): a slow parallax arc round the subject on a hold (life without growing anything off the frame edges) */
@@ -343,8 +343,13 @@ const arcL = (F: Frame, fL: number, rate: number, dp: V3) => (f: number): Shot =
 // sits >= 80 px inside the left edge and the LOANS board's right edge <= 1010 px; the pull-out runs on a cruise ease
 // (peak ~1.4x its mean speed instead of 1.9x) and lands ~112, before the flaps roll; the hold is a slow parallax arc
 // (the lens drifts round the hatch, a 0.04 %/f push), so nothing grows off the frame edges
-const W1: Frame = fr(tk([2.1, 14.0, 9.3]), tk([0.0, 11.4, 5.2]), 61, 0.43, 0.6);
-const R1_V = 16, R1_VD = 96;
+// CAM r3 (A3 P2 x2): the landing tilts ~2.5 deg down from 0.25 m lower on a 2 deg wider lens: the hatch's near rim
+// lands ABOVE the caption band (<= 1280 at 1080), his face at y ~910, the skyline top where it was; the pull-out starts
+// 12 f sooner and runs 80 f on a cruise ease (the scale change still even, peak ~18 px/f), so the tank man's whole
+// head is >= 60 px inside the left edge from "a man" (56) on, and it lands ~84 (well before the flaps roll)
+const W1: Frame = fr(tk([2.0, 13.75, 9.3]), tk([0.0, 11.4, 5.2]), 63, 0.43, 0.54);
+const R1_V = 4, R1_VD = 80;
+const R1_E = cruise(0.3, 0.42);
 const W1_ARC: V3 = [-0.0016, 0.0004, 0.0004];
 // ---- shot 2 (CAM r1, Tino now just inside the gate): A = from the street, the ALLIED / VEGETABLE OIL sign whole and
 // readable in the top third, Tino under it (~17 % of the height) from "Meet"; ONE 68 f glide (4 m, outside the gate,
@@ -355,9 +360,18 @@ const W1_ARC: V3 = [-0.0016, 0.0004, 0.0004];
 // gate, so the sign's beam stays above the frame top while the lens tilts up a little (less asphalt, the No. 7 wall
 // towering); the glide is a log-scale dolly (an even zoom over the 12 m), 90 f, landing just after "king"
 const TINO2: V3 = add3(tf(TF.tino), [0, 0.85, 0]);
-const S2A: Frame = fr(tf([-0.35, 1.6, 31.5]), TINO2, 26.5, 0.448, 0.62);
-const S2B: Frame = fr(tf([2.0, 0.7, 19.2]), TINO2, 45, 0.6, 0.56);
-const R2_V = V(BEAT.tino) + 6, R2_VD = 90;
+// CAM r3 (A3 P2 x2 + LEAD decision): A ~8 % tighter (the sign still whole, ~40 px margins) and the glide starts ON
+// "Tino" (front-loaded cruise), so he is ~20 % of the height by "De Angelis"; B = a LOW HERO angle from just inside the
+// swung-out gate leaves (lens 0.32 m up, 4.8 m from him, a wider 58 deg lens tilted up ~12 deg): the No. 7 wall and its
+// rim tower behind him, his face at ~0.43 H; the right leaf / post (the grey bar on the right edge) is behind the lens
+const S2A: Frame = fr(tf([-0.35, 1.6, 31.5]), TINO2, 25.2, 0.448, 0.62);
+const TINO2F: V3 = add3(tf(TF.tino), [0, 1.29, 0]);
+const S2B: Frame = fr(tf([1.0, 0.32, 17.3]), TINO2F, 58, 0.6, 0.43);
+const R2_V = V(BEAT.tino) - 4, R2_VD = 92;
+const R2_E = cruise(0.22, 0.45);
+/** the lens widens LATE (the square of the move's progress): a linear fov ramp cancelled the dolly for the first ~20 f,
+ *  so Tino only grew after "De Angelis"; now he grows from "Tino" on and is ~20 % of the height by "De Angelis" */
+const R2_FOV = (u: number) => R2_E(u) ** 2;
 // ---- shot 3: the banker MS at the desk (stamp on "money", cash slides on "against it"), the window with the far tank
 // at the right -> CAM r1: ONE gentle 56 f glide (~1.2x) toward the window from 16 f before "sent": the banker's head
 // stays in the left third, the whole window in the right 60 % (sill well above the captions) for the inspector's walk ----
@@ -377,11 +391,21 @@ const R3_V = V(BEAT.amex) + 10, R3_VD = 70;
 // CAM r2 (A2 P2): A frames 0.09 H lower (target at 0.41 H): the top rungs and the rim lip sit at y <= ~1120 during the
 // climb (his head clears the caption band by "up"); the glide to A2 waits for the plumb to land (PLUNK = drop + 30), so
 // "drop a tape inside" plays on a held frame, and lands 4 f after "Ninety" (nearly settled as the shout starts)
-const S4A: Frame = fr(tk([4.6, 14.9, 12.6]), tk([0.4, 11.5, 5.6]), 46, 0.47, 0.4);
+// CAM r3 (A3 P3): A 0.055 H lower again (target at 0.345 H): his cap clears the caption band from the first rungs
+const S4A: Frame = fr(tk([4.6, 14.9, 12.6]), tk([0.4, 11.5, 5.6]), 46, 0.47, 0.345);
 const S4M: Frame = fr(tk([2.9, 13.1, 11.0]), tk([0.45, 11.8, 6.5]), 42, 0.5, 0.47);
 // CAM r2 (A2 P3): B 17 % tighter (fov 36 -> 31) with a 0.13 %/f creep: a medium two-shot by the end, faces >= 180 px wide
 const S4B: Frame = fr(tk([2.4, 4.5, 17.2]), tk([0.92, 0.85, 10.27]), 31, 0.5, 0.56);
-const R4_M_V = V(BEAT.drop) + 31, R4_M_VD = 48;
+// CAM r3 (A3 P2 + P3): "drop a tape inside" gets its own picture: ONE slow bell push from "up," (the whole camera
+// moves 1.45x closer to the tape's middle and tilts it from ~0.35 H down to 0.45 H while it grows, so the bare tank wall
+// under the rim shrinks):
+// the kneeling man, the yellow tape going into the hatch and the plumb's plunk read at phone size; then the glide to the
+// shout medium at the rail starts 6 f before "shout" and lands 6 f after "Ninety" (a ~1.2x push instead of 1.75x)
+const TAPE4: V3 = tk([-0.1, 11.2, 5.2]);
+const scaleAbout = (F: Frame, c: V3, k: number): Frame => ({ pos: lerp3(c, F.pos, k), look: lerp3(c, F.look, k), fov: F.fov });
+const S4T: Frame = fr(scaleAbout(S4A, TAPE4, 1 / 1.45).pos, TAPE4, 46, 0.425, 0.45);
+const R4_T_V = V(BEAT.up), R4_T_VD = V(BEAT.shout) - 8 - V(BEAT.up);
+const R4_M_V = V(BEAT.shout) - 6, R4_M_VD = 40;
 const R4_CUT_V = V(BEAT.andInspector) - 3;
 // ---- shot 5: frontal MS of the banker happily stamping (eyes closed), the cash stacks growing on "more" x2 ----
 const S5: Frame = { pos: bk([0.25, 1.35, 2.5]), look: bk([0.0, 1.0, -1.0]), fov: 40 };
@@ -392,8 +416,10 @@ const CH = BK.chart, CHU: V3 = [Math.cos(CH.yaw), 0, -Math.sin(CH.yaw)], CHN: V3
 const chartPt = (lx: number, ly: number, ln = 0): V3 => bk([CH.c[0] + CHU[0] * lx + CHN[0] * ln, CH.c[1] + ly, CH.c[2] + CHU[2] * lx + CHN[2] * ln]);
 // CAM r2 (A2 P2): the chart's left edge never crosses the frame (>= 40 px through the dissolve) and Tino stays whole at
 // its right: a slightly wider start (~58 % W), half the creep, and a gentler "United" glide (to ~63 % W)
-const S6: Frame = fr(chartPt(0.4, 1.42 - CH.c[1], 6.4), chartPt(0.4, -0.05, 0.2), 42, 0.5, 0.42);
-const S6P: Frame = fr(chartPt(0.45, 1.42 - CH.c[1], 6.0), chartPt(0.36, -0.05, 0.2), 41, 0.5, 0.43);
+const S6: Frame = fr(chartPt(0.4, 1.42 - CH.c[1], 6.6), chartPt(0.4, -0.05, 0.2), 42, 0.5, 0.42);
+// CAM r3 (A3 P3): the hold creeps 0.12 %/f from 0.2 m further out; the "United" landing looks 3 cm further right (room for
+// Tino moved off the pyramid, a CHAR request) on a 2 deg wider lens, so the board's left edge stays >= 40 px inside
+const S6P: Frame = fr(chartPt(0.45, 1.42 - CH.c[1], 6.0), chartPt(0.39, -0.05, 0.2), 43, 0.5, 0.43);
 const R6_V = V(BEAT.united) - 10, R6_VD = 45;
 // ---- shot 7: MYSTERY (FACT FIX 2026-11-14): a 3/4 MS of a LENDER in a suit and fedora kneeling at the hatch and
 // leaning over it -> CAM r1 (r2: 48 f, see below): ONE move from 10 f after "But": the lens arcs over the hatch while the LOOK keeps his
@@ -415,7 +441,9 @@ const R7_V = V(BEAT.soHow) + 10, R7_VD = 48;
 const S8: Frame = { pos: tr([0.3, 1.3, 5.6]), look: tr([0.1, 1.5, -5.95]), fov: 58 };
 // CAM r2 (A2 P1): the push lands 0.22 m further left and turns left (Tino whole, his head at x ~70-370 on HIS crash
 // grimace; the right-edge trader leaves the frame cleanly instead of staying a sliver); a 0.04 %/f creep after it
-const S8P: Frame = { pos: tr([-0.05, 1.3, 3.9]), look: tr([-0.22, 1.5, -5.95]), fov: 58 };
+// CAM r3 (A3 P3): the landing looks 4 cm less far left on a 2 deg wider lens: the phone stand on the left edge leaves the
+// frame cleanly while his head keeps >= 40 px inside the left edge (the board still whole)
+const S8P: Frame = { pos: tr([-0.05, 1.3, 3.9]), look: tr([-0.18, 1.5, -5.95]), fov: 60 };
 const R8_V = V(BEAT.bet) - 22, R8_VD = 46;
 // ---- shot 9 (CAM r1): the rain from outside the gate, slightly low and left: BANKRUPT on the sign in the upper third,
 // the file of lenders walking in through the gate (faces y ~990-1130, above the captions), the No. 7 tank towering
@@ -424,7 +452,10 @@ const R8_V = V(BEAT.bet) - 22, R8_VD = 46;
 // rises above the umbrella line, clear of the walking file); BANKRUPT in the upper third. The old 0.16 %/f dolly blew
 // the near notice off the right edge (it is 3x nearer than the tank): the hold is now a slow truck RIGHT (0.45 cm/f,
 // parallax: the gate slides left past the tank) + a 0.06 %/f push, so the notice stays whole (right edge <= ~1020)
-const S9F: Frame = fr(tf([-1.0, 1.4, 23.6]), tf(TF.ladder), 56, 0.63, 0.5);
+// CAM r3 (A3 P2 + LEAD decision): the lens tilts up ~7 deg (the look target 2.6 m up the stair): the wet road shrinks to
+// ~27 % of the frame (the gate line at ~0.72 H), the No. 7 roof rail and a band of storm sky enter at the top, the
+// lenders' faces sit at ~0.55 H, the stair + climber at ~0.64 W, 0.44-0.6 H (BANKRUPT stays whole in the upper third)
+const S9F: Frame = fr(tf([-1.0, 1.4, 23.6]), tf([TF.ladder[0], 2.6, TF.ladder[2]]), 56, 0.63, 0.5);
 // ---- shot 10: REVEAL (CAM r1): it opens on what the lenders saw: straight down the open roof hatch onto the GOLDEN oil
 // ("Inside...": all gold, no water anywhere in frame), a slow push-in creep; then (CAM r2: 24 f before "was", 76 f, a
 // log-distance orbit, see below) ONE crane back and DOWN round the front of the tank (an arc that stays above the roof, then in front of the cut face: never
@@ -440,7 +471,9 @@ void W10;
 // out, so it never skims the roof edge and the gold layer never fills the frame as a slab; 68 f from 14 f before "was".
 // After the landing a slow creep up and in toward the gold line (it drifts from ~0.19 H toward ~0.27 H, a near match for
 // the bottle's gold top in shot 11) while "water." rings out
-const R10_V = V(BEAT.was) - 24, R10_VD = 76;
+// CAM r3 (A3 P3): the reveal starts 8 f later (16 f before "was") and runs 68 f (still lands ~1626): the all-gold hatch
+// holds ~15 f clear of the dissolve on its creep before the pull-out
+const R10_V = V(BEAT.was) - 16, R10_VD = 68;
 /** the reveal's swing: the lens first pulls straight back up the hatch axis (the gold shrinks in the collar), and only
  *  swings down in front of the cut face from a quarter of the way, once it is far out; the look leaves the hatch with it */
 const R10_ANG = (u: number) => glide(clamp01((u - 0.25) / 0.75));
@@ -449,9 +482,12 @@ const R10_ANG = (u: number) => glide(clamp01((u - 0.25) / 0.75));
 // with shot 12's oil band at the dissolve ----
 // CAM r2 (A2 P3): the opening tilts 2.4 deg down (the gold top at ~0.32 H, near shot 10's gold band at ~0.25 H through
 // the 12 f dissolve); the end MCU looks 3.5 cm higher, so the cork sits whole with ~40 px of headroom (no tangent)
-const S11: Frame = { pos: ki([0.32, 1.02, 1.25]), look: ki([0.05, 0.81, 0.1]), fov: 38 };
-const S11P: Frame = { pos: ki([0.23, 0.98, 0.74]), look: ki([0.05, 0.925, 0.1]), fov: 36 };
-const R11_V = V(BEAT.theOilRises) - 4, R11_VD = 60;
+// CAM r3 (A3 P3 x2): the opening looks 4.5 cm higher (less of the cloth's front drape at the bottom); the glide ends at
+// ~1.45x (0.11 m further out) and starts 6 f sooner, so it is mostly done when the gold band climbs (the rise plays on
+// a near-still frame)
+const S11: Frame = { pos: ki([0.32, 1.02, 1.25]), look: ki([0.05, 0.855, 0.1]), fov: 38 };
+const S11P: Frame = { pos: ki([0.245, 0.985, 0.85]), look: ki([0.05, 0.925, 0.1]), fov: 36 };
+const R11_V = V(BEAT.theOilRises) - 10, R11_VD = 60;
 // ---- shot 12 (CAM r1): the WHOLE cross-section with margins (shell, roof, hatch, floor, both red edges) while it fills
 // -> ONE crane UP-AND-OVER outside the tank (CAM r2: 76 f, a log-distance orbit, see below) (the lens stays >= 9 m out until it is > 2 m above the roof; an arc
 // that keeps the tank in view, no cut plane through the lens) to a high 60-deg view onto the open hatch: all gold, the
@@ -459,7 +495,9 @@ const R11_V = V(BEAT.theOilRises) - 4, R11_VD = 60;
 const S12A: Frame = { pos: cu([-1.2, 4.4, 17.5]), look: cu([0.1, 4.9, 0]), fov: 48 };
 const HATCH12: V3 = [CU.hatch.c[0], CU.hatch.c[1] + 0.1, CU.hatch.c[2]];
 // CAM r2: the hatch at 0.5 H (was 0.55): the gold oil disc sits where shot 13 opens on the gold blob (a match dissolve)
-const S12H: Frame = fr(cu([HATCH12[0], HATCH12[1] + 4.6 * Math.sin(Math.PI / 3), HATCH12[2] + 4.6 * Math.cos(Math.PI / 3)]), cu(HATCH12), 40, 0.5, 0.5);
+// CAM r3 (A3 P3): a 7.5 deg wider lens (the hatch still ~centred, so the gold disc still lands on shot 13's blob through
+// the match dissolve) and a gentler 0.1 %/f creep: the propped lid stands whole at the left for the whole hold
+const S12H: Frame = fr(cu([HATCH12[0], HATCH12[1] + 4.6 * Math.sin(Math.PI / 3), HATCH12[2] + 4.6 * Math.cos(Math.PI / 3)]), cu(HATCH12), 47.5, 0.53, 0.5);
 const W12: V3 = cu([-0.6, 13.5, 12.0]);
 void W12;
 // CAM r2 (A2 P2 / P3 / ADD): the cross-section holds on a 0.15 %/f creep through "a thin layer" (no frozen run); the
@@ -467,8 +505,15 @@ void W12;
 // wall line: the gold layer stays a thin line, <= 2 % of the height) and only closes in on a log-scale distance from a
 // quarter of the way: one even bell, ~30 px/f peak, 76 f from 16 f before "oil" (lands ~1979); the lens then racks
 // from the collar rim to the oil in the last 10 f of the landing (the gold sharpens before "it looks full.")
-const R12_V = V(BEAT.oilIn) - 16, R12_VD = 76;
+// CAM r3 (A3 P2): the crane waits for the thin gold layer to settle on a near-still frame (~0.5 s on the 0.15 %/f creep)
+// and starts 6 f before "oil", 72 f, landing ~1985 (16 f before "it looks full")
+const R12_V = V(BEAT.oilIn) - 6, R12_VD = 72;
 const R12_ANG = (u: number) => glide(clamp01(u / 0.6)), R12_DIST = (u: number) => cruise(0.3, 0.3)(clamp01((u - 0.25) / 0.75));
+/** CAM r3 (A3 P3): while the cut face's gold band would slide down through the caption band, the look dips a little
+ *  (a bell) so the band crosses it faster, then eases back before the landing */
+const R12_DIP = (f: number) => R12_DIPK * bell((vt(f, PV(R12_V), PV(R12_V + R12_VD) - PV(R12_V)) - R12_DIPU) / R12_DIPW);
+const R12_DIPK = 0.75, R12_DIPU = 0.36, R12_DIPW = 0.42;
+const dipLook = (s: (f: number) => Shot, d: (f: number) => number) => (f: number): Shot => { const c = s(f), k = d(f); return { ...c, look: [c.look[0], c.look[1] + k, c.look[2]] }; };
 // ---- shot 13 (CAM r1): the pump room from 0.6 m higher (over the workers' caps): tank A, worker 1 at a valve, the
 // SATURDAY calendar -> ONE long follow whose LOOK rides on the oil blob itself (smoothed over ~28 f: the blob stays in
 // the centre third A -> B -> C, never at the frame edge) while the lens trucks along on one cruise-eased move, easing in
@@ -494,23 +539,18 @@ const blobXs = (f: number) => { let s = 0; for (let k = 0; k <= 14; k++) s += bl
 // eased back + wider), so plate 2 stays whole ~40 f after it flips; it catches up as the lens eases into the medium at C,
 // settled ~2225, before "The hardest-working oil"; the medium holds on a slow parallax arc (no push: plate 3 stays whole
 // under the top edge through "in America.")
-const R13_F0 = COUNT_AT[0] - 4, R13_F1 = COUNT_AT[2] + 24;
-const S13M_ARC: V3 = [0.0018, 0.0004, 0];
-/** the B-leg window: 0 -> 1 as the blob reaches tank B, 1 while it runs on toward C, back to 0 as the lens lands at C */
-const dw13 = (f: number) => smooth((f - (COUNT_AT[1] - 16)) / 20) * (1 - smooth((f - (COUNT_AT[2] - 20)) / 42));
-const follow13 = (f: number): Shot => {
-  const A = full(holdL(S13A, S[12].a, 0.0018)(f)), M = full(arcL(S13M, R13_F1, 0.0003, S13M_ARC)(f)), t = vt(f, R13_F0, R13_F1 - R13_F0);
-  const u = cruise(0.3, 0.4)(t), w = smooth((f - (COUNT_AT[0] - 14)) / 30), dw = dw13(f);
-  // the lens rides ~0.68 m higher over the workers' caps from just before the blob leaves A until it nears C
-  const lift = 0.68 * smooth((f - (COUNT_AT[0] - 30)) / 26) * (1 - smooth((f - (COUNT_AT[2] - 20)) / 40));
-  const bx = blobXs(f), off = M.look[0] - PR.blobCU[0];
-  // on the B leg the look rides the MIDPOINT of COUNTED: 2 and the running blob (both stay in frame), the lens eases
-  // 1.5 m back and 6 deg wider; then it catches up with the blob at C as the window closes
-  const mid = PR.base[0] + (PR.counters[1][0] - PR.counter.w / 2 + bx + 0.38) / 2, lx = bx + off + (mid - bx - off) * dw;
-  const trk: V3 = [lx, M.look[1] + 0.25 * dw, M.look[2]];
-  const look = lerp3(A.look, trk, w), pos = lerp3(A.pos, M.pos, u);
-  return { pos: [pos[0], pos[1] + lift, pos[2] + 1.5 * dw], look: [look[0], look[1] + 0.3 * lift, look[2]], fov: A.fov + (M.fov - A.fov) * u + 6 * dw, roll: 0 };
-};
+// CAM r3 (A3 P2 x3 + LEAD decision): the follow becomes three DWELLS, so every COUNTED plate flips on a SETTLED frame and
+// stays whole >= 45 f: A = the opening (tank A, the SATURDAY calendar; plate 1 flips on the held frame); from 4 f after
+// that flip ONE 36 f glide back and right to AB = a high two-plate wide (plates 1 AND 2 whole, the blob running between
+// them along the pipe on a still frame: plate 1 stays whole ~60 f after its flip, plate 2 flips on the settled frame);
+// from 2 f after flip 2 ONE 46 f cruise glide (peak ~45 px/f) (right + in, plate 2 whole until ~2185) to C = a medium-wide of the blob's
+// stop at tank C with COUNTED: 3 whole above it, settled ~2202 before flip 3 (the blob runs into the still frame); then
+// the punch line holds on a gentle 0.08 %/f push centred between the blob and plate 3 (plate 3 stays whole under the
+// top edge, worker 1 is out of the frame, so no head sits in the caption band)
+const F13_AB: Frame = fr(pr([-1.3, 3.7, 3.1]), pr([-1.5, 2.2, -4.17]), 57, 0.5, 0.44);
+const F13_C: Frame = fr(pr([1.9, 3.45, 1.3]), pr([2.55, 2.1, -3.86]), 48, 0.52, 0.44);
+const R13_AB_V = V(COUNT_AT[0]) + 4, R13_AB_VD = 36, R13_C_V = V(COUNT_AT[1]) + 2, R13_C_VD = 46;
+void S13M; void arcL;
 // ---- shot 14 (CAM r1): the grey street from 2.7 m up and 2.3 m further back: the kerb and a strip of road along the
 // bottom, the headline poster above the captions, the SHARES board, the CLOSED door; a 0.15 %/f creep + a slow 0.6 m
 // truck left (parallax: the kiosk slides against the facades) ----
@@ -521,46 +561,56 @@ const S14: Frame = { pos: st([0.4, 2.6, 5.0]), look: st([0.15, 1.75, -4.0]), fov
 // ---- shot 15 (CAM r1): the investor MS reading (the paper whole, the BUY slip above the captions) -> on "He bet" a
 // glide back and up (CAM r2: 62 f, cruise) (his face ~0.55 H, chin 130 px above the captions; the sunny window + cafe behind); the DOF
 // racks to the cafe on "trusted" and back on "His name?"; then ONE slow 50 f push on "Warren" (his face ~37 % W) ----
-const S15A: Frame = { pos: of([0.22, 1.42, 1.55]), look: of([-0.1, 0.88, -1.4]), fov: 42 };
+// CAM r3 (A3 P1 + LEAD decision, P3 match): the MS moves 0.28 m right and 0.35 m back, a little lower, looking down a
+// touch more: the BUY slip (OF.slip x 0.53) and his writing hand are WHOLE in frame at x ~0.73-0.9 W, y ~0.48-0.54 H
+// (far above the caption band) from "bought" to "cheap.", the paper whole at the left, his face at ~0.31 H; the paper's
+// OIL TANKS headline now sits within ~30 px of the street poster's through the 14 -> 15 dissolve (a true match); the
+// creep is halved (0.08 %/f) so the slip never nears the right edge
+const S15A: Frame = fr(of([0.5, 1.36, 1.9]), of([0.12, 0.92, -0.85]), 42, 0.47, 0.45);
 // CAM r2 (A2 P2): the wide tilts ~4 deg down from 12 cm lower: the newspaper and the BUY slip sit ABOVE the caption band
 // (paper 1054-1261, slip 1185-1246 at 1080), his face at ~0.47 H; the glide back runs 62 f on the cruise ease from 12 f
 // before "He bet" (peak ~1.4x mean instead of 1.9x) and the wide creeps 0.15 %/f; the Warren push is a pure dolly from the wide
 // toward a point under his chin (screen ~0.38 W, 0.68 H): his face grows (head ~29 % W) and rises while the paper and the
 // headline stay ABOVE the caption band the whole way ('OIL' inside the left edge), so 'Warren Buffett.' never lands on it
 const S15B: Frame = { pos: of([0.55, 1.38, 2.3]), look: of([0.0, 0.97, -2.5]), fov: 46 };
-const S15W: Frame = { pos: of([0.37, 1.14, 1.3]), look: of([-0.18, 0.76, -3.5]), fov: 46 };
+// CAM r3 (A3 P1 check): the Warren push looks 7 cm further right on a 3 deg wider lens: the BUY slip he taps on "Buffett." AND the paper's OIL stay whole
+const S15W: Frame = { pos: of([0.37, 1.14, 1.3]), look: of([-0.11, 0.76, -3.5]), fov: 49 };
 const R15_V = V(BEAT.heBet) - 12, R15_VD = 62, R15_W_V = V(BEAT.warren) - 8, R15_W_VD = 50;
 function add3(a: V3, b: V3): V3 { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; }
 
 const CAMS: Record<number, Key[]> = {
-  1: [{ f: 0, s: p0dec }, { f: PV(R1_V), cut: true, s: orbitLog(p0dec, arcL(W1, PV(R1_V + R1_VD), 0.0004, W1_ARC), PV(R1_V), PV(R1_V + R1_VD) - PV(R1_V), glide, glide, glide) }],
+  1: [{ f: 0, s: p0dec }, { f: PV(R1_V), cut: true, s: orbitLog(p0dec, arcL(W1, PV(R1_V + R1_VD), 0.0004, W1_ARC), PV(R1_V), PV(R1_V + R1_VD) - PV(R1_V), R1_E, R1_E, R1_E) }],
   2: [{ f: S[1].a - 7, s: holdL(S2A, S[1].a, 0.0012) },
-    { f: PV(R2_V), cut: true, s: orbitLog(holdL(S2A, S[1].a, 0.0012), holdL(S2B, PV(R2_V + R2_VD), 0.001), PV(R2_V), PV(R2_V + R2_VD) - PV(R2_V), cruise(0.35, 0.4), cruise(0.35, 0.4), cruise(0.35, 0.4)) }],
+    { f: PV(R2_V), cut: true, s: orbitLog(holdL(S2A, S[1].a, 0.0012), holdL(S2B, PV(R2_V + R2_VD), 0.001), PV(R2_V), PV(R2_V + R2_VD) - PV(R2_V), R2_E, R2_E, R2_E, R2_FOV) }],
   3: [{ f: S[2].a - 7, s: holdL(S3A, S[2].a, 0.0015) }, VK(R3_V, R3_VD, holdL(S3W, PV(R3_V + R3_VD), 0.0012))],
-  4: [{ f: S[3].a - 7, s: holdL(S4A, BEAT.climb, 0.0015) }, VK(R4_M_V, R4_M_VD, holdL(S4M, PV(R4_M_V + R4_M_VD), 0.0015)),
+  4: [{ f: S[3].a - 7, s: holdL(S4A, BEAT.climb, 0.0015) }, VK(R4_T_V, R4_T_VD, holdL(S4T, PV(R4_T_V + R4_T_VD), 0.0012)),
+    VK(R4_M_V, R4_M_VD, holdL(S4M, PV(R4_M_V + R4_M_VD), 0.0015)),
     CUT(R4_CUT_V, holdL(S4B, BEAT.believed, 0.0013))],
   5: [{ f: S[4].a - 7, s: holdL(S5, S[4].a, 0.0025) }],
-  6: [{ f: S[5].a - 7, s: holdL(S6, S[5].a, 0.0006) }, VK(R6_V, R6_VD, holdL(S6P, PV(R6_V + R6_VD), 0.0004))],
+  6: [{ f: S[5].a - 7, s: holdL(S6, S[5].a, 0.0012) }, VK(R6_V, R6_VD, holdL(S6P, PV(R6_V + R6_VD), 0.0004))],
   7: [{ f: S[6].a - 7, s: holdL(S7A, S[6].a, 0.0015) },
     { f: PV(R7_V), cut: true, s: via(holdL(S7A, S[6].a, 0.0015), W7, holdL(S7B, PV(R7_V + R7_VD), 0.001), PV(R7_V), PV(R7_V + R7_VD) - PV(R7_V), 0.08, 0.74) }],
   8: [{ f: S[7].a - 7, s: holdL(S8, S[7].a, 0.0015) }, VK(R8_V, R8_VD, holdL(S8P, PV(R8_V + R8_VD), 0.0004))],
   9: [{ f: S[8].a - 7, s: creepL(S9F, (S[8].a + S[8].b) / 2, 0.0006, [0.004, 0, 0]) }],
   10: [{ f: S[9].a - 7, s: holdL(S10A, PV(R10_V), 0.0015) },
     { f: PV(R10_V), cut: true, s: orbitLog(holdL(S10A, PV(R10_V), 0.0015), holdL(S10B, PV(R10_V + R10_VD), 0.0015),
-      PV(R10_V), PV(R10_V + R10_VD) - PV(R10_V), cruise(0.12, 0.6), R10_ANG, R10_ANG) }],
+      PV(R10_V), PV(R10_V + R10_VD) - PV(R10_V), cruise(0.2, 0.55), R10_ANG, R10_ANG) }],
   11: [{ f: S[10].a - 7, s: holdL(S11, S[10].a, 0.0016) }, VK(R11_V, R11_VD, holdL(S11P, PV(R11_V + R11_VD), 0.0012))],
   12: [{ f: S[11].a - 7, s: holdL(S12A, S[11].a, 0.0015) },
-    { f: PV(R12_V), cut: true, s: orbitLog(holdL(S12A, S[11].a, 0.0015), holdL(S12H, PV(R12_V + R12_VD), 0.0015), PV(R12_V), PV(R12_V + R12_VD) - PV(R12_V), R12_DIST, R12_ANG, R12_ANG) }],
-  13: [{ f: S[12].a - 7, s: follow13 }],
+    { f: PV(R12_V), cut: true, s: dipLook(orbitLog(holdL(S12A, S[11].a, 0.0015), holdL(S12H, PV(R12_V + R12_VD), 0.001), PV(R12_V), PV(R12_V + R12_VD) - PV(R12_V), R12_DIST, R12_ANG, R12_ANG), R12_DIP) }],
+  13: [{ f: S[12].a - 7, s: holdL(S13A, S[12].a, 0.0018) }, VK(R13_AB_V, R13_AB_VD, holdL(F13_AB, PV(R13_AB_V + R13_AB_VD), 0.0005)),
+    VK(R13_C_V, R13_C_VD, holdL(F13_C, PV(R13_C_V + R13_C_VD), 0.0008), cruise(0.3, 0.3))],
   14: [{ f: S[13].a - 7, s: creepL(S14, (S[13].a + S[13].b) / 2, 0.0006, [0.003, 0, 0]) }],
-  15: [{ f: S[14].a - 7, s: holdL(S15A, S[14].a, 0.0015) }, VK(R15_V, R15_VD, holdL(S15B, PV(R15_V + R15_VD), 0.0015), cruise(0.35, 0.35)),
+  15: [{ f: S[14].a - 7, s: holdL(S15A, S[14].a, 0.0008) }, VK(R15_V, R15_VD, holdL(S15B, PV(R15_V + R15_VD), 0.0015), cruise(0.35, 0.35)),
     VK(R15_W_V, R15_W_VD, holdL(S15W, PV(R15_W_V + R15_W_VD), 0.001))],
   16: [{ f: S[15].a - 7, s: loopCam }],
 };
 
 // impact kicks: the image offset flips sign every VIDEO frame and decays over n frames (t0 s, gain, n f): a small one on
 // the bank stamp ("money") and on the trading board's crash ("crashed"); never near frame 0 / the last frame
-const KICKS: [number, number, number][] = [[BEAT.money / FPS, 0.6, 6], [(BEAT.crashed1 + 1) / FPS, 1.0, 8]];
+// CAM r3 (ADD life): two more small hits: the BANKRUPT notice slapping onto the gate sign (2 f before "bust", with the
+// thunder) and the SHARES arrows dropping on "crashed" (the bwomp)
+const KICKS: [number, number, number][] = [[BEAT.money / FPS, 0.6, 6], [(BEAT.crashed1 + 1) / FPS, 1.0, 8], [(BEAT.bust - 2) / FPS, 0.5, 6], [(BEAT.crashed2 + 1) / FPS, 0.45, 6]];
 export const kickAt = (t: number) => {
   let a = 0;
   for (const [t0, g, n0] of KICKS) {
@@ -642,6 +692,8 @@ void rack;
 const OIL0: V3 = [TK.hatch.c[0], TK.hatch.oil, TK.hatch.c[2]];
 // the cafe is painted on the window view card (OF.window), so the rack focuses on the window plane, not on OF.cafe
 const INV_EYE: V3 = of([OF.investor[0], 1.18, OF.investor[2]]), CAFE: V3 = of([-0.2, 1.55, -5.27]);  // build r1: the painted cafe layer 2.8 m behind the glass (WORLD-INT)
+/** CAM r3: the shot-15 MS focus, between his eyes and the BUY slip */
+const FOCUS15A: V3 = lerp3(INV_EYE, of([OF.slip[0], OF.slip[1] + 0.05, OF.slip[2]]), 0.45);
 const DOFS: Record<number, Dof[]> = {
   // P0 (frame 0 and the last frame) uses the SAME entry in shot 1 and the loop shot, so the loop frame is identical
   // shot 1: the rack follows the crane from the oil to the tank man; the near rail falls soft (a foreground framer)
@@ -673,8 +725,10 @@ const DOFS: Record<number, Dof[]> = {
   14: [{ f: 0, cInf: 4, focus: () => st(ST.poster.c) }],
   // shot 15: real racks (the focus point glides): to the cafe 8 f before "trusted" (22 f), held ~0.5 s, back to him 8 f
   // before "His name?" (20 f); the investor never passes ~6 px of blur; on "Warren" the push keeps him sharp
-  15: [{ f: 0, cInf: 10, focus: () => INV_EYE }, DV(R15_V, R15_VD, 8, () => INV_EYE),
-    DV(V(BEAT.trusted) - 8, 22, 6, () => CAFE), DV(V(BEAT.hisName) - 8, 20, 8, () => INV_EYE), DV(R15_W_V, R15_W_VD, 10, () => INV_EYE)],
+  // CAM r3 (A3 P1 / P2): the MS focuses between his eyes and the BUY slip (both within ~1.5 px); the cafe rack holds
+  // ~1 s (2546-2576) and returns ON "Warren" (lands 2596); the Warren push deepens the lens only after that rack lands
+  15: [{ f: 0, cInf: 10, focus: () => FOCUS15A }, DV(R15_V, 34, 8, () => INV_EYE),
+    DV(V(BEAT.trusted) - 8, 22, 6, () => CAFE), DV(V(BEAT.hisName) + 6, 20, 8, () => INV_EYE), DV(V(BEAT.hisName) + 27, 36, 10, () => INV_EYE)],
   16: [{ f: 0, cInf: 4, focus: () => OIL0 }],
 };
 /** the lens of shot id at frame f: the active entry, ramping (cInf AND focus point, smootherstep on the video clock)

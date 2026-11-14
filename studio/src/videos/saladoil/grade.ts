@@ -405,6 +405,19 @@ export class GradeEffect extends Effect {
     u.get("gradeBandK")!.value = r.band && r.band[1] > 0 ? r.bandK ?? 0 : 0;
     const ed = r.edge ?? [0, 0, 0, 0], et = tintRGB(ed[0], ed[1]).multiplyScalar(ed[2]);
     (u.get("gradeEdge")!.value as Vector4).set(et.x, et.y, et.z, ed[3]);
+    this.base = { ev: r.ev ?? 0, vig: [r.vig[0], r.vig[1]], vigC: [...(r.vigC ?? [0.5, 0.5])] as [number, number] };
+  }
+  /** fix r3: the preset values set() last uploaded (the per-frame adjust() works on top of them) */
+  private base: { ev: number; vig: [number, number]; vigC: [number, number] } = { ev: 0, vig: [0, 0.4], vigC: [0.5, 0.5] };
+  /** saladoil fix r3: per-FRAME adjustments on top of the cached preset (gradeFor only re-uploads when the light / trim key
+   *  changes, so SaladOil.tsx calls this on EVERY frame, zeros included): dEv stops added to the exposure; dVig / dR0 added
+   *  to the vignette strength / start radius; the vignette centre moved toward c (uv, y up) by cw (0..1). Pure function of
+   *  its inputs: the same inputs give bit-identical uniforms (the loop seam) */
+  adjust(dEv = 0, dVig = 0, dR0 = 0, c: [number, number] | null = null, cw = 0) {
+    const u = this.uniforms, b = this.base;
+    u.get("gradeEV")!.value = b.ev + dEv;
+    (u.get("gradeVig")!.value as Vector2).set(b.vig[0] + dVig, b.vig[1] + dR0);
+    (u.get("gradeVigC")!.value as Vector2).set(c ? b.vigC[0] + (c[0] - b.vigC[0]) * cw : b.vigC[0], c ? b.vigC[1] + (c[1] - b.vigC[1]) * cw : b.vigC[1]);
   }
   /** round 7: this frame's display-space god-ray fan (origin uv, strength 0 = off, radial e-fold in frame heights, sway phase) */
   rays(o: [number, number] | null, k = 0, efold = 0.45, ph = 0) {
@@ -465,7 +478,10 @@ const ROOM_G: GradeParams = { ky: [0.035, 0.1, 0.255, 0.54, 0.8, 0.935, 1], sat:
  *  and the cream walls, the yellow BUY slip (hue ~50) and the cafe's colours lie outside it and keep their colour; plum
  *  shadows (+Cb +Cr) and neutral-cool mids; the vignette leans toward the window (light from behind him). Simulated on the
  *  merged 2458 / 2573: b* +31 -> +24, C* 38 -> 32, L* 55 -> 54 */
-const OFFICE_G: GradeParams = { ky: [0.035, 0.1, 0.255, 0.54, 0.8, 0.935, 1], sat: [0.98, 1.0, 0.98], tintS: [0.032, 0.022], tintM: [0.008, 0.004], tintH: [-0.006, 0.004],
+// FIX ROUND 3 (audit A3 shot 15, lighting 6.5 / colour 7: "one orange note"): the shade turns from plum to a cooler
+// blue-violet (tintS +Cr .022 -> .006, +Cb .032 -> .05) and the highlights a touch more honey, so the warm window light and
+// the cool shade pull apart (complementary, like the reference's warm interiors) instead of one orange wash
+const OFFICE_G: GradeParams = { ky: [0.035, 0.1, 0.255, 0.54, 0.8, 0.935, 1], sat: [0.98, 1.0, 0.98], tintS: [0.05, 0.006], tintM: [0.008, 0.004], tintH: [-0.016, 0.004],
   vig: [0.22, 0.42], ev: 0.04, vigCol: [0.34, 0.2, 0.2], floor: [32, 18, 30], band: [28, 18, 0.8, 0], vigC: [0.5, 0.56] };
 const GOLD_G: GradeParams = { ky: [0.03, 0.08, 0.222, 0.53, 0.825, 0.945, 0.975], sat: [1.04, 1.16, 1.08], tintS: [0.032, 0.012], tintM: [-0.026, 0.008], tintH: [-0.022, 0.01],
   vig: [0.24, 0.36], vigCol: [0.42, 0.22, 0.2], floor: [34, 20, 38],
@@ -483,14 +499,30 @@ export const GRADES: Record<LightName, GradeParams> = {
   // tint is halved (the sepia on the cream roof) and the mids lean violet; the light TURNS by a vertical split that fades
   // in with the relight: the far roof (top of frame) peach, the near roof and the shade (bottom) violet. Simulated on the
   // merged 1231: b* +16 -> +14, the rose top / violet bottom visible, the oil disc untouched (it is centred)
-  late: { ...NOON, sat: [1.06, 1.12, 1.04], tintS: [0.026, 0.014], tintM: [0.008, 0.006], tintH: [-0.008, 0.004], vig: [0.22, 0.38], vigCol: [0.3, 0.16, 0.2],
-    floor: [30, 18, 40], band: [30, 22, 0.72, 0], bandG: [0.3, 0.92, 0.1, 0.2], bandC: [0.66, 0.82], bandV: 0.97,
-    vgrad: [-0.014, 0.012, 0.026, 0.01, 0.18, 0.82] },
+  // FIX ROUND 3 (audit A3 shot 7, lighting / colour 6.5: "a saturated blue-violet LATTICE of rail shadows (#5B366C-#674383)
+  // over ~45 % of the roof, purple crayon scribble or a cage; the lit roof stays muddy khaki, the frame slides to a mauve
+  // 131/86/90"): measured on the ungraded preview3 render, the lattice is display hue ~262, chroma .21, luma .25 and my
+  // A2 grade pushed it to chroma .29 (the violet shadow / mid tints + the violet bottom split) while the orange band
+  // (x0.72) took the honey out of the lit roof. Now: the orange band is gone; a VIOLET band (hue 272 +-40, shadows / mids,
+  // chroma .05-.5) halves the lattice's saturation and lifts it x1.3, holding the shadow tints off it (bandK .85), so the
+  // rail shadows read as soft slate-plum evening shade, not crayon; the mids are neutral, the highlights honey, the bottom
+  // split nearly neutral (the top keeps its peach), a warm amber-brown vignette (SaladOil.tsx centres it on the hatch as the
+  // light turns: the reflected face is framed). Simulated on the ungraded 1240 (checked against preview3 to +-0.5 L*):
+  // lattice #4A2972 -> #4F3C61, the lit roof #B28E71 -> #BA8E59, frame 130/85/89 (L* 41, a* +21, b* +5, mauve) ->
+  // 137/91/70 (L* 43, a* +17, b* +18); WORLD-INT's warmer, lighter 'late' key lands it nearer their 150/110/95 target.
+  late: { ...NOON, sat: [1.06, 1.1, 1.06], tintS: [0.022, 0.01], tintM: [-0.004, 0.004], tintH: [-0.014, 0.006], vig: [0.3, 0.3], vigCol: [0.36, 0.2, 0.16],
+    floor: [30, 20, 40], band: [272, 40, 0.5, 0], bandG: [0.06, 0.7, 0.05, 0.14], bandC: [0.5, 0.7], bandV: 1.3, bandK: 0.85,
+    vgrad: [-0.016, 0.01, 0.006, 0.002, 0.18, 0.82], ev: -0.04 },
   // the rain (fix r1, audit A1 P2: the storm read flat grey, C* 12.6, and the old preset desaturated it further): the
   // reference's SATURATED storm blue: blue-violet darks (floor #10142C), cool-white rain highlights, a deep blue vignette.
   // Simulated on the merged 1445 / 1500: L* 51 -> 46, C* 13 -> 24, b* -11 -> -21
-  storm: { ky: [0.03, 0.085, 0.222, 0.48, 0.755, 0.905, 0.975], sat: [1.26, 1.42, 1.12], tintS: [0.062, -0.03], tintM: [0.046, -0.026], tintH: [0.016, -0.008],
-    vig: [0.3, 0.4], vigCol: [0.1, 0.12, 0.3], floor: [16, 20, 44], ev: -0.06 },
+  // FIX ROUND 3 (re-measured on preview3: since WORLD-EXT's darker wet albedo the storm sits at L* 32-33, below the
+  // plan's 40-46, with the 'Lenders finally checked the tanks' stair climber blue-on-blue in the dark): +0.16 stop and a
+  // slightly lifted low-mid (knots .085 / .222 / .48 -> .097 / .238 / .49), the hue and the saturated storm blue unchanged.
+  // Simulated on the ungraded 1425 / 1450 / 1500 / 1520: L* 31.6-33.1 -> 34.2-35.7, b* -29..-31 kept, the climber and the
+  // lenders' coats one step lighter against the tank wall (CAM's tilt-up takes the dark road out of the frame)
+  storm: { ky: [0.03, 0.097, 0.238, 0.49, 0.755, 0.905, 0.975], sat: [1.26, 1.42, 1.12], tintS: [0.062, -0.03], tintM: [0.046, -0.026], tintH: [0.016, -0.008],
+    vig: [0.3, 0.4], vigCol: [0.1, 0.12, 0.3], floor: [16, 20, 44], ev: 0.1 },
   bank_warm: ROOM_G,
   // the trading floor (fix r1, audit A1 P2: neutral grey, C* 12): deep green-teal walls and darks, the white shirts and the
   // globe pendants warm (#FFD2A0 side), a teal vignette ~0.75 corner / centre. Simulated on the merged 1330: C* 12 -> 17
@@ -501,11 +533,19 @@ export const GRADES: Record<LightName, GradeParams> = {
   // desaturates them (x0.2) and holds the teal tints off them (bandK 0.95), so Tino's suit samples neutral grey (merged
   // 1336: b* -18 / -28 -> -5 / -8, shirts -11 -> -2) while the walls, the floor and the board keep the room's green-teal
   // (the navy jackets and the red / green ties, chroma > 0.26, stay out of the band). Simulated: L* 40 -> 39, p5 9.9 -> 8.5
-  trading: { ky: [0.025, 0.094, 0.26, 0.55, 0.8, 0.93, 0.99], sat: [1.58, 1.9, 1.26], tintS: [0.032, -0.066], tintM: [0.012, -0.052], tintH: [-0.032, 0.016],
-    vig: [0.26, 0.4], ev: 0.3, vigCol: [0.1, 0.2, 0.18], floor: [12, 22, 22],
-    band: [240, 50, 0.2, 0], bandG: [-1, 2, 0.0, 0.02], bandC: [0.16, 0.26], bandK: 0.95, bandH: 1.0,
+  // FIX ROUND 3 (audit A3 shot 8, lighting / colour 6.5: "a murky teal monochrome, mean RGB 74/99/84; the pendants cast no
+  // pools; Tino's shadow side goes navy"): the teal now lives in the SHADOWS only (complementary split: teal shade, warm
+  // cream light): the mid tint's green halved (-.052 -> -.03), the highlights warmer (the white shirts, the globe pendants
+  // and the lamp pools WORLD-INT adds read cream-amber), mid saturation 1.9 -> 1.62, +0.04 stop, the floor grad eased
+  // (.32 -> .22) so the new lamp pools on the tiles survive, and the lavender-grey band now covers the whole luma range
+  // (bandG luma window 0..1: the shadow side of Tino's grey suit is held neutral too, not only his mids). Simulated on the
+  // ungraded 1336 / 1392: RGB 70/95/82 -> 77/95/80, a* -9.8 -> -8.2 (less green), b* +5 -> +7, L* 38 (WORLD-INT's +0.3 EV
+  // ambient carries the rest toward their luma 110-115 target)
+  trading: { ky: [0.025, 0.094, 0.26, 0.55, 0.8, 0.93, 0.99], sat: [1.5, 1.62, 1.24], tintS: [0.026, -0.05], tintM: [0.004, -0.03], tintH: [-0.05, 0.024],
+    vig: [0.26, 0.4], ev: 0.34, vigCol: [0.1, 0.2, 0.18], floor: [12, 22, 22],
+    band: [240, 50, 0.2, 0], bandG: [0.0, 1.0, 0.0, 0.02], bandC: [0.16, 0.26], bandK: 0.95, bandH: 1.0,
     // + a deep-teal GROUND grad: the empty tile floor (A2: "the lower ~30 % is empty teal tile") falls into shade
-    grad: [0.32, 0.34], gradCol: [0.55, 0.66, 0.66], gradS: 0.4 },
+    grad: [0.22, 0.34], gradCol: [0.55, 0.66, 0.66], gradS: 0.4 },
   // the cutaway diagram: deep navy darks, crisp highlights, the gold band keeps its colour
   // + a GOLD band: the oil (pale lemon in the flat diagram light) is pushed back to the film's rich hero gold, so the hatch
   // view "looks full" with the same gold as frame 0 (mid-light yellows only; the blue water and the red cut edges stay)
@@ -520,8 +560,16 @@ export const GRADES: Record<LightName, GradeParams> = {
   // chroma .61 -> .57 while everything round it drops), plum shadows, -0.08 stop more, and the vignette's centre toward the
   // sunny window (upper right), so the light has a side. Simulated on the merged 1706 / 1793 / 1828: b* +36 -> +25..+26,
   // C* 46-48 -> 36-38, L* 62-65 -> 59-62
-  kitchen: { ky: [0.03, 0.088, 0.23, 0.515, 0.785, 0.925, 0.99], sat: [1.14, 1.3, 1.06], tintS: [0.024, 0.012], tintM: [0.006, 0.002], tintH: [-0.004, 0.002],
-    vig: [0.26, 0.42], ev: -0.44, vigCol: [0.42, 0.22, 0.2], floor: [34, 18, 28], band: [14, 22, 0.6, -6], vigC: [0.58, 0.58] },
+  // FIX ROUND 3 (audit A3 shot 11, lighting 6.5: "flat and even, no golden window key"; p5 L* 31 = milky darks): a firmer
+  // toe (knots .088 / .23 -> .074 / .212: the darks drop ~3 L*, the highlights stay) and the vignette pulled harder toward
+  // the sunny window (centre .58 -> .66 up-right, start .42 -> .3, .26 -> .32), so the light falls off away from the window
+  // and the frame has a lit side and a shade side; +0.04 stop back so the mids keep L* ~56. Simulated on the ungraded 1694 /
+  // 1828: p5 L* 31 / 34 -> 28 / 30, the window side unchanged, the lower-left table edge -5 L*
+  kitchen: { ky: [0.026, 0.074, 0.212, 0.505, 0.785, 0.93, 0.995], sat: [1.14, 1.3, 1.06], tintS: [0.024, 0.012], tintM: [0.006, 0.002], tintH: [-0.004, 0.002],
+    vig: [0.32, 0.3], ev: -0.4, vigCol: [0.42, 0.22, 0.2], floor: [34, 18, 28], band: [14, 22, 0.6, -6], vigC: [0.66, 0.66],
+    // + a warm-plum ground grad: the blurred gingham drape at the bottom (LEAD P3: "carries no story") falls into the
+    // table's own shade (-2.3 L* on the bottom third, lit pixels spared), so the eye stays on the bottle
+    grad: [0.28, 0.32], gradCol: [0.66, 0.5, 0.52], gradS: 0.3 },
   // the pump room at NIGHT (fix r1, audit A1 P2: milky and pastel, L* 55, b* +2, no night vignette): the old blue-desaturating
   // band and the +0.3 stop lift are gone; navy darks (floor #1A1D40), the lavender-pink shade turned toward royal blue
   // (+Cb, -Cr), amber lamp highlights, a firmer S (+12 % mid contrast) and a deep night vignette (~0.58 corner / centre).
@@ -546,8 +594,13 @@ export const GRADES: Record<LightName, GradeParams> = {
   // 0.1 (WORLD-INT asked 0.12; 0.1 with its lights.ts office_glow cut lands ~L* 59-60), the warmth as colour, not haze:
   // warmer cream highlights over the same plum shade; the orange band a little lighter (x0.86) so the room still WARMS.
   // Simulated on the merged 2633 (before WORLD-INT's light cut): L* 67.7 -> 64.6, b* +36 -> +29, p5 22.8 -> 21
-  office_glow: { ...OFFICE_G, ev: 0.1, sat: [1.0, 1.06, 1.02], tintM: [-0.004, 0.008], tintH: [-0.02, 0.01], vig: [0.18, 0.46], vigCol: [0.44, 0.26, 0.18],
-    band: [28, 18, 0.86, 0] },
+  // FIX ROUND 3 (audit A3 P3 shot 15: "the glow still lifts the blacks at the end of the push, p5 L* 18.1 -> 20.8, mean
+  // 54.4 -> 58.6 at 2636; the window starts to go milky"; target at 2636 L* <= 57, p5 <= 19, C* >= 35): ev .1 -> -.04, the
+  // black floor a little lower (#201A1E -> #1B0F19) and the orange band x.86 -> x.92 (the colour stays as the light drops).
+  // Simulated on the ungraded 2636: L* 58.4 -> 56.2, p5 21.0 -> 19.1, C* 36.1 -> 35.9, the window p95 95.3 -> 92.7; with
+  // the shot-15 ground grad (SHOT_TRIM[15]) and mid sat 1.06 -> 1.1, rendered: L* 55.4, p5 17.3, C* 35.8
+  office_glow: { ...OFFICE_G, ev: -0.04, sat: [1.0, 1.1, 1.03], tintM: [-0.004, 0.008], tintH: [-0.03, 0.01], vig: [0.18, 0.46], vigCol: [0.44, 0.26, 0.18],
+    band: [28, 18, 0.92, 0], floor: [27, 15, 25] },
 };
 /** One strength (0..1, the effect's `amount`) per preset; all full. */
 export const GRADE_STRENGTH: Record<LightName, number> = {
@@ -600,6 +653,16 @@ export const SHOT_TRIM: Record<number, GradeTrim> = {
   // roof drops -0.1 stop with a slightly firmer top and +10 % saturation, so the gold disc stands out (the cross-section
   // half of the shot is untouched: TRIM_WEIGHT ramps it in over the crane). Merged 2003: L* 68.4 -> 66.3
   12: { ev: -0.1, ky: [0, 0, 0, 0, -0.01, -0.012, -0.01], sat: [1.05, 1.1, 1.06] },
+  // fix r3 (shot 7): the late preset's VIOLET band (see GRADES.late) on BOTH sides of the noon -> late relight, at the trim
+  // weight below: the world's rail shadows turn violet early in the 70 f relight (1198-1212 measured purple while the
+  // preset blend was only half way), so the band runs ahead of the light and the lattice never reads as crayon
+  7: { band: [272, 40, 0.5, 0], bandG: [0.06, 0.7, 0.05, 0.14] },
+  // fix r3 (audit A3 shot 15, lighting 6.5 "flat: no light shapes from the sunny window"; WORLD-INT P2 "the bottom third of
+  // the MS is a bare desk front"): the light now falls off from the window toward the lens: a cool-plum GROUND grad on the
+  // desk front and the rug (lit pixels spared, so WORLD-INT's window patches on the rug stay bright), the same treatment
+  // as the bank's desk front (shots 3 / 5). Simulated on the ungraded 2458 / 2575 / 2636: the bottom third -2.1..-2.6 L*,
+  // p5 18.0 / 16.3 / 19.1 -> 16.9 / 15.4 / 17.3, the face, the headline and the BUY slip (all above the ramp) untouched
+  15: { grad: [0.34, 0.36], gradCol: [0.6, 0.52, 0.64], gradS: 0.35 },
 };
 /** round 3: a trim can ramp in / out inside its shot (weight 0..1 by frame); shots not listed take their trim fully */
 const smooth01 = (x: number) => { const u = Math.max(0, Math.min(1, x)); return u * u * (3 - 2 * u); };
@@ -607,6 +670,8 @@ const smooth01 = (x: number) => { const u = Math.max(0, Math.min(1, x)); return 
 export const TRIM_WEIGHT: Record<number, (f: number) => number> = {
   // shot 12's hatch-hold trim eases in across the crane up to the hatch (no step; the cross-section half keeps its look)
   12: (f) => smooth01((f - BEAT.oilIn) / 60),
+  // shot 7: the violet band is fully on ~26 f into the relight ('someone' - 20 = the relight's start)
+  7: (f) => smooth01((f - (BEAT.someone - 20)) / 26),
 };
 /** a second trim layer with its own weight (by picture frame f) */
 export const SHOT_TRIM_B: Record<number, { t: GradeTrim; w: (f: number) => number }> = {};
