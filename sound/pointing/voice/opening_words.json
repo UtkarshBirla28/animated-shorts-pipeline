@@ -1,0 +1,394 @@
+{
+ "_doc": "REAL word times of the opening (lead hook) from the recorded voice. Times in seconds from frame 0, f = frame at 30 fps. Cuts follow the words (SCRIPT_v3 1.2): cut 1 in the silence after 'not.', cut 2 one frame before 'finger'.",
+ "status": "FINAL word times (full build 2026-11-20, body onsets measured)",
+ "source_build": "sound/pointing/voice/_v3",
+ "takes": {
+  "v3_n01": "v3_hook/t13",
+  "v3_n02": "v3_hook/t13",
+  "v3_n03": "v3_hook/t13",
+  "v3_d01": "cast_d/masaki1",
+  "v3_t01": "v3_t01/t5"
+ },
+ "hook_gate": {
+  "passed": true,
+  "not_starts_by_2.70": true,
+  "laugh_starts_by_4.50": true,
+  "no_gap_over_0.20": true,
+  "finger_starts_by_5.00": true,
+  "not_starts_s": 2.05,
+  "laugh_starts_s": 3.72,
+  "finger_starts_s": 4.69,
+  "finger_ends_s": 5.32,
+  "words_started_by_3s": 10,
+  "words_started_by_5s": 17,
+  "longest_gap_s": 0.155,
+  "pauses_set_to_s": 0.15,
+  "he_is_not": {
+   "dur_s": 0.915,
+   "wps": 3.28,
+   "first_sentence_wps": 4.01,
+   "pitch_drop_from_first_st": -14.2,
+   "third_sentence_back_up_st": 14.4,
+   "f0_med": 105.0,
+   "f0_sd_st": 3.24,
+   "f0_range_st": 8.6,
+   "voiced_share": 0.74,
+   "in_1.05_1.20_s": false
+  }
+ },
+ "cuts": {
+  "cut1_s": 2.71,
+  "cut1_f": 81,
+  "cut2_s": 4.657,
+  "cut2_f": 140,
+  "note": "cut 1 = 0.08 s after 'not.' ends; cut 2 = one frame before 'finger.' starts. The laugh-only take v3_x01 runs from cut 1 to cut 2, 12 dB under the narrator"
+ },
+ "laugh_x01": {
+  "id": "v3_x01",
+  "use": "hook: his laugh under the narrator, cut 1 to cut 2",
+  "speaker": "T",
+  "take": "v3_x01/t1",
+  "s": 2.71,
+  "e": 4.657,
+  "gain_db": -16.93,
+  "level_mono_lufs": -32.06,
+  "cut1_s": 2.71,
+  "cut2_s": 4.657,
+  "under_narrator_db": -12.0
+ },
+ "t01_laugh": {
+  "his_own_laugh_starts_s": 6.815,
+  "first_word_s": 7.165,
+  "note": "the tourist's laugh (his own take) starts under the tail of 'green!'; 'He's' starts at first_word_s"
+ },
+ "lines": [
+  {
+   "id": "v3_n01",
+   "speaker": "N",
+   "s": 0.07,
+   "e": 1.565,
+   "f": 2,
+   "fe": 47,
+   "text": "His bag is on that train."
+  },
+  {
+   "id": "v3_n02",
+   "speaker": "N",
+   "s": 1.715,
+   "e": 2.63,
+   "f": 51,
+   "fe": 79,
+   "text": "He is not."
+  },
+  {
+   "id": "v3_n03",
+   "speaker": "N",
+   "s": 2.78,
+   "e": 5.32,
+   "f": 83,
+   "fe": 160,
+   "text": "All he did was laugh... at a finger."
+  },
+  {
+   "id": "v3_d01",
+   "speaker": "D",
+   "s": 5.5,
+   "e": 6.965,
+   "f": 165,
+   "fe": 209,
+   "text": "Signal... green!"
+  },
+  {
+   "id": "v3_t01",
+   "speaker": "T",
+   "s": 7.165,
+   "e": 8.665,
+   "f": 215,
+   "fe": 260,
+   "text": "He's pointing at nothing!"
+  }
+ ],
+ "words": [
+  {
+   "w": "His",
+   "s": 0.07,
+   "e": 0.26,
+   "f": 2,
+   "fe": 8,
+   "id": "v3_n01"
+  },
+  {
+   "w": "bag",
+   "s": 0.26,
+   "e": 0.62,
+   "f": 8,
+   "fe": 19,
+   "id": "v3_n01"
+  },
+  {
+   "w": "is",
+   "s": 0.62,
+   "e": 0.74,
+   "f": 19,
+   "fe": 22,
+   "id": "v3_n01"
+  },
+  {
+   "w": "on",
+   "s": 0.74,
+   "e": 0.89,
+   "f": 22,
+   "fe": 27,
+   "id": "v3_n01"
+  },
+  {
+   "w": "that",
+   "s": 0.89,
+   "e": 1.03,
+   "f": 27,
+   "fe": 31,
+   "id": "v3_n01"
+  },
+  {
+   "w": "train.",
+   "s": 1.03,
+   "e": 1.565,
+   "f": 31,
+   "fe": 47,
+   "id": "v3_n01"
+  },
+  {
+   "w": "He",
+   "s": 1.715,
+   "e": 1.89,
+   "f": 51,
+   "fe": 57,
+   "id": "v3_n02"
+  },
+  {
+   "w": "is",
+   "s": 1.89,
+   "e": 2.05,
+   "f": 57,
+   "fe": 61,
+   "id": "v3_n02"
+  },
+  {
+   "w": "not.",
+   "s": 2.05,
+   "e": 2.63,
+   "f": 61,
+   "fe": 79,
+   "id": "v3_n02"
+  },
+  {
+   "w": "All",
+   "s": 2.78,
+   "e": 3.07,
+   "f": 83,
+   "fe": 92,
+   "id": "v3_n03"
+  },
+  {
+   "w": "he",
+   "s": 3.07,
+   "e": 3.26,
+   "f": 92,
+   "fe": 98,
+   "id": "v3_n03"
+  },
+  {
+   "w": "did",
+   "s": 3.26,
+   "e": 3.47,
+   "f": 98,
+   "fe": 104,
+   "id": "v3_n03"
+  },
+  {
+   "w": "was",
+   "s": 3.47,
+   "e": 3.72,
+   "f": 104,
+   "fe": 112,
+   "id": "v3_n03"
+  },
+  {
+   "w": "laugh...",
+   "s": 3.72,
+   "e": 4.3,
+   "f": 112,
+   "fe": 129,
+   "id": "v3_n03"
+  },
+  {
+   "w": "at",
+   "s": 4.455,
+   "e": 4.535,
+   "f": 134,
+   "fe": 136,
+   "id": "v3_n03"
+  },
+  {
+   "w": "a",
+   "s": 4.535,
+   "e": 4.69,
+   "f": 136,
+   "fe": 141,
+   "id": "v3_n03"
+  },
+  {
+   "w": "finger.",
+   "s": 4.69,
+   "e": 5.32,
+   "f": 141,
+   "fe": 160,
+   "id": "v3_n03"
+  },
+  {
+   "w": "Signal...",
+   "s": 5.5,
+   "e": 6.03,
+   "f": 165,
+   "fe": 181,
+   "id": "v3_d01"
+  },
+  {
+   "w": "green!",
+   "s": 6.415,
+   "e": 6.965,
+   "f": 192,
+   "fe": 209,
+   "id": "v3_d01"
+  },
+  {
+   "w": "He's",
+   "s": 7.165,
+   "e": 7.405,
+   "f": 215,
+   "fe": 222,
+   "id": "v3_t01"
+  },
+  {
+   "w": "pointing",
+   "s": 7.5,
+   "e": 7.86,
+   "f": 225,
+   "fe": 236,
+   "id": "v3_t01"
+  },
+  {
+   "w": "at",
+   "s": 7.86,
+   "e": 7.98,
+   "f": 236,
+   "fe": 239,
+   "id": "v3_t01"
+  },
+  {
+   "w": "nothing!",
+   "s": 7.98,
+   "e": 8.665,
+   "f": 239,
+   "fe": 260,
+   "id": "v3_t01"
+  }
+ ],
+ "captions": [
+  {
+   "text": "His bag",
+   "s": 0.07,
+   "e": 0.62,
+   "f": 2,
+   "fe": 19,
+   "id": "v3_n01",
+   "speaker": "N",
+   "caps": false,
+   "hidden_words": [
+    "is"
+   ]
+  },
+  {
+   "text": "on that train.",
+   "s": 0.74,
+   "e": 1.565,
+   "f": 22,
+   "fe": 47,
+   "id": "v3_n01",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "He is not.",
+   "s": 1.715,
+   "e": 2.63,
+   "f": 51,
+   "fe": 79,
+   "id": "v3_n02",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "All he did",
+   "s": 2.78,
+   "e": 3.47,
+   "f": 83,
+   "fe": 104,
+   "id": "v3_n03",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "was laugh",
+   "s": 3.47,
+   "e": 4.3,
+   "f": 104,
+   "fe": 129,
+   "id": "v3_n03",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "at a finger.",
+   "s": 4.455,
+   "e": 5.32,
+   "f": 134,
+   "fe": 160,
+   "id": "v3_n03",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "SIGNAL... GREEN!",
+   "s": 5.5,
+   "e": 6.965,
+   "f": 165,
+   "fe": 209,
+   "id": "v3_d01",
+   "speaker": "D",
+   "caps": true
+  },
+  {
+   "text": "HE'S POINTING",
+   "s": 7.165,
+   "e": 7.86,
+   "f": 215,
+   "fe": 236,
+   "id": "v3_t01",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "AT NOTHING!",
+   "s": 7.86,
+   "e": 8.665,
+   "f": 236,
+   "fe": 260,
+   "id": "v3_t01",
+   "speaker": "T",
+   "caps": true
+  }
+ ],
+ "opening_ends_s": 8.665,
+ "next_line": "v3_n04 starts 0.15 s after 'nothing!' ends"
+}

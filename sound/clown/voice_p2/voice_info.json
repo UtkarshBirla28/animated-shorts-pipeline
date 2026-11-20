@@ -1,0 +1,3071 @@
+{
+ "duration_s": 70.49,
+ "stats": {
+  "duration_s": 70.49,
+  "first_word_s": 0.07,
+  "last_word_end_s": 70.34,
+  "tail_s": 0.15,
+  "n_spoken_words": 178,
+  "n_display_tokens": 177,
+  "n_lines": 23,
+  "narrator_words": 153,
+  "narrator_speaking_s": 49.13,
+  "narrator_wps_while_speaking": 3.11,
+  "narrator_wps_over_file": 2.17,
+  "all_words": 178,
+  "all_wps_over_file": 2.53,
+  "all_wps_while_speaking": 3.0,
+  "all_wps_excluding_count_window": 2.8,
+  "peak": 0.883,
+  "peak_dbfs": -1.08,
+  "true_peak_4x": 0.8847,
+  "clipped_samples": 0,
+  "integrated_lufs": -17.48,
+  "ffmpeg_ebur128_lufs": -17.5,
+  "lra_lu": 4.5,
+  "count_window_s": 7.0
+ },
+ "lines": [
+  {
+   "id": "n01",
+   "speaker": "N",
+   "text": "Quick test. Count the people on a phone.",
+   "s": 0.07,
+   "e": 2.12,
+   "words": 8,
+   "wps": 3.9,
+   "lufs": -17.9,
+   "f0": {
+    "med": 272.8,
+    "p10": 225.6,
+    "p90": 343.6,
+    "range_st": 7.3,
+    "sd_st": 3.0,
+    "n": 118
+   },
+   "end": {
+    "rise_st": 1.74,
+    "end_vs_med_st": 2.1,
+    "end_hz": 301.6,
+    "med_hz": 267.1,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n02",
+   "speaker": "N",
+   "text": "Don't lose count.",
+   "s": 5.12,
+   "e": 6.21,
+   "words": 3,
+   "wps": 2.75,
+   "lufs": -17.27,
+   "f0": {
+    "med": 198.7,
+    "p10": 146.3,
+    "p90": 260.8,
+    "range_st": 10.0,
+    "sd_st": 3.65,
+    "n": 88
+   },
+   "end": {
+    "rise_st": -2.94,
+    "end_vs_med_st": 2.11,
+    "end_hz": 223.6,
+    "med_hz": 197.9,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n03",
+   "speaker": "N",
+   "text": "How many?",
+   "s": 9.12,
+   "e": 9.605,
+   "words": 2,
+   "wps": 4.12,
+   "lufs": -16.83,
+   "f0": {
+    "med": 253.8,
+    "p10": 202.1,
+    "p90": 297.0,
+    "range_st": 6.7,
+    "sd_st": 2.51,
+    "n": 37
+   },
+   "end": {
+    "rise_st": 3.48,
+    "end_vs_med_st": 3.17,
+    "end_hz": 294.4,
+    "med_hz": 245.1,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n04",
+   "speaker": "N",
+   "text": "Five.",
+   "s": 10.005,
+   "e": 10.685,
+   "words": 1,
+   "wps": 1.47,
+   "lufs": -17.42,
+   "f0": {
+    "med": 126.7,
+    "p10": 98.9,
+    "p90": 201.8,
+    "range_st": 12.3,
+    "sd_st": 4.17,
+    "n": 22
+   },
+   "end": {
+    "rise_st": -9.41,
+    "end_vs_med_st": -2.32,
+    "end_hz": 112.5,
+    "med_hz": 128.6,
+    "voiced_frames": 22
+   }
+  },
+  {
+   "id": "n05",
+   "speaker": "N",
+   "text": "And the clown? You saw him, right?",
+   "s": 10.815,
+   "e": 12.85,
+   "words": 7,
+   "wps": 3.44,
+   "lufs": -17.65,
+   "f0": {
+    "med": 155.7,
+    "p10": 109.0,
+    "p90": 255.5,
+    "range_st": 14.7,
+    "sd_st": 5.25,
+    "n": 132
+   },
+   "end": {
+    "rise_st": 5.13,
+    "end_vs_med_st": -1.73,
+    "end_hz": 144.5,
+    "med_hz": 159.7,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n06",
+   "speaker": "N",
+   "text": "In a real experiment, most people on a phone call never saw him.",
+   "s": 12.99,
+   "e": 16.835,
+   "words": 13,
+   "wps": 3.38,
+   "lufs": -17.16,
+   "f0": {
+    "med": 146.2,
+    "p10": 104.2,
+    "p90": 240.5,
+    "range_st": 14.5,
+    "sd_st": 5.44,
+    "n": 267
+   },
+   "end": {
+    "rise_st": -3.31,
+    "end_vs_med_st": -1.74,
+    "end_hz": 134.3,
+    "med_hz": 148.5,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n07",
+   "speaker": "N",
+   "text": "Psychologist Ira Hyman needed a distraction nobody could miss. Then a student told him:",
+   "s": 16.995,
+   "e": 22.23,
+   "words": 14,
+   "wps": 2.67,
+   "lufs": -17.42,
+   "f0": {
+    "med": 167.6,
+    "p10": 111.7,
+    "p90": 278.3,
+    "range_st": 15.8,
+    "sd_st": 5.64,
+    "n": 370
+   },
+   "end": {
+    "rise_st": 8.57,
+    "end_vs_med_st": 0.65,
+    "end_hz": 178.7,
+    "med_hz": 172.2,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "s01",
+   "speaker": "STUDENT",
+   "text": "I own a unicycle.",
+   "s": 22.37,
+   "e": 23.675,
+   "words": 4,
+   "wps": 3.07,
+   "lufs": -17.16,
+   "f0": {
+    "med": 178.2,
+    "p10": 131.1,
+    "p90": 282.3,
+    "range_st": 13.3,
+    "sd_st": 5.01,
+    "n": 88
+   },
+   "end": {
+    "rise_st": -14.48,
+    "end_vs_med_st": -6.81,
+    "end_hz": 120.2,
+    "med_hz": 178.2,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "s02",
+   "speaker": "STUDENT",
+   "text": "...and a clown suit.",
+   "s": 23.925,
+   "e": 24.985,
+   "words": 4,
+   "wps": 3.77,
+   "lufs": -17.05,
+   "f0": {
+    "med": 262.4,
+    "p10": 199.1,
+    "p90": 368.2,
+    "range_st": 10.6,
+    "sd_st": 4.22,
+    "n": 65
+   },
+   "end": {
+    "rise_st": 4.56,
+    "end_vs_med_st": 6.26,
+    "end_hz": 373.7,
+    "med_hz": 260.3,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n08",
+   "speaker": "N",
+   "text": "So for one hour, the clown rode circles in the middle of campus.",
+   "s": 25.145,
+   "e": 29.045,
+   "words": 13,
+   "wps": 3.33,
+   "lufs": -17.17,
+   "f0": {
+    "med": 214.5,
+    "p10": 153.6,
+    "p90": 283.6,
+    "range_st": 10.6,
+    "sd_st": 4.47,
+    "n": 289
+   },
+   "end": {
+    "rise_st": 4.3,
+    "end_vs_med_st": 4.38,
+    "end_hz": 276.2,
+    "med_hz": 214.4,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "i01",
+   "speaker": "INTERVIEWER",
+   "text": "Did you see anything unusual?",
+   "s": 29.205,
+   "e": 30.79,
+   "words": 5,
+   "wps": 3.15,
+   "lufs": -17.16,
+   "f0": {
+    "med": 249.6,
+    "p10": 193.8,
+    "p90": 362.2,
+    "range_st": 10.8,
+    "sd_st": 3.86,
+    "n": 134
+   },
+   "end": {
+    "rise_st": 6.2,
+    "end_vs_med_st": 6.78,
+    "end_hz": 369.3,
+    "med_hz": 249.6,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "f01",
+   "speaker": "FRIEND",
+   "text": "The clown? He was amazing!",
+   "s": 31.21,
+   "e": 33.465,
+   "words": 5,
+   "wps": 2.22,
+   "lufs": -17.21,
+   "f0": {
+    "med": 279.2,
+    "p10": 194.4,
+    "p90": 371.8,
+    "range_st": 11.2,
+    "sd_st": 4.06,
+    "n": 166
+   },
+   "end": {
+    "rise_st": -9.47,
+    "end_vs_med_st": -4.16,
+    "end_hz": 216.3,
+    "med_hz": 275.0,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "h01",
+   "speaker": "HEADPHONES",
+   "text": "Dude, the unicycle guy!",
+   "s": 33.575,
+   "e": 35.74,
+   "words": 4,
+   "wps": 1.85,
+   "lufs": -17.16,
+   "f0": {
+    "med": 178.1,
+    "p10": 110.9,
+    "p90": 286.6,
+    "range_st": 16.4,
+    "sd_st": 6.25,
+    "n": 151
+   },
+   "end": {
+    "rise_st": -0.96,
+    "end_vs_med_st": -5.61,
+    "end_hz": 126.0,
+    "med_hz": 174.2,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "p01",
+   "speaker": "PHONE_GUY",
+   "text": "Sorry... what clown?",
+   "s": 35.85,
+   "e": 37.58,
+   "words": 3,
+   "wps": 1.73,
+   "lufs": -17.3,
+   "f0": {
+    "med": 121.0,
+    "p10": 89.7,
+    "p90": 218.9,
+    "range_st": 15.4,
+    "sd_st": 5.11,
+    "n": 81
+   },
+   "end": {
+    "rise_st": 9.65,
+    "end_vs_med_st": 4.99,
+    "end_hz": 176.3,
+    "med_hz": 132.2,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n10",
+   "speaker": "N",
+   "text": "Even asked straight out, only one in four people on a call had seen him.",
+   "s": 37.72,
+   "e": 42.135,
+   "words": 15,
+   "wps": 3.4,
+   "lufs": -17.17,
+   "f0": {
+    "med": 232.8,
+    "p10": 157.1,
+    "p90": 298.4,
+    "range_st": 11.1,
+    "sd_st": 4.03,
+    "n": 288
+   },
+   "end": {
+    "rise_st": -5.9,
+    "end_vs_med_st": -4.08,
+    "end_hz": 182.7,
+    "med_hz": 231.2,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n12",
+   "speaker": "N",
+   "text": "Here's the weird part: people listening to music noticed him.",
+   "s": 42.295,
+   "e": 45.76,
+   "words": 10,
+   "wps": 2.89,
+   "lufs": -17.26,
+   "f0": {
+    "med": 156.0,
+    "p10": 108.2,
+    "p90": 247.0,
+    "range_st": 14.3,
+    "sd_st": 5.48,
+    "n": 196
+   },
+   "end": {
+    "rise_st": -5.6,
+    "end_vs_med_st": -10.48,
+    "end_hz": 87.6,
+    "med_hz": 160.4,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n13",
+   "speaker": "N",
+   "text": "You see, a call pulls your mind toward someone who isn't there.",
+   "s": 45.92,
+   "e": 49.86,
+   "words": 12,
+   "wps": 3.05,
+   "lufs": -17.16,
+   "f0": {
+    "med": 181.3,
+    "p10": 116.0,
+    "p90": 257.3,
+    "range_st": 13.8,
+    "sd_st": 5.02,
+    "n": 273
+   },
+   "end": {
+    "rise_st": 7.62,
+    "end_vs_med_st": 2.87,
+    "end_hz": 214.0,
+    "med_hz": 181.3,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n14",
+   "speaker": "N",
+   "text": "So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height.",
+   "s": 50.02,
+   "e": 55.805,
+   "words": 16,
+   "wps": 2.77,
+   "lufs": -17.28,
+   "f0": {
+    "med": 154.1,
+    "p10": 110.1,
+    "p90": 249.1,
+    "range_st": 14.1,
+    "sd_st": 5.1,
+    "n": 341
+   },
+   "end": {
+    "rise_st": -4.69,
+    "end_vs_med_st": -6.1,
+    "end_hz": 111.9,
+    "med_hz": 159.1,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n15",
+   "speaker": "N",
+   "text": "Nearly everyone ducked under it.",
+   "s": 55.965,
+   "e": 57.92,
+   "words": 5,
+   "wps": 2.56,
+   "lufs": -17.16,
+   "f0": {
+    "med": 189.8,
+    "p10": 136.1,
+    "p90": 275.3,
+    "range_st": 12.2,
+    "sd_st": 4.7,
+    "n": 153
+   },
+   "end": {
+    "rise_st": -1.59,
+    "end_vs_med_st": -3.89,
+    "end_hz": 152.6,
+    "med_hz": 191.1,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n16",
+   "speaker": "N",
+   "text": "On a phone? Only six in a hundred stopped for the money.",
+   "s": 58.08,
+   "e": 61.42,
+   "words": 12,
+   "wps": 3.59,
+   "lufs": -17.27,
+   "f0": {
+    "med": 209.6,
+    "p10": 139.6,
+    "p90": 297.9,
+    "range_st": 13.1,
+    "sd_st": 5.04,
+    "n": 198
+   },
+   "end": {
+    "rise_st": 5.77,
+    "end_vs_med_st": 1.12,
+    "end_hz": 218.3,
+    "med_hz": 204.6,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n17",
+   "speaker": "N",
+   "text": "Their bodies dodged it. Their minds never saw it.",
+   "s": 61.72,
+   "e": 65.335,
+   "words": 9,
+   "wps": 2.49,
+   "lufs": -15.69,
+   "f0": {
+    "med": 124.7,
+    "p10": 109.2,
+    "p90": 151.5,
+    "range_st": 5.7,
+    "sd_st": 2.15,
+    "n": 223
+   },
+   "end": {
+    "rise_st": 2.05,
+    "end_vs_med_st": 2.14,
+    "end_hz": 141.3,
+    "med_hz": 124.9,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n18",
+   "speaker": "N",
+   "text": "You counted five phones. You saw the clown.",
+   "s": 65.495,
+   "e": 68.425,
+   "words": 8,
+   "wps": 2.73,
+   "lufs": -17.44,
+   "f0": {
+    "med": 277.9,
+    "p10": 186.8,
+    "p90": 333.9,
+    "range_st": 10.1,
+    "sd_st": 3.53,
+    "n": 175
+   },
+   "end": {
+    "rise_st": 6.81,
+    "end_vs_med_st": 3.38,
+    "end_hz": 335.2,
+    "med_hz": 275.8,
+    "voiced_frames": 30
+   }
+  },
+  {
+   "id": "n19",
+   "speaker": "N",
+   "text": "Did you see the money?",
+   "s": 68.775,
+   "e": 70.34,
+   "words": 5,
+   "wps": 3.19,
+   "lufs": -15.67,
+   "f0": {
+    "med": 126.6,
+    "p10": 102.0,
+    "p90": 206.2,
+    "range_st": 12.2,
+    "sd_st": 4.91,
+    "n": 122
+   },
+   "end": {
+    "rise_st": 10.18,
+    "end_vs_med_st": 6.99,
+    "end_hz": 189.6,
+    "med_hz": 126.6,
+    "voiced_frames": 30
+   }
+  }
+ ],
+ "gaps": [
+  {
+   "after": "n01",
+   "before": "n01",
+   "kind": "normal",
+   "at_s": 0.715,
+   "true_silence_s": 0.125,
+   "word_gap_s": 0.13,
+   "target_s": 0.13,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -50.7,
+   "between": "test. | Count the",
+   "ok": true
+  },
+  {
+   "after": "n01",
+   "before": "n02",
+   "kind": "count",
+   "at_s": 2.125,
+   "true_silence_s": 2.995,
+   "word_gap_s": 3.0,
+   "target_s": 3.0,
+   "range": [
+    2.5,
+    4.0
+   ],
+   "floor_db": -50.4,
+   "between": "phone. | Don't lose",
+   "ok": true
+  },
+  {
+   "after": "n02",
+   "before": "n03",
+   "kind": "count",
+   "at_s": 6.215,
+   "true_silence_s": 2.905,
+   "word_gap_s": 2.91,
+   "target_s": 2.91,
+   "range": [
+    2.5,
+    4.0
+   ],
+   "floor_db": -47.7,
+   "between": "count. | How many?",
+   "ok": true
+  },
+  {
+   "after": "n03",
+   "before": "n04",
+   "kind": "beat",
+   "at_s": 9.61,
+   "true_silence_s": 0.395,
+   "word_gap_s": 0.4,
+   "target_s": 0.4,
+   "range": [
+    0.37,
+    0.43
+   ],
+   "floor_db": -46.1,
+   "between": "many? | Five.",
+   "ok": true
+  },
+  {
+   "after": "n04",
+   "before": "n05",
+   "kind": "normal",
+   "at_s": 10.69,
+   "true_silence_s": 0.125,
+   "word_gap_s": 0.13,
+   "target_s": 0.13,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -53.2,
+   "between": "Five. | And the",
+   "ok": true
+  },
+  {
+   "after": "n05",
+   "before": "n05",
+   "kind": "normal",
+   "at_s": 11.685,
+   "true_silence_s": 0.125,
+   "word_gap_s": 0.13,
+   "target_s": 0.13,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -58.4,
+   "between": "clown? | You saw",
+   "ok": true
+  },
+  {
+   "after": "n05",
+   "before": "n06",
+   "kind": "normal",
+   "at_s": 12.855,
+   "true_silence_s": 0.135,
+   "word_gap_s": 0.14,
+   "target_s": 0.14,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -50.5,
+   "between": "right? | In a",
+   "ok": true
+  },
+  {
+   "after": "n06",
+   "before": "n07",
+   "kind": "normal",
+   "at_s": 16.84,
+   "true_silence_s": 0.155,
+   "word_gap_s": 0.16,
+   "target_s": 0.16,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -47.9,
+   "between": "him. | Psychologist Ira",
+   "ok": true
+  },
+  {
+   "after": "n07",
+   "before": "n07",
+   "kind": "normal",
+   "at_s": 20.94,
+   "true_silence_s": 0.155,
+   "word_gap_s": 0.16,
+   "target_s": 0.16,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -53.9,
+   "between": "miss. | Then a",
+   "ok": true
+  },
+  {
+   "after": "n07",
+   "before": "s01",
+   "kind": "normal",
+   "at_s": 22.235,
+   "true_silence_s": 0.135,
+   "word_gap_s": 0.14,
+   "target_s": 0.14,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -64.3,
+   "between": "him: | I own",
+   "ok": true
+  },
+  {
+   "after": "s01",
+   "before": "s02",
+   "kind": "beat",
+   "at_s": 23.68,
+   "true_silence_s": 0.245,
+   "word_gap_s": 0.25,
+   "target_s": 0.25,
+   "range": [
+    0.22,
+    0.28
+   ],
+   "floor_db": -55.8,
+   "between": "unicycle. | ...and a",
+   "ok": true
+  },
+  {
+   "after": "s02",
+   "before": "n08",
+   "kind": "normal",
+   "at_s": 24.99,
+   "true_silence_s": 0.155,
+   "word_gap_s": 0.16,
+   "target_s": 0.16,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -50.5,
+   "between": "suit. | So for",
+   "ok": true
+  },
+  {
+   "after": "n08",
+   "before": "i01",
+   "kind": "normal",
+   "at_s": 29.05,
+   "true_silence_s": 0.155,
+   "word_gap_s": 0.16,
+   "target_s": 0.16,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -51.7,
+   "between": "campus. | Did you",
+   "ok": true
+  },
+  {
+   "after": "i01",
+   "before": "f01",
+   "kind": "dialogue",
+   "at_s": 30.795,
+   "true_silence_s": 0.105,
+   "word_gap_s": 0.42,
+   "target_s": 0.11,
+   "range": [
+    0.08,
+    0.15
+   ],
+   "floor_db": -52.5,
+   "between": "unusual? | The clown?",
+   "ok": true
+  },
+  {
+   "after": "f01",
+   "before": "f01",
+   "kind": "dialogue",
+   "at_s": 32.055,
+   "true_silence_s": 0.125,
+   "word_gap_s": 0.13,
+   "target_s": 0.13,
+   "range": [
+    0.08,
+    0.15
+   ],
+   "floor_db": -58.7,
+   "between": "clown? | He was",
+   "ok": true
+  },
+  {
+   "after": "f01",
+   "before": "h01",
+   "kind": "dialogue",
+   "at_s": 33.47,
+   "true_silence_s": 0.105,
+   "word_gap_s": 0.11,
+   "target_s": 0.11,
+   "range": [
+    0.08,
+    0.15
+   ],
+   "floor_db": -53.9,
+   "between": "amazing! | Dude, the",
+   "ok": true
+  },
+  {
+   "after": "h01",
+   "before": "p01",
+   "kind": "dialogue",
+   "at_s": 35.745,
+   "true_silence_s": 0.105,
+   "word_gap_s": 0.11,
+   "target_s": 0.11,
+   "range": [
+    0.08,
+    0.15
+   ],
+   "floor_db": -54.3,
+   "between": "guy! | Sorry... what",
+   "ok": true
+  },
+  {
+   "after": "p01",
+   "before": "n10",
+   "kind": "normal",
+   "at_s": 37.585,
+   "true_silence_s": 0.135,
+   "word_gap_s": 0.14,
+   "target_s": 0.14,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -47.0,
+   "between": "clown? | Even asked",
+   "ok": true
+  },
+  {
+   "after": "n10",
+   "before": "n12",
+   "kind": "normal",
+   "at_s": 42.14,
+   "true_silence_s": 0.155,
+   "word_gap_s": 0.16,
+   "target_s": 0.16,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -47.0,
+   "between": "him. | Here's the",
+   "ok": true
+  },
+  {
+   "after": "n12",
+   "before": "n12",
+   "kind": "normal",
+   "at_s": 43.55,
+   "true_silence_s": 0.135,
+   "word_gap_s": 0.14,
+   "target_s": 0.14,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -45.7,
+   "between": "part: | people listening",
+   "ok": true
+  },
+  {
+   "after": "n12",
+   "before": "n13",
+   "kind": "normal",
+   "at_s": 45.765,
+   "true_silence_s": 0.155,
+   "word_gap_s": 0.16,
+   "target_s": 0.16,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -45.8,
+   "between": "him. | You see,",
+   "ok": true
+  },
+  {
+   "after": "n13",
+   "before": "n14",
+   "kind": "normal",
+   "at_s": 49.865,
+   "true_silence_s": 0.155,
+   "word_gap_s": 0.16,
+   "target_s": 0.16,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -47.4,
+   "between": "there. | So Hyman",
+   "ok": true
+  },
+  {
+   "after": "n14",
+   "before": "n14",
+   "kind": "normal",
+   "at_s": 52.565,
+   "true_silence_s": 0.185,
+   "word_gap_s": 0.19,
+   "target_s": 0.19,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -46.8,
+   "between": "sneakier. | He hung",
+   "ok": true
+  },
+  {
+   "after": "n14",
+   "before": "n15",
+   "kind": "normal",
+   "at_s": 55.81,
+   "true_silence_s": 0.155,
+   "word_gap_s": 0.16,
+   "target_s": 0.16,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -53.8,
+   "between": "height. | Nearly everyone",
+   "ok": true
+  },
+  {
+   "after": "n15",
+   "before": "n16",
+   "kind": "normal",
+   "at_s": 57.925,
+   "true_silence_s": 0.155,
+   "word_gap_s": 0.16,
+   "target_s": 0.16,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -46.8,
+   "between": "it. | On a",
+   "ok": true
+  },
+  {
+   "after": "n16",
+   "before": "n16",
+   "kind": "normal",
+   "at_s": 58.88,
+   "true_silence_s": 0.125,
+   "word_gap_s": 0.13,
+   "target_s": 0.13,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -49.3,
+   "between": "phone? | Only six",
+   "ok": true
+  },
+  {
+   "after": "n16",
+   "before": "n17",
+   "kind": "beat",
+   "at_s": 61.425,
+   "true_silence_s": 0.295,
+   "word_gap_s": 0.3,
+   "target_s": 0.3,
+   "range": [
+    0.27,
+    0.33
+   ],
+   "floor_db": -53.7,
+   "between": "money. | Their bodies",
+   "ok": true
+  },
+  {
+   "after": "n17",
+   "before": "n17",
+   "kind": "normal",
+   "at_s": 63.405,
+   "true_silence_s": 0.185,
+   "word_gap_s": 0.19,
+   "target_s": 0.19,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -45.6,
+   "between": "it. | Their minds",
+   "ok": true
+  },
+  {
+   "after": "n17",
+   "before": "n18",
+   "kind": "normal",
+   "at_s": 65.34,
+   "true_silence_s": 0.155,
+   "word_gap_s": 0.16,
+   "target_s": 0.16,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -46.8,
+   "between": "it. | You counted",
+   "ok": true
+  },
+  {
+   "after": "n18",
+   "before": "n18",
+   "kind": "normal",
+   "at_s": 67.11,
+   "true_silence_s": 0.125,
+   "word_gap_s": 0.13,
+   "target_s": 0.13,
+   "range": [
+    0.12,
+    0.22
+   ],
+   "floor_db": -50.9,
+   "between": "phones. | You saw",
+   "ok": true
+  },
+  {
+   "after": "n18",
+   "before": "n19",
+   "kind": "beat",
+   "at_s": 68.43,
+   "true_silence_s": 0.345,
+   "word_gap_s": 0.35,
+   "target_s": 0.35,
+   "range": [
+    0.32,
+    0.38
+   ],
+   "floor_db": -46.1,
+   "between": "clown. | Did you",
+   "ok": true
+  }
+ ],
+ "silences_inside_sentences": [
+  {
+   "at_s": 14.35,
+   "true_silence_s": 0.17,
+   "between": "experiment, | most"
+  },
+  {
+   "at_s": 34.21,
+   "true_silence_s": 0.165,
+   "between": "Dude, | the"
+  },
+  {
+   "at_s": 36.43,
+   "true_silence_s": 0.22,
+   "between": "Sorry... | what"
+  },
+  {
+   "at_s": 39.27,
+   "true_silence_s": 0.165,
+   "between": "out, | only"
+  },
+  {
+   "at_s": 46.42,
+   "true_silence_s": 0.16,
+   "between": "see, | a"
+  },
+  {
+   "at_s": 48.36,
+   "true_silence_s": 0.165,
+   "between": "toward | someone"
+  },
+  {
+   "at_s": 56.485,
+   "true_silence_s": 0.1,
+   "between": "Nearly | everyone"
+  },
+  {
+   "at_s": 62.565,
+   "true_silence_s": 0.11,
+   "between": "bodies | dodged"
+  }
+ ],
+ "verify": {
+  "passed": false,
+  "issues": [
+   "duration 70.49 outside 62-68 s"
+  ],
+  "whole_file_heard": "Quick test! Count the people on a phone! Don't lose count! How many? Five. And the clown? You saw him, right? In a real experiment, most people on a phone call never saw him. Psychologist Ira Hyman needed a distraction nobody could miss. Then a student told him, I own a unicycle and a clown suit. So for one hour, the clown rode circles in the middle of campus. Did you see anything unusual? The clown? He was amazing! Dude! The unicycle guy! Sorry, what clown? Even asked straight out. Only one in four people on a call had seen him. Here's the weird part. People listening to music noticed him. You see, a call pulls your mind toward someone who isn't there. So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height. Nearly everyone ducked under it. On a phone? Only six in a hundred stopped for the money. Their bodies dodged it. Their minds never saw it. You counted five phones! You saw the clown! Did you see the money?",
+  "whole_file_differences": [],
+  "line_differences": [],
+  "per_line": [
+   {
+    "id": "n01",
+    "speaker": "N",
+    "heard": "Quick test! Count the people on a phone!",
+    "diff": [],
+    "min_p": 0.76
+   },
+   {
+    "id": "n02",
+    "speaker": "N",
+    "heard": "Don't lose count!",
+    "diff": [],
+    "min_p": 0.93
+   },
+   {
+    "id": "n03",
+    "speaker": "N",
+    "heard": "How many?",
+    "diff": [],
+    "min_p": 0.84
+   },
+   {
+    "id": "n04",
+    "speaker": "N",
+    "heard": "Five",
+    "diff": [],
+    "min_p": 0.5
+   },
+   {
+    "id": "n05",
+    "speaker": "N",
+    "heard": "And the clown? You saw him, right?",
+    "diff": [],
+    "min_p": 0.76
+   },
+   {
+    "id": "n06",
+    "speaker": "N",
+    "heard": "In a real experiment, most people on a phone call never saw him.",
+    "diff": [],
+    "min_p": 0.95
+   },
+   {
+    "id": "n07",
+    "speaker": "N",
+    "heard": "Psychologist Ira Hyman needed a distraction nobody could miss, then a student told him",
+    "diff": [],
+    "min_p": 0.87
+   },
+   {
+    "id": "s01",
+    "speaker": "STUDENT",
+    "heard": "I own a unicycle!",
+    "diff": [],
+    "min_p": 0.91
+   },
+   {
+    "id": "s02",
+    "speaker": "STUDENT",
+    "heard": "and a clown suit.",
+    "diff": [],
+    "min_p": 0.41
+   },
+   {
+    "id": "n08",
+    "speaker": "N",
+    "heard": "So for one hour the clown rode circles in the middle of campus",
+    "diff": [],
+    "min_p": 0.59
+   },
+   {
+    "id": "i01",
+    "speaker": "INTERVIEWER",
+    "heard": "Did you see anything unusual?",
+    "diff": [],
+    "min_p": 0.87
+   },
+   {
+    "id": "f01",
+    "speaker": "FRIEND",
+    "heard": "The clown? He was amazing!",
+    "diff": [],
+    "min_p": 0.81
+   },
+   {
+    "id": "h01",
+    "speaker": "HEADPHONES",
+    "heard": "Dude, the unicycle guy!",
+    "diff": [],
+    "min_p": 0.88
+   },
+   {
+    "id": "p01",
+    "speaker": "PHONE_GUY",
+    "heard": "Sorry, what clown?",
+    "diff": [],
+    "min_p": 0.8
+   },
+   {
+    "id": "n10",
+    "speaker": "N",
+    "heard": "Even asked straight out, only 1 in 4 people on a call had seen him.",
+    "diff": [],
+    "min_p": 0.45
+   },
+   {
+    "id": "n12",
+    "speaker": "N",
+    "heard": "Here's the weird part people listening to music noticed him",
+    "diff": [],
+    "min_p": 0.16
+   },
+   {
+    "id": "n13",
+    "speaker": "N",
+    "heard": "You see, a call pulls your mind toward someone who isn't there.",
+    "diff": [],
+    "min_p": 0.87
+   },
+   {
+    "id": "n14",
+    "speaker": "N",
+    "heard": "So, Hyman tried something sneakier. He hung dollar bills on a branch right at head height.",
+    "diff": [],
+    "min_p": 0.49
+   },
+   {
+    "id": "n15",
+    "speaker": "N",
+    "heard": "Nearly everyone ducked under it.",
+    "diff": [],
+    "min_p": 0.76
+   },
+   {
+    "id": "n16",
+    "speaker": "N",
+    "heard": "On a phone? Only 6 in 100 stopped for the money.",
+    "diff": [],
+    "min_p": 0.55
+   },
+   {
+    "id": "n17",
+    "speaker": "N",
+    "heard": "Their bodies dodged it. Their minds never saw it.",
+    "diff": [],
+    "min_p": 0.89
+   },
+   {
+    "id": "n18",
+    "speaker": "N",
+    "heard": "You counted five phones! You saw the clown!",
+    "diff": [],
+    "min_p": 0.65
+   },
+   {
+    "id": "n19",
+    "speaker": "N",
+    "heard": "Did you see the money?",
+    "diff": [],
+    "min_p": 0.91
+   }
+  ]
+ },
+ "take": "eleven_v4:james+5 character voices:v6 story script",
+ "script": "sound/clown/SCRIPT_v6.md (binding)",
+ "voices": {
+  "N": {
+   "name": "AT James (James - Conversational, Energetic, Punchy)",
+   "voice_id": "QhpsGjDKZmM9qRYdMhBD",
+   "source": "account (professional)"
+  },
+  "STUDENT": {
+   "name": "Erby - Nerdy Regular Dude",
+   "voice_id": "n27L8GNoVt7SPUboEQb7",
+   "source": "shared library, added as 'CL Student Erby'"
+  },
+  "INTERVIEWER": {
+   "name": "Nikki - Friendly and Conversational",
+   "voice_id": "yhFUAoS32gPDJFQHbH68",
+   "source": "shared library, added as 'CL Interviewer Nikki'"
+  },
+  "FRIEND": {
+   "name": "Laura - Enthusiast, Quirky Attitude",
+   "voice_id": "FGY2WhTYpPnrIDTdsKH5",
+   "source": "premade"
+  },
+  "HEADPHONES": {
+   "name": "Jerry B - California Surfer Dude",
+   "voice_id": "rHWSYoq8UlV0YIBKMryp",
+   "source": "shared library, added as 'CL Headphones JerryB'"
+  },
+  "PHONE_GUY": {
+   "name": "Jeremy - Casual Guy Next Door",
+   "voice_id": "5gaEGrWSk4v20HMfIhgC",
+   "source": "shared library, added as 'CL Phone Jeremy'"
+  }
+ },
+ "model": "eleven_v4",
+ "output": "ElevenLabs mp3_44100_128 (with-timestamps) -> 48 kHz stereo pcm_s24le",
+ "settings": {
+  "all": {
+   "model_id": "eleven_v4",
+   "similarity_boost": 0.75,
+   "speed": 1.0,
+   "note": "eleven_v4 ignores speed: the same seed at 1.0 and 1.2 gave the identical 2.23 s take (takes/test/sp10, sp12); style is not supported by v4"
+  },
+  "context": "every take sent the neighbouring script lines as previous_text / next_text (context only, not spoken; v4 accepts them)",
+  "tags": "one short v4 audio tag per beat ([excited], [playful], [teasing], [intrigued], [mysteriously], [delighted], [incredulous], [warmly], [mischievously], [amused], [slowly], [slyly]; characters [proudly], [friendly], [laughing], [relaxed], [confused]); stability 0.5 or 0.35",
+  "per_take_used": {
+   "c03/t2": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7022,
+    "stability": 0.35,
+    "text": "[teasing] How many? [confident] Five. [amused] And the clown? You saw him, right?",
+    "prev": "Quick test. Count the people on a phone. Don't lose count.",
+    "next": "In a real experiment, most people on a phone call never saw him."
+   },
+   "c03/t4": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7024,
+    "stability": 0.5,
+    "text": "How many? Five! And the clown? You saw him, right?",
+    "prev": "Quick test. Count the people on a phone. Don't lose count.",
+    "next": "In a real experiment, most people on a phone call never saw him."
+   },
+   "c04/t1": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7031,
+    "stability": 0.5,
+    "text": "[intrigued] In a real experiment, most people on a phone call never saw him.",
+    "prev": "And the clown? You saw him, right?",
+    "next": "Psychologist Ira Hyman needed a distraction nobody could miss. Then a student told him:"
+   },
+   "c05/t2": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7042,
+    "stability": 0.35,
+    "text": "[playful] Psychologist Ira Hyman needed a distraction nobody could miss. Then a student told him:",
+    "prev": "In a real experiment, most people on a phone call never saw him.",
+    "next": "I own a unicycle."
+   },
+   "c06b/t2": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7622,
+    "stability": 0.35,
+    "text": "[delighted] So for one hour, the clown RODE circles in the middle of campus. Then his team asked people leaving:",
+    "prev": "I own a unicycle. ...and a clown suit.",
+    "next": "Did you see anything unusual?"
+   },
+   "c07/t2": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7062,
+    "stability": 0.35,
+    "text": "[incredulous] Even asked straight out, only one in four people on a call had seen him. [amused] Many spun around to look.",
+    "prev": "Dude, the unicycle guy! Sorry... what clown?",
+    "next": "Here's the weird part: people listening to music noticed him."
+   },
+   "c08/t1": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7071,
+    "stability": 0.5,
+    "text": "[mysteriously] Here's the weird part: people listening to music noticed him.",
+    "prev": "Even asked straight out, only one in four people on a call had seen him. Many spun around to look.",
+    "next": "You see, a call pulls your mind toward someone who isn't there."
+   },
+   "c09b/t4": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7914,
+    "stability": 0.5,
+    "text": "[warmly] You see, a call pulls your mind toward — someone who isn't there.",
+    "prev": "Here's the weird part: people listening to music noticed him.",
+    "next": "So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height."
+   },
+   "c10/t2": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7092,
+    "stability": 0.35,
+    "text": "[mischievously] So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height.",
+    "prev": "You see, a call pulls your mind toward someone who isn't there.",
+    "next": "Nearly everyone ducked under it."
+   },
+   "c11/t2": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7102,
+    "stability": 0.35,
+    "text": "[amused] Nearly everyone ducked under it. On a phone? Only six in a hundred stopped for the money.",
+    "prev": "So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height.",
+    "next": "Their bodies dodged it. Their minds never saw it."
+   },
+   "c12/t2": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7112,
+    "stability": 0.35,
+    "text": "[slowly] Their bodies dodged it. Their minds never saw it.",
+    "prev": "Nearly everyone ducked under it. On a phone? Only six in a hundred stopped for the money.",
+    "next": "You counted five phones. You saw the clown."
+   },
+   "c13/t2": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7122,
+    "stability": 0.35,
+    "text": "[excited] You counted five phones. You saw the clown. [slyly] Did you see the money?",
+    "prev": "Their bodies dodged it. Their minds never saw it.",
+    "next": null
+   },
+   "c14/t2": {
+    "voice": "QhpsGjDKZmM9qRYdMhBD",
+    "seed": 7132,
+    "stability": 0.35,
+    "text": "[slyly] Did you see the money?",
+    "prev": "Their bodies dodged it. Their minds never saw it. You counted five phones. You saw the clown.",
+    "next": null
+   },
+   "ch_friend/t3": {
+    "voice": "FGY2WhTYpPnrIDTdsKH5",
+    "seed": 8523,
+    "stability": 0.35,
+    "text": "[laughing] The clown? He was amazing!",
+    "prev": "Did you see anything unusual?",
+    "next": "Dude, the unicycle guy!"
+   },
+   "ch_headphones/t2": {
+    "voice": "rHWSYoq8UlV0YIBKMryp",
+    "seed": 8532,
+    "stability": 0.5,
+    "text": "[relaxed] Dude, the unicycle guy!",
+    "prev": "Did you see anything unusual? The clown? He was amazing!",
+    "next": "Sorry... what clown?"
+   },
+   "ch_interviewer/t3": {
+    "voice": "yhFUAoS32gPDJFQHbH68",
+    "seed": 8513,
+    "stability": 0.35,
+    "text": "[friendly] Did you see anything unusual?",
+    "prev": "So for one hour, the clown rode circles in the middle of campus. Then his team asked people leaving:",
+    "next": "The clown? He was amazing!"
+   },
+   "ch_phone_guy/t5": {
+    "voice": "5gaEGrWSk4v20HMfIhgC",
+    "seed": 8641,
+    "stability": 0.5,
+    "text": "[confused] Sorry... what clown?",
+    "prev": "Did you see anything unusual? Dude, the unicycle guy!",
+    "next": "Even asked straight out, only one in four people on a call had seen him."
+   },
+   "ch_student/t3": {
+    "voice": "n27L8GNoVt7SPUboEQb7",
+    "seed": 8503,
+    "stability": 0.35,
+    "text": "[proudly] I own a unicycle... and a clown suit.",
+    "prev": "Psychologist Ira Hyman needed a distraction nobody could miss. Then a student told him:",
+    "next": "So for one hour, the clown rode circles in the middle of campus."
+   }
+  }
+ },
+ "casting": {
+  "method": "3 candidates per role, one take each on the role's own line with the narrator's lead-in as context; measured whisper words / p, f0 median + range, loudness contour range, mean-MFCC timbre distance to James and to the other roles, spectral roll-off (band-limited voices out), noise floor, clipped edges (v6_cast.py, takes/cast_r1.txt)",
+  "candidates": {
+   "STUDENT": {
+    "erby": {
+     "f0_median_hz": 234.4,
+     "f0_range_st": 13.3,
+     "level_range_db": 15.8,
+     "centroid_hz": 1427.0,
+     "whisper_min_p": 0.43,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    },
+    "nathan": {
+     "f0_median_hz": 204.1,
+     "f0_range_st": 10.7,
+     "level_range_db": 21.7,
+     "centroid_hz": 958.0,
+     "whisper_min_p": 0.37,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    },
+    "sheldon": {
+     "f0_median_hz": 287.6,
+     "f0_range_st": 15.6,
+     "level_range_db": 17.6,
+     "centroid_hz": 1523.0,
+     "whisper_min_p": 0.51,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    }
+   },
+   "INTERVIEWER": {
+    "irene": {
+     "f0_median_hz": 267.3,
+     "f0_range_st": 11.8,
+     "level_range_db": 19.3,
+     "centroid_hz": 691.0,
+     "whisper_min_p": 0.85,
+     "wrong_words": 0,
+     "clipped_start": true,
+     "clipped_end": false
+    },
+    "nikki": {
+     "f0_median_hz": 256.0,
+     "f0_range_st": 9.7,
+     "level_range_db": 11.8,
+     "centroid_hz": 688.0,
+     "whisper_min_p": 0.88,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    },
+    "sarah": {
+     "f0_median_hz": 233.7,
+     "f0_range_st": 11.1,
+     "level_range_db": 12.9,
+     "centroid_hz": 607.0,
+     "whisper_min_p": 0.93,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    }
+   },
+   "FRIEND": {
+    "jessica": {
+     "f0_median_hz": 264.0,
+     "f0_range_st": 12.6,
+     "level_range_db": 21.6,
+     "centroid_hz": 1027.0,
+     "whisper_min_p": 0.52,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    },
+    "kymmiee": {
+     "f0_median_hz": 293.9,
+     "f0_range_st": 9.0,
+     "level_range_db": 28.0,
+     "centroid_hz": 546.0,
+     "whisper_min_p": 0.61,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    },
+    "laura": {
+     "f0_median_hz": 293.2,
+     "f0_range_st": 10.0,
+     "level_range_db": 17.6,
+     "centroid_hz": 914.0,
+     "whisper_min_p": 0.64,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    }
+   },
+   "HEADPHONES": {
+    "brandon": {
+     "f0_median_hz": 157.1,
+     "f0_range_st": 16.0,
+     "level_range_db": 24.1,
+     "centroid_hz": 718.0,
+     "whisper_min_p": 0.9,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    },
+    "jerryb": {
+     "f0_median_hz": 189.5,
+     "f0_range_st": 16.7,
+     "level_range_db": 14.3,
+     "centroid_hz": 1239.0,
+     "whisper_min_p": 0.55,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    },
+    "will": {
+     "f0_median_hz": 127.4,
+     "f0_range_st": 16.0,
+     "level_range_db": 17.3,
+     "centroid_hz": 772.0,
+     "whisper_min_p": 0.88,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    }
+   },
+   "PHONE_GUY": {
+    "chris": {
+     "f0_median_hz": 241.1,
+     "f0_range_st": 14.6,
+     "level_range_db": 24.9,
+     "centroid_hz": 948.0,
+     "whisper_min_p": 0.87,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    },
+    "jeremy": {
+     "f0_median_hz": 112.9,
+     "f0_range_st": 11.4,
+     "level_range_db": 27.5,
+     "centroid_hz": 853.0,
+     "whisper_min_p": 0.52,
+     "wrong_words": 1,
+     "clipped_start": false,
+     "clipped_end": false
+    },
+    "trevor": {
+     "f0_median_hz": 244.6,
+     "f0_range_st": 13.6,
+     "level_range_db": 20.7,
+     "centroid_hz": 522.0,
+     "whisper_min_p": 0.85,
+     "wrong_words": 0,
+     "clipped_start": false,
+     "clipped_end": false
+    }
+   }
+  },
+  "decisions": {
+   "STUDENT": "Erby over Sheldon (288 Hz, cartoon-quirky) and Nathan (204 Hz = James's median 0.2 st away): natural everyday cadence, bright nasal timbre (centroid 1.4 kHz), 2.6 st and MFCC 7.2 from James",
+   "INTERVIEWER": "Nikki over Irene (clipped start, 0.2 st from Jessica) and Sarah (falling question, 0.1 st from Erby): the friendly rising question, clean floor",
+   "FRIEND": "Laura over Kymmiee (band-limited: 99 % of the energy under 2.6 kHz, lo-fi) and Jessica (0.5 st from Nikki): bright, bubbly, 293 Hz, 2.3 st above Nikki",
+   "HEADPHONES": "Jerry B over Brandon (noise floor -47.7 dB under -18 LUFS speech) and Will (127 Hz, 2.1 st from Jeremy on the very next line): laid-back surfer drawl, clean floor, 8 st above the phone guy",
+   "PHONE_GUY": "Jeremy over Trevor (band-limited, 4.8 kHz) and Chris (closest timbre to James of all candidates, MFCC 3.6): deep (113-126 Hz), puzzled rise; 7 takes because 'clown' was heard as 'clone' in 2 of the first 4"
+  },
+  "takes_per_line": ">= 4 with the winner on every character line (student 4 covering both lines, interviewer 4, friend 4, headphones 4, phone guy 7)"
+ },
+ "narrator_takes": "14 chunks x 4 takes (c01-c14, 1-3 sentences each, context-linked) + retakes c06b (n08 'RODE' capitalised, 4) and c09b (n13 punctuation, 4); chosen per line by whisper (every word right, word p), clipped edges / extra sound, the end contour (questions rise), pace and f0 against the delivery intent",
+ "picks": {
+  "n01": "c01/t1",
+  "n02": "c02/t1",
+  "n03": "c03/t4",
+  "n04": "c03/t2",
+  "n05": "c03/t2",
+  "n06": "c04/t1",
+  "n07": "c05/t2",
+  "s01": "ch_student/t3",
+  "s02": "ch_student/t3",
+  "n08": "c06b/t2",
+  "n09": "c06b/t2",
+  "i01": "ch_interviewer/t3",
+  "f01": "ch_friend/t3",
+  "h01": "ch_headphones/t2",
+  "p01": "ch_phone_guy/t5",
+  "n10": "c07/t2",
+  "n11": "c07/t2",
+  "n12": "c08/t1",
+  "n13": "c09b/t4",
+  "n14": "c10/t2",
+  "n15": "c11/t2",
+  "n16": "c11/t2",
+  "n17": "c12/t2",
+  "n18": "c13/t2",
+  "n19": "c14/t2"
+ },
+ "why": {
+  "n01": "[excited] t1: game-show bright (325 / 261 Hz), 2.23 s, no flags; t2 has a breath after the end (tail -44 dB), t3 is cut at the end (CLIPEND), t4 runs the two sentences together (0.04 s)",
+  "n02": "[playful] t1: voiced aside (198 Hz, p 0.93); t2 cut at the end, t3 came out as a real whisper (unvoiced) that would vanish under the count music, t4 longer and falling flat",
+  "n03": "untagged t4: the strongest rise of the four (+3.5 st over the last 300 ms), clearest (p 0.90), quickest (0.54 s)",
+  "n04": "t2: low confident fall (126 Hz, end -9.4 st); t3 / t4 shout 'Five!' at 316-342 Hz; t1 the same read as t2 but whisper p 0.16 (t2 0.54: the word/digit token split, not the sound)",
+  "n05": "t2: both questions rise ('And the clown?' +9.3 st, 'You saw him, right?' +12.0 st); t3 / t4 leave 'And the clown?' flat (+0.9 / +1.1)",
+  "n06": "[intrigued] t1: the turn drops to 146 Hz (n05 sits at 147-264 Hz rising), p 0.96, the quickest (3.85 s); t4 [mysteriously] is lower still (120 Hz) but 0.45 s longer with the voice already over 68 s",
+  "n07": "[playful] t2: shortest (5.42 s), 'Ira Hyman' p 0.88 / 0.95, 'Then a student told him' p >= 0.63 and rising into the student (+8.9 st)",
+  "s01": "STUDENT (Erby) t3: 'I own a unicycle!' falls proudly (-14 st), p 0.88-1.00",
+  "s02": "STUDENT t3 (same take): '...and a clown suit!' rises on the punchline (+5.0 st), 'clown suit' p 0.96 / 0.97 ('And' 0.38 in every take: the word after the ellipsis); t4 is cut at the end",
+  "n08": "retake c06b ('RODE' in capitals) t2: 'rode' p 0.74 (every c06 take 0.42-0.49 or heard as 'wrote'; the plain-text control c06b/t4 was heard as 'wrote' again), 3.92 s, delighted rise",
+  "n09": "c06b/t2 (dropped by the cut order)",
+  "i01": "INTERVIEWER (Nikki) t3: the friendliest rise (+6.35 st), clearest (p 0.89), 1.59 s",
+  "f01": "FRIEND (Laura) t3: 'The clown?' rises in recognition (+10.1 st), 'He was amazing!' falls (-9.5 st), the shortest (2.81 s); [laughing] in the read",
+  "h01": "HEADPHONES (Jerry B) t2: clearest (p 0.90 vs 0.26-0.55), laid-back fall at the end; t4 [laughs] p 0.48",
+  "p01": "PHONE GUY (Jeremy) t5 of 7: 'clown' clear (p 0.82; t1 / t3 heard 'clone', t2 0.55, t6 cut at the end), puzzled rise on 'clown?' (+13.9 st), 0.17 s hesitation after 'Sorry...', 126 Hz (7.9 st under James)",
+  "n10": "[incredulous] t2: every word heard (t1 / t4 heard 'ask straight'), lands with a fall (-8.1 st)",
+  "n11": "c07/t2 (dropped by the cut order)",
+  "n12": "[mysteriously] t1: the hushed read ('Here's the weird part:' 3 dB softer in the take, 150 Hz), p 0.95 / 0.84; t3 [whispers] whispers half the line and voices the rest",
+  "n13": "retake c09b (punctuation 'toward -' only) t4: 'toward' heard right (all four c09 takes were heard as 'towards': the 'toward someone' /s/ juncture), clearest of the retakes (p 0.87)",
+  "n14": "[mischievously] t2: clearest (p 0.88 / 0.94), both sentences fall; t4 cut at both ends, t3 p 0.69",
+  "n15": "[amused] t2: falls (-1.6 st) into the question; t3 / t4 rise at the end (uptalk)",
+  "n16": "t2 (same take as n15): 'On a phone?' rises +10.1 st, p 0.73 ('On' p 0.10 in t1); 'six' p 0.33 is the six/6 token split (t1 wrote '6' at 0.68)",
+  "n17": "[slowly] t2: the slowest, lowest, flattest read (2.29 w/s, 121-128 Hz, f0 range 5.4-5.9 st); t1 clipped start, t4 whispers the first half; the /b/ burst of 'bodies' is 19.3 dB over the sentence loudness in every take (clip-gain dip in the build)",
+  "n18": "[excited] t2: quick (gap 0.14 s in the take) and building (+3.6 / +6.8 st)",
+  "n19": "c14 [slyly] t2 (own take, context n17 + n18): the slowest clean read (1.58 s), rises +10.2 st, p >= 0.90; c13's in-context reads are fast (0.92 s) or quiet and flat (105 Hz, 3 st); c14/t3 has the 'the... money' pause but 'money' p 0.62"
+ },
+ "drops": {
+  "n11": "cut order 1 ('Many spun around to look.')",
+  "n09": "cut order 3 ('Then his team asked people leaving:' -> the interviewer line alone)",
+  "n02_kept": "cut order 2 ('Don't lose count.') saves no time: it sits inside the fixed 7.0 s count window"
+ },
+ "cut_order_applied": {
+  "uncut_duration_s": 74.265,
+  "rule": "SCRIPT_v6 cut order when over 68 s: 'Many spun around to look.' (cut), 'Don't lose count.' (KEPT: it sits inside the fixed 7.0 s count window, so cutting it saves 0 s), 'Then his team asked people leaving:' (cut -> the interviewer line alone)",
+  "still_over": "the cut voice runs past 68 s: eleven_v4 James reads 2.5-3.4 words/s whatever the tag (LESSONS 2/36); no stretch was applied (owner rule); further cuts are a script decision"
+ },
+ "processing": "gains only, plus clip-gain dips on single plosive bursts (5 ms window, 4 ms raised-cosine ramps, <= 1.8 dB; listed in _build.json units[].plosive_dips) and small unit trims (<= 0.9 dB) so the peak stays under -1 dBFS without a limiter; every cut is inside true silence with 8 ms fades; no stretch, no pitch shift, no EQ, no compression",
+ "words_json": "words.json = caption tokens ('1 in 4', '6 in 100' as digits: {1|one} {4|four} {6|six} {100|a hundred}; 'Five.' stays a word); words_spoken.json = one entry per spoken word; phrases.json = one entry per line with speaker (N / STUDENT / INTERVIEWER / FRIEND / HEADPHONES / PHONE_GUY); word times are the ElevenLabs v4 character times (40 ms grid) snapped to true silence, first / last word of every sentence pinned to the acoustic on / off",
+ "build": {
+  "target_stereo_lufs": -17.5,
+  "stereo_lufs": -17.48,
+  "peak": 0.883,
+  "duration_s": 70.49,
+  "dropped_lines": [
+   "n11",
+   "n09"
+  ],
+  "lead_s": 0.07,
+  "tail_s": 0.15,
+  "count_s": 7.0,
+  "dont_lose_count_at_s": 3.0,
+  "lift_db": {
+   "n17": 1.5,
+   "n19": 1.5
+  },
+  "inner_rule": {
+   "max_s": 0.2,
+   "cut_to_s": 0.16,
+   "exceptions": {
+    "p01": [
+     0.4,
+     0.34
+    ],
+    "n19": [
+     0.36,
+     0.3
+    ],
+    "s02": [
+     0.3,
+     0.25
+    ]
+   }
+  },
+  "units": [
+   {
+    "line": "n01",
+    "sentences": [
+     "Quick test."
+    ],
+    "take": "c01/t1",
+    "take_on": 0.09,
+    "take_off": 0.74,
+    "on": 0.07,
+    "off": 0.71,
+    "gain_db": -0.35,
+    "lufs_before_gain_mono": -19.83,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.59,
+    "inner_cuts": []
+   },
+   {
+    "line": "n01",
+    "sentences": [
+     "Count the people on a phone."
+    ],
+    "take": "c01/t1",
+    "take_on": 0.955,
+    "take_off": 2.315,
+    "on": 0.84,
+    "off": 2.12,
+    "gain_db": -0.49,
+    "lufs_before_gain_mono": -19.69,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.4771,
+    "inner_cuts": []
+   },
+   {
+    "line": "n02",
+    "sentences": [
+     "Don't lose count."
+    ],
+    "take": "c02/t1",
+    "take_on": 0.075,
+    "take_off": 1.185,
+    "on": 5.12,
+    "off": 6.21,
+    "gain_db": -0.2,
+    "lufs_before_gain_mono": -19.98,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5886,
+    "inner_cuts": []
+   },
+   {
+    "line": "n03",
+    "sentences": [
+     "How many?"
+    ],
+    "take": "c03/t4",
+    "take_on": 0.025,
+    "take_off": 0.56,
+    "on": 9.12,
+    "off": 9.605,
+    "gain_db": -0.91,
+    "lufs_before_gain_mono": -19.26,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.4466,
+    "inner_cuts": []
+   },
+   {
+    "line": "n04",
+    "sentences": [
+     "Five."
+    ],
+    "take": "c03/t2",
+    "take_on": 1.225,
+    "take_off": 1.92,
+    "on": 10.005,
+    "off": 10.685,
+    "gain_db": 0.9,
+    "lufs_before_gain_mono": -21.07,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.6972,
+    "inner_cuts": []
+   },
+   {
+    "line": "n05",
+    "sentences": [
+     "And the clown?"
+    ],
+    "take": "c03/t2",
+    "take_on": 2.095,
+    "take_off": 3.035,
+    "on": 10.815,
+    "off": 11.68,
+    "gain_db": 1.16,
+    "lufs_before_gain_mono": -21.33,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.6534,
+    "inner_cuts": []
+   },
+   {
+    "line": "n05",
+    "sentences": [
+     "You saw him, right?"
+    ],
+    "take": "c03/t2",
+    "take_on": 3.135,
+    "take_off": 4.33,
+    "on": 11.81,
+    "off": 12.85,
+    "gain_db": 1.13,
+    "lufs_before_gain_mono": -21.3,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5999,
+    "inner_cuts": []
+   },
+   {
+    "line": "n06",
+    "sentences": [
+     "In a real experiment, most people on a phone call never saw him."
+    ],
+    "take": "c04/t1",
+    "take_on": 0.08,
+    "take_off": 3.935,
+    "on": 12.99,
+    "off": 16.835,
+    "gain_db": 2.74,
+    "lufs_before_gain_mono": -22.92,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5662,
+    "inner_cuts": []
+   },
+   {
+    "line": "n07",
+    "sentences": [
+     "Psychologist Ira Hyman needed a distraction nobody could miss."
+    ],
+    "take": "c05/t2",
+    "take_on": 0.05,
+    "take_off": 4.005,
+    "on": 16.995,
+    "off": 20.935,
+    "gain_db": 1.06,
+    "lufs_before_gain_mono": -21.23,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.65,
+    "inner_cuts": []
+   },
+   {
+    "line": "n07",
+    "sentences": [
+     "Then a student told him:"
+    ],
+    "take": "c05/t2",
+    "take_on": 4.325,
+    "take_off": 5.47,
+    "on": 21.095,
+    "off": 22.23,
+    "gain_db": 0.52,
+    "lufs_before_gain_mono": -20.7,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5379,
+    "inner_cuts": []
+   },
+   {
+    "line": "s01",
+    "sentences": [
+     "I own a unicycle."
+    ],
+    "take": "ch_student/t3",
+    "take_on": 0.03,
+    "take_off": 1.345,
+    "on": 22.37,
+    "off": 23.675,
+    "gain_db": -1.55,
+    "lufs_before_gain_mono": -18.63,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.584,
+    "inner_cuts": []
+   },
+   {
+    "line": "s02",
+    "sentences": [
+     "...and a clown suit."
+    ],
+    "take": "ch_student/t3",
+    "take_on": 1.635,
+    "take_off": 2.76,
+    "on": 23.925,
+    "off": 24.985,
+    "gain_db": -2.43,
+    "lufs_before_gain_mono": -17.74,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5653,
+    "inner_cuts": []
+   },
+   {
+    "line": "n08",
+    "sentences": [
+     "So for one hour, the clown rode circles in the middle of campus."
+    ],
+    "take": "c06b/t2",
+    "take_on": 0.06,
+    "take_off": 3.985,
+    "on": 25.145,
+    "off": 29.045,
+    "gain_db": -1.1,
+    "lufs_before_gain_mono": -19.08,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5439,
+    "inner_cuts": []
+   },
+   {
+    "line": "i01",
+    "sentences": [
+     "Did you see anything unusual?"
+    ],
+    "take": "ch_interviewer/t3",
+    "take_on": 0.12,
+    "take_off": 1.71,
+    "on": 29.205,
+    "off": 30.79,
+    "gain_db": 0.26,
+    "lufs_before_gain_mono": -20.44,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.4236,
+    "inner_cuts": []
+   },
+   {
+    "line": "f01",
+    "sentences": [
+     "The clown?"
+    ],
+    "take": "ch_friend/t3",
+    "take_on": 0.03,
+    "take_off": 1.185,
+    "on": 30.9,
+    "off": 32.05,
+    "gain_db": 0.77,
+    "lufs_before_gain_mono": -20.94,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5905,
+    "inner_cuts": []
+   },
+   {
+    "line": "f01",
+    "sentences": [
+     "He was amazing!"
+    ],
+    "take": "ch_friend/t3",
+    "take_on": 1.535,
+    "take_off": 2.835,
+    "on": 32.18,
+    "off": 33.465,
+    "gain_db": 0.71,
+    "lufs_before_gain_mono": -20.88,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5462,
+    "inner_cuts": []
+   },
+   {
+    "line": "h01",
+    "sentences": [
+     "Dude, the unicycle guy!"
+    ],
+    "take": "ch_headphones/t2",
+    "take_on": 0.03,
+    "take_off": 2.205,
+    "on": 33.575,
+    "off": 35.74,
+    "gain_db": 0.58,
+    "lufs_before_gain_mono": -20.75,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5486,
+    "inner_cuts": []
+   },
+   {
+    "line": "p01",
+    "sentences": [
+     "Sorry... what clown?"
+    ],
+    "take": "ch_phone_guy/t5",
+    "take_on": 0.08,
+    "take_off": 1.85,
+    "on": 35.85,
+    "off": 37.58,
+    "gain_db": 1.67,
+    "lufs_before_gain_mono": -21.85,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [
+     {
+      "at_unit_s": 1.475,
+      "dip_db": 1.18,
+      "window_ms": 5,
+      "ramps_ms": 4
+     },
+     {
+      "at_unit_s": 1.48,
+      "dip_db": 0.41,
+      "window_ms": 5,
+      "ramps_ms": 4
+     }
+    ],
+    "peak": 0.8799,
+    "inner_cuts": []
+   },
+   {
+    "line": "n10",
+    "sentences": [
+     "Even asked straight out, only one in four people on a call had seen him."
+    ],
+    "take": "c07/t2",
+    "take_on": 0.025,
+    "take_off": 4.51,
+    "on": 37.72,
+    "off": 42.135,
+    "gain_db": 0.53,
+    "lufs_before_gain_mono": -20.71,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.578,
+    "inner_cuts": []
+   },
+   {
+    "line": "n12",
+    "sentences": [
+     "Here's the weird part:"
+    ],
+    "take": "c08/t1",
+    "take_on": 0.12,
+    "take_off": 1.375,
+    "on": 42.295,
+    "off": 43.545,
+    "gain_db": 5.84,
+    "lufs_before_gain_mono": -26.02,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.6213,
+    "inner_cuts": []
+   },
+   {
+    "line": "n12",
+    "sentences": [
+     "people listening to music noticed him."
+    ],
+    "take": "c08/t1",
+    "take_on": 1.655,
+    "take_off": 3.965,
+    "on": 43.685,
+    "off": 45.76,
+    "gain_db": 2.75,
+    "lufs_before_gain_mono": -22.93,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.473,
+    "inner_cuts": []
+   },
+   {
+    "line": "n13",
+    "sentences": [
+     "You see, a call pulls your mind toward someone who isn't there."
+    ],
+    "take": "c09b/t4",
+    "take_on": 0.105,
+    "take_off": 4.195,
+    "on": 45.92,
+    "off": 49.86,
+    "gain_db": 3.83,
+    "lufs_before_gain_mono": -24.01,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.7029,
+    "inner_cuts": [
+     {
+      "at_take_s": 2.625,
+      "was_s": 0.205,
+      "now_s": 0.16
+     },
+     {
+      "at_take_s": 0.6,
+      "was_s": 0.24,
+      "now_s": 0.16
+     }
+    ]
+   },
+   {
+    "line": "n14",
+    "sentences": [
+     "So Hyman tried something sneakier."
+    ],
+    "take": "c10/t2",
+    "take_on": 0.035,
+    "take_off": 2.595,
+    "on": 50.02,
+    "off": 52.56,
+    "gain_db": 4.21,
+    "lufs_before_gain_mono": -24.39,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5792,
+    "inner_cuts": []
+   },
+   {
+    "line": "n14",
+    "sentences": [
+     "He hung dollar bills on a branch, right at head height."
+    ],
+    "take": "c10/t2",
+    "take_on": 3.0,
+    "take_off": 6.065,
+    "on": 52.75,
+    "off": 55.805,
+    "gain_db": 2.88,
+    "lufs_before_gain_mono": -23.06,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.7131,
+    "inner_cuts": []
+   },
+   {
+    "line": "n15",
+    "sentences": [
+     "Nearly everyone ducked under it."
+    ],
+    "take": "c11/t2",
+    "take_on": 0.12,
+    "take_off": 2.115,
+    "on": 55.965,
+    "off": 57.92,
+    "gain_db": 0.13,
+    "lufs_before_gain_mono": -20.31,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.6432,
+    "inner_cuts": []
+   },
+   {
+    "line": "n16",
+    "sentences": [
+     "On a phone?"
+    ],
+    "take": "c11/t2",
+    "take_on": 2.43,
+    "take_off": 3.24,
+    "on": 58.08,
+    "off": 58.875,
+    "gain_db": 3.23,
+    "lufs_before_gain_mono": -24.01,
+    "peak_trim_db": -0.6,
+    "plosive_dips": [],
+    "peak": 0.883,
+    "inner_cuts": []
+   },
+   {
+    "line": "n16",
+    "sentences": [
+     "Only six in a hundred stopped for the money."
+    ],
+    "take": "c11/t2",
+    "take_on": 3.39,
+    "take_off": 6.04,
+    "on": 59.005,
+    "off": 61.42,
+    "gain_db": 1.28,
+    "lufs_before_gain_mono": -21.46,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.7162,
+    "inner_cuts": [
+     {
+      "at_take_s": 3.41,
+      "was_s": 0.205,
+      "now_s": 0.16
+     }
+    ]
+   },
+   {
+    "line": "n17",
+    "sentences": [
+     "Their bodies dodged it."
+    ],
+    "take": "c12/t2",
+    "take_on": 0.09,
+    "take_off": 1.775,
+    "on": 61.72,
+    "off": 63.4,
+    "gain_db": 6.53,
+    "lufs_before_gain_mono": -25.2,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [
+     {
+      "at_unit_s": 0.43,
+      "dip_db": 1.73,
+      "window_ms": 5,
+      "ramps_ms": 4
+     }
+    ],
+    "peak": 0.8799,
+    "inner_cuts": []
+   },
+   {
+    "line": "n17",
+    "sentences": [
+     "Their minds never saw it."
+    ],
+    "take": "c12/t2",
+    "take_on": 2.27,
+    "take_off": 4.025,
+    "on": 63.59,
+    "off": 65.335,
+    "gain_db": 5.47,
+    "lufs_before_gain_mono": -24.15,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.6407,
+    "inner_cuts": []
+   },
+   {
+    "line": "n18",
+    "sentences": [
+     "You counted five phones."
+    ],
+    "take": "c13/t2",
+    "take_on": 0.035,
+    "take_off": 1.655,
+    "on": 65.495,
+    "off": 67.105,
+    "gain_db": 0.04,
+    "lufs_before_gain_mono": -20.22,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.5766,
+    "inner_cuts": []
+   },
+   {
+    "line": "n18",
+    "sentences": [
+     "You saw the clown."
+    ],
+    "take": "c13/t2",
+    "take_on": 1.795,
+    "take_off": 3.02,
+    "on": 67.235,
+    "off": 68.425,
+    "gain_db": 0.0,
+    "lufs_before_gain_mono": -20.18,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.6064,
+    "inner_cuts": []
+   },
+   {
+    "line": "n19",
+    "sentences": [
+     "Did you see the money?"
+    ],
+    "take": "c14/t2",
+    "take_on": 0.105,
+    "take_off": 1.685,
+    "on": 68.775,
+    "off": 70.34,
+    "gain_db": 4.14,
+    "lufs_before_gain_mono": -22.81,
+    "peak_trim_db": 0.0,
+    "plosive_dips": [],
+    "peak": 0.7793,
+    "inner_cuts": []
+   }
+  ],
+  "gaps": [
+   {
+    "after": "n01",
+    "before": "n01",
+    "kind": "normal",
+    "target_s": 0.13,
+    "native_s": 0.215,
+    "between": "test. | Count the"
+   },
+   {
+    "after": "n01",
+    "before": "n02",
+    "kind": "count",
+    "target_s": 3.0,
+    "native_s": null,
+    "between": "phone. | Don't lose"
+   },
+   {
+    "after": "n02",
+    "before": "n03",
+    "kind": "count",
+    "target_s": 2.91,
+    "native_s": null,
+    "between": "count. | How many?"
+   },
+   {
+    "after": "n03",
+    "before": "n04",
+    "kind": "beat",
+    "target_s": 0.4,
+    "native_s": 0.565,
+    "between": "many? | Five."
+   },
+   {
+    "after": "n04",
+    "before": "n05",
+    "kind": "normal",
+    "target_s": 0.13,
+    "native_s": 0.175,
+    "between": "Five. | And the"
+   },
+   {
+    "after": "n05",
+    "before": "n05",
+    "kind": "normal",
+    "target_s": 0.13,
+    "native_s": 0.1,
+    "between": "clown? | You saw"
+   },
+   {
+    "after": "n05",
+    "before": "n06",
+    "kind": "normal",
+    "target_s": 0.14,
+    "native_s": null,
+    "between": "right? | In a"
+   },
+   {
+    "after": "n06",
+    "before": "n07",
+    "kind": "normal",
+    "target_s": 0.16,
+    "native_s": null,
+    "between": "him. | Psychologist Ira"
+   },
+   {
+    "after": "n07",
+    "before": "n07",
+    "kind": "normal",
+    "target_s": 0.16,
+    "native_s": 0.32,
+    "between": "miss. | Then a"
+   },
+   {
+    "after": "n07",
+    "before": "s01",
+    "kind": "normal",
+    "target_s": 0.14,
+    "native_s": null,
+    "between": "him: | I own"
+   },
+   {
+    "after": "s01",
+    "before": "s02",
+    "kind": "beat",
+    "target_s": 0.25,
+    "native_s": 0.29,
+    "between": "unicycle. | ...and a"
+   },
+   {
+    "after": "s02",
+    "before": "n08",
+    "kind": "normal",
+    "target_s": 0.16,
+    "native_s": null,
+    "between": "suit. | So for"
+   },
+   {
+    "after": "n08",
+    "before": "i01",
+    "kind": "normal",
+    "target_s": 0.16,
+    "native_s": 0.38,
+    "between": "campus. | Did you"
+   },
+   {
+    "after": "i01",
+    "before": "f01",
+    "kind": "dialogue",
+    "target_s": 0.11,
+    "native_s": null,
+    "between": "unusual? | The clown?"
+   },
+   {
+    "after": "f01",
+    "before": "f01",
+    "kind": "dialogue",
+    "target_s": 0.13,
+    "native_s": 0.35,
+    "between": "clown? | He was"
+   },
+   {
+    "after": "f01",
+    "before": "h01",
+    "kind": "dialogue",
+    "target_s": 0.11,
+    "native_s": null,
+    "between": "amazing! | Dude, the"
+   },
+   {
+    "after": "h01",
+    "before": "p01",
+    "kind": "dialogue",
+    "target_s": 0.11,
+    "native_s": null,
+    "between": "guy! | Sorry... what"
+   },
+   {
+    "after": "p01",
+    "before": "n10",
+    "kind": "normal",
+    "target_s": 0.14,
+    "native_s": null,
+    "between": "clown? | Even asked"
+   },
+   {
+    "after": "n10",
+    "before": "n12",
+    "kind": "normal",
+    "target_s": 0.16,
+    "native_s": 0.21,
+    "between": "him. | Here's the"
+   },
+   {
+    "after": "n12",
+    "before": "n12",
+    "kind": "normal",
+    "target_s": 0.14,
+    "native_s": 0.28,
+    "between": "part: | people listening"
+   },
+   {
+    "after": "n12",
+    "before": "n13",
+    "kind": "normal",
+    "target_s": 0.16,
+    "native_s": null,
+    "between": "him. | You see,"
+   },
+   {
+    "after": "n13",
+    "before": "n14",
+    "kind": "normal",
+    "target_s": 0.16,
+    "native_s": null,
+    "between": "there. | So Hyman"
+   },
+   {
+    "after": "n14",
+    "before": "n14",
+    "kind": "normal",
+    "target_s": 0.19,
+    "native_s": 0.405,
+    "between": "sneakier. | He hung"
+   },
+   {
+    "after": "n14",
+    "before": "n15",
+    "kind": "normal",
+    "target_s": 0.16,
+    "native_s": null,
+    "between": "height. | Nearly everyone"
+   },
+   {
+    "after": "n15",
+    "before": "n16",
+    "kind": "normal",
+    "target_s": 0.16,
+    "native_s": 0.315,
+    "between": "it. | On a"
+   },
+   {
+    "after": "n16",
+    "before": "n16",
+    "kind": "normal",
+    "target_s": 0.13,
+    "native_s": 0.15,
+    "between": "phone? | Only six"
+   },
+   {
+    "after": "n16",
+    "before": "n17",
+    "kind": "beat",
+    "target_s": 0.3,
+    "native_s": null,
+    "between": "money. | Their bodies"
+   },
+   {
+    "after": "n17",
+    "before": "n17",
+    "kind": "normal",
+    "target_s": 0.19,
+    "native_s": 0.495,
+    "between": "it. | Their minds"
+   },
+   {
+    "after": "n17",
+    "before": "n18",
+    "kind": "normal",
+    "target_s": 0.16,
+    "native_s": null,
+    "between": "it. | You counted"
+   },
+   {
+    "after": "n18",
+    "before": "n18",
+    "kind": "normal",
+    "target_s": 0.13,
+    "native_s": 0.14,
+    "between": "phones. | You saw"
+   },
+   {
+    "after": "n18",
+    "before": "n19",
+    "kind": "beat",
+    "target_s": 0.35,
+    "native_s": 0.42,
+    "between": "clown. | Did you"
+   }
+  ],
+  "word_timing": {
+   "method": "whisper (finished file) word starts snapped to the 10 ms energy onset; sentence-first / last words pinned to the acoustic on / off",
+   "moved_over_60ms": 70,
+   "n_words": 178,
+   "whisper_matched": 178,
+   "vs_elevenlabs_times": {
+    "median_abs_s": 0.04,
+    "over_0.2s": 11
+   },
+   "moves": [
+    [
+     "people",
+     1.29,
+     1.2,
+     "whisper+energy"
+    ],
+    [
+     "on",
+     1.49,
+     1.36,
+     "whisper+energy"
+    ],
+    [
+     "many?",
+     9.33,
+     9.27,
+     "whisper+energy"
+    ],
+    [
+     "saw",
+     12.135,
+     12.03,
+     "whisper+energy"
+    ],
+    [
+     "right?",
+     12.615,
+     12.55,
+     "whisper+energy"
+    ],
+    [
+     "experiment,",
+     13.91,
+     13.67,
+     "whisper+energy"
+    ],
+    [
+     "most",
+     14.59,
+     14.52,
+     "whisper+energy"
+    ],
+    [
+     "on",
+     15.11,
+     15.0,
+     "whisper+energy"
+    ],
+    [
+     "phone",
+     15.43,
+     15.36,
+     "whisper+energy"
+    ],
+    [
+     "never",
+     16.03,
+     15.82,
+     "whisper+energy"
+    ],
+    [
+     "saw",
+     16.43,
+     16.29,
+     "whisper+energy"
+    ],
+    [
+     "him.",
+     16.71,
+     16.64,
+     "whisper+energy"
+    ],
+    [
+     "needed",
+     18.82,
+     18.6,
+     "whisper+energy"
+    ],
+    [
+     "nobody",
+     19.9,
+     19.6,
+     "whisper+energy"
+    ],
+    [
+     "could",
+     20.38,
+     20.22,
+     "whisper+energy"
+    ],
+    [
+     "miss.",
+     20.62,
+     20.5,
+     "whisper+energy"
+    ],
+    [
+     "him:",
+     22.2,
+     22.03,
+     "whisper+energy"
+    ],
+    [
+     "own",
+     22.66,
+     22.59,
+     "whisper+energy"
+    ],
+    [
+     "a",
+     22.82,
+     22.73,
+     "whisper+energy"
+    ],
+    [
+     "unicycle...",
+     22.98,
+     22.9,
+     "whisper+energy"
+    ],
+    [
+     "one",
+     25.88,
+     25.79,
+     "whisper+energy"
+    ],
+    [
+     "hour,",
+     26.2,
+     26.12,
+     "whisper+energy"
+    ],
+    [
+     "circles",
+     27.48,
+     27.29,
+     "whisper+energy"
+    ],
+    [
+     "in",
+     27.96,
+     27.89,
+     "whisper+energy"
+    ],
+    [
+     "campus.",
+     28.64,
+     28.53,
+     "whisper+energy"
+    ],
+    [
+     "you",
+     29.405,
+     29.3,
+     "whisper+energy"
+    ],
+    [
+     "anything",
+     29.925,
+     29.72,
+     "whisper+energy"
+    ],
+    [
+     "The",
+     30.9,
+     31.21,
+     "first word after a non-word sound"
+    ],
+    [
+     "was",
+     32.4,
+     32.26,
+     "whisper+energy"
+    ],
+    [
+     "amazing!",
+     32.56,
+     32.5,
+     "whisper+energy"
+    ],
+    [
+     "unicycle",
+     34.665,
+     34.57,
+     "whisper+energy"
+    ],
+    [
+     "what",
+     37.045,
+     36.82,
+     "whisper+energy"
+    ],
+    [
+     "straight",
+     38.57,
+     38.39,
+     "whisper+energy"
+    ],
+    [
+     "out,",
+     38.97,
+     38.88,
+     "whisper+energy"
+    ],
+    [
+     "one",
+     39.93,
+     39.77,
+     "whisper+energy"
+    ],
+    [
+     "in",
+     40.13,
+     40.0,
+     "whisper+energy"
+    ],
+    [
+     "four",
+     40.37,
+     40.29,
+     "whisper+energy"
+    ],
+    [
+     "people",
+     40.65,
+     40.52,
+     "whisper+energy"
+    ],
+    [
+     "on",
+     40.85,
+     40.73,
+     "whisper+energy"
+    ],
+    [
+     "listening",
+     44.215,
+     44.05,
+     "whisper+energy"
+    ],
+    [
+     "to",
+     44.535,
+     44.42,
+     "whisper+energy"
+    ],
+    [
+     "music",
+     44.895,
+     44.74,
+     "whisper+energy"
+    ],
+    [
+     "noticed",
+     45.215,
+     45.11,
+     "whisper+energy"
+    ],
+    [
+     "him.",
+     45.655,
+     45.53,
+     "whisper+energy"
+    ],
+    [
+     "pulls",
+     47.215,
+     47.13,
+     "whisper+energy"
+    ],
+    [
+     "your",
+     47.495,
+     47.43,
+     "whisper+energy"
+    ],
+    [
+     "mind",
+     47.655,
+     47.53,
+     "whisper+energy"
+    ],
+    [
+     "someone",
+     48.65,
+     48.53,
+     "whisper+energy"
+    ],
+    [
+     "who",
+     49.05,
+     48.98,
+     "whisper+energy"
+    ],
+    [
+     "there.",
+     49.65,
+     49.49,
+     "whisper+energy"
+    ],
+    [
+     "Hyman",
+     50.465,
+     50.39,
+     "whisper+energy"
+    ],
+    [
+     "tried",
+     51.025,
+     50.92,
+     "whisper+energy"
+    ],
+    [
+     "something",
+     51.585,
+     51.28,
+     "whisper+energy"
+    ],
+    [
+     "sneakier.",
+     51.905,
+     51.75,
+     "whisper+energy"
+    ],
+    [
+     "on",
+     53.91,
+     53.82,
+     "whisper+energy"
+    ],
+    [
+     "a",
+     54.15,
+     54.08,
+     "whisper+energy"
+    ],
+    [
+     "branch,",
+     54.577,
+     54.34,
+     "whisper+energy"
+    ],
+    [
+     "right",
+     54.87,
+     54.65,
+     "whisper+energy"
+    ],
+    [
+     "head",
+     55.35,
+     55.26,
+     "whisper+energy"
+    ],
+    [
+     "under",
+     57.56,
+     57.42,
+     "whisper+energy"
+    ],
+    [
+     "six",
+     59.465,
+     59.33,
+     "whisper+energy"
+    ],
+    [
+     "stopped",
+     60.665,
+     60.51,
+     "whisper+energy"
+    ],
+    [
+     "for",
+     60.905,
+     60.8,
+     "whisper+energy"
+    ],
+    [
+     "the",
+     61.025,
+     60.9,
+     "whisper+energy"
+    ],
+    [
+     "it.",
+     63.19,
+     63.07,
+     "whisper+energy"
+    ],
+    [
+     "never",
+     64.44,
+     64.23,
+     "whisper+energy"
+    ],
+    [
+     "saw",
+     64.88,
+     64.72,
+     "whisper+energy"
+    ],
+    [
+     "five",
+     66.18,
+     66.04,
+     "whisper+energy"
+    ],
+    [
+     "clown.",
+     67.99,
+     67.92,
+     "whisper+energy"
+    ],
+    [
+     "you",
+     69.065,
+     68.94,
+     "whisper+energy"
+    ]
+   ]
+  }
+ },
+ "credits": {
+  "account_counter_before": 26359,
+  "account_counter_after": 29462,
+  "used": 3103,
+  "budget": 7000,
+  "characters_sent": 6314,
+  "takes_generated": 99,
+  "credits_per_character": 0.491
+ },
+ "length_decision": {
+  "date": "2026-11-17",
+  "by": "lead",
+  "decision": "70.49 s ACCEPTED (owner values the voice over the 68 s target, up to about 71 s): no further cuts, no credits spent to shorten",
+  "only_failed_check": "duration 70.49 outside 62-68 s"
+ },
+ "promotion": {
+  "date": "2026-11-17",
+  "from": "sound/clown/voice_v6",
+  "to": "sound/clown/voice",
+  "previous_voice_kept_as": "sound/clown/voice_cut1"
+ }
+}

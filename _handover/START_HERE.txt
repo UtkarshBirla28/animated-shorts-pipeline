@@ -1,0 +1,37 @@
+POINTING V4 HANDOVER  (made 2026-11-20)
+=======================================
+
+HOW TO CONTINUE ON THE OFFICE PC
+
+1. Unzip the WHOLE zip into one folder, for example your Desktop. You get two folders side by side:
+      animated-shorts-studio      (the project)
+      _external                   (reference videos and research notes)
+
+2. The PC needs these installed once (skip what is already there):
+      - Git for Windows (it brings Git Bash)
+      - Node.js 22 (20 or newer works)
+      - Python 3.12
+      - ffmpeg (on PATH)
+      - Google Chrome
+      - Claude Code, logged in to your account
+
+3. Open PowerShell in the folder  animated-shorts-studio  and run:
+      powershell -ExecutionPolicy Bypass -File _handover\setup\SETUP_NEW_PC.ps1
+   It installs the packages (5-10 minutes, needs internet) and prints "ALL GOOD" or a short list of notes.
+
+4. Open Claude Code in the folder  animated-shorts-studio  and type:
+      continue
+   Claude reads CLAUDE.md and _handover\HANDOVER.md by itself and carries on from where the laptop stopped.
+
+THE VOICE KEY
+   New voice takes need your ElevenLabs API key. It is NOT inside the zip.
+   If you carry the small file  elevenlabs_api_key.txt  with you, put it next to the two folders before step 3;
+   the setup installs it. Keep that file private and delete it after setup.
+
+WHAT IS NOT IN THE ZIP (on purpose)
+   installed packages (they are re-installed in step 3), render caches, the rejected first video,
+   old voice takes of the dropped story, working files of other videos.
+
+THE CODE IS ALSO ON GITHUB
+   private repo UtkarshBirla28/animated-shorts-pipeline, branch pointing-v4 (code and text only, no media).
+   The zip alone is enough; GitHub is a backup.

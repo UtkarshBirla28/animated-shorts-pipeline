@@ -1,0 +1,697 @@
+{
+ "_start": 24105,
+ "peg_1": {
+  "seconds": 0.5,
+  "prompt": "One wooden clothespin snapping shut, a small sharp wooden click with a tiny spring ring, very close microphone, dry, no reverb, no background noise",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:32:24"
+ },
+ "peg_2": {
+  "seconds": 0.5,
+  "prompt": "One wooden clothespin snapping shut, a small sharp wooden click with a tiny spring ring, very close microphone, dry, no reverb, no background noise",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:32:27"
+ },
+ "peg_3": {
+  "seconds": 0.5,
+  "prompt": "One wooden clothespin snapping shut, a small sharp wooden click with a tiny spring ring, very close microphone, dry, no reverb, no background noise",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:32:30"
+ },
+ "pop_1": {
+  "seconds": 0.5,
+  "prompt": "One small soft cartoon pop, a bubbly blip as a title appears, short, clean, dry, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:32:33"
+ },
+ "pop_2": {
+  "seconds": 0.5,
+  "prompt": "One small soft cartoon pop, a bubbly blip as a title appears, short, clean, dry, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:32:36"
+ },
+ "pop_3": {
+  "seconds": 0.5,
+  "prompt": "One small soft cartoon pop, a bubbly blip as a title appears, short, clean, dry, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:32:39"
+ },
+ "stamp_1": {
+  "seconds": 0.5,
+  "prompt": "One rubber stamp thumped down on a sheet of paper on a wooden desk, short and dull, very close microphone, dry, no background noise",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:32:44"
+ },
+ "stamp_2": {
+  "seconds": 0.5,
+  "prompt": "One rubber stamp thumped down on a sheet of paper on a wooden desk, short and dull, very close microphone, dry, no background noise",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:32:47"
+ },
+ "_last": 26556,
+ "step_soft_1": {
+  "seconds": 4.0,
+  "prompt": "Footsteps of one person in soft rubber-soled sneakers walking at a relaxed pace on outdoor brick paving, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:33:31"
+ },
+ "step_soft_2": {
+  "seconds": 4.0,
+  "prompt": "Footsteps of one person in soft rubber-soled sneakers walking at a relaxed pace on outdoor brick paving, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:33:35"
+ },
+ "step_soft_3": {
+  "seconds": 4.0,
+  "prompt": "Footsteps of one person in soft rubber-soled sneakers walking at a relaxed pace on outdoor brick paving, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:33:39"
+ },
+ "step_hard_1": {
+  "seconds": 4.0,
+  "prompt": "Footsteps of one person in hard leather-soled shoes walking briskly on outdoor brick pavement, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:33:45"
+ },
+ "step_hard_2": {
+  "seconds": 4.0,
+  "prompt": "Footsteps of one person in hard leather-soled shoes walking briskly on outdoor brick pavement, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:33:49"
+ },
+ "step_hard_3": {
+  "seconds": 4.0,
+  "prompt": "Footsteps of one person in hard leather-soled shoes walking briskly on outdoor brick pavement, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:33:52"
+ },
+ "step_slow_1": {
+  "seconds": 4.0,
+  "prompt": "Slow strolling footsteps of one person in canvas shoes on brick paving, six separate steps with long gaps, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:33:57"
+ },
+ "step_slow_2": {
+  "seconds": 4.0,
+  "prompt": "Slow strolling footsteps of one person in canvas shoes on brick paving, six separate steps with long gaps, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:34:01"
+ },
+ "pencil_ticks_1": {
+  "seconds": 3.0,
+  "prompt": "A pencil making seven quick separate check marks on paper on a wooden clipboard, small gaps between the strokes, very close microphone, dry, no background noise, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:06"
+ },
+ "pencil_ticks_2": {
+  "seconds": 3.0,
+  "prompt": "A pencil making seven quick separate check marks on paper on a wooden clipboard, small gaps between the strokes, very close microphone, dry, no background noise, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:11"
+ },
+ "pencil_ticks_3": {
+  "seconds": 3.0,
+  "prompt": "A pencil making seven quick separate check marks on paper on a wooden clipboard, small gaps between the strokes, very close microphone, dry, no background noise, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:17"
+ },
+ "pencil_cross_1": {
+  "seconds": 2.0,
+  "prompt": "A pencil drawing three quick X marks on paper on a clipboard, each X is two short strokes, very close microphone, dry, no background noise, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:22"
+ },
+ "pencil_cross_2": {
+  "seconds": 2.0,
+  "prompt": "A pencil drawing three quick X marks on paper on a clipboard, each X is two short strokes, very close microphone, dry, no background noise, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:27"
+ },
+ "pencil_cross_3": {
+  "seconds": 2.0,
+  "prompt": "A pencil drawing three quick X marks on paper on a clipboard, each X is two short strokes, very close microphone, dry, no background noise, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:31"
+ },
+ "pencil_one_1": {
+  "seconds": 1.0,
+  "prompt": "One firm pencil check mark drawn on paper on a clipboard, a single stroke with a flick, very close microphone, dry, no background noise",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:35"
+ },
+ "pencil_one_2": {
+  "seconds": 1.0,
+  "prompt": "One firm pencil check mark drawn on paper on a clipboard, a single stroke with a flick, very close microphone, dry, no background noise",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:38"
+ },
+ "page_slide_1": {
+  "seconds": 1.0,
+  "prompt": "A sheet of paper on a clipboard slides quickly in and lands with one soft tap on a table, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:43"
+ },
+ "page_slide_2": {
+  "seconds": 1.0,
+  "prompt": "A sheet of paper on a clipboard slides quickly in and lands with one soft tap on a table, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:46"
+ },
+ "bill_flick_1": {
+  "seconds": 1.0,
+  "prompt": "A single paper banknote flapping once as it swings on a clip, one short crisp paper flick, close microphone, dry, no wind noise, no background noise",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:50"
+ },
+ "bill_flick_2": {
+  "seconds": 1.0,
+  "prompt": "A single paper banknote flapping once as it swings on a clip, one short crisp paper flick, close microphone, dry, no wind noise, no background noise",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:53"
+ },
+ "bill_flick_3": {
+  "seconds": 1.0,
+  "prompt": "A single paper banknote flapping once as it swings on a clip, one short crisp paper flick, close microphone, dry, no wind noise, no background noise",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:34:56"
+ },
+ "bills_bed_1": {
+  "seconds": 5.0,
+  "prompt": "Three paper banknotes fluttering gently in a light breeze, soft crisp paper rustle, steady and quiet, close microphone, dry, no wind rumble, no background noise, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:35:01"
+ },
+ "bills_bed_2": {
+  "seconds": 5.0,
+  "prompt": "Three paper banknotes fluttering gently in a light breeze, soft crisp paper rustle, steady and quiet, close microphone, dry, no wind rumble, no background noise, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:35:06"
+ },
+ "bill_hair_1": {
+  "seconds": 1.5,
+  "prompt": "A sheet of paper dragging slowly across long hair, soft and close, slow, dry, no background noise, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:10"
+ },
+ "bill_hair_2": {
+  "seconds": 1.5,
+  "prompt": "A sheet of paper dragging slowly across long hair, soft and close, slow, dry, no background noise, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:13"
+ },
+ "duck_cloth_1": {
+  "seconds": 0.7,
+  "prompt": "A person ducking quickly, one short soft cloth swish of a jacket, close microphone, dry, no background noise, no voices, no footsteps",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:17"
+ },
+ "duck_cloth_2": {
+  "seconds": 0.7,
+  "prompt": "A person ducking quickly, one short soft cloth swish of a jacket, close microphone, dry, no background noise, no voices, no footsteps",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:21"
+ },
+ "duck_cloth_3": {
+  "seconds": 0.7,
+  "prompt": "A person ducking quickly, one short soft cloth swish of a jacket, close microphone, dry, no background noise, no voices, no footsteps",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:24"
+ },
+ "duck_cloth_4": {
+  "seconds": 0.7,
+  "prompt": "A person ducking quickly, one short soft cloth swish of a jacket, close microphone, dry, no background noise, no voices, no footsteps",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:27"
+ },
+ "leaf_brush_1": {
+  "seconds": 0.8,
+  "prompt": "A head brushing once under a leafy branch, a short soft rustle of fresh leaves, close microphone, dry, no wind, no background noise",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:31"
+ },
+ "leaf_brush_2": {
+  "seconds": 0.8,
+  "prompt": "A head brushing once under a leafy branch, a short soft rustle of fresh leaves, close microphone, dry, no wind, no background noise",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:32"
+ },
+ "leaf_brush_3": {
+  "seconds": 0.8,
+  "prompt": "A head brushing once under a leafy branch, a short soft rustle of fresh leaves, close microphone, dry, no wind, no background noise",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:36"
+ },
+ "spin_scuff_1": {
+  "seconds": 0.7,
+  "prompt": "A quick shoe scuff on pavement as a person spins around on the spot, with a short cloth swish, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:38"
+ },
+ "spin_scuff_2": {
+  "seconds": 0.7,
+  "prompt": "A quick shoe scuff on pavement as a person spins around on the spot, with a short cloth swish, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:41"
+ },
+ "pigeon_1": {
+  "seconds": 1.5,
+  "prompt": "A single pigeon takes off from the ground, a short burst of five wing flaps, close microphone, dry, no background noise, no cooing",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:44"
+ },
+ "pigeon_2": {
+  "seconds": 1.5,
+  "prompt": "A single pigeon takes off from the ground, a short burst of five wing flaps, close microphone, dry, no background noise, no cooing",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:47"
+ },
+ "pigeon_3": {
+  "seconds": 1.5,
+  "prompt": "A single pigeon takes off from the ground, a short burst of five wing flaps, close microphone, dry, no background noise, no cooing",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:35:49"
+ },
+ "horn_1": {
+  "seconds": 0.6,
+  "prompt": "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:35:52"
+ },
+ "horn_2": {
+  "seconds": 0.6,
+  "prompt": "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:35:54"
+ },
+ "horn_3": {
+  "seconds": 0.6,
+  "prompt": "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:35:56"
+ },
+ "horn_4": {
+  "seconds": 0.6,
+  "prompt": "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:35:59"
+ },
+ "horn_5": {
+  "seconds": 0.6,
+  "prompt": "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:36:01"
+ },
+ "horn_low_1": {
+  "seconds": 0.6,
+  "prompt": "Two short honks from a big old brass bulb horn with a deep low pitch, honk-honk, close, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:36:08"
+ },
+ "horn_low_2": {
+  "seconds": 0.6,
+  "prompt": "Two short honks from a big old brass bulb horn with a deep low pitch, honk-honk, close, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:36:12"
+ },
+ "horn_low_3": {
+  "seconds": 0.6,
+  "prompt": "Two short honks from a big old brass bulb horn with a deep low pitch, honk-honk, close, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:36:14"
+ },
+ "tyre_roll_1": {
+  "seconds": 4.0,
+  "prompt": "A small rubber bicycle tyre rolling steadily over brick paving, a soft continuous rolling patter, no squeak, no chain, no bell, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:36:19"
+ },
+ "tyre_roll_2": {
+  "seconds": 4.0,
+  "prompt": "A small rubber bicycle tyre rolling steadily over brick paving, a soft continuous rolling patter, no squeak, no chain, no bell, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:36:24"
+ },
+ "squeak_1": {
+  "seconds": 1.5,
+  "prompt": "Two soft short squeaks of a bicycle saddle spring, gentle and slow, close microphone, dry, no background noise",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:36:27"
+ },
+ "squeak_2": {
+  "seconds": 1.5,
+  "prompt": "Two soft short squeaks of a bicycle saddle spring, gentle and slow, close microphone, dry, no background noise",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:36:31"
+ },
+ "squeak_3": {
+  "seconds": 1.5,
+  "prompt": "Two soft short squeaks of a bicycle saddle spring, gentle and slow, close microphone, dry, no background noise",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:36:33"
+ },
+ "boing_1": {
+  "seconds": 0.7,
+  "prompt": "A soft comic cartoon boing, a small rubbery spring, short, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:36:37"
+ },
+ "boing_2": {
+  "seconds": 0.7,
+  "prompt": "A soft comic cartoon boing, a small rubbery spring, short, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:36:40"
+ },
+ "boing_3": {
+  "seconds": 0.7,
+  "prompt": "A soft comic cartoon boing, a small rubbery spring, short, dry, no reverb, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:36:42"
+ },
+ "murmur_f_1": {
+  "seconds": 4.0,
+  "prompt": "A woman talking quietly on a phone heard through a wall, muffled wordless mumbling, calm, completely unintelligible, no clear words, no background noise",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:36:46"
+ },
+ "murmur_f_2": {
+  "seconds": 4.0,
+  "prompt": "A woman talking quietly on a phone heard through a wall, muffled wordless mumbling, calm, completely unintelligible, no clear words, no background noise",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:36:49"
+ },
+ "murmur_m_1": {
+  "seconds": 4.0,
+  "prompt": "A man talking quietly on a phone heard through a wall, muffled wordless mumbling, calm, completely unintelligible, no clear words, no background noise",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:36:54"
+ },
+ "murmur_m_2": {
+  "seconds": 4.0,
+  "prompt": "A man talking quietly on a phone heard through a wall, muffled wordless mumbling, calm, completely unintelligible, no clear words, no background noise",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:36:57"
+ },
+ "crowd_1": {
+  "seconds": 10.0,
+  "prompt": "Soft distant crowd murmur of students on a sunny outdoor campus square, friendly wordless walla, light, no music, no traffic, no shouting, no clear words",
+  "influence": 0.5,
+  "ok": true,
+  "t": "05:37:03"
+ },
+ "crowd_2": {
+  "seconds": 10.0,
+  "prompt": "Soft distant crowd murmur of students on a sunny outdoor campus square, friendly wordless walla, light, no music, no traffic, no shouting, no clear words",
+  "influence": 0.5,
+  "ok": true,
+  "t": "05:37:08"
+ },
+ "square_amb_1": {
+  "seconds": 15.0,
+  "prompt": "Sunny spring campus square ambience, a light breeze in fresh leaves, a few songbirds, a small fountain far away, no traffic, no music, no voices, no footsteps",
+  "influence": 0.5,
+  "ok": true,
+  "t": "05:37:13"
+ },
+ "square_amb_2": {
+  "seconds": 15.0,
+  "prompt": "Sunny spring campus square ambience, a light breeze in fresh leaves, a few songbirds, a small fountain far away, no traffic, no music, no voices, no footsteps",
+  "influence": 0.5,
+  "ok": true,
+  "t": "05:37:16"
+ },
+ "clock_1": {
+  "seconds": 2.5,
+  "prompt": "An old tower clock mechanism spinning fast, a soft ratcheting gear whirr for two seconds, then one soft wooden tock as the hand stops, dry, no bell, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:37:21"
+ },
+ "clock_2": {
+  "seconds": 2.5,
+  "prompt": "An old tower clock mechanism spinning fast, a soft ratcheting gear whirr for two seconds, then one soft wooden tock as the hand stops, dry, no bell, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:37:24"
+ },
+ "headphones_1": {
+  "seconds": 1.5,
+  "prompt": "Tinny music leaking from big headphones heard from outside, a faint fast hi-hat and beat, thin and quiet, no bass, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:37:27"
+ },
+ "headphones_2": {
+  "seconds": 1.5,
+  "prompt": "Tinny music leaking from big headphones heard from outside, a faint fast hi-hat and beat, thin and quiet, no bass, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:37:30"
+ },
+ "shimmer_1": {
+  "seconds": 4.5,
+  "prompt": "A magical rising shimmer, glassy chimes and airy sparkle swelling upward over four seconds and ending in a soft bright bloom, no impact, no low rumble, clean",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:37:33"
+ },
+ "shimmer_2": {
+  "seconds": 4.5,
+  "prompt": "A magical rising shimmer, glassy chimes and airy sparkle swelling upward over four seconds and ending in a soft bright bloom, no impact, no low rumble, clean",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:37:38"
+ },
+ "shimmer_3": {
+  "seconds": 4.5,
+  "prompt": "A magical rising shimmer, glassy chimes and airy sparkle swelling upward over four seconds and ending in a soft bright bloom, no impact, no low rumble, clean",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:37:42"
+ },
+ "impact_1": {
+  "seconds": 1.0,
+  "prompt": "A soft low cinematic whump, one gentle deep thud with a warm body, short, no sub rumble, no long reverb tail, clean, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:37:45"
+ },
+ "impact_2": {
+  "seconds": 1.0,
+  "prompt": "A soft low cinematic whump, one gentle deep thud with a warm body, short, no sub rumble, no long reverb tail, clean, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:37:48"
+ },
+ "impact_3": {
+  "seconds": 1.0,
+  "prompt": "A soft low cinematic whump, one gentle deep thud with a warm body, short, no sub rumble, no long reverb tail, clean, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:37:50"
+ },
+ "chime_1": {
+  "seconds": 1.0,
+  "prompt": "A happy little three-note rising chime on a glockenspiel, bright and sweet, short, clean, no reverb, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:37:54"
+ },
+ "chime_2": {
+  "seconds": 1.0,
+  "prompt": "A happy little three-note rising chime on a glockenspiel, bright and sweet, short, clean, no reverb, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:37:56"
+ },
+ "chime_3": {
+  "seconds": 1.0,
+  "prompt": "A happy little three-note rising chime on a glockenspiel, bright and sweet, short, clean, no reverb, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:37:59"
+ },
+ "crowd_ooh_1": {
+  "seconds": 1.5,
+  "prompt": "A small group of people outdoors react with one soft surprised 'ooh', friendly, short, a few metres away, no words, no music, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:40:26"
+ },
+ "crowd_ooh_2": {
+  "seconds": 1.5,
+  "prompt": "A small group of people outdoors react with one soft surprised 'ooh', friendly, short, a few metres away, no words, no music, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:40:30"
+ },
+ "crowd_laugh_1": {
+  "seconds": 1.5,
+  "prompt": "A small group of friends share one short warm laugh outdoors, a light chuckle, a few metres away, no words, no music, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:40:35"
+ },
+ "crowd_laugh_2": {
+  "seconds": 1.5,
+  "prompt": "A small group of friends share one short warm laugh outdoors, a light chuckle, a few metres away, no words, no music, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:40:38"
+ },
+ "cam_whoosh_s_1": {
+  "seconds": 0.5,
+  "prompt": "A very short soft airy camera whoosh, a quick smooth swish of air, clean, dry, no impact, no bass rumble, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:40:43"
+ },
+ "cam_whoosh_m_1": {
+  "seconds": 0.9,
+  "prompt": "A soft airy camera whoosh, a smooth swish of air passing the microphone, medium length, clean, dry, no impact, no bass rumble, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:40:47"
+ },
+ "cam_whoosh_l_1": {
+  "seconds": 1.6,
+  "prompt": "A long slow soft airy camera whoosh, a smooth gliding swish of air, clean, dry, no impact, no bass rumble, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:40:51"
+ },
+ "drone_1": {
+  "seconds": 6.0,
+  "prompt": "A soft low tension drone, a quiet warm sustained hum with slow gentle movement, mysterious but playful, steady, no melody, no percussion, no impact, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:40:55"
+ },
+ "drone_2": {
+  "seconds": 6.0,
+  "prompt": "A soft low tension drone, a quiet warm sustained hum with slow gentle movement, mysterious but playful, steady, no melody, no percussion, no impact, no voices",
+  "influence": 0.6,
+  "ok": true,
+  "t": "05:40:59"
+ },
+ "low_riser_1": {
+  "seconds": 3.5,
+  "prompt": "A soft low riser, a gentle swelling tone rising slowly in pitch over three seconds, building quiet tension, no impact at the end, clean, no percussion",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:41:03"
+ },
+ "low_riser_2": {
+  "seconds": 3.5,
+  "prompt": "A soft low riser, a gentle swelling tone rising slowly in pitch over three seconds, building quiet tension, no impact at the end, clean, no percussion",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:41:07"
+ },
+ "freeze_hit_1": {
+  "seconds": 0.8,
+  "prompt": "A short soft freeze-frame hit, one muted thump with a tiny glassy ping as time stops, clean, no record scratch, no vinyl, no reverb tail, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:41:11"
+ },
+ "freeze_hit_2": {
+  "seconds": 0.8,
+  "prompt": "A short soft freeze-frame hit, one muted thump with a tiny glassy ping as time stops, clean, no record scratch, no vinyl, no reverb tail, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:41:14"
+ },
+ "freeze_hit_3": {
+  "seconds": 0.8,
+  "prompt": "A short soft freeze-frame hit, one muted thump with a tiny glassy ping as time stops, clean, no record scratch, no vinyl, no reverb tail, no background",
+  "influence": 0.8,
+  "ok": true,
+  "t": "05:41:17"
+ },
+ "murmur_gib_f_1": {
+  "seconds": 4.0,
+  "prompt": "A woman mumbling nonsense gibberish syllables in a steady chatty rhythm, like a muffled cartoon adult voice going wah wah wah, no real words in any language, close, dry, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:51:20"
+ },
+ "murmur_gib_m_1": {
+  "seconds": 4.0,
+  "prompt": "A man mumbling nonsense gibberish syllables in a steady chatty rhythm, like a muffled cartoon adult voice going wah wah wah, no real words in any language, close, dry, no background",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:51:24"
+ },
+ "drone_b_1": {
+  "seconds": 5.0,
+  "prompt": "A low sustained synth drone, warm, full and clearly audible at a steady level, a deep hum with slow gentle movement, mysterious but playful, no melody, no percussion, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "05:51:28"
+ }
+}

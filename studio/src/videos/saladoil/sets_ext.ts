@@ -484,7 +484,7 @@ const SPOUT: V3 = [TF.valve[0] - 0.3, TF.valve[1] - 0.17, TF.valve[2]];
  *  lower-right off the sign, so 'ALLIED / VEGETABLE' stay whole: its left edge x 0.70 (right of VEGETABLE's last E), its top
  *  ~4 cm over OIL's cap line and ~4 cm under ALLIED, its right edge ~0.2 m inside the right post (1.3 x 0.5 m, BANKRUPT ~0.29 m
  *  tall). Local anchor (lead_request TF.notice = [1.33, 3.2, 16.07]) */
-const NOTICE: V3 = [1.33, 3.2, TF.notice[2]], NOTICE_W = 1.3, NOTICE_H = 0.5, NOTICE_ROT = 0.02;
+const NOTICE: V3 = [1.18, 3.2, TF.notice[2]], NOTICE_W = 1.75, NOTICE_H = 0.67,  /* hook pass: BANKRUPT ~1.35x */ NOTICE_ROT = 0.02;
 /** the farm's foreground storm puddles (set-local x, z, w, d, seed) and the guard hut (inside the fence, left of the gate;
  *  fix r2: 0.35 m nearer the gate, still left of the shot-2 drip's fall line so the drop never falls against its white wall) */
 const STORM_PUDDLES: [number, number, number, number, number][] = [[-0.5, 18.4, 4.8, 2.5, 1], [1.3, 13.7, 2.6, 1.3, 2], [-1.7, 11.0, 2.2, 1.1, 3], [2.1, 21.0, 2.6, 1.2, 4], [1.85, 16.55, 1.1, 0.55, 5]];

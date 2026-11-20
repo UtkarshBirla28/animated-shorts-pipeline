@@ -1,0 +1,1135 @@
+{
+ "method": "splice edit of the preview-2 voice (sound/clown/voice_p2): old runs copied sample for sample, new units by the v6 method",
+ "previous_voice": "voice",
+ "unit_target_mono_lufs": -20.18,
+ "lift_db": {
+  "n19": 1.5
+ },
+ "stereo_lufs": -17.43,
+ "peak": 0.883,
+ "duration_s": 74.23,
+ "lead_added_s": 0.27,
+ "tail_s": 0.15,
+ "picks": {
+  "n18": "r18/t4",
+  "n19": "r19b/t2",
+  "n11": "c07/t2",
+  "n05": {
+   "mode": "lift",
+   "lift_db": 3.0
+  },
+  "why": {
+   "n18": "r18/t4 ([mischievously], ONE take, n17 as context): the only take of 14 that starts low-mid and builds: 'You counted five phones.' median 150 Hz (n17 before it 122-128 Hz: +3 st; the installed take 278 Hz: +14.3 st), 'You saw the clown.' 210 Hz with 'saw' up at 357 Hz and a statement fall at the end; 0 wrong words (p 0.64 / 0.84), no clipped edge. The other new takes start at 207-247 Hz (+8 to +12 st after n17). The chunk take r1819/t1 has the same shape but its first sentence needs +6.5 dB and then peaks at 1.28: not usable",
+   "n19": "r19b/t2 ([slowly] 'Did you see the MONEY?!', 'You counted five PHONES. You saw the CLOWN.' as context) of 21 takes: the only one with the stress AND the highest pitch on 'money': 'MONEY' +8.4 dB against the line (you -2.9 dB), 303 Hz median / 373 Hz top, rising 215 -> 364 Hz; 'you' 150 Hz median / 224 top; slow (2.15 s, 2.33 words/s); starts at 130 Hz (n18 ends falling through 112 Hz; sentence medians 210 -> 174 Hz = -3.3 st; the installed pair was 298 -> 121 Hz = -15.6 st); 0 wrong words, no flags. Runner-up r19b/t4 ([slowly] [teasing]): softer and slyer, 'money' 102 -> 267 Hz but only +0.5 dB over 'you'",
+   "n11": "c07/t2 (the stored pick of the uncut build; the same take as n10, so it follows 'had seen him.' as it was performed): 1.64 s, 3.05 words/s, 0 wrong words (p >= 0.79), an amused lift on 'look' (155 -> 320 Hz); c07/t3 has a spoken 'heh' and peaks at 0.98, c07/t1 / t4 are plain falls",
+   "n05": "tag lifted by gain only (+3.0 dB on 'right?', 20 ms ramp): none of the 4 retakes (r05/t1-t4) gives a clear, rising AND audible tag: r05/t1 'right?' 105 -> 216 Hz at -5.3 dB under 'saw' (installed 111 -> 216 Hz at -5.9 dB), r05/t2 109 -> 228 Hz at -5.8 dB, r05/t3 flat (102 -> 116 Hz), r05/t4 louder (-3.3 dB) but flat (105 -> 120 Hz) with a clipped start. With the lift the installed tag sits 2.9 dB under 'saw'. An older take (c03/t3) has the strongest rise (112 -> 281 Hz) if an ear still wants more"
+  }
+ },
+ "n05": {
+  "mode": "lift",
+  "lift_db": 3.0
+ },
+ "tag_lift": {
+  "word": "right?",
+  "from_s": 13.125,
+  "to_s": 13.505,
+  "gain_db": 3.0,
+  "ramp_ms": 20
+ },
+ "dropped_lines": [
+  "n09"
+ ],
+ "units": [
+  {
+   "line": "n01",
+   "sentences": [
+    "Quick test."
+   ],
+   "take": "c01/t1",
+   "take_on": 0.09,
+   "take_off": 0.74,
+   "on": 0.34,
+   "off": 0.98,
+   "gain_db": -0.35,
+   "lufs_before_gain_mono": -19.83,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.59,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 0.07,
+   "shift_s": 0.27,
+   "shift_samples": 12960
+  },
+  {
+   "line": "n01",
+   "sentences": [
+    "Count the people on a phone."
+   ],
+   "take": "c01/t1",
+   "take_on": 0.955,
+   "take_off": 2.315,
+   "on": 1.11,
+   "off": 2.39,
+   "gain_db": -0.49,
+   "lufs_before_gain_mono": -19.69,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.4771,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 0.84,
+   "shift_s": 0.27,
+   "shift_samples": 12960
+  },
+  {
+   "line": "n02",
+   "sentences": [
+    "Don't lose count."
+   ],
+   "take": "c02/t1",
+   "take_on": 0.075,
+   "take_off": 1.185,
+   "on": 5.39,
+   "off": 6.48,
+   "gain_db": -0.2,
+   "lufs_before_gain_mono": -19.98,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5886,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 5.12,
+   "shift_s": 0.27,
+   "shift_samples": 12960
+  },
+  {
+   "line": "n03",
+   "sentences": [
+    "How many?"
+   ],
+   "take": "c03/t4",
+   "take_on": 0.025,
+   "take_off": 0.56,
+   "on": 9.39,
+   "off": 9.875,
+   "gain_db": -0.91,
+   "lufs_before_gain_mono": -19.26,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.4466,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 9.12,
+   "shift_s": 0.27,
+   "shift_samples": 12960
+  },
+  {
+   "line": "n04",
+   "sentences": [
+    "Five."
+   ],
+   "take": "c03/t2",
+   "take_on": 1.225,
+   "take_off": 1.92,
+   "on": 10.275,
+   "off": 10.955,
+   "gain_db": 0.9,
+   "lufs_before_gain_mono": -21.07,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6972,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 10.005,
+   "shift_s": 0.27,
+   "shift_samples": 12960
+  },
+  {
+   "line": "n05",
+   "sentences": [
+    "And the clown?"
+   ],
+   "take": "c03/t2",
+   "take_on": 2.095,
+   "take_off": 3.035,
+   "on": 11.41,
+   "off": 12.275,
+   "gain_db": 1.16,
+   "lufs_before_gain_mono": -21.33,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6534,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 10.815,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "n05",
+   "sentences": [
+    "You saw him, right?"
+   ],
+   "take": "c03/t2",
+   "take_on": 3.135,
+   "take_off": 4.33,
+   "on": 12.405,
+   "off": 13.445,
+   "gain_db": 1.13,
+   "lufs_before_gain_mono": -21.3,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5999,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 11.81,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "n06",
+   "sentences": [
+    "In a real experiment, most people on a phone call never saw him."
+   ],
+   "take": "c04/t1",
+   "take_on": 0.08,
+   "take_off": 3.935,
+   "on": 13.585,
+   "off": 17.43,
+   "gain_db": 2.74,
+   "lufs_before_gain_mono": -22.92,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5662,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 12.99,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "n07",
+   "sentences": [
+    "Psychologist Ira Hyman needed a distraction nobody could miss."
+   ],
+   "take": "c05/t2",
+   "take_on": 0.05,
+   "take_off": 4.005,
+   "on": 17.59,
+   "off": 21.53,
+   "gain_db": 1.06,
+   "lufs_before_gain_mono": -21.23,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.65,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 16.995,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "n07",
+   "sentences": [
+    "Then a student told him:"
+   ],
+   "take": "c05/t2",
+   "take_on": 4.325,
+   "take_off": 5.47,
+   "on": 21.69,
+   "off": 22.825,
+   "gain_db": 0.52,
+   "lufs_before_gain_mono": -20.7,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5379,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 21.095,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "s01",
+   "sentences": [
+    "I own a unicycle."
+   ],
+   "take": "ch_student/t3",
+   "take_on": 0.03,
+   "take_off": 1.345,
+   "on": 22.965,
+   "off": 24.27,
+   "gain_db": -1.55,
+   "lufs_before_gain_mono": -18.63,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.584,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 22.37,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "s02",
+   "sentences": [
+    "...and a clown suit."
+   ],
+   "take": "ch_student/t3",
+   "take_on": 1.635,
+   "take_off": 2.76,
+   "on": 24.52,
+   "off": 25.58,
+   "gain_db": -2.43,
+   "lufs_before_gain_mono": -17.74,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5653,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 23.925,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "n08",
+   "sentences": [
+    "So for one hour, the clown rode circles in the middle of campus."
+   ],
+   "take": "c06b/t2",
+   "take_on": 0.06,
+   "take_off": 3.985,
+   "on": 25.74,
+   "off": 29.64,
+   "gain_db": -1.1,
+   "lufs_before_gain_mono": -19.08,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5439,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 25.145,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "i01",
+   "sentences": [
+    "Did you see anything unusual?"
+   ],
+   "take": "ch_interviewer/t3",
+   "take_on": 0.12,
+   "take_off": 1.71,
+   "on": 29.8,
+   "off": 31.385,
+   "gain_db": 0.26,
+   "lufs_before_gain_mono": -20.44,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.4236,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 29.205,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "f01",
+   "sentences": [
+    "The clown?"
+   ],
+   "take": "ch_friend/t3",
+   "take_on": 0.03,
+   "take_off": 1.185,
+   "on": 31.495,
+   "off": 32.645,
+   "gain_db": 0.77,
+   "lufs_before_gain_mono": -20.94,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5905,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 30.9,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "f01",
+   "sentences": [
+    "He was amazing!"
+   ],
+   "take": "ch_friend/t3",
+   "take_on": 1.535,
+   "take_off": 2.835,
+   "on": 32.775,
+   "off": 34.06,
+   "gain_db": 0.71,
+   "lufs_before_gain_mono": -20.88,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5462,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 32.18,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "h01",
+   "sentences": [
+    "Dude, the unicycle guy!"
+   ],
+   "take": "ch_headphones/t2",
+   "take_on": 0.03,
+   "take_off": 2.205,
+   "on": 34.17,
+   "off": 36.335,
+   "gain_db": 0.58,
+   "lufs_before_gain_mono": -20.75,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5486,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 33.575,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "p01",
+   "sentences": [
+    "Sorry... what clown?"
+   ],
+   "take": "ch_phone_guy/t5",
+   "take_on": 0.08,
+   "take_off": 1.85,
+   "on": 36.445,
+   "off": 38.175,
+   "gain_db": 1.67,
+   "lufs_before_gain_mono": -21.85,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [
+    {
+     "at_unit_s": 1.475,
+     "dip_db": 1.18,
+     "window_ms": 5,
+     "ramps_ms": 4
+    },
+    {
+     "at_unit_s": 1.48,
+     "dip_db": 0.41,
+     "window_ms": 5,
+     "ramps_ms": 4
+    }
+   ],
+   "peak": 0.8799,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 35.85,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "n10",
+   "sentences": [
+    "Even asked straight out, only one in four people on a call had seen him."
+   ],
+   "take": "c07/t2",
+   "take_on": 0.025,
+   "take_off": 4.51,
+   "on": 38.315,
+   "off": 42.73,
+   "gain_db": 0.53,
+   "lufs_before_gain_mono": -20.71,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.578,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 37.72,
+   "shift_s": 0.595,
+   "shift_samples": 28560
+  },
+  {
+   "line": "n11",
+   "sentences": [
+    "Many spun around to look."
+   ],
+   "take": "c07/t2",
+   "take_on": 4.72,
+   "take_off": 6.375,
+   "on": 42.885,
+   "off": 44.525,
+   "gain_db": -0.49,
+   "lufs_before_gain_mono": -19.69,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.59,
+   "inner_cuts": [],
+   "source": "v6b (new)",
+   "tag_text": "[incredulous] Even asked straight out, only one in four people on a call had seen him. [amused] Many spun around to look."
+  },
+  {
+   "line": "n12",
+   "sentences": [
+    "Here's the weird part:"
+   ],
+   "take": "c08/t1",
+   "take_on": 0.12,
+   "take_off": 1.375,
+   "on": 44.69,
+   "off": 45.94,
+   "gain_db": 5.84,
+   "lufs_before_gain_mono": -26.02,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6213,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 42.295,
+   "shift_s": 2.395,
+   "shift_samples": 114960
+  },
+  {
+   "line": "n12",
+   "sentences": [
+    "people listening to music noticed him."
+   ],
+   "take": "c08/t1",
+   "take_on": 1.655,
+   "take_off": 3.965,
+   "on": 46.08,
+   "off": 48.155,
+   "gain_db": 2.75,
+   "lufs_before_gain_mono": -22.93,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.473,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 43.685,
+   "shift_s": 2.395,
+   "shift_samples": 114960
+  },
+  {
+   "line": "n13",
+   "sentences": [
+    "You see, a call pulls your mind toward someone who isn't there."
+   ],
+   "take": "c09b/t4",
+   "take_on": 0.105,
+   "take_off": 4.195,
+   "on": 48.315,
+   "off": 52.255,
+   "gain_db": 3.83,
+   "lufs_before_gain_mono": -24.01,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.7029,
+   "inner_cuts": [
+    {
+     "at_take_s": 2.625,
+     "was_s": 0.205,
+     "now_s": 0.16
+    },
+    {
+     "at_take_s": 0.6,
+     "was_s": 0.24,
+     "now_s": 0.16
+    }
+   ],
+   "source": "p2 (sample-identical)",
+   "old_on": 45.92,
+   "shift_s": 2.395,
+   "shift_samples": 114960
+  },
+  {
+   "line": "n14",
+   "sentences": [
+    "So Hyman tried something sneakier."
+   ],
+   "take": "c10/t2",
+   "take_on": 0.035,
+   "take_off": 2.595,
+   "on": 52.415,
+   "off": 54.955,
+   "gain_db": 4.21,
+   "lufs_before_gain_mono": -24.39,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5792,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 50.02,
+   "shift_s": 2.395,
+   "shift_samples": 114960
+  },
+  {
+   "line": "n14",
+   "sentences": [
+    "He hung dollar bills on a branch, right at head height."
+   ],
+   "take": "c10/t2",
+   "take_on": 3.0,
+   "take_off": 6.065,
+   "on": 55.145,
+   "off": 58.2,
+   "gain_db": 2.88,
+   "lufs_before_gain_mono": -23.06,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.7131,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 52.75,
+   "shift_s": 2.395,
+   "shift_samples": 114960
+  },
+  {
+   "line": "n15",
+   "sentences": [
+    "Nearly everyone ducked under it."
+   ],
+   "take": "c11/t2",
+   "take_on": 0.12,
+   "take_off": 2.115,
+   "on": 58.36,
+   "off": 60.315,
+   "gain_db": 0.13,
+   "lufs_before_gain_mono": -20.31,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6432,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 55.965,
+   "shift_s": 2.395,
+   "shift_samples": 114960
+  },
+  {
+   "line": "n16",
+   "sentences": [
+    "On a phone?"
+   ],
+   "take": "c11/t2",
+   "take_on": 2.43,
+   "take_off": 3.24,
+   "on": 60.475,
+   "off": 61.27,
+   "gain_db": 3.23,
+   "lufs_before_gain_mono": -24.01,
+   "peak_trim_db": -0.6,
+   "plosive_dips": [],
+   "peak": 0.883,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 58.08,
+   "shift_s": 2.395,
+   "shift_samples": 114960
+  },
+  {
+   "line": "n16",
+   "sentences": [
+    "Only six in a hundred stopped for the money."
+   ],
+   "take": "c11/t2",
+   "take_on": 3.39,
+   "take_off": 6.04,
+   "on": 61.4,
+   "off": 63.815,
+   "gain_db": 1.28,
+   "lufs_before_gain_mono": -21.46,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.7162,
+   "inner_cuts": [
+    {
+     "at_take_s": 3.41,
+     "was_s": 0.205,
+     "now_s": 0.16
+    }
+   ],
+   "source": "p2 (sample-identical)",
+   "old_on": 59.005,
+   "shift_s": 2.395,
+   "shift_samples": 114960
+  },
+  {
+   "line": "n17",
+   "sentences": [
+    "Their bodies dodged it."
+   ],
+   "take": "c12/t2",
+   "take_on": 0.09,
+   "take_off": 1.775,
+   "on": 64.32,
+   "off": 66.0,
+   "gain_db": 6.53,
+   "lufs_before_gain_mono": -25.2,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [
+    {
+     "at_unit_s": 0.43,
+     "dip_db": 1.73,
+     "window_ms": 5,
+     "ramps_ms": 4
+    }
+   ],
+   "peak": 0.8799,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 61.72,
+   "shift_s": 2.6,
+   "shift_samples": 124800
+  },
+  {
+   "line": "n17",
+   "sentences": [
+    "Their minds never saw it."
+   ],
+   "take": "c12/t2",
+   "take_on": 2.27,
+   "take_off": 4.025,
+   "on": 66.19,
+   "off": 67.935,
+   "gain_db": 5.47,
+   "lufs_before_gain_mono": -24.15,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6407,
+   "inner_cuts": [],
+   "source": "p2 (sample-identical)",
+   "old_on": 63.59,
+   "shift_s": 2.6,
+   "shift_samples": 124800
+  },
+  {
+   "line": "n18",
+   "sentences": [
+    "You counted five phones."
+   ],
+   "take": "r18/t4",
+   "take_on": 0.125,
+   "take_off": 2.02,
+   "on": 68.44,
+   "off": 70.345,
+   "gain_db": 6.89,
+   "lufs_before_gain_mono": -27.07,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6337,
+   "inner_cuts": [],
+   "source": "v6b (new)",
+   "tag_text": "[mischievously] You counted five phones. You saw the clown."
+  },
+  {
+   "line": "n18",
+   "sentences": [
+    "You saw the clown."
+   ],
+   "take": "r18/t4",
+   "take_on": 2.24,
+   "take_off": 3.4,
+   "on": 70.475,
+   "off": 71.58,
+   "gain_db": 0.5,
+   "lufs_before_gain_mono": -20.68,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6248,
+   "inner_cuts": [],
+   "source": "v6b (new)",
+   "tag_text": "[mischievously] You counted five phones. You saw the clown."
+  },
+  {
+   "line": "n19",
+   "sentences": [
+    "Did you see the money?"
+   ],
+   "take": "r19b/t2",
+   "take_on": 0.09,
+   "take_off": 2.25,
+   "on": 71.93,
+   "off": 74.08,
+   "gain_db": 1.2,
+   "lufs_before_gain_mono": -19.88,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.7725,
+   "inner_cuts": [],
+   "source": "v6b (new)",
+   "tag_text": "[slowly] Did you see the MONEY?!"
+  }
+ ],
+ "gaps": [
+  {
+   "after": "n01",
+   "before": "n01",
+   "kind": "normal",
+   "target_s": 0.13,
+   "between": "test. | Count the",
+   "changed": false
+  },
+  {
+   "after": "n01",
+   "before": "n02",
+   "kind": "count",
+   "target_s": 3.0,
+   "between": "phone. | Don't lose",
+   "changed": false
+  },
+  {
+   "after": "n02",
+   "before": "n03",
+   "kind": "count",
+   "target_s": 2.91,
+   "between": "count. | How many?",
+   "changed": false
+  },
+  {
+   "after": "n03",
+   "before": "n04",
+   "kind": "beat",
+   "target_s": 0.4,
+   "between": "many? | Five.",
+   "changed": false
+  },
+  {
+   "after": "n04",
+   "before": "n05",
+   "kind": "beat",
+   "target_s": 0.455,
+   "between": "Five. | And the",
+   "changed": true
+  },
+  {
+   "after": "n05",
+   "before": "n05",
+   "kind": "normal",
+   "target_s": 0.13,
+   "between": "clown? | You saw",
+   "changed": false
+  },
+  {
+   "after": "n05",
+   "before": "n06",
+   "kind": "normal",
+   "target_s": 0.14,
+   "between": "right? | In a",
+   "changed": false
+  },
+  {
+   "after": "n06",
+   "before": "n07",
+   "kind": "normal",
+   "target_s": 0.16,
+   "between": "him. | Psychologist Ira",
+   "changed": false
+  },
+  {
+   "after": "n07",
+   "before": "n07",
+   "kind": "normal",
+   "target_s": 0.16,
+   "between": "miss. | Then a",
+   "changed": false
+  },
+  {
+   "after": "n07",
+   "before": "s01",
+   "kind": "normal",
+   "target_s": 0.14,
+   "between": "him: | I own",
+   "changed": false
+  },
+  {
+   "after": "s01",
+   "before": "s02",
+   "kind": "beat",
+   "target_s": 0.25,
+   "between": "unicycle. | ...and a",
+   "changed": false
+  },
+  {
+   "after": "s02",
+   "before": "n08",
+   "kind": "normal",
+   "target_s": 0.16,
+   "between": "suit. | So for",
+   "changed": false
+  },
+  {
+   "after": "n08",
+   "before": "i01",
+   "kind": "normal",
+   "target_s": 0.16,
+   "between": "campus. | Did you",
+   "changed": false
+  },
+  {
+   "after": "i01",
+   "before": "f01",
+   "kind": "dialogue",
+   "target_s": 0.11,
+   "between": "unusual? | The clown?",
+   "changed": false
+  },
+  {
+   "after": "f01",
+   "before": "f01",
+   "kind": "dialogue",
+   "target_s": 0.13,
+   "between": "clown? | He was",
+   "changed": false
+  },
+  {
+   "after": "f01",
+   "before": "h01",
+   "kind": "dialogue",
+   "target_s": 0.11,
+   "between": "amazing! | Dude, the",
+   "changed": false
+  },
+  {
+   "after": "h01",
+   "before": "p01",
+   "kind": "dialogue",
+   "target_s": 0.11,
+   "between": "guy! | Sorry... what",
+   "changed": false
+  },
+  {
+   "after": "p01",
+   "before": "n10",
+   "kind": "normal",
+   "target_s": 0.14,
+   "between": "clown? | Even asked",
+   "changed": false
+  },
+  {
+   "after": "n10",
+   "before": "n11",
+   "kind": "normal",
+   "target_s": 0.155,
+   "between": "him. | Many spun",
+   "changed": true
+  },
+  {
+   "after": "n11",
+   "before": "n12",
+   "kind": "normal",
+   "target_s": 0.165,
+   "between": "look. | Here's the",
+   "changed": true
+  },
+  {
+   "after": "n12",
+   "before": "n12",
+   "kind": "normal",
+   "target_s": 0.14,
+   "between": "part: | people listening",
+   "changed": false
+  },
+  {
+   "after": "n12",
+   "before": "n13",
+   "kind": "normal",
+   "target_s": 0.16,
+   "between": "him. | You see,",
+   "changed": false
+  },
+  {
+   "after": "n13",
+   "before": "n14",
+   "kind": "normal",
+   "target_s": 0.16,
+   "between": "there. | So Hyman",
+   "changed": false
+  },
+  {
+   "after": "n14",
+   "before": "n14",
+   "kind": "normal",
+   "target_s": 0.19,
+   "between": "sneakier. | He hung",
+   "changed": false
+  },
+  {
+   "after": "n14",
+   "before": "n15",
+   "kind": "normal",
+   "target_s": 0.16,
+   "between": "height. | Nearly everyone",
+   "changed": false
+  },
+  {
+   "after": "n15",
+   "before": "n16",
+   "kind": "normal",
+   "target_s": 0.16,
+   "between": "it. | On a",
+   "changed": false
+  },
+  {
+   "after": "n16",
+   "before": "n16",
+   "kind": "normal",
+   "target_s": 0.13,
+   "between": "phone? | Only six",
+   "changed": false
+  },
+  {
+   "after": "n16",
+   "before": "n17",
+   "kind": "beat",
+   "target_s": 0.505,
+   "between": "money. | Their bodies",
+   "changed": true
+  },
+  {
+   "after": "n17",
+   "before": "n17",
+   "kind": "normal",
+   "target_s": 0.19,
+   "between": "it. | Their minds",
+   "changed": false
+  },
+  {
+   "after": "n17",
+   "before": "n18",
+   "kind": "beat",
+   "target_s": 0.505,
+   "between": "it. | You counted",
+   "changed": true
+  },
+  {
+   "after": "n18",
+   "before": "n18",
+   "kind": "normal",
+   "target_s": 0.13,
+   "between": "phones. | You saw",
+   "changed": true
+  },
+  {
+   "after": "n18",
+   "before": "n19",
+   "kind": "beat",
+   "target_s": 0.35,
+   "between": "clown. | Did you",
+   "changed": true
+  }
+ ],
+ "old_runs": [
+  {
+   "lines": "n01..n04",
+   "old_from_s": 0.07,
+   "old_to_s": 10.685,
+   "shift_s": 0.27,
+   "old_cut_from_s": 0.0,
+   "old_cut_to_s": 10.7756
+  },
+  {
+   "lines": "n05..n05",
+   "old_from_s": 10.815,
+   "old_to_s": 12.85,
+   "shift_s": 0.595,
+   "old_cut_from_s": 10.7756,
+   "old_cut_to_s": 12.9376
+  },
+  {
+   "lines": "n06..n10",
+   "old_from_s": 12.99,
+   "old_to_s": 42.135,
+   "shift_s": 0.595,
+   "old_cut_from_s": 12.9376,
+   "old_cut_to_s": 42.2574
+  },
+  {
+   "lines": "n12..n16",
+   "old_from_s": 42.295,
+   "old_to_s": 61.42,
+   "shift_s": 2.395,
+   "old_cut_from_s": 42.2574,
+   "old_cut_to_s": 61.5824
+  },
+  {
+   "lines": "n17..n17",
+   "old_from_s": 61.72,
+   "old_to_s": 65.335,
+   "shift_s": 2.6,
+   "old_cut_from_s": 61.5824,
+   "old_cut_to_s": 65.4301
+  }
+ ],
+ "cuts_in_old_file": [
+  {
+   "between": "n04|n05",
+   "old_s": 10.7756,
+   "level_at_cut": 0.0
+  },
+  {
+   "between": "n05|n06",
+   "old_s": 12.9376,
+   "level_at_cut": 0.0
+  },
+  {
+   "between": "n10|n12",
+   "old_s": 42.2574,
+   "level_at_cut": 0.0
+  },
+  {
+   "between": "n16|n17",
+   "old_s": 61.5824,
+   "level_at_cut": 0.0
+  }
+ ],
+ "sample_identity_proof": [
+  {
+   "lines": "n01..n04",
+   "old_s": [
+    0.05,
+    10.705
+   ],
+   "shift_s": 0.27,
+   "sample_identical": true
+  },
+  {
+   "lines": "n05..n05",
+   "old_s": [
+    10.795,
+    12.53
+   ],
+   "shift_s": 0.595,
+   "sample_identical": true
+  },
+  {
+   "lines": "n06..n10",
+   "old_s": [
+    12.97,
+    42.155
+   ],
+   "shift_s": 0.595,
+   "sample_identical": true
+  },
+  {
+   "lines": "n12..n16",
+   "old_s": [
+    42.275,
+    61.44
+   ],
+   "shift_s": 2.395,
+   "sample_identical": true
+  },
+  {
+   "lines": "n17..n17",
+   "old_s": [
+    61.7,
+    65.355
+   ],
+   "shift_s": 2.6,
+   "sample_identical": true
+  }
+ ]
+}

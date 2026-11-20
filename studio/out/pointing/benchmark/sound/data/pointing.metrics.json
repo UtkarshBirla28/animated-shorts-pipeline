@@ -1,0 +1,729 @@
+{
+ "key": "pointing",
+ "dur": 63.766666666666666,
+ "r128": {
+  "I": -14.0,
+  "LRA": 3.5,
+  "TP": -2.8
+ },
+ "asr_text": "His bag is on that train. He is not. All he did was laugh at a finger. Signal, green, he's pointing at nothing. But that driver has a thousand people behind him. So he checks with a finger and a shout. First stop, his suitcase tries to get off and the boy's finger saves it. Bad suitcase. Doors, closed. What's a finger gonna do? Second stop. Stay, be right back. it stays. Vending machine check. This kid gets it. You see his eyes looked right at it. His mind was on his phone. Japan's railway lab tested it for every six mistakes people made just looking. When they pointed and said it out loud, about One, a finger and a shout drag your mind back. Doors closed. Bag check. Bag gone.",
+ "n_words": 131,
+ "mean_p": 0.9265733092795801,
+ "low_p_words": [
+  [
+   17.0,
+   "and",
+   0.33
+  ],
+  [
+   28.78,
+   "it",
+   0.17
+  ],
+  [
+   32.84,
+   "check.",
+   0.3
+  ],
+  [
+   39.18,
+   "his",
+   0.13
+  ],
+  [
+   52.52,
+   "One,",
+   0.19
+  ]
+ ],
+ "first_word": 0.0,
+ "last_word_end": 63.54,
+ "wps_film": 2.0543648719289074,
+ "wps_span": 2.0616934214667926,
+ "gaps_over_0_3": 18,
+ "gaps_over_0_6": 8,
+ "gaps_over_1_0": 5,
+ "gap_time_over_0_3": 14.800000000000004,
+ "longest_gaps": [
+  [
+   2.68,
+   33.68,
+   36.36
+  ],
+  [
+   1.7,
+   20.4,
+   22.1
+  ],
+  [
+   1.42,
+   42.62,
+   44.04
+  ],
+  [
+   1.3,
+   30.72,
+   32.02
+  ],
+  [
+   1.06,
+   48.9,
+   49.96
+  ],
+  [
+   0.84,
+   59.26,
+   60.1
+  ]
+ ],
+ "speech_time": 46.98,
+ "no_voice_s": 6.7,
+ "dead_air_s": 2.1,
+ "very_dead_s": 0.5,
+ "no_voice_runs": [
+  [
+   20.5,
+   22.0,
+   -23.8
+  ],
+  [
+   33.8,
+   36.3,
+   -25.4
+  ]
+ ],
+ "open": {
+  "rms_0_0.05": -30.1,
+  "rms_0_0.3": -17.7,
+  "rms_0.3_1": -15.0,
+  "rms_1_3": -17.1,
+  "peak_0_0.3": -3.0
+ },
+ "close": {
+  "rms_last2": -20.8,
+  "rms_last0.3": -26.3,
+  "tail_after_last_word": 0.23
+ },
+ "side_minus_mid_db": -19.8,
+ "lr_corr": 0.979,
+ "ltas_rel": {
+  "<120": -10.7,
+  "120-400": 1.6,
+  "400-2k": 0.0,
+  "2-5k": -6.9,
+  "5-10k": -8.9,
+  "10-16k": -17.3
+ },
+ "centroid_median": 854.0,
+ "presence_2_5k_per_s_rel_median": [
+  2.7,
+  0.1,
+  -1.0,
+  0.2,
+  2.4,
+  1.1,
+  3.5,
+  3.6,
+  1.3,
+  -1.7,
+  -1.8,
+  1.6,
+  0.3,
+  4.8,
+  -3.9,
+  0.0,
+  0.0,
+  -1.6,
+  1.7,
+  1.3,
+  -6.5,
+  -13.0,
+  -3.2,
+  -2.2,
+  4.2,
+  -4.3,
+  -1.1,
+  -1.2,
+  1.1,
+  -4.5,
+  1.0,
+  1.8,
+  5.8,
+  4.1,
+  -11.6,
+  -20.4,
+  4.5,
+  1.2,
+  -2.4,
+  -1.8,
+  0.8,
+  -3.6,
+  -3.4,
+  2.4,
+  3.5,
+  0.3,
+  -0.3,
+  -0.5,
+  0.3,
+  -8.6,
+  -1.0,
+  -4.9,
+  -7.3,
+  -5.3,
+  7.5,
+  0.4,
+  -12.3,
+  -7.4,
+  -5.6,
+  -6.1,
+  5.4,
+  0.7,
+  -5.3
+ ],
+ "stems_vs_final_corr": 0.9981,
+ "sentences": [
+  {
+   "s": 0.0,
+   "e": 1.56,
+   "text": "His bag is on that train.",
+   "f0_med": 227.0,
+   "range_st": 9.2,
+   "sd_st": 3.71,
+   "end_move_st": null,
+   "word_db_sd": 2.1,
+   "wps": 3.85,
+   "db": -16.4
+  },
+  {
+   "s": 1.74,
+   "e": 2.6,
+   "text": "He is not.",
+   "f0_med": 107.0,
+   "range_st": 8.1,
+   "sd_st": 3.5,
+   "end_move_st": 0.7,
+   "word_db_sd": 3.0,
+   "wps": 3.49,
+   "db": -15.6
+  },
+  {
+   "s": 2.94,
+   "e": 5.3,
+   "text": "All he did was laugh at a finger.",
+   "f0_med": 235.0,
+   "range_st": 15.4,
+   "sd_st": 4.84,
+   "end_move_st": -1.5,
+   "word_db_sd": 1.9,
+   "wps": 3.39,
+   "db": -16.1
+  },
+  {
+   "s": 5.64,
+   "e": 8.56,
+   "text": "Signal, green, he's pointing at nothing.",
+   "f0_med": 230.0,
+   "range_st": 11.3,
+   "sd_st": 5.03,
+   "end_move_st": -17.7,
+   "word_db_sd": 1.4,
+   "wps": 2.05,
+   "db": -16.7
+  },
+  {
+   "s": 8.76,
+   "e": 11.48,
+   "text": "But that driver has a thousand people behind him.",
+   "f0_med": 194.0,
+   "range_st": 10.0,
+   "sd_st": 4.15,
+   "end_move_st": null,
+   "word_db_sd": 3.8,
+   "wps": 3.31,
+   "db": -16.3
+  },
+  {
+   "s": 11.6,
+   "e": 13.68,
+   "text": "So he checks with a finger and a shout.",
+   "f0_med": 282.0,
+   "range_st": 6.6,
+   "sd_st": 2.96,
+   "end_move_st": null,
+   "word_db_sd": 1.5,
+   "wps": 4.33,
+   "db": -16.2
+  },
+  {
+   "s": 14.24,
+   "e": 19.3,
+   "text": "First stop, his suitcase tries to get off and the boy's finger saves it.",
+   "f0_med": 258.0,
+   "range_st": 11.7,
+   "sd_st": 4.26,
+   "end_move_st": null,
+   "word_db_sd": 2.7,
+   "wps": 2.77,
+   "db": -16.6
+  },
+  {
+   "s": 19.52,
+   "e": 20.4,
+   "text": "Bad suitcase.",
+   "f0_med": 138.0,
+   "range_st": 16.0,
+   "sd_st": 6.36,
+   "end_move_st": -5.2,
+   "word_db_sd": 1.0,
+   "wps": 2.27,
+   "db": -22.1
+  },
+  {
+   "s": 22.1,
+   "e": 23.38,
+   "text": "Doors, closed.",
+   "f0_med": 118.0,
+   "range_st": 12.2,
+   "sd_st": 5.36,
+   "end_move_st": -12.2,
+   "word_db_sd": 0.9,
+   "wps": 1.56,
+   "db": -16.7
+  },
+  {
+   "s": 23.96,
+   "e": 25.6,
+   "text": "What's a finger gonna do?",
+   "f0_med": 104.0,
+   "range_st": 1.8,
+   "sd_st": 3.44,
+   "end_move_st": 0.8,
+   "word_db_sd": 1.9,
+   "wps": 3.05,
+   "db": -18.2
+  },
+  {
+   "s": 27.36,
+   "e": 28.78,
+   "text": "Stay, be right back.",
+   "f0_med": 149.0,
+   "range_st": 12.9,
+   "sd_st": 5.25,
+   "end_move_st": 0.1,
+   "word_db_sd": 1.2,
+   "wps": 2.82,
+   "db": -16.6
+  },
+  {
+   "s": 32.02,
+   "e": 33.68,
+   "text": "Vending machine check.",
+   "f0_med": 259.0,
+   "range_st": 1.0,
+   "sd_st": 0.38,
+   "end_move_st": null,
+   "word_db_sd": 2.6,
+   "wps": 1.81,
+   "db": -18.1
+  },
+  {
+   "s": 36.36,
+   "e": 38.2,
+   "text": "This kid gets it.",
+   "f0_med": 116.0,
+   "range_st": 7.3,
+   "sd_st": 3.04,
+   "end_move_st": -0.3,
+   "word_db_sd": 3.2,
+   "wps": 2.17,
+   "db": -17.4
+  },
+  {
+   "s": 38.58,
+   "e": 41.08,
+   "text": "You see his eyes looked right at it.",
+   "f0_med": 174.0,
+   "range_st": 12.9,
+   "sd_st": 4.63,
+   "end_move_st": 0.7,
+   "word_db_sd": 2.6,
+   "wps": 3.2,
+   "db": -15.5
+  },
+  {
+   "s": 41.3,
+   "e": 42.62,
+   "text": "His mind was on his phone.",
+   "f0_med": 116.0,
+   "range_st": 8.6,
+   "sd_st": 2.97,
+   "end_move_st": 0.1,
+   "word_db_sd": 1.3,
+   "wps": 4.55,
+   "db": -14.9
+  },
+  {
+   "s": 44.04,
+   "e": 48.9,
+   "text": "Japan's railway lab tested it for every six mistakes people made just looking.",
+   "f0_med": 214.0,
+   "range_st": 14.5,
+   "sd_st": 5.97,
+   "end_move_st": null,
+   "word_db_sd": 3.5,
+   "wps": 2.67,
+   "db": -16.3
+  },
+  {
+   "s": 49.96,
+   "e": 56.62,
+   "text": "When they pointed and said it out loud, about One, a finger and a shout drag your mind back.",
+   "f0_med": 175.0,
+   "range_st": 13.3,
+   "sd_st": 4.84,
+   "end_move_st": null,
+   "word_db_sd": 3.2,
+   "wps": 2.85,
+   "db": -16.5
+  },
+  {
+   "s": 57.16,
+   "e": 59.26,
+   "text": "Doors closed.",
+   "f0_med": 161.0,
+   "range_st": 14.3,
+   "sd_st": 5.75,
+   "end_move_st": -14.4,
+   "word_db_sd": 0.4,
+   "wps": 0.95,
+   "db": -18.2
+  },
+  {
+   "s": 60.1,
+   "e": 61.46,
+   "text": "Bag check.",
+   "f0_med": 409.0,
+   "range_st": 12.0,
+   "sd_st": 7.13,
+   "end_move_st": null,
+   "word_db_sd": 2.9,
+   "wps": 1.47,
+   "db": -18.4
+  },
+  {
+   "s": 62.28,
+   "e": 63.54,
+   "text": "Bag gone.",
+   "f0_med": 102.0,
+   "range_st": 1.0,
+   "sd_st": 0.41,
+   "end_move_st": -0.8,
+   "word_db_sd": 0.7,
+   "wps": 1.59,
+   "db": -20.6
+  }
+ ],
+ "f0_median_all": 174.5,
+ "f0_range_st_p5_p95": 19.5,
+ "f0_sd_within_sentence_median": 4.45,
+ "f0_range_within_sentence_median": 11.5,
+ "jump_between_sentences_st_median": 7.0,
+ "jump_between_sentences_over_5st": 12,
+ "ends": {
+  "rise": 0,
+  "fall": 4,
+  "flat": 8
+ },
+ "sentence_db_sd": 1.7,
+ "word_db_sd_median": 2.0,
+ "sentence_wps_median": 2.79,
+ "sentence_wps_sd": 0.95,
+ "n_sentences": 20,
+ "sentences_over_5st_from_median": 11,
+ "est_bed_in_gaps_db_vs_speech": -15.0,
+ "est_floor_p10_vs_speech": -17.1,
+ "tonal_frac_gaps": 0.53,
+ "mix_onsets_in_gaps_per10s_gap": 19.2,
+ "gap_time": 14.1,
+ "mix_lowband_tempo": [
+  88.0,
+  0.04
+ ],
+ "stems": {
+  "music_lufs": -31.4,
+  "music_present_pct_film": 92.0,
+  "music_present_pct_speech": 93.0,
+  "music_under_voice_median_db": -21.8,
+  "sfx_lufs": -27.2,
+  "sfx_present_pct_film": 75.0,
+  "sfx_present_pct_speech": 74.0,
+  "sfx_under_voice_median_db": -19.5,
+  "amb_lufs": -36.0,
+  "amb_present_pct_film": 100.0,
+  "amb_present_pct_speech": 100.0,
+  "amb_under_voice_median_db": -23.8,
+  "voice_lufs": -13.6,
+  "music_silent_runs_over_0_5s": [
+   [
+    0.0,
+    2.7
+   ],
+   [
+    21.1,
+    22.7
+   ],
+   [
+    55.9,
+    57.0
+   ]
+  ],
+  "music_silent_total_s": 5.4,
+  "music_level_per_s": [
+   -201.0,
+   -201.0,
+   -124.0,
+   -32.0,
+   -34.0,
+   -38.0,
+   -52.0,
+   -35.0,
+   -36.0,
+   -37.0,
+   -37.0,
+   -40.0,
+   -38.0,
+   -41.0,
+   -46.0,
+   -38.0,
+   -34.0,
+   -28.0,
+   -32.0,
+   -36.0,
+   -38.0,
+   -72.0,
+   -133.0,
+   -28.0,
+   -35.0,
+   -34.0,
+   -33.0,
+   -41.0,
+   -37.0,
+   -35.0,
+   -36.0,
+   -31.0,
+   -37.0,
+   -31.0,
+   -24.0,
+   -82.0,
+   -52.0,
+   -37.0,
+   -35.0,
+   -38.0,
+   -39.0,
+   -37.0,
+   -41.0,
+   -41.0,
+   -32.0,
+   -42.0,
+   -36.0,
+   -34.0,
+   -34.0,
+   -29.0,
+   -39.0,
+   -39.0,
+   -40.0,
+   -31.0,
+   -38.0,
+   -33.0,
+   -149.0,
+   -35.0,
+   -24.0,
+   -30.0,
+   -35.0,
+   -27.0,
+   -33.0
+  ],
+  "music_level_jumps_over_6db_per_min": 24.5,
+  "music_tempo_windows": [
+   [
+    0.0,
+    122.0,
+    0.58
+   ],
+   [
+    3.0,
+    81.0,
+    0.2
+   ],
+   [
+    6.0,
+    71.0,
+    0.16
+   ],
+   [
+    9.0,
+    171.0,
+    0.02
+   ],
+   [
+    12.0,
+    82.0,
+    0.08
+   ],
+   [
+    15.0,
+    162.0,
+    0.24
+   ],
+   [
+    18.0,
+    103.0,
+    0.23
+   ],
+   [
+    21.0,
+    143.0,
+    0.51
+   ],
+   [
+    24.0,
+    143.0,
+    0.35
+   ],
+   [
+    27.0,
+    162.0,
+    0.25
+   ],
+   [
+    30.0,
+    158.0,
+    0.34
+   ],
+   [
+    33.0,
+    69.0,
+    0.29
+   ],
+   [
+    36.0,
+    103.0,
+    0.2
+   ],
+   [
+    39.0,
+    87.0,
+    0.12
+   ],
+   [
+    42.0,
+    130.0,
+    0.7
+   ],
+   [
+    45.0,
+    130.0,
+    0.84
+   ],
+   [
+    48.0,
+    133.0,
+    0.23
+   ],
+   [
+    51.0,
+    130.0,
+    0.21
+   ],
+   [
+    54.0,
+    94.0,
+    0.19
+   ],
+   [
+    57.0,
+    176.0,
+    0.21
+   ]
+  ],
+  "music_centroid_median": 523.0,
+  "sfx_onsets": 47,
+  "sfx_onsets_per10s": 7.4,
+  "sfx_onset_db_vs_voice_median": -22.0,
+  "sfx_onset_db_vs_voice_p90": -15.8,
+  "sfx_onset_centroid_median": 1389.0,
+  "sfx_onset_times": [
+   0.59,
+   0.76,
+   4.14,
+   6.44,
+   11.38,
+   16.96,
+   17.44,
+   18.5,
+   18.62,
+   20.36,
+   21.91,
+   27.98,
+   28.37,
+   28.67,
+   29.36,
+   29.48,
+   30.49,
+   31.2,
+   31.36,
+   33.09,
+   34.1,
+   35.18,
+   40.39,
+   40.67,
+   40.84,
+   41.65,
+   42.04,
+   46.16,
+   46.27,
+   46.62,
+   47.08,
+   47.54,
+   48.0,
+   48.45,
+   48.56,
+   51.48,
+   51.9,
+   52.57,
+   53.17,
+   53.28,
+   54.95,
+   56.86,
+   58.25,
+   58.42,
+   59.06,
+   61.54,
+   62.95
+  ],
+  "voice_side_minus_mid_db": -182.3,
+  "music_side_minus_mid_db": -12.7,
+  "sfx_side_minus_mid_db": -4.8,
+  "amb_side_minus_mid_db": -3.9,
+  "open_0_0.3_dbfs": {
+   "voice": -18.0,
+   "music": -200.0,
+   "sfx": -28.6,
+   "amb": -42.7
+  },
+  "close_last2_dbfs": {
+   "voice": -20.9,
+   "music": -36.6,
+   "sfx": -30.9,
+   "amb": -41.2
+  },
+  "voice_ltas_rel": {
+   "<120": -11.5,
+   "120-400": 1.5,
+   "400-2k": 0.0,
+   "2-5k": -6.7,
+   "5-10k": -9.1,
+   "10-16k": -17.6
+  }
+ }
+}

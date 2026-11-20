@@ -1,0 +1,626 @@
+{
+ "rows": [
+  {
+   "id": "bed.lab",
+   "t": 0.1,
+   "frame": 3,
+   "snd": "lab_room",
+   "lv": -30,
+   "bus": "amb",
+   "what": "the lab's room, under the test and the study"
+  },
+  {
+   "id": "lab.tick0",
+   "t": 11.482,
+   "frame": 344,
+   "snd": "counter_tick",
+   "lv": -24,
+   "bus": "sfx",
+   "what": "the counter flicking through the hundred lights"
+  },
+  {
+   "id": "lab.tick1",
+   "t": 11.562,
+   "frame": 347,
+   "snd": "counter_tick",
+   "lv": -24,
+   "bus": "sfx",
+   "what": "the counter flicking through the hundred lights"
+  },
+  {
+   "id": "lab.tick2",
+   "t": 11.642,
+   "frame": 349,
+   "snd": "counter_tick",
+   "lv": -24,
+   "bus": "sfx",
+   "what": "the counter flicking through the hundred lights"
+  },
+  {
+   "id": "lab.tick3",
+   "t": 11.722,
+   "frame": 352,
+   "snd": "counter_tick",
+   "lv": -24,
+   "bus": "sfx",
+   "what": "the counter flicking through the hundred lights"
+  },
+  {
+   "id": "lab.tick4",
+   "t": 11.802,
+   "frame": 354,
+   "snd": "counter_tick",
+   "lv": -24,
+   "bus": "sfx",
+   "what": "the counter flicking through the hundred lights"
+  },
+  {
+   "id": "lab.tick5",
+   "t": 11.882,
+   "frame": 356,
+   "snd": "counter_tick",
+   "lv": -24,
+   "bus": "sfx",
+   "what": "the counter flicking through the hundred lights"
+  },
+  {
+   "id": "lab.tick6",
+   "t": 11.962,
+   "frame": 359,
+   "snd": "counter_tick",
+   "lv": -24,
+   "bus": "sfx",
+   "what": "the counter flicking through the hundred lights"
+  },
+  {
+   "id": "lab.tick7",
+   "t": 12.042,
+   "frame": 361,
+   "snd": "counter_tick",
+   "lv": -24,
+   "bus": "sfx",
+   "what": "the counter flicking through the hundred lights"
+  },
+  {
+   "id": "lab.press0",
+   "t": 14.431,
+   "frame": 433,
+   "snd": "button",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "five hands slam the buttons"
+  },
+  {
+   "id": "lab.x0",
+   "t": 14.481,
+   "frame": 434,
+   "snd": "red_x",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "five red X's pop up"
+  },
+  {
+   "id": "lab.press1",
+   "t": 14.541,
+   "frame": 436,
+   "snd": "button",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "five hands slam the buttons"
+  },
+  {
+   "id": "lab.x1",
+   "t": 14.591,
+   "frame": 438,
+   "snd": "red_x",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "five red X's pop up"
+  },
+  {
+   "id": "lab.press2",
+   "t": 14.651,
+   "frame": 440,
+   "snd": "button",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "five hands slam the buttons"
+  },
+  {
+   "id": "lab.x2",
+   "t": 14.701,
+   "frame": 441,
+   "snd": "red_x",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "five red X's pop up"
+  },
+  {
+   "id": "lab.press3",
+   "t": 14.761,
+   "frame": 443,
+   "snd": "button",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "five hands slam the buttons"
+  },
+  {
+   "id": "lab.x3",
+   "t": 14.811,
+   "frame": 444,
+   "snd": "red_x",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "five red X's pop up"
+  },
+  {
+   "id": "lab.press4",
+   "t": 14.871,
+   "frame": 446,
+   "snd": "button",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "five hands slam the buttons"
+  },
+  {
+   "id": "lab.x4",
+   "t": 14.921,
+   "frame": 448,
+   "snd": "red_x",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "five red X's pop up"
+  },
+  {
+   "id": "lab.chair1",
+   "t": 15.047,
+   "frame": 451,
+   "snd": "chair",
+   "lv": -27,
+   "bus": "sfx",
+   "what": "a chair shifts as they flinch"
+  },
+  {
+   "id": "lab.press2_0",
+   "t": 17.688,
+   "frame": 531,
+   "snd": "button",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "three hands down again"
+  },
+  {
+   "id": "lab.x2_0",
+   "t": 17.738,
+   "frame": 532,
+   "snd": "red_x",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "three red X's"
+  },
+  {
+   "id": "lab.press2_1",
+   "t": 17.808,
+   "frame": 534,
+   "snd": "button",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "three hands down again"
+  },
+  {
+   "id": "lab.x2_1",
+   "t": 17.858,
+   "frame": 536,
+   "snd": "red_x",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "three red X's"
+  },
+  {
+   "id": "lab.press2_2",
+   "t": 17.928,
+   "frame": 538,
+   "snd": "button",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "three hands down again"
+  },
+  {
+   "id": "lab.x2_2",
+   "t": 17.978,
+   "frame": 539,
+   "snd": "red_x",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "three red X's"
+  },
+  {
+   "id": "lab.point0",
+   "t": 20.022,
+   "frame": 601,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point1",
+   "t": 20.092,
+   "frame": 603,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point2",
+   "t": 20.162,
+   "frame": 605,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point3",
+   "t": 20.232,
+   "frame": 607,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point4",
+   "t": 20.302,
+   "frame": 609,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point5",
+   "t": 20.372,
+   "frame": 611,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point6",
+   "t": 20.442,
+   "frame": 613,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point7",
+   "t": 20.512,
+   "frame": 615,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point8",
+   "t": 20.582,
+   "frame": 617,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point9",
+   "t": 20.652,
+   "frame": 620,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point10",
+   "t": 20.722,
+   "frame": 622,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.point11",
+   "t": 20.792,
+   "frame": 624,
+   "snd": "fwip",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "twelve point at their lamps, one after another"
+  },
+  {
+   "id": "lab.clip",
+   "t": 23.279,
+   "frame": 698,
+   "snd": "clipboard",
+   "lv": -18,
+   "bus": "sfx",
+   "what": "'Not one pressed.': the researcher's clipboard drops on the desk (the hit)"
+  },
+  {
+   "id": "lab.tap0",
+   "t": 23.659,
+   "frame": 710,
+   "snd": "button",
+   "lv": -27,
+   "bus": "sfx",
+   "what": "his hand taps the button by itself"
+  },
+  {
+   "id": "lab.tap1",
+   "t": 24.079,
+   "frame": 722,
+   "snd": "button",
+   "lv": -27,
+   "bus": "sfx",
+   "what": "his hand taps the button by itself"
+  },
+  {
+   "id": "lab.tap2",
+   "t": 24.499,
+   "frame": 735,
+   "snd": "button",
+   "lv": -27,
+   "bus": "sfx",
+   "what": "his hand taps the button by itself"
+  },
+  {
+   "id": "lab.tap3",
+   "t": 24.919,
+   "frame": 748,
+   "snd": "button",
+   "lv": -27,
+   "bus": "sfx",
+   "what": "his hand taps the button by itself"
+  },
+  {
+   "id": "lab.tap4",
+   "t": 25.339,
+   "frame": 760,
+   "snd": "button",
+   "lv": -27,
+   "bus": "sfx",
+   "what": "his hand taps the button by itself"
+  },
+  {
+   "id": "bed.kitchen",
+   "t": 27.023,
+   "frame": 811,
+   "snd": "fridge",
+   "lv": -30,
+   "bus": "amb",
+   "what": "the kitchen fridge's hum"
+  },
+  {
+   "id": "kit.door",
+   "t": 27.023,
+   "frame": 811,
+   "snd": "fridge_door",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "the fridge door, a jar clinks"
+  },
+  {
+   "id": "kit.cereal",
+   "t": 27.947,
+   "frame": 838,
+   "snd": "cereal",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "the cereal box rattles into the fridge"
+  },
+  {
+   "id": "bed.lab2",
+   "t": 29.973,
+   "frame": 899,
+   "snd": "lab_room",
+   "lv": -31,
+   "bus": "amb",
+   "what": "back in the lab: she points and says it"
+  },
+  {
+   "id": "lab.her_point",
+   "t": 29.973,
+   "frame": 899,
+   "snd": "fwip",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "she points at the red lamp and says it"
+  },
+  {
+   "id": "bed.platform",
+   "t": 32.434,
+   "frame": 973,
+   "snd": "platform_air",
+   "lv": -32,
+   "bus": "amb",
+   "what": "today's sunny platform: open air, far crows"
+  },
+  {
+   "id": "cab.step",
+   "t": 32.434,
+   "frame": 973,
+   "snd": "step",
+   "lv": -27,
+   "bus": "sfx",
+   "what": "a commuter's step on the sunny platform"
+  },
+  {
+   "id": "cab.glove",
+   "t": 36.187,
+   "frame": 1086,
+   "snd": "fwip",
+   "lv": -16,
+   "bus": "sfx",
+   "what": "today's driver's white glove snaps out on 'Signal clear!'"
+  },
+  {
+   "id": "steam.thunder",
+   "t": 37.396,
+   "frame": 1122,
+   "snd": "steam_run",
+   "lv": -24,
+   "bus": "sfx",
+   "what": "THE HARD CUT: the steam engine around 1910 thunders through the fields (a story event, 4 s)"
+  },
+  {
+   "id": "steam.whistle",
+   "t": 37.446,
+   "frame": 1123,
+   "snd": "whistle",
+   "lv": -16,
+   "bus": "sfx",
+   "what": "the HARD cut: the steam whistle"
+  },
+  {
+   "id": "bed.steam_cab",
+   "t": 40.996,
+   "frame": 1230,
+   "snd": "steam_run",
+   "lv": -33,
+   "bus": "amb",
+   "what": "inside the cab: the engine's chuff under the shouts, softer and duller"
+  },
+  {
+   "id": "steam.shovel",
+   "t": 44.511,
+   "frame": 1335,
+   "snd": "shovel",
+   "lv": -21,
+   "bus": "sfx",
+   "what": "the coal man mid-shovel"
+  },
+  {
+   "id": "steam.shovel2",
+   "t": 45.411,
+   "frame": 1362,
+   "snd": "shovel",
+   "lv": -23,
+   "bus": "sfx",
+   "what": "another shovel of coal"
+  },
+  {
+   "id": "steam.lean",
+   "t": 49.156,
+   "frame": 1475,
+   "snd": "cloth",
+   "lv": -26,
+   "bus": "sfx",
+   "what": "he leans out to look"
+  },
+  {
+   "id": "steam.boss",
+   "t": 50.249,
+   "frame": 1507,
+   "snd": "cloth",
+   "lv": -27,
+   "bus": "sfx",
+   "what": "the boss squeezed into the corner, bowler hat"
+  },
+  {
+   "id": "steam.nod",
+   "t": 53.018,
+   "frame": 1591,
+   "snd": "cloth",
+   "lv": -27,
+   "bus": "sfx",
+   "what": "the boss beams and nods"
+  },
+  {
+   "id": "bed.steam_dry",
+   "t": 53.505,
+   "frame": 1605,
+   "snd": "steam_run",
+   "lv": -34,
+   "bus": "amb",
+   "what": "line 18, dry: the engine only, far and soft"
+  },
+  {
+   "id": "bed.subway",
+   "t": 55.532,
+   "frame": 1666,
+   "snd": "subway",
+   "lv": -31,
+   "bus": "amb",
+   "what": "a New York station: the tunnel's rumble, a train arriving"
+  },
+  {
+   "id": "ny.brakes",
+   "t": 55.532,
+   "frame": 1666,
+   "snd": "brakes",
+   "lv": -24,
+   "bus": "sfx",
+   "what": "the train pulls in (a story event): its brakes"
+  },
+  {
+   "id": "ny.point",
+   "t": 57.685,
+   "frame": 1731,
+   "snd": "fwip",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "the conductor points at the board"
+  },
+  {
+   "id": "ny.chime",
+   "t": 58.235,
+   "frame": 1747,
+   "snd": "ny_chime",
+   "lv": -22,
+   "bus": "sfx",
+   "what": "the doors' chime after the point"
+  },
+  {
+   "id": "ny.sign",
+   "t": 62.481,
+   "frame": 1874,
+   "snd": "sign",
+   "lv": -21,
+   "bus": "sfx",
+   "what": "the cardboard sign goes up"
+  },
+  {
+   "id": "ny.point2",
+   "t": 66.661,
+   "frame": 2000,
+   "snd": "fwip",
+   "lv": -18,
+   "bus": "sfx",
+   "what": "...and the conductor points at it (deadpan)"
+  },
+  {
+   "id": "bed.lab3",
+   "t": 67.149,
+   "frame": 2014,
+   "snd": "lab_room",
+   "lv": -30,
+   "bus": "amb",
+   "what": "the lab again: the loop's room into frame 0"
+  },
+  {
+   "id": "loop.point",
+   "t": 68.687,
+   "frame": 2061,
+   "snd": "fwip",
+   "lv": -20,
+   "bus": "sfx",
+   "what": "she points (the arm up of frame 0)"
+  }
+ ],
+ "L": 70.19774876183023
+}

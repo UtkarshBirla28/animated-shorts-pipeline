@@ -35,7 +35,7 @@ export const XPAD = 6.5;
 /** frames the story beats react on (cast.ts / sets_*.ts / sound read these; react 0-3 f before the word) */
 export const BEAT = {
   // 1 HOOK: "By 1963, a man had borrowed over $150 million... against tanks that were mostly water."
-  by: PW(0), y1963: PW(0, "1963"), borrowed: PW(0, "borrowed"), million: PW(0, "$150 million"), millionEnd: PWE(0, "$150 million"),
+  by: PW(0), y1963: PW(0) + 8 /* hook pass: "By 1963," cut from the voice; the year is in the hook title */, borrowed: PW(0, "borrowed"), million: PW(0, "$150 million"), millionEnd: PWE(0, "$150 million"),
   against: PW(1), tanks1: PW(1, "tanks"), mostly1: PW(1, "mostly"), water1: PW(1, "water"),
   // 2 SETTING: "Meet Tino De Angelis, New Jersey's salad oil king. His giant tanks were full of cooking oil."
   meet: PW(2), tino: PW(2, "Tino"), king: PW(2, "king"), his: PW(3), giant: PW(3, "giant"), full1: PW(3, "full"), cooking: PW(3, "cooking"),
@@ -348,7 +348,7 @@ const arcL = (F: Frame, fL: number, rate: number, dp: V3) => (f: number): Shot =
 // 12 f sooner and runs 80 f on a cruise ease (the scale change still even, peak ~18 px/f), so the tank man's whole
 // head is >= 60 px inside the left edge from "a man" (56) on, and it lands ~84 (well before the flaps roll)
 const W1: Frame = fr(tk([2.0, 13.75, 9.3]), tk([0.0, 11.4, 5.2]), 63, 0.43, 0.54);
-const R1_V = 4, R1_VD = 80;
+const R1_V = 2, R1_VD = 54;  // hook pass (2026-11-15): a punchier reveal, lands as "$150 million" starts
 const R1_E = cruise(0.3, 0.42);
 const W1_ARC: V3 = [-0.0016, 0.0004, 0.0004];
 // ---- shot 2 (CAM r1, Tino now just inside the gate): A = from the street, the ALLIED / VEGETABLE OIL sign whole and
@@ -393,9 +393,9 @@ const R3_V = V(BEAT.amex) + 10, R3_VD = 70;
 // "drop a tape inside" plays on a held frame, and lands 4 f after "Ninety" (nearly settled as the shout starts)
 // CAM r3 (A3 P3): A 0.055 H lower again (target at 0.345 H): his cap clears the caption band from the first rungs
 const S4A: Frame = fr(tk([4.6, 14.9, 12.6]), tk([0.4, 11.5, 5.6]), 46, 0.47, 0.345);
-const S4M: Frame = fr(tk([2.9, 13.1, 11.0]), tk([0.45, 11.8, 6.5]), 42, 0.5, 0.47);
+const S4M: Frame = fr(tk([2.9, 13.1, 11.0]), tk([0.45, 11.8, 6.5]), 34, 0.5, 0.47);  // hook pass: the shout ~1.25x bigger
 // CAM r2 (A2 P3): B 17 % tighter (fov 36 -> 31) with a 0.13 %/f creep: a medium two-shot by the end, faces >= 180 px wide
-const S4B: Frame = fr(tk([2.4, 4.5, 17.2]), tk([0.92, 0.85, 10.27]), 31, 0.5, 0.56);
+const S4B: Frame = fr(tk([2.4, 4.5, 17.2]), tk([0.92, 0.85, 10.27]), 25, 0.5, 0.56);  // hook pass: the inspector ~1.25x bigger
 // CAM r3 (A3 P2 + P3): "drop a tape inside" gets its own picture: ONE slow bell push from "up," (the whole camera
 // moves 1.45x closer to the tape's middle and tilts it from ~0.35 H down to 0.45 H while it grows, so the bare tank wall
 // under the rim shrinks):
@@ -432,7 +432,7 @@ const R6_V = V(BEAT.united) - 10, R6_VD = 45;
 // the landing holds BOTH faces: the real lender whole at the top (hat to chin in the top 30 %), his reflection centred
 // at ~0.47 H in the gold; then a ~32 f hold with a 0.1 %/f creep
 const S7A: Frame = fr(tk([2.1, 13.05, 6.0]), tk([-0.5, 11.6, 5.42]), 50, 0.5, 0.32);
-const S7B: Frame = fr(tk([1.45, 13.55, 5.53]), tk(TK.reflect), 54, 0.5, 0.58);  // fix2 LEAD (A2 P1): the lender's whole head in frame
+const S7B: Frame = fr(tk([1.15, 13.0, 5.5]), tk(TK.reflect), 55, 0.5, 0.66);  // hook pass: a closer, cleaner look-inside landing  // fix2 LEAD (A2 P1): the lender's whole head in frame
 const W7: V3 = tk([1.55, 13.3, 5.85]);
 const R7_V = V(BEAT.soHow) + 10, R7_VD = 48;
 // ---- shot 8 (CAM r1): the trading floor from EYE level (1.3 m, ~1 deg up): every trader's eyes sit on one line at

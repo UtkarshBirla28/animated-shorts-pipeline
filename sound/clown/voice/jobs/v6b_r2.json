@@ -1,0 +1,132 @@
+[
+ {
+  "folder": "r19b",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[teasing] Did you see the MONEY?!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9101,
+  "prev": "You counted five PHONES. You saw the CLOWN.",
+  "next": null,
+  "lines": [
+   "n19"
+  ],
+  "round": "v6b-2"
+ },
+ {
+  "folder": "r19b",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[slowly] Did you see the MONEY?!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9102,
+  "prev": "You counted five PHONES. You saw the CLOWN.",
+  "next": null,
+  "lines": [
+   "n19"
+  ],
+  "round": "v6b-2"
+ },
+ {
+  "folder": "r19b",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[slyly] Did you see the MONEY?!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9103,
+  "prev": "You counted five PHONES. You saw the CLOWN.",
+  "next": null,
+  "lines": [
+   "n19"
+  ],
+  "round": "v6b-2"
+ },
+ {
+  "folder": "r19b",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[slowly] [teasing] Did you see the MONEY?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9104,
+  "prev": "You counted five PHONES. You saw the CLOWN.",
+  "next": null,
+  "lines": [
+   "n19"
+  ],
+  "round": "v6b-2"
+ },
+ {
+  "folder": "r19b",
+  "take": "t5",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[teasing] Did you see... the MONEY?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9105,
+  "prev": "You counted five PHONES. You saw the CLOWN.",
+  "next": null,
+  "lines": [
+   "n19"
+  ],
+  "round": "v6b-2"
+ },
+ {
+  "folder": "r19b",
+  "take": "t6",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[slowly] Did you see the MONEY?",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9106,
+  "prev": "You counted five PHONES. You saw the CLOWN.",
+  "next": null,
+  "lines": [
+   "n19"
+  ],
+  "round": "v6b-2"
+ },
+ {
+  "folder": "r1819",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[mischievously] You counted five phones. You saw the clown. [teasing] Did you see the MONEY?!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9121,
+  "prev": "Their bodies dodged it. Their minds never saw it.",
+  "next": null,
+  "lines": [
+   "n18",
+   "n19"
+  ],
+  "round": "v6b-2"
+ },
+ {
+  "folder": "r1819",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[playful] You counted five PHONES. You saw the CLOWN. [slowly] Did you see the MONEY?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9122,
+  "prev": "Their bodies dodged it. Their minds never saw it.",
+  "next": null,
+  "lines": [
+   "n18",
+   "n19"
+  ],
+  "round": "v6b-2"
+ }
+]

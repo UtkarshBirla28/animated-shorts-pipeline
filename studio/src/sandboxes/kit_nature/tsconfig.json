@@ -1,0 +1,5 @@
+{
+  "extends": "../../../tsconfig.json",
+  "include": ["./**/*", "../../kit/**/*", "../lookpilot/shot.ts", "../../videos/clown/**/*"],
+  "exclude": []
+}

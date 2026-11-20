@@ -1,0 +1,1295 @@
+{
+ "lines": [
+  {
+   "id": "v3_n01",
+   "speaker": "N",
+   "text": "His bag is on that train.",
+   "heard": "His bag is on that train!",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "his",
+     0.78
+    ],
+    [
+     "bag",
+     0.97
+    ],
+    [
+     "is",
+     0.991
+    ],
+    [
+     "on",
+     0.992
+    ],
+    [
+     "that",
+     0.936
+    ],
+    [
+     "train",
+     0.988
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n02",
+   "speaker": "N",
+   "text": "He is not.",
+   "heard": "He is not.",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "he",
+     0.822
+    ],
+    [
+     "is",
+     0.984
+    ],
+    [
+     "not",
+     0.959
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n03",
+   "speaker": "N",
+   "text": "All he did was laugh... at a finger.",
+   "heard": "All he did was laugh, at a finger!",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "all",
+     0.904
+    ],
+    [
+     "he",
+     0.993
+    ],
+    [
+     "did",
+     0.998
+    ],
+    [
+     "was",
+     0.994
+    ],
+    [
+     "laugh",
+     0.952
+    ],
+    [
+     "at",
+     0.901
+    ],
+    [
+     "a",
+     0.993
+    ],
+    [
+     "finger",
+     0.997
+    ]
+   ],
+   "ok": true,
+   "heard_in_mix": "All he did was laugh at a finger.",
+   "mix_word_p": [
+    [
+     "all",
+     0.859
+    ],
+    [
+     "he",
+     0.99
+    ],
+    [
+     "did",
+     0.997
+    ],
+    [
+     "was",
+     0.993
+    ],
+    [
+     "laugh",
+     0.94
+    ],
+    [
+     "at",
+     0.412
+    ],
+    [
+     "a",
+     0.985
+    ],
+    [
+     "finger",
+     0.998
+    ]
+   ],
+   "mix_lost_words": []
+  },
+  {
+   "id": "v3_d01",
+   "speaker": "D",
+   "text": "Signal... green!",
+   "heard": "Signal! Green!",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "signal",
+     0.786
+    ],
+    [
+     "green",
+     0.91
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_t01",
+   "speaker": "T",
+   "text": "He's pointing at nothing!",
+   "heard": "He's pointing at nothing!",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "he's",
+     0.857
+    ],
+    [
+     "pointing",
+     0.987
+    ],
+    [
+     "at",
+     0.995
+    ],
+    [
+     "nothing",
+     0.938
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n04",
+   "speaker": "N",
+   "text": "But that driver has a thousand people behind him.",
+   "heard": "But that driver has a thousand people behind him.",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "but",
+     0.762
+    ],
+    [
+     "that",
+     0.963
+    ],
+    [
+     "driver",
+     0.982
+    ],
+    [
+     "has",
+     0.989
+    ],
+    [
+     "a",
+     0.763
+    ],
+    [
+     "thousand",
+     0.972
+    ],
+    [
+     "people",
+     0.994
+    ],
+    [
+     "behind",
+     0.999
+    ],
+    [
+     "him",
+     0.999
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n05",
+   "speaker": "N",
+   "text": "So he checks with a finger and a shout.",
+   "heard": "So he checks with a finger and a shout.",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "so",
+     0.67
+    ],
+    [
+     "he",
+     0.893
+    ],
+    [
+     "checks",
+     0.996
+    ],
+    [
+     "with",
+     0.995
+    ],
+    [
+     "a",
+     0.985
+    ],
+    [
+     "finger",
+     0.985
+    ],
+    [
+     "and",
+     0.969
+    ],
+    [
+     "a",
+     0.978
+    ],
+    [
+     "shout",
+     0.988
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n06",
+   "speaker": "N",
+   "text": "First stop.",
+   "heard": "First stop",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "first",
+     0.821
+    ],
+    [
+     "stop",
+     0.828
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n07",
+   "speaker": "N",
+   "text": "His suitcase tries to get off...",
+   "heard": "His suitcase tries to get off!",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "his",
+     0.765
+    ],
+    [
+     "suitcase",
+     0.946
+    ],
+    [
+     "tries",
+     0.985
+    ],
+    [
+     "to",
+     0.999
+    ],
+    [
+     "get",
+     0.998
+    ],
+    [
+     "off",
+     0.995
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n08",
+   "speaker": "N",
+   "text": "...and the boy's finger saves it.",
+   "heard": "And the boy's finger saves it!",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "and",
+     0.49
+    ],
+    [
+     "the",
+     0.977
+    ],
+    [
+     "boy's",
+     0.936
+    ],
+    [
+     "finger",
+     0.969
+    ],
+    [
+     "saves",
+     0.98
+    ],
+    [
+     "it",
+     0.997
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_t02",
+   "speaker": "T",
+   "text": "Bad suitcase.",
+   "heard": "BAD SUITCASE",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "bad",
+     0.647
+    ],
+    [
+     "suitcase",
+     0.874
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_d02",
+   "speaker": "D",
+   "text": "Doors... closed!",
+   "heard": "DOORS CLOSED",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "doors",
+     0.796
+    ],
+    [
+     "closed",
+     0.966
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_t03",
+   "speaker": "T",
+   "text": "What's a finger gonna do?",
+   "heard": "What's a finger gonna do?",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "what's",
+     0.91
+    ],
+    [
+     "a",
+     0.923
+    ],
+    [
+     "finger",
+     0.982
+    ],
+    [
+     "gonna",
+     0.886
+    ],
+    [
+     "do",
+     0.979
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n09",
+   "speaker": "N",
+   "text": "Second stop.",
+   "heard": "Second stop.",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "second",
+     0.841
+    ],
+    [
+     "stop",
+     0.771
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_t04",
+   "speaker": "T",
+   "text": "Stay. Be right back.",
+   "heard": "Stay! Be right back!",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "stay",
+     0.838
+    ],
+    [
+     "be",
+     0.963
+    ],
+    [
+     "right",
+     0.988
+    ],
+    [
+     "back",
+     0.996
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n10",
+   "speaker": "N",
+   "text": "It stays.",
+   "heard": "It stays.",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "it",
+     0.68
+    ],
+    [
+     "stays",
+     0.941
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_t05",
+   "speaker": "T",
+   "text": "Vending machine... check!",
+   "heard": "Vending machine, check!",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "vending",
+     0.836
+    ],
+    [
+     "machine",
+     0.666
+    ],
+    [
+     "check",
+     0.951
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_t06",
+   "speaker": "T",
+   "text": "This kid gets it!",
+   "heard": "This kid gets it",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "this",
+     0.807
+    ],
+    [
+     "kid",
+     0.969
+    ],
+    [
+     "gets",
+     0.92
+    ],
+    [
+     "it",
+     0.998
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n11",
+   "speaker": "N",
+   "text": "You see, his eyes looked right at it. His mind was on his phone.",
+   "heard": "You see, his eyes looked right at it. His mind was on his phone.",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "you",
+     0.813
+    ],
+    [
+     "see",
+     0.998
+    ],
+    [
+     "his",
+     0.986
+    ],
+    [
+     "eyes",
+     0.996
+    ],
+    [
+     "looked",
+     0.985
+    ],
+    [
+     "right",
+     0.989
+    ],
+    [
+     "at",
+     0.998
+    ],
+    [
+     "it",
+     0.991
+    ],
+    [
+     "his",
+     0.993
+    ],
+    [
+     "mind",
+     0.999
+    ],
+    [
+     "was",
+     0.998
+    ],
+    [
+     "on",
+     0.996
+    ],
+    [
+     "his",
+     0.995
+    ],
+    [
+     "phone",
+     0.999
+    ]
+   ],
+   "ok": true,
+   "heard_in_mix": "You see, his eyes looked right at it. His mind was on his phone.",
+   "mix_word_p": [
+    [
+     "you",
+     0.741
+    ],
+    [
+     "see",
+     0.997
+    ],
+    [
+     "his",
+     0.983
+    ],
+    [
+     "eyes",
+     0.995
+    ],
+    [
+     "looked",
+     0.979
+    ],
+    [
+     "right",
+     0.987
+    ],
+    [
+     "at",
+     0.998
+    ],
+    [
+     "it",
+     0.987
+    ],
+    [
+     "his",
+     0.989
+    ],
+    [
+     "mind",
+     0.998
+    ],
+    [
+     "was",
+     0.997
+    ],
+    [
+     "on",
+     0.994
+    ],
+    [
+     "his",
+     0.994
+    ],
+    [
+     "phone",
+     0.998
+    ]
+   ],
+   "mix_lost_words": []
+  },
+  {
+   "id": "v3_n12",
+   "speaker": "N",
+   "text": "Japan's railway lab tested it.",
+   "heard": "Japan's railway lab tested it!",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "japan's",
+     0.976
+    ],
+    [
+     "railway",
+     0.74
+    ],
+    [
+     "lab",
+     0.996
+    ],
+    [
+     "tested",
+     0.983
+    ],
+    [
+     "it",
+     0.998
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_n13",
+   "speaker": "N",
+   "text": "For every six mistakes people made just looking... when they pointed and said it out loud: about one.",
+   "heard": "for every six mistakes people made just looking when they pointed and said it out loud, about one.",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "for",
+     0.677
+    ],
+    [
+     "every",
+     0.994
+    ],
+    [
+     "six",
+     0.585
+    ],
+    [
+     "mistakes",
+     0.997
+    ],
+    [
+     "people",
+     0.997
+    ],
+    [
+     "made",
+     0.966
+    ],
+    [
+     "just",
+     0.991
+    ],
+    [
+     "looking",
+     0.987
+    ],
+    [
+     "when",
+     0.473
+    ],
+    [
+     "they",
+     0.996
+    ],
+    [
+     "pointed",
+     0.995
+    ],
+    [
+     "and",
+     0.982
+    ],
+    [
+     "said",
+     0.976
+    ],
+    [
+     "it",
+     0.99
+    ],
+    [
+     "out",
+     0.997
+    ],
+    [
+     "loud",
+     0.979
+    ],
+    [
+     "about",
+     0.87
+    ],
+    [
+     "one",
+     0.942
+    ]
+   ],
+   "ok": true,
+   "heard_in_mix": "for every six mistakes people made just looking when they pointed and said it out loud, about one.",
+   "mix_word_p": [
+    [
+     "for",
+     0.508
+    ],
+    [
+     "every",
+     0.994
+    ],
+    [
+     "six",
+     0.582
+    ],
+    [
+     "mistakes",
+     0.996
+    ],
+    [
+     "people",
+     0.996
+    ],
+    [
+     "made",
+     0.966
+    ],
+    [
+     "just",
+     0.988
+    ],
+    [
+     "looking",
+     0.988
+    ],
+    [
+     "when",
+     0.481
+    ],
+    [
+     "they",
+     0.995
+    ],
+    [
+     "pointed",
+     0.995
+    ],
+    [
+     "and",
+     0.977
+    ],
+    [
+     "said",
+     0.974
+    ],
+    [
+     "it",
+     0.989
+    ],
+    [
+     "out",
+     0.996
+    ],
+    [
+     "loud",
+     0.98
+    ],
+    [
+     "about",
+     0.896
+    ],
+    [
+     "one",
+     0.944
+    ]
+   ],
+   "mix_lost_words": []
+  },
+  {
+   "id": "v3_n14",
+   "speaker": "N",
+   "text": "A finger and a shout drag your mind back.",
+   "heard": "A finger and a shout drag your mind back.",
+   "diff": [],
+   "flagged": false,
+   "word_p": [
+    [
+     "a",
+     0.858
+    ],
+    [
+     "finger",
+     0.994
+    ],
+    [
+     "and",
+     0.985
+    ],
+    [
+     "a",
+     0.974
+    ],
+    [
+     "shout",
+     0.991
+    ],
+    [
+     "drag",
+     0.924
+    ],
+    [
+     "your",
+     0.991
+    ],
+    [
+     "mind",
+     0.999
+    ],
+    [
+     "back",
+     0.999
+    ]
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_d03",
+   "speaker": "D",
+   "text": "Doors... closed!",
+   "heard": "Doors Closed",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "doors",
+     0.78
+    ],
+    [
+     "closed",
+     0.634
+    ]
+   ],
+   "ok": true,
+   "heard_in_mix": "DOORS CLOSED",
+   "mix_word_p": [
+    [
+     "doors",
+     0.713
+    ],
+    [
+     "closed",
+     0.903
+    ]
+   ],
+   "mix_lost_words": []
+  },
+  {
+   "id": "v3_k01",
+   "speaker": "KID",
+   "text": "Bag... check!",
+   "heard": "Bag check!",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "bag",
+     0.792
+    ],
+    [
+     "check",
+     0.7
+    ]
+   ],
+   "ok": true,
+   "heard_in_mix": "Bag check!",
+   "mix_word_p": [
+    [
+     "bag",
+     0.787
+    ],
+    [
+     "check",
+     0.724
+    ]
+   ],
+   "mix_lost_words": []
+  },
+  {
+   "id": "v3_t07",
+   "speaker": "T",
+   "text": "Bag... gone.",
+   "heard": "Bag. Gone.",
+   "diff": [],
+   "flagged": true,
+   "word_p": [
+    [
+     "bag",
+     0.631
+    ],
+    [
+     "gone",
+     0.951
+    ]
+   ],
+   "ok": true
+  }
+ ],
+ "flag_fail": [],
+ "line_fail": [],
+ "mix_lost": [],
+ "low_p_warn": [
+  {
+   "id": "v3_n08",
+   "low": [
+    [
+     "and",
+     0.49
+    ]
+   ]
+  },
+  {
+   "id": "v3_n13",
+   "low": [
+    [
+     "six",
+     0.59
+    ],
+    [
+     "when",
+     0.47
+    ]
+   ]
+  }
+ ],
+ "notes": [],
+ "replay": {
+  "id": "v3_r01",
+  "text": "What's a finger gonna do?",
+  "heard_phone_stem": "What's a finger gonna do?",
+  "word_p": [
+   [
+    "what's",
+    0.92
+   ],
+   [
+    "a",
+    0.9
+   ],
+   [
+    "finger",
+    0.98
+   ],
+   [
+    "gonna",
+    0.9
+   ],
+   [
+    "do",
+    0.99
+   ]
+  ],
+  "diff_phone_stem": [],
+  "heard_in_mix": "What's a finger gonna do?",
+  "all_five_words_heard": true
+ },
+ "six": {
+  "len_s": 0.31,
+  "ok": true
+ },
+ "whole_file_heard": "His bag is on that train. He is not. All he did was laugh at a finger. Signal, green. He's pointing at nothing. But that driver has a thousand people behind him. So he checks with a finger and a shout. First stop, his suitcase tries to get off. And the boy's finger saves it. Bad suitcase. Case. Doors closed. What's a finger gonna do? Second stop. Stay. Be right back. It stays. Vending machine, check. This kid gets it. You see, his eyes looked right... at it. His mind was on his phone. Japan's railway lab tested it for every six mistakes people made just looking when they pointed and said it out loud. About one. A finger and a shout dragged your mind back. Doors. Closed. Bag, check! Bag, gone.",
+ "whole_file_diff": [
+  [
+   "insert",
+   "",
+   "case"
+  ],
+  [
+   "delete",
+   "what's a finger gonna do",
+   ""
+  ],
+  [
+   "replace",
+   "drag",
+   "dragged"
+  ]
+ ],
+ "whole_file_low_p": [
+  [
+   "at",
+   0.54,
+   4.34
+  ],
+  [
+   "Case.",
+   0.21,
+   20.0
+  ],
+  [
+   "right...",
+   0.54,
+   40.3
+  ],
+  [
+   "for",
+   0.58,
+   46.02
+  ],
+  [
+   "when",
+   0.3,
+   49.72
+  ],
+  [
+   "dragged",
+   0.43,
+   54.84
+  ]
+ ],
+ "breath_audible_s": 0.0,
+ "breath_where": [],
+ "intentional_laugh_pre_roll": [
+  {
+   "before": "What's",
+   "id": "v3_t03",
+   "laugh_pre_roll_audible_s": 0.04
+  }
+ ],
+ "v3_gates": {
+  "hook_gate": {
+   "passed": true,
+   "not_starts_by_2.70": true,
+   "laugh_starts_by_4.50": true,
+   "no_gap_over_0.20": true,
+   "finger_starts_by_5.00": true,
+   "not_starts_s": 2.05,
+   "laugh_starts_s": 3.72,
+   "finger_starts_s": 4.69,
+   "words_started_by_3s": 10,
+   "words_started_by_5s": 17,
+   "longest_true_silence_s": 0.155,
+   "he_is_not": {
+    "dur_s": 0.915,
+    "wps": 3.28,
+    "first_sentence_wps": 4.01,
+    "pitch_drop_from_first_st": -14.2,
+    "third_sentence_back_up_st": 14.4,
+    "f0_med": 105.0,
+    "f0_sd_st": 3.24,
+    "f0_range_st": 8.6,
+    "voiced_share": 0.74,
+    "in_1.05_1.20_s": false
+   }
+  },
+  "length": {
+   "duration_s": 63.75,
+   "plan_s": 65.3,
+   "over_66": false,
+   "over_70": false,
+   "cut_steps_applied": [],
+   "ok": true
+  },
+  "reused_takes": {
+   "n": 7,
+   "all_say_the_expected_words": true,
+   "checks": [
+    {
+     "line": "v3_d01",
+     "take": "cast_d/masaki1",
+     "span": [
+      0.065,
+      1.41
+     ],
+     "expected": "Signal green",
+     "heard": "Signal! Green!",
+     "diff": []
+    },
+    {
+     "line": "v3_d02",
+     "take": "ch_d03/t3",
+     "span": [
+      0.095,
+      1.53
+     ],
+     "expected": "Doors closed",
+     "heard": "DOORS CLOSED",
+     "diff": []
+    },
+    {
+     "line": "v3_t04",
+     "take": "ch_t02/t3",
+     "span": [
+      0.065,
+      1.69
+     ],
+     "expected": "Stay Be right back",
+     "heard": "Stay! Be right back!",
+     "diff": []
+    },
+    {
+     "line": "v3_t05",
+     "take": "ch_t04/t2",
+     "span": [
+      0.025,
+      1.89
+     ],
+     "expected": "Vending machine check",
+     "heard": "Vending machine, check!",
+     "diff": []
+    },
+    {
+     "line": "v3_n12",
+     "take": "c08c/t1",
+     "span": [
+      0.095,
+      2.135
+     ],
+     "expected": "Japan's railway lab tested it",
+     "heard": "Japan's railway lab tested it!",
+     "diff": []
+    },
+    {
+     "line": "v3_d03",
+     "take": "ch_d04/t4",
+     "span": [
+      0.08,
+      1.64
+     ],
+     "expected": "Doors closed",
+     "heard": "DOORS CLOSED",
+     "diff": []
+    },
+    {
+     "line": "v3_k01",
+     "take": "ch_k01/t5",
+     "span": [
+      0.12,
+      1.475
+     ],
+     "expected": "Bag check",
+     "heard": "Bag check!",
+     "diff": []
+    }
+   ]
+  },
+  "call_rhythm": {
+   "rule": "fact guard 5: no call under 1.3 s; the held beat >= 0.35 s",
+   "calls": [
+    {
+     "id": "v3_d01",
+     "len_s": 1.465,
+     "beat_s": 0.385,
+     "ok": true
+    },
+    {
+     "id": "v3_d02",
+     "len_s": 1.425,
+     "beat_s": 0.535,
+     "ok": true
+    },
+    {
+     "id": "v3_t05",
+     "len_s": 1.96,
+     "beat_s": 0.355,
+     "ok": true
+    },
+    {
+     "id": "v3_d03",
+     "len_s": 2.25,
+     "beat_s": 1.03,
+     "ok": true
+    },
+    {
+     "id": "v3_k01",
+     "len_s": 1.35,
+     "beat_s": 0.37,
+     "ok": true
+    },
+    {
+     "id": "v3_t07",
+     "len_s": 1.53,
+     "beat_s": 0.47,
+     "ok": true
+    }
+   ],
+   "ok": true
+  },
+  "replay": {
+   "starts_before_end_of_phone_s": 0.225,
+   "second_word_starts_after_phone_s": 0.0,
+   "ends_before_japans_s": 0.08,
+   "under_narrator_db": -8.0,
+   "ok": true
+  },
+  "bag_gone_level": {
+   "lufs": -18.64,
+   "narrator_median_lufs": -17.04,
+   "db_under_narrator": 1.6,
+   "f0_range_st": 2.6,
+   "ok": true
+  }
+ },
+ "passed": true
+}

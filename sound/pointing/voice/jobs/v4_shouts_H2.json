@@ -1,0 +1,116 @@
+[
+ {
+  "folder": "v4_H",
+  "take": "t7",
+  "voice": "8TMmdpPgqHKvDOGYP2lN",
+  "model": "eleven_v4",
+  "text": "[gruffly] Signal clear.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13307,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "gregory",
+  "script": "v4",
+  "round": "shout2"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t8",
+  "voice": "8TMmdpPgqHKvDOGYP2lN",
+  "model": "eleven_v4",
+  "text": "[low voice] Signal clear.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13308,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "gregory",
+  "script": "v4",
+  "round": "shout2"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t9",
+  "voice": "rSLmFOTRq9g87aTxSUr6",
+  "model": "eleven_v4",
+  "text": "[gruffly] Signal clear.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13309,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "david",
+  "script": "v4",
+  "round": "shout2"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t10",
+  "voice": "rSLmFOTRq9g87aTxSUr6",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal clear.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13310,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "david",
+  "script": "v4",
+  "round": "shout2"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t11",
+  "voice": "8TMmdpPgqHKvDOGYP2lN",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal clear.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13311,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "gregory",
+  "script": "v4",
+  "round": "shout2"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t12",
+  "voice": "rSLmFOTRq9g87aTxSUr6",
+  "model": "eleven_v4",
+  "text": "[low voice] Signal clear.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13312,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "david",
+  "script": "v4",
+  "round": "shout2"
+ }
+]

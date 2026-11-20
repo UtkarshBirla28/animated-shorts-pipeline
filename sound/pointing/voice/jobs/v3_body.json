@@ -1,0 +1,905 @@
+[
+ {
+  "folder": "v3_n04",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "But that driver has a thousand people behind him.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9401,
+  "prev": "He's pointing at nothing!",
+  "next": "So he checks with a finger and a shout.",
+  "lines": [
+   "v3_n04"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n04",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "But that driver has a thousand people behind him.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9402,
+  "prev": "He's pointing at nothing!",
+  "next": "So he checks with a finger and a shout.",
+  "lines": [
+   "v3_n04"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n04",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[serious] But that driver has a thousand people behind him.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9403,
+  "prev": "He's pointing at nothing!",
+  "next": "So he checks with a finger and a shout.",
+  "lines": [
+   "v3_n04"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n04",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[calmly] But that driver has a thousand people behind him.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9404,
+  "prev": "He's pointing at nothing!",
+  "next": "So he checks with a finger and a shout.",
+  "lines": [
+   "v3_n04"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n05",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "So he checks with a finger and a shout.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9411,
+  "prev": "But that driver has a thousand people behind him.",
+  "next": "First stop.",
+  "lines": [
+   "v3_n05"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n05",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "So he checks with a finger and a shout.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9412,
+  "prev": "But that driver has a thousand people behind him.",
+  "next": "First stop.",
+  "lines": [
+   "v3_n05"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n05",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[playful] So he checks with a finger and a shout.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9413,
+  "prev": "But that driver has a thousand people behind him.",
+  "next": "First stop.",
+  "lines": [
+   "v3_n05"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n05",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[cheerfully] So he checks with a finger and a shout.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9414,
+  "prev": "But that driver has a thousand people behind him.",
+  "next": "First stop.",
+  "lines": [
+   "v3_n05"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0608",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "First stop. His suitcase tries to get off... and the boy's finger saves it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9421,
+  "prev": "So he checks with a finger and a shout.",
+  "next": "Bad suitcase.",
+  "lines": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0608",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "First stop. His suitcase tries to get off... and the boy's finger saves it.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9422,
+  "prev": "So he checks with a finger and a shout.",
+  "next": "Bad suitcase.",
+  "lines": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0608",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "First stop. [alarmed] His suitcase tries to get off... [relieved] and the boy's finger saves it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9423,
+  "prev": "So he checks with a finger and a shout.",
+  "next": "Bad suitcase.",
+  "lines": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0608",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "First stop. [nervous] His suitcase tries to get off... [warmly] and the boy's finger saves it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9424,
+  "prev": "So he checks with a finger and a shout.",
+  "next": "Bad suitcase.",
+  "lines": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0910",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Second stop. ... It stays.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9431,
+  "prev": "What's a finger gonna do?",
+  "next": "Vending machine... check!",
+  "lines": [
+   "v3_n09",
+   "v3_n10"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0910",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Second stop. It stays.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9432,
+  "prev": "What's a finger gonna do?",
+  "next": "Vending machine... check!",
+  "lines": [
+   "v3_n09",
+   "v3_n10"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0910",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Second stop. [deadpan] It stays.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9433,
+  "prev": "What's a finger gonna do?",
+  "next": "Vending machine... check!",
+  "lines": [
+   "v3_n09",
+   "v3_n10"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0910",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Second stop. [deadpan] It stays.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9434,
+  "prev": "What's a finger gonna do?",
+  "next": "Vending machine... check!",
+  "lines": [
+   "v3_n09",
+   "v3_n10"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0910",
+  "take": "t5",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Second stop. ... It stays.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9435,
+  "prev": "What's a finger gonna do?",
+  "next": "Vending machine... check!",
+  "lines": [
+   "v3_n09",
+   "v3_n10"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n11",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "You see, his eyes looked right at it. His mind was on his phone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9441,
+  "prev": "This kid gets it!",
+  "next": "Japan's railway lab tested it.",
+  "lines": [
+   "v3_n11"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n11",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "You see, his eyes looked right at it. His mind was on his phone.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9442,
+  "prev": "This kid gets it!",
+  "next": "Japan's railway lab tested it.",
+  "lines": [
+   "v3_n11"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n11",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[thoughtful] You see, his eyes looked right at it. His mind was on his phone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9443,
+  "prev": "This kid gets it!",
+  "next": "Japan's railway lab tested it.",
+  "lines": [
+   "v3_n11"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n11",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] You see, his eyes looked right at it. His mind was on his phone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9444,
+  "prev": "This kid gets it!",
+  "next": "Japan's railway lab tested it.",
+  "lines": [
+   "v3_n11"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n13",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "For every six mistakes people made just looking... when they pointed and said it out loud: about one.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9451,
+  "prev": "Japan's railway lab tested it.",
+  "next": "A finger and a shout drag your mind back.",
+  "lines": [
+   "v3_n13"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n13",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "For every six mistakes people made just looking... when they pointed and said it out loud: about one.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9452,
+  "prev": "Japan's railway lab tested it.",
+  "next": "A finger and a shout drag your mind back.",
+  "lines": [
+   "v3_n13"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n13",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] For every six mistakes people made just looking... when they pointed and said it out loud: about one.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9453,
+  "prev": "Japan's railway lab tested it.",
+  "next": "A finger and a shout drag your mind back.",
+  "lines": [
+   "v3_n13"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n13",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] For every six mistakes people made just looking... when they pointed and said it out loud: about one.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9454,
+  "prev": "Japan's railway lab tested it.",
+  "next": "A finger and a shout drag your mind back.",
+  "lines": [
+   "v3_n13"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n14",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "A finger and a shout drag your mind back.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9461,
+  "prev": "For every six mistakes people made just looking... when they pointed and said it out loud: about one.",
+  "next": "Doors... closed!",
+  "lines": [
+   "v3_n14"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n14",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "A finger and a shout drag your mind back.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9462,
+  "prev": "For every six mistakes people made just looking... when they pointed and said it out loud: about one.",
+  "next": "Doors... closed!",
+  "lines": [
+   "v3_n14"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n14",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[firmly] A finger and a shout drag your mind back.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9463,
+  "prev": "For every six mistakes people made just looking... when they pointed and said it out loud: about one.",
+  "next": "Doors... closed!",
+  "lines": [
+   "v3_n14"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n14",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] A finger and a shout drag your mind back.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9464,
+  "prev": "For every six mistakes people made just looking... when they pointed and said it out loud: about one.",
+  "next": "Doors... closed!",
+  "lines": [
+   "v3_n14"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. The tourist laughing at him will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9471,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. The tourist laughing at him will lose that suitcase.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9472,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. The tourist laughing at him will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9473,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[amused] He points along an empty track. The tourist laughing at him will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9474,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t5",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. [dryly] The tourist laughing at him will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9475,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t02",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[scolding] Bad suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9501,
+  "prev": "and the boy's finger saves it.",
+  "next": "Doors... closed!",
+  "lines": [
+   "v3_t02"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t02",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[scolding] Bad suitcase.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9502,
+  "prev": "and the boy's finger saves it.",
+  "next": "Doors... closed!",
+  "lines": [
+   "v3_t02"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t02",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[fondly] Bad suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9503,
+  "prev": "and the boy's finger saves it.",
+  "next": "Doors... closed!",
+  "lines": [
+   "v3_t02"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t02",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[playfully scolding] Bad suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9504,
+  "prev": "and the boy's finger saves it.",
+  "next": "Doors... closed!",
+  "lines": [
+   "v3_t02"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t03",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] What's a finger gonna do?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9511,
+  "prev": "Doors... closed!",
+  "next": "Second stop.",
+  "lines": [
+   "v3_t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t03",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] What's a finger gonna do?",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9512,
+  "prev": "Doors... closed!",
+  "next": "Second stop.",
+  "lines": [
+   "v3_t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t03",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[amused] What's a finger gonna do?",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9513,
+  "prev": "Doors... closed!",
+  "next": "Second stop.",
+  "lines": [
+   "v3_t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t03",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[cocky] What's a finger gonna do?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9514,
+  "prev": "Doors... closed!",
+  "next": "Second stop.",
+  "lines": [
+   "v3_t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t06",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[warmly] This kid gets it!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9521,
+  "prev": "Vending machine... check!",
+  "next": "You see, his eyes looked right at it. His mind was on his phone.",
+  "lines": [
+   "v3_t06"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t06",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[warmly] This kid gets it!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9522,
+  "prev": "Vending machine... check!",
+  "next": "You see, his eyes looked right at it. His mind was on his phone.",
+  "lines": [
+   "v3_t06"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t06",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[delighted] This kid gets it!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9523,
+  "prev": "Vending machine... check!",
+  "next": "You see, his eyes looked right at it. His mind was on his phone.",
+  "lines": [
+   "v3_t06"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t06",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[impressed] This kid gets it!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9524,
+  "prev": "Vending machine... check!",
+  "next": "You see, his eyes looked right at it. His mind was on his phone.",
+  "lines": [
+   "v3_t06"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_x02",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[giggles] Hehehe... hehe.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9531,
+  "prev": null,
+  "next": null,
+  "lines": [
+   "v3_x02"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3",
+  "note": "giggle only, no words"
+ },
+ {
+  "folder": "v3_x02",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[giggling helplessly] Hee hee hee hee!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9532,
+  "prev": null,
+  "next": null,
+  "lines": [
+   "v3_x02"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3",
+  "note": "giggle only, no words"
+ },
+ {
+  "folder": "v3_x02",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[chuckles] [giggles]",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9533,
+  "prev": null,
+  "next": null,
+  "lines": [
+   "v3_x02"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3",
+  "note": "giggle only, no words"
+ }
+]

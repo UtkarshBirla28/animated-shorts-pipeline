@@ -1,0 +1,215 @@
+{
+ "voice_dir": "C:\\Users\\utkar\\Desktop\\animated-shorts-studio\\sound\\clown\\voice",
+ "frames": 2122,
+ "samples": 3395200,
+ "sections": [
+  [
+   "quiz",
+   0.0,
+   9.06
+  ],
+  [
+   "answer",
+   9.06,
+   12.99
+  ],
+  [
+   "turn",
+   12.99,
+   16.995
+  ],
+  [
+   "origin",
+   16.995,
+   23.915
+  ],
+  [
+   "suit",
+   23.915,
+   25.145
+  ],
+  [
+   "ride",
+   25.145,
+   29.205
+  ],
+  [
+   "interviews",
+   29.205,
+   37.72
+  ],
+  [
+   "number",
+   37.72,
+   42.295
+  ],
+  [
+   "mystery",
+   42.295,
+   50.02
+  ],
+  [
+   "money",
+   50.02,
+   61.45
+  ],
+  [
+   "mindblow",
+   61.72,
+   65.495
+  ],
+  [
+   "end",
+   65.495,
+   68.445
+  ],
+  [
+   "hush",
+   68.445,
+   68.775
+  ],
+  [
+   "rewind",
+   68.775,
+   70.733
+  ]
+ ],
+ "cues": [
+  [
+   0.0,
+   "QUIZ (106 BPM, 4 bars from frame 0): a ticking woodblock clock (tick / tock), a staccato pizzicato ostinato over a D pedal with an inner line creeping up a semitone a bar (A Bb B C#), celesta sparks, shaker 8ths then 16ths from 'Don't lose count.', a sly clarinet + glockenspiel phrase only in the narration-free stretches of the count"
+  ],
+  [
+   9.06,
+   "ANSWER: the clock stops on a held tremolo A7sus4 ('How many?'); a bright D-major-add9 sting ON 'Five.' (pizz rolled up, glockenspiel, triangle); a light pizz walk under 'And the clown? You saw him, right?'; a two-note glockenspiel wink in the breath after 'right?'"
+  ],
+  [
+   12.99,
+   "THE TURN (hard cut: the floor drops): a soft low piano D, a bowed bass D, cold high string harmonics (A E), a falling celesta line F E D C# (unresolved); a low bassoon A leads into the office"
+  ],
+  [
+   16.995,
+   "ORIGIN (104 BPM): office mischief: a creeping staccato pizz bass (D C Bb A G A Bb C#), brushes on the off-beats, a sneaky staccato bassoon line under the narration; 'I own a unicycle.': a pizz arpeggio up and a glockenspiel ping"
+  ],
+  [
+   23.925,
+   "'...and a clown': the music holds its breath (one high tremolo); 'suit.': a COMIC HIT in Bb major (a harp glissando lands on a pizz chord, a short clean muted-trumpet stab, glockenspiel, bass, a snap)"
+  ],
+  [
+   25.145,
+   "RIDE (118 BPM): the hour of riding: a bouncy syncopated bass, harp + pizz 8th arpeggios (Bbmaj7 F/A Gm7 C7sus), brushes on 2 and 4, shaker 16ths, a light clock tick, a glockenspiel line"
+  ],
+  [
+   29.205,
+   "INTERVIEWS (118 BPM): light and quick, out of the dialogue's way: off-beat pizz dabs, a soft bass, shaker; tiny glockenspiel dabs only in the breaths between the four voices; it STOPS under 'Sorry... what clown?' (one held harmonic) and a low pizz + bassoon 'plonk' buttons it"
+  ],
+  [
+   37.72,
+   "THE NUMBER (79 BPM, half-time): incredulous: a held Gm(add9)/D, an A7sus tremolo from '1 in 4', a half-time bass, a questioning celesta (A D E, unresolved) after 'straight out,'"
+  ],
+  [
+   42.295,
+   "MYSTERY (70 BPM): hushed, leaning in: soft tremolo strings (Dm(maj7) -> Bbmaj7#11 on 'music' -> Gm6/Bb on 'You see,' -> A7b9 on 'someone'), harp harmonics one a beat, a soft heartbeat bass, the celesta mystery motif (D F E C#) after 'weird part:' and after 'You see,'"
+  ],
+  [
+   50.02,
+   "MONEY (103 BPM, 5 bars): sneaky tiptoe: a staccato pizz figure (quarters, then all 8ths from bar 3) doubled by a staccato bassoon, finger snaps from 'sneakier.', shaker from 'Nearly everyone', a falling pizz dip on 'ducked', a celesta counter-line; an A7 tremolo swells from 'On a phone?' and the whole band STOPS dead after 'money.'"
+  ],
+  [
+   61.72,
+   "MIND-BLOW: almost everything drops: a soft low piano D, glassy string harmonics (A D E), three slow celesta notes; on 'minds' the harmony turns to a Bb colour (wonder)"
+  ],
+  [
+   65.495,
+   "END (122 BPM): a quick build on the quiz's ostinato (faster, rising, clock + shaker), a rising tremolo, glockenspiel pings on 'five' and 'clown'; CUT DEAD after 'clown.'"
+  ],
+  [
+   68.445,
+   "HUSH: silence"
+  ],
+  [
+   68.775,
+   "REWIND: a tape rewind of the quiz music (reversed, fast, pitching down) under 'Did you see the'; a reversed-reverb SWELL of the frame-0 chord through 'money?' to the seam; the music STOPS on the last sample (frame 0's downbeat answers it)"
+  ]
+ ],
+ "gains_db": [
+  [
+   "quiz",
+   0.0,
+   9.06,
+   -15.45
+  ],
+  [
+   "answer",
+   9.06,
+   12.99,
+   -16.39
+  ],
+  [
+   "turn",
+   12.99,
+   16.995,
+   -22.0
+  ],
+  [
+   "origin",
+   16.995,
+   23.915,
+   -13.34
+  ],
+  [
+   "suit",
+   23.915,
+   25.145,
+   -19.78
+  ],
+  [
+   "ride",
+   25.145,
+   29.205,
+   -16.27
+  ],
+  [
+   "interviews",
+   29.205,
+   37.72,
+   -12.11
+  ],
+  [
+   "number",
+   37.72,
+   42.295,
+   -15.91
+  ],
+  [
+   "mystery",
+   42.295,
+   50.02,
+   -17.49
+  ],
+  [
+   "money",
+   50.02,
+   61.45,
+   -15.74
+  ],
+  [
+   "mindblow",
+   61.72,
+   65.495,
+   -13.46
+  ],
+  [
+   "end",
+   65.495,
+   68.445,
+   -16.85
+  ],
+  [
+   "rewind",
+   68.775,
+   70.733,
+   -10.45
+  ]
+ ]
+}

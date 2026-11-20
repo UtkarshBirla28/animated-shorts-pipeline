@@ -1,0 +1,190 @@
+CREDITS: sound of "The Clown Nobody Saw"
+
+Voice: ElevenLabs text-to-speech (the channel's narrator voice), licensed through the owner's ElevenLabs plan.
+Music: no third-party music. The score (music_v2.wav) is original: written and synthesized in sound/clown/audio/music.py with the instruments of this repository.
+
+Recorded sound effects, all Creative Commons 0 1.0 (public domain dedication, https://creativecommons.org/publicdomain/zero/1.0/),
+copied from the sound-effects reference library into sound/clown/audio/_lib/. CC0 needs no credit; this list is the proof of source.
+Sources can change their terms: re-check each source page before publishing.
+- fs-824189-pop-in-sfx.ogg | Sadiquecat via Freesound (CC0; credit optional) | https://freesound.org/people/Sadiquecat/sounds/824189/ | CC0 1.0 | text / title pop-in (a real 'pop in', 410-1090 Hz)
+- kit-pop.ogg | ethernel0 via Freesound (CC0) | https://freesound.org/people/ethernel0/sounds/776016/ | CC0 1.0 | neutral small pop
+- fs-258269-mouth-pop.ogg | jcallison via Freesound (CC0; credit optional) | https://freesound.org/people/jcallison/sounds/258269/ | CC0 1.0 | organic low mouth pop (thought bubble, small appear)
+- fs-447910-plop.ogg | Breviceps via Freesound (CC0; credit optional) | https://freesound.org/people/Breviceps/sounds/447910/ | CC0 1.0 | tiny plop (a dotted line landing, a small UI point)
+- fs393811.ogg | deleted_user_6479820 via Freesound (CC0; credit given voluntarily) | https://freesound.org/people/deleted_user_6479820/sounds/393811/ | CC0 1.0 | a very short flick / swish (a card or chip flipping)
+- fs-349504-triangle-open-04.ogg | cabled_mess via Freesound (CC0; credit optional) | https://freesound.org/people/cabled_mess/sounds/349504/ | CC0 1.0 | a struck open triangle (a clear 'answer' ding, rings 3.5 s: fade as needed)
+- kenney-interface-confirmation-002.ogg | Kenney (kenney.nl), CC0; credit optional | https://kenney.nl/assets/interface-sounds | CC0 1.0 | a short rising confirmation chime
+- kenney-interface-glass-001.ogg | Kenney (kenney.nl), CC0; credit optional | https://kenney.nl/assets/interface-sounds | CC0 1.0 | a glassy glint
+- fs745291.ogg | SamsterBirdies via Freesound (CC0; credit given voluntarily) | https://freesound.org/people/SamsterBirdies/sounds/745291/ | CC0 1.0 | a soft ceramic / board knock (a page or card landing; body 340-2260 Hz, plays on a phone)
+- fs-702773-swipe-wav.ogg | LilMati via Freesound (CC0; credit optional) | https://freesound.org/people/LilMati/sounds/702773/ | CC0 1.0 | a paper-like swipe, 0.84 s (a page sliding in or out; also the MEDIUM camera whoosh)
+- fs-127197-fast-simple-chop-5-aif.ogg | dave.des via Freesound (CC0; credit optional) | https://freesound.org/people/dave.des/sounds/127197/ | CC0 1.0 | a fast chop whoosh, 0.48 s (a quick duck / arm move)
+- fs-683101-quick-woosh.ogg | florianreichelt via Freesound (CC0; credit optional) | https://freesound.org/people/florianreichelt/sounds/683101/ | CC0 1.0 | a quick thin woosh, 0.28 s of sound (an arrow drawing, a small move)
+- kit-whoosh.ogg | qubodup via Freesound (CC0) | https://freesound.org/people/qubodup/sounds/60013/ | CC0 1.0 | the library's default whoosh, 0.42 s
+- fs-786514-swoosh-v2.ogg | migoreng1 via Freesound (CC0; credit optional) | https://freesound.org/people/migoreng1/sounds/786514/ | CC0 1.0 | a low swoosh, 0.30 s
+- fs830856.ogg | MeanRaccoon via Freesound (CC0; credit given voluntarily) | https://freesound.org/people/MeanRaccoon/sounds/830856/ | CC0 1.0 | a low whoosh, 0.40 s
+- fs810485.ogg | CVLTIV8R via Freesound (CC0; credit given voluntarily) | https://freesound.org/people/CVLTIV8R/sounds/810485/ | CC0 1.0 | a wide analog sweep whoosh, 0.59 s (something leaving / floating off)
+- fs-683096-woosh.ogg | florianreichelt via Freesound (CC0; credit optional) | https://freesound.org/people/florianreichelt/sounds/683096/ | CC0 1.0 | a slow deep woosh with a 0.39 s rise, 1.5 s (slow motion)
+- fs-816262-broomstick-whoosh-3-quiet-okm1.ogg | Sadiquecat via Freesound (CC0; credit optional) | https://freesound.org/people/Sadiquecat/sounds/816262/ | CC0 1.0 | CAMERA WHOOSH, SHORT (0.41 s): a real broomstick air whoosh, quiet
+- fs-169867-swoosh.ogg | Halgrimm via Freesound (CC0; credit optional) | https://freesound.org/people/Halgrimm/sounds/169867/ | CC0 1.0 | CAMERA WHOOSH, LONG (2.2 s): a real air swoosh
+- fs-264777-swoosh.ogg | Shinplaster via Freesound (CC0; credit optional) | https://freesound.org/people/Shinplaster/sounds/264777/ | CC0 1.0 | CAMERA WHOOSH, EXTRA LONG (4.0 s): a slow air swoosh (a long pull-back)
+- kit-impact.ogg | peoplearehappy via Freesound (CC0) | https://freesound.org/people/peoplearehappy/sounds/841274/ | CC0 1.0 | a soft low impact (weight on a reveal; 105-480 Hz)
+- kenney-impact-impactsoft-heavy-000.ogg | Kenney (kenney.nl), CC0; credit optional | https://kenney.nl/assets/impact-sounds | CC0 1.0 | a soft heavy thump, 0.53 s (a FREEZE-frame hit without any scratch)
+- kenney-impact-impactsoft-heavy-001.ogg | Kenney (kenney.nl), CC0; credit optional | https://kenney.nl/assets/impact-sounds | CC0 1.0 | a soft heavy thump, 0.57 s (second take of the freeze hit)
+- fs524817.ogg | DeVern via Freesound (CC0; credit given voluntarily) | https://freesound.org/people/DeVern/sounds/524817/ | CC0 1.0 | an oil-drum soft impact, 0.66 s (a rounder freeze / landing hit)
+- fs-685256-riser-sound-effect-short-wav.ogg | syntheffects via Freesound (CC0; credit optional) | https://freesound.org/people/syntheffects/sounds/685256/ | CC0 1.0 | a 2.5 s riser (must END on a hit)
+- fs-396161-scary-hits-risers-001.ogg | Xinematix via Freesound (CC0; credit optional) | https://freesound.org/people/Xinematix/sounds/396161/ | CC0 1.0 | a 6 s dark riser (tension; use low and filtered)
+- fs384187.ogg | malle99 via Freesound (CC0; credit given voluntarily) | https://freesound.org/people/malle99/sounds/384187/ | CC0 1.0 | a real tick, 0.07 s
+- fs721514.ogg | BaggoNotes via Freesound (CC0; credit given voluntarily) | https://freesound.org/people/BaggoNotes/sounds/721514/ | CC0 1.0 | a very short tick, 0.02 s
+- kit-click.ogg | adh.dreaming via Freesound (CC0) | https://freesound.org/people/adh.dreaming/sounds/671105/ | CC0 1.0 | a classic click, 0.09 s
+- fs788933.ogg | Mediasaur via Freesound (CC0; credit given voluntarily) | https://freesound.org/people/Mediasaur/sounds/788933/ | CC0 1.0 | a bright click, 0.12 s
+- kit-tick.ogg | Squirrel_404 via Freesound (CC0) | https://freesound.org/people/Squirrel_404/sounds/683048/ | CC0 1.0 | a tiny tick, 0.02 s
+
+Generated sound effects: ElevenLabs Sound Effects (text-to-sound, SFX only, never voice), made for this film with the owner's
+ElevenLabs account (el_batch.py / el_sfx.py); commercial use is covered by the owner's paid plan. Files in sound/clown/audio/_el/.
+- horn_a.wav | ElevenLabs Sound Effects | prompt: "Clown bicycle bulb horn, two quick squeezes, honk honk, close, dry, no background" | 1.0 s
+- horn_b.wav | ElevenLabs Sound Effects | prompt: "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background" | 0.6 s
+- horn_c.wav | ElevenLabs Sound Effects | prompt: "One short honk of a rubber bulb clown horn, close, dry, no reverb" | 0.5 s
+- squeak_a.wav | ElevenLabs Sound Effects | prompt: "A rusty bicycle pedal squeaking, three slow rhythmic squeaks, close, dry, no background" | 0.8 s
+- peg_1.wav | ElevenLabs Sound Effects | prompt: "One wooden clothespin snapping shut, a small sharp wooden click with a tiny spring ring, very close microphone, dry, no reverb, no background noise" | 0.5 s
+- peg_2.wav | ElevenLabs Sound Effects | prompt: "One wooden clothespin snapping shut, a small sharp wooden click with a tiny spring ring, very close microphone, dry, no reverb, no background noise" | 0.5 s
+- peg_3.wav | ElevenLabs Sound Effects | prompt: "One wooden clothespin snapping shut, a small sharp wooden click with a tiny spring ring, very close microphone, dry, no reverb, no background noise" | 0.5 s
+- pop_1.wav | ElevenLabs Sound Effects | prompt: "One small soft cartoon pop, a bubbly blip as a title appears, short, clean, dry, no background" | 0.5 s
+- pop_2.wav | ElevenLabs Sound Effects | prompt: "One small soft cartoon pop, a bubbly blip as a title appears, short, clean, dry, no background" | 0.5 s
+- pop_3.wav | ElevenLabs Sound Effects | prompt: "One small soft cartoon pop, a bubbly blip as a title appears, short, clean, dry, no background" | 0.5 s
+- stamp_1.wav | ElevenLabs Sound Effects | prompt: "One rubber stamp thumped down on a sheet of paper on a wooden desk, short and dull, very close microphone, dry, no background noise" | 0.5 s
+- stamp_2.wav | ElevenLabs Sound Effects | prompt: "One rubber stamp thumped down on a sheet of paper on a wooden desk, short and dull, very close microphone, dry, no background noise" | 0.5 s
+- step_soft_1.wav | ElevenLabs Sound Effects | prompt: "Footsteps of one person in soft rubber-soled sneakers walking at a relaxed pace on outdoor brick paving, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s
+- step_soft_2.wav | ElevenLabs Sound Effects | prompt: "Footsteps of one person in soft rubber-soled sneakers walking at a relaxed pace on outdoor brick paving, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s
+- step_soft_3.wav | ElevenLabs Sound Effects | prompt: "Footsteps of one person in soft rubber-soled sneakers walking at a relaxed pace on outdoor brick paving, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s
+- step_hard_1.wav | ElevenLabs Sound Effects | prompt: "Footsteps of one person in hard leather-soled shoes walking briskly on outdoor brick pavement, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s
+- step_hard_2.wav | ElevenLabs Sound Effects | prompt: "Footsteps of one person in hard leather-soled shoes walking briskly on outdoor brick pavement, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s
+- step_hard_3.wav | ElevenLabs Sound Effects | prompt: "Footsteps of one person in hard leather-soled shoes walking briskly on outdoor brick pavement, eight clear separate steps, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s
+- step_slow_1.wav | ElevenLabs Sound Effects | prompt: "Slow strolling footsteps of one person in canvas shoes on brick paving, six separate steps with long gaps, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s
+- step_slow_2.wav | ElevenLabs Sound Effects | prompt: "Slow strolling footsteps of one person in canvas shoes on brick paving, six separate steps with long gaps, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s
+- pencil_ticks_1.wav | ElevenLabs Sound Effects | prompt: "A pencil making seven quick separate check marks on paper on a wooden clipboard, small gaps between the strokes, very close microphone, dry, no background noise, no voices" | 3.0 s
+- pencil_ticks_2.wav | ElevenLabs Sound Effects | prompt: "A pencil making seven quick separate check marks on paper on a wooden clipboard, small gaps between the strokes, very close microphone, dry, no background noise, no voices" | 3.0 s
+- pencil_ticks_3.wav | ElevenLabs Sound Effects | prompt: "A pencil making seven quick separate check marks on paper on a wooden clipboard, small gaps between the strokes, very close microphone, dry, no background noise, no voices" | 3.0 s
+- pencil_cross_1.wav | ElevenLabs Sound Effects | prompt: "A pencil drawing three quick X marks on paper on a clipboard, each X is two short strokes, very close microphone, dry, no background noise, no voices" | 2.0 s
+- pencil_cross_2.wav | ElevenLabs Sound Effects | prompt: "A pencil drawing three quick X marks on paper on a clipboard, each X is two short strokes, very close microphone, dry, no background noise, no voices" | 2.0 s
+- pencil_cross_3.wav | ElevenLabs Sound Effects | prompt: "A pencil drawing three quick X marks on paper on a clipboard, each X is two short strokes, very close microphone, dry, no background noise, no voices" | 2.0 s
+- pencil_one_1.wav | ElevenLabs Sound Effects | prompt: "One firm pencil check mark drawn on paper on a clipboard, a single stroke with a flick, very close microphone, dry, no background noise" | 1.0 s
+- pencil_one_2.wav | ElevenLabs Sound Effects | prompt: "One firm pencil check mark drawn on paper on a clipboard, a single stroke with a flick, very close microphone, dry, no background noise" | 1.0 s
+- page_slide_1.wav | ElevenLabs Sound Effects | prompt: "A sheet of paper on a clipboard slides quickly in and lands with one soft tap on a table, close microphone, dry, no reverb, no background noise, no music, no voices" | 1.0 s
+- page_slide_2.wav | ElevenLabs Sound Effects | prompt: "A sheet of paper on a clipboard slides quickly in and lands with one soft tap on a table, close microphone, dry, no reverb, no background noise, no music, no voices" | 1.0 s
+- bill_flick_1.wav | ElevenLabs Sound Effects | prompt: "A single paper banknote flapping once as it swings on a clip, one short crisp paper flick, close microphone, dry, no wind noise, no background noise" | 1.0 s
+- bill_flick_2.wav | ElevenLabs Sound Effects | prompt: "A single paper banknote flapping once as it swings on a clip, one short crisp paper flick, close microphone, dry, no wind noise, no background noise" | 1.0 s
+- bill_flick_3.wav | ElevenLabs Sound Effects | prompt: "A single paper banknote flapping once as it swings on a clip, one short crisp paper flick, close microphone, dry, no wind noise, no background noise" | 1.0 s
+- bills_bed_1.wav | ElevenLabs Sound Effects | prompt: "Three paper banknotes fluttering gently in a light breeze, soft crisp paper rustle, steady and quiet, close microphone, dry, no wind rumble, no background noise, no voices" | 5.0 s
+- bills_bed_2.wav | ElevenLabs Sound Effects | prompt: "Three paper banknotes fluttering gently in a light breeze, soft crisp paper rustle, steady and quiet, close microphone, dry, no wind rumble, no background noise, no voices" | 5.0 s
+- bill_hair_1.wav | ElevenLabs Sound Effects | prompt: "A sheet of paper dragging slowly across long hair, soft and close, slow, dry, no background noise, no voices" | 1.5 s
+- bill_hair_2.wav | ElevenLabs Sound Effects | prompt: "A sheet of paper dragging slowly across long hair, soft and close, slow, dry, no background noise, no voices" | 1.5 s
+- duck_cloth_1.wav | ElevenLabs Sound Effects | prompt: "A person ducking quickly, one short soft cloth swish of a jacket, close microphone, dry, no background noise, no voices, no footsteps" | 0.7 s
+- duck_cloth_2.wav | ElevenLabs Sound Effects | prompt: "A person ducking quickly, one short soft cloth swish of a jacket, close microphone, dry, no background noise, no voices, no footsteps" | 0.7 s
+- duck_cloth_3.wav | ElevenLabs Sound Effects | prompt: "A person ducking quickly, one short soft cloth swish of a jacket, close microphone, dry, no background noise, no voices, no footsteps" | 0.7 s
+- duck_cloth_4.wav | ElevenLabs Sound Effects | prompt: "A person ducking quickly, one short soft cloth swish of a jacket, close microphone, dry, no background noise, no voices, no footsteps" | 0.7 s
+- leaf_brush_1.wav | ElevenLabs Sound Effects | prompt: "A head brushing once under a leafy branch, a short soft rustle of fresh leaves, close microphone, dry, no wind, no background noise" | 0.8 s
+- leaf_brush_2.wav | ElevenLabs Sound Effects | prompt: "A head brushing once under a leafy branch, a short soft rustle of fresh leaves, close microphone, dry, no wind, no background noise" | 0.8 s
+- leaf_brush_3.wav | ElevenLabs Sound Effects | prompt: "A head brushing once under a leafy branch, a short soft rustle of fresh leaves, close microphone, dry, no wind, no background noise" | 0.8 s
+- spin_scuff_1.wav | ElevenLabs Sound Effects | prompt: "A quick shoe scuff on pavement as a person spins around on the spot, with a short cloth swish, close microphone, dry, no reverb, no background noise, no music, no voices" | 0.7 s
+- spin_scuff_2.wav | ElevenLabs Sound Effects | prompt: "A quick shoe scuff on pavement as a person spins around on the spot, with a short cloth swish, close microphone, dry, no reverb, no background noise, no music, no voices" | 0.7 s
+- pigeon_1.wav | ElevenLabs Sound Effects | prompt: "A single pigeon takes off from the ground, a short burst of five wing flaps, close microphone, dry, no background noise, no cooing" | 1.5 s
+- pigeon_2.wav | ElevenLabs Sound Effects | prompt: "A single pigeon takes off from the ground, a short burst of five wing flaps, close microphone, dry, no background noise, no cooing" | 1.5 s
+- pigeon_3.wav | ElevenLabs Sound Effects | prompt: "A single pigeon takes off from the ground, a short burst of five wing flaps, close microphone, dry, no background noise, no cooing" | 1.5 s
+- horn_1.wav | ElevenLabs Sound Effects | prompt: "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background" | 0.6 s
+- horn_2.wav | ElevenLabs Sound Effects | prompt: "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background" | 0.6 s
+- horn_3.wav | ElevenLabs Sound Effects | prompt: "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background" | 0.6 s
+- horn_4.wav | ElevenLabs Sound Effects | prompt: "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background" | 0.6 s
+- horn_5.wav | ElevenLabs Sound Effects | prompt: "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background" | 0.6 s
+- horn_low_1.wav | ElevenLabs Sound Effects | prompt: "Two short honks from a big old brass bulb horn with a deep low pitch, honk-honk, close, dry, no reverb, no background" | 0.6 s
+- horn_low_2.wav | ElevenLabs Sound Effects | prompt: "Two short honks from a big old brass bulb horn with a deep low pitch, honk-honk, close, dry, no reverb, no background" | 0.6 s
+- horn_low_3.wav | ElevenLabs Sound Effects | prompt: "Two short honks from a big old brass bulb horn with a deep low pitch, honk-honk, close, dry, no reverb, no background" | 0.6 s
+- tyre_roll_1.wav | ElevenLabs Sound Effects | prompt: "A small rubber bicycle tyre rolling steadily over brick paving, a soft continuous rolling patter, no squeak, no chain, no bell, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s
+- tyre_roll_2.wav | ElevenLabs Sound Effects | prompt: "A small rubber bicycle tyre rolling steadily over brick paving, a soft continuous rolling patter, no squeak, no chain, no bell, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s
+- squeak_1.wav | ElevenLabs Sound Effects | prompt: "Two soft short squeaks of a bicycle saddle spring, gentle and slow, close microphone, dry, no background noise" | 1.5 s
+- squeak_2.wav | ElevenLabs Sound Effects | prompt: "Two soft short squeaks of a bicycle saddle spring, gentle and slow, close microphone, dry, no background noise" | 1.5 s
+- squeak_3.wav | ElevenLabs Sound Effects | prompt: "Two soft short squeaks of a bicycle saddle spring, gentle and slow, close microphone, dry, no background noise" | 1.5 s
+- boing_1.wav | ElevenLabs Sound Effects | prompt: "A soft comic cartoon boing, a small rubbery spring, short, dry, no reverb, no background" | 0.7 s
+- boing_2.wav | ElevenLabs Sound Effects | prompt: "A soft comic cartoon boing, a small rubbery spring, short, dry, no reverb, no background" | 0.7 s
+- boing_3.wav | ElevenLabs Sound Effects | prompt: "A soft comic cartoon boing, a small rubbery spring, short, dry, no reverb, no background" | 0.7 s
+- murmur_f_1.wav | ElevenLabs Sound Effects | prompt: "A woman talking quietly on a phone heard through a wall, muffled wordless mumbling, calm, completely unintelligible, no clear words, no background noise" | 4.0 s
+- murmur_f_2.wav | ElevenLabs Sound Effects | prompt: "A woman talking quietly on a phone heard through a wall, muffled wordless mumbling, calm, completely unintelligible, no clear words, no background noise" | 4.0 s
+- murmur_m_1.wav | ElevenLabs Sound Effects | prompt: "A man talking quietly on a phone heard through a wall, muffled wordless mumbling, calm, completely unintelligible, no clear words, no background noise" | 4.0 s
+- murmur_m_2.wav | ElevenLabs Sound Effects | prompt: "A man talking quietly on a phone heard through a wall, muffled wordless mumbling, calm, completely unintelligible, no clear words, no background noise" | 4.0 s
+- crowd_1.wav | ElevenLabs Sound Effects | prompt: "Soft distant crowd murmur of students on a sunny outdoor campus square, friendly wordless walla, light, no music, no traffic, no shouting, no clear words" | 10.0 s
+- crowd_2.wav | ElevenLabs Sound Effects | prompt: "Soft distant crowd murmur of students on a sunny outdoor campus square, friendly wordless walla, light, no music, no traffic, no shouting, no clear words" | 10.0 s
+- square_amb_1.wav | ElevenLabs Sound Effects | prompt: "Sunny spring campus square ambience, a light breeze in fresh leaves, a few songbirds, a small fountain far away, no traffic, no music, no voices, no footsteps" | 15.0 s
+- square_amb_2.wav | ElevenLabs Sound Effects | prompt: "Sunny spring campus square ambience, a light breeze in fresh leaves, a few songbirds, a small fountain far away, no traffic, no music, no voices, no footsteps" | 15.0 s
+- clock_1.wav | ElevenLabs Sound Effects | prompt: "An old tower clock mechanism spinning fast, a soft ratcheting gear whirr for two seconds, then one soft wooden tock as the hand stops, dry, no bell, no background" | 2.5 s
+- clock_2.wav | ElevenLabs Sound Effects | prompt: "An old tower clock mechanism spinning fast, a soft ratcheting gear whirr for two seconds, then one soft wooden tock as the hand stops, dry, no bell, no background" | 2.5 s
+- headphones_1.wav | ElevenLabs Sound Effects | prompt: "Tinny music leaking from big headphones heard from outside, a faint fast hi-hat and beat, thin and quiet, no bass, no voices" | 1.5 s
+- headphones_2.wav | ElevenLabs Sound Effects | prompt: "Tinny music leaking from big headphones heard from outside, a faint fast hi-hat and beat, thin and quiet, no bass, no voices" | 1.5 s
+- shimmer_1.wav | ElevenLabs Sound Effects | prompt: "A magical rising shimmer, glassy chimes and airy sparkle swelling upward over four seconds and ending in a soft bright bloom, no impact, no low rumble, clean" | 4.5 s
+- shimmer_2.wav | ElevenLabs Sound Effects | prompt: "A magical rising shimmer, glassy chimes and airy sparkle swelling upward over four seconds and ending in a soft bright bloom, no impact, no low rumble, clean" | 4.5 s
+- shimmer_3.wav | ElevenLabs Sound Effects | prompt: "A magical rising shimmer, glassy chimes and airy sparkle swelling upward over four seconds and ending in a soft bright bloom, no impact, no low rumble, clean" | 4.5 s
+- impact_1.wav | ElevenLabs Sound Effects | prompt: "A soft low cinematic whump, one gentle deep thud with a warm body, short, no sub rumble, no long reverb tail, clean, no background" | 1.0 s
+- impact_2.wav | ElevenLabs Sound Effects | prompt: "A soft low cinematic whump, one gentle deep thud with a warm body, short, no sub rumble, no long reverb tail, clean, no background" | 1.0 s
+- impact_3.wav | ElevenLabs Sound Effects | prompt: "A soft low cinematic whump, one gentle deep thud with a warm body, short, no sub rumble, no long reverb tail, clean, no background" | 1.0 s
+- chime_1.wav | ElevenLabs Sound Effects | prompt: "A happy little three-note rising chime on a glockenspiel, bright and sweet, short, clean, no reverb, no background" | 1.0 s
+- chime_2.wav | ElevenLabs Sound Effects | prompt: "A happy little three-note rising chime on a glockenspiel, bright and sweet, short, clean, no reverb, no background" | 1.0 s
+- chime_3.wav | ElevenLabs Sound Effects | prompt: "A happy little three-note rising chime on a glockenspiel, bright and sweet, short, clean, no reverb, no background" | 1.0 s
+- crowd_ooh_1.wav | ElevenLabs Sound Effects | prompt: "A small group of people outdoors react with one soft surprised 'ooh', friendly, short, a few metres away, no words, no music, no background" | 1.5 s
+- crowd_ooh_2.wav | ElevenLabs Sound Effects | prompt: "A small group of people outdoors react with one soft surprised 'ooh', friendly, short, a few metres away, no words, no music, no background" | 1.5 s
+- crowd_laugh_1.wav | ElevenLabs Sound Effects | prompt: "A small group of friends share one short warm laugh outdoors, a light chuckle, a few metres away, no words, no music, no background" | 1.5 s
+- crowd_laugh_2.wav | ElevenLabs Sound Effects | prompt: "A small group of friends share one short warm laugh outdoors, a light chuckle, a few metres away, no words, no music, no background" | 1.5 s
+- cam_whoosh_s_1.wav | ElevenLabs Sound Effects | prompt: "A very short soft airy camera whoosh, a quick smooth swish of air, clean, dry, no impact, no bass rumble, no background" | 0.5 s
+- cam_whoosh_m_1.wav | ElevenLabs Sound Effects | prompt: "A soft airy camera whoosh, a smooth swish of air passing the microphone, medium length, clean, dry, no impact, no bass rumble, no background" | 0.9 s
+- cam_whoosh_l_1.wav | ElevenLabs Sound Effects | prompt: "A long slow soft airy camera whoosh, a smooth gliding swish of air, clean, dry, no impact, no bass rumble, no background" | 1.6 s
+- drone_1.wav | ElevenLabs Sound Effects | prompt: "A soft low tension drone, a quiet warm sustained hum with slow gentle movement, mysterious but playful, steady, no melody, no percussion, no impact, no voices" | 6.0 s
+- drone_2.wav | ElevenLabs Sound Effects | prompt: "A soft low tension drone, a quiet warm sustained hum with slow gentle movement, mysterious but playful, steady, no melody, no percussion, no impact, no voices" | 6.0 s
+- low_riser_1.wav | ElevenLabs Sound Effects | prompt: "A soft low riser, a gentle swelling tone rising slowly in pitch over three seconds, building quiet tension, no impact at the end, clean, no percussion" | 3.5 s
+- low_riser_2.wav | ElevenLabs Sound Effects | prompt: "A soft low riser, a gentle swelling tone rising slowly in pitch over three seconds, building quiet tension, no impact at the end, clean, no percussion" | 3.5 s
+- freeze_hit_1.wav | ElevenLabs Sound Effects | prompt: "A short soft freeze-frame hit, one muted thump with a tiny glassy ping as time stops, clean, no record scratch, no vinyl, no reverb tail, no background" | 0.8 s
+- freeze_hit_2.wav | ElevenLabs Sound Effects | prompt: "A short soft freeze-frame hit, one muted thump with a tiny glassy ping as time stops, clean, no record scratch, no vinyl, no reverb tail, no background" | 0.8 s
+- freeze_hit_3.wav | ElevenLabs Sound Effects | prompt: "A short soft freeze-frame hit, one muted thump with a tiny glassy ping as time stops, clean, no record scratch, no vinyl, no reverb tail, no background" | 0.8 s
+- murmur_gib_f_1.wav | ElevenLabs Sound Effects | prompt: "A woman mumbling nonsense gibberish syllables in a steady chatty rhythm, like a muffled cartoon adult voice going wah wah wah, no real words in any language, close, dry, no background" | 4.0 s
+- murmur_gib_m_1.wav | ElevenLabs Sound Effects | prompt: "A man mumbling nonsense gibberish syllables in a steady chatty rhythm, like a muffled cartoon adult voice going wah wah wah, no real words in any language, close, dry, no background" | 4.0 s
+- drone_b_1.wav | ElevenLabs Sound Effects | prompt: "A low sustained synth drone, warm, full and clearly audible at a steady level, a deep hum with slow gentle movement, mysterious but playful, no melody, no percussion, no voices" | 5.0 s
+- tape_rewind_1.wav | ElevenLabs Sound Effects | prompt: "A VHS video cassette tape rewinding at high speed inside a VCR, a fast mechanical motor whirr with light tape chatter, steady, close, dry, no music, no voices, no beep" | 3.0 s
+- tape_rewind_2.wav | ElevenLabs Sound Effects | prompt: "A VHS video cassette tape rewinding at high speed inside a VCR, a fast mechanical motor whirr with light tape chatter, steady, close, dry, no music, no voices, no beep" | 3.0 s
+- tape_stop_1.wav | ElevenLabs Sound Effects | prompt: "A VCR tape mechanism stopping abruptly, one short mechanical click-clunk, close, dry, no music, no voices" | 0.6 s
+- tape_stop_2.wav | ElevenLabs Sound Effects | prompt: "A VCR tape mechanism stopping abruptly, one short mechanical click-clunk, close, dry, no music, no voices" | 0.6 s
+- door_open_1.wav | ElevenLabs Sound Effects | prompt: "A wooden office door: the latch clicks, then the door swings open with a soft short creak, indoors, close, no voices, no footsteps, no music" | 1.5 s
+- door_open_2.wav | ElevenLabs Sound Effects | prompt: "A wooden office door: the latch clicks, then the door swings open with a soft short creak, indoors, close, no voices, no footsteps, no music" | 1.5 s
+- zip_1.wav | ElevenLabs Sound Effects | prompt: "A zipper on a garment bag ripped open fast, one quick zip, close microphone, dry, no reverb, no background noise, no music, no voices" | 0.6 s
+- zip_2.wav | ElevenLabs Sound Effects | prompt: "A zipper on a garment bag ripped open fast, one quick zip, close microphone, dry, no reverb, no background noise, no music, no voices" | 0.6 s
+- bag_rustle_1.wav | ElevenLabs Sound Effects | prompt: "A plastic garment bag swung up quickly, a short crinkly rustle, close microphone, dry, no reverb, no background noise, no music, no voices" | 0.8 s
+- bag_rustle_2.wav | ElevenLabs Sound Effects | prompt: "A plastic garment bag swung up quickly, a short crinkly rustle, close microphone, dry, no reverb, no background noise, no music, no voices" | 0.8 s
+- dog_yap_1.wav | ElevenLabs Sound Effects | prompt: "A small terrier dog gives two short happy yaps, outdoors, a few metres away, dry, no other sounds, no music, no voices" | 1.0 s
+- dog_yap_2.wav | ElevenLabs Sound Effects | prompt: "A small terrier dog gives two short happy yaps, outdoors, a few metres away, dry, no other sounds, no music, no voices" | 1.0 s
+- dog_paws_1.wav | ElevenLabs Sound Effects | prompt: "A small dog running fast across brick paving, quick light claws pattering, close, dry, no barking, no panting, no background noise" | 1.5 s
+- skid_1.wav | ElevenLabs Sound Effects | prompt: "A small rubber bicycle tyre skids to a quick stop on brick paving, one short chirpy skid, close microphone, dry, no reverb, no background noise, no music, no voices" | 0.8 s
+- skid_2.wav | ElevenLabs Sound Effects | prompt: "A small rubber bicycle tyre skids to a quick stop on brick paving, one short chirpy skid, close microphone, dry, no reverb, no background noise, no music, no voices" | 0.8 s
+- man_sigh_1.wav | ElevenLabs Sound Effects | prompt: "A middle-aged man lets out one short thoughtful sigh through his nose, close, dry, no words, no music" | 1.2 s
+- man_sigh_2.wav | ElevenLabs Sound Effects | prompt: "A middle-aged man lets out one short thoughtful sigh through his nose, close, dry, no words, no music" | 1.2 s
+- gasp_f_1.wav | ElevenLabs Sound Effects | prompt: "A young woman's small surprised gasp, one short quick intake of breath, close, dry, no words, no music" | 0.8 s
+- gasp_f_2.wav | ElevenLabs Sound Effects | prompt: "A young woman's small surprised gasp, one short quick intake of breath, close, dry, no words, no music" | 0.8 s
+- hm_f_1.wav | ElevenLabs Sound Effects | prompt: "A woman's short surprised 'hm' with closed lips, rising, close, dry, no words, no music" | 0.6 s
+- hm_f_2.wav | ElevenLabs Sound Effects | prompt: "A woman's short surprised 'hm' with closed lips, rising, close, dry, no words, no music" | 0.6 s
+- laugh_m_1.wav | ElevenLabs Sound Effects | prompt: "A man's short cheerful goofy chuckle, a friendly clown laughing, outdoors a few metres away, no words, no music" | 1.2 s
+- laugh_m_2.wav | ElevenLabs Sound Effects | prompt: "A man's short cheerful goofy chuckle, a friendly clown laughing, outdoors a few metres away, no words, no music" | 1.2 s
+- laugh_f_1.wav | ElevenLabs Sound Effects | prompt: "A young woman's short delighted giggle, outdoors a few metres away, no words, no music" | 1.2 s
+- laugh_f_2.wav | ElevenLabs Sound Effects | prompt: "A young woman's short delighted giggle, outdoors a few metres away, no words, no music" | 1.2 s
+- yelp_1.wav | ElevenLabs Sound Effects | prompt: "A man's short comic startled yelp, wordless, surprised, outdoors a few metres away, no words, no music" | 0.8 s
+- yelp_2.wav | ElevenLabs Sound Effects | prompt: "A man's short comic startled yelp, wordless, surprised, outdoors a few metres away, no words, no music" | 0.8 s
+- hand_bell_1.wav | ElevenLabs Sound Effects | prompt: "A small brass hand bell rung quickly three times, a bright ding-a-ling, short, close, dry, no reverb, no background" | 1.2 s
+- hand_bell_2.wav | ElevenLabs Sound Effects | prompt: "A small brass hand bell rung quickly three times, a bright ding-a-ling, short, close, dry, no reverb, no background" | 1.2 s
+
+SOUND p3 (polish round 2): ElevenLabs Sound Effects generations made for this film by el_batch_p3.py (account counter 36955 -> 37134: 179 credits).
+- pigeon_b_1.wav | ElevenLabs Sound Effects | prompt: "A pigeon bursting into flight right next to the microphone: a quick flurry of bright fluttering wing claps, crisp clapping feathers, no cooing, close microphone, dry, no reverb, no background noise, no music, no voices" | 1.2 s | used
+- pigeon_b_2.wav | ElevenLabs Sound Effects | prompt: "A pigeon bursting into flight right next to the microphone: a quick flurry of bright fluttering wing claps, crisp clapping feathers, no cooing, close microphone, dry, no reverb, no background noise, no music, no voices" | 1.2 s | used
+- pigeon_b_3.wav | ElevenLabs Sound Effects | prompt: "A pigeon bursting into flight right next to the microphone: a quick flurry of bright fluttering wing claps, crisp clapping feathers, no cooing, close microphone, dry, no reverb, no background noise, no music, no voices" | 1.2 s | used
+- pigeon_settle_1.wav | ElevenLabs Sound Effects | prompt: "A pigeon landing close by: a short soft flutter of wings settling, then still, no cooing, close microphone, dry, no reverb, no background noise, no music, no voices" | 1.0 s | NOT USED (failed its measurement, in samples_reject.json)
+- sneaker_steps_1.wav | ElevenLabs Sound Effects | prompt: "Footsteps of one person walking at a relaxed pace in rubber-soled sneakers on brick paving, crisp light gritty scuffs on every step, evenly spaced, close microphone, dry, no reverb, no background noise, no music, no voices" | 4.0 s | used
+- heel_scuff_1.wav | ElevenLabs Sound Effects | prompt: "Three separate short shoe heel scuffs on stone paving, bright gritty scrapes, with silence between them, close microphone, dry, no reverb, no background noise, no music, no voices" | 2.0 s | used
+- confetti_1.wav | ElevenLabs Sound Effects | prompt: "A small party confetti popper pops, then paper confetti flutters down in a light papery shower, close microphone, dry, no reverb, no background noise, no music, no voices" | 1.5 s | used
+- confetti_2.wav | ElevenLabs Sound Effects | prompt: "A small party confetti popper pops, then paper confetti flutters down in a light papery shower, close microphone, dry, no reverb, no background noise, no music, no voices" | 1.5 s | used
+- juggle_1.wav | ElevenLabs Sound Effects | prompt: "Juggling: soft cloth balls landing in a person's palms, a light rhythmic pat, pat, pat of catches, close microphone, dry, no reverb, no background noise, no music, no voices" | 2.5 s | NOT USED (failed its measurement, in samples_reject.json)
+- paper_crumple_1.wav | ElevenLabs Sound Effects | prompt: "A sheet of paper crumpled quickly into a ball in one fist, close microphone, dry, no reverb, no background noise, no music, no voices" | 1.0 s | used
+- idea_ping_1.wav | ElevenLabs Sound Effects | prompt: "A cartoon light bulb switching on for a bright idea: a tiny click then a short clear bright 'ding', close microphone, dry, no reverb, no background noise, no music, no voices" | 0.8 s | NOT USED (failed its measurement, in samples_reject.json)
+Synthesized in this repo for p3 (sfx.py): the juggling pats, the '?' / '!' pops (the '!' over a CC0 pop), the twinkles, the light-bulb ping (a CC0 click + glockenspiel), the two-note whistle, the dust puff, the jogger (recorded hard-sole steps).
+
+Everything else (the bed's fallback layers, the score) is synthesized in this repo's own code.

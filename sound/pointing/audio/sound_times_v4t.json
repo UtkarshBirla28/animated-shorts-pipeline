@@ -1,0 +1,1598 @@
+{
+ "made": "2026-11-20 06:49:38",
+ "timeline": {
+  "source": "voice",
+  "voice_dir": "C:\\Users\\utkar\\Desktop\\animated-shorts-studio\\sound\\pointing\\voice",
+  "shots": "the film's timeline.ts (words: this voice)",
+  "L": 63.766666666666666,
+  "frames": 1913,
+  "cut1": 2.7,
+  "words_missing": [],
+  "lines_absent": []
+ },
+ "fps": 30,
+ "shots": {
+  "s01": {
+   "a": 0.0,
+   "b": 2.7,
+   "fa": 0,
+   "fb": 81
+  },
+  "s02": {
+   "a": 2.7,
+   "b": 4.666666666666667,
+   "fa": 81,
+   "fb": 140
+  },
+  "s03": {
+   "a": 4.666666666666667,
+   "b": 5.466666666666667,
+   "fa": 140,
+   "fb": 164
+  },
+  "s03b": {
+   "a": 5.466666666666667,
+   "b": 7.066666666666666,
+   "fa": 164,
+   "fb": 212
+  },
+  "s04": {
+   "a": 7.066666666666666,
+   "b": 8.733333333333333,
+   "fa": 212,
+   "fb": 262
+  },
+  "s05": {
+   "a": 8.733333333333333,
+   "b": 11.466666666666667,
+   "fa": 262,
+   "fb": 344
+  },
+  "s06": {
+   "a": 11.466666666666667,
+   "b": 13.866666666666667,
+   "fa": 344,
+   "fb": 416
+  },
+  "s07": {
+   "a": 13.866666666666667,
+   "b": 16.966666666666665,
+   "fa": 416,
+   "fb": 509
+  },
+  "s08": {
+   "a": 16.966666666666665,
+   "b": 20.766666666666666,
+   "fa": 509,
+   "fb": 623
+  },
+  "s09": {
+   "a": 20.766666666666666,
+   "b": 23.966666666666665,
+   "fa": 623,
+   "fb": 719
+  },
+  "s10": {
+   "a": 23.966666666666665,
+   "b": 25.666666666666668,
+   "fa": 719,
+   "fb": 770
+  },
+  "s11": {
+   "a": 25.666666666666668,
+   "b": 29.133333333333333,
+   "fa": 770,
+   "fb": 874
+  },
+  "s12": {
+   "a": 29.133333333333333,
+   "b": 31.433333333333334,
+   "fa": 874,
+   "fb": 943
+  },
+  "s13": {
+   "a": 31.433333333333334,
+   "b": 34.0,
+   "fa": 943,
+   "fb": 1020
+  },
+  "s14": {
+   "a": 34.0,
+   "b": 35.1,
+   "fa": 1020,
+   "fb": 1053
+  },
+  "s15": {
+   "a": 35.1,
+   "b": 38.333333333333336,
+   "fa": 1053,
+   "fb": 1150
+  },
+  "s16a": {
+   "a": 38.333333333333336,
+   "b": 42.4,
+   "fa": 1150,
+   "fb": 1272
+  },
+  "s16b": {
+   "a": 42.4,
+   "b": 45.2,
+   "fa": 1272,
+   "fb": 1356
+  },
+  "s17": {
+   "a": 45.2,
+   "b": 48.9,
+   "fa": 1356,
+   "fb": 1467
+  },
+  "s18": {
+   "a": 48.9,
+   "b": 49.9,
+   "fa": 1467,
+   "fb": 1497
+  },
+  "s19": {
+   "a": 49.9,
+   "b": 53.36666666666667,
+   "fa": 1497,
+   "fb": 1601
+  },
+  "s20": {
+   "a": 53.36666666666667,
+   "b": 55.833333333333336,
+   "fa": 1601,
+   "fb": 1675
+  },
+  "s21": {
+   "a": 55.833333333333336,
+   "b": 56.86666666666667,
+   "fa": 1675,
+   "fb": 1706
+  },
+  "s22": {
+   "a": 56.86666666666667,
+   "b": 59.96666666666667,
+   "fa": 1706,
+   "fb": 1799
+  },
+  "s23": {
+   "a": 59.96666666666667,
+   "b": 61.833333333333336,
+   "fa": 1799,
+   "fb": 1855
+  },
+  "s24": {
+   "a": 61.833333333333336,
+   "b": 63.766666666666666,
+   "fa": 1855,
+   "fb": 1913
+  }
+ },
+ "lines": {
+  "v3_n01": {
+   "s": 0.07,
+   "e": 1.565
+  },
+  "v3_n02": {
+   "s": 1.715,
+   "e": 2.63
+  },
+  "v3_n03": {
+   "s": 2.78,
+   "e": 5.32
+  },
+  "v3_d01": {
+   "s": 5.5,
+   "e": 6.965
+  },
+  "v3_t01": {
+   "s": 7.165,
+   "e": 8.665
+  },
+  "v3_n04": {
+   "s": 8.815,
+   "e": 11.395
+  },
+  "v3_n05": {
+   "s": 11.545,
+   "e": 13.715
+  },
+  "v3_n06": {
+   "s": 14.115,
+   "e": 15.0
+  },
+  "v3_n07": {
+   "s": 15.25,
+   "e": 16.95
+  },
+  "v3_n08": {
+   "s": 17.45,
+   "e": 19.195
+  },
+  "v3_t02": {
+   "s": 19.345,
+   "e": 20.37
+  },
+  "v3_d02": {
+   "s": 21.97,
+   "e": 23.395
+  },
+  "v3_t03": {
+   "s": 24.145,
+   "e": 25.475
+  },
+  "v3_n09": {
+   "s": 25.825,
+   "e": 26.67
+  },
+  "v3_t04": {
+   "s": 27.12,
+   "e": 28.675
+  },
+  "v3_n10": {
+   "s": 29.625,
+   "e": 30.595
+  },
+  "v3_t05": {
+   "s": 31.695,
+   "e": 33.655
+  },
+  "v3_t06": {
+   "s": 36.435,
+   "e": 37.88
+  },
+  "v3_n11": {
+   "s": 38.53,
+   "e": 42.69
+  },
+  "v3_r01": {
+   "s": 42.465,
+   "e": 43.795
+  },
+  "v3_n12": {
+   "s": 43.875,
+   "e": 45.905
+  },
+  "v3_n13": {
+   "s": 46.055,
+   "e": 52.96
+  },
+  "v3_n14": {
+   "s": 53.52,
+   "e": 56.26
+  },
+  "v3_d03": {
+   "s": 57.01,
+   "e": 59.26
+  },
+  "v3_k01": {
+   "s": 60.04,
+   "e": 61.39
+  },
+  "v3_t07": {
+   "s": 62.12,
+   "e": 63.65
+  }
+ },
+ "melody": {
+  "start": 43.875,
+  "phrase": 5.5,
+  "pulse": 0.4583333333333333,
+  "end": 54.875,
+  "balls": [
+   46.16666666666667,
+   46.625,
+   47.083333333333336,
+   47.54166666666667,
+   48.0,
+   48.458333333333336
+  ],
+  "one": 52.58333333333333,
+  "fill_b": [
+   50.1,
+   52.08333333333333
+  ]
+ },
+ "music_dead_stop": 63.23,
+ "doors": {
+  "plant_start": 20.37,
+  "plant_meet": 21.67,
+  "plant_lamps": 21.92,
+  "plant_glide": 23.47,
+  "payoff_start": 56.66,
+  "payoff_meet": 57.959999999999994,
+  "payoff_lamps": 58.26,
+  "payoff_glide": 59.345
+ },
+ "cues": [
+  {
+   "id": "s01.arm",
+   "t": 0.067,
+   "frame": 2,
+   "anchor": "s01.a + 0.067",
+   "sound": "fwip",
+   "what": "his straight-arm point locks out (frame 2); the snap's air starts in the film's last frames"
+  },
+  {
+   "id": "s01.click0",
+   "t": 0.067,
+   "frame": 2,
+   "anchor": "s01.a + 0.067",
+   "sound": "rail_click",
+   "what": "ONE crisp rail joint under the leaving car, with the arm and the word 'His'"
+  },
+  {
+   "id": "s01.click1",
+   "t": 0.6,
+   "frame": 18,
+   "anchor": "s01.a + 0.60",
+   "sound": "rail_click",
+   "what": "the next bogie on the joint (the clicks speed up)"
+  },
+  {
+   "id": "s01.click2",
+   "t": 1.12,
+   "frame": 34,
+   "anchor": "s01.a + 1.12",
+   "sound": "rail_click",
+   "what": "rail joint, faster"
+  },
+  {
+   "id": "s01.crow",
+   "t": 1.3,
+   "frame": 39,
+   "anchor": "s01.a + 1.30",
+   "sound": "crow",
+   "what": "a far crow over the evening platform"
+  },
+  {
+   "id": "s01.click3",
+   "t": 1.58,
+   "frame": 47,
+   "anchor": "s01.a + 1.58",
+   "sound": "rail_click",
+   "what": "rail joint, the suitcase has left the frame; car after car streams past"
+  },
+  {
+   "id": "s01.click4",
+   "t": 1.98,
+   "frame": 59,
+   "anchor": "s01.a + 1.98",
+   "sound": "rail_click",
+   "what": "rail joint"
+  },
+  {
+   "id": "s01.click5",
+   "t": 2.34,
+   "frame": 70,
+   "anchor": "s01.a + 2.34",
+   "sound": "rail_click",
+   "what": "rail joint (he looks at us, blank)"
+  },
+  {
+   "id": "s01.click6",
+   "t": 2.66,
+   "frame": 80,
+   "anchor": "s01.a + 2.66",
+   "sound": "rail_click",
+   "what": "rail joint, the train's tail going"
+  },
+  {
+   "id": "s02.swing",
+   "t": 4.267,
+   "frame": 128,
+   "anchor": "EVT('phoneSwing', v3_n03:at.s - 0.02)",
+   "sound": "phone_swing",
+   "what": "he swings his phone round toward the cab glass (on 'at a')"
+  },
+  {
+   "id": "s03.rise",
+   "t": 4.687,
+   "frame": 141,
+   "anchor": "s03.a + 0.02",
+   "sound": "cloth",
+   "what": "the white glove rising (40 % up at the cut): a cotton rustle"
+  },
+  {
+   "id": "s03.reach",
+   "t": 5.4,
+   "frame": 162,
+   "anchor": "CAST('driver', 'call', 'signal', 'out', v3_d01.s - 0.05)",
+   "sound": "fwip",
+   "what": "the arm reaches full stretch, the fingertip beside the green lamp"
+  },
+  {
+   "id": "s03b.hum",
+   "t": 5.467,
+   "frame": 164,
+   "anchor": "s03b.a",
+   "sound": "cab_hum",
+   "what": "the instrument panel's hum, close to his face (the cab bed runs on through the cut)"
+  },
+  {
+   "id": "s03b.ear",
+   "t": 5.815,
+   "frame": 174,
+   "anchor": "CAST('driver', 'call', 'signal', 'ear', v3_d01:signal.e + 0.04)",
+   "sound": "cloth",
+   "what": "the hand draws back beside his right ear on the held beat"
+  },
+  {
+   "id": "s03b.snap",
+   "t": 6.448,
+   "frame": 193,
+   "anchor": "CAST('driver', 'call', 'signal', 'snap', v3_d01:green.s + 0.03)",
+   "sound": "fwip",
+   "what": "the white glove SNAPS out toward the lens on 'green!' (the signature sound: the sharpest sound of the opening after the voice)"
+  },
+  {
+   "id": "s04.jab",
+   "t": 7.43,
+   "frame": 223,
+   "anchor": "CAST('tourist', 'jab', 'pointing#1-3', 'f0', v3_t01:pointing.s - 0.05) + 0.03",
+   "sound": "cloth",
+   "what": "his finger jabs toward the glass and stops short (no tap)"
+  },
+  {
+   "id": "s05.creep",
+   "t": 10.41,
+   "frame": 312,
+   "anchor": "EVT('bagCreep', v3_n04.s + 1.45)",
+   "sound": "suit_roll",
+   "what": "the train picks up speed: the yellow suitcase creeps backward on its spinner wheels"
+  },
+  {
+   "id": "s05.hook",
+   "t": 10.847,
+   "frame": 325,
+   "anchor": "CAST('tourist', 'hook', 'behind-4', 'lock', v3_n04.s + 2.35)",
+   "sound": "sneaker_hook",
+   "what": "without looking, his sneaker hooks a wheel"
+  },
+  {
+   "id": "s05.drag",
+   "t": 11.013,
+   "frame": 330,
+   "anchor": "CAST('tourist', 'hook', 'behind-4', 'f0', v3_n04.s + 2.05) + 14 / 30",
+   "sound": "suit_roll",
+   "what": "he drags it back with his foot"
+  },
+  {
+   "id": "s05.settle",
+   "t": 11.38,
+   "frame": 341,
+   "anchor": "CAST('tourist', 'hook', 'behind-4', 'f0', v3_n04.s + 2.05) + 25 / 30",
+   "sound": "suit_stop",
+   "what": "it settles at his knee"
+  },
+  {
+   "id": "s06.point",
+   "t": 11.99,
+   "frame": 360,
+   "anchor": "CAST('driver', 'call', 'checks', 'out', s06.a + 0.30)",
+   "sound": "fwip",
+   "what": "the glove points at the speedometer (soft, foreground, no call)"
+  },
+  {
+   "id": "s06.brake",
+   "t": 12.49,
+   "frame": 375,
+   "anchor": "EVT('brake', v3_n05.s + 1.40)",
+   "sound": "brake_onset",
+   "what": "the train brakes"
+  },
+  {
+   "id": "s06.roll",
+   "t": 12.54,
+   "frame": 376,
+   "anchor": "EVT('brake', v3_n05.s + 1.40) + 0.05",
+   "sound": "suit_roll",
+   "what": "the suitcase rolls forward into the bottom of the window"
+  },
+  {
+   "id": "s06.cap",
+   "t": 12.557,
+   "frame": 377,
+   "anchor": "CAST('kid', 'capDrop', 'finger#2+3', 'lock', v3_n05.s + 2.03)",
+   "sound": "cap_drop",
+   "what": "the jolt drops his too-big cap over his eyes"
+  },
+  {
+   "id": "s06.ear",
+   "t": 12.61,
+   "frame": 378,
+   "anchor": "CAST('driver', 'call', 'checks', 'ear', s06.a + 0.72)",
+   "sound": "cloth",
+   "what": "the glove goes to the ear"
+  },
+  {
+   "id": "s06.capup",
+   "t": 12.823,
+   "frame": 385,
+   "anchor": "CAST('kid', 'capDrop', 'finger#2+3', 'push', v3_n05.s + 2.42)",
+   "sound": "cloth",
+   "what": "one finger pushes the cap up"
+  },
+  {
+   "id": "s06.tok",
+   "t": 12.91,
+   "frame": 387,
+   "anchor": "EVT('bagBump', v3_n05.s + 1.95)",
+   "sound": "suit_bump",
+   "what": "it bumps the wall under the boy: a soft 'tok'"
+  },
+  {
+   "id": "s06.snap",
+   "t": 13.243,
+   "frame": 397,
+   "anchor": "CAST('driver', 'call', 'checks', 'snap', s06.a + 1.10)",
+   "sound": "fwip",
+   "what": "the glove snaps"
+  },
+  {
+   "id": "s06.copy",
+   "t": 13.443,
+   "frame": 403,
+   "anchor": "CAST('kid', 'call', 'checks', 'snap', s06.a + 1.55)",
+   "sound": "fwip",
+   "what": "behind the glass the boy copies it all a beat late: his first full copy"
+  },
+  {
+   "id": "s07.pa",
+   "t": 14.117,
+   "frame": 424,
+   "anchor": "s07.a + 0.25",
+   "sound": "pa_murmur",
+   "what": "a soft wordless announcement far down the platform"
+  },
+  {
+   "id": "s07.stop",
+   "t": 14.167,
+   "frame": 425,
+   "anchor": "EVT('stopA', s07.a + 0.14)",
+   "sound": "arrive_stop",
+   "what": "the train stops with a small jerk; the air lets go"
+  },
+  {
+   "id": "s07.chime",
+   "t": 14.667,
+   "frame": 440,
+   "anchor": "EVT('stopA', s07.a + 0.14) + 0.50",
+   "sound": "door_chime",
+   "what": "the door chime (ours: two soft tones, twice)"
+  },
+  {
+   "id": "s07.steps",
+   "t": 15.167,
+   "frame": 455,
+   "anchor": "s07.a + 1.30",
+   "sound": "steps_off",
+   "what": "commuters step off"
+  },
+  {
+   "id": "s07.nudge",
+   "t": 15.25,
+   "frame": 458,
+   "anchor": "v3_n07.s",
+   "sound": "suit_nudge",
+   "what": "a passing briefcase nudges the yellow suitcase"
+  },
+  {
+   "id": "s07.trundle",
+   "t": 15.37,
+   "frame": 461,
+   "anchor": "v3_n07.s + 0.12",
+   "sound": "suit_roll",
+   "what": "it trundles after the people on its spinner wheels, straight for the open door"
+  },
+  {
+   "id": "s07.roller",
+   "t": 15.417,
+   "frame": 463,
+   "anchor": "s07.a + 1.55",
+   "sound": "suit_roll",
+   "what": "a commuter's own roller bag on the platform tiles (a suitcase recorded in a Tokyo station)"
+  },
+  {
+   "id": "s07.open",
+   "t": 16.167,
+   "frame": 485,
+   "anchor": "EVT('stopA', s07.a + 0.14) + 0.50 + 1.5",
+   "sound": "door_slide",
+   "what": "the doors slide open (1.5 s, 0.5 s after the stop: the platform set's door cycle)"
+  },
+  {
+   "id": "s07.strip",
+   "t": 16.767,
+   "frame": 503,
+   "anchor": "s08.a - 0.20",
+   "sound": "threshold",
+   "what": "its front wheels reach the yellow floor strip"
+  },
+  {
+   "id": "s08.snap",
+   "t": 17.0,
+   "frame": 510,
+   "anchor": "CAST('kid', 'point', '@s08-3', 'lock', s08.a + 0.38)",
+   "sound": "fwip",
+   "what": "the boy snaps the full driver's point at the suitcase"
+  },
+  {
+   "id": "s08.plate",
+   "t": 17.447,
+   "frame": 523,
+   "anchor": "s08.a + 0.48",
+   "sound": "threshold",
+   "what": "the wheels creep onto the metal threshold"
+  },
+  {
+   "id": "s08.step1",
+   "t": 17.98,
+   "frame": 539,
+   "anchor": "v3_n08:saves.s - 0.50",
+   "sound": "step",
+   "what": "two quick steps (1)"
+  },
+  {
+   "id": "s08.step2",
+   "t": 18.21,
+   "frame": 546,
+   "anchor": "v3_n08:saves.s - 0.27",
+   "sound": "step",
+   "what": "two quick steps (2), the lunge"
+  },
+  {
+   "id": "s08.catch",
+   "t": 18.48,
+   "frame": 554,
+   "anchor": "v3_n08:saves.s",
+   "sound": "suit_catch",
+   "what": "he catches the handle, two wheels over the gap (on 'saves')"
+  },
+  {
+   "id": "s08.haul",
+   "t": 18.74,
+   "frame": 562,
+   "anchor": "v3_n08:saves.s + 0.26",
+   "sound": "threshold",
+   "what": "he hauls it in over the plate"
+  },
+  {
+   "id": "s08.down",
+   "t": 19.165,
+   "frame": 575,
+   "anchor": "v3_n08.e - 0.03",
+   "sound": "suit_bump",
+   "what": "the suitcase back on the car floor"
+  },
+  {
+   "id": "s08.wag",
+   "t": 19.208,
+   "frame": 576,
+   "anchor": "CAST('tourist', 'wag', 'bad-5', 'f0', v3_t02:bad.s - 0.15) + 0.03",
+   "sound": "cloth",
+   "what": "he wags a finger at the suitcase like at a puppy"
+  },
+  {
+   "id": "s08.chime",
+   "t": 20.37,
+   "frame": 611,
+   "anchor": "EVT('chimeA', v3_t02.e)",
+   "sound": "door_chime",
+   "what": "THE PLANT: the chime starts on the boy's nod, with the doors"
+  },
+  {
+   "id": "s09.walk1",
+   "t": 21.317,
+   "frame": 640,
+   "anchor": "s09.a + 0.55 + 0.00",
+   "sound": "step",
+   "what": "a passer-by on the platform tiles, far (STATION's walkers)"
+  },
+  {
+   "id": "s09.run",
+   "t": 21.55,
+   "frame": 646,
+   "anchor": "EVT('chimeA', v3_t02.e) + 1.18",
+   "sound": "run_stop",
+   "what": "the late salaryman stops short and gives up"
+  },
+  {
+   "id": "s08.doors",
+   "t": 21.67,
+   "frame": 650,
+   "anchor": "EVT('chimeA', v3_t02.e) + 1.3",
+   "sound": "door_slide",
+   "what": "THE PLANT: both door leaves slide in and MEET (rubber thump)"
+  },
+  {
+   "id": "s09.walk2",
+   "t": 21.837,
+   "frame": 655,
+   "anchor": "s09.a + 0.55 + 0.52",
+   "sound": "step",
+   "what": "a passer-by on the platform tiles, far (STATION's walkers)"
+  },
+  {
+   "id": "s09.lamps",
+   "t": 21.92,
+   "frame": 658,
+   "anchor": "EVT('lampsOutA', EVT('chimeA', v3_t02.e) + 1.55)",
+   "sound": "relay_click",
+   "what": "the red car-side lamps go out: a small relay click"
+  },
+  {
+   "id": "s09.walk3",
+   "t": 22.357,
+   "frame": 671,
+   "anchor": "s09.a + 0.55 + 1.04",
+   "sound": "step",
+   "what": "a passer-by on the platform tiles, far (STATION's walkers)"
+  },
+  {
+   "id": "s09.walk4",
+   "t": 22.877,
+   "frame": 686,
+   "anchor": "s09.a + 0.55 + 1.56",
+   "sound": "step",
+   "what": "a passer-by on the platform tiles, far (STATION's walkers)"
+  },
+  {
+   "id": "s09.walk5",
+   "t": 23.397,
+   "frame": 702,
+   "anchor": "s09.a + 0.55 + 2.08",
+   "sound": "step",
+   "what": "a passer-by on the platform tiles, far (STATION's walkers)"
+  },
+  {
+   "id": "s09.depart",
+   "t": 23.47,
+   "frame": 704,
+   "anchor": "EVT('glideA', v3_d02.e + 0.075)",
+   "sound": "depart",
+   "what": "the brake lets go and the train starts to glide (the motor's first notes)"
+  },
+  {
+   "id": "s10.handle",
+   "t": 24.025,
+   "frame": 721,
+   "anchor": "v3_t03.s - 0.12",
+   "sound": "suit_stop",
+   "what": "his other hand on the suitcase handle"
+  },
+  {
+   "id": "s11.chime",
+   "t": 25.767,
+   "frame": 773,
+   "anchor": "EVT('doorsOpenB', s11.a + 0.10)",
+   "sound": "door_chime",
+   "what": "the door chime"
+  },
+  {
+   "id": "s11.pa",
+   "t": 25.867,
+   "frame": 776,
+   "anchor": "s11.a + 0.2",
+   "sound": "pa_murmur",
+   "what": "a wordless announcement, far"
+  },
+  {
+   "id": "s11.wheel",
+   "t": 26.287,
+   "frame": 789,
+   "anchor": "s11.a + 0.62",
+   "sound": "suit_roll",
+   "what": "he wheels the suitcase to the doorway"
+  },
+  {
+   "id": "s11.park",
+   "t": 27.05,
+   "frame": 812,
+   "anchor": "v3_t04.s - 0.07",
+   "sound": "suit_stop",
+   "what": "he parks it on the yellow strip, just inside the doorway ('Stay.')"
+  },
+  {
+   "id": "s11.pats",
+   "t": 27.253,
+   "frame": 818,
+   "anchor": "CAST('tourist', 'pat', 'stay#1-4', 'lock', v3_t04:stay.e + 0.02)",
+   "sound": "pats",
+   "what": "two pats on its handle, like a dog"
+  },
+  {
+   "id": "s11.open",
+   "t": 27.267,
+   "frame": 818,
+   "anchor": "EVT('doorsOpenB', s11.a + 0.10) + 1.5",
+   "sound": "door_slide",
+   "what": "the doors open (1.5 s, from EV.doorsOpenB, just after the cut)"
+  },
+  {
+   "id": "s11.hop1",
+   "t": 27.98,
+   "frame": 839,
+   "anchor": "v3_t04:right.s - 0.02",
+   "sound": "step",
+   "what": "he skips out (take-off)"
+  },
+  {
+   "id": "s11.hop2",
+   "t": 28.367,
+   "frame": 851,
+   "anchor": "CAST('tourist', 'hop', 'right#1', 'lock', v3_t04.e + 0.06)",
+   "sound": "step",
+   "what": "he lands on the platform"
+  },
+  {
+   "id": "s11.hop3",
+   "t": 28.667,
+   "frame": 860,
+   "anchor": "CAST('tourist', 'hop', 'right#1', 'lock', v3_t04.e + 0.06) + 0.30",
+   "sound": "step",
+   "what": "one more step away"
+  },
+  {
+   "id": "s12.tag",
+   "t": 29.353,
+   "frame": 881,
+   "anchor": "s12.a + 0.22",
+   "sound": "tag_flutter",
+   "what": "the red tag on the handle ticks in the air"
+  },
+  {
+   "id": "s12.walk1",
+   "t": 29.383,
+   "frame": 882,
+   "anchor": "s12.a + 0.25 + 0.00",
+   "sound": "step",
+   "what": "a passer-by far down the platform (the bag alone)"
+  },
+  {
+   "id": "s12.walk2",
+   "t": 29.933,
+   "frame": 898,
+   "anchor": "s12.a + 0.25 + 0.55",
+   "sound": "step",
+   "what": "a passer-by far down the platform (the bag alone)"
+  },
+  {
+   "id": "s12.walk3",
+   "t": 30.483,
+   "frame": 914,
+   "anchor": "s12.a + 0.25 + 1.10",
+   "sound": "step",
+   "what": "a passer-by far down the platform (the bag alone)"
+  },
+  {
+   "id": "s12.crow",
+   "t": 30.775,
+   "frame": 923,
+   "anchor": "v3_n10.e + 0.18",
+   "sound": "crow",
+   "what": "a crow, far (the bag alone)"
+  },
+  {
+   "id": "s12.walk4",
+   "t": 31.033,
+   "frame": 931,
+   "anchor": "s12.a + 0.25 + 1.65",
+   "sound": "step",
+   "what": "a passer-by far down the platform (the bag alone)"
+  },
+  {
+   "id": "s12.tag2",
+   "t": 31.145,
+   "frame": 934,
+   "anchor": "v3_n10.e + 0.55",
+   "sound": "tag_flutter",
+   "what": "the tag again"
+  },
+  {
+   "id": "s13.hum",
+   "t": 31.433,
+   "frame": 943,
+   "anchor": "s13.a",
+   "sound": "vending",
+   "what": "the drinks machine's compressor hum, close"
+  },
+  {
+   "id": "s13.arm",
+   "t": 31.663,
+   "frame": 950,
+   "anchor": "CAST('tourist', 'call', 'vending', 'out', v3_t05:vending.s + 0.20) - 0.17",
+   "sound": "cloth",
+   "what": "his arm goes out stiffly at the machine"
+  },
+  {
+   "id": "s13.walk1",
+   "t": 31.733,
+   "frame": 952,
+   "anchor": "s13.a + 0.30 + 0.00",
+   "sound": "step",
+   "what": "a passer-by behind the machines, far"
+  },
+  {
+   "id": "s13.hip",
+   "t": 31.833,
+   "frame": 955,
+   "anchor": "s13.a + 0.40",
+   "sound": "cloth",
+   "what": "his hip swing as he plays the guard (CAST's LIFE block)"
+  },
+  {
+   "id": "s13.walk2",
+   "t": 32.283,
+   "frame": 968,
+   "anchor": "s13.a + 0.30 + 0.55",
+   "sound": "step",
+   "what": "a passer-by behind the machines, far"
+  },
+  {
+   "id": "s13.ear",
+   "t": 32.595,
+   "frame": 978,
+   "anchor": "CAST('tourist', 'call', 'vending', 'ear', v3_t05:machine.e + 0.04)",
+   "sound": "cloth",
+   "what": "the hand to the ear on the beat"
+  },
+  {
+   "id": "s13.walk3",
+   "t": 32.833,
+   "frame": 985,
+   "anchor": "s13.a + 0.30 + 1.10",
+   "sound": "step",
+   "what": "a passer-by behind the machines, far"
+  },
+  {
+   "id": "s13.bob",
+   "t": 32.895,
+   "frame": 987,
+   "anchor": "CAST('tourist', 'call', 'vending', 'ear', v3_t05:machine.e + 0.04) + 0.30",
+   "sound": "cloth",
+   "what": "a head bob on the held beat"
+  },
+  {
+   "id": "s13.roll",
+   "t": 32.988,
+   "frame": 990,
+   "anchor": "CAST('tourist', 'call', 'vending', 'snap', v3_t05:check.s + 0.03) - 0.24",
+   "sound": "cloth",
+   "what": "he rolls his whole body into the snap"
+  },
+  {
+   "id": "s13.snap",
+   "t": 33.228,
+   "frame": 997,
+   "anchor": "CAST('tourist', 'call', 'vending', 'snap', v3_t05:check.s + 0.03)",
+   "sound": "fwip",
+   "what": "the snap on 'check!' (his floppy sleeve: bigger and sillier than the driver's)"
+  },
+  {
+   "id": "s13.walk4",
+   "t": 33.383,
+   "frame": 1002,
+   "anchor": "s13.a + 0.30 + 1.65",
+   "sound": "step",
+   "what": "a passer-by behind the machines, far"
+  },
+  {
+   "id": "s14.hum",
+   "t": 34.0,
+   "frame": 1020,
+   "anchor": "s14.a",
+   "sound": "vending",
+   "what": "the machine, a few steps away now"
+  },
+  {
+   "id": "s14.step",
+   "t": 34.1,
+   "frame": 1023,
+   "anchor": "s14.a + 0.10",
+   "sound": "step",
+   "what": "the boy steps up beside the suitcase"
+  },
+  {
+   "id": "s14.snap",
+   "t": 34.2,
+   "frame": 1026,
+   "anchor": "CAST('kid', 'urgent', '@s14+2', 'lock', s14.a + 0.33)",
+   "sound": "fwip",
+   "what": "the boy's own small, higher 'fwip': the full point, mouth shut"
+  },
+  {
+   "id": "s15.turn",
+   "t": 35.18,
+   "frame": 1055,
+   "anchor": "s15.a + 0.08",
+   "sound": "cloth",
+   "what": "the tourist turns his whole head"
+  },
+  {
+   "id": "s15.guns",
+   "t": 36.335,
+   "frame": 1090,
+   "anchor": "CAST('tourist', 'guns', 'this-8', 'lock', v3_t06.s - 0.10)",
+   "sound": "fwip",
+   "what": "he points back at the boy with both index fingers"
+  },
+  {
+   "id": "s15.back",
+   "t": 38.0,
+   "frame": 1140,
+   "anchor": "v3_t06.e + 0.12",
+   "sound": "step",
+   "what": "he turns back to his phone"
+  },
+  {
+   "id": "s16a.hum",
+   "t": 38.333,
+   "frame": 1150,
+   "anchor": "s16a.a",
+   "sound": "vending",
+   "what": "the machine behind him"
+  },
+  {
+   "id": "s16a.chirp",
+   "t": 38.383,
+   "frame": 1152,
+   "anchor": "s16a.a + 0.05",
+   "sound": "guide_chirp",
+   "what": "the platform's guide signal far away (our own electronic chirp)"
+  },
+  {
+   "id": "s16a.giggle1",
+   "t": 38.533,
+   "frame": 1156,
+   "anchor": "CAST('tourist', 'laugh', '@s16a+6', 'f0', s16a.a + 0.20)",
+   "sound": "giggle",
+   "what": "he GIGGLES at his clip across the platform (CAST: laugh @s16a+6..36): his own unused take, far and dull, under the narrator"
+  },
+  {
+   "id": "s16a.roller",
+   "t": 39.033,
+   "frame": 1171,
+   "anchor": "s16a.a + 0.7",
+   "sound": "suit_roll",
+   "what": "a roller bag passes on the platform tiles behind him (recorded in a Tokyo station)"
+  },
+  {
+   "id": "s16a.shake",
+   "t": 39.667,
+   "frame": 1190,
+   "anchor": "s16a.a + 40 / 30",
+   "sound": "cloth",
+   "what": "he shakes his head at his own clip, grinning (CAST: shake @s16a+40)"
+  },
+  {
+   "id": "s16a.walk1",
+   "t": 39.933,
+   "frame": 1198,
+   "anchor": "s16a.a + 1.60 + 0.00",
+   "sound": "step",
+   "what": "a second passer-by on the tiles, the other side"
+  },
+  {
+   "id": "s16a.blip",
+   "t": 40.0,
+   "frame": 1200,
+   "anchor": "s16a.a + 50 / 30",
+   "sound": "lamp_bip",
+   "what": "a tiny phone notification blip as he starts scrolling (thin, from his phone)"
+  },
+  {
+   "id": "s16a.tap1",
+   "t": 40.2,
+   "frame": 1206,
+   "anchor": "s16a.a + 56 / 30",
+   "sound": "button",
+   "what": "his thumb taps the phone glass (scrolling, @s16a+50..92)"
+  },
+  {
+   "id": "s16a.walk2",
+   "t": 40.433,
+   "frame": 1213,
+   "anchor": "s16a.a + 1.60 + 0.50",
+   "sound": "step",
+   "what": "a second passer-by on the tiles, the other side"
+  },
+  {
+   "id": "s16a.tap2",
+   "t": 40.567,
+   "frame": 1217,
+   "anchor": "s16a.a + 67 / 30",
+   "sound": "button",
+   "what": "thumb tap"
+  },
+  {
+   "id": "s16a.tap3",
+   "t": 40.9,
+   "frame": 1227,
+   "anchor": "s16a.a + 77 / 30",
+   "sound": "button",
+   "what": "thumb tap"
+  },
+  {
+   "id": "s16a.walk3",
+   "t": 40.933,
+   "frame": 1228,
+   "anchor": "s16a.a + 1.60 + 1.00",
+   "sound": "step",
+   "what": "a second passer-by on the tiles, the other side"
+  },
+  {
+   "id": "s16a.step1",
+   "t": 41.065,
+   "frame": 1232,
+   "anchor": "v3_n11:it.e + 0.0",
+   "sound": "step",
+   "what": "a commuter passing behind him"
+  },
+  {
+   "id": "s16a.tap4",
+   "t": 41.267,
+   "frame": 1238,
+   "anchor": "s16a.a + 88 / 30",
+   "sound": "button",
+   "what": "thumb tap"
+  },
+  {
+   "id": "s16a.giggle2",
+   "t": 41.4,
+   "frame": 1242,
+   "anchor": "CAST('tourist', 'laugh', '@s16a+92', 'f0', s16a.a + 3.07)",
+   "sound": "giggle",
+   "what": "he giggles again to the cut (CAST: laugh @s16a+92)"
+  },
+  {
+   "id": "s16a.walk4",
+   "t": 41.433,
+   "frame": 1243,
+   "anchor": "s16a.a + 1.60 + 1.50",
+   "sound": "step",
+   "what": "a second passer-by on the tiles, the other side"
+  },
+  {
+   "id": "s16a.step2",
+   "t": 41.545,
+   "frame": 1246,
+   "anchor": "v3_n11:it.e + 0.48",
+   "sound": "step",
+   "what": "a commuter passing"
+  },
+  {
+   "id": "s16a.step3",
+   "t": 42.035,
+   "frame": 1261,
+   "anchor": "v3_n11:it.e + 0.97",
+   "sound": "step",
+   "what": "a commuter passing"
+  },
+  {
+   "id": "s16b.wiggle",
+   "t": 42.617,
+   "frame": 1278,
+   "anchor": "CAST('tourist', 'wag', \"what's#2-4\", 'f0', v3_r01.s + 0.12) + 0.03",
+   "sound": "cloth",
+   "what": "he wiggles his finger along with his own voice from the phone"
+  },
+  {
+   "id": "s16b.crow",
+   "t": 43.245,
+   "frame": 1297,
+   "anchor": "v3_r01.e - 0.55",
+   "sound": "crow",
+   "what": "a crow, very far"
+  },
+  {
+   "id": "s16b.pa_on",
+   "t": 43.785,
+   "frame": 1314,
+   "anchor": "v3_n12.s - 0.09",
+   "sound": "relay_click",
+   "what": "the platform's speakers click on, a breath before the melody"
+  },
+  {
+   "id": "s17.press01",
+   "t": 45.32,
+   "frame": 1360,
+   "anchor": "45.32",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.bar",
+   "t": 45.32,
+   "frame": 1360,
+   "anchor": "45.32",
+   "sound": "bar_fill",
+   "what": "the EYE bar fills to its end mark (from her first press to the sixth tink)"
+  },
+  {
+   "id": "s17.press02",
+   "t": 45.502,
+   "frame": 1365,
+   "anchor": "45.50225490196078",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press03",
+   "t": 45.685,
+   "frame": 1371,
+   "anchor": "45.68450980392157",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press04",
+   "t": 45.867,
+   "frame": 1376,
+   "anchor": "45.86676470588235",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press05",
+   "t": 46.049,
+   "frame": 1381,
+   "anchor": "46.049019607843135",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.ball1",
+   "t": 46.167,
+   "frame": 1385,
+   "anchor": "46.16666666666667",
+   "sound": "jar_ball",
+   "what": "red ball 1 of 6 drops into the EYE jar, on the melody's pulse"
+  },
+  {
+   "id": "s17.press06",
+   "t": 46.231,
+   "frame": 1387,
+   "anchor": "46.231274509803924",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press07",
+   "t": 46.414,
+   "frame": 1392,
+   "anchor": "46.413529411764706",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press08",
+   "t": 46.596,
+   "frame": 1398,
+   "anchor": "46.59578431372549",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.ball2",
+   "t": 46.625,
+   "frame": 1399,
+   "anchor": "46.625",
+   "sound": "jar_ball",
+   "what": "red ball 2 of 6 drops into the EYE jar, on the melody's pulse"
+  },
+  {
+   "id": "s17.press09",
+   "t": 46.778,
+   "frame": 1403,
+   "anchor": "46.77803921568628",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press10",
+   "t": 46.96,
+   "frame": 1409,
+   "anchor": "46.96029411764706",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.ball3",
+   "t": 47.083,
+   "frame": 1412,
+   "anchor": "47.083333333333336",
+   "sound": "jar_ball",
+   "what": "red ball 3 of 6 drops into the EYE jar, on the melody's pulse"
+  },
+  {
+   "id": "s17.press11",
+   "t": 47.143,
+   "frame": 1414,
+   "anchor": "47.14254901960785",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press12",
+   "t": 47.325,
+   "frame": 1420,
+   "anchor": "47.32480392156863",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press13",
+   "t": 47.507,
+   "frame": 1425,
+   "anchor": "47.50705882352941",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.ball4",
+   "t": 47.542,
+   "frame": 1426,
+   "anchor": "47.54166666666667",
+   "sound": "jar_ball",
+   "what": "red ball 4 of 6 drops into the EYE jar, on the melody's pulse"
+  },
+  {
+   "id": "s17.press14",
+   "t": 47.689,
+   "frame": 1431,
+   "anchor": "47.6893137254902",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press15",
+   "t": 47.872,
+   "frame": 1436,
+   "anchor": "47.87156862745098",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.ball5",
+   "t": 48.0,
+   "frame": 1440,
+   "anchor": "48.0",
+   "sound": "jar_ball",
+   "what": "red ball 5 of 6 drops into the EYE jar, on the melody's pulse"
+  },
+  {
+   "id": "s17.press16",
+   "t": 48.054,
+   "frame": 1442,
+   "anchor": "48.053823529411765",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press17",
+   "t": 48.236,
+   "frame": 1447,
+   "anchor": "48.236078431372555",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.press18",
+   "t": 48.418,
+   "frame": 1453,
+   "anchor": "48.41833333333334",
+   "sound": "button",
+   "what": "she only looks and presses, a fast run (the picture's 18 presses)"
+  },
+  {
+   "id": "s17.ball6",
+   "t": 48.458,
+   "frame": 1454,
+   "anchor": "48.458333333333336",
+   "sound": "jar_ball",
+   "what": "red ball 6 of 6 drops into the EYE jar, on the melody's pulse (it lands on 'looking...')"
+  },
+  {
+   "id": "s19.bar",
+   "t": 50.1,
+   "frame": 1503,
+   "anchor": "50.1",
+   "sound": "bar_fill",
+   "what": "the FINGER bar fills to the same end mark"
+  },
+  {
+   "id": "s19.point",
+   "t": 50.27,
+   "frame": 1508,
+   "anchor": "CAST('volunteer', 'call', 'pointed', 'out', v3_n13:pointed.s + 0.02)",
+   "sound": "fwip",
+   "what": "the volunteer points at the lamp"
+  },
+  {
+   "id": "s19.snap",
+   "t": 51.433,
+   "frame": 1543,
+   "anchor": "CAST('volunteer', 'call', 'pointed', 'snap', v3_n13:out.s + 0.03)",
+   "sound": "fwip",
+   "what": "her snap on the call (true rhythm: point, ear, snap)"
+  },
+  {
+   "id": "s19.bubble",
+   "t": 51.453,
+   "frame": 1544,
+   "anchor": "CAST('volunteer', 'call', 'pointed', 'snap', v3_n13:out.s + 0.03) + 0.02",
+   "sound": "bubble_pop",
+   "what": "a speech bubble with a finger icon pops on the snap"
+  },
+  {
+   "id": "s19.press",
+   "t": 51.915,
+   "frame": 1557,
+   "anchor": "v3_n13:loud.e + 0.06",
+   "sound": "button",
+   "what": "she presses the button once"
+  },
+  {
+   "id": "s19.bip",
+   "t": 51.975,
+   "frame": 1559,
+   "anchor": "v3_n13:loud.e + 0.12",
+   "sound": "lamp_bip",
+   "what": "the lamp answers"
+  },
+  {
+   "id": "s19.one",
+   "t": 52.583,
+   "frame": 1577,
+   "anchor": "52.58333333333333",
+   "sound": "jar_ball",
+   "what": "ONE red ball drops into the FINGER jar: a brighter tink (on 'about one', on the pulse)"
+  },
+  {
+   "id": "s20.arm",
+   "t": 53.833,
+   "frame": 1615,
+   "anchor": "CAST('kid', 'point', '@s20+5', 'lock', s20.a + 0.30)",
+   "sound": "fwip",
+   "what": "the boy's arm comes up and points at it once more, mouth shut"
+  },
+  {
+   "id": "s20.tag",
+   "t": 54.667,
+   "frame": 1640,
+   "anchor": "s20.a + 1.30",
+   "sound": "tag_flutter",
+   "what": "the red tag"
+  },
+  {
+   "id": "s21.hum",
+   "t": 55.833,
+   "frame": 1675,
+   "anchor": "s21.a",
+   "sound": "cab_hum",
+   "what": "the held breath: the cab's instrument hum, close (the motor is still; the doors are outside)"
+  },
+  {
+   "id": "s21.point",
+   "t": 55.893,
+   "frame": 1677,
+   "anchor": "s21.a + 0.06",
+   "sound": "cloth",
+   "what": "his white glove settles, pointing at the DARK door pilot lamp"
+  },
+  {
+   "id": "s21.chime",
+   "t": 56.66,
+   "frame": 1700,
+   "anchor": "EVT('chimeB', v3_n14.e + 0.40)",
+   "sound": "door_chime",
+   "what": "the door chime starts OUTSIDE (heard through the cab)"
+  },
+  {
+   "id": "s22.chime",
+   "t": 56.66,
+   "frame": 1700,
+   "anchor": "EVT('chimeB', v3_n14.e + 0.40)",
+   "sound": "door_chime",
+   "what": "the chime, as in the plant"
+  },
+  {
+   "id": "s21.doors",
+   "t": 57.96,
+   "frame": 1739,
+   "anchor": "EVT('chimeB', v3_n14.e + 0.40) + 1.3",
+   "sound": "door_slide",
+   "what": "the doors start with it, unseen"
+  },
+  {
+   "id": "s22.doors",
+   "t": 57.96,
+   "frame": 1739,
+   "anchor": "EVT('chimeB', v3_n14.e + 0.40) + 1.3",
+   "sound": "door_slide",
+   "what": "the doors (already sliding) MEET with the yellow suitcase behind the glass"
+  },
+  {
+   "id": "s22.lamps",
+   "t": 58.26,
+   "frame": 1748,
+   "anchor": "EVT('lampsOutB', EVT('chimeB', v3_n14.e + 0.40) + 1.60)",
+   "sound": "relay_click",
+   "what": "the red car-side lamps go out"
+  },
+  {
+   "id": "s22.pilot",
+   "t": 58.427,
+   "frame": 1753,
+   "anchor": "EVT('lampsOutB', EVT('chimeB', v3_n14.e + 0.40) + 1.60) + 5 / 30",
+   "sound": "relay_click",
+   "what": "the cab's door-closed pilot lamp lights (unseen here, about f1753): a soft relay tick through the car"
+  },
+  {
+   "id": "s22.depart",
+   "t": 59.345,
+   "frame": 1780,
+   "anchor": "EVT('glideB', v3_d03.e + 0.085)",
+   "sound": "depart",
+   "what": "the brake lets go; the train glides, the motor whine RISING, straight through the loop seam into frame 0 and on to the first cut"
+  },
+  {
+   "id": "s23.click1",
+   "t": 59.74,
+   "frame": 1792,
+   "anchor": "v3_k01.s - 0.30",
+   "sound": "rail_click",
+   "what": "the first slow rail joint under the gliding car"
+  },
+  {
+   "id": "s23.arm",
+   "t": 60.122,
+   "frame": 1804,
+   "anchor": "CAST('kid', 'call', 'bag#2', 'out', v3_k01:bag.s + 0.04)",
+   "sound": "fwip",
+   "what": "the boy's arm on 'Bag' (behind the door glass)"
+  },
+  {
+   "id": "s23.snap",
+   "t": 60.988,
+   "frame": 1830,
+   "anchor": "CAST('kid', 'call', 'bag#2', 'snap', v3_k01:check.s + 0.03)",
+   "sound": "fwip",
+   "what": "his snap on 'check!': the tourist's head starts to turn on the word"
+  },
+  {
+   "id": "s23.click2",
+   "t": 61.55,
+   "frame": 1846,
+   "anchor": "v3_k01.e + 0.16",
+   "sound": "rail_click",
+   "what": "rail joint, a little sooner"
+  },
+  {
+   "id": "s24.arm",
+   "t": 62.053,
+   "frame": 1862,
+   "anchor": "CAST('tourist', 'call', 'bag#3', 'out', v3_t07:bag.s + 0.30) - 0.40",
+   "sound": "cloth",
+   "what": "his arm comes up and points (18 frames)"
+  },
+  {
+   "id": "s24.ear",
+   "t": 62.63,
+   "frame": 1879,
+   "anchor": "CAST('tourist', 'call', 'bag#3', 'ear', v3_t07:bag.e + 0.04)",
+   "sound": "cloth",
+   "what": "his hand draws back beside his ear"
+  },
+  {
+   "id": "s24.click",
+   "t": 62.96,
+   "frame": 1889,
+   "anchor": "v3_t07:bag.e + 0.20",
+   "sound": "rail_click",
+   "what": "rail joint, in the beat between 'Bag...' and 'gone.'"
+  }
+ ]
+}

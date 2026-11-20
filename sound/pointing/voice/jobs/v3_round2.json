@@ -1,0 +1,230 @@
+[
+ {
+  "folder": "v3_n0608",
+  "take": "t5",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[flatly] First stop. [alarmed] His suitcase tries to get off... [relieved] and the boy's finger saves it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9425,
+  "prev": "So he checks with a finger and a shout.",
+  "next": "Bad suitcase.",
+  "lines": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0608",
+  "take": "t6",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[calmly] First stop. [alarmed] His suitcase tries to get off... [warmly] and the boy's finger saves it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9426,
+  "prev": "So he checks with a finger and a shout.",
+  "next": "Bad suitcase.",
+  "lines": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0608",
+  "take": "t7",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[deadpan] First stop. [worried] His suitcase tries to get off... [relieved] and the boy's finger saves it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9427,
+  "prev": "So he checks with a finger and a shout.",
+  "next": "Bad suitcase.",
+  "lines": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_n0608",
+  "take": "t8",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[flatly] First stop. His suitcase tries to get off... and the boy's finger saves it.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9428,
+  "prev": "So he checks with a finger and a shout.",
+  "next": "Bad suitcase.",
+  "lines": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t03",
+  "take": "t5",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] What's a finger gonna do?!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9515,
+  "prev": "Doors... closed!",
+  "next": "Second stop.",
+  "lines": [
+   "v3_t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t03",
+  "take": "t6",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[teasing] What's a finger gonna do?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9516,
+  "prev": "Doors... closed!",
+  "next": "Second stop.",
+  "lines": [
+   "v3_t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t03",
+  "take": "t7",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[incredulous] What's a finger gonna do?",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9517,
+  "prev": "Doors... closed!",
+  "next": "Second stop.",
+  "lines": [
+   "v3_t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t03",
+  "take": "t8",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] What's a finger gonna do?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9518,
+  "prev": "Doors... closed!",
+  "next": "Second stop.",
+  "lines": [
+   "v3_t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t6",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. The tourist, laughing at him, will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9476,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t7",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. The tourist, laughing at him, will lose that suitcase.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9477,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t8",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. [dryly] The tourist, laughing at him, will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9478,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t9",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. The tourist, laughing at him, will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9479,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ }
+]

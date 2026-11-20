@@ -1,0 +1,615 @@
+{
+ "file": "briefs/v3/pointing/bible.json",
+ "stage": "decide",
+ "rows": [
+  {
+   "id": "F0",
+   "rule": "script linted (tools/v3/script_lint.py)",
+   "status": "PASS",
+   "detail": "script.lint = 'PASS' (briefs/v3/pointing/SCRIPT.md)"
+  },
+  {
+   "id": "F1",
+   "rule": "voice locked before the build",
+   "status": "WARN",
+   "detail": "not locked yet: timing uses the linter's estimates"
+  },
+  {
+   "id": "F2",
+   "rule": ">= 5 locations (or a reason)",
+   "status": "PASS",
+   "detail": "7 sets (cab, car, jp_platform, kitchen, lab, ny_car, ny_station), 7 place + light states"
+  },
+  {
+   "id": "F3",
+   "rule": "every shot's set is defined",
+   "status": "PASS",
+   "detail": "7 sets"
+  },
+  {
+   "id": "F4",
+   "rule": "a new framing about every 2.5 s",
+   "status": "PASS",
+   "detail": "34 framings over 67.4 s = one per 1.98 s"
+  },
+  {
+   "id": "F5",
+   "rule": "<= 2 comic snaps / whips",
+   "status": "PASS",
+   "detail": "none"
+  },
+  {
+   "id": "F6",
+   "rule": "shots cover the voice",
+   "status": "PASS",
+   "detail": "shots 67.4 s, voice 67.4 s"
+  },
+  {
+   "id": "F7",
+   "rule": "shot ids unique, times in order",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "F8",
+   "rule": "the loop: last frame flows into frame 0",
+   "status": "PASS",
+   "detail": "frame0: s01: the tourist's phone camera full frame (red record dot + | last: s22: the SAME phone UI (timer 00:11) looking down the same k"
+  },
+  {
+   "id": "F9",
+   "rule": "music plan (mood, changes, end)",
+   "status": "PASS",
+   "detail": "curious, crisp and playful: clockwork pizzicato + marimba + a small celesta moti"
+  },
+  {
+   "id": "set:cab",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "interior: the driver's cab of a Tokyo commuter train at golden hour (driver's de"
+  },
+  {
+   "id": "set:car",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "interior: inside the packed front car at evening rush: long green bench seats, s"
+  },
+  {
+   "id": "set:jp_platform",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "WARN",
+   "detail": "surface 'tactile_paving_jp' not in the catalog"
+  },
+  {
+   "id": "set:ny_station",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "WARN",
+   "detail": "surface 'subway_tile' not in the catalog"
+  },
+  {
+   "id": "set:ny_car",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "WARN",
+   "detail": "surface 'brushed_stainless' not in the catalog"
+  },
+  {
+   "id": "set:kitchen",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "interior: a small flat at night: the front door, and right beside it a 2-burner "
+  },
+  {
+   "id": "set:lab",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "interior: a bright, simple railway test lab (no logos): white walls, a big windo"
+  },
+  {
+   "id": "F11",
+   "rule": "camera median >= 0.7 %/f (his 0.72; ours 0.18-0.35)",
+   "status": "PASS",
+   "detail": "0.74 %/f (camSpeedStats(plan)); shots faster than 1 %/f: 15 % of the time (target ~30 %); still: 0 %"
+  },
+  {
+   "id": "K",
+   "rule": "kit names to align / request",
+   "status": "WARN",
+   "detail": "22 names not in a published catalog (see 'requests')"
+  }
+ ],
+ "shots": [
+  {
+   "id": "s01",
+   "dur": 1.37,
+   "framings": 1,
+   "s_per_framing": 1.37,
+   "cam": 0.28,
+   "cam_src": "core",
+   "life": 5,
+   "rig": "golden",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s02",
+   "dur": 4.87,
+   "framings": 2,
+   "s_per_framing": 2.44,
+   "cam": 0.78,
+   "cam_src": "core",
+   "life": 5,
+   "rig": "golden",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s03",
+   "dur": 5.51,
+   "framings": 2,
+   "s_per_framing": 2.75,
+   "cam": 0.78,
+   "cam_src": "core",
+   "life": 5,
+   "rig": "golden",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s04",
+   "dur": 1.74,
+   "framings": 1,
+   "s_per_framing": 1.74,
+   "cam": 0.56,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s05",
+   "dur": 3.49,
+   "framings": 2,
+   "s_per_framing": 1.75,
+   "cam": 1.1,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s06",
+   "dur": 1.0,
+   "framings": 1,
+   "s_per_framing": 1.0,
+   "cam": 0.58,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "shot only 1.0 s (readability; LESSONS 29)"
+   ]
+  },
+  {
+   "id": "s07",
+   "dur": 1.0,
+   "framings": 1,
+   "s_per_framing": 1.0,
+   "cam": 1.14,
+   "cam_src": "core",
+   "life": 5,
+   "rig": "golden",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "shot only 1.0 s (readability; LESSONS 29)",
+    "surface 'tactile_paving_jp' not in the catalog"
+   ]
+  },
+  {
+   "id": "s08",
+   "dur": 2.0,
+   "framings": 1,
+   "s_per_framing": 2.0,
+   "cam": 0.69,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "surface 'tactile_paving_jp' not in the catalog"
+   ]
+  },
+  {
+   "id": "s09",
+   "dur": 2.49,
+   "framings": 1,
+   "s_per_framing": 2.49,
+   "cam": 0.91,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "surface 'tactile_paving_jp' not in the catalog"
+   ]
+  },
+  {
+   "id": "s10",
+   "dur": 1.75,
+   "framings": 1,
+   "s_per_framing": 1.75,
+   "cam": 0.7,
+   "cam_src": "core",
+   "life": 5,
+   "rig": "nightPractical",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "surface 'tactile_domes_us' not in the catalog"
+   ]
+  },
+  {
+   "id": "s11",
+   "dur": 2.87,
+   "framings": 1,
+   "s_per_framing": 2.87,
+   "cam": 0.69,
+   "cam_src": "core",
+   "life": 5,
+   "rig": "nightPractical",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "surface 'brushed_stainless' not in the catalog"
+   ]
+  },
+  {
+   "id": "s12",
+   "dur": 4.0,
+   "framings": 2,
+   "s_per_framing": 2.0,
+   "cam": 0.71,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "nightPractical",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "surface 'subway_tile' not in the catalog",
+    "surface 'brushed_stainless' not in the catalog"
+   ]
+  },
+  {
+   "id": "s13",
+   "dur": 2.0,
+   "framings": 1,
+   "s_per_framing": 2.0,
+   "cam": 0.7,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "nightPractical",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "surface 'brushed_stainless' not in the catalog"
+   ]
+  },
+  {
+   "id": "s14",
+   "dur": 3.87,
+   "framings": 2,
+   "s_per_framing": 1.93,
+   "cam": 1.17,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s15",
+   "dur": 4.37,
+   "framings": 2,
+   "s_per_framing": 2.18,
+   "cam": 0.19,
+   "cam_src": "core",
+   "life": 5,
+   "rig": "nightPractical",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s16",
+   "dur": 3.62,
+   "framings": 2,
+   "s_per_framing": 1.81,
+   "cam": 0.73,
+   "cam_src": "core",
+   "life": 5,
+   "rig": "interiorWarm",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s17",
+   "dur": 7.37,
+   "framings": 3,
+   "s_per_framing": 2.46,
+   "cam": 0.74,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "interiorWarm",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s18",
+   "dur": 5.86,
+   "framings": 2,
+   "s_per_framing": 2.93,
+   "cam": 0.76,
+   "cam_src": "core",
+   "life": 5,
+   "rig": "golden",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s19",
+   "dur": 4.37,
+   "framings": 2,
+   "s_per_framing": 2.18,
+   "cam": 0.71,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s20",
+   "dur": 1.0,
+   "framings": 1,
+   "s_per_framing": 1.0,
+   "cam": 1.14,
+   "cam_src": "core",
+   "life": 5,
+   "rig": "golden",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "shot only 1.0 s (readability; LESSONS 29)",
+    "surface 'tactile_paving_jp' not in the catalog"
+   ]
+  },
+  {
+   "id": "s21",
+   "dur": 1.0,
+   "framings": 1,
+   "s_per_framing": 1.0,
+   "cam": 1.26,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "shot only 1.0 s (readability; LESSONS 29)",
+    "surface 'brushed_stainless' not in the catalog"
+   ]
+  },
+  {
+   "id": "s22",
+   "dur": 1.85,
+   "framings": 2,
+   "s_per_framing": 0.92,
+   "cam": 0.2,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "surface 'tactile_paving_jp' not in the catalog"
+   ]
+  }
+ ],
+ "requests": {
+  "props/train_jp_cab": [
+   "set cab (marked new)",
+   "s01",
+   "s04",
+   "s05",
+   "s06",
+   "s19"
+  ],
+  "props/rail_signal_jp": [
+   "set cab (marked new)",
+   "s01",
+   "s22"
+  ],
+  "props/ocs_mast_jp": [
+   "set cab (marked new)",
+   "set jp_platform (marked new)",
+   "s01",
+   "s22",
+   "s22"
+  ],
+  "props/utility_pole_jp": [
+   "set cab (marked new)",
+   "set jp_platform (marked new)"
+  ],
+  "props/train_jp_interior": [
+   "set car (marked new)",
+   "s02",
+   "s03"
+  ],
+  "props/suitcase_spinner": [
+   "set car (marked new)",
+   "s02",
+   "s03",
+   "s08",
+   "s09",
+   "s14",
+   "s18",
+   "s20",
+   "s21"
+  ],
+  "props/train_jp_commuter": [
+   "set jp_platform (marked new)",
+   "set jp_platform (marked new)",
+   "s07",
+   "s07",
+   "s07",
+   "s07",
+   "s08",
+   "s08",
+   "s09",
+   "s14",
+   "s14",
+   "s18",
+   "s19",
+   "s20",
+   "s20",
+   "s20",
+   "s20",
+   "s21",
+   "s21",
+   "s22",
+   "s22"
+  ],
+  "props/vending_machine_jp": [
+   "set jp_platform (marked new)",
+   "s09",
+   "s14"
+  ],
+  "props/bench_bucket_jp": [
+   "set jp_platform (marked new)",
+   "s07"
+  ],
+  "props/station_bins_jp": [
+   "set jp_platform (marked new)",
+   "s14"
+  ],
+  "props/platform_canopy_jp": [
+   "set jp_platform (marked new)",
+   "s07"
+  ],
+  "props/itv_monitor_jp": [
+   "set jp_platform (marked new)",
+   "s09",
+   "s18"
+  ],
+  "props/train_ny_subway": [
+   "set ny_station (marked new)",
+   "set ny_car (marked new)",
+   "s10",
+   "s10",
+   "s11",
+   "s12",
+   "s13",
+   "s13"
+  ],
+  "props/gas_stove": [
+   "set kitchen (marked new)",
+   "s15"
+  ],
+  "props/range_hood": [
+   "set kitchen (marked new)",
+   "s15"
+  ],
+  "props/apartment_door": [
+   "set kitchen (marked new)",
+   "s15"
+  ],
+  "props/kettle": [
+   "set kitchen (marked new)",
+   "s15"
+  ],
+  "props/fridge": [
+   "set kitchen (marked new)"
+  ],
+  "props/wall_clock": [
+   "set kitchen (marked new)",
+   "s15",
+   "s15"
+  ],
+  "props/work_table": [
+   "set lab (marked new)"
+  ],
+  "props/glass_jar_big": [
+   "set lab (marked new)",
+   "s16",
+   "s17"
+  ],
+  "cards/rat": [
+   "s10"
+  ]
+ },
+ "fails": 0,
+ "warns": 16,
+ "verdict": "PASS",
+ "film_s": 67.4,
+ "framings": 34,
+ "catalog": {
+  "surfaces": {
+   "n": 226,
+   "sources": [
+    "public/kit/surfaces/ (37)",
+    "kit/surfaces/NOTES.md (191 tokens)"
+   ]
+  },
+  "props": {
+   "n": 211,
+   "sources": [
+    "public/kit/props/ (46)",
+    "kit/props/NOTES.md (24 tokens)",
+    "kit/nature/NOTES.md (154 tokens)"
+   ]
+  },
+  "nature": {
+   "n": 156,
+   "sources": [
+    "public/kit/trees/ (2)",
+    "public/kit/nature/ (1)",
+    "kit/nature/NOTES.md (154 tokens)"
+   ]
+  },
+  "fx": {
+   "n": 162,
+   "sources": [
+    "kit/fx/NOTES.md (39 tokens)",
+    "kit/nature/NOTES.md (154 tokens)"
+   ]
+  },
+  "cards": {
+   "n": 103,
+   "sources": [
+    "kit/cards/NOTES.md (103 tokens)"
+   ]
+  },
+  "core": {
+   "n": 235,
+   "sources": [
+    "kit/core/NOTES.md (235 tokens)"
+   ]
+  }
+ }
+}

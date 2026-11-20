@@ -1,0 +1,224 @@
+counts {'play': 101, 'loop': 10, 'far': 25, 'merged': 5, 'roll': 7, 'step': 51, 'silent': 16, 'rule': 8, 'thin': 40} | duck frames [141, 217] | E1 pops [2048, 2062, 2076, 2090, 2104] | E3 {'a': 2149, 'r1': 47, 'hold': 40, 'r2': 10, 'from': 394, 'duck': 141, 'tS': 125, 'tE': 142, 'ring_full': 2204}
+113 events, 51 footsteps of 15 walkers, 14 loops
+  f     0.0 Q1   honk                 -6.0 LU pan +0.52 prio 6 | horn_4#1 (frame 0) + horn_5#1 (f 6), two squeezes tuned to A, over by 
+  f     0.0 Q1   phone_chatter_bed   -29.1 LU pan +0.14 prio 0 | murmur_m_2
+  f     0.0 Q1   phone_chatter_bed   -31.7 LU pan -0.20 prio 0 | murmur_f_1
+  f     0.0 Q1   unicycle_near       -25.8 LU pan +0.53 prio 0 | tyre_roll_1 + squeak takes
+  f    71.0 Q1   chip_in             -23.0 LU pan +0.35 prio 9 | fs-824189-pop-in-sfx
+  f    93.0 Q1   pigeon_land         -25.0 LU pan +0.59 prio 4 | pigeon_b_3 + fs384187 + fs721514
+  f   108.0 Q1   honk                -16.6 LU pan +0.55 prio 6 | horn_2#3 + horn_4#1 (two squeezes, tuned to A)
+  f   122.0 Q1   honk                -17.3 LU pan +0.50 prio 6 | horn_4#2 + horn_2#3 (two squeezes, tuned to A)
+  f   123.0 Q1   pigeon_leave        -27.0 LU pan +0.50 prio 3 | pigeon_b_1
+  f   132.0 Q1   clown_wobble        -24.0 LU pan +0.48 prio 5 | skid_2 + yelp_1 + laugh_m_1
+  f   157.0 Q1   pigeon_scatter      -20.4 LU pan +0.64 prio 5 | pigeon_b_2
+  f   159.0 Q1   clown_yelp          -23.5 LU pan +0.59 prio 4 | yelp_2
+  f   166.0 Q1   tyre_land           -25.7 LU pan +0.60 prio 3 | boing_1
+  f   171.0 Q1   dog_paws            -21.0 LU pan -0.20 prio 4 | dog_paws_1
+  f   177.0 Q1   dog_yap             -17.5 LU pan +0.07 prio 5 | dog_yap_1
+  f   182.0 Q1   honk                -16.1 LU pan +0.56 prio 6 | horn_5#1 + horn_4#2 (two squeezes, tuned to A)
+  f   183.0 Q1   pigeon_scatter      -15.0 LU pan +0.58 prio 5 | pigeon_b_3
+  f   215.0 Q1   honk                -17.1 LU pan +0.54 prio 6 | horn_5#1 (one squeeze, tuned to A)
+  f   220.0 Q1   pigeon_flush        -19.1 LU pan +0.71 prio 5 | pigeon_b_1
+  f   224.0 Q1   honk                -17.0 LU pan +0.59 prio 6 | horn_4#1 (one squeeze, tuned to A)
+  f   266.0 Q1   juggle              -25.9 LU pan +0.56 prio 4 | (synthesized palm pats, one a catch)
+  f   292.0 Q2   pigeon_scatter      -15.0 LU pan -0.82 prio 5 | pigeon_b_1
+  f   307.0 Q2   chip_flip           -20.0 LU pan +0.35 prio 9 | fs393811
+  f   312.0 Q2   five_ding           -12.5 LU pan +0.35 prio 9 | fs-349504-triangle-open-04
+  f   312.0 Q2   unicycle_near       -25.7 LU pan +0.06 prio 0 | tyre_roll_1 + squeak takes
+  f   322.0 Q2   honk                -11.6 LU pan +0.09 prio 6 | horn_4#2 + horn_2#3 (two squeezes, tuned to A)
+  f   366.0 Q3   brake_skid          -13.5 LU pan +0.00 prio 6 | skid_1 + squeak_2#2
+  f   367.0 Q3   dust_puff           -25.0 LU pan +0.00 prio 5 | (synthesized dust puff)
+  f   394.0 Q3   honk                 -9.1 LU pan +0.00 prio 6 | horn_5#1 + horn_4#2 (two squeezes, tuned to A)
+  f   411.0 S1   unicycle_wheel_loop  -33.3 LU pan +0.59 prio 0 | tyre_roll_1
+  f   452.0 S1   honk                -16.5 LU pan +0.34 prio 6 | horn_5#1 (one squeeze, tuned to A)
+  f   462.0 S1   honk                -16.5 LU pan +0.50 prio 6 | horn_4#1 (one squeeze, tuned to A)
+  f   490.0 S1   bell_ring           -15.3 LU pan +0.56 prio 7 | hand_bell_1
+  f   498.0 S1   honk                -16.2 LU pan +0.46 prio 6 | horn_2#3 (one squeeze, tuned to A)
+  f   504.0 S1   unicycle_brake      -13.3 LU pan +0.30 prio 6 | skid_2 + one low horn squeeze tuned to D
+  f   504.0 S1   dust_puff           -25.0 LU pan +0.31 prio 5 | (synthesized dust puff)
+  f   537.0 S2   marker_tap          -22.0 LU pan -0.20 prio 4 | fs745291
+  f   545.0 S2   marker_tap          -22.0 LU pan -0.22 prio 4 | fs745291
+  f   550.0 S2   sigh                -23.0 LU pan -0.23 prio 4 | man_sigh_1
+  f   604.0 S2   paper_crumple       -21.0 LU pan -0.10 prio 5 | paper_crumple_1
+  f   620.0 S2   paper_hit           -21.0 LU pan -0.41 prio 5 | fs745291
+  f   648.0 S2   door_latch          -17.0 LU pan -0.07 prio 6 | door_open_1
+  f   652.0 S2   paper_flutter       -32.0 LU pan -0.18 prio 0 | bills_bed_1
+  f   686.0 S3   unicycle_roll       -29.0 LU pan +0.21 prio 0 | tyre_roll_1
+  f   704.0 S4   sparkle             -24.0 LU pan +0.18 prio 4 | glockenspiel + celesta A6 D7 E7 (own instruments)
+  f   716.0 S4   unicycle_rock       -25.4 LU pan +0.18 prio 5 | squeak_1#3
+  f   724.0 S4   unicycle_rock       -25.3 LU pan +0.19 prio 5 | squeak_2#1
+  f   734.0 S5   garment_rustle      -21.0 LU pan +0.09 prio 4 | bag_rustle_1
+  f   747.0 S5   zip_rip             -18.0 LU pan -0.03 prio 5 | zip_1
+  f   749.0 S5   garment_fling       -14.5 LU pan -0.07 prio 7 | fs830856 + bag_rustle_2
+  f   751.0 S5   confetti_pop        -20.0 LU pan -0.07 prio 6 | confetti_1
+  f   752.0 S5   suit_spring         -21.0 LU pan -0.07 prio 6 | boing_3
+  f   754.0 S5   sparkle             -24.0 LU pan -0.07 prio 4 | glockenspiel + celesta A6 D7 E7 (own instruments)
+  f   758.0 S5   bulb_ping           -19.0 LU pan -0.61 prio 7 | a switch click + glockenspiel A6 / E7 (own instrument)
+  f   775.0 S6   unicycle_wheel_loop  -34.1 LU pan -0.28 prio 0 | tyre_roll_2
+  f   778.0 S6   clock_hour          -25.0 LU pan +0.50 prio 9 | clock_1
+  f   805.0 S6   honk                -18.8 LU pan -0.10 prio 6 | horn_4#2 (one squeeze, tuned to A)
+  f   828.0 S6   bystander_laugh     -27.0 LU pan +0.85 prio 4 | crowd_laugh_1
+  f   879.0 S6   wobble              -22.0 LU pan +0.37 prio 4 | yelp_2 + squeak_2#1
+  f   989.0 S9   hand_clap           -22.2 LU pan +0.33 prio 4 | (synthesized hand clap)
+  f   998.0 S9   hand_clap           -22.2 LU pan +0.34 prio 4 | (synthesized hand clap)
+  f  1007.0 S9   hand_clap           -22.1 LU pan +0.34 prio 4 | (synthesized hand clap)
+  f  1016.0 S9   hand_clap           -22.0 LU pan +0.35 prio 4 | (synthesized hand clap)
+  f  1025.0 S9   hand_clap           -21.8 LU pan +0.36 prio 4 | (synthesized hand clap)
+  f  1037.0 S10  headphone_off       -29.0 LU pan -0.22 prio 0 | headphones_1
+  f  1088.0 S10  honk                -19.0 LU pan +0.48 prio 6 | horn_5#1 (one squeeze, tuned to A)
+  f  1096.0 S11  unicycle_wheel_loop  -33.7 LU pan +0.23 prio 0 | tyre_roll_1
+  f  1121.0 S11  question_pop        -22.0 LU pan -0.34 prio 5 | (synthesized rising 'bwoop?')
+  f  1147.0 S11  honk                -16.5 LU pan +0.15 prio 6 | horn_2#3 + horn_4#1 (two squeezes, tuned to A)
+  f  1147.0 S11  surprise_pop        -23.0 LU pan +0.69 prio 5 | pop_3 + a bright blip (synth)
+  f  1205.0 S12  pencil_tick         -17.0 LU pan -0.09 prio 6 | pencil_one_1
+  f  1211.0 S12  pencil_cross        -17.5 LU pan -0.09 prio 6 | pencil_cross_1#1 + pencil_cross_1#2
+  f  1220.0 S12  pencil_cross        -17.5 LU pan -0.09 prio 6 | pencil_cross_1#3 + pencil_cross_1#4
+  f  1227.0 S12  pencil_cross        -17.5 LU pan -0.09 prio 6 | pencil_cross_1#5 + pencil_cross_1#6
+  f  1233.0 S12  one_in_four         -18.0 LU pan +0.00 prio 6 | stamp_1
+  f  1243.0 S12  pencil_tap          -24.0 LU pan -0.26 prio 4 | fs788933
+  f  1249.0 S12  pencil_tap          -24.0 LU pan -0.26 prio 4 | fs721514
+  f  1297.0 S13  honk                -10.0 LU pan -0.38 prio 6 | horn_4#2 + horn_2#3 (two squeezes, tuned to A)
+  f  1303.0 S13  spin_whoosh         -15.5 LU pan +0.30 prio 6 | spin_scuff_1 + fs-786514-swoosh-v2 + fs-127197-fast-simple-chop-5-aif
+  f  1312.0 S13  jaw_drop            -15.0 LU pan +0.30 prio 6 | woodblock + bass pizzicato D2 (own instruments) + impact_1 + boing_2
+  f  1332.0 S13  honk                -10.0 LU pan -0.38 prio 6 | horn_5#1 + horn_4#2 (two squeezes, tuned to A)
+  f  1344.0 S14  juggle              -26.2 LU pan +0.38 prio 4 | (synthesized palm pats, one a catch)
+  f  1346.0 S14  headphone_music     -31.0 LU pan -0.38 prio 0 | headphones_1
+  f  1412.0 S14  honk                -14.6 LU pan +0.09 prio 6 | horn_5#1 (one squeeze, tuned to A)
+  f  1424.0 S14  honk                -14.6 LU pan +0.09 prio 6 | horn_4#1 (one squeeze, tuned to A)
+  f  1433.0 S14  tap_cup             -24.0 LU pan -0.38 prio 4 | fs721514 + kit-tick
+  f  1484.0 S15  mind_lift           -17.0 LU pan +0.09 prio 7 | fs810485
+  f  1524.0 S15  bubble_pop          -17.0 LU pan -0.42 prio 7 | fs-258269-mouth-pop + fs-447910-plop
+  f  1524.0 S15  unicycle_in         -28.5 LU pan +0.51 prio 0 | tyre_roll_1
+  f  1525.0 S15  twinkle             -25.0 LU pan -0.42 prio 4 | glockenspiel + celesta D7 F7 A7
+  f  1526.0 S15  bubble_pop_bed      -33.0 LU pan -0.42 prio 0 | murmur_gib_f_1
+  f  1539.0 S15  honk                -13.2 LU pan +0.30 prio 6 | horn_2#3 (one squeeze, tuned to A)
+  f  1550.0 S15  honk                -13.2 LU pan +0.30 prio 6 | horn_4#2 (one squeeze, tuned to A)
+  f  1554.0 S15  give_up             -18.0 LU pan +0.17 prio 6 | a '?' pop (synth) + one low horn squeeze cut short (D, -1 st)
+  f  1595.0 S16  jogger_pass         -24.0 LU pan +0.26 prio 4 | step_hard x 4 (a jogger passing, right to left)
+  f  1600.0 S16  freeze              -20.0 LU pan +0.00 prio 5 | duck_cloth_3 + bill_flick_2
+  f  1611.0 S16  whistle             -24.0 LU pan +0.00 prio 5 | (synthesized two-note whistle, F6 D6)
+  f  1627.0 S16  bills_twinkle       -23.0 LU pan -0.09 prio 5 | kenney-interface-glass-001
+  f  1657.0 S17  peg_squeeze         -27.0 LU pan +0.04 prio 4 | squeak_3#1
+  f  1665.0 S17  peg_snap            -12.5 LU pan +0.04 prio 8 | peg_3
+  f  1666.0 S17  bill_flutter        -18.0 LU pan +0.04 prio 5 | bill_flick_1
+  f  1735.0 S17  bill_flutter        -21.0 LU pan -0.09 prio 5 | bill_flick_2
+  f  1742.0 S17  wink_ting           -24.0 LU pan -0.26 prio 4 | (glockenspiel E7, own instrument)
+  f  1758.0 S18  duck                -15.5 LU pan +0.34 prio 7 | duck_cloth_1 + leaf_brush_1
+  f  1763.0 S18  bill_flutter        -20.0 LU pan +0.34 prio 5 | bill_flick_3
+  f  1781.0 S18  duck                -15.5 LU pan +0.22 prio 7 | duck_cloth_2 + leaf_brush_2
+  f  1786.0 S18  bill_flutter        -20.0 LU pan +0.22 prio 5 | bill_flick_1
+  f  1801.0 S18  duck                -15.5 LU pan +0.13 prio 7 | duck_cloth_3 + leaf_brush_3
+  f  1806.0 S18  bill_flutter        -20.0 LU pan +0.13 prio 5 | bill_flick_2
+  f  1825.0 S19  duck                -17.5 LU pan +0.04 prio 7 | duck_cloth_4 + leaf_brush_1
+  f  1829.0 S19  bill_flutter        -21.0 LU pan +0.04 prio 5 | bill_flick_3
+  f  1888.0 S19  stop                -19.0 LU pan -0.21 prio 5 | spin_scuff_2
+  f  1890.0 S19  gasp                -21.0 LU pan -0.21 prio 5 | gasp_f_1
+  f  1905.0 S19  bill_swat           -17.0 LU pan -0.09 prio 6 | bill_flick_1
+  f  1938.0 S20  duck_slow           -22.0 LU pan +0.00 prio 5 | duck_cloth_4 (slowed to 0.45x, low-passed 1700 Hz)
+  f  1954.0 S20  bill_brush_slow     -13.0 LU pan +0.09 prio 8 | fs-683096-woosh + bill_hair_1
+  f  1986.0 S20  bubble_laugh        -25.0 LU pan -0.42 prio 4 | laugh_f_1 (slowed to 0.45x, low-passed 1700 Hz)
+  f  2048.0 E1   count_pip           -16.0 LU pan -0.15 prio 9 | glockenspiel note D6 (own instrument) + pop_2
+  f  2062.0 E1   count_pip           -15.5 LU pan -0.07 prio 9 | glockenspiel note E6 (own instrument) + pop_2
+  f  2076.0 E1   count_pip           -15.0 LU pan +0.01 prio 9 | glockenspiel note F6 (own instrument) + pop_2
+  f  2090.0 E1   count_pip           -14.5 LU pan +0.09 prio 9 | glockenspiel note G6 (own instrument) + pop_2
+  f  2104.0 E1   count_pip           -14.0 LU pan +0.17 prio 9 | glockenspiel note A6 (own instrument) + pop_2
+  f  2121.0 E2   brake_skid          -16.4 LU pan +0.00 prio 6 | skid_2 + squeak_3#1
+  f  2149.0 E3   tape_rewind         -19.0 LU pan +0.00 prio 9 | tape_rewind_1
+  f  2196.0 E3   freeze_hit          -17.0 LU pan +0.00 prio 9 | kenney-impact-impactsoft-heavy-000 + tape_stop_1 + freeze_hit_3
+  f  2204.0 E3   ring_glint          -19.0 LU pan -0.25 prio 9 | kenney-interface-glass-001
+  f  2236.0 E3   tape_rewind_on      -19.0 LU pan +0.00 prio 9 | tape_rewind_2
+NOT SOUNDED:
+  f     0.0 Q1   phone_chatter_bed  far      too far to hear on its own (near 0.00 < 0.3): it is in the crowd bed
+  f     0.0 Q1   phone_chatter_bed  far      too far to hear on its own (near 0.00 < 0.3): it is in the crowd bed
+  f     0.0 Q1   phone_chatter_bed  far      too far to hear on its own (near 0.00 < 0.3): it is in the crowd bed
+  f     6.0 Q1   honk               merged   the second squeeze of the frame-0 honk-honk (one event in the lead-in, over before 'Quick')
+  f   116.0 Q1   pigeon_scurry      silent   far and quiet (tiny claws on brick, near 0.30): it is in the bed
+  f   131.0 Q1   footstep           rule     THE QUIZ RULE: it would still sound in the window of the duck at f 141 (only 3 f of room): only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there
+  f   135.0 Q1   surprise_ping      silent   THE QUIZ RULE: no chime or ping anywhere in Q1; his yelp and the wobble's scuff carry the take
+  f   137.0 Q1   laugh_far          rule     THE QUIZ RULE: inside the window (+-6 f) of the duck at f 141: only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there
+  f   141.0 Q1   duck_SILENT        silent   THE QUIZ RULE: the two ducks of the count are silent
+  f   143.0 Q1   footstep           rule     THE QUIZ RULE: inside the window (+-6 f) of the duck at f 141: only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there
+  f   145.0 Q1   footstep           rule     THE QUIZ RULE: inside the window (+-6 f) of the duck at f 141: only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there
+  f   158.0 Q1   dog_bark_far       thin     over the budget of 110 events (lowest priority first)
+  f   159.0 Q1   surprise_ping      silent   THE QUIZ RULE: no chime or ping anywhere in Q1; his yelp and the wobble's scuff carry the take
+  f   207.0 Q1   footstep           rule     THE QUIZ RULE: it would still sound in the window of the duck at f 217 (only 3 f of room): only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there
+  f   209.0 Q1   footstep           rule     THE QUIZ RULE: it would still sound in the window of the duck at f 217 (only 1 f of room): only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there
+  f   216.0 Q1   footstep           rule     THE QUIZ RULE: inside the window (+-6 f) of the duck at f 217: only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there
+  f   217.0 Q1   duck_SILENT        silent   THE QUIZ RULE: the two ducks of the count are silent
+  f   220.0 Q1   footstep           rule     THE QUIZ RULE: inside the window (+-6 f) of the duck at f 217: only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there
+  f   314.0 Q2   catch              thin     over the budget of 110 events (lowest priority first)
+  f   371.0 Q3   whoosh_small       thin     over the budget of 110 events (lowest priority first)
+  f   421.0 S1   pigeon_flush       thin     over the budget of 110 events (lowest priority first)
+  f   430.0 S1   pigeon_flush       thin     thinned: under 24 f after the last kept 'pigeon_flush'
+  f   454.0 S1   bike_pass          far      too far to hear on its own (near 0.11 < 0.3): it is in the crowd bed
+  f   459.0 S1   pigeon_flush       thin     thinned: at most 1 'pigeon_flush' in a shot
+  f   472.0 S1   skateboard_pass    far      too far to hear on its own (near 0.09 < 0.3): it is in the crowd bed
+  f   475.0 S1   pigeon_flush       thin     thinned: at most 1 'pigeon_flush' in a shot
+  f   488.0 S1   laugh              thin     held back: 2 f from 'bell_ring' (higher priority)
+  f   488.0 S1   laugh              thin     thinned: under 30 f after the last kept 'laugh'
+  f   490.0 S1   honk               thin     held back: 0 f from 'bell_ring' (higher priority)
+  f   511.0 S1   pigeon_flush       thin     thinned: at most 1 'pigeon_flush' in a shot
+  f   590.0 S2   marker_jab         thin     over the budget of 110 events (lowest priority first)
+  f   597.0 S2   marker_jab         thin     held back: 0 f from 'paper_rustle' (higher priority)
+  f   597.0 S2   paper_rustle       thin     over the budget of 110 events (lowest priority first)
+  f   614.0 S2   paper_throw        thin     over the budget of 110 events (lowest priority first)
+  f   652.0 S2   door_swing         merged   inside door_latch's take (the latch, then the creak of the swing)
+  f   660.0 S3   door_stop          thin     over the budget of 110 events (lowest priority first)
+  f   750.0 S5   flash_snap         merged   carried by the score's comic hit, which now lands on this frame (FIX2 D11: the hit on the bag opening)
+  f   755.0 S5   nose_pop           merged   inside the confetti burst and the sparkle (it would be the fifth effect in 6 frames under the student's 'clown')
+  f   759.0 S5   hands_rub          thin     over the budget of 110 events (lowest priority first)
+  f   764.0 S5   hop_land           thin     over the budget of 110 events (lowest priority first)
+  f   775.0 S6   frisbee_throw      silent   about 40 m away in the high wide (near 0.05): under the bed's level
+  f   778.0 S6   pigeon_flush       far      too far to hear on its own (near 0.08 < 0.2): it is in the crowd bed
+  f   799.0 S6   frisbee_throw      silent   about 40 m away in the high wide (near 0.05): under the bed's level
+  f   800.0 S6   pigeon_flush       far      too far to hear on its own (near 0.08 < 0.2): it is in the crowd bed
+  f   811.0 S6   frisbee_throw      silent   about 40 m away in the high wide (near 0.05): under the bed's level
+  f   812.0 S6   pigeon_flush       far      too far to hear on its own (near 0.11 < 0.2): it is in the crowd bed
+  f   816.0 S6   juggle_loop        thin     over the budget of 110 events (lowest priority first)
+  f   824.0 S6   pigeon_flush       far      too far to hear on its own (near 0.15 < 0.2): it is in the crowd bed
+  f   830.0 S6   pigeon_flush       far      too far to hear on its own (near 0.15 < 0.2): it is in the crowd bed
+  f   834.0 S6   bike_pass          far      too far to hear on its own (near 0.08 < 0.3): it is in the crowd bed
+  f   836.0 S6   pigeon_flush       far      too far to hear on its own (near 0.16 < 0.2): it is in the crowd bed
+  f   843.0 S6   frisbee_throw      silent   about 40 m away in the high wide (near 0.05): under the bed's level
+  f   849.0 S6   pigeon_flush       far      too far to hear on its own (near 0.12 < 0.2): it is in the crowd bed
+  f   856.0 S6   frisbee_throw      silent   about 40 m away in the high wide (near 0.05): under the bed's level
+  f   868.0 S6   honk               thin     thinned: at most 1 'honk' in a shot
+  f   872.0 S6   pigeon_flush       far      too far to hear on its own (near 0.14 < 0.2): it is in the crowd bed
+  f   878.0 S6   pigeon_flush       far      too far to hear on its own (near 0.14 < 0.2): it is in the crowd bed
+  f   884.0 S6   pigeon_flush       far      too far to hear on its own (near 0.17 < 0.2): it is in the crowd bed
+  f   885.0 S6   skateboard_pass    far      too far to hear on its own (near 0.08 < 0.3): it is in the crowd bed
+  f   887.0 S6   frisbee_throw      silent   about 40 m away in the high wide (near 0.05): under the bed's level
+  f   896.0 S6   pigeon_flush       far      too far to hear on its own (near 0.19 < 0.2): it is in the crowd bed
+  f   927.0 S7   bike_pass          far      too far to hear on its own (near 0.08 < 0.3): it is in the crowd bed
+  f   945.0 S8   laugh              thin     a second voice under a character's line (the dialogue stays clean)
+  f   954.0 S8   pigeon_flush       thin     over the budget of 110 events (lowest priority first)
+  f   985.0 S8   bike_pass          far      too far to hear on its own (near 0.18 < 0.3): it is in the crowd bed
+  f   999.0 S9   laugh              thin     a second voice under a character's line (the dialogue stays clean)
+  f  1017.0 S9   laugh              thin     a second voice under a character's line (the dialogue stays clean)
+  f  1054.0 S10  thumb_jab          thin     over the budget of 110 events (lowest priority first)
+  f  1075.0 S10  pigeon_flush       far      too far to hear on its own (near 0.17 < 0.2): it is in the crowd bed
+  f  1077.0 S10  thumb_jab          thin     over the budget of 110 events (lowest priority first)
+  f  1083.0 S10  skateboard_pass    far      too far to hear on its own (near 0.14 < 0.3): it is in the crowd bed
+  f  1085.0 S10  pigeon_flush       far      too far to hear on its own (near 0.19 < 0.2): it is in the crowd bed
+  f  1090.0 S10  pigeon_flush       far      too far to hear on its own (near 0.18 < 0.2): it is in the crowd bed
+  f  1107.0 S11  pigeon_flush       thin     over the budget of 110 events (lowest priority first)
+  f  1151.0 S11  pigeon_flush       thin     thinned: at most 1 'pigeon_flush' in a shot
+  f  1151.0 S11  bike_pass          far      too far to hear on its own (near 0.06 < 0.3): it is in the crowd bed
+  f  1271.0 S12  brows_up           thin     over the budget of 110 events (lowest priority first)
+  f  1299.0 S13  pigeon_flush       thin     held back: 2 f from 'honk' (higher priority)
+  f  1371.0 S14  pigeon_flush       thin     over the budget of 110 events (lowest priority first)
+  f  1383.0 S14  notice             silent   a look: no sound
+  f  1397.0 S14  wave               silent   a wave: no sound
+  f  1404.0 S14  wave_back          silent   a wave: no sound
+  f  1478.0 S15  signal_on          merged   carried by the mind's rising sweep 6 frames later
+  f  1555.0 S15  bubble_laugh       thin     held back: 1 f from 'give_up' (higher priority)
+  f  1583.0 S16  sly_look           silent   a look: no sound
+  f  1606.0 S16  sweat_drop         thin     over the budget of 110 events (lowest priority first)
+  f  1633.0 S16  brow_waggle        silent   a look: no sound
+  f  1699.0 S17  pat_head           thin     over the budget of 110 events (lowest priority first)
+  f  1900.0 S19  hop                thin     over the budget of 110 events (lowest priority first)
+  f  1910.0 S19  land               thin     over the budget of 110 events (lowest priority first)
+  f  1967.0 S20  rise_slow          thin     over the budget of 110 events (lowest priority first)
+  f  1993.0 S20  bubble_laugh       thin     thinned: under 30 f after the last kept 'bubble_laugh'
+  f  2007.0 S20  petal_land         thin     over the budget of 110 events (lowest priority first)
+  f  2126.0 E2   whoosh_small       thin     over the budget of 110 events (lowest priority first)

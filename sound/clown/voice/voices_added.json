@@ -1,0 +1,52 @@
+{
+ "CL Student Erby": {
+  "voice_id": "n27L8GNoVt7SPUboEQb7",
+  "library_voice_id": "n27L8GNoVt7SPUboEQb7",
+  "library_name": "Erby - Nerdy Regular Dude"
+ },
+ "CL Student Sheldon": {
+  "voice_id": "uWNz6TbvrJHW6G4bBMPw",
+  "library_voice_id": "uWNz6TbvrJHW6G4bBMPw",
+  "library_name": "Sheldon - Quirky, Clever, Enthusiastic"
+ },
+ "CL Student Nathan": {
+  "voice_id": "g2W4HAjKvdW93AmsjsOx",
+  "library_voice_id": "g2W4HAjKvdW93AmsjsOx",
+  "library_name": "Nathan - High-Pitched Nerd"
+ },
+ "CL Interviewer Irene": {
+  "voice_id": "w9xM4Spfmuw28ZXAirWK",
+  "library_voice_id": "w9xM4Spfmuw28ZXAirWK",
+  "library_name": "Irene - Friendly, Expressive, Conversational"
+ },
+ "CL Interviewer Nikki": {
+  "voice_id": "yhFUAoS32gPDJFQHbH68",
+  "library_voice_id": "yhFUAoS32gPDJFQHbH68",
+  "library_name": "Nikki - Friendly and Conversational"
+ },
+ "CL Friend Kymmiee": {
+  "voice_id": "KHDywVwjZ97ShJLe4NCr",
+  "library_voice_id": "KHDywVwjZ97ShJLe4NCr",
+  "library_name": "Kymmiee - Bubbly & Friendly"
+ },
+ "CL Headphones JerryB": {
+  "voice_id": "rHWSYoq8UlV0YIBKMryp",
+  "library_voice_id": "rHWSYoq8UlV0YIBKMryp",
+  "library_name": "Jerry B - California Surfer Dude"
+ },
+ "CL Headphones Brandon": {
+  "voice_id": "QzclONYwRWvec152I3wf",
+  "library_voice_id": "QzclONYwRWvec152I3wf",
+  "library_name": "Brandon"
+ },
+ "CL Phone Jeremy": {
+  "voice_id": "5gaEGrWSk4v20HMfIhgC",
+  "library_voice_id": "5gaEGrWSk4v20HMfIhgC",
+  "library_name": "Jeremy - Casual Guy Next Door"
+ },
+ "CL Phone Trevor": {
+  "voice_id": "69SAlwj2jajrSXUGnYAA",
+  "library_voice_id": "69SAlwj2jajrSXUGnYAA",
+  "library_name": "Trevor - Natural Conversational Authentic"
+ }
+}

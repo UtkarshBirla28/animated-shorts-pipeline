@@ -1,0 +1,2515 @@
+{
+ "script": "sound/pointing/SCRIPT_v3.md (LOCKED 2026-11-19)",
+ "lines_json": "sound/pointing/script_v3/voice_lines_v3.json",
+ "segment": "all",
+ "target_stereo_lufs": -17.5,
+ "dialogue_stereo_lufs": -17.53,
+ "stereo_lufs": -17.68,
+ "peak": 0.8831,
+ "dialogue_peak": 0.8831,
+ "unit_target_mono_lufs": -20.06,
+ "duration_s": 63.75,
+ "lead_s": 0.07,
+ "tail_s": 0.1,
+ "build_rule": {
+  "tried": [
+   {
+    "cut_steps": 0,
+    "duration_s": 63.69
+   }
+  ],
+  "cut_steps_applied": [],
+  "dropped_lines": [],
+  "replay_dropped": false,
+  "apply_cut_order_over_s": 66.0,
+  "refuse_over_s": 70.0
+ },
+ "timing_plan": {
+  "_doc": "The pause plan of the pointing voice, SCRIPT v3 (read by pt3_build.py, pt3_verify.py). Made from SCRIPT_v3.md section 4.2 (and the cut order 4.3). Every value is TRUE silence (10 ms RMS windows every 5 ms under -45 dBFS) between the acoustic end of one line and the first WORD of the next. A pause is cut, or silence is added: the audio is never stretched.",
+  "lead_s": 0.07,
+  "tail_s": 0.1,
+  "gaps": {
+   "v3_n01|v3_n02": 0.15,
+   "v3_n02|v3_n03": 0.15,
+   "v3_n03|v3_d01": 0.18,
+   "v3_d01|v3_t01": 0.2,
+   "v3_t01|v3_n04": 0.15,
+   "v3_n04|v3_n05": 0.15,
+   "v3_n05|v3_n06": 0.4,
+   "v3_n06|v3_n07": 0.25,
+   "v3_n07|v3_n08": 0.5,
+   "v3_n08|v3_t02": 0.15,
+   "v3_t02|v3_d02": 1.6,
+   "v3_d02|v3_t03": 0.75,
+   "v3_t03|v3_n09": 0.35,
+   "v3_n09|v3_t04": 0.45,
+   "v3_t04|v3_n10": 0.95,
+   "v3_n10|v3_t05": 1.1,
+   "v3_t05|v3_t06": 2.78,
+   "v3_t06|v3_n11": 0.65,
+   "v3_n11|v3_n12": 1.45,
+   "v3_n12|v3_n13": 0.15,
+   "v3_n13|v3_n14": 0.56,
+   "v3_n14|v3_d03": 0.75,
+   "v3_d03|v3_k01": 0.78,
+   "v3_k01|v3_t07": 0.73,
+   "v3_a01|v3_a02": 0.15,
+   "v3_a02|v3_d01": 0.33,
+   "v3_a01f|v3_a02": 0.15
+  },
+  "sentence_gaps": {
+   "v3_t04": 0.3,
+   "v3_n11": 0.2,
+   "v3_n13": 0.3
+  },
+  "inner_set": {
+   "v3_n03": [
+    {
+     "after": "laugh...",
+     "to": 0.15,
+     "mode": "set"
+    }
+   ],
+   "v3_d01": [
+    {
+     "after": "Signal...",
+     "to": 0.38,
+     "mode": "set"
+    }
+   ],
+   "v3_t05": [
+    {
+     "after": "machine...",
+     "to": 0.35,
+     "mode": "min"
+    }
+   ],
+   "v3_k01": [
+    {
+     "after": "Bag...",
+     "to": 0.35,
+     "mode": "min"
+    }
+   ],
+   "v3_d03": [
+    {
+     "after": "Doors...",
+     "to": 1.005,
+     "mode": "set"
+    }
+   ],
+   "v3_n11": [
+    {
+     "after": "see,",
+     "to": 0.2,
+     "mode": "max"
+    }
+   ],
+   "v3_n13": [
+    {
+     "after": "looking...",
+     "to": 1.0,
+     "mode": "set"
+    }
+   ],
+   "v3_n07": [],
+   "v3_d02": [
+    {
+     "after": "Doors...",
+     "to": 0.35,
+     "mode": "min"
+    }
+   ],
+   "v3_t07": [
+    {
+     "after": "Bag...",
+     "to": 0.35,
+     "mode": "min"
+    }
+   ],
+   "v3_t04": []
+  },
+  "inner_keep": [
+   "v3_d02",
+   "v3_t07",
+   "v3_d01",
+   "v3_d03",
+   "v3_k01",
+   "v3_t05",
+   "v3_t04"
+  ],
+  "pre_keep_s": {
+   "v3_t01": 0.35,
+   "v3_t03": 0.24,
+   "v3_t06": 0.4
+  },
+  "lift_db": {
+   "v3_t07": -1.5,
+   "v3_n10": -1.5
+  },
+  "n01_breath": {
+   "to": 0.2,
+   "if_not_starts_by": 2.6,
+   "and_finger_starts_by": 5.0
+  },
+  "replay": {
+   "line": "v3_r01",
+   "source": "v3_t03",
+   "under_narrator_db": -8.0,
+   "overlap_s": 0.3,
+   "then_s": 0.08,
+   "band_hz": [
+    550,
+    3600
+   ]
+  },
+  "laughs": {
+   "hook": {
+    "take": "x01",
+    "under_narrator_db": -12.0,
+    "from": "cut 1 (0.08 s after 'not.')",
+    "to": "cut 2 (one frame before 'finger')"
+   },
+   "phone_bed": {
+    "take": "x01",
+    "under_narrator_db": -18.0,
+    "from": "0.20 s before 'You see,'",
+    "to": "the start of the replay",
+    "band_hz": [
+     550,
+     3600
+    ]
+   },
+   "cutaway": {
+    "take": "x02",
+    "under_narrator_db": -10.0,
+    "inside": "the 1.00 s pause after 'looking...'",
+    "margin_s": 0.07
+   },
+   "payoff": {
+    "take": "x02",
+    "under_narrator_db": -14.0,
+    "from": "0.15 s before 'Doors...'",
+    "to": "the kid's 'check!'"
+   }
+  },
+  "cut_order": [
+   {
+    "step": 1,
+    "what": "the N pauses to their floors (saves 0.45 s)",
+    "gaps": {
+     "v3_d01|v3_t01": 0.1,
+     "v3_n06|v3_n07": 0.15,
+     "v3_t03|v3_n09": 0.25,
+     "v3_n12|v3_n13": 0.1
+    },
+    "sentence_gaps": {
+     "v3_n11": 0.15
+    },
+    "inner_set": {
+     "v3_n11": [
+      {
+       "after": "see,",
+       "to": 0.15,
+       "mode": "max"
+      }
+     ]
+    }
+   },
+   {
+    "step": 2,
+    "what": "four picture holds to their floors (saves 0.59 s)",
+    "gaps": {
+     "v3_n13|v3_n14": 0.4,
+     "v3_d02|v3_t03": 0.6,
+     "v3_d03|v3_k01": 0.65,
+     "v3_n14|v3_d03": 0.6
+    }
+   },
+   {
+    "step": 3,
+    "what": "the phone's replay goes (saves 1.15 s)",
+    "drop_replay": true,
+    "gaps": {
+     "v3_n11|v3_n12": 0.3
+    }
+   },
+   {
+    "step": 4,
+    "what": "v3_t05 becomes a silent mock point held 0.9 s (saves 1.5 s)",
+    "drop": [
+     "v3_t05"
+    ],
+    "gaps": {
+     "v3_n10|v3_t06": 4.35
+    }
+   },
+   {
+    "step": 5,
+    "what": "v3_n05 and its shot (saves 2.8 s)",
+    "drop": [
+     "v3_n05"
+    ],
+    "gaps": {
+     "v3_n04|v3_n06": 0.4
+    }
+   }
+  ],
+  "limits": {
+   "apply_cut_order_over_s": 66.0,
+   "refuse_over_s": 70.0
+  },
+  "word_onsets_measured": {
+   "_doc": "2026-11-20 (voice owner): word STARTS inside connected speech measured by hand on the dialogue stem (10 ms frames: level, >3 kHz and <400 Hz energy share, spectral peak, f0), where Whisper put the start on the vowel 0.06-0.18 s late. Value = seconds from the start ('on') of the unit that holds the word; key = the word's index in the whole line (0 = first word, not set: moving 'What's' of v3_t03 moves the phone replay and so the AUDIO; its measured onset 24.195 is in NOTES.md). Body pass 2026-11-20: the words the cuts, EV events and beats are anchored on. Convention: a word starts at its first phone, stop closures included (a closure shared by two stops is split in the middle). The build applies a value only when it is within 0.25 s of its own estimate, and lists every move.",
+   "v3_n01": {
+    "1": 0.19,
+    "2": 0.55,
+    "3": 0.67,
+    "4": 0.82,
+    "5": 0.96
+   },
+   "v3_n02": {
+    "1": 0.175,
+    "2": 0.335
+   },
+   "v3_n03": {
+    "1": 0.29,
+    "2": 0.48,
+    "6": 1.755,
+    "7": 1.91
+   },
+   "v3_t01": {
+    "3": 0.815
+   },
+   "v3_n04": {
+    "6": 1.595,
+    "7": 1.865
+   },
+   "v3_n05": {
+    "5": 0.845,
+    "8": 1.665
+   },
+   "v3_n08": {
+    "3": 0.6,
+    "4": 1.03
+   },
+   "v3_n11": {
+    "13": 0.995
+   },
+   "v3_n13": {
+    "10": 4.115,
+    "15": 5.345
+   },
+   "v3_n14": {
+    "8": 2.34
+   }
+  },
+  "_why": {
+   "lead_s": "frame 0: the rail click and 'His' on frame 2 (0.07 s)",
+   "tail_s": "the film ends 0.10 s after 'gone.'; the next frame is frame 0",
+   "v3_n01|v3_n02": "sentence break (0.20 s as the deadpan's breath when 'not' still starts by 2.60 s: n01_breath)",
+   "v3_n02|v3_n03": "sentence break; cut 1 sits in it",
+   "inner v3_n03": "0.15 s after 'laugh...': the phone swings to the cab glass; cut 2 is one frame before 'finger'",
+   "v3_n03|v3_d01": "the glove reaches full stretch before 'Signal'",
+   "inner v3_d01": "0.38 s: the hand at the ear (0.12 s of silence added to the take's 0.26 s)",
+   "v3_d01|v3_t01": "N: his laugh starts under the tail of 'green!'; his words wait (the pause is measured to 'He's'; up to 0.35 s of the take's own laugh sits before it)",
+   "v3_t01|v3_n04": "N: the laugh tail",
+   "v3_n04|v3_n05": "N: the foot drags the suitcase back; the cut",
+   "v3_n05|v3_n06": "the train stops, the doors open",
+   "v3_n06|v3_n07": "N: commuters step off",
+   "v3_n07|v3_n08": "the boy's point snaps out (13 frames)",
+   "v3_n08|v3_t02": "N: the haul finishes",
+   "v3_t02|v3_d02": "0.40 the nod with the chime and the doors starting + 0.90 the doors meet + 0.25 the side lamps go out + 0.05, THEN the call",
+   "v3_d02|v3_t03": "the train starts to glide; the salaryman gives up",
+   "v3_t03|v3_n09": "N: the boy's frown",
+   "v3_n09|v3_t04": "he wheels the bag to the doorway",
+   "sentence v3_t04": "0.30 s: the two pats ('Stay.' / 'Be right back.')",
+   "v3_t04|v3_n10": "the hop out, then the bag alone before the line",
+   "v3_n10|v3_t05": "the bag alone for 2.2 s in all",
+   "inner v3_t05": "fact guard 5: the beat is at least 0.35 s (the take has 0.24 s: silence added, never squeezed)",
+   "v3_t05|v3_t06": "0.33 the pose holds + 1.10 the boy's point (v3_p01) + 1.35 the head turn, the 0.7 s look, the grin",
+   "v3_t06|v3_n11": "he turns back to his phone",
+   "inner v3_n11": "N: 0.20 s after 'You see,' (only cut down, never padded), 0.20 s between the sentences",
+   "v3_n11|v3_n12": "the phone's replay in the clear: it starts 0.30 s before the end of 'phone.' (only its first word under the narrator), then 0.08 s. The build computes this pause from the real replay length (plan 1.45 s)",
+   "v3_n12|v3_n13": "N",
+   "inner v3_n13": "1.00 s after 'looking...' = the cutaway v3_p02; 0.30 s after 'out loud:' = the held beat before the single ball",
+   "v3_n13|v3_n14": "0.41 the 6 against 1 hold + 0.15 the doorway shot settles",
+   "v3_n14|v3_d03": "0.40 the cab's quiet + 0.20 the chime and the doors start + 0.15 the doors are SEEN sliding before the word",
+   "inner v3_d03": "1.005 s between 'Doors...' and '...closed!': the doors meet on the bag, the side lamps go out",
+   "v3_d03|v3_k01": "the train starts to glide",
+   "inner v3_k01": "fact guard 5: at least 0.35 s",
+   "v3_k01|v3_t07": "0.45 the grin drains and the cap goes up + 0.28 of the last shot",
+   "lift_db": "v3_t07 is small by pitch, not by level (1.5 dB under the other lines, far inside the 6 dB limit); v3_n10 'It stays.' is the quietest narrator line"
+  }
+ },
+ "lift_db": {
+  "v3_t07": -1.5,
+  "v3_n10": -1.5
+ },
+ "inner_rule": {
+  "max_s": 0.2,
+  "cut_to_s": 0.16
+ },
+ "deadpan_breath": {
+  "applied": false,
+  "pause_s": 0.15,
+  "not_would_start_s": 2.1,
+  "finger_would_start_s": 4.74,
+  "note": "the lead's gate is measured with the pauses at 0.15 s, and the film ships that way; the script's optional 0.20 s breath before 'He is not.' is one flag away (--breath) when both 'would start' times are inside its limits"
+ },
+ "reused_take_checks": [
+  {
+   "line": "v3_d01",
+   "take": "cast_d/masaki1",
+   "span": [
+    0.065,
+    1.41
+   ],
+   "expected": "Signal green",
+   "heard": "Signal! Green!",
+   "diff": []
+  },
+  {
+   "line": "v3_d02",
+   "take": "ch_d03/t3",
+   "span": [
+    0.095,
+    1.53
+   ],
+   "expected": "Doors closed",
+   "heard": "DOORS CLOSED",
+   "diff": []
+  },
+  {
+   "line": "v3_t04",
+   "take": "ch_t02/t3",
+   "span": [
+    0.065,
+    1.69
+   ],
+   "expected": "Stay Be right back",
+   "heard": "Stay! Be right back!",
+   "diff": []
+  },
+  {
+   "line": "v3_t05",
+   "take": "ch_t04/t2",
+   "span": [
+    0.025,
+    1.89
+   ],
+   "expected": "Vending machine check",
+   "heard": "Vending machine, check!",
+   "diff": []
+  },
+  {
+   "line": "v3_n12",
+   "take": "c08c/t1",
+   "span": [
+    0.095,
+    2.135
+   ],
+   "expected": "Japan's railway lab tested it",
+   "heard": "Japan's railway lab tested it!",
+   "diff": []
+  },
+  {
+   "line": "v3_d03",
+   "take": "ch_d04/t4",
+   "span": [
+    0.08,
+    1.64
+   ],
+   "expected": "Doors closed",
+   "heard": "DOORS CLOSED",
+   "diff": []
+  },
+  {
+   "line": "v3_k01",
+   "take": "ch_k01/t5",
+   "span": [
+    0.12,
+    1.475
+   ],
+   "expected": "Bag check",
+   "heard": "Bag check!",
+   "diff": []
+  }
+ ],
+ "units": [
+  {
+   "line": "v3_n01",
+   "sentences": [
+    "His bag is on that train."
+   ],
+   "take": "v3_hook/t13",
+   "reused_v1_take": false,
+   "take_on": 0.03,
+   "take_off": 1.54,
+   "on": 0.07,
+   "off": 1.565,
+   "gain_db": -0.16,
+   "lufs_before_gain_mono": -19.9,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.56,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n02",
+   "sentences": [
+    "He is not."
+   ],
+   "take": "v3_hook/t13",
+   "reused_v1_take": false,
+   "take_on": 2.01,
+   "take_off": 2.895,
+   "on": 1.715,
+   "off": 2.63,
+   "gain_db": 7.36,
+   "lufs_before_gain_mono": -27.42,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6384,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n03",
+   "sentences": [
+    "All he did was laugh... at a finger."
+   ],
+   "take": "v3_hook/t13",
+   "reused_v1_take": false,
+   "take_on": 3.225,
+   "take_off": 5.77,
+   "on": 2.78,
+   "off": 5.32,
+   "gain_db": 2.1,
+   "lufs_before_gain_mono": -22.15,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.7731,
+   "inner_cuts": [
+    {
+     "at_take_s": 4.745,
+     "was_s": 0.15,
+     "now_s": 0.15,
+     "rule": {
+      "after": "laugh...",
+      "to": 0.15,
+      "mode": "set"
+     }
+    }
+   ],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_d01",
+   "sentences": [
+    "Signal... green!"
+   ],
+   "take": "cast_d/masaki1",
+   "reused_v1_take": true,
+   "take_on": 0.065,
+   "take_off": 1.41,
+   "on": 5.5,
+   "off": 6.965,
+   "gain_db": -1.23,
+   "lufs_before_gain_mono": -18.83,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5482,
+   "inner_cuts": [
+    {
+     "at_take_s": 0.6,
+     "was_s": 0.25,
+     "now_s": 0.38,
+     "rule": {
+      "after": "Signal...",
+      "to": 0.38,
+      "mode": "set"
+     }
+    }
+   ],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_t01",
+   "sentences": [
+    "He's pointing at nothing!"
+   ],
+   "take": "v3_t01/t5",
+   "reused_v1_take": false,
+   "take_on": 0.68,
+   "take_off": 2.2,
+   "on": 7.165,
+   "off": 8.665,
+   "gain_db": -1.96,
+   "lufs_before_gain_mono": -18.09,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6148,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.35,
+   "laugh_before_word_in_take_s": 0.61,
+   "first_word_onset": "whisper None, elevenlabs 0.64, dip at 0.68"
+  },
+  {
+   "line": "v3_n04",
+   "sentences": [
+    "But that driver has a thousand people behind him."
+   ],
+   "take": "v3_n04/t4",
+   "reused_v1_take": false,
+   "take_on": 0.16,
+   "take_off": 2.755,
+   "on": 8.815,
+   "off": 11.395,
+   "gain_db": 4.83,
+   "lufs_before_gain_mono": -24.89,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6615,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n05",
+   "sentences": [
+    "So he checks with a finger and a shout."
+   ],
+   "take": "v3_n05/t4",
+   "reused_v1_take": false,
+   "take_on": 0.105,
+   "take_off": 2.29,
+   "on": 11.545,
+   "off": 13.715,
+   "gain_db": 0.09,
+   "lufs_before_gain_mono": -20.14,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6667,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n06",
+   "sentences": [
+    "First stop."
+   ],
+   "take": "v3_n0608/t5",
+   "reused_v1_take": false,
+   "take_on": 0.115,
+   "take_off": 1.025,
+   "on": 14.115,
+   "off": 15.0,
+   "gain_db": -1.52,
+   "lufs_before_gain_mono": -18.53,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5039,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n07",
+   "sentences": [
+    "His suitcase tries to get off..."
+   ],
+   "take": "v3_n0608/t5",
+   "reused_v1_take": false,
+   "take_on": 1.355,
+   "take_off": 3.06,
+   "on": 15.25,
+   "off": 16.95,
+   "gain_db": -1.79,
+   "lufs_before_gain_mono": -18.27,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.4953,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n08",
+   "sentences": [
+    "...and the boy's finger saves it."
+   ],
+   "take": "v3_n0608/t5",
+   "reused_v1_take": false,
+   "take_on": 3.34,
+   "take_off": 5.095,
+   "on": 17.45,
+   "off": 19.195,
+   "gain_db": 1.26,
+   "lufs_before_gain_mono": -21.31,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6252,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_t02",
+   "sentences": [
+    "Bad suitcase."
+   ],
+   "take": "v3_t02/t1",
+   "reused_v1_take": false,
+   "take_on": 0.165,
+   "take_off": 1.19,
+   "on": 19.345,
+   "off": 20.37,
+   "gain_db": 3.54,
+   "lufs_before_gain_mono": -23.6,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [
+    {
+     "at_unit_s": 0.065,
+     "dip_db": 1.76,
+     "window_ms": 5,
+     "ramps_ms": 4
+    },
+    {
+     "at_unit_s": 0.08,
+     "dip_db": 1.8,
+     "window_ms": 5,
+     "ramps_ms": 4
+    },
+    {
+     "at_unit_s": 0.09,
+     "dip_db": 2.39,
+     "window_ms": 5,
+     "ramps_ms": 4
+    },
+    {
+     "at_unit_s": 0.12,
+     "dip_db": 2.24,
+     "window_ms": 5,
+     "ramps_ms": 4
+    },
+    {
+     "at_unit_s": 0.13,
+     "dip_db": 1.66,
+     "window_ms": 5,
+     "ramps_ms": 4
+    },
+    {
+     "at_unit_s": 0.155,
+     "dip_db": 0.66,
+     "window_ms": 5,
+     "ramps_ms": 4
+    },
+    {
+     "at_unit_s": 0.16,
+     "dip_db": 0.32,
+     "window_ms": 5,
+     "ramps_ms": 4
+    }
+   ],
+   "peak": 0.8799,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_d02",
+   "sentences": [
+    "Doors... closed!"
+   ],
+   "take": "ch_d03/t3",
+   "reused_v1_take": true,
+   "take_on": 0.095,
+   "take_off": 1.53,
+   "on": 21.97,
+   "off": 23.395,
+   "gain_db": -1.02,
+   "lufs_before_gain_mono": -19.04,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5573,
+   "inner_cuts": [
+    {
+     "at_take_s": 0.635,
+     "was_s": 0.35,
+     "now_s": 0.35,
+     "rule": {
+      "after": "Doors...",
+      "to": 0.35,
+      "mode": "min"
+     }
+    }
+   ],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_t03",
+   "sentences": [
+    "What's a finger gonna do?"
+   ],
+   "take": "v3_t03/t1",
+   "reused_v1_take": false,
+   "take_on": 0.87,
+   "take_off": 2.215,
+   "on": 24.145,
+   "off": 25.475,
+   "gain_db": 2.39,
+   "lufs_before_gain_mono": -22.59,
+   "peak_trim_db": -0.14,
+   "plosive_dips": [],
+   "peak": 0.883,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.24,
+   "laugh_before_word_in_take_s": 0.83,
+   "first_word_onset": "whisper 0.84, elevenlabs 0.88, dip at 0.87"
+  },
+  {
+   "line": "v3_n09",
+   "sentences": [
+    "Second stop."
+   ],
+   "take": "v3_n0910/t3",
+   "reused_v1_take": false,
+   "take_on": 0.015,
+   "take_off": 0.87,
+   "on": 25.825,
+   "off": 26.67,
+   "gain_db": 1.44,
+   "lufs_before_gain_mono": -21.5,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6885,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_t04",
+   "sentences": [
+    "Stay."
+   ],
+   "take": "ch_t02/t3",
+   "reused_v1_take": true,
+   "take_on": 0.065,
+   "take_off": 0.56,
+   "on": 27.12,
+   "off": 27.59,
+   "gain_db": 1.94,
+   "lufs_before_gain_mono": -22.0,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6051,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_t04",
+   "sentences": [
+    "Be right back."
+   ],
+   "take": "ch_t02/t3",
+   "reused_v1_take": true,
+   "take_on": 0.89,
+   "take_off": 1.69,
+   "on": 27.89,
+   "off": 28.675,
+   "gain_db": -0.82,
+   "lufs_before_gain_mono": -19.23,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.4744,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n10",
+   "sentences": [
+    "It stays."
+   ],
+   "take": "v3_n0910/t3",
+   "reused_v1_take": false,
+   "take_on": 1.34,
+   "take_off": 2.34,
+   "on": 29.625,
+   "off": 30.595,
+   "gain_db": 3.63,
+   "lufs_before_gain_mono": -25.19,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.4664,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_t05",
+   "sentences": [
+    "Vending machine... check!"
+   ],
+   "take": "ch_t04/t2",
+   "reused_v1_take": true,
+   "take_on": 0.025,
+   "take_off": 1.89,
+   "on": 31.695,
+   "off": 33.655,
+   "gain_db": -0.56,
+   "lufs_before_gain_mono": -19.5,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.865,
+   "inner_cuts": [
+    {
+     "at_take_s": 1.18,
+     "was_s": 0.235,
+     "now_s": 0.35,
+     "rule": {
+      "after": "machine...",
+      "to": 0.35,
+      "mode": "min"
+     }
+    }
+   ],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_t06",
+   "sentences": [
+    "This kid gets it!"
+   ],
+   "take": "v3_t06/t1",
+   "reused_v1_take": false,
+   "take_on": 0.095,
+   "take_off": 1.55,
+   "on": 36.435,
+   "off": 37.88,
+   "gain_db": 7.84,
+   "lufs_before_gain_mono": -28.33,
+   "peak_trim_db": -0.43,
+   "plosive_dips": [],
+   "peak": 0.883,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": "no laugh before the word"
+  },
+  {
+   "line": "v3_n11",
+   "sentences": [
+    "You see, his eyes looked right at it."
+   ],
+   "take": "v3_n11/t3",
+   "reused_v1_take": false,
+   "take_on": 0.095,
+   "take_off": 2.635,
+   "on": 38.53,
+   "off": 41.065,
+   "gain_db": 4.55,
+   "lufs_before_gain_mono": -24.6,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6026,
+   "inner_cuts": [
+    {
+     "at_take_s": 0.875,
+     "was_s": 0.05,
+     "now_s": 0.05,
+     "rule": {
+      "after": "see,",
+      "to": 0.2,
+      "mode": "max"
+     }
+    }
+   ],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n11",
+   "sentences": [
+    "His mind was on his phone."
+   ],
+   "take": "v3_n11/t3",
+   "reused_v1_take": false,
+   "take_on": 2.975,
+   "take_off": 4.41,
+   "on": 41.265,
+   "off": 42.69,
+   "gain_db": 4.05,
+   "lufs_before_gain_mono": -24.1,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5166,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n12",
+   "sentences": [
+    "Japan's railway lab tested it."
+   ],
+   "take": "c08c/t1",
+   "reused_v1_take": true,
+   "take_on": 0.095,
+   "take_off": 2.135,
+   "on": 43.875,
+   "off": 45.905,
+   "gain_db": 3.19,
+   "lufs_before_gain_mono": -23.25,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6885,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n13",
+   "sentences": [
+    "For every six mistakes people made just looking... when they pointed and said it out loud:"
+   ],
+   "take": "v3_n13/t3",
+   "reused_v1_take": false,
+   "take_on": 0.055,
+   "take_off": 5.315,
+   "on": 46.055,
+   "off": 51.855,
+   "gain_db": 2.2,
+   "lufs_before_gain_mono": -22.26,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6881,
+   "inner_cuts": [
+    {
+     "at_take_s": 2.89,
+     "was_s": 0.45,
+     "now_s": 1.0,
+     "rule": {
+      "after": "looking...",
+      "to": 1.0,
+      "mode": "set"
+     }
+    }
+   ],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n13",
+   "sentences": [
+    "about one."
+   ],
+   "take": "v3_n13/t3",
+   "reused_v1_take": false,
+   "take_on": 5.685,
+   "take_off": 6.495,
+   "on": 52.155,
+   "off": 52.96,
+   "gain_db": 2.93,
+   "lufs_before_gain_mono": -22.98,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.7647,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_n14",
+   "sentences": [
+    "A finger and a shout drag your mind back."
+   ],
+   "take": "v3_n14/t1",
+   "reused_v1_take": false,
+   "take_on": 0.03,
+   "take_off": 2.78,
+   "on": 53.52,
+   "off": 56.26,
+   "gain_db": 1.85,
+   "lufs_before_gain_mono": -21.91,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6323,
+   "inner_cuts": [],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_d03",
+   "sentences": [
+    "Doors... closed!"
+   ],
+   "take": "ch_d04/t4",
+   "reused_v1_take": true,
+   "take_on": 0.08,
+   "take_off": 1.64,
+   "on": 57.01,
+   "off": 59.26,
+   "gain_db": -0.59,
+   "lufs_before_gain_mono": -19.47,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.6396,
+   "inner_cuts": [
+    {
+     "at_take_s": 0.745,
+     "was_s": 0.305,
+     "now_s": 1.005,
+     "rule": {
+      "after": "Doors...",
+      "to": 1.005,
+      "mode": "set"
+     }
+    }
+   ],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_k01",
+   "sentences": [
+    "Bag... check!"
+   ],
+   "take": "ch_k01/t5",
+   "reused_v1_take": true,
+   "take_on": 0.12,
+   "take_off": 1.475,
+   "on": 60.04,
+   "off": 61.39,
+   "gain_db": -2.35,
+   "lufs_before_gain_mono": -17.7,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [],
+   "peak": 0.5809,
+   "inner_cuts": [
+    {
+     "at_take_s": 0.67,
+     "was_s": 0.305,
+     "now_s": 0.35,
+     "rule": {
+      "after": "Bag...",
+      "to": 0.35,
+      "mode": "min"
+     }
+    }
+   ],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  },
+  {
+   "line": "v3_t07",
+   "sentences": [
+    "Bag... gone."
+   ],
+   "take": "v3_t07/t2",
+   "reused_v1_take": false,
+   "take_on": 0.18,
+   "take_off": 1.74,
+   "on": 62.12,
+   "off": 63.65,
+   "gain_db": 10.17,
+   "lufs_before_gain_mono": -31.72,
+   "peak_trim_db": 0.0,
+   "plosive_dips": [
+    {
+     "at_unit_s": 0.13,
+     "dip_db": 0.09,
+     "window_ms": 5,
+     "ramps_ms": 4
+    },
+    {
+     "at_unit_s": 0.14,
+     "dip_db": 0.69,
+     "window_ms": 5,
+     "ramps_ms": 4
+    },
+    {
+     "at_unit_s": 0.15,
+     "dip_db": 0.9,
+     "window_ms": 5,
+     "ramps_ms": 4
+    },
+    {
+     "at_unit_s": 0.165,
+     "dip_db": 0.2,
+     "window_ms": 5,
+     "ramps_ms": 4
+    }
+   ],
+   "peak": 0.8831,
+   "inner_cuts": [
+    {
+     "at_take_s": 0.845,
+     "was_s": 0.44,
+     "now_s": 0.44,
+     "rule": {
+      "after": "Bag...",
+      "to": 0.35,
+      "mode": "min"
+     }
+    }
+   ],
+   "laugh_pre_roll_s": 0.0,
+   "laugh_before_word_in_take_s": 0.0,
+   "first_word_onset": null
+  }
+ ],
+ "gaps": [
+  {
+   "after": "v3_n01",
+   "before": "v3_n02",
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": 0.47,
+   "between": "train. | He is"
+  },
+  {
+   "after": "v3_n02",
+   "before": "v3_n03",
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": 0.33,
+   "between": "not. | All he"
+  },
+  {
+   "after": "v3_n03",
+   "before": "v3_d01",
+   "kind": "normal",
+   "target_s": 0.18,
+   "native_s": null,
+   "between": "finger. | Signal... green!"
+  },
+  {
+   "after": "v3_d01",
+   "before": "v3_t01",
+   "kind": "normal",
+   "target_s": 0.2,
+   "native_s": 0.4,
+   "between": "green! | He's pointing"
+  },
+  {
+   "after": "v3_t01",
+   "before": "v3_n04",
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": null,
+   "between": "nothing! | But that"
+  },
+  {
+   "after": "v3_n04",
+   "before": "v3_n05",
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": null,
+   "between": "him. | So he"
+  },
+  {
+   "after": "v3_n05",
+   "before": "v3_n06",
+   "kind": "beat",
+   "target_s": 0.4,
+   "native_s": null,
+   "between": "shout. | First stop."
+  },
+  {
+   "after": "v3_n06",
+   "before": "v3_n07",
+   "kind": "normal",
+   "target_s": 0.25,
+   "native_s": 0.33,
+   "between": "stop. | His suitcase"
+  },
+  {
+   "after": "v3_n07",
+   "before": "v3_n08",
+   "kind": "beat",
+   "target_s": 0.5,
+   "native_s": 0.28,
+   "between": "off... | ...and the"
+  },
+  {
+   "after": "v3_n08",
+   "before": "v3_t02",
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": null,
+   "between": "it. | Bad suitcase."
+  },
+  {
+   "after": "v3_t02",
+   "before": "v3_d02",
+   "kind": "beat",
+   "target_s": 1.6,
+   "native_s": null,
+   "between": "suitcase. | Doors... closed!"
+  },
+  {
+   "after": "v3_d02",
+   "before": "v3_t03",
+   "kind": "beat",
+   "target_s": 0.75,
+   "native_s": null,
+   "between": "closed! | What's a"
+  },
+  {
+   "after": "v3_t03",
+   "before": "v3_n09",
+   "kind": "beat",
+   "target_s": 0.35,
+   "native_s": null,
+   "between": "do? | Second stop."
+  },
+  {
+   "after": "v3_n09",
+   "before": "v3_t04",
+   "kind": "beat",
+   "target_s": 0.45,
+   "native_s": 0.47,
+   "between": "stop. | Stay."
+  },
+  {
+   "after": "v3_t04",
+   "before": "v3_t04",
+   "kind": "beat",
+   "target_s": 0.3,
+   "native_s": 0.33,
+   "between": "Stay. | Be right"
+  },
+  {
+   "after": "v3_t04",
+   "before": "v3_n10",
+   "kind": "beat",
+   "target_s": 0.95,
+   "native_s": null,
+   "between": "back. | It stays."
+  },
+  {
+   "after": "v3_n10",
+   "before": "v3_t05",
+   "kind": "beat",
+   "target_s": 1.1,
+   "native_s": null,
+   "between": "stays. | Vending machine..."
+  },
+  {
+   "after": "v3_t05",
+   "before": "v3_t06",
+   "kind": "beat",
+   "target_s": 2.78,
+   "native_s": null,
+   "between": "check! | This kid"
+  },
+  {
+   "after": "v3_t06",
+   "before": "v3_n11",
+   "kind": "beat",
+   "target_s": 0.65,
+   "native_s": null,
+   "between": "it! | You see,"
+  },
+  {
+   "after": "v3_n11",
+   "before": "v3_n11",
+   "kind": "normal",
+   "target_s": 0.2,
+   "native_s": 0.34,
+   "between": "it. | His mind"
+  },
+  {
+   "after": "v3_n11",
+   "before": "v3_n12",
+   "kind": "beat",
+   "target_s": 1.185,
+   "native_s": null,
+   "between": "phone. | Japan's railway"
+  },
+  {
+   "after": "v3_n12",
+   "before": "v3_n13",
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": null,
+   "between": "it. | For every"
+  },
+  {
+   "after": "v3_n13",
+   "before": "v3_n13",
+   "kind": "beat",
+   "target_s": 0.3,
+   "native_s": 0.37,
+   "between": "loud: | about one."
+  },
+  {
+   "after": "v3_n13",
+   "before": "v3_n14",
+   "kind": "beat",
+   "target_s": 0.56,
+   "native_s": null,
+   "between": "one. | A finger"
+  },
+  {
+   "after": "v3_n14",
+   "before": "v3_d03",
+   "kind": "beat",
+   "target_s": 0.75,
+   "native_s": null,
+   "between": "back. | Doors... closed!"
+  },
+  {
+   "after": "v3_d03",
+   "before": "v3_k01",
+   "kind": "beat",
+   "target_s": 0.78,
+   "native_s": null,
+   "between": "closed! | Bag... check!"
+  },
+  {
+   "after": "v3_k01",
+   "before": "v3_t07",
+   "kind": "beat",
+   "target_s": 0.73,
+   "native_s": null,
+   "between": "check! | Bag... gone."
+  }
+ ],
+ "extras": [
+  {
+   "id": "v3_x01",
+   "use": "hook: his laugh under the narrator, cut 1 to cut 2",
+   "speaker": "T",
+   "take": "v3_x01/t1",
+   "s": 2.71,
+   "e": 4.657,
+   "gain_db": -16.93,
+   "level_mono_lufs": -32.06,
+   "cut1_s": 2.71,
+   "cut2_s": 4.657,
+   "under_narrator_db": -12.0
+  },
+  {
+   "id": "v3_x01",
+   "use": "his phone's speaker under v3_n11: a wordless laugh, thin",
+   "speaker": "T (phone)",
+   "take": "v3_x01/t1",
+   "s": 38.33,
+   "e": 42.465,
+   "gain_db": -21.89,
+   "level_mono_lufs": -38.06,
+   "under_narrator_db": -18.0,
+   "band_hz": [
+    550,
+    3600
+   ]
+  },
+  {
+   "id": "v3_x02",
+   "use": "the cutaway v3_p02 (the pause after 'looking...'): his giggle",
+   "speaker": "T",
+   "take": "v3_x02/t1",
+   "s": 48.96,
+   "e": 49.82,
+   "gain_db": -0.2,
+   "level_mono_lufs": -30.06,
+   "under_narrator_db": -10.0
+  },
+  {
+   "id": "v3_x02",
+   "use": "the payoff shot: he giggles at his phone, back to the train, until the kid's 'check!'",
+   "speaker": "T",
+   "take": "v3_x02/t1",
+   "s": 56.86,
+   "e": 60.955,
+   "gain_db": -4.2,
+   "level_mono_lufs": -34.06,
+   "under_narrator_db": -14.0
+  }
+ ],
+ "replay": {
+  "on": 42.465,
+  "off": 43.795,
+  "overlap_with_phone_s": 0.225,
+  "first_word_len_s": 0.225,
+  "gain_db": -1.67,
+  "under_narrator_db": -8.0,
+  "band_hz": [
+   550,
+   3600
+  ],
+  "source": "the v3_t03 unit of this build, band-passed"
+ },
+ "stems": {
+  "dialogue": "stems/dialogue.wav (the spoken lines only: word times, gaps and gates are measured on it)",
+  "laughs": "stems/laughs.wav (the laugh-only takes, at their mix level)",
+  "phone": "stems/phone.wav (the thin replay + the thin laugh bed)",
+  "sum": "voice.wav = dialogue + laughs + phone, sample for sample"
+ },
+ "word_timing": {
+  "method": "whisper (finished dialogue) word starts snapped to the 10 ms energy onset; sentence-first / last words pinned to the acoustic on / off; the first word after a laugh pre-roll = the energy dip before whisper's / ElevenLabs' start in the take",
+  "moved_over_60ms": 82,
+  "n_words": 131,
+  "whisper_matched": 131,
+  "vs_elevenlabs_times": {
+   "median_abs_s": 0.06,
+   "over_0.2s": 15
+  },
+  "moves": [
+   [
+    "that",
+    0.92,
+    0.8,
+    "whisper+energy"
+   ],
+   [
+    "train.",
+    1.32,
+    1.14,
+    "whisper+energy"
+   ],
+   [
+    "is",
+    2.0,
+    1.81,
+    "whisper+energy"
+   ],
+   [
+    "not.",
+    2.32,
+    2.23,
+    "whisper+energy"
+   ],
+   [
+    "was",
+    3.555,
+    3.47,
+    "whisper+energy"
+   ],
+   [
+    "laugh...",
+    3.875,
+    3.72,
+    "whisper+energy"
+   ],
+   [
+    "a",
+    4.835,
+    4.71,
+    "whisper+energy"
+   ],
+   [
+    "finger.",
+    5.29,
+    4.87,
+    "whisper+energy"
+   ],
+   [
+    "green!",
+    6.68,
+    6.415,
+    "end of the true silence before it"
+   ],
+   [
+    "pointing",
+    7.605,
+    7.5,
+    "whisper+energy"
+   ],
+   [
+    "at",
+    7.925,
+    7.86,
+    "whisper+energy"
+   ],
+   [
+    "nothing!",
+    8.165,
+    8.04,
+    "whisper+energy"
+   ],
+   [
+    "that",
+    9.015,
+    8.95,
+    "whisper+energy"
+   ],
+   [
+    "driver",
+    9.335,
+    9.16,
+    "whisper+energy"
+   ],
+   [
+    "has",
+    9.615,
+    9.47,
+    "whisper+energy"
+   ],
+   [
+    "behind",
+    10.815,
+    10.72,
+    "whisper+energy"
+   ],
+   [
+    "him.",
+    11.295,
+    11.2,
+    "whisper+energy"
+   ],
+   [
+    "he",
+    11.755,
+    11.64,
+    "whisper+energy"
+   ],
+   [
+    "with",
+    12.195,
+    12.11,
+    "whisper+energy"
+   ],
+   [
+    "finger",
+    12.475,
+    12.54,
+    "whisper+energy"
+   ],
+   [
+    "suitcase",
+    15.495,
+    15.4,
+    "whisper+energy"
+   ],
+   [
+    "tries",
+    16.095,
+    15.98,
+    "whisper+energy"
+   ],
+   [
+    "off...",
+    16.615,
+    16.5,
+    "whisper+energy"
+   ],
+   [
+    "finger",
+    18.35,
+    18.17,
+    "whisper+energy"
+   ],
+   [
+    "saves",
+    18.63,
+    18.51,
+    "whisper+energy"
+   ],
+   [
+    "it.",
+    18.99,
+    18.92,
+    "whisper+energy"
+   ],
+   [
+    "closed!",
+    23.11,
+    22.86,
+    "end of the true silence before it"
+   ],
+   [
+    "a",
+    24.435,
+    24.37,
+    "whisper+energy"
+   ],
+   [
+    "stop.",
+    26.29,
+    26.2,
+    "whisper+energy"
+   ],
+   [
+    "right",
+    28.115,
+    28.0,
+    "whisper+energy"
+   ],
+   [
+    "back.",
+    28.555,
+    28.39,
+    "whisper+energy"
+   ],
+   [
+    "stays.",
+    29.885,
+    29.76,
+    "whisper+energy"
+   ],
+   [
+    "machine...",
+    32.46,
+    32.26,
+    "whisper+energy"
+   ],
+   [
+    "it!",
+    37.7,
+    37.6,
+    "whisper+energy"
+   ],
+   [
+    "see,",
+    38.835,
+    38.77,
+    "whisper+energy"
+   ],
+   [
+    "looked",
+    40.035,
+    39.97,
+    "whisper+energy"
+   ],
+   [
+    "right",
+    40.355,
+    40.15,
+    "whisper+energy"
+   ],
+   [
+    "at",
+    40.675,
+    40.56,
+    "whisper+energy"
+   ],
+   [
+    "mind",
+    41.65,
+    41.43,
+    "whisper+energy"
+   ],
+   [
+    "was",
+    41.89,
+    41.82,
+    "whisper+energy"
+   ],
+   [
+    "on",
+    42.01,
+    41.93,
+    "whisper+energy"
+   ],
+   [
+    "phone.",
+    42.49,
+    42.31,
+    "whisper+energy"
+   ],
+   [
+    "railway",
+    44.56,
+    44.46,
+    "whisper+energy"
+   ],
+   [
+    "lab",
+    44.92,
+    44.85,
+    "whisper+energy"
+   ],
+   [
+    "it.",
+    45.815,
+    45.53,
+    "whisper+energy"
+   ],
+   [
+    "six",
+    46.655,
+    46.54,
+    "whisper+energy"
+   ],
+   [
+    "mistakes",
+    46.975,
+    46.85,
+    "whisper+energy"
+   ],
+   [
+    "people",
+    47.615,
+    47.5,
+    "whisper+energy"
+   ],
+   [
+    "made",
+    47.895,
+    47.64,
+    "whisper+energy"
+   ],
+   [
+    "looking...",
+    48.415,
+    48.35,
+    "whisper+energy"
+   ],
+   [
+    "when",
+    49.898,
+    49.83,
+    "end of the true silence before it"
+   ],
+   [
+    "pointed",
+    50.285,
+    50.18,
+    "whisper+energy"
+   ],
+   [
+    "and",
+    50.765,
+    50.6,
+    "whisper+energy"
+   ],
+   [
+    "out",
+    51.205,
+    51.13,
+    "whisper+energy"
+   ],
+   [
+    "loud:",
+    51.725,
+    51.38,
+    "whisper+energy"
+   ],
+   [
+    "one.",
+    52.57,
+    52.42,
+    "whisper+energy"
+   ],
+   [
+    "drag",
+    55.07,
+    54.81,
+    "whisper+energy"
+   ],
+   [
+    "your",
+    55.35,
+    55.24,
+    "whisper+energy"
+   ],
+   [
+    "mind",
+    55.51,
+    55.4,
+    "whisper+energy"
+   ],
+   [
+    "back.",
+    56.17,
+    55.83,
+    "whisper+energy"
+   ],
+   [
+    "bag",
+    0.37,
+    0.26,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "is",
+    0.58,
+    0.62,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "on",
+    0.71,
+    0.74,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "that",
+    0.8,
+    0.89,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "train.",
+    1.14,
+    1.03,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "is",
+    1.81,
+    1.89,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "not.",
+    2.23,
+    2.05,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "he",
+    3.14,
+    3.07,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "did",
+    3.35,
+    3.26,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "a",
+    4.71,
+    4.535,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "finger.",
+    4.87,
+    4.69,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "nothing!",
+    8.04,
+    7.98,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "people",
+    10.48,
+    10.41,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "behind",
+    10.72,
+    10.68,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "finger",
+    12.54,
+    12.39,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "shout.",
+    13.29,
+    13.21,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "finger",
+    18.17,
+    18.05,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "saves",
+    18.51,
+    18.48,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "phone.",
+    42.31,
+    42.26,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "pointed",
+    50.18,
+    50.11,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "loud:",
+    51.38,
+    51.34,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ],
+   [
+    "back.",
+    55.83,
+    55.8,
+    "measured onset (pt_timing_v3 word_onsets_measured)"
+   ]
+  ]
+ },
+ "word_p_whisper": [
+  [
+   "His",
+   0.779
+  ],
+  [
+   "bag",
+   0.97
+  ],
+  [
+   "is",
+   0.991
+  ],
+  [
+   "on",
+   0.993
+  ],
+  [
+   "that",
+   0.936
+  ],
+  [
+   "train.",
+   0.988
+  ],
+  [
+   "He",
+   0.823
+  ],
+  [
+   "is",
+   0.983
+  ],
+  [
+   "not.",
+   0.961
+  ],
+  [
+   "All",
+   0.904
+  ],
+  [
+   "he",
+   0.993
+  ],
+  [
+   "did",
+   0.998
+  ],
+  [
+   "was",
+   0.994
+  ],
+  [
+   "laugh...",
+   0.952
+  ],
+  [
+   "at",
+   0.899
+  ],
+  [
+   "a",
+   0.993
+  ],
+  [
+   "finger.",
+   0.997
+  ],
+  [
+   "Signal...",
+   0.786
+  ],
+  [
+   "green!",
+   0.91
+  ],
+  [
+   "He's",
+   0.858
+  ],
+  [
+   "pointing",
+   0.987
+  ],
+  [
+   "at",
+   0.995
+  ],
+  [
+   "nothing!",
+   0.938
+  ],
+  [
+   "But",
+   0.762
+  ],
+  [
+   "that",
+   0.963
+  ],
+  [
+   "driver",
+   0.982
+  ],
+  [
+   "has",
+   0.989
+  ],
+  [
+   "a",
+   0.763
+  ],
+  [
+   "thousand",
+   0.973
+  ],
+  [
+   "people",
+   0.994
+  ],
+  [
+   "behind",
+   0.999
+  ],
+  [
+   "him.",
+   0.999
+  ],
+  [
+   "So",
+   0.67
+  ],
+  [
+   "he",
+   0.893
+  ],
+  [
+   "checks",
+   0.996
+  ],
+  [
+   "with",
+   0.995
+  ],
+  [
+   "a",
+   0.985
+  ],
+  [
+   "finger",
+   0.985
+  ],
+  [
+   "and",
+   0.968
+  ],
+  [
+   "a",
+   0.978
+  ],
+  [
+   "shout.",
+   0.988
+  ],
+  [
+   "First",
+   0.82
+  ],
+  [
+   "stop.",
+   0.828
+  ],
+  [
+   "His",
+   0.765
+  ],
+  [
+   "suitcase",
+   0.946
+  ],
+  [
+   "tries",
+   0.985
+  ],
+  [
+   "to",
+   0.999
+  ],
+  [
+   "get",
+   0.998
+  ],
+  [
+   "off...",
+   0.995
+  ],
+  [
+   "...and",
+   0.489
+  ],
+  [
+   "the",
+   0.977
+  ],
+  [
+   "boy's",
+   0.936
+  ],
+  [
+   "finger",
+   0.97
+  ],
+  [
+   "saves",
+   0.981
+  ],
+  [
+   "it.",
+   0.997
+  ],
+  [
+   "Bad",
+   0.647
+  ],
+  [
+   "suitcase.",
+   0.874
+  ],
+  [
+   "Doors...",
+   0.796
+  ],
+  [
+   "closed!",
+   0.966
+  ],
+  [
+   "What's",
+   0.91
+  ],
+  [
+   "a",
+   0.924
+  ],
+  [
+   "finger",
+   0.982
+  ],
+  [
+   "gonna",
+   0.886
+  ],
+  [
+   "do?",
+   0.979
+  ],
+  [
+   "Second",
+   0.841
+  ],
+  [
+   "stop.",
+   0.771
+  ],
+  [
+   "Stay.",
+   0.813
+  ],
+  [
+   "Be",
+   0.886
+  ],
+  [
+   "right",
+   0.987
+  ],
+  [
+   "back.",
+   0.992
+  ],
+  [
+   "It",
+   0.68
+  ],
+  [
+   "stays.",
+   0.941
+  ],
+  [
+   "Vending",
+   0.836
+  ],
+  [
+   "machine...",
+   0.669
+  ],
+  [
+   "check!",
+   0.95
+  ],
+  [
+   "This",
+   0.807
+  ],
+  [
+   "kid",
+   0.969
+  ],
+  [
+   "gets",
+   0.921
+  ],
+  [
+   "it!",
+   0.998
+  ],
+  [
+   "You",
+   0.864
+  ],
+  [
+   "see,",
+   0.998
+  ],
+  [
+   "his",
+   0.983
+  ],
+  [
+   "eyes",
+   0.995
+  ],
+  [
+   "looked",
+   0.975
+  ],
+  [
+   "right",
+   0.992
+  ],
+  [
+   "at",
+   0.999
+  ],
+  [
+   "it.",
+   0.994
+  ],
+  [
+   "His",
+   0.773
+  ],
+  [
+   "mind",
+   0.992
+  ],
+  [
+   "was",
+   0.998
+  ],
+  [
+   "on",
+   0.997
+  ],
+  [
+   "his",
+   0.996
+  ],
+  [
+   "phone.",
+   0.997
+  ],
+  [
+   "Japan's",
+   0.976
+  ],
+  [
+   "railway",
+   0.737
+  ],
+  [
+   "lab",
+   0.996
+  ],
+  [
+   "tested",
+   0.983
+  ],
+  [
+   "it.",
+   0.998
+  ],
+  [
+   "For",
+   0.754
+  ],
+  [
+   "every",
+   0.995
+  ],
+  [
+   "six",
+   0.608
+  ],
+  [
+   "mistakes",
+   0.997
+  ],
+  [
+   "people",
+   0.996
+  ],
+  [
+   "made",
+   0.966
+  ],
+  [
+   "just",
+   0.989
+  ],
+  [
+   "looking...",
+   0.986
+  ],
+  [
+   "when",
+   0.642
+  ],
+  [
+   "they",
+   0.996
+  ],
+  [
+   "pointed",
+   0.996
+  ],
+  [
+   "and",
+   0.983
+  ],
+  [
+   "said",
+   0.971
+  ],
+  [
+   "it",
+   0.995
+  ],
+  [
+   "out",
+   0.998
+  ],
+  [
+   "loud:",
+   0.978
+  ],
+  [
+   "about",
+   0.756
+  ],
+  [
+   "one.",
+   0.443
+  ],
+  [
+   "A",
+   0.855
+  ],
+  [
+   "finger",
+   0.994
+  ],
+  [
+   "and",
+   0.985
+  ],
+  [
+   "a",
+   0.975
+  ],
+  [
+   "shout",
+   0.991
+  ],
+  [
+   "drag",
+   0.925
+  ],
+  [
+   "your",
+   0.991
+  ],
+  [
+   "mind",
+   0.999
+  ],
+  [
+   "back.",
+   0.999
+  ],
+  [
+   "Doors...",
+   0.779
+  ],
+  [
+   "closed!",
+   0.633
+  ],
+  [
+   "Bag...",
+   0.792
+  ],
+  [
+   "check!",
+   0.697
+  ],
+  [
+   "Bag...",
+   0.631
+  ],
+  [
+   "gone.",
+   0.951
+  ]
+ ]
+}

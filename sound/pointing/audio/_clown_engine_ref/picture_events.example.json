@@ -1,0 +1,11 @@
+{
+ "_doc": "EXAMPLE of audio/picture_events.json for 'The Clown Nobody Saw' (copy to picture_events.json and edit). Each key is a picture event from SOUND_EVENTS.md; the value is a frame (30 fps), a BEAT expression ('suitEnd+2', 'S9.a+8'), a list of them where the event is a list, or null to drop the sound. mix.py reads it at every run and writes the frames it used to picture_events_used.json.",
+ "honk_suit": "suitEnd+2",
+ "honk_seen_5": 1134,
+ "peg_clip_7": "withMoney-5",
+ "ducks_7": ["nearly+2", "everyone+1", "ducked"],
+ "ducks_7b": ["phoneQ", "hundred+2"],
+ "wheelie_1": null,
+ "phone_walker_5": null,
+ "pullback_lands": "youSawThe+2"
+}

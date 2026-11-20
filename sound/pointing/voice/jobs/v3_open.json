@@ -1,0 +1,328 @@
+[
+ {
+  "folder": "v3_hook",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. He is not. All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9101,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. He is not. All he did was laugh... at a finger.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9102,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. He is not. All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9103,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[amused] His bag is on that train. [deadpan] He is not. [amused] All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9104,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t5",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. [deadpan] He is not. All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9105,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t6",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. [deadpan] He is not. All he did was laugh... at a finger.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9106,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t7",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[amused] His bag is on that train. He is not. All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9107,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t8",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. [flatly] He is not. [amused] All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9108,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_x01",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing hard] Hahahaha! Ahahaha!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9201,
+  "prev": null,
+  "next": null,
+  "lines": [
+   "v3_x01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3",
+  "note": "laugh only, no words"
+ },
+ {
+  "folder": "v3_x01",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[bursts out laughing] Ha ha ha ha ha ha!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9202,
+  "prev": null,
+  "next": null,
+  "lines": [
+   "v3_x01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3",
+  "note": "laugh only, no words"
+ },
+ {
+  "folder": "v3_x01",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughs] [laughs harder]",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9203,
+  "prev": null,
+  "next": null,
+  "lines": [
+   "v3_x01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3",
+  "note": "laugh only, no words"
+ },
+ {
+  "folder": "v3_x01",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[wheezing laugh] Hahaha... hahahaha!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9204,
+  "prev": null,
+  "next": null,
+  "lines": [
+   "v3_x01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3",
+  "note": "laugh only, no words"
+ },
+ {
+  "folder": "v3_t01",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] He's pointing at nothing!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9301,
+  "prev": "Signal... green!",
+  "next": "But that driver has a thousand people behind him.",
+  "lines": [
+   "v3_t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t01",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] He's pointing at nothing!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9302,
+  "prev": "Signal... green!",
+  "next": "But that driver has a thousand people behind him.",
+  "lines": [
+   "v3_t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t01",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughs] He's pointing at nothing!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9303,
+  "prev": "Signal... green!",
+  "next": "But that driver has a thousand people behind him.",
+  "lines": [
+   "v3_t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t01",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughs] He's pointing at nothing!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9304,
+  "prev": "Signal... green!",
+  "next": "But that driver has a thousand people behind him.",
+  "lines": [
+   "v3_t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t01",
+  "take": "t5",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] He's pointing at nothing!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9305,
+  "prev": "Signal... green!",
+  "next": "But that driver has a thousand people behind him.",
+  "lines": [
+   "v3_t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ }
+]

@@ -1,0 +1,56 @@
+timeline: words from the voice in C:/Users/utkar/Desktop/animated-shorts-studio/sound/pointing/voice/_v3; shots from the film's timeline.ts (words: this voice); L = 63.733 s = 1912 frames
+  film clock: words.ts (the real voice: 135 words); 81 cast beats
+  cuts that differ from the sound's old copy of the rules (old -> film): s03 4.837->4.667, s16b 42.465->42.400, s17 45.240->45.200
+  s01    0.000 -   2.700  (2.70 s)  platB
+  s02    2.700 -   4.667  (1.97 s)  car
+  s03    4.667 -   7.067  (2.40 s)  cab
+  s04    7.067 -   8.733  (1.67 s)  car
+  s05    8.733 -  11.467  (2.73 s)  car
+  s06   11.467 -  13.867  (2.40 s)  cab
+  s07   13.867 -  16.967  (3.10 s)  platA
+  s08   16.967 -  20.767  (3.80 s)  platA
+  s09   20.767 -  23.900  (3.13 s)  platA
+  s10   23.900 -  25.667  (1.77 s)  car
+  s11   25.667 -  29.133  (3.47 s)  platB
+  s12   29.133 -  31.433  (2.30 s)  platB
+  s13   31.433 -  34.000  (2.57 s)  platB
+  s14   34.000 -  35.100  (1.10 s)  platB
+  s15   35.100 -  38.333  (3.23 s)  door
+  s16a  38.333 -  42.400  (4.07 s)  platB
+  s16b  42.400 -  45.200  (2.80 s)  platB
+  s17   45.200 -  48.900  (3.70 s)  lab
+  s18   48.900 -  49.900  (1.00 s)  door
+  s19   49.900 -  53.367  (3.47 s)  lab
+  s20   53.367 -  55.867  (2.50 s)  door
+  s21   55.867 -  56.867  (1.00 s)  cabstop
+  s22   56.867 -  59.967  (3.10 s)  platB
+  s23   59.967 -  61.833  (1.87 s)  platB
+  s24   61.833 -  63.733  (1.90 s)  platB
+  v3_n01   0.070 -   1.565  N   His bag is on that train.
+  v3_n02   1.715 -   2.630  N   He is not.
+  v3_x01 (not in the voice track)
+  v3_n03   2.780 -   5.320  N   All he did was laugh... at a finger.
+  v3_d01   5.500 -   6.965  D   Signal... green!
+  v3_t01   7.165 -   8.665  T   He's pointing at nothing!
+  v3_n04   8.815 -  11.395  N   But that driver has a thousand people behind him.
+  v3_n05  11.545 -  13.715  N   So he checks with a finger and a shout.
+  v3_n06  14.115 -  15.000  N   First stop.
+  v3_n07  15.250 -  16.950  N   His suitcase tries to get off...
+  v3_n08  17.450 -  19.195  N   ...and the boy's finger saves it.
+  v3_t02  19.345 -  20.370  T   Bad suitcase.
+  v3_d02  21.970 -  23.395  D   Doors... closed!
+  v3_t03  24.145 -  25.475  T   What's a finger gonna do?
+  v3_n09  25.825 -  26.670  N   Second stop.
+  v3_t04  27.120 -  28.675  T   Stay. Be right back.
+  v3_n10  29.625 -  30.595  N   It stays.
+  v3_t05  31.695 -  33.655  T   Vending machine... check!
+  v3_t06  36.435 -  37.880  T   This kid gets it!
+  v3_n11  38.530 -  42.690  N   You see, his eyes looked right at it. His mind was on his ph
+  v3_r01  42.465 -  43.795  T   What's a finger gonna do?
+  v3_n12  43.875 -  45.905  N   Japan's railway lab tested it.
+  v3_n13  46.055 -  52.960  N   For every six mistakes people made just looking... when they
+  v3_x02 (not in the voice track)
+  v3_n14  53.520 -  56.260  N   A finger and a shout drag your mind back.
+  v3_d03  57.010 -  59.260  D   Doors... closed!
+  v3_k01  60.040 -  61.390  KID Bag... check!
+  v3_t07  62.120 -  63.635  T   Bag... gone.

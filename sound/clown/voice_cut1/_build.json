@@ -1,0 +1,806 @@
+{
+ "target_stereo_lufs_asked": -17.2,
+ "target_stereo_lufs_used": -17.2,
+ "gap_scale": 0.42,
+ "sentence_loudness_tolerance_lu": 1.2,
+ "dropped_sentences": [],
+ "peak": 0.8589,
+ "duration_s": 62.015,
+ "portions": [
+  {
+   "take": "p1/t1",
+   "sentences": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "gain_db": 1.34,
+   "raw_lufs_take": -21.24
+  },
+  {
+   "take": "p1/t2",
+   "sentences": [
+    4
+   ],
+   "gain_db": 0.35,
+   "raw_lufs_take": -20.9
+  },
+  {
+   "take": "p1/t1",
+   "sentences": [
+    5,
+    6,
+    7
+   ],
+   "gain_db": 0.94,
+   "raw_lufs_take": -21.24
+  },
+  {
+   "take": "c03/t2",
+   "sentences": [
+    8
+   ],
+   "gain_db": -3.88,
+   "raw_lufs_take": -18.41
+  },
+  {
+   "take": "p1/t1",
+   "sentences": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "gain_db": 1.27,
+   "raw_lufs_take": -21.24
+  },
+  {
+   "take": "r1/t3",
+   "sentences": [
+    13
+   ],
+   "gain_db": -3.46,
+   "raw_lufs_take": -18.91
+  },
+  {
+   "take": "p1/t1",
+   "sentences": [
+    14
+   ],
+   "gain_db": 1.31,
+   "raw_lufs_take": -21.24
+  },
+  {
+   "take": "p2/t1",
+   "sentences": [
+    15,
+    16,
+    17,
+    18
+   ],
+   "gain_db": 2.23,
+   "raw_lufs_take": -22.59
+  },
+  {
+   "take": "k1a/t5",
+   "sentences": [
+    19
+   ],
+   "gain_db": 3.26,
+   "raw_lufs_take": -23.76
+  },
+  {
+   "take": "p3/t2",
+   "sentences": [
+    20
+   ],
+   "gain_db": 0.66,
+   "raw_lufs_take": -21.96
+  },
+  {
+   "take": "p3/t3",
+   "sentences": [
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+   ],
+   "gain_db": 0.88,
+   "raw_lufs_take": -21.11
+  },
+  {
+   "take": "p4/t8",
+   "sentences": [
+    30
+   ],
+   "gain_db": 0.26,
+   "raw_lufs_take": -21.56
+  },
+  {
+   "take": "p4/t2",
+   "sentences": [
+    31,
+    32
+   ],
+   "gain_db": 1.78,
+   "raw_lufs_take": -21.92
+  },
+  {
+   "take": "k2d/t2",
+   "sentences": [
+    33
+   ],
+   "gain_db": -1.75,
+   "raw_lufs_take": -18.83
+  }
+ ],
+ "sentences": [
+  {
+   "i": 0,
+   "take": "p1/t1",
+   "take_on": 0.045,
+   "take_off": 4.24,
+   "on": 0.1,
+   "off": 4.19,
+   "inner_cuts": [
+    {
+     "between": "square, | and",
+     "was_s": 0.275,
+     "now_s": 0.18
+    }
+   ],
+   "portion_gain_db": 1.34,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -19.8
+  },
+  {
+   "i": 1,
+   "take": "p1/t1",
+   "take_on": 4.88,
+   "take_off": 5.455,
+   "on": 4.375,
+   "off": 4.945,
+   "inner_cuts": [],
+   "portion_gain_db": 1.34,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -19.26
+  },
+  {
+   "i": 2,
+   "take": "p1/t1",
+   "take_on": 5.835,
+   "take_off": 7.25,
+   "on": 5.105,
+   "off": 6.515,
+   "inner_cuts": [],
+   "portion_gain_db": 1.34,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.53
+  },
+  {
+   "i": 3,
+   "take": "p1/t1",
+   "take_on": 7.79,
+   "take_off": 10.495,
+   "on": 6.7,
+   "off": 9.4,
+   "inner_cuts": [],
+   "portion_gain_db": 1.34,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -19.79
+  },
+  {
+   "i": 4,
+   "take": "p1/t2",
+   "take_on": 11.19,
+   "take_off": 13.175,
+   "on": 9.56,
+   "off": 11.54,
+   "inner_cuts": [],
+   "portion_gain_db": 0.35,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.03
+  },
+  {
+   "i": 5,
+   "take": "p1/t1",
+   "take_on": 13.085,
+   "take_off": 13.975,
+   "on": 11.7,
+   "off": 12.585,
+   "inner_cuts": [],
+   "portion_gain_db": 0.94,
+   "sentence_gain_db": -0.27,
+   "lufs_before_sentence_gain": -18.74
+  },
+  {
+   "i": 6,
+   "take": "p1/t1",
+   "take_on": 14.54,
+   "take_off": 16.1,
+   "on": 12.77,
+   "off": 14.325,
+   "inner_cuts": [],
+   "portion_gain_db": 0.94,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -19.27
+  },
+  {
+   "i": 7,
+   "take": "p1/t1",
+   "take_on": 16.71,
+   "take_off": 19.115,
+   "on": 14.51,
+   "off": 16.91,
+   "inner_cuts": [],
+   "portion_gain_db": 0.94,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.78
+  },
+  {
+   "i": 8,
+   "take": "c03/t2",
+   "take_on": 0.105,
+   "take_off": 0.775,
+   "on": 17.07,
+   "off": 17.735,
+   "inner_cuts": [],
+   "portion_gain_db": -3.88,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.14
+  },
+  {
+   "i": 9,
+   "take": "p1/t1",
+   "take_on": 21.01,
+   "take_off": 21.455,
+   "on": 18.185,
+   "off": 18.625,
+   "inner_cuts": [],
+   "portion_gain_db": 1.27,
+   "sentence_gain_db": -0.93,
+   "lufs_before_sentence_gain": -18.08
+  },
+  {
+   "i": 10,
+   "take": "p1/t1",
+   "take_on": 21.795,
+   "take_off": 22.5,
+   "on": 18.77,
+   "off": 19.465,
+   "inner_cuts": [],
+   "portion_gain_db": 1.27,
+   "sentence_gain_db": -0.3,
+   "lufs_before_sentence_gain": -18.71
+  },
+  {
+   "i": 11,
+   "take": "p1/t1",
+   "take_on": 22.995,
+   "take_off": 23.68,
+   "on": 19.615,
+   "off": 20.295,
+   "inner_cuts": [],
+   "portion_gain_db": 1.27,
+   "sentence_gain_db": -1.31,
+   "lufs_before_sentence_gain": -17.7
+  },
+  {
+   "i": 12,
+   "take": "p1/t1",
+   "take_on": 24.125,
+   "take_off": 24.64,
+   "on": 20.445,
+   "off": 20.955,
+   "inner_cuts": [],
+   "portion_gain_db": 1.27,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -19.56
+  },
+  {
+   "i": 13,
+   "take": "r1/t3",
+   "take_on": 8.25,
+   "take_off": 8.935,
+   "on": 21.115,
+   "off": 21.795,
+   "inner_cuts": [],
+   "portion_gain_db": -3.46,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -19.86
+  },
+  {
+   "i": 14,
+   "take": "p1/t1",
+   "take_on": 26.535,
+   "take_off": 29.345,
+   "on": 21.955,
+   "off": 24.525,
+   "inner_cuts": [
+    {
+     "between": "leaving: | did",
+     "was_s": 0.415,
+     "now_s": 0.18
+    }
+   ],
+   "portion_gain_db": 1.31,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.36
+  },
+  {
+   "i": 15,
+   "take": "p2/t1",
+   "take_on": 0.065,
+   "take_off": 1.93,
+   "on": 24.685,
+   "off": 26.545,
+   "inner_cuts": [],
+   "portion_gain_db": 2.23,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.53
+  },
+  {
+   "i": 16,
+   "take": "p2/t1",
+   "take_on": 2.12,
+   "take_off": 3.455,
+   "on": 26.695,
+   "off": 28.025,
+   "inner_cuts": [],
+   "portion_gain_db": 2.23,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -19.9
+  },
+  {
+   "i": 17,
+   "take": "p2/t1",
+   "take_on": 3.94,
+   "take_off": 7.03,
+   "on": 28.21,
+   "off": 31.295,
+   "inner_cuts": [],
+   "portion_gain_db": 2.23,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.0
+  },
+  {
+   "i": 18,
+   "take": "p2/t1",
+   "take_on": 7.395,
+   "take_off": 9.885,
+   "on": 31.45,
+   "off": 33.84,
+   "inner_cuts": [
+    {
+     "between": "counted: | people",
+     "was_s": 0.275,
+     "now_s": 0.18
+    }
+   ],
+   "portion_gain_db": 2.23,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -19.74
+  },
+  {
+   "i": 19,
+   "take": "k1a/t5",
+   "take_on": 0.065,
+   "take_off": 2.625,
+   "on": 34.205,
+   "off": 36.76,
+   "inner_cuts": [],
+   "portion_gain_db": 3.26,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.1
+  },
+  {
+   "i": 20,
+   "take": "p3/t2",
+   "take_on": 0.045,
+   "take_off": 1.345,
+   "on": 36.92,
+   "off": 38.215,
+   "inner_cuts": [],
+   "portion_gain_db": 0.66,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.3
+  },
+  {
+   "i": 21,
+   "take": "p3/t3",
+   "take_on": 1.695,
+   "take_off": 3.275,
+   "on": 38.375,
+   "off": 39.95,
+   "inner_cuts": [],
+   "portion_gain_db": 0.88,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.55
+  },
+  {
+   "i": 22,
+   "take": "p3/t3",
+   "take_on": 3.47,
+   "take_off": 4.775,
+   "on": 40.1,
+   "off": 41.4,
+   "inner_cuts": [],
+   "portion_gain_db": 0.88,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.96
+  },
+  {
+   "i": 23,
+   "take": "p3/t3",
+   "take_on": 5.255,
+   "take_off": 7.42,
+   "on": 41.585,
+   "off": 43.745,
+   "inner_cuts": [],
+   "portion_gain_db": 0.88,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.51
+  },
+  {
+   "i": 24,
+   "take": "p3/t3",
+   "take_on": 7.855,
+   "take_off": 11.2,
+   "on": 43.93,
+   "off": 47.27,
+   "inner_cuts": [],
+   "portion_gain_db": 0.88,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -19.51
+  },
+  {
+   "i": 25,
+   "take": "p3/t3",
+   "take_on": 11.435,
+   "take_off": 12.635,
+   "on": 47.42,
+   "off": 48.615,
+   "inner_cuts": [],
+   "portion_gain_db": 0.88,
+   "sentence_gain_db": -0.92,
+   "lufs_before_sentence_gain": -18.09
+  },
+  {
+   "i": 26,
+   "take": "p3/t3",
+   "take_on": 12.945,
+   "take_off": 14.31,
+   "on": 48.765,
+   "off": 50.13,
+   "inner_cuts": [],
+   "portion_gain_db": 0.88,
+   "sentence_gain_db": 0.42,
+   "lufs_before_sentence_gain": -21.83
+  },
+  {
+   "i": 27,
+   "take": "p3/t3",
+   "take_on": 14.6,
+   "take_off": 15.335,
+   "on": 50.28,
+   "off": 51.01,
+   "inner_cuts": [],
+   "portion_gain_db": 0.88,
+   "sentence_gain_db": 0.4,
+   "lufs_before_sentence_gain": -21.81
+  },
+  {
+   "i": 28,
+   "take": "p3/t3",
+   "take_on": 15.615,
+   "take_off": 16.485,
+   "on": 51.13,
+   "off": 51.985,
+   "inner_cuts": [],
+   "portion_gain_db": 0.88,
+   "sentence_gain_db": -1.62,
+   "lufs_before_sentence_gain": -17.39
+  },
+  {
+   "i": 29,
+   "take": "p3/t3",
+   "take_on": 16.725,
+   "take_off": 18.5,
+   "on": 52.135,
+   "off": 53.905,
+   "inner_cuts": [],
+   "portion_gain_db": 0.88,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.48
+  },
+  {
+   "i": 30,
+   "take": "p4/t8",
+   "take_on": 0.015,
+   "take_off": 2.625,
+   "on": 54.065,
+   "off": 56.67,
+   "inner_cuts": [],
+   "portion_gain_db": 0.26,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.22
+  },
+  {
+   "i": 31,
+   "take": "p4/t2",
+   "take_on": 3.225,
+   "take_off": 5.35,
+   "on": 56.83,
+   "off": 58.95,
+   "inner_cuts": [],
+   "portion_gain_db": 1.78,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.12
+  },
+  {
+   "i": 32,
+   "take": "p4/t2",
+   "take_on": 5.985,
+   "take_off": 7.02,
+   "on": 59.135,
+   "off": 60.165,
+   "inner_cuts": [],
+   "portion_gain_db": 1.78,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -19.41
+  },
+  {
+   "i": 33,
+   "take": "k2d/t2",
+   "take_on": 0.07,
+   "take_off": 1.44,
+   "on": 60.5,
+   "off": 61.865,
+   "inner_cuts": [],
+   "portion_gain_db": -1.75,
+   "sentence_gain_db": 0.0,
+   "lufs_before_sentence_gain": -20.23
+  }
+ ],
+ "gaps": [
+  {
+   "after": 0,
+   "before": 1,
+   "kind": "normal",
+   "target_s": 0.185,
+   "native_s": 0.64
+  },
+  {
+   "after": 1,
+   "before": 2,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": 0.38
+  },
+  {
+   "after": 2,
+   "before": 3,
+   "kind": "normal",
+   "target_s": 0.185,
+   "native_s": 0.54
+  },
+  {
+   "after": 3,
+   "before": 4,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": null
+  },
+  {
+   "after": 4,
+   "before": 5,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": null
+  },
+  {
+   "after": 5,
+   "before": 6,
+   "kind": "normal",
+   "target_s": 0.185,
+   "native_s": 0.565
+  },
+  {
+   "after": 6,
+   "before": 7,
+   "kind": "normal",
+   "target_s": 0.185,
+   "native_s": 0.61
+  },
+  {
+   "after": 7,
+   "before": 8,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": null
+  },
+  {
+   "after": 8,
+   "before": 9,
+   "kind": "answer",
+   "target_s": 0.45,
+   "native_s": null,
+   "was_s": 0.13,
+   "added_s": 0.32
+  },
+  {
+   "after": 9,
+   "before": 10,
+   "kind": "rapid",
+   "target_s": 0.145,
+   "native_s": 0.34
+  },
+  {
+   "after": 10,
+   "before": 11,
+   "kind": "rapid",
+   "target_s": 0.15,
+   "native_s": 0.495
+  },
+  {
+   "after": 11,
+   "before": 12,
+   "kind": "rapid",
+   "target_s": 0.15,
+   "native_s": 0.445
+  },
+  {
+   "after": 12,
+   "before": 13,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": null
+  },
+  {
+   "after": 13,
+   "before": 14,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": null
+  },
+  {
+   "after": 14,
+   "before": 15,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": null
+  },
+  {
+   "after": 15,
+   "before": 16,
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": 0.19
+  },
+  {
+   "after": 16,
+   "before": 17,
+   "kind": "normal",
+   "target_s": 0.185,
+   "native_s": 0.485
+  },
+  {
+   "after": 17,
+   "before": 18,
+   "kind": "normal",
+   "target_s": 0.155,
+   "native_s": 0.365
+  },
+  {
+   "after": 18,
+   "before": 19,
+   "kind": "beat",
+   "target_s": 0.365,
+   "native_s": null
+  },
+  {
+   "after": 19,
+   "before": 20,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": null
+  },
+  {
+   "after": 20,
+   "before": 21,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": null
+  },
+  {
+   "after": 21,
+   "before": 22,
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": 0.195
+  },
+  {
+   "after": 22,
+   "before": 23,
+   "kind": "normal",
+   "target_s": 0.185,
+   "native_s": 0.48
+  },
+  {
+   "after": 23,
+   "before": 24,
+   "kind": "normal",
+   "target_s": 0.185,
+   "native_s": 0.435
+  },
+  {
+   "after": 24,
+   "before": 25,
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": 0.235
+  },
+  {
+   "after": 25,
+   "before": 26,
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": 0.31
+  },
+  {
+   "after": 26,
+   "before": 27,
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": 0.29
+  },
+  {
+   "after": 27,
+   "before": 28,
+   "kind": "rapid",
+   "target_s": 0.12,
+   "native_s": 0.28
+  },
+  {
+   "after": 28,
+   "before": 29,
+   "kind": "normal",
+   "target_s": 0.15,
+   "native_s": 0.24
+  },
+  {
+   "after": 29,
+   "before": 30,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": null
+  },
+  {
+   "after": 30,
+   "before": 31,
+   "kind": "normal",
+   "target_s": 0.16,
+   "native_s": null
+  },
+  {
+   "after": 31,
+   "before": 32,
+   "kind": "normal",
+   "target_s": 0.185,
+   "native_s": 0.635
+  },
+  {
+   "after": 32,
+   "before": 33,
+   "kind": "beat",
+   "target_s": 0.335,
+   "native_s": null
+  }
+ ]
+}

@@ -1,0 +1,367 @@
+{
+ "file": "briefs/v3/award/SCRIPT.md",
+ "section": null,
+ "mode": "table",
+ "sentences": 27,
+ "words": 183,
+ "est_s": 75.3,
+ "target_s": 70.0,
+ "rows": [
+  {
+   "id": "len",
+   "rule": "length + pace for the target",
+   "status": "PASS",
+   "detail": "183 words, 27 sentences -> est 75.3 s at 2.67 w/s + 0.25 s/sentence (2.8-2.4 w/s: 72-83 s); target 70 s (PASS 65-76 s) needs about 147-182 words"
+  },
+  {
+   "id": "1",
+   "rule": "hook: short, no date / name / statistic",
+   "status": "PASS",
+   "detail": "\"Schools mailed kids an award for a perfect month of school.\" (11 words, L26); MANUAL: is it a strange action you can draw, reason hidden?"
+  },
+  {
+   "id": "5",
+   "rule": "choices / setbacks, no 'Also' / 'In fact'",
+   "status": "PASS",
+   "detail": "3 of 26 sentences open with So / But / Then / Yet (MANUAL: does every line change something?)"
+  },
+  {
+   "id": "6",
+   "rule": "at most 4 spoken numbers, never 2 statistics in a row",
+   "status": "PASS",
+   "detail": "4 different (4 mentions): '15,000' L32, 'three' L32, '2 in 100' L34, '8%' L36"
+  },
+  {
+   "id": "7",
+   "rule": "no real names / years in the voice",
+   "status": "PASS",
+   "detail": "none found"
+  },
+  {
+   "id": "4",
+   "rule": "a doubter by 30 %",
+   "status": "PASS",
+   "detail": "tagged at 27 % L30: \"Your mom sticks it on the fridge: \"Now you'll never miss a day!\"\"; MANUAL: does the ending prove them wrong?"
+  },
+  {
+   "id": "10",
+   "rule": "one loop line, 2-6 words, at 40-65 %",
+   "status": "WARN",
+   "detail": "tagged at 67 % (3 words) L35: \"Who shows up?\""
+  },
+  {
+   "id": "11",
+   "rule": "the answer lands at 60-75 %",
+   "status": "PASS",
+   "detail": "tagged: 68 % (t = 51.6 s) L36: \"The promise?\""
+  },
+  {
+   "id": "t",
+   "rule": "answer -> end <= 12-15 s",
+   "status": "WARN",
+   "detail": "15.6 s of voice after the answer beat ends (39 words)"
+  },
+  {
+   "id": "12",
+   "rule": "the why: <= 3 sentences, <= 1 comparison",
+   "status": "PASS",
+   "detail": "3 sentences from L37 (0 comparisons); MANUAL: physical, said once?"
+  },
+  {
+   "id": "14",
+   "rule": "nothing after the payoff",
+   "status": "PASS",
+   "detail": "tagged L39: \"The certificate stays on the fridge... while you hit snooze.\"; MANUAL: ironic picture, pays off a plant?"
+  },
+  {
+   "id": "r",
+   "rule": "short plain lines (<= 20 words)",
+   "status": "PASS",
+   "detail": "all sentences <= 20 words; mean 6.8 words / sentence"
+  },
+  {
+   "id": "2",
+   "rule": "hero object on screen by 1 s; the answer hidden in frame 0",
+   "status": "MANUAL",
+   "detail": ""
+  },
+  {
+   "id": "3",
+   "rule": "by ~15 %: who wants what, what it costs",
+   "status": "MANUAL",
+   "detail": ""
+  },
+  {
+   "id": "8",
+   "rule": "one gauge the viewer can watch",
+   "status": "MANUAL",
+   "detail": ""
+  },
+  {
+   "id": "9",
+   "rule": "one fair clue before the answer",
+   "status": "MANUAL",
+   "detail": ""
+  },
+  {
+   "id": "13",
+   "rule": "something new every 5 s, a joke every ~10 s",
+   "status": "MANUAL",
+   "detail": ""
+  },
+  {
+   "id": "15",
+   "rule": "fact check every line; dramatize only inside Imagine / Picture",
+   "status": "MANUAL",
+   "detail": ""
+  }
+ ],
+ "fails": 0,
+ "warns": 2,
+ "verdict": "PASS",
+ "lines": [
+  {
+   "line": 26,
+   "pos": 0.0,
+   "t": 0.0,
+   "words": 11,
+   "beat": "hook",
+   "speaker": "N",
+   "text": "Schools mailed kids an award for a perfect month of school."
+  },
+  {
+   "line": 26,
+   "pos": 5.8,
+   "t": 4.37,
+   "words": 6,
+   "beat": "hook",
+   "speaker": "N",
+   "text": "The next month, they missed more."
+  },
+  {
+   "line": 27,
+   "pos": 9.1,
+   "t": 6.87,
+   "words": 5,
+   "beat": "stakes",
+   "speaker": "N",
+   "text": "Imagine you're one of them."
+  },
+  {
+   "line": 27,
+   "pos": 11.9,
+   "t": 8.99,
+   "words": 11,
+   "beat": "stakes",
+   "speaker": "N",
+   "text": "Last autumn, you went a whole month without missing a day."
+  },
+  {
+   "line": 28,
+   "pos": 17.7,
+   "t": 13.36,
+   "words": 11,
+   "beat": "stakes",
+   "speaker": "N",
+   "text": "Then, in January, an envelope arrives with your name on it."
+  },
+  {
+   "line": 29,
+   "pos": 23.5,
+   "t": 17.73,
+   "words": 3,
+   "beat": "plant",
+   "speaker": "N",
+   "text": "Inside: a certificate."
+  },
+  {
+   "line": 29,
+   "pos": 25.4,
+   "t": 19.1,
+   "words": 2,
+   "beat": "plant",
+   "speaker": "N",
+   "text": "\"Perfect Attendance.\""
+  },
+  {
+   "line": 30,
+   "pos": 26.7,
+   "t": 20.1,
+   "words": 13,
+   "beat": "doubter",
+   "speaker": "MOM",
+   "text": "Your mom sticks it on the fridge: \"Now you'll never miss a day!\""
+  },
+  {
+   "line": 31,
+   "pos": 33.5,
+   "t": 25.22,
+   "words": 7,
+   "beat": "turn",
+   "speaker": "N",
+   "text": "But it isn't just a nice surprise."
+  },
+  {
+   "line": 31,
+   "pos": 37.3,
+   "t": 28.09,
+   "words": 3,
+   "beat": "turn",
+   "speaker": "N",
+   "text": "It's a test."
+  },
+  {
+   "line": 32,
+   "pos": 39.1,
+   "t": 29.47,
+   "words": 9,
+   "beat": "escalation",
+   "speaker": "N",
+   "text": "More than 15,000 students were split into three groups."
+  },
+  {
+   "line": 33,
+   "pos": 43.9,
+   "t": 33.09,
+   "words": 4,
+   "beat": "gauge",
+   "speaker": "N",
+   "text": "One group got nothing."
+  },
+  {
+   "line": 33,
+   "pos": 46.3,
+   "t": 34.84,
+   "words": 14,
+   "beat": "gauge",
+   "speaker": "N",
+   "text": "One got a promise: \"Be perfect in February, and you could win an award.\""
+  },
+  {
+   "line": 33,
+   "pos": 53.6,
+   "t": 40.33,
+   "words": 6,
+   "beat": "gauge",
+   "speaker": "N",
+   "text": "And one got the surprise certificate."
+  },
+  {
+   "line": 33,
+   "pos": 56.9,
+   "t": 42.83,
+   "words": 2,
+   "beat": "gauge",
+   "speaker": "N",
+   "text": "Like you."
+  },
+  {
+   "line": 34,
+   "pos": 58.2,
+   "t": 43.82,
+   "words": 5,
+   "beat": "escalation",
+   "speaker": "N",
+   "text": "Ask teachers what happens next."
+  },
+  {
+   "line": 34,
+   "pos": 61.0,
+   "t": 45.95,
+   "words": 8,
+   "beat": "escalation",
+   "speaker": "N",
+   "text": "Only 2 in 100 say it will backfire."
+  },
+  {
+   "line": 35,
+   "pos": 65.3,
+   "t": 49.19,
+   "words": 2,
+   "beat": "loop",
+   "speaker": "N",
+   "text": "So, February."
+  },
+  {
+   "line": 35,
+   "pos": 66.7,
+   "t": 50.19,
+   "words": 3,
+   "beat": "loop",
+   "speaker": "N",
+   "text": "Who shows up?"
+  },
+  {
+   "line": 36,
+   "pos": 68.5,
+   "t": 51.57,
+   "words": 2,
+   "beat": "answer",
+   "speaker": "N",
+   "text": "The promise?"
+  },
+  {
+   "line": 36,
+   "pos": 69.8,
+   "t": 52.57,
+   "words": 3,
+   "beat": "answer",
+   "speaker": "N",
+   "text": "It changed nothing."
+  },
+  {
+   "line": 36,
+   "pos": 71.6,
+   "t": 53.94,
+   "words": 2,
+   "beat": "answer",
+   "speaker": "N",
+   "text": "The certificate?"
+  },
+  {
+   "line": 36,
+   "pos": 73.0,
+   "t": 54.94,
+   "words": 12,
+   "beat": "answer",
+   "speaker": "N",
+   "text": "Those kids had about 8% more absences than kids who got nothing."
+  },
+  {
+   "line": 37,
+   "pos": 79.3,
+   "t": 59.68,
+   "words": 9,
+   "beat": "why",
+   "speaker": "N",
+   "text": "You see, the award didn't just say \"well done.\""
+  },
+  {
+   "line": 37,
+   "pos": 84.1,
+   "t": 63.3,
+   "words": 10,
+   "beat": "why",
+   "speaker": "N",
+   "text": "It probably also said: \"you're ahead of the other kids.\""
+  },
+  {
+   "line": 38,
+   "pos": 89.4,
+   "t": 67.3,
+   "words": 10,
+   "beat": "why",
+   "speaker": "N",
+   "text": "And when you're already ahead... one lazy morning feels earned."
+  },
+  {
+   "line": 39,
+   "pos": 94.7,
+   "t": 71.29,
+   "words": 10,
+   "beat": "payoff",
+   "speaker": "N",
+   "text": "The certificate stays on the fridge... while you hit snooze."
+  }
+ ]
+}

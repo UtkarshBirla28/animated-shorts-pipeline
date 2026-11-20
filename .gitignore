@@ -8,7 +8,6 @@ __pycache__/
 studio/out/
 studio/backup/
 _remotion-tmp*/
-studio/src/sandboxes/
 studio/src/videos/*_world_ext/
 studio/src/videos/*_world_int/
 studio/src/videos/*_char/
@@ -31,3 +30,7 @@ upstream/
 # secrets
 .env
 *.key
+
+# pointing-v4 snapshot: reports under studio/out/pointing are added on purpose (git add -f)
+_handover/memory/
+*api_key*

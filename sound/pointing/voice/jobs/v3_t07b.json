@@ -1,0 +1,74 @@
+[
+ {
+  "folder": "v3_t07",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[flatly] Bag... gone.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9541,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "v3_t07"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t07",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[flatly] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9542,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "v3_t07"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t07",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[deadpan] Bag... gone.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9543,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "v3_t07"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_t07",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[defeated] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9544,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "v3_t07"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "script": "v3"
+ }
+]

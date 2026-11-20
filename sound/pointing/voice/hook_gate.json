@@ -1,0 +1,173 @@
+{
+ "dir": "_v3",
+ "word_starts": [
+  [
+   "His",
+   0.07
+  ],
+  [
+   "bag",
+   0.26
+  ],
+  [
+   "is",
+   0.62
+  ],
+  [
+   "on",
+   0.74
+  ],
+  [
+   "that",
+   0.89
+  ],
+  [
+   "train.",
+   1.03
+  ],
+  [
+   "He",
+   1.715
+  ],
+  [
+   "is",
+   1.89
+  ],
+  [
+   "not.",
+   2.05
+  ],
+  [
+   "All",
+   2.78
+  ],
+  [
+   "he",
+   3.07
+  ],
+  [
+   "did",
+   3.26
+  ],
+  [
+   "was",
+   3.47
+  ],
+  [
+   "laugh...",
+   3.72
+  ],
+  [
+   "at",
+   4.455
+  ],
+  [
+   "a",
+   4.535
+  ],
+  [
+   "finger.",
+   4.69
+  ]
+ ],
+ "first_word_s": 0.07,
+ "words_started_by_3s": 10,
+ "words_started_by_5s": 17,
+ "longest_true_silence_s": 0.155,
+ "longest_true_silence_at_s": 4.3,
+ "longest_word_edge_gap_s": 0.155,
+ "longest_word_edge_gap_between": "laugh... | at",
+ "lines": {
+  "v3_n01": {
+   "s": 0.07,
+   "e": 1.565,
+   "dur": 1.495,
+   "wps": 4.01,
+   "f0_med": 238.4,
+   "f0_range_st": 10.6,
+   "f0_sd_st": 4.01,
+   "end": {
+    "rise_st": 6.33,
+    "end_vs_med_st": 6.72,
+    "end_hz": 345.9,
+    "med_hz": 234.6,
+    "voiced_frames": 30
+   },
+   "voiced_share": 0.84,
+   "bands": {
+    "mid_db": -7.11,
+    "hi_db": -16.39,
+    "centroid_hz": 822.0
+   }
+  },
+  "v3_n02": {
+   "s": 1.715,
+   "e": 2.63,
+   "dur": 0.915,
+   "wps": 3.28,
+   "f0_med": 105.0,
+   "f0_range_st": 8.6,
+   "f0_sd_st": 3.24,
+   "end": {
+    "rise_st": 1.03,
+    "end_vs_med_st": -0.97,
+    "end_hz": 99.4,
+    "med_hz": 105.1,
+    "voiced_frames": 30
+   },
+   "voiced_share": 0.74,
+   "bands": {
+    "mid_db": -12.93,
+    "hi_db": -12.59,
+    "centroid_hz": 625.0
+   }
+  },
+  "v3_n03": {
+   "s": 2.78,
+   "e": 5.32,
+   "dur": 2.54,
+   "wps": 3.15,
+   "f0_med": 241.2,
+   "f0_range_st": 14.1,
+   "f0_sd_st": 4.65,
+   "end": {
+    "rise_st": -2.49,
+    "end_vs_med_st": -0.31,
+    "end_hz": 235.4,
+    "med_hz": 239.6,
+    "voiced_frames": 30
+   },
+   "voiced_share": 0.66,
+   "bands": {
+    "mid_db": -7.79,
+    "hi_db": -18.52,
+    "centroid_hz": 716.0
+   }
+  }
+ },
+ "not_starts_s": 2.05,
+ "laugh_starts_s": 3.72,
+ "finger_starts_s": 4.69,
+ "finger_ends_s": 5.32,
+ "he_is_not": {
+  "dur_s": 0.915,
+  "wps": 3.28,
+  "first_sentence_wps": 4.01,
+  "pitch_drop_from_first_st": -14.2,
+  "third_sentence_back_up_st": 14.4,
+  "f0_med": 105.0,
+  "f0_sd_st": 3.24,
+  "f0_range_st": 8.6,
+  "voiced_share": 0.74,
+  "in_1.05_1.20_s": false
+ },
+ "gate": {
+  "not_starts_by_2.70": true,
+  "laugh_starts_by_4.50": true,
+  "no_gap_over_0.20": true
+ },
+ "prefer": {
+  "finger_starts_by_5.00": true
+ },
+ "passed": true
+}

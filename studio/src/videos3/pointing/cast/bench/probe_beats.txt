@@ -1,0 +1,8 @@
+import { actorOf, filmBeats, beatReport } from "C:/Users/utkar/Desktop/animated-shorts-studio/studio/src/videos3/pointing/cast/acting";
+import { anchorsOf, SPECS } from "C:/Users/utkar/Desktop/animated-shorts-studio/studio/src/videos3/pointing/cast/people";
+const envOf = (who: any, f: number, v = { s: 0.2, c: 0.98 }) => { const A = anchorsOf(who, v as any); return { t: f / 30, f, s: v.s, c: v.c, light: 0.6, back: v.c < -0.35, aim: [60, 420] as [number, number], look: null, head: A.head, r: A.r, u: A.u, chest: A.chest, restL: null, restR: null } as any; };
+const show = (who: any, f: number) => { const P: any = actorOf(who, SPECS[who as "tourist"].seed)(envOf(who, f)); console.log(who, "f" + f, "expr", P.expr, "film", JSON.stringify(P.film), "mouth", P.mouth, "blink", P.blink?.toFixed?.(2), "look", P.look?.toFixed?.(2), P.lookY?.toFixed?.(2), "armL", P.armL?.hand, JSON.stringify(P.armL?.to2 ?? P.armL?.to), "armR", P.armR?.hand, JSON.stringify(P.armR?.to2 ?? P.armR?.to)); };
+for (const f of [66, 69, 71, 72, 74, 76, 78, 79, 80, 81, 82, 143, 144, 212, 213]) show("tourist", f);
+console.log(beatReport().join("\n") || "beatReport: all line up");
+const T = filmBeats().filter((t: any) => t.b.who === "tourist").slice(0, 12).map((t: any) => `${t.b.m} f0 ${Math.round(t.f0)} f1 ${Math.round(t.f1)} gate ${t.gate} stop ${t.stop}`);
+console.log(T.join("\n"));

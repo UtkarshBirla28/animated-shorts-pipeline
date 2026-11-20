@@ -1,0 +1,6 @@
+[
+ {"folder": "test", "take": "sp10", "voice": "QhpsGjDKZmM9qRYdMhBD", "model": "eleven_v4", "text": "[excited] Quick test. Count the people on a phone.", "stability": 0.5, "speed": 1.0, "seed": 6001, "lines": ["n01"], "note": "speed test 1.0"},
+ {"folder": "test", "take": "sp12", "voice": "QhpsGjDKZmM9qRYdMhBD", "model": "eleven_v4", "text": "[excited] Quick test. Count the people on a phone.", "stability": 0.5, "speed": 1.2, "seed": 6001, "lines": ["n01"], "note": "speed test 1.2, same seed"},
+ {"folder": "test", "take": "notag", "voice": "QhpsGjDKZmM9qRYdMhBD", "model": "eleven_v4", "text": "Quick test. Count the people on a phone.", "stability": 0.5, "speed": 1.0, "seed": 6001, "lines": ["n01"], "note": "no tag"},
+ {"folder": "test", "take": "ctx", "voice": "QhpsGjDKZmM9qRYdMhBD", "model": "eleven_v4", "text": "[playful] Don't lose count.", "stability": 0.5, "speed": 1.0, "seed": 6002, "prev": "Quick test. Count the people on a phone.", "next": "How many? Five.", "lines": ["n02"], "note": "previous_text / next_text accepted by v4?"}
+]

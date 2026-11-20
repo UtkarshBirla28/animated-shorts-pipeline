@@ -1,0 +1,274 @@
+[
+ {
+  "i": 0,
+  "beat": 1,
+  "s": 0.1,
+  "e": 4.19,
+  "markup": "A clown rode a unicycle around this square, and half the people never saw him.",
+  "style": null
+ },
+ {
+  "i": 1,
+  "beat": 1,
+  "s": 4.375,
+  "e": 4.945,
+  "markup": "Your turn.",
+  "style": null
+ },
+ {
+  "i": 2,
+  "beat": 1,
+  "s": 5.105,
+  "e": 6.515,
+  "markup": "Count the people on a phone.",
+  "style": null
+ },
+ {
+  "i": 3,
+  "beat": 2,
+  "s": 6.7,
+  "e": 9.4,
+  "markup": "A psychology professor needed something nobody could miss.",
+  "style": null
+ },
+ {
+  "i": 4,
+  "beat": 2,
+  "s": 9.56,
+  "e": 11.54,
+  "markup": "A student of his owned a unicycle.",
+  "style": null
+ },
+ {
+  "i": 5,
+  "beat": 2,
+  "s": 11.7,
+  "e": 12.585,
+  "markup": "And a clown suit.",
+  "style": null
+ },
+ {
+  "i": 6,
+  "beat": 2,
+  "s": 12.77,
+  "e": 14.325,
+  "markup": "You don't waste a student like that.",
+  "style": null
+ },
+ {
+  "i": 7,
+  "beat": 2,
+  "s": 14.51,
+  "e": 16.91,
+  "markup": "So for an hour, he rode laps around the sculpture.",
+  "style": null
+ },
+ {
+  "i": 8,
+  "beat": 3,
+  "s": 17.07,
+  "e": 17.735,
+  "markup": "How many phones?",
+  "style": null
+ },
+ {
+  "i": 9,
+  "beat": 3,
+  "s": 17.865,
+  "e": 18.305,
+  "markup": "Five.",
+  "style": null
+ },
+ {
+  "i": 10,
+  "beat": 3,
+  "s": 18.45,
+  "e": 19.145,
+  "markup": "And the clown?",
+  "style": null
+ },
+ {
+  "i": 11,
+  "beat": 3,
+  "s": 19.295,
+  "e": 19.975,
+  "markup": "You saw him.",
+  "style": null
+ },
+ {
+  "i": 12,
+  "beat": 3,
+  "s": 20.125,
+  "e": 20.635,
+  "markup": "Easy.",
+  "style": null
+ },
+ {
+  "i": 13,
+  "beat": 4,
+  "s": 20.795,
+  "e": 21.475,
+  "markup": "So who didn't?",
+  "style": null
+ },
+ {
+  "i": 14,
+  "beat": 4,
+  "s": 21.635,
+  "e": 24.205,
+  "markup": "The team stopped people leaving: did you see the clown?",
+  "style": null
+ },
+ {
+  "i": 15,
+  "beat": 4,
+  "s": 24.365,
+  "e": 26.225,
+  "markup": "People in pairs mostly said yes.",
+  "style": null
+ },
+ {
+  "i": 16,
+  "beat": 4,
+  "s": 26.375,
+  "e": 27.705,
+  "markup": "So did people with music.",
+  "style": null
+ },
+ {
+  "i": 17,
+  "beat": 5,
+  "s": 27.89,
+  "e": 30.975,
+  "markup": "But to one group, a purple and yellow clown was invisible.",
+  "style": null
+ },
+ {
+  "i": 18,
+  "beat": 5,
+  "s": 31.13,
+  "e": 33.52,
+  "markup": "The ones you counted: people on a phone call.",
+  "style": null
+ },
+ {
+  "i": 19,
+  "beat": 6,
+  "s": 33.885,
+  "e": 36.44,
+  "markup": "Just {1|one} in {4|four} saw the clown.",
+  "style": null
+ },
+ {
+  "i": 20,
+  "beat": 6,
+  "s": 36.6,
+  "e": 37.895,
+  "markup": "Many spun around to look.",
+  "style": null
+ },
+ {
+  "i": 21,
+  "beat": 7,
+  "s": 38.055,
+  "e": 39.63,
+  "markup": "Your eyes stay on the path.",
+  "style": null
+ },
+ {
+  "i": 22,
+  "beat": 7,
+  "s": 39.78,
+  "e": 41.08,
+  "markup": "Your mind takes the call.",
+  "style": null
+ },
+ {
+  "i": 23,
+  "beat": 8,
+  "s": 41.265,
+  "e": 43.425,
+  "markup": "So the professor tried again, with money.",
+  "style": null
+ },
+ {
+  "i": 24,
+  "beat": 8,
+  "s": 43.61,
+  "e": 46.95,
+  "markup": "Three dollar bills on a branch, at head height, over a path.",
+  "style": null
+ },
+ {
+  "i": 25,
+  "beat": 8,
+  "s": 47.1,
+  "e": 48.295,
+  "markup": "Nearly everyone ducked.",
+  "style": null
+ },
+ {
+  "i": 26,
+  "beat": 8,
+  "s": 48.445,
+  "e": 49.81,
+  "markup": "Few stopped for the cash.",
+  "style": null
+ },
+ {
+  "i": 27,
+  "beat": 9,
+  "s": 49.96,
+  "e": 50.69,
+  "markup": "On a phone?",
+  "style": null
+ },
+ {
+  "i": 28,
+  "beat": 9,
+  "s": 50.81,
+  "e": 51.665,
+  "markup": "{6|Six} in {100.|a hundred.}",
+  "style": null
+ },
+ {
+  "i": 29,
+  "beat": 9,
+  "s": 51.815,
+  "e": 53.585,
+  "markup": "They ducked under the money and kept walking.",
+  "style": null
+ },
+ {
+  "i": 30,
+  "beat": 10,
+  "s": 53.745,
+  "e": 56.35,
+  "markup": "That branch has hung over this video since the first second.",
+  "style": null
+ },
+ {
+  "i": 31,
+  "beat": 10,
+  "s": 56.51,
+  "e": 58.63,
+  "markup": "Two people ducked under it while you counted.",
+  "style": null
+ },
+ {
+  "i": 32,
+  "beat": 10,
+  "s": 58.815,
+  "e": 59.845,
+  "markup": "You saw the clown.",
+  "style": null
+ },
+ {
+  "i": 33,
+  "beat": 11,
+  "s": 60.18,
+  "e": 61.545,
+  "markup": "Did you see the money?",
+  "style": null
+ }
+]

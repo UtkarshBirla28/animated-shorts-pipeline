@@ -1,0 +1,89 @@
+{
+ "sections": [
+  {
+   "name": "hook",
+   "t0": 0.0,
+   "t1": 6.92,
+   "bpm": 104.0,
+   "style": "bounce",
+   "prog": "Dm Bb Gm A7",
+   "lu": 16.5,
+   "gain_db": -25.6
+  },
+  {
+   "name": "setup",
+   "t0": 6.92,
+   "t1": 18.46,
+   "bpm": 104.0,
+   "style": "bounce",
+   "prog": "F C Dm Bb Gm C F A7",
+   "lu": 17.5,
+   "gain_db": -26.3
+  },
+  {
+   "name": "stops",
+   "t0": 18.46,
+   "t1": 30.0,
+   "bpm": 104.0,
+   "style": "tiptoe",
+   "prog": "Dm Dm Gm A7",
+   "lu": 18.0,
+   "gain_db": -23.5
+  },
+  {
+   "name": "why",
+   "t0": 30.0,
+   "t1": 41.54,
+   "bpm": 104.0,
+   "style": "halftime",
+   "prog": "Bb Gm7 Dm A7",
+   "lu": 19.0,
+   "gain_db": -27.4
+  },
+  {
+   "name": "build",
+   "t0": 41.54,
+   "t1": 52.0,
+   "bpm": 114.7,
+   "style": "build",
+   "prog": "Gm A7 Bb A7",
+   "lu": 17.0,
+   "gain_db": -27.5
+  },
+  {
+   "name": "payoff",
+   "t0": 52.0,
+   "t1": 60.0,
+   "bpm": 105.0,
+   "style": "bounce",
+   "prog": "Dm Bb Gm A7",
+   "lu": 16.5,
+   "gain_db": -25.6
+  }
+ ],
+ "hits": [
+  [
+   18.46,
+   "A7",
+   1.0
+  ],
+  [
+   30.0,
+   "Bb",
+   0.8
+  ],
+  [
+   52.0,
+   "Dm",
+   1.2
+  ]
+ ],
+ "stops": [
+  [
+   56.6,
+   57.2
+  ]
+ ],
+ "lufs": -29.543777606092984,
+ "vref": -13.7
+}

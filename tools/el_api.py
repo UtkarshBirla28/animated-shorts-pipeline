@@ -1,6 +1,7 @@
 """Tiny ElevenLabs REST helper for what the ElevenLabs MCP server cannot do (list premade voices with previews, read
 shared-voice owner ids, add a shared library voice to My Voices, remove it again, TTS with timestamps).
-The API key is read at run time from the user's Claude Code config (~/.claude.json -> mcpServers.elevenlabs.env) and is
+The API key is read at run time from ~/.secrets/elevenlabs_api_key (the newer key), else from ~/.claude.json
+(mcpServers.elevenlabs.env); it is
 NEVER printed, logged or written anywhere.
 Usage:
   python -s el_api.py voices                      # my voices (premade + added) with labels + preview_url  -> JSON
@@ -22,6 +23,13 @@ API = "https://api.elevenlabs.io/v1"
 
 
 def key():
+    # 1) the owner's newer key (2026-11-18), kept in a private file outside every project folder; 2) the old MCP config
+    # EL_KEY_FILE (env) picks another private key file, e.g. ~/.secrets/elevenlabs_old_light_key for the Old Light channel
+    f = os.path.expanduser(os.environ.get("EL_KEY_FILE") or "~/.secrets/elevenlabs_api_key")
+    if os.path.exists(f):
+        k = open(f, encoding="utf-8").read().strip()
+        if k:
+            return k
     cfg = json.load(open(os.path.expanduser("~/.claude.json"), encoding="utf-8"))
     k = cfg.get("mcpServers", {}).get("elevenlabs", {}).get("env", {}).get("ELEVENLABS_API_KEY")
     if not k:

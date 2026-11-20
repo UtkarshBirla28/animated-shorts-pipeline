@@ -1,0 +1,286 @@
+{
+ "_doc": "The pause plan of the pointing voice, SCRIPT v3 (read by pt3_build.py, pt3_verify.py). Made from SCRIPT_v3.md section 4.2 (and the cut order 4.3). Every value is TRUE silence (10 ms RMS windows every 5 ms under -45 dBFS) between the acoustic end of one line and the first WORD of the next. A pause is cut, or silence is added: the audio is never stretched.",
+ "lead_s": 0.07,
+ "tail_s": 0.1,
+ "gaps": {
+  "v3_n01|v3_n02": 0.15,
+  "v3_n02|v3_n03": 0.15,
+  "v3_n03|v3_d01": 0.18,
+  "v3_d01|v3_t01": 0.2,
+  "v3_t01|v3_n04": 0.15,
+  "v3_n04|v3_n05": 0.15,
+  "v3_n05|v3_n06": 0.4,
+  "v3_n06|v3_n07": 0.25,
+  "v3_n07|v3_n08": 0.5,
+  "v3_n08|v3_t02": 0.15,
+  "v3_t02|v3_d02": 1.6,
+  "v3_d02|v3_t03": 0.75,
+  "v3_t03|v3_n09": 0.35,
+  "v3_n09|v3_t04": 0.45,
+  "v3_t04|v3_n10": 0.95,
+  "v3_n10|v3_t05": 1.1,
+  "v3_t05|v3_t06": 2.78,
+  "v3_t06|v3_n11": 0.65,
+  "v3_n11|v3_n12": 1.45,
+  "v3_n12|v3_n13": 0.15,
+  "v3_n13|v3_n14": 0.56,
+  "v3_n14|v3_d03": 0.75,
+  "v3_d03|v3_k01": 0.78,
+  "v3_k01|v3_t07": 0.73,
+  "v3_a01|v3_a02": 0.15,
+  "v3_a02|v3_d01": 0.33,
+  "v3_a01f|v3_a02": 0.15
+ },
+ "sentence_gaps": {
+  "v3_t04": 0.3,
+  "v3_n11": 0.2,
+  "v3_n13": 0.3
+ },
+ "inner_set": {
+  "v3_n03": [
+   {
+    "after": "laugh...",
+    "to": 0.15,
+    "mode": "set"
+   }
+  ],
+  "v3_d01": [
+   {
+    "after": "Signal...",
+    "to": 0.38,
+    "mode": "set"
+   }
+  ],
+  "v3_t05": [
+   {
+    "after": "machine...",
+    "to": 0.35,
+    "mode": "min"
+   }
+  ],
+  "v3_k01": [
+   {
+    "after": "Bag...",
+    "to": 0.35,
+    "mode": "min"
+   }
+  ],
+  "v3_d03": [
+   {
+    "after": "Doors...",
+    "to": 1.005,
+    "mode": "set"
+   }
+  ],
+  "v3_n11": [
+   {
+    "after": "see,",
+    "to": 0.2,
+    "mode": "max"
+   }
+  ],
+  "v3_n13": [
+   {
+    "after": "looking...",
+    "to": 1.0,
+    "mode": "set"
+   }
+  ],
+  "v3_n07": [],
+  "v3_d02": [
+   {
+    "after": "Doors...",
+    "to": 0.35,
+    "mode": "min"
+   }
+  ],
+  "v3_t07": [
+   {
+    "after": "Bag...",
+    "to": 0.35,
+    "mode": "min"
+   }
+  ],
+  "v3_t04": []
+ },
+ "inner_keep": [
+  "v3_d02",
+  "v3_t07",
+  "v3_d01",
+  "v3_d03",
+  "v3_k01",
+  "v3_t05",
+  "v3_t04"
+ ],
+ "pre_keep_s": {
+  "v3_t01": 0.35,
+  "v3_t03": 0.24,
+  "v3_t06": 0.4
+ },
+ "lift_db": {
+  "v3_t07": -1.5,
+  "v3_n10": -1.5
+ },
+ "n01_breath": {
+  "to": 0.2,
+  "if_not_starts_by": 2.6,
+  "and_finger_starts_by": 5.0
+ },
+ "replay": {
+  "line": "v3_r01",
+  "source": "v3_t03",
+  "under_narrator_db": -8.0,
+  "overlap_s": 0.3,
+  "then_s": 0.08,
+  "band_hz": [
+   550,
+   3600
+  ]
+ },
+ "laughs": {
+  "hook": {
+   "take": "x01",
+   "under_narrator_db": -12.0,
+   "from": "cut 1 (0.08 s after 'not.')",
+   "to": "cut 2 (one frame before 'finger')"
+  },
+  "phone_bed": {
+   "take": "x01",
+   "under_narrator_db": -18.0,
+   "from": "0.20 s before 'You see,'",
+   "to": "the start of the replay",
+   "band_hz": [
+    550,
+    3600
+   ]
+  },
+  "cutaway": {
+   "take": "x02",
+   "under_narrator_db": -10.0,
+   "inside": "the 1.00 s pause after 'looking...'",
+   "margin_s": 0.07
+  },
+  "payoff": {
+   "take": "x02",
+   "under_narrator_db": -14.0,
+   "from": "0.15 s before 'Doors...'",
+   "to": "the kid's 'check!'"
+  }
+ },
+ "cut_order": [
+  {
+   "step": 1,
+   "what": "the N pauses to their floors (saves 0.45 s)",
+   "gaps": {
+    "v3_d01|v3_t01": 0.1,
+    "v3_n06|v3_n07": 0.15,
+    "v3_t03|v3_n09": 0.25,
+    "v3_n12|v3_n13": 0.1
+   },
+   "sentence_gaps": {
+    "v3_n11": 0.15
+   },
+   "inner_set": {
+    "v3_n11": [
+     {
+      "after": "see,",
+      "to": 0.15,
+      "mode": "max"
+     }
+    ]
+   }
+  },
+  {
+   "step": 2,
+   "what": "four picture holds to their floors (saves 0.59 s)",
+   "gaps": {
+    "v3_n13|v3_n14": 0.4,
+    "v3_d02|v3_t03": 0.6,
+    "v3_d03|v3_k01": 0.65,
+    "v3_n14|v3_d03": 0.6
+   }
+  },
+  {
+   "step": 3,
+   "what": "the phone's replay goes (saves 1.15 s)",
+   "drop_replay": true,
+   "gaps": {
+    "v3_n11|v3_n12": 0.3
+   }
+  },
+  {
+   "step": 4,
+   "what": "v3_t05 becomes a silent mock point held 0.9 s (saves 1.5 s)",
+   "drop": [
+    "v3_t05"
+   ],
+   "gaps": {
+    "v3_n10|v3_t06": 4.35
+   }
+  },
+  {
+   "step": 5,
+   "what": "v3_n05 and its shot (saves 2.8 s)",
+   "drop": [
+    "v3_n05"
+   ],
+   "gaps": {
+    "v3_n04|v3_n06": 0.4
+   }
+  }
+ ],
+ "limits": {
+  "apply_cut_order_over_s": 66.0,
+  "refuse_over_s": 70.0
+ },
+ "word_onsets_measured": {
+  "_doc": "2026-11-20 (voice owner): word STARTS inside connected speech measured by hand on the dialogue stem (10 ms frames: level, >3 kHz and <400 Hz energy share, spectral peak, f0), where Whisper put the start on the vowel 0.06-0.18 s late. Value = seconds from the start ('on') of the unit that holds the word; key = the word's index in the whole line (0 = first word, not set: moving 'What's' of v3_t03 moves the phone replay and so the AUDIO; its measured onset 24.195 is in NOTES.md). Body pass 2026-11-20: the words the cuts, EV events and beats are anchored on. Convention: a word starts at its first phone, stop closures included (a closure shared by two stops is split in the middle). The build applies a value only when it is within 0.25 s of its own estimate, and lists every move.",
+  "v3_n01": {"1": 0.19, "2": 0.55, "3": 0.67, "4": 0.82, "5": 0.96},
+  "v3_n02": {"1": 0.175, "2": 0.335},
+  "v3_n03": {"1": 0.29, "2": 0.48, "6": 1.755, "7": 1.91},
+  "v3_t01": {"3": 0.815},
+  "v3_n04": {"6": 1.595, "7": 1.865},
+  "v3_n05": {"5": 0.845, "8": 1.665},
+  "v3_n08": {"3": 0.6, "4": 1.03},
+  "v3_n11": {"13": 0.995},
+  "v3_n13": {"10": 4.115, "15": 5.345},
+  "v3_n14": {"8": 2.34}
+ },
+ "_why": {
+  "lead_s": "frame 0: the rail click and 'His' on frame 2 (0.07 s)",
+  "tail_s": "the film ends 0.10 s after 'gone.'; the next frame is frame 0",
+  "v3_n01|v3_n02": "sentence break (0.20 s as the deadpan's breath when 'not' still starts by 2.60 s: n01_breath)",
+  "v3_n02|v3_n03": "sentence break; cut 1 sits in it",
+  "inner v3_n03": "0.15 s after 'laugh...': the phone swings to the cab glass; cut 2 is one frame before 'finger'",
+  "v3_n03|v3_d01": "the glove reaches full stretch before 'Signal'",
+  "inner v3_d01": "0.38 s: the hand at the ear (0.12 s of silence added to the take's 0.26 s)",
+  "v3_d01|v3_t01": "N: his laugh starts under the tail of 'green!'; his words wait (the pause is measured to 'He's'; up to 0.35 s of the take's own laugh sits before it)",
+  "v3_t01|v3_n04": "N: the laugh tail",
+  "v3_n04|v3_n05": "N: the foot drags the suitcase back; the cut",
+  "v3_n05|v3_n06": "the train stops, the doors open",
+  "v3_n06|v3_n07": "N: commuters step off",
+  "v3_n07|v3_n08": "the boy's point snaps out (13 frames)",
+  "v3_n08|v3_t02": "N: the haul finishes",
+  "v3_t02|v3_d02": "0.40 the nod with the chime and the doors starting + 0.90 the doors meet + 0.25 the side lamps go out + 0.05, THEN the call",
+  "v3_d02|v3_t03": "the train starts to glide; the salaryman gives up",
+  "v3_t03|v3_n09": "N: the boy's frown",
+  "v3_n09|v3_t04": "he wheels the bag to the doorway",
+  "sentence v3_t04": "0.30 s: the two pats ('Stay.' / 'Be right back.')",
+  "v3_t04|v3_n10": "the hop out, then the bag alone before the line",
+  "v3_n10|v3_t05": "the bag alone for 2.2 s in all",
+  "inner v3_t05": "fact guard 5: the beat is at least 0.35 s (the take has 0.24 s: silence added, never squeezed)",
+  "v3_t05|v3_t06": "0.33 the pose holds + 1.10 the boy's point (v3_p01) + 1.35 the head turn, the 0.7 s look, the grin",
+  "v3_t06|v3_n11": "he turns back to his phone",
+  "inner v3_n11": "N: 0.20 s after 'You see,' (only cut down, never padded), 0.20 s between the sentences",
+  "v3_n11|v3_n12": "the phone's replay in the clear: it starts 0.30 s before the end of 'phone.' (only its first word under the narrator), then 0.08 s. The build computes this pause from the real replay length (plan 1.45 s)",
+  "v3_n12|v3_n13": "N",
+  "inner v3_n13": "1.00 s after 'looking...' = the cutaway v3_p02; 0.30 s after 'out loud:' = the held beat before the single ball",
+  "v3_n13|v3_n14": "0.41 the 6 against 1 hold + 0.15 the doorway shot settles",
+  "v3_n14|v3_d03": "0.40 the cab's quiet + 0.20 the chime and the doors start + 0.15 the doors are SEEN sliding before the word",
+  "inner v3_d03": "1.005 s between 'Doors...' and '...closed!': the doors meet on the bag, the side lamps go out",
+  "v3_d03|v3_k01": "the train starts to glide",
+  "inner v3_k01": "fact guard 5: at least 0.35 s",
+  "v3_k01|v3_t07": "0.45 the grin drains and the cap goes up + 0.28 of the last shot",
+  "lift_db": "v3_t07 is small by pitch, not by level (1.5 dB under the other lines, far inside the 6 dB limit); v3_n10 'It stays.' is the quietest narrator line"
+ }
+}

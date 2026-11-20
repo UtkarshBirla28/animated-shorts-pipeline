@@ -1,0 +1,274 @@
+[
+ {
+  "folder": "ch_d01",
+  "take": "t1",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "Signal... green!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8601,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d01",
+  "take": "t2",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "Signal... green!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8602,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d01",
+  "take": "t3",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal... green!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8603,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d01",
+  "take": "t4",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "[shouting] Signal... green!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8604,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d02",
+  "take": "t1",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "Speed... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8611,
+  "prev": "So he points at the speed.",
+  "next": "The doors.",
+  "lines": [
+   "d02"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d02",
+  "take": "t2",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "Speed... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8612,
+  "prev": "So he points at the speed.",
+  "next": "The doors.",
+  "lines": [
+   "d02"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d02",
+  "take": "t3",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "[firmly] Speed... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8613,
+  "prev": "So he points at the speed.",
+  "next": "The doors.",
+  "lines": [
+   "d02"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d02",
+  "take": "t4",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "[calmly] Speed... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8614,
+  "prev": "So he points at the speed.",
+  "next": "The doors.",
+  "lines": [
+   "d02"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d03",
+  "take": "t1",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8621,
+  "prev": "So he points at the speed. Speed... check! The doors.",
+  "next": "Stay. Be right back.",
+  "lines": [
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d03",
+  "take": "t2",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "Doors... closed!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8622,
+  "prev": "So he points at the speed. Speed... check! The doors.",
+  "next": "Stay. Be right back.",
+  "lines": [
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d03",
+  "take": "t3",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "[firmly] Doors... closed!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8623,
+  "prev": "So he points at the speed. Speed... check! The doors.",
+  "next": "Stay. Be right back.",
+  "lines": [
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d03",
+  "take": "t4",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "[calmly] Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8624,
+  "prev": "So he points at the speed. Speed... check! The doors.",
+  "next": "Stay. Be right back.",
+  "lines": [
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d04",
+  "take": "t1",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8631,
+  "prev": "You see, your eyes can look right at something... while your mind is somewhere else. A finger and a shout drag your mind back to it.",
+  "next": "Bag... check!",
+  "lines": [
+   "d04"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d04",
+  "take": "t2",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "Doors... closed!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8632,
+  "prev": "You see, your eyes can look right at something... while your mind is somewhere else. A finger and a shout drag your mind back to it.",
+  "next": "Bag... check!",
+  "lines": [
+   "d04"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d04",
+  "take": "t3",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "[firmly] Doors... closed!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8633,
+  "prev": "You see, your eyes can look right at something... while your mind is somewhere else. A finger and a shout drag your mind back to it.",
+  "next": "Bag... check!",
+  "lines": [
+   "d04"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "ch_d04",
+  "take": "t4",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "[calmly] Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8634,
+  "prev": "You see, your eyes can look right at something... while your mind is somewhere else. A finger and a shout drag your mind back to it.",
+  "next": "Bag... check!",
+  "lines": [
+   "d04"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ }
+]
