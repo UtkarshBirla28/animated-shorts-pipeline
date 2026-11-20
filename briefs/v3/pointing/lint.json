@@ -1,0 +1,376 @@
+{
+ "file": "briefs/v3/pointing/SCRIPT_v3_lint.md",
+ "section": null,
+ "mode": "table",
+ "sentences": 28,
+ "words": 136,
+ "est_s": 57.9,
+ "target_s": 65.0,
+ "rows": [
+  {
+   "id": "len",
+   "rule": "length + pace for the target",
+   "status": "WARN",
+   "detail": "136 words, 28 sentences -> est 57.9 s at 2.67 w/s + 0.25 s/sentence (2.8-2.4 w/s: 56-64 s); target 65 s (PASS 60-71 s) needs about 134-168 words"
+  },
+  {
+   "id": "1",
+   "rule": "hook: short, no date / name / statistic",
+   "status": "PASS",
+   "detail": "\"His bag is on that train.\" (6 words, L13); MANUAL: is it a strange action you can draw, reason hidden?"
+  },
+  {
+   "id": "5",
+   "rule": "choices / setbacks, no 'Also' / 'In fact'",
+   "status": "PASS",
+   "detail": "2 of 27 sentences open with So / But / Then / Yet (MANUAL: does every line change something?)"
+  },
+  {
+   "id": "6",
+   "rule": "at most 4 spoken numbers, never 2 statistics in a row",
+   "status": "PASS",
+   "detail": "2 different (2 mentions): 'thousand' L18, 'six' L34"
+  },
+  {
+   "id": "7",
+   "rule": "no real names / years in the voice",
+   "status": "PASS",
+   "detail": "none found"
+  },
+  {
+   "id": "4",
+   "rule": "a doubter by 30 %",
+   "status": "PASS",
+   "detail": "tagged at 14 % L17: \"He's pointing at nothing!\"; MANUAL: does the ending prove them wrong?"
+  },
+  {
+   "id": "10",
+   "rule": "one loop line, 2-6 words, at 40-65 %",
+   "status": "PASS",
+   "detail": "tagged at 43 % (5 words) L25: \"What's a finger gonna do?\""
+  },
+  {
+   "id": "11",
+   "rule": "the answer lands at 60-75 %",
+   "status": "WARN",
+   "detail": "tagged: 77 % (t = 44.3 s) L34: \"For every six mistakes people made just looking... when they pointed a\""
+  },
+  {
+   "id": "t",
+   "rule": "answer -> end <= 12-15 s",
+   "status": "PASS",
+   "detail": "6.6 s of voice after the answer beat ends (15 words)"
+  },
+  {
+   "id": "12",
+   "rule": "the why: <= 3 sentences, <= 1 comparison",
+   "status": "PASS",
+   "detail": "1 sentences from L35 (0 comparisons); MANUAL: physical, said once?"
+  },
+  {
+   "id": "14",
+   "rule": "nothing after the payoff",
+   "status": "PASS",
+   "detail": "tagged L38: \"Bag... gone.\"; MANUAL: ironic picture, pays off a plant?"
+  },
+  {
+   "id": "r",
+   "rule": "short plain lines (<= 20 words)",
+   "status": "PASS",
+   "detail": "all sentences <= 20 words; mean 4.9 words / sentence"
+  },
+  {
+   "id": "2",
+   "rule": "hero object on screen by 1 s; the answer hidden in frame 0",
+   "status": "MANUAL",
+   "detail": ""
+  },
+  {
+   "id": "3",
+   "rule": "by ~15 %: who wants what, what it costs",
+   "status": "MANUAL",
+   "detail": ""
+  },
+  {
+   "id": "8",
+   "rule": "one gauge the viewer can watch",
+   "status": "MANUAL",
+   "detail": ""
+  },
+  {
+   "id": "9",
+   "rule": "one fair clue before the answer",
+   "status": "MANUAL",
+   "detail": ""
+  },
+  {
+   "id": "13",
+   "rule": "something new every 5 s, a joke every ~10 s",
+   "status": "MANUAL",
+   "detail": ""
+  },
+  {
+   "id": "15",
+   "rule": "fact check every line; dramatize only inside Imagine / Picture",
+   "status": "MANUAL",
+   "detail": ""
+  }
+ ],
+ "fails": 0,
+ "warns": 2,
+ "verdict": "PASS",
+ "lines": [
+  {
+   "line": 13,
+   "pos": 0.0,
+   "t": 0.0,
+   "words": 6,
+   "beat": "hook",
+   "speaker": "N",
+   "text": "His bag is on that train."
+  },
+  {
+   "line": 14,
+   "pos": 4.3,
+   "t": 2.5,
+   "words": 3,
+   "beat": "hook",
+   "speaker": "N",
+   "text": "He is not."
+  },
+  {
+   "line": 15,
+   "pos": 6.7,
+   "t": 3.87,
+   "words": 8,
+   "beat": "hook",
+   "speaker": "N",
+   "text": "All he did was laugh... at a finger."
+  },
+  {
+   "line": 16,
+   "pos": 12.3,
+   "t": 7.12,
+   "words": 2,
+   "beat": "clue",
+   "speaker": "D",
+   "text": "Signal... green!"
+  },
+  {
+   "line": 17,
+   "pos": 14.0,
+   "t": 8.12,
+   "words": 4,
+   "beat": "doubter",
+   "speaker": "T",
+   "text": "He's pointing at nothing!"
+  },
+  {
+   "line": 18,
+   "pos": 17.0,
+   "t": 9.86,
+   "words": 9,
+   "beat": "stakes",
+   "speaker": "N",
+   "text": "But that driver has a thousand people behind him."
+  },
+  {
+   "line": 19,
+   "pos": 23.3,
+   "t": 13.49,
+   "words": 9,
+   "beat": "escalation",
+   "speaker": "N",
+   "text": "So he checks with a finger and a shout."
+  },
+  {
+   "line": 20,
+   "pos": 29.5,
+   "t": 17.11,
+   "words": 2,
+   "beat": "escalation",
+   "speaker": "N",
+   "text": "First stop."
+  },
+  {
+   "line": 21,
+   "pos": 31.2,
+   "t": 18.1,
+   "words": 6,
+   "beat": "escalation",
+   "speaker": "N",
+   "text": "His suitcase tries to get off..."
+  },
+  {
+   "line": 22,
+   "pos": 35.6,
+   "t": 20.6,
+   "words": 6,
+   "beat": "escalation",
+   "speaker": "N",
+   "text": "and the boy's finger saves it."
+  },
+  {
+   "line": 23,
+   "pos": 39.9,
+   "t": 23.1,
+   "words": 2,
+   "beat": "gag",
+   "speaker": "T",
+   "text": "Bad suitcase."
+  },
+  {
+   "line": 24,
+   "pos": 41.6,
+   "t": 24.1,
+   "words": 2,
+   "beat": "plant (the call)",
+   "speaker": "D",
+   "text": "Doors... closed!"
+  },
+  {
+   "line": 25,
+   "pos": 43.3,
+   "t": 25.1,
+   "words": 5,
+   "beat": "loop",
+   "speaker": "T",
+   "text": "What's a finger gonna do?"
+  },
+  {
+   "line": 26,
+   "pos": 47.0,
+   "t": 27.22,
+   "words": 2,
+   "beat": "escalation",
+   "speaker": "N",
+   "text": "Second stop."
+  },
+  {
+   "line": 27,
+   "pos": 48.7,
+   "t": 28.22,
+   "words": 1,
+   "beat": "plant (the bag)",
+   "speaker": "T",
+   "text": "Stay."
+  },
+  {
+   "line": 27,
+   "pos": 49.8,
+   "t": 28.84,
+   "words": 3,
+   "beat": "plant (the bag)",
+   "speaker": "T",
+   "text": "Be right back."
+  },
+  {
+   "line": 28,
+   "pos": 52.2,
+   "t": 30.22,
+   "words": 2,
+   "beat": "plant",
+   "speaker": "N",
+   "text": "It stays."
+  },
+  {
+   "line": 29,
+   "pos": 53.9,
+   "t": 31.22,
+   "words": 3,
+   "beat": "gag",
+   "speaker": "T",
+   "text": "Vending machine... check!"
+  },
+  {
+   "line": 30,
+   "pos": 56.3,
+   "t": 32.59,
+   "words": 4,
+   "beat": "doubter",
+   "speaker": "T",
+   "text": "This kid gets it!"
+  },
+  {
+   "line": 31,
+   "pos": 59.3,
+   "t": 34.34,
+   "words": 8,
+   "beat": "clue",
+   "speaker": "N",
+   "text": "You see, his eyes looked right at it."
+  },
+  {
+   "line": 31,
+   "pos": 64.9,
+   "t": 37.58,
+   "words": 6,
+   "beat": "clue",
+   "speaker": "N",
+   "text": "His mind was on his phone."
+  },
+  {
+   "line": 32,
+   "pos": 69.2,
+   "t": 40.08,
+   "words": 5,
+   "beat": "loop",
+   "speaker": "T",
+   "text": "What's a finger gonna do?"
+  },
+  {
+   "line": 33,
+   "pos": 72.8,
+   "t": 42.2,
+   "words": 5,
+   "beat": "escalation",
+   "speaker": "N",
+   "text": "Japan's railway lab tested it."
+  },
+  {
+   "line": 34,
+   "pos": 76.5,
+   "t": 44.33,
+   "words": 18,
+   "beat": "answer",
+   "speaker": "N",
+   "text": "For every six mistakes people made just looking... when they pointed and said it out loud: about one."
+  },
+  {
+   "line": 35,
+   "pos": 88.6,
+   "t": 51.32,
+   "words": 9,
+   "beat": "why",
+   "speaker": "N",
+   "text": "A finger and a shout drag your mind back."
+  },
+  {
+   "line": 36,
+   "pos": 94.8,
+   "t": 54.94,
+   "words": 2,
+   "beat": "payoff",
+   "speaker": "D",
+   "text": "Doors... closed!"
+  },
+  {
+   "line": 37,
+   "pos": 96.6,
+   "t": 55.94,
+   "words": 2,
+   "beat": "payoff",
+   "speaker": "KID",
+   "text": "Bag... check!"
+  },
+  {
+   "line": 38,
+   "pos": 98.3,
+   "t": 56.94,
+   "words": 2,
+   "beat": "payoff",
+   "speaker": "T",
+   "text": "Bag... gone."
+  }
+ ]
+}

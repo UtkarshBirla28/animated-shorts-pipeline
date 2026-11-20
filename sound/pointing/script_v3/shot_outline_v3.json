@@ -1,0 +1,462 @@
+[
+ {
+  "id": "v3_s01",
+  "start_s": 0.0,
+  "end_s": 3.05,
+  "place": "jp_platform, station B, low gold sun (about 14 deg)",
+  "who": [
+   "tourist",
+   "boy (cap brim and one hand in the door window)"
+  ],
+  "action": "FRAME 0. His straight-arm point (the end of a real snap) lands on frame 2 in front of the door window; the yellow suitcase, handle up with a red tag, slides away from his fingertip from frame 3 and leaves the frame at 1.4 s; cars stream past behind him; at 1.9 s he turns his face to the lens, blank; one slow blink at 2.5 s. Mouth closed. He stands behind the yellow line. Lines v3_n01, v3_n02.",
+  "camera": "Low (about waist height), from about the hips up. One move: face 19 % of the frame height at frame 0, 21 % at 1.0 s, 28 % at 3.05 s (about 0.43 %/f) plus a small drift right with the door window in 0-1.4 s that eases back onto his face. camSpeedStats target 0.76 %/f in 0-1 s. One continuous set-up with v3_s24: run this shot at film time + L (L = the final length, 65.12 s on the plan). Test export B: the same render with one same-axis cut-in at 1.87 s (1.25x, eyes at the same screen place).",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "tourist: stunned blank face with eyes to the lens and a blink",
+   "tourist: straight-arm point landing with 4 % overshoot",
+   "suitcase: raised handle with a red tag",
+   "tall clean door glass",
+   "time offset of the platform set (train run, cast beats, dust, birds) for the loop"
+  ]
+ },
+ {
+  "id": "v3_s02",
+  "start_s": 3.05,
+  "end_s": 4.88,
+  "place": "car (packed front car), from the aisle looking toward the cab",
+  "who": [
+   "tourist",
+   "boy (at the cab glass)",
+   "kid_mum (beside the boy)",
+   "driver (his back, through the glass)",
+   "jp_commuters"
+  ],
+  "action": "One minute earlier. The SAME face, same size (28 %) and screen place, roaring with laughter into his own phone: he stands with his BACK to the cab glass, the phone at chest height to his left (a selfie with the driver behind him). The suitcase's red-tagged handle is at the bottom edge from the cut. From 4.48 s (in the pause after 'laugh', then through 'at a') he swings the phone round toward the cab glass: 12 frames, to the cut at 4.88 s. Line v3_n03 (first part); laugh v3_x01.",
+  "camera": "Frames 0-10 hold the matched face. Frames 10-40: ease back down the aisle and sink, fastest in the first 10 frames, never over 4.2 %/f, about 2.3 %/f on average; the whole yellow suitcase (at his knee, aisle side) in frame by about 3.72 s. Frames 40-55 still. Storyboard this shot before the voice is recorded; if the suitcase is late, move it nearer the lens, do not speed the camera.",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "tourist: back to the cab glass, selfie arm at chest height, big laugh",
+   "tourist: phone swing toward the glass (12 frames)",
+   "new camera in the aisle (replaces s02's profile from 2.4 m)"
+  ]
+ },
+ {
+  "id": "v3_s03",
+  "start_s": 4.88,
+  "end_s": 7.2,
+  "place": "cab",
+  "who": [
+   "driver"
+  ],
+  "action": "The white glove is already 40 % raised at the cut and reaches full stretch by 5.60 s, the fingertip right beside one glowing green lamp far down a dead-straight empty track. 'Signal...' arm straight; hand back by the right ear on the 0.38 s beat; snap on 'green!' and hold. Left hand on the handle. Lines v3_n03 ('finger.'), v3_d01.",
+  "camera": "A slow orbit from behind his right shoulder toward his right side. The green lamp: a core of at least 18 px and a halo of at least 40 px at 1080 x 1920, on a dark background (never the green bank); one lamp, no readable signal head (signalJP 'bright', or a nearer signal at about 250 m).",
+  "exists_as_bible_shot": "s05",
+  "new_poses_or_animation": [
+   "driver: point at the track ahead (new blocking)",
+   "signal lamp glow sized for a phone"
+  ]
+ },
+ {
+  "id": "v3_s04",
+  "start_s": 7.2,
+  "end_s": 8.93,
+  "place": "car, two-shot at the cab glass",
+  "who": [
+   "tourist",
+   "boy",
+   "kid_mum",
+   "jp_commuters"
+  ],
+  "action": "His gap-toothed laugh; a jab of his finger toward the glass that stops short of it (no tap, no tap sound); phone up. The boy raises ONE finger to the glass and holds it, looking up at the laughing tourist (no hand to the ear, no snap). The yellow suitcase at his knee. Through the glass, small: the glove and the green lamp. Line v3_t01.",
+  "camera": "s02's profile two-shot, a slow slide; strap sway.",
+  "exists_as_bible_shot": "s02",
+  "new_poses_or_animation": [
+   "tourist: finger jab that stops short of the glass",
+   "boy: one finger on the glass, looking up"
+  ]
+ },
+ {
+  "id": "v3_s05",
+  "start_s": 8.93,
+  "end_s": 11.92,
+  "place": "car, mid-aisle",
+  "who": [
+   "jp_commuters",
+   "tourist (legs)",
+   "suitcase"
+  ],
+  "action": "Over the packed car toward the cab end: a salaryman asleep at a strap (jerks up, nods off), two students, a grandma with a cloth bundle, a stroller with a small waving hand; everyone sways. The train speeds up: the yellow suitcase creeps backward away from him (10.45 s); without looking, his sneaker hooks a wheel (11.35 s) and drags it back. Line v3_n04.",
+  "camera": "A forward glide over the heads that sinks and lands at the tourist's knees (s03 reversed). Keep the lens out of the cards.",
+  "exists_as_bible_shot": "s03",
+  "new_poses_or_animation": [
+   "suitcase: creep backward",
+   "tourist: no-look foot hook and drag"
+  ]
+ },
+ {
+  "id": "v3_s06",
+  "start_s": 11.92,
+  "end_s": 14.75,
+  "place": "cab, looking back through the partition glass",
+  "who": [
+   "driver (glove, soft in the foreground)",
+   "boy",
+   "tourist",
+   "kid_mum"
+  ],
+  "action": "The glove points at the speedometer, goes to the ear, snaps (no spoken call). Behind the glass the boy copies it all a beat late: his FIRST full copy. At 13.40 s the train brakes: the yellow top of the suitcase rolls forward into the bottom edge of the window and bumps the wall under the boy (soft 'tok'); the jolt drops his too-big cap over his eyes; he pushes it up with one finger, glances down at the suitcase, keeps pointing. The tourist grins at his own clip. Mum's hand on the boy's shoulder. Line v3_n05.",
+  "camera": "A new framing in the cab set (s04 and s05 merged); a slow push; focus on the boy.",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "boy: full copy of the point-ear-snap",
+   "boy: cap drops, one finger pushes it up, glance down",
+   "suitcase: roll forward and bump under braking"
+  ]
+ },
+ {
+  "id": "v3_s07",
+  "start_s": 14.75,
+  "end_s": 17.95,
+  "place": "jp_platform, station A, at car 1's front door, looking in",
+  "who": [
+   "jp_commuters",
+   "tourist (back to us)",
+   "boy",
+   "kid_mum",
+   "suitcase"
+  ],
+  "action": "The train stops with a small jerk; door chime; the doors slide open; commuters step off. A passing briefcase nudges the yellow suitcase; it trundles on its spinner wheels straight for the open door (a clear lane; people step round it politely); its front wheels reach the yellow floor strip. The tourist has his back to it, phone DOWN at his side, watching the driver through the cab glass. Lines v3_n06, v3_n07.",
+  "camera": "s08's doorway framing at station A, framed below the door header; a slow ease in.",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "jp_commuters: walking off the train",
+   "suitcase: trundle to the threshold",
+   "view that joins the car interior and the platform"
+  ]
+ },
+ {
+  "id": "v3_s08",
+  "start_s": 17.95,
+  "end_s": 21.75,
+  "place": "jp_platform, station A, the same doorway, closer",
+  "who": [
+   "boy",
+   "kid_mum (her hand on the boy)",
+   "tourist",
+   "suitcase"
+  ],
+  "action": "The boy snaps the full driver's point at the suitcase (17.95-18.40 s). The tourist's eyes go to the boy, run down his arm, and pop; two quick steps, a lunge, he catches the handle with two wheels over the gap (19.55 s) and hauls it in. He wags a finger at the suitcase ('Bad suitcase.'); the boy nods once, firm. On the nod (21.35 s) the chime starts and both door leaves begin to slide in from the frame edges. Lines v3_n08, v3_t02.",
+  "camera": "A cut-in of v3_s07, framed below the door header.",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "boy: snap point at the suitcase",
+   "tourist: look down the arm, two steps, lunge and grab, haul",
+   "tourist: finger wag",
+   "boy: one firm nod",
+   "suitcase: tilt over the gap"
+  ]
+ },
+ {
+  "id": "v3_s09",
+  "start_s": 21.75,
+  "end_s": 24.88,
+  "place": "jp_platform, station A, knee-high along the car side",
+  "who": [
+   "late salaryman",
+   "tourist, suitcase and boy behind car 1's door glass",
+   "kid_mum (beside the boy behind the glass; she may be half hidden)"
+  ],
+  "action": "THE PLANT. The doors are already sliding, about a third shut; they meet (thump 22.65 s); the small red car-side lamps go out (22.90 s); THEN the driver's call, heard from the cab; the train starts to glide (24.45 s). A late salaryman stops short and gives up. Line v3_d02.",
+  "camera": "s07's low wide track. One door speed, 1.3 s from open to shut, the same as in v3_s22.",
+  "exists_as_bible_shot": "s07",
+  "new_poses_or_animation": [
+   "doors at 1.3 s (the kit's cycle is 1.6 s)",
+   "three cards readable behind the door glass"
+  ]
+ },
+ {
+  "id": "v3_s10",
+  "start_s": 24.88,
+  "end_s": 27.0,
+  "place": "car, moving",
+  "who": [
+   "tourist",
+   "boy",
+   "kid_mum",
+   "jp_commuters"
+  ],
+  "action": "The tourist to his own phone camera, wiggling his index finger, his other hand on the suitcase handle. The boy, arms crossed, frowns up at him. Line v3_t03.",
+  "camera": "A new shot in s02's set-up; slight push; sway.",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "tourist: finger wiggle to his phone",
+   "boy: arms crossed, frown"
+  ]
+ },
+ {
+  "id": "v3_s11",
+  "start_s": 27.0,
+  "end_s": 30.55,
+  "place": "jp_platform, station B, the doorway framing",
+  "who": [
+   "tourist",
+   "suitcase",
+   "boy",
+   "kid_mum"
+  ],
+  "action": "The doors open. He wheels the suitcase to the doorway, already looking toward the cab end, phone up. He parks it just inside the doorway on the yellow strip ('Stay.'), pats its handle twice like a dog, and skips out onto the platform ('Be right back.'). Lines v3_n09, v3_t04.",
+  "camera": "s08, longer; ease back; framed below the door header.",
+  "exists_as_bible_shot": "s08",
+  "new_poses_or_animation": [
+   "tourist: two pats on the handle",
+   "tourist: skip-hop out"
+  ]
+ },
+ {
+  "id": "v3_s12",
+  "start_s": 30.55,
+  "end_s": 32.75,
+  "place": "jp_platform, station B, the same doorway, closer",
+  "who": [
+   "suitcase",
+   "boy",
+   "kid_mum"
+  ],
+  "action": "The yellow suitcase alone in a stripe of sun for 2.2 s. The boy looks at the bag, then at the tourist's back. His mum, a hand on his shoulder, looks at the bag, then at the tourist's back, and smiles: its owner is right there. Line v3_n10.",
+  "camera": "A cut-in of s08; almost still; framed below the door header.",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "kid_mum: look at the bag, at the tourist's back, a small smile (her card needs a v3 pass)"
+  ]
+ },
+ {
+  "id": "v3_s13",
+  "start_s": 32.75,
+  "end_s": 35.19,
+  "place": "jp_platform, station B, by the drinks vending machine near the cab end",
+  "who": [
+   "tourist",
+   "suitcase and boy in the open doorway behind him",
+   "kid_mum (beside the boy in the doorway)"
+  ],
+  "action": "He is ALREADY facing his own phone, stiff as a guard (no thumbs-up, no phone turn). The driver's point at the machine: arm on 'Vending machine...', hand to the ear on the beat, snap on 'check!'. His grin breaks through. Behind him, easy to read: the doorway, the yellow suitcase, the boy. Behind the yellow line. Hold 0.33 s. Line v3_t05.",
+  "camera": "s14, first half only (no orbit to a two-shot).",
+  "exists_as_bible_shot": "s14",
+  "new_poses_or_animation": [
+   "tourist: stiff mock call in the true rhythm"
+  ]
+ },
+ {
+  "id": "v3_s14",
+  "start_s": 35.19,
+  "end_s": 36.29,
+  "place": "jp_platform, station B, the doorway, tight, from the platform",
+  "who": [
+   "boy",
+   "kid_mum (her hand on his backpack)",
+   "suitcase"
+  ],
+  "action": "v3_p01, no words. The yellow suitcase big in the sun stripe. The boy steps up beside it and snaps the full point at it, eyebrows up, urgent, MOUTH SHUT. Sound: his own small higher 'fwip', one held plucked note. If the storyboard shows it does not read, this shot becomes 1.40 s.",
+  "camera": "A tighter insert of s08's framing, framed below the door header.",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "boy: urgent point, eyebrows up, mouth shut"
+  ]
+ },
+ {
+  "id": "v3_s15",
+  "start_s": 36.29,
+  "end_s": 39.39,
+  "place": "from inside the doorway, looking out at platform B",
+  "who": [
+   "tourist",
+   "suitcase (yellow edge in the near corner)",
+   "boy (arm in the near corner)"
+  ],
+  "action": "The tourist turns his whole head (36.29-36.69 s). His eyes land straight on the lens, which is the suitcase, and hold 0.7 s (36.69-37.39 s), dead air. Then the grin: he points back at the boy with both index fingers, 'This kid gets it!', and turns back to his phone (38.94-39.39 s). Line v3_t06.",
+  "camera": "The camera right beside the suitcase. His face at least 15 % of the frame height during the look. Framed below the door header.",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "tourist: head turn and a 0.7 s look into the lens",
+   "tourist: double point with both index fingers (the library's 'guns' with no recoil)",
+   "view from inside the doorway"
+  ]
+ },
+ {
+  "id": "v3_s16a",
+  "start_s": 39.39,
+  "end_s": 43.47,
+  "place": "jp_platform, station B",
+  "who": [
+   "tourist",
+   "suitcase and boy in the doorway behind him",
+   "kid_mum (beside the boy in the doorway)"
+  ],
+  "action": "Phone up, silent, absorbed in his own clip; the phone plays only a thin wordless giggle. On 'looked right at it' the focus pulls to the open doorway, the yellow bag and the boy behind him; on 'his phone' it comes back to his phone-lit face. Line v3_n11.",
+  "camera": "s18's slow orbit, without the phone-screen picture (no render-to-texture).",
+  "exists_as_bible_shot": "s18",
+  "new_poses_or_animation": [
+   "tourist: absorbed, silent, phone-lit",
+   "focus pull to the bag and back"
+  ]
+ },
+ {
+  "id": "v3_s16b",
+  "start_s": 43.47,
+  "end_s": 46.55,
+  "place": "jp_platform, station B",
+  "who": [
+   "tourist",
+   "suitcase over his shoulder",
+   "boy",
+   "kid_mum"
+  ],
+  "action": "The phone answers the narrator: his own 'What's a finger gonna do?' (v3_r01, thin). He wiggles his finger along with it, delighted with himself. At 45.22 s the departure melody starts and the music-note pictogram appears; the boy looks up at the sound. Line v3_n12 starts over him ('Japan's railway lab').",
+  "camera": "The same orbit, one same-axis cut-in at the replay's start (1.3x closer).",
+  "exists_as_bible_shot": "s18",
+  "new_poses_or_animation": [
+   "tourist: finger wiggle along with his phone",
+   "caption layer: phone pictogram, music-note pictogram"
+  ]
+ },
+ {
+  "id": "v3_s17",
+  "start_s": 46.55,
+  "end_s": 50.09,
+  "place": "lab",
+  "who": [
+   "two jars",
+   "volunteer (soft, behind the jars)"
+  ],
+  "action": "CUT on 'tested'. Two big glass jars fill the frame, square to the lens: an EYE icon, a FINGER + SPEECH-BUBBLE icon. Under each one a plain TRIES bar. She only looks and presses, in a fast run (about three presses for each ball): the EYE bar fills to its end mark and six red balls drop into the EYE jar, about 0.48 s apart, each on a pulse of the melody; the sixth lands on 'looking...'. Nothing teeters, nothing leaves a jar. Lines v3_n12 ('tested it.'), v3_n13 (first clause).",
+  "camera": "s17's jar framing, a slow move. Each bar at least 4 % of the frame height, a round-button pictogram at its left end, no digits, the same end mark on both.",
+  "exists_as_bible_shot": "s17",
+  "new_poses_or_animation": [
+   "volunteer: fast run of presses (acting keyed to the v3 words)",
+   "two TRIES bars",
+   "no rim teeter"
+  ]
+ },
+ {
+  "id": "v3_s18",
+  "start_s": 50.09,
+  "end_s": 51.09,
+  "place": "from inside the doorway (v3_s15's camera)",
+  "who": [
+   "suitcase",
+   "boy (cap brim)",
+   "tourist (his back)"
+  ],
+  "action": "v3_p02, no words. The yellow suitcase large in the near corner; the boy looks from the bag to the tourist; beyond, the tourist with his back to it, shoulders shaking at his phone. The melody louder, with platform sound; his giggle (v3_x02).",
+  "camera": "v3_s15's camera, a little wider. Framed below the door header.",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "tourist: shoulders shaking, seen from behind",
+   "boy: look from the bag to the tourist"
+  ]
+ },
+ {
+  "id": "v3_s19",
+  "start_s": 51.09,
+  "end_s": 54.6,
+  "place": "lab (the same framing as v3_s17)",
+  "who": [
+   "two jars",
+   "volunteer (soft, behind the jars)"
+  ],
+  "action": "On 'when they pointed and said it out loud' she points at the lamp and calls in the true rhythm (point, hand by the ear, snap; a speech bubble with a finger icon pops on the snap) and presses; the FINGER bar fills to the SAME end mark. On 'about one' a single red ball drops into the FINGER jar (a brighter tink). Hold 6 against 1, both bars equally full, 0.41 s. No digits, no chip. Line v3_n13 (second half).",
+  "camera": "The same framing; the move ends square on the jars.",
+  "exists_as_bible_shot": "s17",
+  "new_poses_or_animation": [
+   "volunteer: one point and call in the true rhythm"
+  ]
+ },
+ {
+  "id": "v3_s20",
+  "start_s": 54.6,
+  "end_s": 57.3,
+  "place": "from inside the doorway (v3_s15's camera)",
+  "who": [
+   "suitcase",
+   "boy (his pointing arm)",
+   "tourist (his back)"
+  ],
+  "action": "Near corner: the yellow suitcase; the boy's arm comes up and points at it once more (14 frames), mouth shut, and holds. Beyond: the tourist's BACK, shoulders shaking at his phone. The melody plays its last notes and stops at 56.22 s; the music-note pictogram goes out. The doors do not move in this shot. Line v3_n14 (to 'mind').",
+  "camera": "v3_s15's camera, a slow push. Framed below the door header.",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "boy: arm up and hold, mouth shut"
+  ]
+ },
+ {
+  "id": "v3_s21",
+  "start_s": 57.3,
+  "end_s": 58.32,
+  "place": "cab, at station B",
+  "who": [
+   "driver"
+  ],
+  "action": "CUT on 'back.'. A hold: the white glove is already straight at the small dark door lamp; his eyes on it; his left hand on the handle; he says nothing. Quiet for 0.40 s; at 58.12 s the door chime starts outside (the doors start with it, unseen).",
+  "camera": "s19's right-side framing, cut to 1.0 s. The lamp with its door pictogram at least 6 % of the frame width, at his fingertip.",
+  "exists_as_bible_shot": "s19",
+  "new_poses_or_animation": [
+   "cab door lamp with a door pictogram, sized for a phone"
+  ]
+ },
+ {
+  "id": "v3_s22",
+  "start_s": 58.32,
+  "end_s": 61.4,
+  "place": "jp_platform, station B, knee-high along the car side",
+  "who": [
+   "tourist (in front, back to the train)",
+   "suitcase and boy behind car 1's door glass",
+   "kid_mum (beside the boy behind the glass; she may be half hidden)"
+  ],
+  "action": "THE PAYOFF, v3_s09's framing exactly. The doors are already sliding. The tourist giggles at his phone. 'Doors...' is heard from the cab over this picture (58.47 s). The doors meet with the yellow suitcase behind the glass (thump 59.42 s); the red car-side lamps go out (59.72 s); '...closed!' (60.12 s); the train starts to glide (60.78 s). The driver is never on screen during the call. Line v3_d03.",
+  "camera": "s20's low wide track; the same door speed as the plant (1.3 s).",
+  "exists_as_bible_shot": "s20",
+  "new_poses_or_animation": [
+   "tourist: helpless giggle at his phone, behind the yellow line"
+  ]
+ },
+ {
+  "id": "v3_s23",
+  "start_s": 61.4,
+  "end_s": 63.23,
+  "place": "jp_platform, station B, tracking car 1's door window",
+  "who": [
+   "boy",
+   "kid_mum",
+   "suitcase",
+   "tourist (his whole head from 62.3 s)"
+  ],
+  "action": "The boy, one hand on the suitcase handle, his mum's hand on his shoulder, does the full point at the suitcase: arm on 'Bag', hand to the ear on the beat, snap on 'check!' (62.35 s). The tourist's head starts to turn ON the word 'check!'; his grin drains (62.78-63.23 s). After 'check!' the boy pushes his cap up with the pointing hand (13 frames, to the cut at 63.23 s), chin up; he is pointing again when v3_s24 opens (the arm comes back down across the cut; it is not animated in this shot). Line v3_k01.",
+  "camera": "s21's follow shot; it holds the tourist's whole head at the right of the frame from 62.3 s.",
+  "exists_as_bible_shot": "s21",
+  "new_poses_or_animation": [
+   "boy: proud call in the driver's rhythm",
+   "boy: cap pushed up with the pointing hand",
+   "tourist: head turn, grin drains (blankDrop)"
+  ]
+ },
+ {
+  "id": "v3_s24",
+  "start_s": 63.23,
+  "end_s": 65.12,
+  "place": "jp_platform, station B",
+  "who": [
+   "tourist",
+   "suitcase behind the door glass",
+   "boy (cap brim and hand in the window)"
+  ],
+  "action": "FRAME 0's camera, 1.9 s earlier. The door window with the yellow suitcase slides from behind his left shoulder to his fingertip. His face follows it; his phone hand sinks through the shot. 'Bag...': the arm comes up and points (18 frames). The beat: the hand draws back beside his ear. 'gone.': the arm sags forward slowly for 12 frames, elbow soft, to about 60 % of full stretch, then locks out straight over the last 6 frames at the driver's snap speed. The music stops dead on 'gone.'. The film ends 0.10 s after the word, 2 frames before the lock-out lands; the next frame is frame 0. Line v3_t07.",
+  "camera": "v3_s01's camera and move, started 1.9 s earlier (face about 16 % at its first frame, 19 % at the seam).",
+  "exists_as_bible_shot": null,
+  "new_poses_or_animation": [
+   "tourist: arm up, hand by the ear, 12-frame sag, 6-frame lock-out",
+   "tourist: phone hand sinking",
+   "boy: pointing again at the leading edge of the window"
+  ]
+ }
+]

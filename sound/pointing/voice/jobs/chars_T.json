@@ -1,0 +1,410 @@
+[
+ {
+  "folder": "ch_t01",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8641,
+  "prev": "Signal... green!",
+  "next": "Give him a minute. He'll be pointing too.",
+  "lines": [
+   "t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t01",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8642,
+  "prev": "Signal... green!",
+  "next": "Give him a minute. He'll be pointing too.",
+  "lines": [
+   "t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t01",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughs] Bro's pointing at nothing!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8643,
+  "prev": "Signal... green!",
+  "next": "Give him a minute. He'll be pointing too.",
+  "lines": [
+   "t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t01",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughs] Bro's pointing at nothing!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8644,
+  "prev": "Signal... green!",
+  "next": "Give him a minute. He'll be pointing too.",
+  "lines": [
+   "t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t02",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[affectionately] Stay. Be right back.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8651,
+  "prev": "Doors... closed!",
+  "next": "Nobody does that in New York!",
+  "lines": [
+   "t02"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t02",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[affectionately] Stay. Be right back.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8652,
+  "prev": "Doors... closed!",
+  "next": "Nobody does that in New York!",
+  "lines": [
+   "t02"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t02",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[playful] Stay. Be right back.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8653,
+  "prev": "Doors... closed!",
+  "next": "Nobody does that in New York!",
+  "lines": [
+   "t02"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t02",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "Stay. Be right back.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8654,
+  "prev": "Doors... closed!",
+  "next": "Nobody does that in New York!",
+  "lines": [
+   "t02"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t03",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[excited] Nobody does that in New York!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8661,
+  "prev": "Stay. Be right back.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t03",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[excited] Nobody does that in New York!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8662,
+  "prev": "Stay. Be right back.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t03",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] Nobody does that in New York!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8663,
+  "prev": "Stay. Be right back.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t03",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "Nobody does that in New York!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8664,
+  "prev": "Stay. Be right back.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t04",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[mocking] Vending machine... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8671,
+  "prev": "So now, conductors must point at a striped board first. No board? No doors.",
+  "next": "What's a finger gonna do, bro?",
+  "lines": [
+   "t04"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t04",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[mocking] Vending machine... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8672,
+  "prev": "So now, conductors must point at a striped board first. No board? No doors.",
+  "next": "What's a finger gonna do, bro?",
+  "lines": [
+   "t04"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t04",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[teasing] Vending machine... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8673,
+  "prev": "So now, conductors must point at a striped board first. No board? No doors.",
+  "next": "What's a finger gonna do, bro?",
+  "lines": [
+   "t04"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t04",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] Vending machine... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8674,
+  "prev": "So now, conductors must point at a striped board first. No board? No doors.",
+  "next": "What's a finger gonna do, bro?",
+  "lines": [
+   "t04"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t05",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[amused] What's a finger gonna do, bro?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8681,
+  "prev": "Vending machine... check!",
+  "next": "Ever gone back home to check the stove... you'd already checked?",
+  "lines": [
+   "t05"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t05",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[amused] What's a finger gonna do, bro?",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8682,
+  "prev": "Vending machine... check!",
+  "next": "Ever gone back home to check the stove... you'd already checked?",
+  "lines": [
+   "t05"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t05",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] What's a finger gonna do, bro?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8683,
+  "prev": "Vending machine... check!",
+  "next": "Ever gone back home to check the stove... you'd already checked?",
+  "lines": [
+   "t05"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t05",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "What's a finger gonna do, bro?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8684,
+  "prev": "Vending machine... check!",
+  "next": "Ever gone back home to check the stove... you'd already checked?",
+  "lines": [
+   "t05"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t06",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[deadpan] Bag... gone.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8693,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t06",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[flatly] Bag... gone.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8694,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t06",
+  "take": "t5",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8695,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "ch_t06",
+  "take": "t6",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[quietly] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8696,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ }
+]

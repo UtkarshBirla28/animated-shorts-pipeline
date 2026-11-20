@@ -1,0 +1,207 @@
+{
+ "_start": 35737,
+ "tape_rewind_1": {
+  "seconds": 3.0,
+  "prompt": "A VHS video cassette tape rewinding at high speed inside a VCR, a fast mechanical motor whirr with light tape chatter, steady, close, dry, no music, no voices, no beep",
+  "influence": 0.75,
+  "ok": true,
+  "t": "22:54:06"
+ },
+ "tape_rewind_2": {
+  "seconds": 3.0,
+  "prompt": "A VHS video cassette tape rewinding at high speed inside a VCR, a fast mechanical motor whirr with light tape chatter, steady, close, dry, no music, no voices, no beep",
+  "influence": 0.75,
+  "ok": true,
+  "t": "22:54:09"
+ },
+ "tape_stop_1": {
+  "seconds": 0.6,
+  "prompt": "A VCR tape mechanism stopping abruptly, one short mechanical click-clunk, close, dry, no music, no voices",
+  "influence": 0.8,
+  "ok": true,
+  "t": "22:54:14"
+ },
+ "tape_stop_2": {
+  "seconds": 0.6,
+  "prompt": "A VCR tape mechanism stopping abruptly, one short mechanical click-clunk, close, dry, no music, no voices",
+  "influence": 0.8,
+  "ok": true,
+  "t": "22:54:18"
+ },
+ "door_open_1": {
+  "seconds": 1.5,
+  "prompt": "A wooden office door: the latch clicks, then the door swings open with a soft short creak, indoors, close, no voices, no footsteps, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:54:22"
+ },
+ "door_open_2": {
+  "seconds": 1.5,
+  "prompt": "A wooden office door: the latch clicks, then the door swings open with a soft short creak, indoors, close, no voices, no footsteps, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:54:25"
+ },
+ "zip_1": {
+  "seconds": 0.6,
+  "prompt": "A zipper on a garment bag ripped open fast, one quick zip, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.8,
+  "ok": true,
+  "t": "22:54:29"
+ },
+ "zip_2": {
+  "seconds": 0.6,
+  "prompt": "A zipper on a garment bag ripped open fast, one quick zip, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.8,
+  "ok": true,
+  "t": "22:54:33"
+ },
+ "bag_rustle_1": {
+  "seconds": 0.8,
+  "prompt": "A plastic garment bag swung up quickly, a short crinkly rustle, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:54:37"
+ },
+ "bag_rustle_2": {
+  "seconds": 0.8,
+  "prompt": "A plastic garment bag swung up quickly, a short crinkly rustle, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:54:41"
+ },
+ "dog_yap_1": {
+  "seconds": 1.0,
+  "prompt": "A small terrier dog gives two short happy yaps, outdoors, a few metres away, dry, no other sounds, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "22:54:45"
+ },
+ "dog_yap_2": {
+  "seconds": 1.0,
+  "prompt": "A small terrier dog gives two short happy yaps, outdoors, a few metres away, dry, no other sounds, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "22:54:50"
+ },
+ "dog_paws_1": {
+  "seconds": 1.5,
+  "prompt": "A small dog running fast across brick paving, quick light claws pattering, close, dry, no barking, no panting, no background noise",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:54:55"
+ },
+ "skid_1": {
+  "seconds": 0.8,
+  "prompt": "A small rubber bicycle tyre skids to a quick stop on brick paving, one short chirpy skid, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "22:55:02"
+ },
+ "skid_2": {
+  "seconds": 0.8,
+  "prompt": "A small rubber bicycle tyre skids to a quick stop on brick paving, one short chirpy skid, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "22:55:06"
+ },
+ "man_sigh_1": {
+  "seconds": 1.2,
+  "prompt": "A middle-aged man lets out one short thoughtful sigh through his nose, close, dry, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:11"
+ },
+ "man_sigh_2": {
+  "seconds": 1.2,
+  "prompt": "A middle-aged man lets out one short thoughtful sigh through his nose, close, dry, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:15"
+ },
+ "gasp_f_1": {
+  "seconds": 0.8,
+  "prompt": "A young woman's small surprised gasp, one short quick intake of breath, close, dry, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:19"
+ },
+ "gasp_f_2": {
+  "seconds": 0.8,
+  "prompt": "A young woman's small surprised gasp, one short quick intake of breath, close, dry, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:23"
+ },
+ "hm_f_1": {
+  "seconds": 0.6,
+  "prompt": "A woman's short surprised 'hm' with closed lips, rising, close, dry, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:27"
+ },
+ "hm_f_2": {
+  "seconds": 0.6,
+  "prompt": "A woman's short surprised 'hm' with closed lips, rising, close, dry, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:32"
+ },
+ "laugh_m_1": {
+  "seconds": 1.2,
+  "prompt": "A man's short cheerful goofy chuckle, a friendly clown laughing, outdoors a few metres away, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:37"
+ },
+ "laugh_m_2": {
+  "seconds": 1.2,
+  "prompt": "A man's short cheerful goofy chuckle, a friendly clown laughing, outdoors a few metres away, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:42"
+ },
+ "laugh_f_1": {
+  "seconds": 1.2,
+  "prompt": "A young woman's short delighted giggle, outdoors a few metres away, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:49"
+ },
+ "laugh_f_2": {
+  "seconds": 1.2,
+  "prompt": "A young woman's short delighted giggle, outdoors a few metres away, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:53"
+ },
+ "yelp_1": {
+  "seconds": 0.8,
+  "prompt": "A man's short comic startled yelp, wordless, surprised, outdoors a few metres away, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:55:59"
+ },
+ "yelp_2": {
+  "seconds": 0.8,
+  "prompt": "A man's short comic startled yelp, wordless, surprised, outdoors a few metres away, no words, no music",
+  "influence": 0.7,
+  "ok": true,
+  "t": "22:56:03"
+ },
+ "hand_bell_1": {
+  "seconds": 1.2,
+  "prompt": "A small brass hand bell rung quickly three times, a bright ding-a-ling, short, close, dry, no reverb, no background",
+  "influence": 0.75,
+  "ok": true,
+  "t": "22:56:07"
+ },
+ "hand_bell_2": {
+  "seconds": 1.2,
+  "prompt": "A small brass hand bell rung quickly three times, a bright ding-a-ling, short, close, dry, no reverb, no background",
+  "influence": 0.75,
+  "ok": true,
+  "t": "22:56:11"
+ },
+ "_last": 35994
+}

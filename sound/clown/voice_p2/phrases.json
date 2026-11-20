@@ -1,0 +1,232 @@
+[
+ {
+  "i": 0,
+  "id": "n01",
+  "speaker": "N",
+  "beat": 1,
+  "s": 0.07,
+  "e": 2.12,
+  "markup": "Quick test. Count the people on a phone.",
+  "style": null
+ },
+ {
+  "i": 1,
+  "id": "n02",
+  "speaker": "N",
+  "beat": 1,
+  "s": 5.12,
+  "e": 6.21,
+  "markup": "Don't lose count.",
+  "style": null
+ },
+ {
+  "i": 2,
+  "id": "n03",
+  "speaker": "N",
+  "beat": 1,
+  "s": 9.12,
+  "e": 9.605,
+  "markup": "How many?",
+  "style": null
+ },
+ {
+  "i": 3,
+  "id": "n04",
+  "speaker": "N",
+  "beat": 1,
+  "s": 10.005,
+  "e": 10.685,
+  "markup": "Five.",
+  "style": null
+ },
+ {
+  "i": 4,
+  "id": "n05",
+  "speaker": "N",
+  "beat": 1,
+  "s": 10.815,
+  "e": 12.85,
+  "markup": "And the clown? You saw him, right?",
+  "style": null
+ },
+ {
+  "i": 5,
+  "id": "n06",
+  "speaker": "N",
+  "beat": 2,
+  "s": 12.99,
+  "e": 16.835,
+  "markup": "In a real experiment, most people on a phone call never saw him.",
+  "style": null
+ },
+ {
+  "i": 6,
+  "id": "n07",
+  "speaker": "N",
+  "beat": 3,
+  "s": 16.995,
+  "e": 22.23,
+  "markup": "Psychologist Ira Hyman needed a distraction nobody could miss. Then a student told him:",
+  "style": null
+ },
+ {
+  "i": 7,
+  "id": "s01",
+  "speaker": "STUDENT",
+  "beat": 3,
+  "s": 22.37,
+  "e": 23.675,
+  "markup": "I own a unicycle.",
+  "style": null
+ },
+ {
+  "i": 8,
+  "id": "s02",
+  "speaker": "STUDENT",
+  "beat": 3,
+  "s": 23.925,
+  "e": 24.985,
+  "markup": "...and a clown suit.",
+  "style": null
+ },
+ {
+  "i": 9,
+  "id": "n08",
+  "speaker": "N",
+  "beat": 3,
+  "s": 25.145,
+  "e": 29.045,
+  "markup": "So for one hour, the clown rode circles in the middle of campus.",
+  "style": null
+ },
+ {
+  "i": 11,
+  "id": "i01",
+  "speaker": "INTERVIEWER",
+  "beat": 4,
+  "s": 29.205,
+  "e": 30.79,
+  "markup": "Did you see anything unusual?",
+  "style": null
+ },
+ {
+  "i": 12,
+  "id": "f01",
+  "speaker": "FRIEND",
+  "beat": 4,
+  "s": 31.21,
+  "e": 33.465,
+  "markup": "The clown? He was amazing!",
+  "style": null
+ },
+ {
+  "i": 13,
+  "id": "h01",
+  "speaker": "HEADPHONES",
+  "beat": 4,
+  "s": 33.575,
+  "e": 35.74,
+  "markup": "Dude, the unicycle guy!",
+  "style": null
+ },
+ {
+  "i": 14,
+  "id": "p01",
+  "speaker": "PHONE_GUY",
+  "beat": 4,
+  "s": 35.85,
+  "e": 37.58,
+  "markup": "Sorry... what clown?",
+  "style": null
+ },
+ {
+  "i": 15,
+  "id": "n10",
+  "speaker": "N",
+  "beat": 5,
+  "s": 37.72,
+  "e": 42.135,
+  "markup": "Even asked straight out, only {1|one} in {4|four} people on a call had seen him.",
+  "style": null
+ },
+ {
+  "i": 17,
+  "id": "n12",
+  "speaker": "N",
+  "beat": 6,
+  "s": 42.295,
+  "e": 45.76,
+  "markup": "Here's the weird part: people listening to music noticed him.",
+  "style": null
+ },
+ {
+  "i": 18,
+  "id": "n13",
+  "speaker": "N",
+  "beat": 6,
+  "s": 45.92,
+  "e": 49.86,
+  "markup": "You see, a call pulls your mind toward someone who isn't there.",
+  "style": null
+ },
+ {
+  "i": 19,
+  "id": "n14",
+  "speaker": "N",
+  "beat": 7,
+  "s": 50.02,
+  "e": 55.805,
+  "markup": "So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height.",
+  "style": null
+ },
+ {
+  "i": 20,
+  "id": "n15",
+  "speaker": "N",
+  "beat": 7,
+  "s": 55.965,
+  "e": 57.92,
+  "markup": "Nearly everyone ducked under it.",
+  "style": null
+ },
+ {
+  "i": 21,
+  "id": "n16",
+  "speaker": "N",
+  "beat": 7,
+  "s": 58.08,
+  "e": 61.42,
+  "markup": "On a phone? Only {6|six} in {100|a hundred} stopped for the money.",
+  "style": null
+ },
+ {
+  "i": 22,
+  "id": "n17",
+  "speaker": "N",
+  "beat": 8,
+  "s": 61.72,
+  "e": 65.335,
+  "markup": "Their bodies dodged it. Their minds never saw it.",
+  "style": null
+ },
+ {
+  "i": 23,
+  "id": "n18",
+  "speaker": "N",
+  "beat": 9,
+  "s": 65.495,
+  "e": 68.425,
+  "markup": "You counted five phones. You saw the clown.",
+  "style": null
+ },
+ {
+  "i": 24,
+  "id": "n19",
+  "speaker": "N",
+  "beat": 9,
+  "s": 68.775,
+  "e": 70.34,
+  "markup": "Did you see the money?",
+  "style": null
+ }
+]

@@ -1,0 +1,74 @@
+[
+ {
+  "folder": "c09b",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] A finger and a shout... drag your mind back to it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7301,
+  "prev": "You see, your eyes can look right at something... while your mind is somewhere else.",
+  "next": "Doors... closed!",
+  "lines": [
+   "n13"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r2 pace"
+ },
+ {
+  "folder": "c09b",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] A finger and a shout... drag your mind back to it.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7302,
+  "prev": "You see, your eyes can look right at something... while your mind is somewhere else.",
+  "next": "Doors... closed!",
+  "lines": [
+   "n13"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r2 pace"
+ },
+ {
+  "folder": "c09b",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "A finger, and a shout, drag your mind back to it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7303,
+  "prev": "You see, your eyes can look right at something... while your mind is somewhere else.",
+  "next": "Doors... closed!",
+  "lines": [
+   "n13"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r2 pace"
+ },
+ {
+  "folder": "c09b",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[slowly] A finger and a shout drag your mind back to it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7304,
+  "prev": "You see, your eyes can look right at something... while your mind is somewhere else.",
+  "next": "Doors... closed!",
+  "lines": [
+   "n13"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r2 pace"
+ }
+]

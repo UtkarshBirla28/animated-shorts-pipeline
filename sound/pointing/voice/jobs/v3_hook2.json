@@ -1,0 +1,162 @@
+[
+ {
+  "folder": "v3_hook",
+  "take": "t9",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. [flatly] He is not. [amused] All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9109,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t10",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. [flatly] He is not. [amused] All he did was laugh... at a finger.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9110,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t11",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. [flatly] He is not. All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9111,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t12",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. [deadpan] He is not. [amused] All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9112,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t13",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[brightly] His bag is on that train. [flatly] He is not. [amused] All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9113,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t14",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. [flatly] He is not. [amused] All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9114,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t15",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. [dryly] He is not. [amused] All he did was laugh... at a finger.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9115,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_hook",
+  "take": "t16",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "His bag is on that train. [flatly] He is not. [amused] All he did was laugh... at a finger.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9116,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ }
+]

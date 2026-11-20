@@ -1,0 +1,24 @@
+pass  length of mix.wav: 3593600 samples at 48000 Hz, 2 ch (the film: 2246 f = 3593600 samples)
+pass  length of stem_voice.wav: 3593600 samples at 48000 Hz, 2 ch (the film: 2246 f = 3593600 samples)
+pass  length of stem_music.wav: 3593600 samples at 48000 Hz, 2 ch (the film: 2246 f = 3593600 samples)
+pass  length of stem_sfx.wav: 3593600 samples at 48000 Hz, 2 ch (the film: 2246 f = 3593600 samples)
+pass  length of stem_amb.wav: 3593600 samples at 48000 Hz, 2 ch (the film: 2246 f = 3593600 samples)
+pass  length of music_v2.wav: 3593600 samples at 48000 Hz, 2 ch (the film: 2246 f = 3593600 samples)
+pass  the report belongs to this timeline: report 2246 f, timeline 2246 f
+pass  integrated loudness -14 LUFS +-0.5: -14.01 LUFS
+pass  true peak <= -2 dBTP: -2.90 dBTP
+pass  speech margin >= 7 dB on every word: lowest 7.3 dB of 182 words
+pass  character lines as clear as the narrator: characters median 24.5 / lowest 14.3 dB; narrator median 16.9 dB
+pass  sync direction: every cue -1 .. +2 f: 164 cues, +0.00 .. +0.16 f, 0 outside
+pass  mono fold-down loss <= 1 LU: -0.01 LU
+pass  quiz rule, duck f 141: everything but the clown / pigeons / dog is silent in the window: peak 0.0000000
+pass  quiz rule, duck f 141: what sounds there is the clown's / pigeons' / dog's, at pan +0.10 or further right: clown_wobble f 132 pan +0.48; L-R -7.2 dB
+pass  quiz rule, duck f 141: the bed is an ordinary moment: louder than 50 % of Q1's windows, rise above 54 %, L-R -0.14 dB (Q1 -0.02)
+pass  quiz rule, duck f 141: the score's pulse runs through unchanged: level -26.0 dB; the same slice two beats before / after -24.4 / -25.7 dB; L-R +0.33 dB (Q1 -0.46)
+pass  quiz rule, duck f 217: everything but the clown / pigeons / dog is silent in the window: peak 0.0000000
+pass  quiz rule, duck f 217: what sounds there is the clown's / pigeons' / dog's, at pan +0.10 or further right: honk f 215 pan +0.54, pigeon_flush f 220 pan +0.71; L-R -10.1 dB
+pass  quiz rule, duck f 217: the bed is an ordinary moment: louder than 62 % of Q1's windows, rise above 6 %, L-R +0.32 dB (Q1 -0.02)
+pass  quiz rule, duck f 217: the score's pulse runs through unchanged: level -23.0 dB; the same slice two beats before / after -24.7 / -22.2 dB; L-R -0.47 dB (Q1 -0.46)
+pass  loop seam: no click: jump 0.01147; typical steps 0.03319 / 0.10777
+
+22 of 22 checks pass

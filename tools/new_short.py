@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-EXAMPLES = {"saladoil": "SaladOil", "antitheft": "AntiTheft"}
+EXAMPLES = {"saladoil": "SaladOil", "antitheft": "AntiTheft", "typo": "Typo"}
 frm = [a for a in sys.argv[1:] if a.startswith("--from=")]
 args = [a for a in sys.argv[1:] if not a.startswith("--from=")]
 EX = frm[0].split("=", 1)[1] if frm else "saladoil"

@@ -1,0 +1,2916 @@
+{
+ "_doc": "what became of every cue of the animators' three files in the last render (status: play / step / loop / roll = sounded; UNMAPPED = no sound known for that name; thin / rule / far / silent / merged / off = not sounded, with the reason)",
+ "files": [
+  "C:\\Users\\utkar\\Desktop\\animated-shorts-studio\\studio\\out\\clown\\anim_quiz\\sound_cues.json",
+  "C:\\Users\\utkar\\Desktop\\animated-shorts-studio\\studio\\out\\clown\\anim_story1\\sound_cues.json",
+  "C:\\Users\\utkar\\Desktop\\animated-shorts-studio\\studio\\out\\clown\\anim_story2\\sound_cues.json"
+ ],
+ "problems": [],
+ "counts": {
+  "play": 141,
+  "loop": 12,
+  "far": 15,
+  "merged": 4,
+  "roll": 7,
+  "step": 66,
+  "rule": 9,
+  "silent": 22,
+  "thin": 45
+ },
+ "duck_frames": [
+  141,
+  217
+ ],
+ "unmapped": [],
+ "rows": [
+  {
+   "frame": 0.0,
+   "name": "honk",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "frame 0: the clown pumps his bulb horn right beside the phone guy's head (the thumbnail; the squeeze is ON frame 0)"
+  },
+  {
+   "frame": 0.0,
+   "name": "phone_chatter_bed",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "loop",
+   "why": "",
+   "what": "p1 (red) on the call: a murmur of one side of a phone talk, 0..124"
+  },
+  {
+   "frame": 0.0,
+   "name": "phone_chatter_bed",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.00 < 0.3): it is in the crowd bed",
+   "what": "p2 (white) on the call: a murmur of one side of a phone talk, 0..206"
+  },
+  {
+   "frame": 0.0,
+   "name": "phone_chatter_bed",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.00 < 0.3): it is in the crowd bed",
+   "what": "p3 (hero) on the call: a murmur of one side of a phone talk, 0..284"
+  },
+  {
+   "frame": 0.0,
+   "name": "phone_chatter_bed",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.00 < 0.3): it is in the crowd bed",
+   "what": "p4 (blue) on the call: a murmur of one side of a phone talk, 0..264"
+  },
+  {
+   "frame": 0.0,
+   "name": "phone_chatter_bed",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "loop",
+   "why": "",
+   "what": "p5 (pink) on the call: a murmur of one side of a phone talk, 0..182"
+  },
+  {
+   "frame": 6.0,
+   "name": "honk",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "merged",
+   "why": "the second squeeze of the frame-0 honk-honk (one event in the lead-in, over before 'Quick')",
+   "what": "the second pump of the opening honk, still in the lead-in before 'Quick test.' (no reaction from the phone guy)"
+  },
+  {
+   "frame": 9.0,
+   "name": "wheel_squeak",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "roll",
+   "why": "",
+   "what": "a pedal squeak (every half crank turn while he is near)"
+  },
+  {
+   "frame": 21.0,
+   "name": "wheel_squeak",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "roll",
+   "why": "",
+   "what": "a pedal squeak (every half crank turn while he is near)"
+  },
+  {
+   "frame": 24.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p1 (red) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 29.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p5 (pink) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 30.0,
+   "name": "wink_ting",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "rule",
+   "why": "THE QUIZ RULE: no 'ting' sound anywhere in Q1",
+   "what": "Q1 hook: a cheeky WINK to the lens on 'Count the people' (two brow waggles): a tiny sparkle ting or a lip click"
+  },
+  {
+   "frame": 32.0,
+   "name": "wheel_squeak",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "roll",
+   "why": "",
+   "what": "a pedal squeak (every half crank turn while he is near)"
+  },
+  {
+   "frame": 44.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p5 (pink) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 93.0,
+   "name": "pigeon_land",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "a pigeon lands on his hat as he rides backward up the plaza (a soft flutter + a tiny thump; it pecks the hat at +10 and +17: two taps; he goes cross-eyed)"
+  },
+  {
+   "frame": 94.0,
+   "name": "honk",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "riding backward up the plaza, face to us: a honk with the horn held high (screen right), as the pigeon lands on his hat"
+  },
+  {
+   "frame": 108.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p1 (red) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 113.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p1 (red) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 116.0,
+   "name": "pigeon_scurry",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "silent",
+   "why": "far and quiet (tiny claws on brick, near 0.30): it is in the bed",
+   "what": "the flock scurries in on foot from the right edge behind him (tiny claws, a coo or two; quiet)"
+  },
+  {
+   "frame": 118.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p1 (red) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 121.0,
+   "name": "honk",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "a second cheery honk, horn high (right after the phone guy has walked off past him)"
+  },
+  {
+   "frame": 123.0,
+   "name": "pigeon_leave",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "the pigeon flutters off his hat to the upper right"
+  },
+  {
+   "frame": 131.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "rule",
+   "why": "THE QUIZ RULE: it would still sound in the window of the duck at f 141 (only 3 f of room): only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there",
+   "what": "p2 (white) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 132.0,
+   "name": "clown_wobble",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "DUCKS[0] gag: the wobble-and-save at the loop's far end (wheel scuff, a yelp 'whoa!' f+1, relieved laugh f+22)"
+  },
+  {
+   "frame": 135.0,
+   "name": "surprise_ping",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "silent",
+   "why": "THE QUIZ RULE: no chime or ping anywhere in Q1; his yelp and the wobble's scuff carry the take",
+   "what": "his take on the wobble: a tiny '!' ping (surprise lines + a '!' pop over his hat)"
+  },
+  {
+   "frame": 137.0,
+   "name": "laugh_far",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "rule",
+   "why": "THE QUIZ RULE: inside the window (+-6 f) of the duck at f 141: only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there",
+   "what": "the pair stop on the far right and one points at the clown, both laughing (far, quiet)"
+  },
+  {
+   "frame": 141.0,
+   "name": "duck_SILENT",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "silent",
+   "why": "THE QUIZ RULE: the two ducks of the count are silent",
+   "what": "DUCK 1: a phone person dips under bill 2 (feet only, NO accent, no swish: nothing points at the money)"
+  },
+  {
+   "frame": 145.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "rule",
+   "why": "THE QUIZ RULE: inside the window (+-6 f) of the duck at f 141: only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there",
+   "what": "p2 (white) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 146.0,
+   "name": "cheek_puff",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "silent",
+   "why": "a look (his puffed cheeks): the 'phew' 5 frames later carries it",
+   "what": "after the wobble-save: he puffs his cheeks (relief)..."
+  },
+  {
+   "frame": 151.0,
+   "name": "phew_blow",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "...and BLOWS it out: a relieved 'phew' (a little puff cloud floats off to the right)"
+  },
+  {
+   "frame": 157.0,
+   "name": "pigeon_scatter",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "'Don't lose count.': he rides into the pigeon flock; six birds burst LOW past his wheel and settle a metre away (a flurry of wing claps, no climb)"
+  },
+  {
+   "frame": 158.0,
+   "name": "dog_bark_far",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "FAR background: the dog walker's dog lunges at the scattering pigeons, the lead snaps taut (one far bark, very quiet)"
+  },
+  {
+   "frame": 159.0,
+   "name": "clown_yelp",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "his flinch (jaw drop), then a laugh at f+14"
+  },
+  {
+   "frame": 159.0,
+   "name": "surprise_ping",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "silent",
+   "why": "THE QUIZ RULE: no chime or ping anywhere in Q1; his yelp and the wobble's scuff carry the take",
+   "what": "his take on the pigeon flock: a tiny '!' ping"
+  },
+  {
+   "frame": 160.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p2 (white) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 163.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p5 (pink) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 166.0,
+   "name": "tyre_land",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "he lands from the little hop (a rubbery boing, small)"
+  },
+  {
+   "frame": 171.0,
+   "name": "dog_paws",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "a small terrier bounds across the near ground left -> right (paws in pairs on brick, a bounding rhythm, 40 f)"
+  },
+  {
+   "frame": 176.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p2 (white) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 177.0,
+   "name": "dog_yap",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "two happy yaps as it chases the near pigeons"
+  },
+  {
+   "frame": 178.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p5 (pink) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 182.0,
+   "name": "honk",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "a honk after the scattered pigeons, horn high"
+  },
+  {
+   "frame": 183.0,
+   "name": "pigeon_scatter",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "near pigeons (group B) scatter low to the left away from the dog; group A hops and settles"
+  },
+  {
+   "frame": 189.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p4 (blue) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 192.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p2 (white) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 196.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p3 (hero) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 201.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p4 (blue) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 203.0,
+   "name": "sly_hmm",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "silent",
+   "why": "'a tiny heh or nothing': nothing (it sits 8 frames before duck 2's window)",
+   "what": "MISCHIEF before the pigeon honk: a sly side-eye at the re-landed birds (a tiny 'heh' or nothing)"
+  },
+  {
+   "frame": 207.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "rule",
+   "why": "THE QUIZ RULE: it would still sound in the window of the duck at f 217 (only 3 f of room): only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there",
+   "what": "p3 (hero) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 212.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "rule",
+   "why": "THE QUIZ RULE: inside the window (+-6 f) of the duck at f 217: only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there",
+   "what": "p4 (blue) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 215.0,
+   "name": "honk",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "DUCKS[1] gag: he honks to screen right at the re-landed pigeons"
+  },
+  {
+   "frame": 216.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "rule",
+   "why": "THE QUIZ RULE: inside the window (+-6 f) of the duck at f 217: only the clown, the pigeons or the dog, panned at +0.10 or further right, may sound there",
+   "what": "p3 (hero) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 217.0,
+   "name": "duck_SILENT",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "silent",
+   "why": "THE QUIZ RULE: the two ducks of the count are silent",
+   "what": "DUCK 2: a phone person dips under bill 2 (feet only, NO accent, no swish: nothing points at the money)"
+  },
+  {
+   "frame": 220.0,
+   "name": "pigeon_flush",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "the flock takes off, up and away to the right over the far plaza"
+  },
+  {
+   "frame": 224.0,
+   "name": "honk",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "a second pump at the pigeons"
+  },
+  {
+   "frame": 224.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p4 (blue) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 229.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p3 (hero) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 236.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p4 (blue) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 247.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p4 (blue) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 258.0,
+   "name": "footstep",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "step",
+   "why": "",
+   "what": "p4 (blue) footstep on brick + phone chatter murmur under it"
+  },
+  {
+   "frame": 266.0,
+   "name": "juggle",
+   "src": "quiz",
+   "shot": "Q1",
+   "status": "play",
+   "why": "",
+   "what": "HIS JUGGLE: two balls and his own horn in a cascade over his head, on the spot before 'How many?' and on into Q2 as he rides at the lens: a soft whup on every throw (one every 4 f), the brass horn's tiny ting when it is caught at the end"
+  },
+  {
+   "frame": 292.0,
+   "name": "pigeon_scatter",
+   "src": "quiz",
+   "shot": "Q2",
+   "status": "play",
+   "why": "",
+   "what": "Q2: the near pigeons scatter low to both sides as he starts toward the lens (none is left when he brakes)"
+  },
+  {
+   "frame": 314.0,
+   "name": "catch",
+   "src": "quiz",
+   "shot": "Q2",
+   "status": "play",
+   "why": "",
+   "what": "he catches the horn (a small slap + ting)"
+  },
+  {
+   "frame": 317.0,
+   "name": "wheel_squeak",
+   "src": "quiz",
+   "shot": "Q2",
+   "status": "roll",
+   "why": "",
+   "what": "a pedal squeak (every half crank turn while he is near)"
+  },
+  {
+   "frame": 322.0,
+   "name": "honk",
+   "src": "quiz",
+   "shot": "Q2",
+   "status": "play",
+   "why": "",
+   "what": "Q2: the CHEER honk right after 'Five.' (he has just caught the horn), horn high on screen right"
+  },
+  {
+   "frame": 330.0,
+   "name": "wheel_squeak",
+   "src": "quiz",
+   "shot": "Q2",
+   "status": "roll",
+   "why": "",
+   "what": "a pedal squeak (every half crank turn while he is near)"
+  },
+  {
+   "frame": 344.0,
+   "name": "wheel_squeak",
+   "src": "quiz",
+   "shot": "Q2",
+   "status": "roll",
+   "why": "",
+   "what": "a pedal squeak (every half crank turn while he is near)"
+  },
+  {
+   "frame": 358.0,
+   "name": "wheel_squeak",
+   "src": "quiz",
+   "shot": "Q3",
+   "status": "roll",
+   "why": "",
+   "what": "a pedal squeak (every half crank turn while he is near)"
+  },
+  {
+   "frame": 366.0,
+   "name": "brake_skid",
+   "src": "quiz",
+   "shot": "Q3",
+   "status": "play",
+   "why": "",
+   "what": "Q3: he brakes hard at the stop mark (tyre skid on brick, a creak of the saddle on the pitch forward, a squash, 3 cm rock back; then he rocks on the spot)"
+  },
+  {
+   "frame": 367.0,
+   "name": "dust_puff",
+   "src": "quiz",
+   "shot": "Q3",
+   "status": "play",
+   "why": "",
+   "what": "Q3: a puff of dust at the tyre as he brakes (soft, under the skid)"
+  },
+  {
+   "frame": 371.0,
+   "name": "whoosh_small",
+   "src": "quiz",
+   "shot": "Q3",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "Q3: the wave's arm rises (a soft cloth swish)"
+  },
+  {
+   "frame": 390.0,
+   "name": "wink_ting",
+   "src": "quiz",
+   "shot": "Q3",
+   "status": "play",
+   "why": "",
+   "what": "Q3 'right?': the WINK (+ two brow waggles) before the puffed-cheek honk; E2 replays its start"
+  },
+  {
+   "frame": 394.0,
+   "name": "honk",
+   "src": "quiz",
+   "shot": "Q3",
+   "status": "play",
+   "why": "",
+   "what": "Q3: THE WAVE HONK with the other hand on 'right?'"
+  },
+  {
+   "frame": 411.0,
+   "name": "unicycle_wheel_loop",
+   "src": "story1",
+   "shot": "S1",
+   "status": "loop",
+   "why": "",
+   "what": "the clown's wheel ticking + tyre on brick behind the phone guy (to f 531)"
+  },
+  {
+   "frame": 421.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S1",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 429.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S1",
+   "status": "step",
+   "why": "",
+   "what": "the phone guy: a step (brick)"
+  },
+  {
+   "frame": 430.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S1",
+   "status": "thin",
+   "why": "thinned: under 24 f after the last kept 'pigeon_flush'",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 447.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S1",
+   "status": "step",
+   "why": "",
+   "what": "the phone guy: a step (brick)"
+  },
+  {
+   "frame": 452.0,
+   "name": "honk",
+   "src": "story1",
+   "shot": "S1",
+   "status": "play",
+   "why": "",
+   "what": "the clown squeezes his bulb horn"
+  },
+  {
+   "frame": 454.0,
+   "name": "bike_pass",
+   "src": "story1",
+   "shot": "S1",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.11 < 0.3): it is in the crowd bed",
+   "what": "a cyclist rides through the background (freewheel tick, a ding)"
+  },
+  {
+   "frame": 459.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S1",
+   "status": "thin",
+   "why": "thinned: at most 1 'pigeon_flush' in a shot",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 462.0,
+   "name": "honk",
+   "src": "story1",
+   "shot": "S1",
+   "status": "play",
+   "why": "",
+   "what": "the clown squeezes his bulb horn"
+  },
+  {
+   "frame": 465.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S1",
+   "status": "step",
+   "why": "",
+   "what": "the phone guy: a step (brick)"
+  },
+  {
+   "frame": 472.0,
+   "name": "skateboard_pass",
+   "src": "story1",
+   "shot": "S1",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.09 < 0.3): it is in the crowd bed",
+   "what": "a skateboarder rolls through the background"
+  },
+  {
+   "frame": 475.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S1",
+   "status": "thin",
+   "why": "thinned: at most 1 'pigeon_flush' in a shot",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 483.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S1",
+   "status": "step",
+   "why": "",
+   "what": "the phone guy: a step (brick)"
+  },
+  {
+   "frame": 488.0,
+   "name": "laugh",
+   "src": "story1",
+   "shot": "S1",
+   "status": "thin",
+   "why": "held back: 2 f from 'bell_ring' (higher priority)",
+   "what": "the phone guy laughs"
+  },
+  {
+   "frame": 488.0,
+   "name": "laugh",
+   "src": "story1",
+   "shot": "S1",
+   "status": "thin",
+   "why": "thinned: under 30 f after the last kept 'laugh'",
+   "what": "the clown laughs"
+  },
+  {
+   "frame": 490.0,
+   "name": "honk",
+   "src": "story1",
+   "shot": "S1",
+   "status": "thin",
+   "why": "held back: 0 f from 'bell_ring' (higher priority)",
+   "what": "the clown squeezes his bulb horn"
+  },
+  {
+   "frame": 490.0,
+   "name": "bell_ring",
+   "src": "story1",
+   "shot": "S1",
+   "status": "play",
+   "why": "",
+   "what": "the clown rings his little brass hand bell high over his head, ding-a-ling (to f 503)"
+  },
+  {
+   "frame": 498.0,
+   "name": "honk",
+   "src": "story1",
+   "shot": "S1",
+   "status": "play",
+   "why": "",
+   "what": "the clown squeezes his bulb horn"
+  },
+  {
+   "frame": 501.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S1",
+   "status": "step",
+   "why": "",
+   "what": "the phone guy: a step (brick)"
+  },
+  {
+   "frame": 504.0,
+   "name": "unicycle_brake",
+   "src": "story1",
+   "shot": "S1",
+   "status": "play",
+   "why": "",
+   "what": "the clown gives up: his tyre scuffs to a stop, the bell clunks down (a sad little honk would be funny here)"
+  },
+  {
+   "frame": 504.0,
+   "name": "dust_puff",
+   "src": "story1",
+   "shot": "S1",
+   "status": "play",
+   "why": "",
+   "what": "a skid puff of dust under the clown's tyre as he brakes"
+  },
+  {
+   "frame": 511.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S1",
+   "status": "thin",
+   "why": "thinned: at most 1 'pigeon_flush' in a shot",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 519.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S1",
+   "status": "step",
+   "why": "",
+   "what": "the phone guy: a step (brick)"
+  },
+  {
+   "frame": 537.0,
+   "name": "marker_tap",
+   "src": "story1",
+   "shot": "S2",
+   "status": "play",
+   "why": "",
+   "what": "Hyman taps the whiteboard under DISTRACTION? with his marker"
+  },
+  {
+   "frame": 545.0,
+   "name": "marker_tap",
+   "src": "story1",
+   "shot": "S2",
+   "status": "play",
+   "why": "",
+   "what": "the second tap"
+  },
+  {
+   "frame": 550.0,
+   "name": "sigh",
+   "src": "story1",
+   "shot": "S2",
+   "status": "play",
+   "why": "",
+   "what": "Hyman shakes his head and sighs (shoulders up, then down)"
+  },
+  {
+   "frame": 570.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S2",
+   "status": "step",
+   "why": "",
+   "what": "Hyman: a step (office floorboards)"
+  },
+  {
+   "frame": 590.0,
+   "name": "marker_jab",
+   "src": "story1",
+   "shot": "S2",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "he jabs the marker at the title (a small air whoosh)"
+  },
+  {
+   "frame": 597.0,
+   "name": "marker_jab",
+   "src": "story1",
+   "shot": "S2",
+   "status": "thin",
+   "why": "held back: 0 f from 'paper_rustle' (higher priority)",
+   "what": "the second jab"
+  },
+  {
+   "frame": 597.0,
+   "name": "paper_rustle",
+   "src": "story1",
+   "shot": "S2",
+   "status": "play",
+   "why": "",
+   "what": "he pulls a note out of his breast pocket"
+  },
+  {
+   "frame": 604.0,
+   "name": "paper_crumple",
+   "src": "story1",
+   "shot": "S2",
+   "status": "play",
+   "why": "",
+   "what": "he crumples the note in his fist (to f 609)"
+  },
+  {
+   "frame": 614.0,
+   "name": "paper_throw",
+   "src": "story1",
+   "shot": "S2",
+   "status": "play",
+   "why": "",
+   "what": "he lobs the paper ball at the board (a light whoosh)"
+  },
+  {
+   "frame": 620.0,
+   "name": "paper_hit",
+   "src": "story1",
+   "shot": "S2",
+   "status": "play",
+   "why": "",
+   "what": "the paper ball bounces off the whiteboard (a soft tock)"
+  },
+  {
+   "frame": 648.0,
+   "name": "door_latch",
+   "src": "story1",
+   "shot": "S2",
+   "status": "play",
+   "why": "",
+   "what": "the office door's latch clicks"
+  },
+  {
+   "frame": 652.0,
+   "name": "door_swing",
+   "src": "story1",
+   "shot": "S2",
+   "status": "merged",
+   "why": "inside door_latch's take (the latch, then the creak of the swing)",
+   "what": "the door swings open into the room (a soft creak)"
+  },
+  {
+   "frame": 652.0,
+   "name": "paper_flutter",
+   "src": "story1",
+   "shot": "S2",
+   "status": "loop",
+   "why": "",
+   "what": "a few sheets lift off the pin board in the door's draught and flutter down (to f 694)"
+  },
+  {
+   "frame": 660.0,
+   "name": "door_stop",
+   "src": "story1",
+   "shot": "S3",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "the door bumps its stop"
+  },
+  {
+   "frame": 664.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S3",
+   "status": "step",
+   "why": "",
+   "what": "Hyman: a step (office floorboards)"
+  },
+  {
+   "frame": 666.0,
+   "name": "take_gasp",
+   "src": "story1",
+   "shot": "S3",
+   "status": "play",
+   "why": "",
+   "what": "Hyman's take as the student leans in (a small gasp, his glasses jump)"
+  },
+  {
+   "frame": 686.0,
+   "name": "unicycle_roll",
+   "src": "story1",
+   "shot": "S3",
+   "status": "loop",
+   "why": "",
+   "what": "the unicycle's tyre rolls in on the floorboards (to f 713)"
+  },
+  {
+   "frame": 698.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S4",
+   "status": "step",
+   "why": "",
+   "what": "the student: a step (office floorboards)"
+  },
+  {
+   "frame": 704.0,
+   "name": "sparkle",
+   "src": "story1",
+   "shot": "S4",
+   "status": "play",
+   "why": "",
+   "what": "a twinkle on the unicycle as he shows it off"
+  },
+  {
+   "frame": 705.0,
+   "name": "take_boing",
+   "src": "story1",
+   "shot": "S4",
+   "status": "play",
+   "why": "",
+   "what": "Hyman's take on \"unicycle\": eyes wide, glasses jump, mouth shut (a boing)"
+  },
+  {
+   "frame": 716.0,
+   "name": "unicycle_rock",
+   "src": "story1",
+   "shot": "S4",
+   "status": "play",
+   "why": "",
+   "what": "a squeak as he rocks the unicycle"
+  },
+  {
+   "frame": 724.0,
+   "name": "unicycle_rock",
+   "src": "story1",
+   "shot": "S4",
+   "status": "play",
+   "why": "",
+   "what": "a squeak as he rocks it back"
+  },
+  {
+   "frame": 734.0,
+   "name": "garment_rustle",
+   "src": "story1",
+   "shot": "S5",
+   "status": "play",
+   "why": "",
+   "what": "the zipped garment bag swings on its hanger beside him (the cut)"
+  },
+  {
+   "frame": 741.0,
+   "name": "cloth_grab",
+   "src": "story1",
+   "shot": "S5",
+   "status": "play",
+   "why": "",
+   "what": "his hand grabs the bag's flap edge (a cloth rustle, a tug back at f 745)"
+  },
+  {
+   "frame": 748.0,
+   "name": "garment_fling",
+   "src": "story1",
+   "shot": "S5",
+   "status": "play",
+   "why": "",
+   "what": "the bag's flap swings open (a cloth whoosh, to f 755)"
+  },
+  {
+   "frame": 750.0,
+   "name": "suit_spring",
+   "src": "story1",
+   "shot": "S5",
+   "status": "play",
+   "why": "",
+   "what": "the clown suit tumbles out of the bag and bounces once (a boing / the reveal hit, settles by f 762)"
+  },
+  {
+   "frame": 752.0,
+   "name": "confetti_pop",
+   "src": "story1",
+   "shot": "S5",
+   "status": "play",
+   "why": "",
+   "what": "confetti bursts out of the bag's mouth and flutters down (settles by f 798)"
+  },
+  {
+   "frame": 756.0,
+   "name": "jaw_drop",
+   "src": "story1",
+   "shot": "S5",
+   "status": "play",
+   "why": "",
+   "what": "Hyman's jaw drops, his glasses jump (a comic gasp / boing)"
+  },
+  {
+   "frame": 756.0,
+   "name": "sparkle",
+   "src": "story1",
+   "shot": "S5",
+   "status": "play",
+   "why": "",
+   "what": "sparkles twinkle round the clown suit (to the cut)"
+  },
+  {
+   "frame": 765.0,
+   "name": "bulb_ping",
+   "src": "story1",
+   "shot": "S5",
+   "status": "play",
+   "why": "",
+   "what": "the light bulb pings on over Hyman's head (his idea), AFTER his jaw drop"
+  },
+  {
+   "frame": 767.0,
+   "name": "hands_rub",
+   "src": "story1",
+   "shot": "S5",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "Hyman rubs his fists in glee (to the cut)"
+  },
+  {
+   "frame": 775.0,
+   "name": "frisbee_throw",
+   "src": "story1",
+   "shot": "S6",
+   "status": "silent",
+   "why": "about 40 m away in the high wide (near 0.05): under the bed's level",
+   "what": "a frisbee whooshes across"
+  },
+  {
+   "frame": 775.0,
+   "name": "unicycle_wheel_loop",
+   "src": "story1",
+   "shot": "S6",
+   "status": "loop",
+   "why": "",
+   "what": "the clown's wheel whirring round his tight circle, fast (slows f 843..873, to f 897)"
+  },
+  {
+   "frame": 776.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the pink-phone blonde (S6): a step (brick)"
+  },
+  {
+   "frame": 777.0,
+   "name": "hop_land",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "Hyman's little hop of glee lands"
+  },
+  {
+   "frame": 783.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S6",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 795.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the pink-phone blonde (S6): a step (brick)"
+  },
+  {
+   "frame": 798.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S6",
+   "status": "thin",
+   "why": "thinned: under 24 f after the last kept 'pigeon_flush'",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 799.0,
+   "name": "frisbee_throw",
+   "src": "story1",
+   "shot": "S6",
+   "status": "silent",
+   "why": "about 40 m away in the high wide (near 0.05): under the bed's level",
+   "what": "a frisbee whooshes across"
+  },
+  {
+   "frame": 805.0,
+   "name": "honk",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "the clown squeezes his bulb horn"
+  },
+  {
+   "frame": 813.0,
+   "name": "laugh",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "the pink-phone blonde (S6) laughs"
+  },
+  {
+   "frame": 814.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the pink-phone blonde (S6): a step (brick)"
+  },
+  {
+   "frame": 823.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S6",
+   "status": "thin",
+   "why": "thinned: at most 1 'pigeon_flush' in a shot",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 829.0,
+   "name": "timelapse_whoosh",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "three time-lapse afterimages trail him round his circle + his tyre track glints on the brick (a whooshy shimmer, to f 853)"
+  },
+  {
+   "frame": 832.0,
+   "name": "bike_pass",
+   "src": "story1",
+   "shot": "S6",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.11 < 0.3): it is in the crowd bed",
+   "what": "a cyclist rides through the background (freewheel tick, a ding)"
+  },
+  {
+   "frame": 833.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the pink-phone blonde (S6): a step (brick)"
+  },
+  {
+   "frame": 837.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the lime-phone man crossing near the lens (S6): a step (brick)"
+  },
+  {
+   "frame": 840.0,
+   "name": "gasp",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "the beret woman stops dead and gasps at the clown (\"!\")"
+  },
+  {
+   "frame": 843.0,
+   "name": "frisbee_throw",
+   "src": "story1",
+   "shot": "S6",
+   "status": "silent",
+   "why": "about 40 m away in the high wide (near 0.05): under the bed's level",
+   "what": "a frisbee whooshes across"
+  },
+  {
+   "frame": 844.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S6",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.19 < 0.2): it is in the crowd bed",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 852.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the pink-phone blonde (S6): a step (brick)"
+  },
+  {
+   "frame": 852.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the lime-phone man crossing near the lens (S6): a step (brick)"
+  },
+  {
+   "frame": 852.0,
+   "name": "hand_clap",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "the beret woman claps for him: the hands meet on this frame"
+  },
+  {
+   "frame": 858.0,
+   "name": "honk",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "the clown squeezes his bulb horn"
+  },
+  {
+   "frame": 859.0,
+   "name": "laugh",
+   "src": "story1",
+   "shot": "S6",
+   "status": "thin",
+   "why": "thinned: at most 1 'laugh' in a shot",
+   "what": "the pink-phone blonde (S6) laughs"
+  },
+  {
+   "frame": 859.0,
+   "name": "phone_laugh",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "the pink-phone blonde LAUGHS into her call right on the honk (she never looks)"
+  },
+  {
+   "frame": 860.0,
+   "name": "hand_clap",
+   "src": "story1",
+   "shot": "S6",
+   "status": "thin",
+   "why": "held back: 2 f from 'honk' (higher priority)",
+   "what": "the beret woman claps for him: the hands meet on this frame"
+  },
+  {
+   "frame": 866.0,
+   "name": "question_pop",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "a \"?\" pops over the clown: she did not even look"
+  },
+  {
+   "frame": 867.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the lime-phone man crossing near the lens (S6): a step (brick)"
+  },
+  {
+   "frame": 868.0,
+   "name": "hand_clap",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "the beret woman claps for him: the hands meet on this frame"
+  },
+  {
+   "frame": 870.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S6",
+   "status": "thin",
+   "why": "thinned: at most 1 'pigeon_flush' in a shot",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 871.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the pink-phone blonde (S6): a step (brick)"
+  },
+  {
+   "frame": 871.0,
+   "name": "skateboard_pass",
+   "src": "story1",
+   "shot": "S6",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.11 < 0.3): it is in the crowd bed",
+   "what": "a skateboarder rolls through the background"
+  },
+  {
+   "frame": 872.0,
+   "name": "bystander_laugh",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "the beret woman laughs and hops with delight"
+  },
+  {
+   "frame": 876.0,
+   "name": "juggle_loop",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "the clown juggles three balls as he laps (soft pats, to the cut)"
+  },
+  {
+   "frame": 876.0,
+   "name": "hand_clap",
+   "src": "story1",
+   "shot": "S6",
+   "status": "thin",
+   "why": "held back: 0 f from 'juggle_loop' (higher priority)",
+   "what": "the beret woman claps for him: the hands meet on this frame"
+  },
+  {
+   "frame": 882.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the lime-phone man crossing near the lens (S6): a step (brick)"
+  },
+  {
+   "frame": 884.0,
+   "name": "hand_clap",
+   "src": "story1",
+   "shot": "S6",
+   "status": "play",
+   "why": "",
+   "what": "the beret woman claps for him: the hands meet on this frame"
+  },
+  {
+   "frame": 885.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S6",
+   "status": "thin",
+   "why": "thinned: at most 1 'pigeon_flush' in a shot",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 887.0,
+   "name": "frisbee_throw",
+   "src": "story1",
+   "shot": "S6",
+   "status": "silent",
+   "why": "about 40 m away in the high wide (near 0.05): under the bed's level",
+   "what": "a frisbee whooshes across"
+  },
+  {
+   "frame": 890.0,
+   "name": "footstep",
+   "src": "story1",
+   "shot": "S6",
+   "status": "step",
+   "why": "",
+   "what": "the pink-phone blonde (S6): a step (brick)"
+  },
+  {
+   "frame": 925.0,
+   "name": "pen_tap",
+   "src": "story1",
+   "shot": "S7",
+   "status": "play",
+   "why": "",
+   "what": "the interviewer taps her clipboard with the pen"
+  },
+  {
+   "frame": 927.0,
+   "name": "bike_pass",
+   "src": "story1",
+   "shot": "S7",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.08 < 0.3): it is in the crowd bed",
+   "what": "a cyclist rides through the background (freewheel tick, a ding)"
+  },
+  {
+   "frame": 931.0,
+   "name": "pen_tap",
+   "src": "story1",
+   "shot": "S7",
+   "status": "play",
+   "why": "",
+   "what": "the second tap"
+  },
+  {
+   "frame": 944.0,
+   "name": "whip_pan",
+   "src": "story1",
+   "shot": "S8",
+   "status": "play",
+   "why": "",
+   "what": "a whip-pan WHOOSH across the cut S7 -> S8 (peaks on f 944)"
+  },
+  {
+   "frame": 945.0,
+   "name": "laugh",
+   "src": "story1",
+   "shot": "S8",
+   "status": "thin",
+   "why": "a second voice under a character's line (the dialogue stays clean)",
+   "what": "friend B (pink) laughs"
+  },
+  {
+   "frame": 954.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S8",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 955.0,
+   "name": "sparkle",
+   "src": "story1",
+   "shot": "S8",
+   "status": "play",
+   "why": "",
+   "what": "a twinkle of recognition by friend B's eyes on \"The clown?\""
+  },
+  {
+   "frame": 982.0,
+   "name": "bike_pass",
+   "src": "story1",
+   "shot": "S8",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.18 < 0.3): it is in the crowd bed",
+   "what": "a cyclist rides through the background (freewheel tick, a ding)"
+  },
+  {
+   "frame": 986.0,
+   "name": "whip_pan",
+   "src": "story1",
+   "shot": "S9",
+   "status": "thin",
+   "why": "held back: 3 f from 'hand_clap' (higher priority)",
+   "what": "a whip-pan WHOOSH across the cut S8 -> S9 (peaks on f 986)"
+  },
+  {
+   "frame": 989.0,
+   "name": "hand_clap",
+   "src": "story1",
+   "shot": "S9",
+   "status": "play",
+   "why": "",
+   "what": "friend A claps along (light): the hands meet on this frame"
+  },
+  {
+   "frame": 992.0,
+   "name": "snap_zoom",
+   "src": "story1",
+   "shot": "S9",
+   "status": "silent",
+   "why": "the 4 f punch-in lands ON a character's word ('amazing!', 'guy!'): no sound over it",
+   "what": "a 4 f snap punch-in on \"amazing!\" (a short zoom whoosh / pop)"
+  },
+  {
+   "frame": 998.0,
+   "name": "hand_clap",
+   "src": "story1",
+   "shot": "S9",
+   "status": "play",
+   "why": "",
+   "what": "friend A claps along (light): the hands meet on this frame"
+  },
+  {
+   "frame": 999.0,
+   "name": "laugh",
+   "src": "story1",
+   "shot": "S9",
+   "status": "thin",
+   "why": "a second voice under a character's line (the dialogue stays clean)",
+   "what": "friend A (denim) laughs"
+  },
+  {
+   "frame": 1007.0,
+   "name": "hand_clap",
+   "src": "story1",
+   "shot": "S9",
+   "status": "play",
+   "why": "",
+   "what": "friend A claps along (light): the hands meet on this frame"
+  },
+  {
+   "frame": 1013.0,
+   "name": "laugh",
+   "src": "story1",
+   "shot": "S9",
+   "status": "thin",
+   "why": "a second voice under a character's line (the dialogue stays clean)",
+   "what": "friend B (pink) laughs"
+  },
+  {
+   "frame": 1016.0,
+   "name": "hand_clap",
+   "src": "story1",
+   "shot": "S9",
+   "status": "play",
+   "why": "",
+   "what": "friend A claps along (light): the hands meet on this frame"
+  },
+  {
+   "frame": 1025.0,
+   "name": "hand_clap",
+   "src": "story1",
+   "shot": "S9",
+   "status": "play",
+   "why": "",
+   "what": "friend A claps along (light): the hands meet on this frame"
+  },
+  {
+   "frame": 1028.0,
+   "name": "whip_pan",
+   "src": "story1",
+   "shot": "S10",
+   "status": "thin",
+   "why": "held back: 3 f from 'hand_clap' (higher priority)",
+   "what": "a whip-pan WHOOSH across the cut S9 -> S10 (peaks on f 1028)"
+  },
+  {
+   "frame": 1037.0,
+   "name": "headphone_off",
+   "src": "story1",
+   "shot": "S10",
+   "status": "loop",
+   "why": "",
+   "what": "he hooks one headphone cup off his ear (a tinny music leak from it until the shot ends)"
+  },
+  {
+   "frame": 1054.0,
+   "name": "thumb_jab",
+   "src": "story1",
+   "shot": "S10",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "his thumb jerks back at the clown (a small whoosh)"
+  },
+  {
+   "frame": 1075.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S10",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.17 < 0.2): it is in the crowd bed",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 1077.0,
+   "name": "thumb_jab",
+   "src": "story1",
+   "shot": "S10",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "the second jerk of the thumb"
+  },
+  {
+   "frame": 1077.0,
+   "name": "snap_zoom",
+   "src": "story1",
+   "shot": "S10",
+   "status": "silent",
+   "why": "the 4 f punch-in lands ON a character's word ('amazing!', 'guy!'): no sound over it",
+   "what": "a 4 f snap punch-in on \"guy!\" (a short zoom whoosh / pop)"
+  },
+  {
+   "frame": 1081.0,
+   "name": "honk",
+   "src": "story1",
+   "shot": "S10",
+   "status": "play",
+   "why": "",
+   "what": "the clown squeezes his bulb horn"
+  },
+  {
+   "frame": 1083.0,
+   "name": "skateboard_pass",
+   "src": "story1",
+   "shot": "S10",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.14 < 0.3): it is in the crowd bed",
+   "what": "a skateboarder rolls through the background"
+  },
+  {
+   "frame": 1085.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S10",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.19 < 0.2): it is in the crowd bed",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 1090.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S10",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.19 < 0.2): it is in the crowd bed",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 1096.0,
+   "name": "whip_pan",
+   "src": "story1",
+   "shot": "S11",
+   "status": "play",
+   "why": "",
+   "what": "a whip-pan WHOOSH across the cut S10 -> S11 (peaks on f 1096)"
+  },
+  {
+   "frame": 1096.0,
+   "name": "unicycle_wheel_loop",
+   "src": "story1",
+   "shot": "S11",
+   "status": "loop",
+   "why": "",
+   "what": "the clown's wheel rolling by behind the phone guy (to f 1152)"
+  },
+  {
+   "frame": 1107.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S11",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 1120.0,
+   "name": "squint",
+   "src": "story1",
+   "shot": "S11",
+   "status": "merged",
+   "why": "carried by the '?' pop one frame later",
+   "what": "the phone guy squints left-right (a tiny comic 'hmm?' eye dart, to f 1135)"
+  },
+  {
+   "frame": 1121.0,
+   "name": "question_pop",
+   "src": "story1",
+   "shot": "S11",
+   "status": "play",
+   "why": "",
+   "what": "a \"?\" pops over the phone guy's head"
+  },
+  {
+   "frame": 1124.0,
+   "name": "glance",
+   "src": "story1",
+   "shot": "S11",
+   "status": "silent",
+   "why": "'a tiny chair creak / nothing': nothing",
+   "what": "the team member glances at the clown (a tiny chair creak / nothing)"
+  },
+  {
+   "frame": 1141.0,
+   "name": "surprise_pop",
+   "src": "story1",
+   "shot": "S11",
+   "status": "play",
+   "why": "",
+   "what": "the team member's FULL double take: a \"!\" pops over her head, jaw drop (a boing)"
+  },
+  {
+   "frame": 1147.0,
+   "name": "honk",
+   "src": "story1",
+   "shot": "S11",
+   "status": "play",
+   "why": "",
+   "what": "the clown squeezes his bulb horn"
+  },
+  {
+   "frame": 1151.0,
+   "name": "pigeon_flush",
+   "src": "story1",
+   "shot": "S11",
+   "status": "thin",
+   "why": "thinned: at most 1 'pigeon_flush' in a shot",
+   "what": "a pigeon flaps up from the ground"
+  },
+  {
+   "frame": 1151.0,
+   "name": "bike_pass",
+   "src": "story1",
+   "shot": "S11",
+   "status": "far",
+   "why": "too far to hear on its own (near 0.06 < 0.3): it is in the crowd bed",
+   "what": "a cyclist rides through the background (freewheel tick, a ding)"
+  },
+  {
+   "frame": 1151.0,
+   "name": "pencil_scribble",
+   "src": "story2",
+   "shot": "S11",
+   "status": "play",
+   "why": "",
+   "what": "S12 her pencil quickly draws phone person 1 (head, body, legs, arms, the phone: one fast scribble, 9 f)"
+  },
+  {
+   "frame": 1161.0,
+   "name": "pencil_scribble",
+   "src": "story2",
+   "shot": "S12",
+   "status": "thin",
+   "why": "thinned: under 20 f after the last kept 'pencil_scribble'",
+   "what": "S12 her pencil quickly draws phone person 2 (head, body, legs, arms, the phone: one fast scribble, 9 f)"
+  },
+  {
+   "frame": 1171.0,
+   "name": "pencil_scribble",
+   "src": "story2",
+   "shot": "S12",
+   "status": "play",
+   "why": "",
+   "what": "S12 her pencil quickly draws phone person 3 (head, body, legs, arms, the phone: one fast scribble, 9 f)"
+  },
+  {
+   "frame": 1185.0,
+   "name": "pencil_scribble",
+   "src": "story2",
+   "shot": "S12",
+   "status": "thin",
+   "why": "thinned: under 20 f after the last kept 'pencil_scribble'",
+   "what": "S12 her pencil quickly draws phone person 4 (head, body, legs, arms, the phone: one fast scribble, 9 f)"
+  },
+  {
+   "frame": 1200.0,
+   "name": "pencil_tap",
+   "src": "story2",
+   "shot": "S12",
+   "status": "play",
+   "why": "",
+   "what": "S12 on 'only' her pencil taps the first phone person once"
+  },
+  {
+   "frame": 1205.0,
+   "name": "pencil_tick",
+   "src": "story2",
+   "shot": "S12",
+   "status": "play",
+   "why": "",
+   "what": "S12 the interviewer's pencil ticks doodle 1 (one stroke)"
+  },
+  {
+   "frame": 1211.0,
+   "name": "pencil_cross",
+   "src": "story2",
+   "shot": "S12",
+   "status": "play",
+   "why": "",
+   "what": "S12 the interviewer's pencil crosses doodle 2 (two strokes)"
+  },
+  {
+   "frame": 1220.0,
+   "name": "pencil_cross",
+   "src": "story2",
+   "shot": "S12",
+   "status": "play",
+   "why": "",
+   "what": "S12 the interviewer's pencil crosses doodle 3 (two strokes)"
+  },
+  {
+   "frame": 1227.0,
+   "name": "pencil_cross",
+   "src": "story2",
+   "shot": "S12",
+   "status": "play",
+   "why": "",
+   "what": "S12 the interviewer's pencil crosses doodle 4 (two strokes)"
+  },
+  {
+   "frame": 1233.0,
+   "name": "one_in_four",
+   "src": "story2",
+   "shot": "S12",
+   "status": "play",
+   "why": "",
+   "what": "S12 the big red '1 in 4' lands on the page, three dashes flick out each side (a marker squeak / soft thump)"
+  },
+  {
+   "frame": 1243.0,
+   "name": "pencil_tap",
+   "src": "story2",
+   "shot": "S12",
+   "status": "play",
+   "why": "",
+   "what": "S12 her pencil taps the page beside the '1' (twice: 'see?')"
+  },
+  {
+   "frame": 1249.0,
+   "name": "pencil_tap",
+   "src": "story2",
+   "shot": "S12",
+   "status": "play",
+   "why": "",
+   "what": "S12 her pencil taps the page beside the '1' (twice: 'see?')"
+  },
+  {
+   "frame": 1258.0,
+   "name": "brows_up",
+   "src": "story2",
+   "shot": "S12",
+   "status": "play",
+   "why": "",
+   "what": "S12 she looks up as the lens rises to her face, eyebrows up (incredulous): a soft 'hm!' breath only, no voice"
+  },
+  {
+   "frame": 1297.0,
+   "name": "honk",
+   "src": "story2",
+   "shot": "S13",
+   "status": "play",
+   "why": "",
+   "what": "S13 the clown squeezes his horn right behind the phone guy"
+  },
+  {
+   "frame": 1299.0,
+   "name": "pigeon_flush",
+   "src": "story2",
+   "shot": "S13",
+   "status": "thin",
+   "why": "held back: 2 f from 'honk' (higher priority)",
+   "what": "S13 the pigeons by the clown's wheel flush on the honk"
+  },
+  {
+   "frame": 1303.0,
+   "name": "spin_whoosh",
+   "src": "story2",
+   "shot": "S13",
+   "status": "play",
+   "why": "",
+   "what": "S13 the phone guy spins round (5 f keyed turn, the smear frame on +2)"
+  },
+  {
+   "frame": 1312.0,
+   "name": "jaw_drop",
+   "src": "story2",
+   "shot": "S13",
+   "status": "play",
+   "why": "",
+   "what": "S13 the take: his jaw drops with a '!' and surprise ticks, his free hand flings out (a comic 'boing' / gasp)"
+  },
+  {
+   "frame": 1313.0,
+   "name": "eye_pop",
+   "src": "story2",
+   "shot": "S13",
+   "status": "thin",
+   "why": "held back: 1 f from 'jaw_drop' (higher priority)",
+   "what": "S13 the clown's eyes POP (finally seen!): a cartoon 'boing' / eye-pop squeak"
+  },
+  {
+   "frame": 1317.0,
+   "name": "hop",
+   "src": "story2",
+   "shot": "S13",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "S13 the clown hops his unicycle for joy, both arms up (a springy boing + wheel creak; lands ~10 f later)"
+  },
+  {
+   "frame": 1317.0,
+   "name": "cheer",
+   "src": "story2",
+   "shot": "S13",
+   "status": "silent",
+   "why": "his silent cheer, 'under the voice': the hop's boing and the two honks carry his joy",
+   "what": "S13 the clown's ecstatic silent cheer (a tiny 'woo!' breath or kazoo flourish, under the voice)"
+  },
+  {
+   "frame": 1321.0,
+   "name": "honk",
+   "src": "story2",
+   "shot": "S13",
+   "status": "play",
+   "why": "",
+   "what": "S13 the clown's double honk overhead, first of two"
+  },
+  {
+   "frame": 1327.0,
+   "name": "land",
+   "src": "story2",
+   "shot": "S13",
+   "status": "thin",
+   "why": "held back: 1 f from 'honk' (higher priority)",
+   "what": "S13 the unicycle lands (tyre thump, a squeak)"
+  },
+  {
+   "frame": 1328.0,
+   "name": "honk",
+   "src": "story2",
+   "shot": "S13",
+   "status": "play",
+   "why": "",
+   "what": "S13 the clown's double honk overhead, second of two"
+  },
+  {
+   "frame": 1345.0,
+   "name": "phone_chatter",
+   "src": "story2",
+   "shot": "S14",
+   "status": "loop",
+   "why": "",
+   "what": "S14 the phone walker's muffled chatter into her call (blah-blah, under the voice) until she leaves the frame"
+  },
+  {
+   "frame": 1347.0,
+   "name": "wave",
+   "src": "story2",
+   "shot": "S14",
+   "status": "silent",
+   "why": "a wave: no sound",
+   "what": "S14 the clown waves big at the phone walker as she comes (cloth flap)"
+  },
+  {
+   "frame": 1353.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S14",
+   "status": "step",
+   "why": "",
+   "what": "S14 the phone walker's brisk step (pink phone, walking right to left under the clown's nose)"
+  },
+  {
+   "frame": 1353.0,
+   "name": "honk",
+   "src": "story2",
+   "shot": "S14",
+   "status": "play",
+   "why": "",
+   "what": "S14 the clown honks at the phone walker (as she comes): she never looks"
+  },
+  {
+   "frame": 1361.0,
+   "name": "honk",
+   "src": "story2",
+   "shot": "S14",
+   "status": "play",
+   "why": "",
+   "what": "S14 the clown honks at the phone walker (right over her head as she passes under him): she never looks"
+  },
+  {
+   "frame": 1363.0,
+   "name": "phone_laugh",
+   "src": "story2",
+   "shot": "S14",
+   "status": "play",
+   "why": "",
+   "what": "S14 the phone walker laughs into her call (a short muffled laugh) right as he honks over her head"
+  },
+  {
+   "frame": 1368.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S14",
+   "status": "step",
+   "why": "",
+   "what": "S14 the phone walker's brisk step (pink phone, walking right to left under the clown's nose)"
+  },
+  {
+   "frame": 1377.0,
+   "name": "give_up",
+   "src": "story2",
+   "shot": "S14",
+   "status": "play",
+   "why": "",
+   "what": "S14 she is gone: the clown gives up, a '?' pops over his hat (a sad little horn sag / deflating squeak)"
+  },
+  {
+   "frame": 1383.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S14",
+   "status": "step",
+   "why": "",
+   "what": "S14 the phone walker's brisk step (pink phone, walking right to left under the clown's nose)"
+  },
+  {
+   "frame": 1385.0,
+   "name": "headphone_music",
+   "src": "story2",
+   "shot": "S14",
+   "status": "loop",
+   "why": "",
+   "what": "S14 tinny music leaks from the dude's headphones as he walks in (notes float off them; duck it under the voice)"
+  },
+  {
+   "frame": 1387.0,
+   "name": "pigeon_flush",
+   "src": "story2",
+   "shot": "S14",
+   "status": "thin",
+   "why": "held back: 2 f from 'unicycle_off' (higher priority)",
+   "what": "S14 pigeons in the dude's path flutter aside"
+  },
+  {
+   "frame": 1389.0,
+   "name": "unicycle_off",
+   "src": "story2",
+   "shot": "S14",
+   "status": "play",
+   "why": "",
+   "what": "S14 he turns and rides off slowly, dejected (wheel creak)"
+  },
+  {
+   "frame": 1393.0,
+   "name": "footstep_bop",
+   "src": "story2",
+   "shot": "S14",
+   "status": "step",
+   "why": "",
+   "what": "S14 the headphone dude's step (bopping walk; he walks into the frame on 'listening', the camera picks him up)"
+  },
+  {
+   "frame": 1398.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S14",
+   "status": "step",
+   "why": "",
+   "what": "S14 the phone walker's brisk step (pink phone, walking right to left under the clown's nose)"
+  },
+  {
+   "frame": 1406.0,
+   "name": "notice",
+   "src": "story2",
+   "shot": "S14",
+   "status": "silent",
+   "why": "a look: no sound",
+   "what": "S14 the dude spots the clown: a 'whoa' take, a '!' pops (a short comic 'whup' / record scratch of the music)"
+  },
+  {
+   "frame": 1408.0,
+   "name": "footstep_bop",
+   "src": "story2",
+   "shot": "S14",
+   "status": "step",
+   "why": "",
+   "what": "S14 the headphone dude's step (bopping walk; he walks into the frame on 'listening', the camera picks him up)"
+  },
+  {
+   "frame": 1417.0,
+   "name": "wave",
+   "src": "story2",
+   "shot": "S14",
+   "status": "silent",
+   "why": "a wave: no sound",
+   "what": "S14 the dude raises his hand and waves big at the clown on 'noticed'"
+  },
+  {
+   "frame": 1423.0,
+   "name": "footstep_bop",
+   "src": "story2",
+   "shot": "S14",
+   "status": "step",
+   "why": "",
+   "what": "S14 the headphone dude's step (bopping walk; he walks into the frame on 'listening', the camera picks him up)"
+  },
+  {
+   "frame": 1427.0,
+   "name": "eye_pop",
+   "src": "story2",
+   "shot": "S14",
+   "status": "play",
+   "why": "",
+   "what": "S14 the clown's eyes POP (someone sees him!): cartoon 'boing'"
+  },
+  {
+   "frame": 1431.0,
+   "name": "hop",
+   "src": "story2",
+   "shot": "S14",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "S14 the clown hops his unicycle for joy, both arms up (springy boing; lands ~10 f later)"
+  },
+  {
+   "frame": 1435.0,
+   "name": "honk",
+   "src": "story2",
+   "shot": "S14",
+   "status": "play",
+   "why": "",
+   "what": "S14 the clown's happy honk overhead (first of two)"
+  },
+  {
+   "frame": 1438.0,
+   "name": "footstep_bop",
+   "src": "story2",
+   "shot": "S14",
+   "status": "step",
+   "why": "",
+   "what": "S14 the headphone dude's step (bopping walk; he walks into the frame on 'listening', the camera picks him up)"
+  },
+  {
+   "frame": 1442.0,
+   "name": "honk",
+   "src": "story2",
+   "shot": "S14",
+   "status": "play",
+   "why": "",
+   "what": "S14 the clown's happy honk overhead (second of two)"
+  },
+  {
+   "frame": 1444.0,
+   "name": "wave_back",
+   "src": "story2",
+   "shot": "S14",
+   "status": "silent",
+   "why": "a wave: no sound",
+   "what": "S14 the clown waves back at the dude (cloth flap)"
+  },
+  {
+   "frame": 1456.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S15",
+   "status": "step",
+   "why": "",
+   "what": "S15 the hero's slow phone-walk step toward the lens"
+  },
+  {
+   "frame": 1473.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S15",
+   "status": "step",
+   "why": "",
+   "what": "S15 the hero's slow phone-walk step toward the lens"
+  },
+  {
+   "frame": 1478.0,
+   "name": "signal_on",
+   "src": "story2",
+   "shot": "S15",
+   "status": "merged",
+   "why": "carried by the mind's rising sweep 6 frames later",
+   "what": "S15 the wavy phone-signal line draws out toward the bubble"
+  },
+  {
+   "frame": 1484.0,
+   "name": "mind_lift",
+   "src": "story2",
+   "shot": "S15",
+   "status": "play",
+   "why": "",
+   "what": "S15 her see-through mind lifts out of her head (a soft rising shimmer)"
+  },
+  {
+   "frame": 1491.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S15",
+   "status": "step",
+   "why": "",
+   "what": "S15 the hero's slow phone-walk step toward the lens"
+  },
+  {
+   "frame": 1508.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S15",
+   "status": "step",
+   "why": "",
+   "what": "S15 the hero's slow phone-walk step toward the lens"
+  },
+  {
+   "frame": 1524.0,
+   "name": "bubble_pop",
+   "src": "story2",
+   "shot": "S15",
+   "status": "play",
+   "why": "",
+   "what": "S15 her mind arrives in the call bubble (a warm pop)"
+  },
+  {
+   "frame": 1524.0,
+   "name": "unicycle_in",
+   "src": "story2",
+   "shot": "S15",
+   "status": "loop",
+   "why": "",
+   "what": "S15 the UNSEEN clown's unicycle whirrs in from the right behind her and keeps pace (wheel + pedals)"
+  },
+  {
+   "frame": 1525.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S15",
+   "status": "step",
+   "why": "",
+   "what": "S15 the hero's slow phone-walk step toward the lens"
+  },
+  {
+   "frame": 1525.0,
+   "name": "twinkle",
+   "src": "story2",
+   "shot": "S15",
+   "status": "play",
+   "why": "",
+   "what": "S15 twinkles round the bubble as her mind lands in the kitchen (soft chime, with the pop)"
+  },
+  {
+   "frame": 1539.0,
+   "name": "honk",
+   "src": "story2",
+   "shot": "S15",
+   "status": "play",
+   "why": "",
+   "what": "S15 he honks at her ear, waving (she never turns)"
+  },
+  {
+   "frame": 1543.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S15",
+   "status": "step",
+   "why": "",
+   "what": "S15 the hero's slow phone-walk step toward the lens"
+  },
+  {
+   "frame": 1550.0,
+   "name": "honk",
+   "src": "story2",
+   "shot": "S15",
+   "status": "play",
+   "why": "",
+   "what": "S15 he honks again, bouncing for attention"
+  },
+  {
+   "frame": 1554.0,
+   "name": "give_up",
+   "src": "story2",
+   "shot": "S15",
+   "status": "play",
+   "why": "",
+   "what": "S15 on 'isn't there' he gives up: a '?' pops over his hat, a sad little horn sag (half honk), he peels off behind her"
+  },
+  {
+   "frame": 1555.0,
+   "name": "bubble_laugh",
+   "src": "story2",
+   "shot": "S15",
+   "status": "thin",
+   "why": "held back: 1 f from 'give_up' (higher priority)",
+   "what": "S15 inside the bubble: she and her mum laugh (tiny, muffled, warm)"
+  },
+  {
+   "frame": 1560.0,
+   "name": "footstep_phone",
+   "src": "story2",
+   "shot": "S15",
+   "status": "step",
+   "why": "",
+   "what": "S15 the hero's slow phone-walk step toward the lens"
+  },
+  {
+   "frame": 1578.0,
+   "name": "tiptoe_step",
+   "src": "story2",
+   "shot": "S16",
+   "status": "step",
+   "why": "",
+   "what": "S16 Hyman's tiptoe step (sneaky, pizzicato-friendly; none while he is frozen)"
+  },
+  {
+   "frame": 1579.0,
+   "name": "pigeon_strut",
+   "src": "story2",
+   "shot": "S16",
+   "status": "silent",
+   "why": "tiny claw taps under 'So Hyman tried something sneakier.': too small to hear; his own tiptoes carry the rhythm",
+   "what": "S16 a pigeon tiptoes after Hyman, copying him (tiny claw taps on his rhythm; it freezes when he freezes)"
+  },
+  {
+   "frame": 1583.0,
+   "name": "sly_look",
+   "src": "story2",
+   "shot": "S16",
+   "status": "silent",
+   "why": "a look: no sound",
+   "what": "S16 Hyman glances left"
+  },
+  {
+   "frame": 1594.0,
+   "name": "tiptoe_step",
+   "src": "story2",
+   "shot": "S16",
+   "status": "step",
+   "why": "",
+   "what": "S16 Hyman's tiptoe step (sneaky, pizzicato-friendly; none while he is frozen)"
+  },
+  {
+   "frame": 1595.0,
+   "name": "jogger_pass",
+   "src": "story2",
+   "shot": "S16",
+   "status": "play",
+   "why": "",
+   "what": "S16 a jogger runs by right behind him (quick steps, right to left)"
+  },
+  {
+   "frame": 1600.0,
+   "name": "freeze",
+   "src": "story2",
+   "shot": "S16",
+   "status": "play",
+   "why": "",
+   "what": "S16 Hyman FREEZES on one leg and whips the bills behind his back (a little gasp / paper rustle)"
+  },
+  {
+   "frame": 1606.0,
+   "name": "sweat_drop",
+   "src": "story2",
+   "shot": "S16",
+   "status": "play",
+   "why": "",
+   "what": "S16 one sweat drop pops at his temple (a tiny 'plip')"
+  },
+  {
+   "frame": 1611.0,
+   "name": "whistle",
+   "src": "story2",
+   "shot": "S16",
+   "status": "play",
+   "why": "",
+   "what": "S16 he looks at the sky and whistles innocently (two notes, notes float from his lips) until the jogger is gone"
+  },
+  {
+   "frame": 1627.0,
+   "name": "bills_twinkle",
+   "src": "story2",
+   "shot": "S16",
+   "status": "play",
+   "why": "",
+   "what": "S16 the bills come back out with a twinkle (a small glassy 'ting')"
+  },
+  {
+   "frame": 1630.0,
+   "name": "tiptoe_step",
+   "src": "story2",
+   "shot": "S16",
+   "status": "step",
+   "why": "",
+   "what": "S16 Hyman's tiptoe step (sneaky, pizzicato-friendly; none while he is frozen)"
+  },
+  {
+   "frame": 1633.0,
+   "name": "brow_waggle",
+   "src": "story2",
+   "shot": "S16",
+   "status": "silent",
+   "why": "a look: no sound",
+   "what": "S16 the bills come back out: smug brow waggle, he sneaks on"
+  },
+  {
+   "frame": 1644.0,
+   "name": "tiptoe_step",
+   "src": "story2",
+   "shot": "S16",
+   "status": "step",
+   "why": "",
+   "what": "S16 Hyman's tiptoe step (sneaky, pizzicato-friendly; none while he is frozen)"
+  },
+  {
+   "frame": 1657.0,
+   "name": "peg_squeeze",
+   "src": "story2",
+   "shot": "S17",
+   "status": "play",
+   "why": "",
+   "what": "S17 the peg pinched open (a wooden creak)"
+  },
+  {
+   "frame": 1665.0,
+   "name": "peg_snap",
+   "src": "story2",
+   "shot": "S17",
+   "status": "play",
+   "why": "",
+   "what": "S17 the peg SNAPS shut on the bill"
+  },
+  {
+   "frame": 1666.0,
+   "name": "bill_flutter",
+   "src": "story2",
+   "shot": "S17",
+   "status": "play",
+   "why": "",
+   "what": "S17 the bill swings after the snap"
+  },
+  {
+   "frame": 1680.0,
+   "name": "footstep",
+   "src": "story2",
+   "shot": "S17",
+   "status": "step",
+   "why": "",
+   "what": "S17 Hyman's step as he walks into the frame beside his trap (leather shoe)"
+  },
+  {
+   "frame": 1695.0,
+   "name": "footstep",
+   "src": "story2",
+   "shot": "S17",
+   "status": "step",
+   "why": "",
+   "what": "S17 Hyman's step as he walks into the frame beside his trap (leather shoe)"
+  },
+  {
+   "frame": 1702.0,
+   "name": "stop",
+   "src": "story2",
+   "shot": "S17",
+   "status": "play",
+   "why": "",
+   "what": "S17 Hyman stops beside the bill (a small shoe scuff), turns to us"
+  },
+  {
+   "frame": 1708.0,
+   "name": "pat_head",
+   "src": "story2",
+   "shot": "S17",
+   "status": "play",
+   "why": "",
+   "what": "S17 Hyman pats the top of his head (head height)"
+  },
+  {
+   "frame": 1735.0,
+   "name": "bill_flutter",
+   "src": "story2",
+   "shot": "S17",
+   "status": "play",
+   "why": "",
+   "what": "S17 his flat hand brushes the bill's bottom edge"
+  },
+  {
+   "frame": 1742.0,
+   "name": "wink_ting",
+   "src": "story2",
+   "shot": "S17",
+   "status": "play",
+   "why": "",
+   "what": "S17 Hyman winks at us, a twinkle at his eye (a tiny 'ting')"
+  },
+  {
+   "frame": 1758.0,
+   "name": "duck",
+   "src": "story2",
+   "shot": "S18",
+   "status": "play",
+   "why": "",
+   "what": "S18 scarf ducks under the lowest bill (a wince)"
+  },
+  {
+   "frame": 1758.0,
+   "name": "footstep",
+   "src": "story2",
+   "shot": "S18",
+   "status": "step",
+   "why": "",
+   "what": "S18 scarf's step into the dip (leather shoe)"
+  },
+  {
+   "frame": 1763.0,
+   "name": "bill_flutter",
+   "src": "story2",
+   "shot": "S18",
+   "status": "play",
+   "why": "",
+   "what": "S18 scarf's head pushes the bill: it swings (paper flap)"
+  },
+  {
+   "frame": 1768.0,
+   "name": "footstep",
+   "src": "story2",
+   "shot": "S18",
+   "status": "step",
+   "why": "",
+   "what": "S18 scarf's step out of the dip (leather shoe)"
+  },
+  {
+   "frame": 1783.0,
+   "name": "footstep",
+   "src": "story2",
+   "shot": "S18",
+   "status": "step",
+   "why": "",
+   "what": "S18 parka's step into the dip (sneaker shoe)"
+  },
+  {
+   "frame": 1784.0,
+   "name": "phone_chatter",
+   "src": "story2",
+   "shot": "S18",
+   "status": "loop",
+   "why": "",
+   "what": "S18 the third walker chats into his phone as he comes and goes under the bill (muffled, under the voice)"
+  },
+  {
+   "frame": 1786.0,
+   "name": "duck",
+   "src": "story2",
+   "shot": "S18",
+   "status": "play",
+   "why": "",
+   "what": "S18 parka ducks under the lowest bill (a lean-back limbo)"
+  },
+  {
+   "frame": 1791.0,
+   "name": "bill_flutter",
+   "src": "story2",
+   "shot": "S18",
+   "status": "play",
+   "why": "",
+   "what": "S18 parka's head pushes the bill: it swings (paper flap)"
+  },
+  {
+   "frame": 1793.0,
+   "name": "footstep",
+   "src": "story2",
+   "shot": "S18",
+   "status": "step",
+   "why": "",
+   "what": "S18 parka's step out of the dip (sneaker shoe)"
+  },
+  {
+   "frame": 1797.0,
+   "name": "footstep",
+   "src": "story2",
+   "shot": "S18",
+   "status": "step",
+   "why": "",
+   "what": "S18 elder's step into the dip (soft shoe)"
+  },
+  {
+   "frame": 1803.0,
+   "name": "duck",
+   "src": "story2",
+   "shot": "S18",
+   "status": "play",
+   "why": "",
+   "what": "S18 elder ducks under the lowest bill (a quick dip holding his cap down, ON THE PHONE the whole way, never looking up)"
+  },
+  {
+   "frame": 1808.0,
+   "name": "bill_flutter",
+   "src": "story2",
+   "shot": "S18",
+   "status": "play",
+   "why": "",
+   "what": "S18 elder's head pushes the bill: it swings (paper flap)"
+  },
+  {
+   "frame": 1810.0,
+   "name": "footstep",
+   "src": "story2",
+   "shot": "S18",
+   "status": "step",
+   "why": "",
+   "what": "S18 elder's step out of the dip (soft shoe)"
+  },
+  {
+   "frame": 1825.0,
+   "name": "duck",
+   "src": "story2",
+   "shot": "S19",
+   "status": "play",
+   "why": "",
+   "what": "S19 the phone guy (red phone) ducks under the bill without looking, still chatting"
+  },
+  {
+   "frame": 1829.0,
+   "name": "bill_flutter",
+   "src": "story2",
+   "shot": "S19",
+   "status": "play",
+   "why": "",
+   "what": "S19 his head pushes the bill: it swings hard (paper flap)"
+  },
+  {
+   "frame": 1888.0,
+   "name": "stop",
+   "src": "story2",
+   "shot": "S19",
+   "status": "play",
+   "why": "",
+   "what": "S19 the no-phone walker's last step: she stops dead under the bill on 'stopped' (shoe scuff)"
+  },
+  {
+   "frame": 1890.0,
+   "name": "gasp",
+   "src": "story2",
+   "shot": "S19",
+   "status": "play",
+   "why": "",
+   "what": "S19 she stares up at the money (a little delighted gasp)"
+  },
+  {
+   "frame": 1896.0,
+   "name": "reach",
+   "src": "story2",
+   "shot": "S19",
+   "status": "play",
+   "why": "",
+   "what": "S19 she reaches up on her toes for the bill (cloth swish)"
+  },
+  {
+   "frame": 1905.0,
+   "name": "bill_pinch",
+   "src": "story2",
+   "shot": "S19",
+   "status": "play",
+   "why": "",
+   "what": "S19 her fingers PINCH the bill's corner on 'money' (a crisp paper snap) + a money glint 'ting'"
+  },
+  {
+   "frame": 1909.0,
+   "name": "bill_tug",
+   "src": "story2",
+   "shot": "S19",
+   "status": "play",
+   "why": "",
+   "what": "S19 she tugs the bill (first tug: paper flap, the peg creaks)"
+  },
+  {
+   "frame": 1912.0,
+   "name": "giggle",
+   "src": "story2",
+   "shot": "S19",
+   "status": "rule",
+   "why": "the breath before 'Their bodies dodged it.' stays silent (it would start in it or be cut by it)",
+   "what": "S19 she giggles, hunched with glee, holding the money (a tiny delighted giggle, no words)"
+  },
+  {
+   "frame": 1920.0,
+   "name": "bill_tug",
+   "src": "story2",
+   "shot": "S19",
+   "status": "rule",
+   "why": "the breath before 'Their bodies dodged it.' stays silent (it would start in it or be cut by it)",
+   "what": "S19 she tugs the bill (second tug: paper flap, the peg creaks)"
+  },
+  {
+   "frame": 1938.0,
+   "name": "duck_slow",
+   "src": "story2",
+   "shot": "S20",
+   "status": "play",
+   "why": "",
+   "what": "S20 SLOW MOTION: the hero dips under the bill (slowed whoosh, low)"
+  },
+  {
+   "frame": 1954.0,
+   "name": "bill_brush_slow",
+   "src": "story2",
+   "shot": "S20",
+   "status": "play",
+   "why": "",
+   "what": "S20 her hair drags the bill: it lifts and swings on behind her head (slowed paper rustle)"
+  },
+  {
+   "frame": 1967.0,
+   "name": "rise_slow",
+   "src": "story2",
+   "shot": "S20",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "S20 she rises out of the dip and walks on, still chatting (cloth rustle, slowed)"
+  },
+  {
+   "frame": 1984.0,
+   "name": "bubble_swell",
+   "src": "story2",
+   "shot": "S20",
+   "status": "thin",
+   "why": "held back: 2 f from 'bubble_laugh' (higher priority)",
+   "what": "S20 the call bubble swells and drifts in as the lens rises (a soft warm swell, slowed)"
+  },
+  {
+   "frame": 1986.0,
+   "name": "bubble_laugh",
+   "src": "story2",
+   "shot": "S20",
+   "status": "play",
+   "why": "",
+   "what": "S20 her mind laughs in the call bubble beside her (warm, muffled)"
+  },
+  {
+   "frame": 1993.0,
+   "name": "bubble_laugh",
+   "src": "story2",
+   "shot": "S20",
+   "status": "thin",
+   "why": "thinned: under 30 f after the last kept 'bubble_laugh'",
+   "what": "S20 the mind laughs again on 'minds' (oblivious)"
+  },
+  {
+   "frame": 1998.0,
+   "name": "bill_flutter_slow",
+   "src": "story2",
+   "shot": "S20",
+   "status": "play",
+   "why": "",
+   "what": "S20 a gust swings the bill right over her head (slowed paper flap)"
+  },
+  {
+   "frame": 2007.0,
+   "name": "petal_land",
+   "src": "story2",
+   "shot": "S20",
+   "status": "thin",
+   "why": "over the budget of 150 events (lowest priority first)",
+   "what": "S20 a petal lands on her nose on 'never saw it'; she does not blink (a tiny soft tick)"
+  },
+  {
+   "frame": 2020.0,
+   "name": "bubble_laugh",
+   "src": "story2",
+   "shot": "S20",
+   "status": "play",
+   "why": "",
+   "what": "S20 the mind laughs on 'saw it' (warm, muffled, oblivious)"
+  },
+  {
+   "frame": 2121.0,
+   "name": "brake_skid",
+   "src": "quiz",
+   "shot": "E2",
+   "status": "play",
+   "why": "",
+   "what": "E2 replay of the Q3 brake (picture time 366)"
+  },
+  {
+   "frame": 2126.0,
+   "name": "whoosh_small",
+   "src": "quiz",
+   "shot": "E2",
+   "status": "play",
+   "why": "",
+   "what": "E2 replay: the wave's arm rises (picture time 371)"
+  }
+ ]
+}

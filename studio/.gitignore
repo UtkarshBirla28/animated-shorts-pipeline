@@ -1,0 +1,4 @@
+node_modules/
+out/
+backup/
+*.mp4

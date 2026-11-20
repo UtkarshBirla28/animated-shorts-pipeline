@@ -1,0 +1,116 @@
+[
+ {
+  "folder": "v3_alt",
+  "take": "t12",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. [crisply] The tourist laughing at him will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9490,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t13",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. [crisply] The tourist laughing at him will lose that suitcase.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9491,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t14",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. The TOURIST laughing at him will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9492,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t15",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. [enunciating] The tourist laughing at him will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9493,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t16",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[matter-of-fact] He points along an empty track. The tourist laughing at him will lose that suitcase.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 9494,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ },
+ {
+  "folder": "v3_alt",
+  "take": "t17",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "He points along an empty track. The TOURIST laughing at him will lose that suitcase.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 9495,
+  "prev": null,
+  "next": "Signal... green! He's pointing at nothing!",
+  "lines": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v3"
+ }
+]

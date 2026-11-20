@@ -1,0 +1,53 @@
+[
+ {
+  "folder": "ch_phone_guy",
+  "take": "t5",
+  "text": "[confused] Sorry... what clown?",
+  "stability": 0.5,
+  "seed": 8641,
+  "voice": "5gaEGrWSk4v20HMfIhgC",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual? Dude, the unicycle guy!",
+  "next": "Even asked straight out, only one in four people on a call had seen him.",
+  "lines": [
+   "p01"
+  ],
+  "role": "PHONE_GUY",
+  "candidate": "jeremy"
+ },
+ {
+  "folder": "ch_phone_guy",
+  "take": "t6",
+  "text": "[confused] Sorry... what clown?",
+  "stability": 0.5,
+  "seed": 8642,
+  "voice": "5gaEGrWSk4v20HMfIhgC",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual? Dude, the unicycle guy!",
+  "next": "Even asked straight out, only one in four people on a call had seen him.",
+  "lines": [
+   "p01"
+  ],
+  "role": "PHONE_GUY",
+  "candidate": "jeremy"
+ },
+ {
+  "folder": "ch_phone_guy",
+  "take": "t7",
+  "text": "[puzzled] Sorry... what clown?",
+  "stability": 0.5,
+  "seed": 8643,
+  "voice": "5gaEGrWSk4v20HMfIhgC",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual? Dude, the unicycle guy!",
+  "next": "Even asked straight out, only one in four people on a call had seen him.",
+  "lines": [
+   "p01"
+  ],
+  "role": "PHONE_GUY",
+  "candidate": "jeremy"
+ }
+]

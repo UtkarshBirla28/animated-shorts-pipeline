@@ -1,0 +1,614 @@
+{
+ "_doc": "the script's own caption chunks (SCRIPT_v3 5.5 / voice_lines_v3.json `caption`) with their times from this voice: 1-3 words, CAPS for character lines, sentence case for the narrator, 'bag... gone.' small. `hidden_words` = spoken words the caption does not show (the 'is' of the first sentence: it IS a token of words.json, for the lip-sync and the beats).",
+ "fps": 30,
+ "chunks": [
+  {
+   "text": "His bag",
+   "s": 0.07,
+   "e": 0.62,
+   "f": 2,
+   "fe": 19,
+   "id": "v3_n01",
+   "speaker": "N",
+   "caps": false,
+   "hidden_words": [
+    "is"
+   ]
+  },
+  {
+   "text": "on that train.",
+   "s": 0.74,
+   "e": 1.565,
+   "f": 22,
+   "fe": 47,
+   "id": "v3_n01",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "He is not.",
+   "s": 1.715,
+   "e": 2.63,
+   "f": 51,
+   "fe": 79,
+   "id": "v3_n02",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "All he did",
+   "s": 2.78,
+   "e": 3.47,
+   "f": 83,
+   "fe": 104,
+   "id": "v3_n03",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "was laugh",
+   "s": 3.47,
+   "e": 4.3,
+   "f": 104,
+   "fe": 129,
+   "id": "v3_n03",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "at a finger.",
+   "s": 4.455,
+   "e": 5.32,
+   "f": 134,
+   "fe": 160,
+   "id": "v3_n03",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "SIGNAL... GREEN!",
+   "s": 5.5,
+   "e": 6.965,
+   "f": 165,
+   "fe": 209,
+   "id": "v3_d01",
+   "speaker": "D",
+   "caps": true
+  },
+  {
+   "text": "HE'S POINTING",
+   "s": 7.165,
+   "e": 7.86,
+   "f": 215,
+   "fe": 236,
+   "id": "v3_t01",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "AT NOTHING!",
+   "s": 7.86,
+   "e": 8.665,
+   "f": 236,
+   "fe": 260,
+   "id": "v3_t01",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "But that driver",
+   "s": 8.815,
+   "e": 9.47,
+   "f": 264,
+   "fe": 284,
+   "id": "v3_n04",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "has 1,000 people",
+   "s": 9.47,
+   "e": 10.68,
+   "f": 284,
+   "fe": 320,
+   "id": "v3_n04",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "behind him.",
+   "s": 10.68,
+   "e": 11.395,
+   "f": 320,
+   "fe": 342,
+   "id": "v3_n04",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "So he checks",
+   "s": 11.545,
+   "e": 12.11,
+   "f": 346,
+   "fe": 363,
+   "id": "v3_n05",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "with a finger",
+   "s": 12.11,
+   "e": 12.91,
+   "f": 363,
+   "fe": 387,
+   "id": "v3_n05",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "and a shout.",
+   "s": 12.91,
+   "e": 13.715,
+   "f": 387,
+   "fe": 411,
+   "id": "v3_n05",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "First stop.",
+   "s": 14.115,
+   "e": 15.0,
+   "f": 423,
+   "fe": 450,
+   "id": "v3_n06",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "His suitcase",
+   "s": 15.25,
+   "e": 15.98,
+   "f": 458,
+   "fe": 479,
+   "id": "v3_n07",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "tries to",
+   "s": 15.98,
+   "e": 16.37,
+   "f": 479,
+   "fe": 491,
+   "id": "v3_n07",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "get off...",
+   "s": 16.37,
+   "e": 16.95,
+   "f": 491,
+   "fe": 508,
+   "id": "v3_n07",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "and the",
+   "s": 17.45,
+   "e": 17.73,
+   "f": 524,
+   "fe": 532,
+   "id": "v3_n08",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "boy's finger",
+   "s": 17.73,
+   "e": 18.48,
+   "f": 532,
+   "fe": 554,
+   "id": "v3_n08",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "saves it.",
+   "s": 18.48,
+   "e": 19.195,
+   "f": 554,
+   "fe": 576,
+   "id": "v3_n08",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "BAD SUITCASE.",
+   "s": 19.345,
+   "e": 20.37,
+   "f": 580,
+   "fe": 611,
+   "id": "v3_t02",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "DOORS... CLOSED!",
+   "s": 21.97,
+   "e": 23.395,
+   "f": 659,
+   "fe": 702,
+   "id": "v3_d02",
+   "speaker": "D",
+   "caps": true
+  },
+  {
+   "text": "WHAT'S A FINGER",
+   "s": 24.145,
+   "e": 24.98,
+   "f": 724,
+   "fe": 749,
+   "id": "v3_t03",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "GONNA DO?",
+   "s": 24.98,
+   "e": 25.475,
+   "f": 749,
+   "fe": 764,
+   "id": "v3_t03",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "Second stop.",
+   "s": 25.825,
+   "e": 26.67,
+   "f": 775,
+   "fe": 800,
+   "id": "v3_n09",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "STAY.",
+   "s": 27.12,
+   "e": 27.59,
+   "f": 814,
+   "fe": 828,
+   "id": "v3_t04",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "BE RIGHT BACK.",
+   "s": 27.89,
+   "e": 28.675,
+   "f": 837,
+   "fe": 860,
+   "id": "v3_t04",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "It stays.",
+   "s": 29.625,
+   "e": 30.595,
+   "f": 889,
+   "fe": 918,
+   "id": "v3_n10",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "VENDING MACHINE...",
+   "s": 31.695,
+   "e": 32.84,
+   "f": 951,
+   "fe": 985,
+   "id": "v3_t05",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "CHECK!",
+   "s": 33.195,
+   "e": 33.655,
+   "f": 996,
+   "fe": 1010,
+   "id": "v3_t05",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "THIS KID",
+   "s": 36.435,
+   "e": 37.185,
+   "f": 1093,
+   "fe": 1116,
+   "id": "v3_t06",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "GETS IT!",
+   "s": 37.325,
+   "e": 37.88,
+   "f": 1120,
+   "fe": 1136,
+   "id": "v3_t06",
+   "speaker": "T",
+   "caps": true
+  },
+  {
+   "text": "You see,",
+   "s": 38.53,
+   "e": 39.275,
+   "f": 1156,
+   "fe": 1178,
+   "id": "v3_n11",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "his eyes",
+   "s": 39.37,
+   "e": 39.97,
+   "f": 1181,
+   "fe": 1199,
+   "id": "v3_n11",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "looked right",
+   "s": 39.97,
+   "e": 40.56,
+   "f": 1199,
+   "fe": 1217,
+   "id": "v3_n11",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "at it.",
+   "s": 40.56,
+   "e": 41.065,
+   "f": 1217,
+   "fe": 1232,
+   "id": "v3_n11",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "His mind",
+   "s": 41.265,
+   "e": 41.82,
+   "f": 1238,
+   "fe": 1255,
+   "id": "v3_n11",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "was on",
+   "s": 41.82,
+   "e": 42.17,
+   "f": 1255,
+   "fe": 1265,
+   "id": "v3_n11",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "his phone.",
+   "s": 42.17,
+   "e": 42.69,
+   "f": 1265,
+   "fe": 1281,
+   "id": "v3_n11",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "WHAT'S A FINGER",
+   "s": 42.72,
+   "e": 43.3,
+   "f": 1282,
+   "fe": 1299,
+   "id": "v3_r01",
+   "speaker": "T",
+   "caps": true,
+   "phone_pictogram": true,
+   "size": 0.8
+  },
+  {
+   "text": "GONNA DO?",
+   "s": 43.3,
+   "e": 43.795,
+   "f": 1299,
+   "fe": 1314,
+   "id": "v3_r01",
+   "speaker": "T",
+   "caps": true,
+   "phone_pictogram": true,
+   "size": 0.8
+  },
+  {
+   "text": "Japan's railway lab",
+   "s": 43.875,
+   "e": 45.24,
+   "f": 1316,
+   "fe": 1357,
+   "id": "v3_n12",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "tested it.",
+   "s": 45.24,
+   "e": 45.905,
+   "f": 1357,
+   "fe": 1377,
+   "id": "v3_n12",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "For every 6",
+   "s": 46.055,
+   "e": 46.91,
+   "f": 1382,
+   "fe": 1407,
+   "id": "v3_n13",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "mistakes people made",
+   "s": 46.91,
+   "e": 48.11,
+   "f": 1407,
+   "fe": 1443,
+   "id": "v3_n13",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "just looking...",
+   "s": 48.11,
+   "e": 48.89,
+   "f": 1443,
+   "fe": 1467,
+   "id": "v3_n13",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "when they pointed",
+   "s": 49.89,
+   "e": 50.66,
+   "f": 1497,
+   "fe": 1520,
+   "id": "v3_n13",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "and said it",
+   "s": 50.66,
+   "e": 51.19,
+   "f": 1520,
+   "fe": 1536,
+   "id": "v3_n13",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "out loud:",
+   "s": 51.19,
+   "e": 51.855,
+   "f": 1536,
+   "fe": 1556,
+   "id": "v3_n13",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "about 1.",
+   "s": 52.155,
+   "e": 52.96,
+   "f": 1565,
+   "fe": 1589,
+   "id": "v3_n13",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "A finger",
+   "s": 53.52,
+   "e": 54.13,
+   "f": 1606,
+   "fe": 1624,
+   "id": "v3_n14",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "and a shout",
+   "s": 54.13,
+   "e": 54.8,
+   "f": 1624,
+   "fe": 1644,
+   "id": "v3_n14",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "drag your mind",
+   "s": 54.87,
+   "e": 55.86,
+   "f": 1646,
+   "fe": 1676,
+   "id": "v3_n14",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "back.",
+   "s": 55.86,
+   "e": 56.26,
+   "f": 1676,
+   "fe": 1688,
+   "id": "v3_n14",
+   "speaker": "N",
+   "caps": false
+  },
+  {
+   "text": "DOORS...",
+   "s": 57.01,
+   "e": 57.65,
+   "f": 1710,
+   "fe": 1730,
+   "id": "v3_d03",
+   "speaker": "D",
+   "caps": true
+  },
+  {
+   "text": "...CLOSED!",
+   "s": 58.68,
+   "e": 59.26,
+   "f": 1760,
+   "fe": 1778,
+   "id": "v3_d03",
+   "speaker": "D",
+   "caps": true
+  },
+  {
+   "text": "BAG... CHECK!",
+   "s": 60.04,
+   "e": 61.39,
+   "f": 1801,
+   "fe": 1842,
+   "id": "v3_k01",
+   "speaker": "KID",
+   "caps": true
+  },
+  {
+   "text": "bag... gone.",
+   "s": 62.12,
+   "e": 63.65,
+   "f": 1864,
+   "fe": 1910,
+   "id": "v3_t07",
+   "speaker": "T",
+   "caps": false,
+   "size": 0.7
+  }
+ ]
+}

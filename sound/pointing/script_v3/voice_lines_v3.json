@@ -1,0 +1,580 @@
+[
+ {
+  "id": "v3_n01",
+  "speaker": "N",
+  "text": "His bag is on that train.",
+  "tags": "",
+  "direction": "Bright and up on 'His BAG', level to 'train'. One take with v3_n02 and v3_n03, best of 6-8, untagged first. Gate on the assembled hook (three pauses set to 0.15 s): 'not' starts by 2.70 s, 'laugh' starts by 4.50 s, no gap over 0.20 s; prefer 'finger' starting by 5.00 s; if no take passes, record again; never stretch.",
+  "pause_after_s": 0.15,
+  "reuse_v1_take": false,
+  "planned_start_s": 0.07,
+  "planned_end_s": 1.72,
+  "planned_len_s": 1.65,
+  "record_group": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "in_film": true,
+  "caption": "His bag / on that train.",
+  "note": "The pause after this line may be 0.20 s (the deadpan's breath) on a take where 'not' still starts by 2.60 s."
+ },
+ {
+  "id": "v3_n02",
+  "speaker": "N",
+  "text": "He is not.",
+  "tags": "",
+  "direction": "Low and flat, at the same speed as the first sentence, 1.05-1.20 s. The drop in pitch is the joke, not a slow-down. Untagged first; use [deadpan] only if it measures better (no whisper, no creak).",
+  "pause_after_s": 0.15,
+  "reuse_v1_take": false,
+  "planned_start_s": 1.87,
+  "planned_end_s": 2.97,
+  "planned_len_s": 1.1,
+  "record_group": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "in_film": true,
+  "alt_tag": "[deadpan]",
+  "caption": "He is not.",
+  "note": "Cut 1 sits in the silence after this line, placed from the accepted take's real word times."
+ },
+ {
+  "id": "v3_n03",
+  "speaker": "N",
+  "text": "All he did was laugh... at a finger.",
+  "tags": "",
+  "direction": "Back up and amused, climbing to 'LAUGH', a small fall on 'finger'. The raw '...' pause is cut to 0.15 s in silence.",
+  "pause_after_s": 0.18,
+  "reuse_v1_take": false,
+  "planned_start_s": 3.12,
+  "planned_end_s": 5.47,
+  "planned_len_s": 2.35,
+  "record_group": [
+   "v3_n01",
+   "v3_n02",
+   "v3_n03"
+  ],
+  "in_film": true,
+  "inner_pauses_s": [
+   0.15
+  ],
+  "caption": "All he did / was laugh / at a finger.",
+  "note": "Cut 2 sits one frame before 'finger' (4.88 s on the plan), placed from the accepted take's real word times."
+ },
+ {
+  "id": "v3_x01",
+  "speaker": "T",
+  "text": "(a real belly laugh, about 2 s, no words)",
+  "tags": "[laughs]",
+  "direction": "A real laugh, no words. Used 12 dB under the narrator at 3.05-4.88 s, under the tail of 'green!' (from about 6.95 s), and thin through his phone under v3_n11.",
+  "pause_after_s": 0,
+  "reuse_v1_take": false,
+  "planned_start_s": 3.05,
+  "planned_end_s": 4.88,
+  "planned_len_s": 1.83,
+  "in_film": true,
+  "wordless": true
+ },
+ {
+  "id": "v3_d01",
+  "speaker": "D",
+  "text": "Signal... green!",
+  "tags": "[firmly]",
+  "direction": "Firm name at mid pitch, a held beat, the status clipped with a falling end. No accent put on the English.",
+  "pause_after_s": 0.2,
+  "reuse_v1_take": true,
+  "planned_start_s": 5.65,
+  "planned_end_s": 7.105,
+  "planned_len_s": 1.455,
+  "in_film": true,
+  "v1_take": "sound/pointing/voice/takes/cast_d/masaki1.mp3",
+  "v1_pick_id": "d01",
+  "expected_words": "Signal green",
+  "measured_len_s": 1.335,
+  "v1_build_take_on_off_s": [
+   0.065,
+   1.41
+  ],
+  "inner_pauses_s": [
+   0.38
+  ],
+  "caption": "SIGNAL... GREEN!",
+  "note": "Use only the first call of the audition take, as the v1 build cut it (1.335 s, inner silence 0.255 s). Add 0.12 s of silence inside it so the beat is 0.38 s. Never squeeze. The file holds three calls ('Signal... green! Speed... check! Doors... closed!'): cut only the span in v1_build_take_on_off_s and compare the transcript of that cut with expected_words, so 'Speed... check!' can never play."
+ },
+ {
+  "id": "v3_t01",
+  "speaker": "T",
+  "text": "He's pointing at nothing!",
+  "tags": "[laughing]",
+  "direction": "Mocking; a real laugh before and under the words; a rising end. Accept only if 'He's' is clear (the old 'Bro's' scored 0.56).",
+  "pause_after_s": 0.15,
+  "reuse_v1_take": false,
+  "planned_start_s": 7.3,
+  "planned_end_s": 8.85,
+  "planned_len_s": 1.55,
+  "in_film": true,
+  "caption": "HE'S POINTING / AT NOTHING!"
+ },
+ {
+  "id": "v3_n04",
+  "speaker": "N",
+  "text": "But that driver has a thousand people behind him.",
+  "tags": "",
+  "direction": "The low line after the laugh; steady; weight on 'THOUsand'.",
+  "pause_after_s": 0.15,
+  "reuse_v1_take": false,
+  "planned_start_s": 9.0,
+  "planned_end_s": 11.85,
+  "planned_len_s": 2.85,
+  "in_film": true,
+  "caption": "But that driver / has 1,000 people / behind him."
+ },
+ {
+  "id": "v3_n05",
+  "speaker": "N",
+  "text": "So he checks with a finger and a shout.",
+  "tags": "",
+  "direction": "Quick and light, a small lift on 'shout'.",
+  "pause_after_s": 0.4,
+  "reuse_v1_take": false,
+  "planned_start_s": 12.0,
+  "planned_end_s": 14.6,
+  "planned_len_s": 2.6,
+  "in_film": true,
+  "caption": "So he checks / with a finger / and a shout."
+ },
+ {
+  "id": "v3_n06",
+  "speaker": "N",
+  "text": "First stop.",
+  "tags": "",
+  "direction": "Low and clipped, so the next line can rise. One take with v3_n07 and v3_n08; the two pauses are set in the build.",
+  "pause_after_s": 0.25,
+  "reuse_v1_take": false,
+  "planned_start_s": 15.0,
+  "planned_end_s": 15.85,
+  "planned_len_s": 0.85,
+  "record_group": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "in_film": true,
+  "caption": "First stop."
+ },
+ {
+  "id": "v3_n07",
+  "speaker": "N",
+  "text": "His suitcase tries to get off...",
+  "tags": "",
+  "direction": "Rises, a little alarmed, and hangs on 'off...'.",
+  "pause_after_s": 0.5,
+  "reuse_v1_take": false,
+  "planned_start_s": 16.1,
+  "planned_end_s": 17.95,
+  "planned_len_s": 1.85,
+  "record_group": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "in_film": true,
+  "caption": "His suitcase / tries to / get off..."
+ },
+ {
+  "id": "v3_n08",
+  "speaker": "N",
+  "text": "...and the boy's finger saves it.",
+  "tags": "",
+  "direction": "Comes down warm on 'SAVES it'.",
+  "pause_after_s": 0.15,
+  "reuse_v1_take": false,
+  "planned_start_s": 18.45,
+  "planned_end_s": 20.25,
+  "planned_len_s": 1.8,
+  "record_group": [
+   "v3_n06",
+   "v3_n07",
+   "v3_n08"
+  ],
+  "in_film": true,
+  "caption": "and the / boy's finger / saves it."
+ },
+ {
+  "id": "v3_t02",
+  "speaker": "T",
+  "text": "Bad suitcase.",
+  "tags": "[scolding]",
+  "direction": "Fond, like to a puppy.",
+  "pause_after_s": 1.6,
+  "reuse_v1_take": false,
+  "planned_start_s": 20.4,
+  "planned_end_s": 21.35,
+  "planned_len_s": 0.95,
+  "in_film": true,
+  "caption": "BAD SUITCASE.",
+  "note": "The 1.60 s after it: the nod with the chime and the doors starting together (0.40 s, never under this line), the doors meet (0.90 s), the side lamps go out (0.25 s), then the call."
+ },
+ {
+  "id": "v3_d02",
+  "speaker": "D",
+  "text": "Doors... closed!",
+  "tags": "[firmly]",
+  "direction": "Low and firm. The plant: it must sound like the payoff call.",
+  "pause_after_s": 0.75,
+  "reuse_v1_take": true,
+  "planned_start_s": 22.95,
+  "planned_end_s": 24.375,
+  "planned_len_s": 1.425,
+  "in_film": true,
+  "v1_take": "sound/pointing/voice/takes/ch_d03/t3.mp3",
+  "v1_pick_id": "d03",
+  "expected_words": "Doors closed",
+  "measured_len_s": 1.425,
+  "v1_build_take_on_off_s": [
+   0.095,
+   1.53
+  ],
+  "inner_pauses_s": [
+   0.44
+  ],
+  "caption": "DOORS... CLOSED!"
+ },
+ {
+  "id": "v3_t03",
+  "speaker": "T",
+  "text": "What's a finger gonna do?",
+  "tags": "[laughing]",
+  "direction": "Cocky, a real laugh inside it, a rising end. No 'bro'. The same take is replayed thin through his phone (v3_r01).",
+  "pause_after_s": 0.35,
+  "reuse_v1_take": false,
+  "planned_start_s": 25.125,
+  "planned_end_s": 26.795,
+  "planned_len_s": 1.67,
+  "in_film": true,
+  "caption": "WHAT'S A FINGER / GONNA DO?"
+ },
+ {
+  "id": "v3_n09",
+  "speaker": "N",
+  "text": "Second stop.",
+  "tags": "",
+  "direction": "Low and clipped. Recorded as ONE take with v3_n10 ('Second stop. ... It stays.') and split in silence: never record a two-word narrator line alone.",
+  "pause_after_s": 0.45,
+  "reuse_v1_take": false,
+  "planned_start_s": 27.145,
+  "planned_end_s": 28.095,
+  "planned_len_s": 0.95,
+  "record_group": [
+   "v3_n09",
+   "v3_n10"
+  ],
+  "in_film": true,
+  "caption": "Second stop."
+ },
+ {
+  "id": "v3_t04",
+  "speaker": "T",
+  "text": "Stay. Be right back.",
+  "tags": "[playful]",
+  "direction": "'Stay.' low and fond, 'Be right back.' bright.",
+  "pause_after_s": 0.95,
+  "reuse_v1_take": true,
+  "planned_start_s": 28.545,
+  "planned_end_s": 30.1,
+  "planned_len_s": 1.555,
+  "in_film": true,
+  "v1_take": "sound/pointing/voice/takes/ch_t02/t3.mp3",
+  "v1_pick_id": "t02",
+  "expected_words": "Stay Be right back",
+  "measured_len_s": 1.555,
+  "v1_build_take_on_off_s": [
+   0.065,
+   1.69
+  ],
+  "inner_pauses_s": [
+   0.3
+  ],
+  "caption": "STAY. / BE RIGHT BACK."
+ },
+ {
+  "id": "v3_n10",
+  "speaker": "N",
+  "text": "It stays.",
+  "tags": "",
+  "direction": "The quietest, flattest narrator line in the film. Untagged first; [deadpan] only if it measures better.",
+  "pause_after_s": 1.1,
+  "reuse_v1_take": false,
+  "planned_start_s": 31.05,
+  "planned_end_s": 31.9,
+  "planned_len_s": 0.85,
+  "record_group": [
+   "v3_n09",
+   "v3_n10"
+  ],
+  "in_film": true,
+  "alt_tag": "[deadpan]",
+  "caption": "It stays."
+ },
+ {
+  "id": "v3_t05",
+  "speaker": "T",
+  "text": "Vending machine... check!",
+  "tags": "[mocking]",
+  "direction": "Proud, stiff, fake-deep, too loud. Never a put-on accent: listen to the reused take for this before it is placed; if it has one, record again. Check that its own beat is 0.35 s or more; if not, add silence, never squeeze.",
+  "pause_after_s": 2.78,
+  "reuse_v1_take": true,
+  "planned_start_s": 33.0,
+  "planned_end_s": 34.86,
+  "planned_len_s": 1.86,
+  "in_film": true,
+  "v1_take": "sound/pointing/voice/takes/ch_t04/t2.mp3",
+  "v1_pick_id": "t04",
+  "expected_words": "Vending machine check",
+  "measured_len_s": 1.86,
+  "v1_build_take_on_off_s": [
+   0.025,
+   1.89
+  ],
+  "measured_inner_silence_s": 0.24,
+  "caption": "VENDING MACHINE... / CHECK!",
+  "note": "The 2.78 s after it has no voice: 0.33 s pose hold, the 1.10 s wordless shot v3_p01 (the boy points, mouth shut), then 1.35 s (head turn, the 0.7 s look, the grin). Measured in the verify pass (ch_t04/t2.probe.json; this take was not in the v1 build, so its span is the probe's): the take's own beat is 0.24 s, under the 0.35 s floor of fact guard 5. The build adds 0.11 s of silence inside the beat (the line is then 1.97 s and the plan 65.23 s), or the lead takes the 0.11 s out of the 0.33 s pose hold. Never squeeze."
+ },
+ {
+  "id": "v3_t06",
+  "speaker": "T",
+  "text": "This kid gets it!",
+  "tags": "[warmly]",
+  "direction": "Charmed, warm, no laugh tag. Test every word ('gets it' is an idiom; three stops in a row).",
+  "pause_after_s": 0.65,
+  "reuse_v1_take": false,
+  "planned_start_s": 37.64,
+  "planned_end_s": 38.94,
+  "planned_len_s": 1.3,
+  "in_film": true,
+  "fallback_text": "[warmly] Ha! Nice one, kid!",
+  "caption": "THIS KID / GETS IT!"
+ },
+ {
+  "id": "v3_n11",
+  "speaker": "N",
+  "text": "You see, his eyes looked right at it. His mind was on his phone.",
+  "tags": "",
+  "direction": "Starts low on 'You see,', lifts on 'RIGHT at it', falls away on 'phone'. No other words under it.",
+  "pause_after_s": 1.45,
+  "reuse_v1_take": false,
+  "planned_start_s": 39.59,
+  "planned_end_s": 43.77,
+  "planned_len_s": 4.18,
+  "in_film": true,
+  "inner_pauses_s": [
+   0.2,
+   0.2
+  ],
+  "caption": "You see, / his eyes / looked right / at it. / His mind / was on / his phone.",
+  "note": "The 1.45 s after it holds the phone's replay v3_r01 (it starts 0.30 s before the end of 'phone.' and ends 1.37 s after it), then 0.08 s."
+ },
+ {
+  "id": "v3_r01",
+  "speaker": "T",
+  "text": "What's a finger gonna do?",
+  "tags": "",
+  "direction": "Not a new take: the v3_t03 take through a small-speaker filter, thin, about 8 dB under the narrator's level, in the clear. Only its first word may sit under the narrator's last word.",
+  "pause_after_s": 0.08,
+  "reuse_v1_take": false,
+  "planned_start_s": 43.47,
+  "planned_end_s": 45.14,
+  "planned_len_s": 1.67,
+  "in_film": true,
+  "source_take": "v3_t03",
+  "from_phone": true,
+  "caption": "(phone pictogram) WHAT'S A FINGER / GONNA DO?"
+ },
+ {
+  "id": "v3_n12",
+  "speaker": "N",
+  "text": "Japan's railway lab tested it.",
+  "tags": "[intrigued]",
+  "direction": "Bright, a light lift at the end; it answers the phone. Starts 0.08 s after 'do?'. The cut to the jars is on 'tested'.",
+  "pause_after_s": 0.15,
+  "reuse_v1_take": true,
+  "planned_start_s": 45.22,
+  "planned_end_s": 47.25,
+  "planned_len_s": 2.03,
+  "in_film": true,
+  "v1_take": "sound/pointing/voice/takes/c08c/t1.mp3",
+  "v1_pick_id": "n10",
+  "expected_words": "Japan's railway lab tested it",
+  "measured_len_s": 2.03,
+  "v1_build_take_on_off_s": [
+   0.095,
+   2.135
+  ],
+  "caption": "Japan's railway lab / tested it."
+ },
+ {
+  "id": "v3_n13",
+  "speaker": "N",
+  "text": "For every six mistakes people made just looking... when they pointed and said it out loud: about one.",
+  "tags": "",
+  "direction": "Count evenly up to 'SIX', hang on 'looking...'; 'when they pointed and said it out loud' lighter and higher; 'about ONE' low, slow, landed. Record with v3_n12's words as the previous line so it follows on. Confirm the word 'six' by its length (0.25 s or more).",
+  "pause_after_s": 0.56,
+  "reuse_v1_take": false,
+  "planned_start_s": 47.4,
+  "planned_end_s": 54.19,
+  "planned_len_s": 6.79,
+  "in_film": true,
+  "inner_pauses_s": [
+   1.0,
+   0.3
+  ],
+  "fallback_text": "For every six mistakes people made just looking... point and say it out loud: about one.",
+  "caption": "For every 6 / mistakes people made / just looking... / when they pointed / and said it / out loud: / about 1.",
+  "note": "First clause 47.40-50.09 (measured 2.69 s in v1, the same words). The 1.00 s pause is the cutaway v3_p02. Second half 51.09-53.09, 0.30 s, 'about one.' 53.39-54.19. A splice with the v1 first clause (c08/t1) is the last resort only."
+ },
+ {
+  "id": "v3_x02",
+  "speaker": "T",
+  "text": "(a soft helpless giggle, about 1.5 s, no words)",
+  "tags": "[giggles]",
+  "direction": "Helpless, quiet. Used in the cutaway (50.09-51.09 s) and in the payoff shot (58.3-62.3 s). If it is not recorded, use the tail of v3_x01 at a lower level.",
+  "pause_after_s": 0,
+  "reuse_v1_take": false,
+  "planned_start_s": 50.09,
+  "planned_end_s": 51.09,
+  "planned_len_s": 1.0,
+  "in_film": true,
+  "wordless": true
+ },
+ {
+  "id": "v3_n14",
+  "speaker": "N",
+  "text": "A finger and a shout drag your mind back.",
+  "tags": "",
+  "direction": "Firm; up on 'DRAG', down on 'back'. The cut to the cab is on 'back.'.",
+  "pause_after_s": 0.75,
+  "reuse_v1_take": false,
+  "planned_start_s": 54.75,
+  "planned_end_s": 57.72,
+  "planned_len_s": 2.97,
+  "in_film": true,
+  "caption": "A finger / and a shout / drag your mind / back.",
+  "note": "The 0.75 s after it: 0.40 s of quiet in the cab, the chime and the doors start (58.12 s), the cut to the platform (58.32 s), the doors seen sliding for 0.15 s before the driver's word."
+ },
+ {
+  "id": "v3_d03",
+  "speaker": "D",
+  "text": "Doors... closed!",
+  "tags": "[calmly]",
+  "direction": "The same sound as the plant. Heard over the platform picture; the driver is not on screen during the call.",
+  "pause_after_s": 0.78,
+  "reuse_v1_take": true,
+  "planned_start_s": 58.47,
+  "planned_end_s": 60.695,
+  "planned_len_s": 2.225,
+  "in_film": true,
+  "v1_take": "sound/pointing/voice/takes/ch_d04/t4.mp3",
+  "v1_pick_id": "d04",
+  "expected_words": "Doors closed",
+  "measured_len_s": 1.55,
+  "v1_build_take_on_off_s": [
+   0.08,
+   1.64
+  ],
+  "inner_pauses_s": [
+   1.005
+  ],
+  "caption": "DOORS... / ...CLOSED!",
+  "note": "The take is 'Doors...' 0.645 s, silence 0.325 s, 'closed!' 0.575 s. Add 0.68 s of silence between the words (0.325 to 1.005 s): 'Doors...' 58.47-59.12, '...closed!' 60.12-60.70. Never stretch."
+ },
+ {
+  "id": "v3_k01",
+  "speaker": "KID",
+  "text": "Bag... check!",
+  "tags": "[proudly]",
+  "direction": "High and proud, in the driver's exact rhythm. Tagged takes only. Mixed clean even though he is behind glass.",
+  "pause_after_s": 0.73,
+  "reuse_v1_take": true,
+  "planned_start_s": 61.48,
+  "planned_end_s": 62.785,
+  "planned_len_s": 1.305,
+  "in_film": true,
+  "v1_take": "sound/pointing/voice/takes/ch_k01/t5.mp3",
+  "v1_pick_id": "k01",
+  "expected_words": "Bag check",
+  "measured_len_s": 1.305,
+  "v1_build_take_on_off_s": [
+   0.12,
+   1.475
+  ],
+  "measured_inner_silence_s": 0.325,
+  "caption": "BAG... CHECK!",
+  "note": "Measured in the verify pass: the take's own beat is 0.31 s (ch_k01/t5.probe.json) to 0.325 s (voice_info.json), just under the 0.35 s floor of fact guard 5. The build adds 0.04 s of silence inside the beat. Never squeeze."
+ },
+ {
+  "id": "v3_t07",
+  "speaker": "T",
+  "text": "Bag... gone.",
+  "tags": "[flatly]",
+  "direction": "Small and flat by pitch, not by level: mixed no more than 6 dB under the narrator's average level. The music stops dead on 'gone.'.",
+  "pause_after_s": 0.1,
+  "reuse_v1_take": true,
+  "planned_start_s": 63.51,
+  "planned_end_s": 65.025,
+  "planned_len_s": 1.515,
+  "in_film": true,
+  "v1_take": "sound/pointing/voice/takes/ch_t06/t4.mp3",
+  "v1_pick_id": "t06",
+  "expected_words": "Bag gone",
+  "measured_len_s": 1.515,
+  "v1_build_take_on_off_s": [
+   0.055,
+   1.6
+  ],
+  "inner_pauses_s": [
+   0.46
+  ],
+  "caption": "bag... gone. (small, lower-case, 70 % of the house size or more)",
+  "note": "The film ends 0.10 s after the word. The next frame is frame 0; 'His' starts 0.07 s later."
+ },
+ {
+  "id": "v3_a01",
+  "speaker": "N",
+  "text": "He points along an empty track.",
+  "tags": "",
+  "direction": "ALTERNATE HOOK, for a later A/B only. One take with v3_a02, untagged first. Plain, a little amused.",
+  "pause_after_s": 0.15,
+  "reuse_v1_take": false,
+  "planned_start_s": 0.07,
+  "planned_end_s": 1.95,
+  "planned_len_s": 1.88,
+  "record_group": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "in_film": false,
+  "fallback_text": "He points down an empty track.",
+  "caption": "He points / along an / empty track.",
+  "note": "Gate: the lead hook's gate, and 'suitcase.' must END by 5.00 s on the assembled take. If no take passes, use the fallback sentence with the caption chunks 'He points' / 'down an' / 'empty track.'."
+ },
+ {
+  "id": "v3_a02",
+  "speaker": "N",
+  "text": "The tourist laughing at him will lose that suitcase.",
+  "tags": "",
+  "direction": "ALTERNATE HOOK. Dry; weight on 'that SUITcase'.",
+  "pause_after_s": 0.33,
+  "reuse_v1_take": false,
+  "planned_start_s": 2.1,
+  "planned_end_s": 4.92,
+  "planned_len_s": 2.82,
+  "record_group": [
+   "v3_a01",
+   "v3_a02"
+  ],
+  "in_film": false,
+  "caption": "The tourist / laughing at him / will lose / that suitcase."
+ }
+]

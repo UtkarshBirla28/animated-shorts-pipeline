@@ -1,0 +1,35 @@
+[
+ {
+  "name": "horn_a",
+  "seconds": 1.0,
+  "prompt": "Clown bicycle bulb horn, two quick squeezes, honk honk, close, dry, no background",
+  "influence": 0.7,
+  "credits": 0
+ },
+ {
+  "name": "horn_b",
+  "seconds": 0.6,
+  "prompt": "Two very short quick honks from a small rubber bulb bicycle horn, comedic clown horn, honk-honk, close, dry, no reverb, no background",
+  "influence": 0.8,
+  "credits": 0
+ },
+ {
+  "name": "horn_c",
+  "seconds": 0.5,
+  "prompt": "One short honk of a rubber bulb clown horn, close, dry, no reverb",
+  "influence": 0.8,
+  "credits": 0
+ },
+ {
+  "name": "squeak_a",
+  "seconds": 0.8,
+  "prompt": "A rusty bicycle pedal squeaking, three slow rhythmic squeaks, close, dry, no background",
+  "influence": 0.8,
+  "credits": 0
+ },
+ {
+  "name": "_total",
+  "note": "the per-call counter lagged (0 each); the account counter moved 24076 -> 24105 over these 4 calls = 29 credits at most (of the 1200 allowed). Used in the film: horn_b only; horn_a / horn_c / squeak_a are measurement references.",
+  "credits": 29
+ }
+]

@@ -1,0 +1,66 @@
+[
+ {
+  "folder": "c09b",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] You see, a call pulls your mind toward... someone who isn't there.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7911,
+  "prev": "Here's the weird part: people listening to music noticed him.",
+  "next": "So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height.",
+  "lines": [
+   "n13"
+  ],
+  "note": "retake: toward was heard as towards in all c09 takes"
+ },
+ {
+  "folder": "c09b",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] You see, a call pulls your mind toward... someone who isn't there.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7912,
+  "prev": "Here's the weird part: people listening to music noticed him.",
+  "next": "So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height.",
+  "lines": [
+   "n13"
+  ],
+  "note": "retake: toward was heard as towards in all c09 takes"
+ },
+ {
+  "folder": "c09b",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[thoughtful] You see, a call pulls your mind toward... someone who isn't there.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7913,
+  "prev": "Here's the weird part: people listening to music noticed him.",
+  "next": "So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height.",
+  "lines": [
+   "n13"
+  ],
+  "note": "retake: toward was heard as towards in all c09 takes"
+ },
+ {
+  "folder": "c09b",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] You see, a call pulls your mind toward — someone who isn't there.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7914,
+  "prev": "Here's the weird part: people listening to music noticed him.",
+  "next": "So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height.",
+  "lines": [
+   "n13"
+  ],
+  "note": "retake: toward was heard as towards in all c09 takes"
+ }
+]

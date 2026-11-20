@@ -45,6 +45,7 @@ import { VOICE_TOTAL, WARP, toNew } from "./voicewarp";
 import { SHOTS, FPS, LAST, XFADE, XPAD, BEAT, V, shotAt, dofAt, camAt, camMotion, lightAt, smooth } from "./story";
 import { TK, CU, KI, BK, type LightName, type V3 } from "./plan";
 import { Captions } from "./Captions";
+import { HookTitle } from "./HookTitle";
 
 // the video is as long as the final narration + the loop tail (voicewarp.ts VOICE_TOTAL = story.ts TOTAL)
 export const SALADOIL_FRAMES = VOICE_TOTAL;
@@ -716,6 +717,7 @@ export const SaladOilShort: React.FC = () => {
         {gl ? <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "screen", opacity: gl.g.warm * b,
           background: `radial-gradient(ellipse ${gl.g.r * 100}% ${gl.g.r * 70}% at ${gl.g.at[0] * 100}% ${gl.g.at[1] * 100}%, rgba(${gl.g.col},1) 0%, rgba(${gl.g.col},0.55) 45%, rgba(${gl.g.col},0) 100%)` }} /> : null}
       </AbsoluteFill>
+      {on.captions ? <HookTitle frame={vf} /> : null}
       {on.captions ? <Captions frame={vf} /> : null}
     </AbsoluteFill>
   );

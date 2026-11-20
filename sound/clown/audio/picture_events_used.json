@@ -1,0 +1,321 @@
+{
+ "_doc": "frames (30 fps) every SFX used in the last mix.py run; copy a key into picture_events.json to override it (a frame, a list of frames, a 'beat+n' expression, or null to drop the cue)",
+ "_probes": [
+  "Overlays.tsx: all 15 tally / text formulas match this file's copies"
+ ],
+ "honk_0": {
+  "value": 0.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "count_text": {
+  "value": 150.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "chip_in": {
+  "value": 211.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "wheelie_1": {
+  "value": 328.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "honk_suit": {
+  "value": 377.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "clock_spin": {
+  "value": 448.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "chip_flip": {
+  "value": 534.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "five_ding": {
+  "value": 534.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "honk_wave_1": {
+  "value": 600.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "phone_walker_1": {
+  "value": true,
+  "source": "cast_plan.ts WALKERS (picture_plan.json)"
+ },
+ "phone_walker_2": {
+  "value": true,
+  "source": "cast_plan.ts WALKERS (picture_plan.json)"
+ },
+ "phone_walker_3": {
+  "value": true,
+  "source": "cast_plan.ts WALKERS (picture_plan.json)"
+ },
+ "phone_walker_4": {
+  "value": true,
+  "source": "cast_plan.ts WALKERS (picture_plan.json)"
+ },
+ "phone_walker_5": {
+  "value": true,
+  "source": "cast_plan.ts WALKERS (picture_plan.json)"
+ },
+ "clip_tap_2": {
+  "value": 659.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "page_3": {
+  "value": 734.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pairs_tick_1": {
+  "value": 744.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pairs_tick_2": {
+  "value": 747.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pairs_tick_3": {
+  "value": 750.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pairs_tick_4": {
+  "value": 753.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pairs_tick_5": {
+  "value": 756.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pairs_tick_6": {
+  "value": 759.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pairs_tick_7": {
+  "value": 762.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pairs_cross_1": {
+  "value": 767.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pairs_cross_2": {
+  "value": 769.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pairs_cross_3": {
+  "value": 771.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "laugh_3": {
+  "value": 758.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "music_tick_1": {
+  "value": 799.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "music_tick_2": {
+  "value": 802.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "music_tick_3": {
+  "value": 805.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "music_tick_4": {
+  "value": 808.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "music_tick_5": {
+  "value": 811.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "music_tick_6": {
+  "value": 814.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "music_cross_1": {
+  "value": 818.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "music_cross_2": {
+  "value": 820.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "music_cross_3": {
+  "value": 822.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "music_cross_4": {
+  "value": 824.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "headphones_3": {
+  "value": 810.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "hero_call_4": {
+  "value": 836.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "honk_muffled_4a": {
+  "value": 846.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "honk_muffled_4b": {
+  "value": 930.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "page_5": {
+  "value": 1016.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "call_tick": {
+  "value": 1027.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "call_cross_1": {
+  "value": 1039.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "call_cross_2": {
+  "value": 1045.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "call_cross_3": {
+  "value": 1060.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "spin_5": {
+  "value": 1105.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "honk_seen_5": {
+  "value": 1136.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "sightline_1": {
+  "value": 1148.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "sightline_2": {
+  "value": 1152.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "hero_call_6": {
+  "value": 1141.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "mind_leaves_6": {
+  "value": 1198.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "bubble_6": {
+  "value": 1221.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "peg_clip_7": {
+  "value": 1283.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "bill_swing_7": {
+  "value": 1285.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "bills_7": {
+  "value": 1292.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "ducks_7": {
+  "value": [
+   1413.0,
+   1424.0,
+   1439.0
+  ],
+  "source": "default (BEAT-keyed)"
+ },
+ "stop_7": {
+  "value": 1462.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "note_7": {
+  "value": 1477.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "page_7": {
+  "value": 1493.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "callers_7": {
+  "value": 1489.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "ducks_7b": {
+  "value": [
+   1510.0,
+   1539.0
+  ],
+  "source": "default (BEAT-keyed)"
+ },
+ "six_scratch": {
+  "value": 1522.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "six_wah": {
+  "value": 1548.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "hero_call_8": {
+  "value": 1555.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "brush_8": {
+  "value": 1569.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "bill_hair_8": {
+  "value": 1569.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "reveal_on": {
+  "value": 1623.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "reveal_shimmer": {
+  "value": 1621.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "afterimage_1": {
+  "value": 1712.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "afterimage_2": {
+  "value": 1724.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "honk_wave_9": {
+  "value": 1759.5,
+  "source": "default (BEAT-keyed)"
+ },
+ "pigeon_himEnd": {
+  "value": 127.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pigeon_unicycle2End": {
+  "value": 347.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pigeon_soWhoEnd": {
+  "value": 645.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pigeon_yesEnd": {
+  "value": 788.0,
+  "source": "default (BEAT-keyed)"
+ },
+ "pigeon_secondEnd": {
+  "value": 1691.0,
+  "source": "default (BEAT-keyed)"
+ }
+}

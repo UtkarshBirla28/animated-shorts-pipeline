@@ -1,0 +1,242 @@
+[
+ {
+  "i": 0,
+  "id": "n01",
+  "speaker": "N",
+  "beat": 1,
+  "s": 0.34,
+  "e": 2.39,
+  "markup": "Quick test. Count the people on a phone.",
+  "style": null
+ },
+ {
+  "i": 1,
+  "id": "n02",
+  "speaker": "N",
+  "beat": 1,
+  "s": 5.39,
+  "e": 6.48,
+  "markup": "Don't lose count.",
+  "style": null
+ },
+ {
+  "i": 2,
+  "id": "n03",
+  "speaker": "N",
+  "beat": 1,
+  "s": 9.39,
+  "e": 9.875,
+  "markup": "How many?",
+  "style": null
+ },
+ {
+  "i": 3,
+  "id": "n04",
+  "speaker": "N",
+  "beat": 1,
+  "s": 10.275,
+  "e": 10.955,
+  "markup": "Five.",
+  "style": null
+ },
+ {
+  "i": 4,
+  "id": "n05",
+  "speaker": "N",
+  "beat": 1,
+  "s": 11.41,
+  "e": 13.445,
+  "markup": "And the clown? You saw him, right?",
+  "style": null
+ },
+ {
+  "i": 5,
+  "id": "n06",
+  "speaker": "N",
+  "beat": 2,
+  "s": 13.585,
+  "e": 17.43,
+  "markup": "In a real experiment, most people on a phone call never saw him.",
+  "style": null
+ },
+ {
+  "i": 6,
+  "id": "n07",
+  "speaker": "N",
+  "beat": 3,
+  "s": 17.59,
+  "e": 22.825,
+  "markup": "Psychologist Ira Hyman needed a distraction nobody could miss. Then a student told him:",
+  "style": null
+ },
+ {
+  "i": 7,
+  "id": "s01",
+  "speaker": "STUDENT",
+  "beat": 3,
+  "s": 22.965,
+  "e": 24.27,
+  "markup": "I own a unicycle.",
+  "style": null
+ },
+ {
+  "i": 8,
+  "id": "s02",
+  "speaker": "STUDENT",
+  "beat": 3,
+  "s": 24.52,
+  "e": 25.58,
+  "markup": "...and a clown suit.",
+  "style": null
+ },
+ {
+  "i": 9,
+  "id": "n08",
+  "speaker": "N",
+  "beat": 3,
+  "s": 25.74,
+  "e": 29.64,
+  "markup": "So for one hour, the clown rode circles in the middle of campus.",
+  "style": null
+ },
+ {
+  "i": 11,
+  "id": "i01",
+  "speaker": "INTERVIEWER",
+  "beat": 4,
+  "s": 29.8,
+  "e": 31.385,
+  "markup": "Did you see anything unusual?",
+  "style": null
+ },
+ {
+  "i": 12,
+  "id": "f01",
+  "speaker": "FRIEND",
+  "beat": 4,
+  "s": 31.805,
+  "e": 34.06,
+  "markup": "The clown? He was amazing!",
+  "style": null
+ },
+ {
+  "i": 13,
+  "id": "h01",
+  "speaker": "HEADPHONES",
+  "beat": 4,
+  "s": 34.17,
+  "e": 36.335,
+  "markup": "Dude, the unicycle guy!",
+  "style": null
+ },
+ {
+  "i": 14,
+  "id": "p01",
+  "speaker": "PHONE_GUY",
+  "beat": 4,
+  "s": 36.445,
+  "e": 38.175,
+  "markup": "Sorry... what clown?",
+  "style": null
+ },
+ {
+  "i": 15,
+  "id": "n10",
+  "speaker": "N",
+  "beat": 5,
+  "s": 38.315,
+  "e": 42.73,
+  "markup": "Even asked straight out, only {1|one} in {4|four} people on a call had seen him.",
+  "style": null
+ },
+ {
+  "i": 16,
+  "id": "n11",
+  "speaker": "N",
+  "beat": 5,
+  "s": 42.885,
+  "e": 44.525,
+  "markup": "Many spun around to look.",
+  "style": null
+ },
+ {
+  "i": 17,
+  "id": "n12",
+  "speaker": "N",
+  "beat": 6,
+  "s": 44.69,
+  "e": 48.155,
+  "markup": "Here's the weird part: people listening to music noticed him.",
+  "style": null
+ },
+ {
+  "i": 18,
+  "id": "n13",
+  "speaker": "N",
+  "beat": 6,
+  "s": 48.315,
+  "e": 52.255,
+  "markup": "You see, a call pulls your mind toward someone who isn't there.",
+  "style": null
+ },
+ {
+  "i": 19,
+  "id": "n14",
+  "speaker": "N",
+  "beat": 7,
+  "s": 52.415,
+  "e": 58.2,
+  "markup": "So Hyman tried something sneakier. He hung dollar bills on a branch, right at head height.",
+  "style": null
+ },
+ {
+  "i": 20,
+  "id": "n15",
+  "speaker": "N",
+  "beat": 7,
+  "s": 58.36,
+  "e": 60.315,
+  "markup": "Nearly everyone ducked under it.",
+  "style": null
+ },
+ {
+  "i": 21,
+  "id": "n16",
+  "speaker": "N",
+  "beat": 7,
+  "s": 60.475,
+  "e": 63.815,
+  "markup": "On a phone? Only {6|six} in {100|a hundred} stopped for the money.",
+  "style": null
+ },
+ {
+  "i": 22,
+  "id": "n17",
+  "speaker": "N",
+  "beat": 8,
+  "s": 64.32,
+  "e": 67.935,
+  "markup": "Their bodies dodged it. Their minds never saw it.",
+  "style": null
+ },
+ {
+  "i": 23,
+  "id": "n18",
+  "speaker": "N",
+  "beat": 9,
+  "s": 68.44,
+  "e": 71.58,
+  "markup": "You counted five phones. You saw the clown.",
+  "style": null
+ },
+ {
+  "i": 24,
+  "id": "n19",
+  "speaker": "N",
+  "beat": 9,
+  "s": 71.93,
+  "e": 74.08,
+  "markup": "Did you see the money?",
+  "style": null
+ }
+]

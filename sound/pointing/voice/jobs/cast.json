@@ -1,0 +1,937 @@
+[
+ {
+  "folder": "cast_d",
+  "take": "hideo1",
+  "voice": "FMgBdHe1YV2Xi0B9anXW",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8001,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "hideo"
+ },
+ {
+  "folder": "cast_d",
+  "take": "hideo2",
+  "voice": "FMgBdHe1YV2Xi0B9anXW",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8002,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "hideo"
+ },
+ {
+  "folder": "cast_d",
+  "take": "hideo3",
+  "voice": "FMgBdHe1YV2Xi0B9anXW",
+  "model": "eleven_v4",
+  "text": "Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8003,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "hideo"
+ },
+ {
+  "folder": "cast_d",
+  "take": "masaki1",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8004,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "cast_d",
+  "take": "masaki2",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8005,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "cast_d",
+  "take": "masaki3",
+  "voice": "2Jg786yPJ6zSdiI0EAAH",
+  "model": "eleven_v4",
+  "text": "Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8006,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "masaki"
+ },
+ {
+  "folder": "cast_d",
+  "take": "kei1",
+  "voice": "qjx83Y0UcERgVPICvVpl",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8007,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "kei"
+ },
+ {
+  "folder": "cast_d",
+  "take": "kei2",
+  "voice": "qjx83Y0UcERgVPICvVpl",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8008,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "kei"
+ },
+ {
+  "folder": "cast_d",
+  "take": "kei3",
+  "voice": "qjx83Y0UcERgVPICvVpl",
+  "model": "eleven_v4",
+  "text": "Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8009,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "kei"
+ },
+ {
+  "folder": "cast_d",
+  "take": "taro1",
+  "voice": "UznIBkKIQe3ZG2tGydre",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8010,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "taro"
+ },
+ {
+  "folder": "cast_d",
+  "take": "taro2",
+  "voice": "UznIBkKIQe3ZG2tGydre",
+  "model": "eleven_v4",
+  "text": "[firmly] Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8011,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "taro"
+ },
+ {
+  "folder": "cast_d",
+  "take": "taro3",
+  "voice": "UznIBkKIQe3ZG2tGydre",
+  "model": "eleven_v4",
+  "text": "Signal... green! Speed... check! Doors... closed!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8012,
+  "prev": null,
+  "next": "Bro's pointing at nothing!",
+  "lines": [
+   "d01",
+   "d02",
+   "d03"
+  ],
+  "role": "D",
+  "candidate": "taro"
+ },
+ {
+  "folder": "cast_t",
+  "take": "gus1",
+  "voice": "wGkprrTXgBM5EC3Znt6U",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing! [excited] Nobody does that in New York!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8101,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t01",
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "gus"
+ },
+ {
+  "folder": "cast_t",
+  "take": "gus2",
+  "voice": "wGkprrTXgBM5EC3Znt6U",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing! [excited] Nobody does that in New York!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8102,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t01",
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "gus"
+ },
+ {
+  "folder": "cast_t",
+  "take": "jerryb1",
+  "voice": "rHWSYoq8UlV0YIBKMryp",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing! [excited] Nobody does that in New York!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8104,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t01",
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "jerryb"
+ },
+ {
+  "folder": "cast_t",
+  "take": "jerryb2",
+  "voice": "rHWSYoq8UlV0YIBKMryp",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing! [excited] Nobody does that in New York!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8105,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t01",
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "jerryb"
+ },
+ {
+  "folder": "cast_t",
+  "take": "hal1",
+  "voice": "aLyZxRoKf8CwWlGthFYB",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing! [excited] Nobody does that in New York!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8107,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t01",
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "hal"
+ },
+ {
+  "folder": "cast_t",
+  "take": "hal2",
+  "voice": "aLyZxRoKf8CwWlGthFYB",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing! [excited] Nobody does that in New York!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8108,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t01",
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "hal"
+ },
+ {
+  "folder": "cast_t",
+  "take": "peter1",
+  "voice": "zfpxqh60b0TrMkJHDLsR",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing! [excited] Nobody does that in New York!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8110,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t01",
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "peter"
+ },
+ {
+  "folder": "cast_t",
+  "take": "peter2",
+  "voice": "zfpxqh60b0TrMkJHDLsR",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing! [excited] Nobody does that in New York!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8111,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t01",
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "peter"
+ },
+ {
+  "folder": "cast_t",
+  "take": "flackoo1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing! [excited] Nobody does that in New York!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8113,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t01",
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "cast_t",
+  "take": "flackoo2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing! [excited] Nobody does that in New York!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8114,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "Actually, New York does.",
+  "lines": [
+   "t01",
+   "t03"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "cast_t6",
+  "take": "gus1",
+  "voice": "wGkprrTXgBM5EC3Znt6U",
+  "model": "eleven_v4",
+  "text": "[deadpan] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8131,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "gus"
+ },
+ {
+  "folder": "cast_t6",
+  "take": "gus2",
+  "voice": "wGkprrTXgBM5EC3Znt6U",
+  "model": "eleven_v4",
+  "text": "[flatly] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8132,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "gus"
+ },
+ {
+  "folder": "cast_t6",
+  "take": "jerryb1",
+  "voice": "rHWSYoq8UlV0YIBKMryp",
+  "model": "eleven_v4",
+  "text": "[deadpan] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8134,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "jerryb"
+ },
+ {
+  "folder": "cast_t6",
+  "take": "jerryb2",
+  "voice": "rHWSYoq8UlV0YIBKMryp",
+  "model": "eleven_v4",
+  "text": "[flatly] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8135,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "jerryb"
+ },
+ {
+  "folder": "cast_t6",
+  "take": "hal1",
+  "voice": "aLyZxRoKf8CwWlGthFYB",
+  "model": "eleven_v4",
+  "text": "[deadpan] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8137,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "hal"
+ },
+ {
+  "folder": "cast_t6",
+  "take": "hal2",
+  "voice": "aLyZxRoKf8CwWlGthFYB",
+  "model": "eleven_v4",
+  "text": "[flatly] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8138,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "hal"
+ },
+ {
+  "folder": "cast_t6",
+  "take": "peter1",
+  "voice": "zfpxqh60b0TrMkJHDLsR",
+  "model": "eleven_v4",
+  "text": "[deadpan] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8140,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "peter"
+ },
+ {
+  "folder": "cast_t6",
+  "take": "peter2",
+  "voice": "zfpxqh60b0TrMkJHDLsR",
+  "model": "eleven_v4",
+  "text": "[flatly] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8141,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "peter"
+ },
+ {
+  "folder": "cast_t6",
+  "take": "flackoo1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[deadpan] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8143,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "cast_t6",
+  "take": "flackoo2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[flatly] Bag... gone.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8144,
+  "prev": "Doors... closed! Bag... check!",
+  "next": null,
+  "lines": [
+   "t06"
+  ],
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ {
+  "folder": "cast_k",
+  "take": "piku1",
+  "voice": "EeQEodFZVtBkjtgK3HBc",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8201,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "piku"
+ },
+ {
+  "folder": "cast_k",
+  "take": "piku2",
+  "voice": "EeQEodFZVtBkjtgK3HBc",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8202,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "piku"
+ },
+ {
+  "folder": "cast_k",
+  "take": "piku3",
+  "voice": "EeQEodFZVtBkjtgK3HBc",
+  "model": "eleven_v4",
+  "text": "Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8203,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "piku"
+ },
+ {
+  "folder": "cast_k",
+  "take": "kiran1",
+  "voice": "o80picuztV1xYiPeIrpa",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8204,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kiran"
+ },
+ {
+  "folder": "cast_k",
+  "take": "kiran2",
+  "voice": "o80picuztV1xYiPeIrpa",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8205,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kiran"
+ },
+ {
+  "folder": "cast_k",
+  "take": "kiran3",
+  "voice": "o80picuztV1xYiPeIrpa",
+  "model": "eleven_v4",
+  "text": "Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8206,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kiran"
+ },
+ {
+  "folder": "cast_k",
+  "take": "kavya1",
+  "voice": "bA58y3FqVI6b6gTNh0oT",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8207,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kavya"
+ },
+ {
+  "folder": "cast_k",
+  "take": "kavya2",
+  "voice": "bA58y3FqVI6b6gTNh0oT",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8208,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kavya"
+ },
+ {
+  "folder": "cast_k",
+  "take": "kavya3",
+  "voice": "bA58y3FqVI6b6gTNh0oT",
+  "model": "eleven_v4",
+  "text": "Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8209,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kavya"
+ },
+ {
+  "folder": "cast_k",
+  "take": "munni1",
+  "voice": "VOGEEZj2Kly5dP9LrQy8",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8210,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "munni"
+ },
+ {
+  "folder": "cast_k",
+  "take": "munni2",
+  "voice": "VOGEEZj2Kly5dP9LrQy8",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8211,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "munni"
+ },
+ {
+  "folder": "cast_k",
+  "take": "munni3",
+  "voice": "VOGEEZj2Kly5dP9LrQy8",
+  "model": "eleven_v4",
+  "text": "Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8212,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "munni"
+ },
+ {
+  "folder": "cast_k",
+  "take": "chutki1",
+  "voice": "Jr72SE8p9OcJmr8hyX0D",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8213,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "chutki"
+ },
+ {
+  "folder": "cast_k",
+  "take": "chutki2",
+  "voice": "Jr72SE8p9OcJmr8hyX0D",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8214,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "chutki"
+ },
+ {
+  "folder": "cast_k",
+  "take": "chutki3",
+  "voice": "Jr72SE8p9OcJmr8hyX0D",
+  "model": "eleven_v4",
+  "text": "Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8215,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "chutki"
+ },
+ {
+  "folder": "cast_k",
+  "take": "teddy1",
+  "voice": "XjGYkUkzth8BPs29fmcV",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8216,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "teddy"
+ },
+ {
+  "folder": "cast_k",
+  "take": "teddy2",
+  "voice": "XjGYkUkzth8BPs29fmcV",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8217,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "teddy"
+ },
+ {
+  "folder": "cast_k",
+  "take": "teddy3",
+  "voice": "XjGYkUkzth8BPs29fmcV",
+  "model": "eleven_v4",
+  "text": "Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8218,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "teddy"
+ },
+ {
+  "folder": "cast_k",
+  "take": "valf1",
+  "voice": "loY1uopAz31XyhAEhNSa",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8219,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "valf"
+ },
+ {
+  "folder": "cast_k",
+  "take": "valf2",
+  "voice": "loY1uopAz31XyhAEhNSa",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8220,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "valf"
+ },
+ {
+  "folder": "cast_k",
+  "take": "valf3",
+  "voice": "loY1uopAz31XyhAEhNSa",
+  "model": "eleven_v4",
+  "text": "Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8221,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "valf"
+ }
+]

@@ -1,0 +1,74 @@
+[
+ {
+  "folder": "ch_t01b",
+  "take": "t1",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8801,
+  "prev": "Signal... green!",
+  "next": "Give him a minute. He'll be pointing too.",
+  "lines": [
+   "t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "round": "r4 'Bro's' clarity"
+ },
+ {
+  "folder": "ch_t01b",
+  "take": "t2",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughs] Bro's pointing at nothing!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8802,
+  "prev": "Signal... green!",
+  "next": "Give him a minute. He'll be pointing too.",
+  "lines": [
+   "t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "round": "r4 'Bro's' clarity"
+ },
+ {
+  "folder": "ch_t01b",
+  "take": "t3",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughing] Bro's pointing at nothing!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8803,
+  "prev": "Signal... green!",
+  "next": "Give him a minute. He'll be pointing too.",
+  "lines": [
+   "t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "round": "r4 'Bro's' clarity"
+ },
+ {
+  "folder": "ch_t01b",
+  "take": "t4",
+  "voice": "3lqN2QjRfNc5KxYJLLOR",
+  "model": "eleven_v4",
+  "text": "[laughs] Bro's pointing at nothing!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8804,
+  "prev": "Signal... green!",
+  "next": "Give him a minute. He'll be pointing too.",
+  "lines": [
+   "t01"
+  ],
+  "role": "T",
+  "candidate": "flackoo",
+  "round": "r4 'Bro's' clarity"
+ }
+]

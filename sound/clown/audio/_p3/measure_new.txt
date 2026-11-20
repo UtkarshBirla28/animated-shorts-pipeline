@@ -1,0 +1,20 @@
+pigeon_b_1         1.20 s  peak   -3.0 dBFS  clipped 0  silent   76 %  events  3  <90 Hz  -33.4  0.5-6k  -8.3  2-5k  -15.1 dB  top  16114 Hz  centroid   689 Hz
+pigeon_b_2         1.20 s  peak   -2.4 dBFS  clipped 0  silent   72 %  events  5  <90 Hz  -10.2  0.5-6k  -1.5  2-5k  -17.3 dB  top  15329 Hz  centroid   879 Hz
+pigeon_b_3         1.20 s  peak   -3.1 dBFS  clipped 0  silent   87 %  events  3  <90 Hz  -24.1  0.5-6k  -2.7  2-5k  -16.2 dB  top  11780 Hz  centroid   934 Hz
+pigeon_settle_1    1.00 s  peak   -6.1 dBFS  clipped 0  silent   59 %  events  3  <90 Hz   -0.2  0.5-6k -25.0  2-5k  -42.7 dB  top   1007 Hz  centroid    36 Hz
+sneaker_steps_1    4.00 s  peak  -26.2 dBFS  clipped 0  silent   63 %  events 12  <90 Hz  -18.6  0.5-6k  -5.8  2-5k  -11.0 dB  top  16556 Hz  centroid  1002 Hz
+heel_scuff_1       2.00 s  peak   -5.2 dBFS  clipped 0  silent   70 %  events  5  <90 Hz  -33.5  0.5-6k  -1.8  2-5k  -11.3 dB  top  16607 Hz  centroid  1685 Hz
+confetti_1         1.48 s  peak   -1.4 dBFS  clipped 0  silent   37 %  events  2  <90 Hz  -21.1  0.5-6k  -4.8  2-5k   -7.6 dB  top  16733 Hz  centroid  7712 Hz
+confetti_2         1.48 s  peak   -1.3 dBFS  clipped 0  silent   42 %  events  5  <90 Hz  -24.1  0.5-6k  -4.3  2-5k   -6.3 dB  top  16708 Hz  centroid  7603 Hz
+juggle_1           2.48 s  peak  -20.2 dBFS  clipped 0  silent   44 %  events  8  <90 Hz   -0.2  0.5-6k -32.3  2-5k  -47.3 dB  top    394 Hz  centroid    33 Hz
+paper_crumple_1    1.00 s  peak   -7.4 dBFS  clipped 0  silent   39 %  events  4  <90 Hz  -25.4  0.5-6k  -0.8  2-5k   -2.5 dB  top  15743 Hz  centroid  4058 Hz
+idea_ping_1        0.80 s  peak  -44.9 dBFS  clipped 0  silent   63 %  events  2  <90 Hz  -19.0  0.5-6k -14.4  2-5k  -18.9 dB  top  16660 Hz  centroid  8199 Hz
+
+pigeon_b       3 takes: 0.41 0.45 0.39
+pigeon_settle  1 takes: 0.56
+sneaker        7 takes: 0.35 0.42 0.17 0.33 0.17 0.32 0.34
+scuff          4 takes: 0.40 0.42 0.15 0.35
+confetti       2 takes: 1.18 1.29
+juggle_pat     7 takes: 0.29 0.09 0.14 0.33 0.17 0.16 0.27
+paper_crumple  1 takes: 0.97
+idea_ping      1 takes: 0.80

@@ -1,0 +1,287 @@
+[
+ {
+  "folder": "v4_go",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Go.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13001,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Go.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13002,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Go.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13003,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Go.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13004,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t5",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Go.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13005,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t6",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Go.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13006,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t7",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Go.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13007,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t8",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Go.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13008,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t9",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Go!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13009,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t10",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Go!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13010,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t11",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[firmly] Go!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13011,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_go",
+  "take": "t12",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[firmly] Go!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13012,
+  "prev": "Tap your foot on every green light. Only green.",
+  "next": "Did you tap? She did.",
+  "lines": [
+   "go"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "script": "v4",
+  "round": "go"
+ },
+ {
+  "folder": "v4_C",
+  "take": "t1",
+  "voice": "UznIBkKIQe3ZG2tGydre",
+  "model": "eleven_v4",
+  "text": "[shouting] Clear!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13101,
+  "prev": "So he shouted every signal to his coal man, who checked it and shouted back.",
+  "next": "His boss rode along, loved it, and made it a rule.",
+  "lines": [
+   "C"
+  ],
+  "role": "C",
+  "candidate": "taro",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_C",
+  "take": "t2",
+  "voice": "UznIBkKIQe3ZG2tGydre",
+  "model": "eleven_v4",
+  "text": "[cheerfully] Clear!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13102,
+  "prev": "So he shouted every signal to his coal man, who checked it and shouted back.",
+  "next": "His boss rode along, loved it, and made it a rule.",
+  "lines": [
+   "C"
+  ],
+  "role": "C",
+  "candidate": "taro",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_C",
+  "take": "t3",
+  "voice": "UznIBkKIQe3ZG2tGydre",
+  "model": "eleven_v4",
+  "text": "[shouting] Clear!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13103,
+  "prev": "So he shouted every signal to his coal man, who checked it and shouted back.",
+  "next": "His boss rode along, loved it, and made it a rule.",
+  "lines": [
+   "C"
+  ],
+  "role": "C",
+  "candidate": "taro",
+  "script": "v4",
+  "round": "shout"
+ }
+]

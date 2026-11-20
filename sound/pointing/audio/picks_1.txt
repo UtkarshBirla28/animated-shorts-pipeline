@@ -1,0 +1,37 @@
+341202|train_depart_emu|EMU train departing: brake hiss + motor whine (the hook, both departures, the loop seam)
+348851|train_depart_tube|electric train accelerating out of a station (alternate / layer)
+450131|ride_chuo|inside a JR East Chuo Line train, Tokyo (car + cab bed; speech-free stretches only)
+315900|ride_hibiya|inside a Tokyo Hibiya line train, subdued ambience (car bed; speech-free stretches only)
+341200|door_close_a|train door closing with air hiss
+275443|door_close_pneu|pneumatic train door shutting
+234304|slidingdoor_close|sliding door closing
+209969|door_open_close|train door opening then closing (door rumble)
+388568|air_brake|train air brake release
+480813|wheels_clack|train wheels clacking over rail joints
+364902|suitcase_tokyo|a rolling suitcase and footsteps in a Tokyo station
+423702|suitcase_roll_5|rolling suitcase
+423703|suitcase_roll_4|rolling suitcase
+423708|suitcase_roll_7|rolling suitcase
+479346|suitcase_handling|suitcase handling and wheeling (handle, pats, set-downs)
+859087|luggage_comb_plate|luggage wheels over a metal plate (the door threshold)
+361470|crow_caw_1|one crow caw
+813115|crow_caw_2|one crow caw
+437345|crows_cawing|crows cawing (far crows over the platform)
+737994|sparrows|sparrows chirping in a city
+459964|steps_concrete|footsteps on concrete
+789609|steps_group|three people walking on concrete
+235713|sneaker_steps|squeaky sneakers on tile
+88502|sneaker_squeak|sneaker squeak rubber
+634880|walla_ext|generic exterior walla (indistinct people)
+766658|murmuring|indistinct murmuring (the packed car)
+730438|vending_hum|vending machine hum
+639754|marble_impact|a marble impact
+399006|glass_beads|glass beads dropping
+708193|beads_glass_bowl|beads dropping into a glass bowl
+545527|button_clicks|plastic buttons clicking (the lab box)
+495390|cloth_whoosh_seq|jacket whoosh sequence (the glove / arm snaps)
+391448|shirt_whoosh|shirt whooshes (arm moves)
+850704|fabric_soft|soft fabric rustle (cloth moves, the cap)
+342539|plastic_thud|plastic thud (the suitcase bumping the wall)
+851249|plastic_bonks|small plastic bonks (pats on the suitcase shell)
+536187|leather_creak|leather creak (hand straps)

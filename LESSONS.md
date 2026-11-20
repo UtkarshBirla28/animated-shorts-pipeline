@@ -135,3 +135,63 @@ Each lesson is a real failure from the antitheft build, its cause, and the rule 
 
 45. Pace without re-takes: if the read feels slow, SHORTEN (never remove) the pauses with `tools/tighten_pauses.py <voice dir> <new dir> --factor 0.65 --floor 0.22 "a|b|0.5"` (keep the dramatic beats near 0.45-0.52 s), install it with gen_words_ts --force -> export_timeline -> voice_warp --identity -> export_timeline, and map any literal frames in picture_events.json. Salad oil went 92.0 -> 88.6 s and the auditor found no dead air left.
 46. One light whole-video audit (one agent, about 12 images) is a cheap final check when the token budget is low; the full 10-agent audit is for the improvement loop.
+
+## From the clown short (2026-11-17/18, `clown`): cut 1 was REJECTED by the owner, then rebuilt
+47. **Story first; a quiz is only a hook.** Cut 1 was designed as a viewer test and the test's fairness rules drove
+    everything (one locked 21 s shot, the story narrated WHILE the viewer counted). The owner: "looks like an image",
+    "no life", "dialogues are so bad", "I would swipe". The rebuild: a fast quiz hook (~9 s), THEN the story in the hit's
+    shape (strange claim, funny origin, real people talking in their own voices, a mystery, "You see,", escalating
+    reveals, the twist as the last line). Never narrate story while the viewer must do a task.
+48. **The camera moves in every frame, and it is MEASURED.** `studio/out/clown/v2/measure_cam.mjs` evaluates the camera
+    of every film frame and reports px/frame per shot; no frame under 0.5 px/f except a deliberate freeze. A new framing
+    about every 2.5 s; the first shot rides WITH the main character from frame 0.
+49. **Life is a rule, not a polish pass:** at least three moving background things per shot (crowd kit walkers, pigeons
+    that flush when someone passes, a dog, a skater, a frisbee), the focal character 35-60 % of the frame height, no
+    bare-ground lower half (low lens + near props / pigeons / shadows).
+50. **Compare cut 1 with the earlier finals side by side BEFORE showing it** (frames of saladoil / antitheft next to
+    ours). Six audits scored cut 1 at 4.7-6; the owner's verdict was harsher than any of them. Audit the IDEA (static?
+    story or quiz? would I swipe?) before auditing the polish.
+51. **Characters who speak get their own voices and moving mouths.** Narrator: James on eleven_v4 with performance tags,
+    best of 4 takes per chunk with neighbouring lines as context. Character lines: cast 3 candidates per role, pick by
+    measurement (clarity, pitch / timbre distance from the others, no lo-fi), 4+ takes each. `phrases.json` carries a
+    `speaker` field; `gen_words_ts.py` passes it through; the talk cycle runs only on the speaker's own line.
+52. **Rig heights vs props.** The cards' real head heights are 1.45 / 1.52 / 1.57 m (small / standard / tall), not the
+    1.66 m some plans assume. A "duck under the branch" only reads if the standing head would hit it: use the tall build
+    or a 12-15 % scale-up for the ducker, and check on stills that the head top passes below the edge.
+53. **Real effects, data-driven cues.** Bare synthesized effects scored 4.5 / 10. Build a library (ElevenLabs sound
+    effects cost ~10 credits per second; CC0 recordings from the sound-effects skill), measure every take (reject silent,
+    clipped or word-like ones), and let each animator write `sound_cues.json` ([{frame, name, what, pan, near}]) from the
+    staging code; `sfx.py` maps names to samples at mix time and reports anything unmapped. A sync-direction check
+    fails the mix if a cue is more than 1 f early or 2 f late.
+54. **Misdirection is allowed, pointing is not.** In a "did you notice" film nothing may point at the hidden thing, but
+    sounds and gags on the OTHER side of the frame are fair and keep the scene alive; do not silence a visible honk.
+55. **Two Claude sessions on one 16 GB PC take turns:** `studio/scripts/ram_token.sh` (`ram_take` / `ram_release`, token
+    `C:\Users\utkar\Desktop\RAM_TOKEN.txt`), agreed with the other session by message; light work continues without the
+    token. While waiting, do the light work the project still needs.
+56. **Network drops kill agents, not work.** Resume a dead agent with SendMessage (it keeps its transcript); tell agents
+    to save often; keep `RESUME_HERE.md` current. Subagents cannot write report files named REPORT.md: the hand-back
+    message is the report.
+57. **A killed script chain can keep running** and render without the lock; kill stray `render_chunks.sh` / `render.mjs`
+    processes after stopping an agent, and delete chunk files without a `.done` marker.
+58. **Final renders use `FINAL=1`** (PNG frames, bt709, crf 15, x264 slow): the default sends every frame through JPEG
+    quality 80 before encoding.
+59. **Never hard-code frame ranges in render scripts.** The preview script still had preview 2's chunk list
+    (0-2116) after the voice made the film 2246 frames, so the ending was silently not rendered. Derive the chunks
+    from `timeline.json`'s `total` (run_p2.sh / run_final.sh now do), and check the rendered frame count against it.
+60. **Never edit a shell script while it is running:** bash reads it as it goes, so an edit mid-run corrupts the
+    lines it has not reached yet (the preview's mux step broke: "aac: command not found"). Edit, then re-run.
+
+## From the Ricks Clips study (2026-11-19): read before writing or designing the next short
+61. **Script craft** (`C:\Users\utkar\research_notes\ricksclips\SCRIPT_REPORT.md` section 5): line 1 = a strange action
+    you can picture with the reason hidden; a hero with a want and a risk; a DOUBTER proven wrong; the answer held to
+    60-75 %; every step "So..." (a choice) or "But..." (a setback); at most ~4 spoken numbers, no names / years in the
+    voice; one gauge; one loop line; a short physical "why" said once; an ironic last picture that pays off a planted
+    detail, ending on the last word. Use the 15-rule checklist before voicing. Keep every fact true.
+62. **Look** (`...\ricksclips\LOOK_REPORT.md`): his new look = cartoon cards inside a game-engine-lit world. Our gaps:
+    camera 2-4x too slow, too little self-moving detail, toon-painted materials, ink on the world, light you cannot
+    see, too much depth-of-field blur, too few locations. Run the first-week pilot (camera presets, HDRI, PBR world
+    textures, soft shadows + AO, cards in the light, grade) on a 10-s test shot before building the next film.
+63. **Disk guard (2026-11-19).** Every Remotion `bundle()` copies all of `studio/public` (~1 GB with the kit) into
+    `_remotion-tmp`; 2,500 leftover bundles (65 GB) filled C: to 0 bytes mid-day, truncating files. `stills.mjs`,
+    `render.mjs` and `kit_render.mjs` now delete their bundle on exit and sweep bundles older than 12 h at start. Any
+    new script that calls `bundle()` must do the same. Check `df -h /c` before long renders.

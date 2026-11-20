@@ -1,0 +1,3682 @@
+{
+ "_doc": "WORKED EXAMPLE of the v3 DETAIL BIBLE (format: briefs/v3/BIBLE_TEMPLATE.json). Story: SCRIPT_REPORT 5.6 Script 1, as linted in briefs/v3/award/SCRIPT.md (PASS). Times are the linter's estimates (est_t0) until the voice is locked.",
+ "schema": "v3-bible/1",
+ "slug": "award",
+ "title": "The Award That Made Kids Miss School",
+ "status": {
+  "script": "linted",
+  "voice": "none",
+  "storyboard": "none",
+  "gate1": false,
+  "gate2": false
+ },
+ "script": {
+  "path": "briefs/v3/award/SCRIPT.md",
+  "target_s": 70,
+  "lint": "PASS"
+ },
+ "voice": {
+  "narrator": "James - Conversational, Energetic, Punchy (eleven_v4, QhpsGjDKZmM9qRYdMhBD)",
+  "words_json": "sound/award/voice/words.json",
+  "locked": false,
+  "total_frames": null,
+  "tail_frames": 20,
+  "characters": [
+   {
+    "speaker": "MOM",
+    "voice": "cast 3 warm adult female candidates, 4+ takes, pick by clarity + timbre distance from James",
+    "lines": 1
+   }
+  ]
+ },
+ "look": {
+  "default_rig": "golden",
+  "notes": "warm and bright everywhere, even February: overcastWarm, never grey-blue; mean chroma ~24; ink only on the cards; story colours = the three envelopes (grey / blue / yellow) and the gold certificate"
+ },
+ "locations_reason": "",
+ "cast": [
+  {
+   "id": "kid",
+   "role": "YOU: the perfect-attendance kid (about 10), the hero",
+   "build": "small",
+   "body_colour": "#f2b632",
+   "signature": "yellow backpack + red beanie",
+   "card": "cards/card",
+   "speaks": false,
+   "expressions": [
+    "bright",
+    "proud",
+    "smug",
+    "sleepy",
+    "blank"
+   ]
+  },
+  {
+   "id": "mom",
+   "role": "Mom, proud, the doubter (she is SURE it works)",
+   "build": "standard",
+   "body_colour": "#5c8f5a",
+   "signature": "green cardigan + a coffee mug",
+   "card": "cards/card",
+   "speaks": true,
+   "expressions": [
+    "proud",
+    "certain",
+    "warm"
+   ]
+  },
+  {
+   "id": "clerk",
+   "role": "the researcher in the mail room (generic, never a likeness)",
+   "build": "tall",
+   "body_colour": "#7b7f8c",
+   "signature": "grey vest + rubber stamp + pencil behind the ear",
+   "card": "cards/card",
+   "speaks": false,
+   "expressions": [
+    "focused",
+    "sly"
+   ]
+  },
+  {
+   "id": "promise_kid",
+   "role": "the promise-letter kid",
+   "build": "small",
+   "body_colour": "#3d6fb6",
+   "signature": "blue puffer jacket",
+   "card": "cards/card",
+   "speaks": false,
+   "expressions": [
+    "neutral",
+    "shrug"
+   ]
+  },
+  {
+   "id": "teachers",
+   "role": "about 20 teachers (crowd kit)",
+   "build": "standard",
+   "body_colour": "#9a8d7a",
+   "signature": "lanyards",
+   "card": "cards/crowd",
+   "speaks": false,
+   "expressions": [
+    "doubtful",
+    "smiling"
+   ]
+  },
+  {
+   "id": "kids_crowd",
+   "role": "schoolkids arriving / at desks (crowd kit)",
+   "build": "small",
+   "body_colour": "#c9a27e",
+   "signature": "backpacks",
+   "card": "cards/crowd",
+   "speaks": false,
+   "expressions": [
+    "chatty",
+    "sleepy"
+   ]
+  }
+ ],
+ "sets": [
+  {
+   "id": "kitchen",
+   "place": "a warm family kitchen, early morning, sun through the window over the sink",
+   "kind": "interior",
+   "kit_base": "surfaces/interior",
+   "ground": {
+    "surface": "floor_tiles",
+    "meso": "tile joints with depth, slight bevel",
+    "wear": [
+     "scuffs by the fridge",
+     "a crumb trail"
+    ],
+    "scatter": [
+     "crumbs",
+     "a dropped magnet letter"
+    ]
+   },
+   "surfaces": [
+    {
+     "where": "walls",
+     "surface": "painted_wall",
+     "meso": "skirting board + window frame insets",
+     "wear": [
+      "grease mark above the hob"
+     ]
+    },
+    {
+     "where": "counter",
+     "surface": "marble",
+     "meso": "bevelled edge",
+     "wear": [
+      "a mug ring"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "id": "fridge",
+     "kit": "props/fridge_retro",
+     "hero": true,
+     "where": "back wall, right of the window",
+     "new": true
+    },
+    {
+     "id": "alarm_clock",
+     "kit": "props/alarm_clock",
+     "hero": true,
+     "where": "counter, beside the fridge",
+     "new": true
+    },
+    {
+     "id": "certificate",
+     "kit": "local/certificate",
+     "hero": true,
+     "where": "fridge door, eye height",
+     "local": true
+    },
+    {
+     "id": "kettle",
+     "kit": "props/kettle",
+     "where": "counter",
+     "new": true
+    },
+    {
+     "id": "fruit_bowl",
+     "kit": "props/fruit_bowl",
+     "where": "table",
+     "new": true
+    },
+    {
+     "id": "chairs",
+     "kit": "props/wooden_chair",
+     "where": "table",
+     "new": true
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/potted_plant",
+     "count": 2,
+     "where": "window sill"
+    }
+   ],
+   "practicals": [
+    {
+     "kind": "spot",
+     "what": "pendant lamp over the table (warm, off at the start, on in s17)",
+     "kelvin": 2700,
+     "shadow": true
+    }
+   ],
+   "ambience": "kitchen morning: fridge hum, distant birds outside, a clock tick",
+   "est_build_s": 25
+  },
+  {
+   "id": "home_hall",
+   "place": "the front hall in January: a door with a brass letterbox, a doormat, wet boots, snow outside the door glass",
+   "kind": "interior",
+   "kit_base": "surfaces/interior",
+   "ground": {
+    "surface": "wood_floor",
+    "meso": "boards with gaps",
+    "wear": [
+     "wet footprints",
+     "grit by the mat"
+    ],
+    "scatter": [
+     "melting snow crumbs",
+     "a flyer"
+    ]
+   },
+   "surfaces": [
+    {
+     "where": "walls",
+     "surface": "plaster",
+     "meso": "dado rail + door frame",
+     "wear": [
+      "scuffed skirting"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "id": "front_door",
+     "kit": "props/front_door_letterbox",
+     "hero": true,
+     "where": "end wall",
+     "new": true
+    },
+    {
+     "id": "doormat",
+     "kit": "props/doormat",
+     "where": "inside the door",
+     "new": true
+    },
+    {
+     "id": "boots",
+     "kit": "props/boots_pair",
+     "where": "beside the mat",
+     "new": true
+    },
+    {
+     "id": "coat_hooks",
+     "kit": "props/coat_hooks",
+     "where": "left wall",
+     "new": true
+    }
+   ],
+   "vegetation": [],
+   "practicals": [
+    {
+     "kind": "point",
+     "what": "hall ceiling lamp",
+     "kelvin": 2900,
+     "shadow": false
+    }
+   ],
+   "ambience": "hall: muffled street outside, a radiator tick",
+   "est_build_s": 20
+  },
+  {
+   "id": "autumn_street",
+   "place": "a tree-lined street to school in autumn, low gold sun, leaves falling",
+   "kind": "exterior",
+   "kit_base": "surfaces/facade",
+   "ground": {
+    "surface": "concrete_sidewalk",
+    "meso": "slab joints + bevelled kerb",
+    "wear": [
+     "damp patches",
+     "moss in joints"
+    ],
+    "scatter": [
+     "leaf_litter (instanced)",
+     "conkers",
+     "a lost glove"
+    ]
+   },
+   "surfaces": [
+    {
+     "where": "road",
+     "surface": "asphalt",
+     "meso": "kerb bevel, a drain grate",
+     "wear": [
+      "puddles",
+      "tyre marks"
+     ]
+    },
+    {
+     "where": "house fronts",
+     "surface": "brick_wall",
+     "meso": "window insets, sills, gutters",
+     "wear": [
+      "dirt at the wall bottoms"
+     ]
+    },
+    {
+     "where": "verges",
+     "surface": "lawn_soil",
+     "meso": "grass blades near the lens",
+     "wear": [
+      "leaf drifts"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "id": "school_gate",
+     "kit": "props/iron_gate",
+     "where": "end of the street",
+     "new": true
+    },
+    {
+     "id": "tally_board",
+     "kit": "local/tally_board",
+     "hero": true,
+     "where": "on the school fence: 'DAYS: 20 / 20'",
+     "local": true
+    },
+    {
+     "id": "bins",
+     "kit": "props/wheelie_bin",
+     "where": "kerb",
+     "new": true
+    },
+    {
+     "id": "lamp_posts",
+     "kit": "props/street_lamp_01",
+     "where": "every 12 m"
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/tree_small_02",
+     "count": 6,
+     "where": "both kerbs, autumn tint"
+    },
+    {
+     "kit": "nature/hedge",
+     "count": 3,
+     "where": "front gardens"
+    },
+    {
+     "kit": "nature/grass",
+     "count": 1,
+     "where": "verges near the lens"
+    }
+   ],
+   "practicals": [],
+   "ambience": "street autumn: wind in leaves, distant traffic, kids far off",
+   "est_build_s": 30
+  },
+  {
+   "id": "mail_room",
+   "place": "a school-district mail room: a long sorting table, thousands of envelopes in three colours",
+   "kind": "interior",
+   "kit_base": "surfaces/interior",
+   "ground": {
+    "surface": "concrete_floor",
+    "meso": "expansion joints",
+    "wear": [
+     "trolley wheel marks"
+    ],
+    "scatter": [
+     "a few dropped envelopes",
+     "rubber bands"
+    ]
+   },
+   "surfaces": [
+    {
+     "where": "walls",
+     "surface": "painted_brick",
+     "meso": "mortar depth, a pipe run",
+     "wear": [
+      "chipped paint at trolley height"
+     ]
+    },
+    {
+     "where": "table top",
+     "surface": "planks",
+     "meso": "bevelled board edges",
+     "wear": [
+      "ink stains"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "id": "sort_table",
+     "kit": "props/work_table",
+     "hero": true,
+     "where": "centre",
+     "new": true
+    },
+    {
+     "id": "envelope_piles",
+     "kit": "local/envelope_piles",
+     "hero": true,
+     "where": "on the table: grey / blue / yellow",
+     "local": true
+    },
+    {
+     "id": "trays",
+     "kit": "local/mail_trays",
+     "where": "table end: NO LETTER / PROMISE / CERTIFICATE",
+     "local": true
+    },
+    {
+     "id": "shelves",
+     "kit": "props/metal_shelf",
+     "where": "back wall",
+     "new": true
+    },
+    {
+     "id": "desk_fan",
+     "kit": "props/desk_fan",
+     "where": "shelf",
+     "new": true
+    },
+    {
+     "id": "count_board",
+     "kit": "local/whiteboard",
+     "where": "left wall: '15,000 STUDENTS'",
+     "local": true
+    }
+   ],
+   "vegetation": [],
+   "practicals": [
+    {
+     "kind": "area",
+     "what": "two long ceiling lamps (warm-white, not green fluorescent)",
+     "kelvin": 3500,
+     "shadow": false
+    },
+    {
+     "kind": "spot",
+     "what": "desk lamp at the stamping station",
+     "kelvin": 2800,
+     "shadow": true
+    }
+   ],
+   "ambience": "mail room: paper shuffles, a desk fan, a franking thunk now and then",
+   "est_build_s": 25
+  },
+  {
+   "id": "staff_room",
+   "place": "a cosy school staff room: mugs, a coffee machine, a whiteboard, about 20 teachers",
+   "kind": "interior",
+   "kit_base": "surfaces/interior",
+   "ground": {
+    "surface": "carpet",
+    "meso": "carpet pile normal + a worn path",
+    "wear": [
+     "coffee stain"
+    ],
+    "scatter": [
+     "a dropped pen"
+    ]
+   },
+   "surfaces": [
+    {
+     "where": "walls",
+     "surface": "painted_wall",
+     "meso": "notice-board frames, skirting",
+     "wear": [
+      "pin holes"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "id": "whiteboard",
+     "kit": "local/whiteboard",
+     "hero": true,
+     "where": "front: 'WILL IT BACKFIRE?'",
+     "local": true
+    },
+    {
+     "id": "coffee_machine",
+     "kit": "props/coffee_machine",
+     "where": "side counter",
+     "new": true
+    },
+    {
+     "id": "mugs",
+     "kit": "props/mug",
+     "where": "tables",
+     "new": true
+    },
+    {
+     "id": "sofas",
+     "kit": "props/sofa",
+     "where": "back",
+     "new": true
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/potted_plant",
+     "count": 1,
+     "where": "corner"
+    }
+   ],
+   "practicals": [
+    {
+     "kind": "point",
+     "what": "two warm ceiling lamps",
+     "kelvin": 3000,
+     "shadow": false
+    }
+   ],
+   "ambience": "staff room: murmur, a spoon on a mug, the coffee machine gurgle",
+   "est_build_s": 25
+  },
+  {
+   "id": "school_gate",
+   "place": "the school gate on a February morning: frost, puddles, kids arriving, a big calendar board",
+   "kind": "exterior",
+   "kit_base": "surfaces/facade",
+   "ground": {
+    "surface": "brick_pavers",
+    "meso": "paver joints with depth",
+    "wear": [
+     "puddles",
+     "frost in the joints"
+    ],
+    "scatter": [
+     "leaf_litter (sparse, wet)",
+     "gravel"
+    ]
+   },
+   "surfaces": [
+    {
+     "where": "school wall",
+     "surface": "brick_wall",
+     "meso": "window insets, sills, a roof edge",
+     "wear": [
+      "damp at the wall bottoms"
+     ]
+    },
+    {
+     "where": "gate",
+     "surface": "painted_metal",
+     "meso": "bar bevels",
+     "wear": [
+      "rust spots"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "id": "calendar_board",
+     "kit": "local/calendar_board",
+     "hero": true,
+     "where": "beside the gate: 'FEBRUARY'",
+     "local": true
+    },
+    {
+     "id": "gate",
+     "kit": "props/iron_gate",
+     "where": "centre",
+     "new": true
+    },
+    {
+     "id": "bike_rack",
+     "kit": "props/bike_rack",
+     "where": "left",
+     "new": true
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/tree_small_02",
+     "count": 2,
+     "where": "bare winter branches behind the wall"
+    },
+    {
+     "kit": "nature/hedge",
+     "count": 1,
+     "where": "along the wall"
+    }
+   ],
+   "practicals": [],
+   "ambience": "school gate: kids chatter, a distant bus, crows",
+   "est_build_s": 30
+  },
+  {
+   "id": "classroom",
+   "place": "a sunny classroom: rows of desks, a big wall calendar, a chalkboard, morning shafts through tall windows",
+   "kind": "interior",
+   "kit_base": "surfaces/interior",
+   "ground": {
+    "surface": "wood_floor",
+    "meso": "boards with gaps",
+    "wear": [
+     "chair scuffs"
+    ],
+    "scatter": [
+     "paper scraps",
+     "a pencil"
+    ]
+   },
+   "surfaces": [
+    {
+     "where": "walls",
+     "surface": "plaster",
+     "meso": "window insets with deep sills, skirting",
+     "wear": [
+      "sticky-tape marks"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "id": "desks",
+     "kit": "props/school_desk",
+     "hero": false,
+     "where": "4 rows",
+     "new": true
+    },
+    {
+     "id": "wall_calendar",
+     "kit": "local/wall_calendar",
+     "hero": true,
+     "where": "side wall: FEBRUARY, rows grey / blue / yellow",
+     "local": true
+    },
+    {
+     "id": "chalkboard",
+     "kit": "local/chalkboard",
+     "where": "front wall",
+     "local": true
+    },
+    {
+     "id": "wall_clock",
+     "kit": "props/wall_clock",
+     "where": "above the board",
+     "new": true
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/potted_plant",
+     "count": 3,
+     "where": "window sills"
+    }
+   ],
+   "practicals": [
+    {
+     "kind": "area",
+     "what": "ceiling lamps (on, dim against the sun shafts)",
+     "kelvin": 3500,
+     "shadow": false
+    }
+   ],
+   "ambience": "classroom: chairs, pencils, a clock tick, muffled playground",
+   "est_build_s": 25
+  },
+  {
+   "id": "bedroom",
+   "place": "the kid's bedroom at dawn: blinds throwing bars of light, the alarm clock, posters",
+   "kind": "interior",
+   "kit_base": "surfaces/interior",
+   "ground": {
+    "surface": "carpet",
+    "meso": "pile normal",
+    "wear": [
+     "a sock",
+     "a book face down"
+    ],
+    "scatter": [
+     "lego bricks"
+    ]
+   },
+   "surfaces": [
+    {
+     "where": "walls",
+     "surface": "painted_wall",
+     "meso": "window frame + blinds slats with depth",
+     "wear": [
+      "poster corners curling"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "id": "bed",
+     "kit": "props/bed_single",
+     "hero": true,
+     "where": "under the window",
+     "new": true
+    },
+    {
+     "id": "alarm_clock_bed",
+     "kit": "props/alarm_clock",
+     "hero": true,
+     "where": "bedside table",
+     "new": true
+    },
+    {
+     "id": "blinds",
+     "kit": "props/window_blinds",
+     "where": "window",
+     "new": true
+    },
+    {
+     "id": "backpack",
+     "kit": "local/yellow_backpack",
+     "where": "on the chair",
+     "local": true
+    }
+   ],
+   "vegetation": [],
+   "practicals": [
+    {
+     "kind": "point",
+     "what": "bedside lamp (off; a warm glow only in s19 if needed)",
+     "kelvin": 2700,
+     "shadow": false
+    }
+   ],
+   "ambience": "bedroom dawn: birds outside, soft heating hum",
+   "est_build_s": 20
+  }
+ ],
+ "shots": [
+  {
+   "id": "s01",
+   "beat": "Hook",
+   "line": "Schools mailed kids an award for a perfect month of school.",
+   "starts_on": "Schools",
+   "est_t0": 0,
+   "set": "kitchen",
+   "location": "the fridge wall",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "FRAME 0 = thumbnail: the fridge door with the gold certificate under a magnet, the alarm clock on the counter beside it, morning shaft from the window",
+     "subject": "certificate",
+     "subject_height_pct": 30,
+     "insert": true
+    },
+    {
+     "at_s": 2.3,
+     "desc": "the push ends close on the certificate: PERFECT ATTENDANCE readable, the clock edge in frame",
+     "subject": "certificate",
+     "insert": true
+    }
+   ],
+   "camera": {
+    "preset": "pushIn",
+    "params": {
+     "subject": "certificate",
+     "fov": 55,
+     "height_m": 1.3,
+     "dist_m": [
+      2.6,
+      1.1
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 0.8
+   },
+   "light": {
+    "rig": "morning",
+    "rig_opts": {},
+    "notes": "a warm sun shaft across the fridge door; dust motes in it"
+   },
+   "surfaces_near": [
+    {
+     "surface": "marble",
+     "where": "counter edge in the lower frame",
+     "meso": "bevelled edge",
+     "wear": [
+      "mug ring"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/fridge_retro",
+     "near_lens": true
+    },
+    {
+     "kit": "props/alarm_clock",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/potted_plant",
+     "where": "window sill, out of focus left"
+    }
+   ],
+   "life": [
+    {
+     "what": "dust motes drifting in the sun shaft",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "steam curling from the kettle spout",
+     "kit": "fx/smoke"
+    },
+    {
+     "what": "a fridge magnet letter swings after the fridge hum shudder",
+     "kit": "local/magnet_swing"
+    },
+    {
+     "what": "the alarm clock's second hand ticks",
+     "kit": "local/clock_hands",
+     "audible": true
+    }
+   ],
+   "fx": [
+    {
+     "kit": "fx/dust",
+     "what": "motes in the shaft",
+     "silent": true
+    }
+   ],
+   "acting": [],
+   "boards": [
+    {
+     "text": "PERFECT ATTENDANCE",
+     "on": "award",
+     "hold_s": 2.5,
+     "caps_px": 56
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "clock tick (soft, keeps going)",
+     "for": "life:3",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "kitchen morning bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    },
+    {
+     "event": "kettle hiss low",
+     "for": "life:1",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 0,
+    "still": "studio/out/award/stills/draft/f15.jpg"
+   }
+  },
+  {
+   "id": "s02",
+   "beat": "Hook",
+   "line": "The next month, they missed more.",
+   "starts_on": "The",
+   "est_t0": 4.4,
+   "set": "classroom",
+   "location": "the back of the class, the empty desk",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "a row of full desks, one EMPTY desk in the middle; behind it the wall calendar with red gaps",
+     "subject": "desks",
+     "subject_height_pct": 40
+    }
+   ],
+   "camera": {
+    "preset": "pushIn",
+    "params": {
+     "subject": "desks",
+     "fov": 60,
+     "height_m": 1,
+     "dist_m": [
+      4,
+      2.6
+     ],
+     "ease": "out"
+    },
+    "speed_pct_f": 0.7
+   },
+   "light": {
+    "rig": "morning",
+    "notes": "shafts through the tall windows across the desks"
+   },
+   "surfaces_near": [
+    {
+     "surface": "wood_floor",
+     "where": "floor in the lower third",
+     "meso": "board gaps",
+     "wear": [
+      "chair scuffs"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/school_desk",
+     "near_lens": true
+    },
+    {
+     "kit": "local/wall_calendar"
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "kids at the full desks fidget, one yawns",
+     "kit": "cards/crowd"
+    },
+    {
+     "what": "dust motes in the window shafts",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "a paper corner on the notice board lifts in the draught",
+     "kit": "local/paper_flutter"
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "kids_crowd",
+     "on": "missed",
+     "action": "a kid glances at the empty chair, shrugs",
+     "expression": "puzzled",
+     "frames_min": 14
+    }
+   ],
+   "boards": [],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "chair creak + pencil taps",
+     "for": "acting:0",
+     "on": "missed",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "classroom bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1.2,
+    "still": null
+   }
+  },
+  {
+   "id": "s03",
+   "beat": "Stakes",
+   "line": "Imagine you're one of them.",
+   "starts_on": "Imagine",
+   "est_t0": 6.9,
+   "set": "autumn_street",
+   "location": "mid-street under the trees",
+   "transition_in": "dissolve:10",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "the kid walks toward the lens, beanie and yellow backpack, leaves falling, gold back-light",
+     "subject": "kid",
+     "subject_height_pct": 40
+    }
+   ],
+   "camera": {
+    "preset": "lowWideTrack",
+    "params": {
+     "subject": "kid",
+     "fov": 70,
+     "height_m": 0.5,
+     "dist_m": [
+      3.4,
+      2.4
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 0.9
+   },
+   "light": {
+    "rig": "golden",
+    "notes": "dapple from the crowns slides over the kid; warm rim"
+   },
+   "surfaces_near": [
+    {
+     "surface": "concrete_sidewalk",
+     "where": "the path under the lens",
+     "meso": "slab joints",
+     "wear": [
+      "moss in joints"
+     ]
+    },
+    {
+     "surface": "leaf_litter",
+     "where": "scatter along the kerb",
+     "meso": "instanced leaves",
+     "wear": []
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/street_lamp_01"
+    },
+    {
+     "kit": "props/wheelie_bin"
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/tree_small_02",
+     "where": "both sides, crowns overhead"
+    },
+    {
+     "kit": "nature/grass",
+     "where": "verge in the near left"
+    }
+   ],
+   "life": [
+    {
+     "what": "leaves falling and blowing across the path",
+     "kit": "fx/blowing_leaves",
+     "audible": true
+    },
+    {
+     "what": "a cyclist crosses far behind",
+     "kit": "cards/crowd"
+    },
+    {
+     "what": "crowns sway in the wind (shadows move)",
+     "kit": "nature/wind"
+    },
+    {
+     "what": "two birds hop and flutter off as the kid passes",
+     "kit": "fx/birds",
+     "audible": true
+    }
+   ],
+   "fx": [
+    {
+     "kit": "fx/footstep_puff",
+     "what": "leaf kick on each step",
+     "silent": false
+    }
+   ],
+   "acting": [
+    {
+     "who": "kid",
+     "on": "Imagine",
+     "action": "walks with a bounce, hitches the backpack strap",
+     "expression": "bright",
+     "frames_min": 18
+    }
+   ],
+   "boards": [],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "footsteps on leaves",
+     "for": "acting:0",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "leaf skitter",
+     "for": "life:0",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "bird flutter",
+     "for": "life:3",
+     "on": "one",
+     "kind": "sfx",
+     "source": "lib"
+    },
+    {
+     "event": "leaf kick",
+     "for": "fx:0",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "autumn street bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1,
+    "still": null
+   }
+  },
+  {
+   "id": "s04",
+   "beat": "Stakes",
+   "line": "Last autumn, you went a whole month without missing a day.",
+   "starts_on": "Last",
+   "est_t0": 9,
+   "set": "autumn_street",
+   "location": "along the street to the school fence",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "side-on: the kid walks right to left past the houses, the light stepping from gold to noon to gold (days passing)",
+     "subject": "kid",
+     "subject_height_pct": 38
+    },
+    {
+     "at_s": 2.4,
+     "desc": "the kid reaches the school fence; the tally board 'DAYS: 20 / 20' gets its last tick",
+     "subject": "tally_board",
+     "subject_height_pct": 35
+    }
+   ],
+   "camera": {
+    "preset": "followSide",
+    "params": {
+     "subject": "kid",
+     "fov": 55,
+     "height_m": 1,
+     "dist_m": [
+      5,
+      5
+     ],
+     "ease": "linear",
+     "walk_mps": 1
+    },
+    "speed_pct_f": 1.1
+   },
+   "light": {
+    "rig": "golden",
+    "rig_opts": {},
+    "notes": "a fast sun sweep on the house fronts = days passing (rig_opts animated by the set)"
+   },
+   "surfaces_near": [
+    {
+     "surface": "concrete_sidewalk",
+     "where": "path",
+     "meso": "slab joints",
+     "wear": [
+      "damp patches"
+     ]
+    },
+    {
+     "surface": "brick_wall",
+     "where": "garden walls passing the lens",
+     "meso": "mortar depth, coping stones",
+     "wear": [
+      "dirt at the bottom"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "local/tally_board",
+     "near_lens": false
+    },
+    {
+     "kit": "props/iron_gate"
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/hedge",
+     "where": "front gardens sliding past (parallax)"
+    },
+    {
+     "kit": "nature/tree_small_02"
+    }
+   ],
+   "life": [
+    {
+     "what": "a dog on a lead sniffs a lamp post",
+     "kit": "cards/crowd"
+    },
+    {
+     "what": "leaves blowing",
+     "kit": "fx/blowing_leaves"
+    },
+    {
+     "what": "a car passes on the road behind",
+     "kit": "props/car",
+     "audible": true
+    },
+    {
+     "what": "other kids join the walk in the second framing",
+     "kit": "cards/crowd"
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "kid",
+     "on": "whole",
+     "action": "skips the last two steps, taps the fence",
+     "expression": "proud",
+     "frames_min": 14
+    }
+   ],
+   "boards": [
+    {
+     "text": "DAYS: 20 / 20",
+     "on": "day.",
+     "hold_s": 1.8,
+     "caps_px": 52
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "footsteps + a skip",
+     "for": "acting:0",
+     "on": "whole",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "car pass-by",
+     "for": "life:2",
+     "on": "month",
+     "kind": "sfx",
+     "source": "lib"
+    },
+    {
+     "event": "chalk tick on the board",
+     "for": "acting:0",
+     "on": "day.",
+     "kind": "foley",
+     "source": "el"
+    },
+    {
+     "event": "autumn street bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1.2,
+    "still": null
+   }
+  },
+  {
+   "id": "s05",
+   "beat": "Stakes",
+   "line": "Then, in January, an envelope arrives with your name on it.",
+   "starts_on": "Then,",
+   "est_t0": 13.4,
+   "set": "home_hall",
+   "location": "the doormat",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "floor level: the letterbox flap snaps open, a yellow envelope drops toward the lens onto the mat; snow falling outside the door glass",
+     "subject": "front_door",
+     "insert": true
+    },
+    {
+     "at_s": 2.4,
+     "desc": "the kid's hand picks it up; the envelope reads the kid's name (a board on the envelope)",
+     "subject": "kid",
+     "subject_height_pct": 40
+    }
+   ],
+   "camera": {
+    "preset": "pushIn",
+    "params": {
+     "subject": "doormat",
+     "fov": 72,
+     "height_m": 0.2,
+     "dist_m": [
+      2.2,
+      0.8
+     ],
+     "ease": "out"
+    },
+    "speed_pct_f": 0.9
+   },
+   "light": {
+    "rig": "interiorWarm",
+    "practicals_on": [
+     "hall ceiling lamp"
+    ],
+    "notes": "cold daylight through the door glass vs the warm hall lamp"
+   },
+   "surfaces_near": [
+    {
+     "surface": "wood_floor",
+     "where": "boards under the lens",
+     "meso": "board gaps",
+     "wear": [
+      "wet footprints",
+      "grit"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/front_door_letterbox",
+     "near_lens": false
+    },
+    {
+     "kit": "props/doormat",
+     "near_lens": true
+    },
+    {
+     "kit": "props/boots_pair",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "snow falling beyond the door glass",
+     "kit": "fx/snow",
+     "audible": false
+    },
+    {
+     "what": "the letterbox flap swings and settles",
+     "kit": "local/flap_swing",
+     "audible": true
+    },
+    {
+     "what": "melt water drips off a boot",
+     "kit": "fx/rain",
+     "audible": true
+    }
+   ],
+   "fx": [
+    {
+     "kit": "fx/dust",
+     "what": "a puff of grit when the envelope lands",
+     "on": "arrives",
+     "silent": false
+    }
+   ],
+   "acting": [
+    {
+     "who": "kid",
+     "on": "name",
+     "action": "crouches, picks the envelope up, eyes widen at the name",
+     "expression": "bright",
+     "frames_min": 16
+    }
+   ],
+   "boards": [
+    {
+     "text": "TO: YOU",
+     "on": "name",
+     "hold_s": 1.6,
+     "caps_px": 48
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "letterbox clack + flap swing",
+     "for": "life:1",
+     "on": "envelope",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "envelope slap on the mat",
+     "for": "fx:0",
+     "on": "arrives",
+     "kind": "foley",
+     "source": "el"
+    },
+    {
+     "event": "paper rustle on pick-up",
+     "for": "acting:0",
+     "on": "name",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "drip",
+     "for": "life:2",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "hall bed + muffled street",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 0.6,
+    "still": null
+   }
+  },
+  {
+   "id": "s06",
+   "beat": "Plant",
+   "line": "Inside: a certificate. \"Perfect Attendance.\"",
+   "starts_on": "Inside:",
+   "est_t0": 17.7,
+   "set": "kitchen",
+   "location": "the kitchen table",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "top-down over the table: the kid's hands tear the envelope, the gold certificate slides out between the fruit bowl and a cereal box",
+     "subject": "certificate",
+     "insert": true
+    }
+   ],
+   "camera": {
+    "preset": "macroTopDown",
+    "params": {
+     "subject": "certificate",
+     "fov": 50,
+     "height_m": 1.6,
+     "ease": "inOut"
+    },
+    "speed_pct_f": 0.3
+   },
+   "light": {
+    "rig": "morning",
+    "notes": "window light from the top of frame, crisp shadows of the hands"
+   },
+   "surfaces_near": [
+    {
+     "surface": "planks",
+     "where": "table top",
+     "meso": "board joints, bevelled edge",
+     "wear": [
+      "knife marks",
+      "a jam smear"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/fruit_bowl",
+     "near_lens": true
+    },
+    {
+     "kit": "local/certificate",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "cereal flakes scatter as the envelope is pulled",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "steam from a mug at the frame edge",
+     "kit": "fx/smoke"
+    },
+    {
+     "what": "a cat paw reaches for the envelope corner",
+     "kit": "cards/cat",
+     "new": true
+    }
+   ],
+   "fx": [
+    {
+     "kit": "fx/sparks",
+     "what": "a tiny gold glint sweeps the certificate seal",
+     "on": "Attendance",
+     "silent": false
+    }
+   ],
+   "acting": [
+    {
+     "who": "kid",
+     "on": "Inside",
+     "action": "tears the envelope, slides the certificate out",
+     "expression": "bright",
+     "frames_min": 14
+    }
+   ],
+   "boards": [
+    {
+     "text": "PERFECT ATTENDANCE",
+     "on": "Perfect",
+     "hold_s": 1.8,
+     "caps_px": 60
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "envelope tear",
+     "for": "acting:0",
+     "on": "Inside",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "soft shimmer on the glint",
+     "for": "fx:0",
+     "on": "Attendance",
+     "kind": "sfx",
+     "source": "el"
+    },
+    {
+     "event": "kitchen bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1.4,
+    "still": null
+   }
+  },
+  {
+   "id": "s07",
+   "beat": "Doubter",
+   "line": "Your mom sticks it on the fridge: \"Now you'll never miss a day!\" (MOM)",
+   "starts_on": "Your",
+   "est_t0": 20.1,
+   "set": "kitchen",
+   "location": "the fridge",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "mom slaps the certificate on the fridge with a magnet, the kid beside her",
+     "subject": "mom",
+     "subject_height_pct": 55
+    },
+    {
+     "at_s": 2.6,
+     "desc": "the orbit ends on mom's proud face and wagging finger on her line, the kid grinning below",
+     "subject": "mom",
+     "subject_height_pct": 58
+    }
+   ],
+   "camera": {
+    "preset": "orbit",
+    "params": {
+     "subject": "mom",
+     "fov": 50,
+     "height_m": 1.3,
+     "dist_m": [
+      2.2,
+      1.8
+     ],
+     "ease": "inOut",
+     "a0": -40,
+     "a1": 35
+    },
+    "speed_pct_f": 0.8
+   },
+   "light": {
+    "rig": "morning",
+    "notes": "window light on mom's face, warm rim; the clock on the counter stays in frame (plant)"
+   },
+   "surfaces_near": [
+    {
+     "surface": "floor_tiles",
+     "where": "floor at the frame bottom",
+     "meso": "joints",
+     "wear": [
+      "scuffs"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/fridge_retro",
+     "near_lens": true
+    },
+    {
+     "kit": "props/alarm_clock"
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "steam from mom's mug",
+     "kit": "fx/smoke"
+    },
+    {
+     "what": "the magnet letters on the fridge rattle from the slap",
+     "kit": "local/magnet_swing",
+     "audible": true
+    },
+    {
+     "what": "the curtain moves in a draught",
+     "kit": "local/cloth_sway"
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "mom",
+     "on": "sticks",
+     "action": "slaps the certificate on with a magnet (wind-up 5 f, slap, overshoot)",
+     "expression": "proud",
+     "frames_min": 14
+    },
+    {
+     "who": "mom",
+     "on": "Now",
+     "action": "wags a finger, says her line (talk cycle on her words)",
+     "expression": "certain",
+     "frames_min": 18
+    },
+    {
+     "who": "kid",
+     "on": "never",
+     "action": "nods hard, beams",
+     "expression": "proud",
+     "frames_min": 14,
+     "silent": true
+    }
+   ],
+   "boards": [],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "magnet slap on the fridge",
+     "for": "acting:0",
+     "on": "sticks",
+     "kind": "foley",
+     "source": "el"
+    },
+    {
+     "event": "MOM's line (her own voice)",
+     "for": "acting:1",
+     "on": "Now",
+     "kind": "foley",
+     "source": "el"
+    },
+    {
+     "event": "magnet letters rattle",
+     "for": "life:1",
+     "on": "sticks",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "kitchen bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 3,
+    "still": null
+   }
+  },
+  {
+   "id": "s08",
+   "beat": "Turn",
+   "line": "But it isn't just a nice surprise. It's a test.",
+   "starts_on": "But",
+   "est_t0": 25.2,
+   "set": "mail_room",
+   "location": "the stamping station",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "close: a yellow envelope under the desk lamp; the clerk's hand stamps it",
+     "subject": "envelope_piles",
+     "insert": true
+    },
+    {
+     "at_s": 2.4,
+     "desc": "the pull-back reveals the long table: thousands of envelopes; on 'test' the clerk lifts a sly eyebrow",
+     "subject": "clerk",
+     "subject_height_pct": 40,
+     "wide": true
+    }
+   ],
+   "camera": {
+    "preset": "pullBack",
+    "params": {
+     "subject": "clerk",
+     "fov": 55,
+     "height_m": 1.2,
+     "dist_m": [
+      0.9,
+      4.5
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 1.2
+   },
+   "light": {
+    "rig": "interiorWarm",
+    "practicals_on": [
+     "desk lamp",
+     "ceiling lamps"
+    ],
+    "notes": "a pool of warm desk-lamp light in a dimmer room: the reveal walks out of the pool"
+   },
+   "surfaces_near": [
+    {
+     "surface": "planks",
+     "where": "table top",
+     "meso": "board edges",
+     "wear": [
+      "ink stains"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/work_table",
+     "near_lens": true
+    },
+    {
+     "kit": "local/envelope_piles",
+     "near_lens": true
+    },
+    {
+     "kit": "props/metal_shelf"
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "the desk fan turns, papers lift at the table end",
+     "kit": "props/desk_fan",
+     "audible": true
+    },
+    {
+     "what": "a second worker wheels a trolley of envelopes across the back",
+     "kit": "cards/crowd",
+     "audible": true
+    },
+    {
+     "what": "dust motes in the lamp beam",
+     "kit": "fx/dust"
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "clerk",
+     "on": "surprise",
+     "action": "stamps the envelope (a firm thunk)",
+     "expression": "focused",
+     "frames_min": 12
+    },
+    {
+     "who": "clerk",
+     "on": "test",
+     "action": "looks up at the lens, one eyebrow up",
+     "expression": "sly",
+     "frames_min": 16,
+     "silent": true
+    }
+   ],
+   "boards": [],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "rubber-stamp thunk",
+     "for": "acting:0",
+     "on": "surprise",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "desk fan hum + paper flutter",
+     "for": "life:0",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "trolley wheels",
+     "for": "life:1",
+     "on": "test",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "mail room bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 3.2,
+    "still": null
+   }
+  },
+  {
+   "id": "s09",
+   "beat": "Escalation",
+   "line": "More than 15,000 students were split into three groups.",
+   "starts_on": "More",
+   "est_t0": 29.5,
+   "set": "mail_room",
+   "location": "above the sorting table",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "high top-down: three rivers of envelopes (grey / blue / yellow) flowing into three trays; the whiteboard '15,000 STUDENTS' at the edge",
+     "subject": "envelope_piles",
+     "wide": true
+    },
+    {
+     "at_s": 1.8,
+     "desc": "the rise ends wide and high: the whole table, three trays filling, workers as small figures",
+     "subject": "sort_table",
+     "wide": true
+    }
+   ],
+   "camera": {
+    "preset": "droneRise",
+    "params": {
+     "subject": "sort_table",
+     "fov": 60,
+     "height_m": 2.4,
+     "dist_m": [
+      2.4,
+      4
+     ],
+     "ease": "out",
+     "rise": 2.5,
+     "forward": -1.2
+    },
+    "speed_pct_f": 1
+   },
+   "light": {
+    "rig": "interiorWarm",
+    "practicals_on": [
+     "ceiling lamps"
+    ],
+    "notes": "even warm top light; the three colours lead"
+   },
+   "surfaces_near": [
+    {
+     "surface": "planks",
+     "where": "table",
+     "meso": "board edges",
+     "wear": [
+      "ink stains"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "local/envelope_piles"
+    },
+    {
+     "kit": "local/mail_trays"
+    },
+    {
+     "kit": "local/whiteboard"
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "envelopes slide in three streams (instanced, staggered)",
+     "kit": "local/envelope_stream",
+     "audible": true
+    },
+    {
+     "what": "three workers sort with quick hands",
+     "kit": "cards/crowd"
+    },
+    {
+     "what": "the desk fan turns",
+     "kit": "props/desk_fan"
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "clerk",
+     "on": "three",
+     "action": "pushes the last stack into the third tray",
+     "expression": "focused",
+     "frames_min": 12
+    }
+   ],
+   "boards": [
+    {
+     "text": "15,000 STUDENTS",
+     "on": "15,000",
+     "hold_s": 2,
+     "caps_px": 52
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "paper slides (three layers)",
+     "for": "life:0",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "tray clunk",
+     "for": "acting:0",
+     "on": "three",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "mail room bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1.8,
+    "still": null
+   }
+  },
+  {
+   "id": "s10",
+   "beat": "Gauge",
+   "line": "One group got nothing.",
+   "starts_on": "One",
+   "est_t0": 33.1,
+   "set": "mail_room",
+   "location": "the grey tray",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "the grey tray labelled NO LETTER: the clerk drops it into a bin with a shrug; dust puffs",
+     "subject": "trays",
+     "subject_height_pct": 45
+    }
+   ],
+   "camera": {
+    "preset": "pushIn",
+    "params": {
+     "subject": "trays",
+     "fov": 50,
+     "height_m": 1.1,
+     "ease": "linear",
+     "dist_m": [
+      2.2,
+      1.5
+     ]
+    },
+    "speed_pct_f": 0.35
+   },
+   "light": {
+    "rig": "interiorWarm",
+    "practicals_on": [
+     "ceiling lamps"
+    ]
+   },
+   "surfaces_near": [
+    {
+     "surface": "concrete_floor",
+     "where": "floor under the bin",
+     "meso": "expansion joint",
+     "wear": [
+      "wheel marks"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "local/mail_trays",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "dust puff from the bin",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "a worker behind carries a crate",
+     "kit": "cards/crowd"
+    },
+    {
+     "what": "the fan-blown paper flutters on the table",
+     "kit": "local/paper_flutter"
+    }
+   ],
+   "fx": [
+    {
+     "kit": "fx/dust",
+     "what": "puff from the bin",
+     "on": "nothing",
+     "silent": false
+    }
+   ],
+   "acting": [
+    {
+     "who": "clerk",
+     "on": "nothing",
+     "action": "tips the empty grey tray into a bin, shrugs",
+     "expression": "deadpan",
+     "frames_min": 16
+    }
+   ],
+   "boards": [
+    {
+     "text": "NO LETTER",
+     "on": "group",
+     "hold_s": 1.5,
+     "caps_px": 48
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "hollow tray tip into a bin",
+     "for": "acting:0",
+     "on": "nothing",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "soft puff",
+     "for": "fx:0",
+     "on": "nothing",
+     "kind": "sfx",
+     "source": "lib"
+    },
+    {
+     "event": "mail room bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1,
+    "still": null
+   }
+  },
+  {
+   "id": "s11",
+   "beat": "Gauge",
+   "line": "One got a promise: \"Be perfect in February, and you could win an award.\"",
+   "starts_on": "One#2",
+   "est_t0": 34.8,
+   "set": "mail_room",
+   "location": "the blue pile",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "macro over a blue letter being folded: 'BE PERFECT IN FEBRUARY' readable",
+     "subject": "envelope_piles",
+     "insert": true
+    },
+    {
+     "at_s": 2.8,
+     "desc": "push past the letter to the clerk sliding it into a blue envelope, a blue trophy doodle on the board behind",
+     "subject": "clerk",
+     "subject_height_pct": 42
+    }
+   ],
+   "camera": {
+    "preset": "pullBack",
+    "params": {
+     "subject": "envelope_piles",
+     "fov": 45,
+     "height_m": 1.15,
+     "dist_m": [
+      0.8,
+      1.9
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 0.8
+   },
+   "light": {
+    "rig": "interiorWarm",
+    "practicals_on": [
+     "desk lamp"
+    ]
+   },
+   "surfaces_near": [
+    {
+     "surface": "planks",
+     "where": "table top",
+     "meso": "board edges",
+     "wear": [
+      "ink stains"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "local/envelope_piles",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "paper edges flutter in the fan draught",
+     "kit": "local/paper_flutter"
+    },
+    {
+     "what": "a worker behind stacks blue envelopes",
+     "kit": "cards/crowd"
+    },
+    {
+     "what": "the desk lamp beam with motes",
+     "kit": "fx/dust"
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "clerk",
+     "on": "promise",
+     "action": "folds the letter in thirds, slides it into a blue envelope",
+     "expression": "focused",
+     "frames_min": 18
+    }
+   ],
+   "boards": [
+    {
+     "text": "BE PERFECT IN FEBRUARY",
+     "on": "perfect",
+     "hold_s": 2.2,
+     "caps_px": 48
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "paper fold + slide into the envelope",
+     "for": "acting:0",
+     "on": "promise",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "mail room bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1.2,
+    "still": null
+   }
+  },
+  {
+   "id": "s12",
+   "beat": "Gauge",
+   "line": "And one got the surprise certificate. Like you.",
+   "starts_on": "And",
+   "est_t0": 40.3,
+   "set": "mail_room",
+   "location": "the yellow pile",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "the yellow pile glows under the lamp; the clerk lifts ONE yellow envelope to the lens: 'TO: YOU'",
+     "subject": "envelope_piles",
+     "subject_height_pct": 40,
+     "insert": true
+    },
+    {
+     "at_s": 1.9,
+     "desc": "on 'Like you.' the envelope fills the frame: TO: YOU, the clerk's wink behind it",
+     "subject": "envelope_piles",
+     "insert": true
+    }
+   ],
+   "camera": {
+    "preset": "pushIn",
+    "params": {
+     "subject": "envelope_piles",
+     "fov": 50,
+     "height_m": 1.2,
+     "dist_m": [
+      1.8,
+      0.9
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 0.7
+   },
+   "light": {
+    "rig": "interiorWarm",
+    "practicals_on": [
+     "desk lamp"
+    ],
+    "notes": "the yellow envelope catches the lamp: the gold of the story"
+   },
+   "surfaces_near": [
+    {
+     "surface": "planks",
+     "where": "table",
+     "meso": "edges",
+     "wear": [
+      "ink stains"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "local/envelope_piles",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "the stack settles and one envelope slides off",
+     "kit": "local/envelope_stream",
+     "audible": true
+    },
+    {
+     "what": "dust motes in the lamp",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "a worker passes behind out of focus",
+     "kit": "cards/crowd"
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "clerk",
+     "on": "you",
+     "action": "holds the envelope up to the lens, a wink",
+     "expression": "sly",
+     "frames_min": 16
+    }
+   ],
+   "boards": [
+    {
+     "text": "TO: YOU",
+     "on": "you",
+     "hold_s": 1.6,
+     "caps_px": 56
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "paper slide",
+     "for": "life:0",
+     "on": "certificate",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "envelope flick toward the lens",
+     "for": "acting:0",
+     "on": "you",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "mail room bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 2.6,
+    "still": null
+   }
+  },
+  {
+   "id": "s13",
+   "beat": "Escalation",
+   "line": "Ask teachers what happens next. Only 2 in 100 say it will backfire.",
+   "starts_on": "Ask",
+   "est_t0": 43.8,
+   "set": "staff_room",
+   "location": "the whiteboard end",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "over a teacher's shoulder to the whiteboard 'WILL IT BACKFIRE?'; teachers chatting with mugs",
+     "subject": "whiteboard",
+     "subject_height_pct": 35,
+     "wide": true
+    },
+    {
+     "at_s": 2.6,
+     "desc": "the pull-back finds TWO raised hands among about twenty teachers who laugh it off",
+     "subject": "teachers",
+     "wide": true
+    }
+   ],
+   "camera": {
+    "preset": "pullBack",
+    "params": {
+     "subject": "teachers",
+     "fov": 60,
+     "height_m": 1.5,
+     "dist_m": [
+      2,
+      5.5
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 1
+   },
+   "light": {
+    "rig": "interiorWarm",
+    "practicals_on": [
+     "two warm ceiling lamps"
+    ],
+    "notes": "warm lamps + a window strip; the two raised hands catch a sun patch"
+   },
+   "surfaces_near": [
+    {
+     "surface": "carpet",
+     "where": "floor",
+     "meso": "pile",
+     "wear": [
+      "coffee stain"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "local/whiteboard"
+    },
+    {
+     "kit": "props/coffee_machine"
+    },
+    {
+     "kit": "props/mug",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/potted_plant",
+     "where": "corner"
+    }
+   ],
+   "life": [
+    {
+     "what": "steam from the coffee machine and mugs",
+     "kit": "fx/smoke"
+    },
+    {
+     "what": "teachers sip, nudge, chuckle (crowd idles)",
+     "kit": "cards/crowd",
+     "audible": true
+    },
+    {
+     "what": "the window blind sways",
+     "kit": "local/cloth_sway"
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "teachers",
+     "on": "backfire",
+     "action": "two hands go up; the rest wave it off with a laugh",
+     "expression": "doubtful",
+     "frames_min": 18
+    }
+   ],
+   "boards": [
+    {
+     "text": "WILL IT BACKFIRE?",
+     "on": "Ask",
+     "hold_s": 2.4,
+     "caps_px": 52
+    },
+    {
+     "text": "2 IN 100",
+     "on": "2",
+     "hold_s": 1.8,
+     "caps_px": 60
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "a ripple of teacher laughter",
+     "for": "acting:0",
+     "on": "backfire",
+     "kind": "foley",
+     "source": "el"
+    },
+    {
+     "event": "staff room murmur + spoon on mug",
+     "for": "life:1",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    },
+    {
+     "event": "coffee machine gurgle",
+     "for": "life:0",
+     "on": "Ask",
+     "kind": "foley",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 3.6,
+    "still": null
+   }
+  },
+  {
+   "id": "s14",
+   "beat": "Loop",
+   "line": "So, February. Who shows up?",
+   "starts_on": "So,",
+   "est_t0": 49.2,
+   "set": "school_gate",
+   "location": "the gate",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "the calendar board flips to FEBRUARY; the crane drops to the gate where kids in coats stream in, frost on the pavers",
+     "subject": "calendar_board",
+     "subject_height_pct": 35,
+     "wide": true
+    }
+   ],
+   "camera": {
+    "preset": "craneDown",
+    "params": {
+     "subject": "gate",
+     "fov": 60,
+     "height_m": 3.5,
+     "dist_m": [
+      5,
+      3.5
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 1
+   },
+   "light": {
+    "rig": "overcastWarm",
+    "notes": "soft warm overcast, puddle reflections; still bright (owner: warm, never grey)"
+   },
+   "surfaces_near": [
+    {
+     "surface": "brick_pavers",
+     "where": "the ground in front of the gate",
+     "meso": "paver joints",
+     "wear": [
+      "puddles",
+      "frost in the joints"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "local/calendar_board",
+     "near_lens": false
+    },
+    {
+     "kit": "props/iron_gate"
+    },
+    {
+     "kit": "props/bike_rack"
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/tree_small_02",
+     "where": "bare branches behind the wall"
+    },
+    {
+     "kit": "nature/hedge",
+     "where": "along the wall"
+    }
+   ],
+   "life": [
+    {
+     "what": "kids stream through the gate with breath puffs",
+     "kit": "cards/crowd",
+     "audible": true
+    },
+    {
+     "what": "crows lift off the wall",
+     "kit": "fx/birds",
+     "audible": true
+    },
+    {
+     "what": "a bus passes beyond the fence",
+     "kit": "props/bus",
+     "audible": true
+    },
+    {
+     "what": "puddle ripples from footsteps",
+     "kit": "fx/rain"
+    }
+   ],
+   "fx": [
+    {
+     "kit": "fx/smoke",
+     "what": "breath puffs (small, white)",
+     "silent": true
+    }
+   ],
+   "acting": [
+    {
+     "who": "kids_crowd",
+     "on": "Who",
+     "action": "kids hurry in, one checks a watch",
+     "expression": "chatty",
+     "frames_min": 14
+    }
+   ],
+   "boards": [
+    {
+     "text": "FEBRUARY",
+     "on": "February",
+     "hold_s": 1.8,
+     "caps_px": 72
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "board flap flip",
+     "for": "life:0",
+     "on": "February",
+     "kind": "foley",
+     "source": "el"
+    },
+    {
+     "event": "kids chatter + footsteps on wet pavers",
+     "for": "acting:0",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "crows",
+     "for": "life:1",
+     "on": "Who",
+     "kind": "sfx",
+     "source": "lib"
+    },
+    {
+     "event": "bus pass-by",
+     "for": "life:2",
+     "on": "shot",
+     "kind": "sfx",
+     "source": "lib"
+    },
+    {
+     "event": "school gate bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1.2,
+    "still": "studio/out/award/stills/draft/f1491.jpg"
+   }
+  },
+  {
+   "id": "s15",
+   "beat": "Answer",
+   "line": "The promise? It changed nothing.",
+   "starts_on": "The#2",
+   "est_t0": 51.6,
+   "set": "classroom",
+   "location": "the blue row",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "the promise kid (blue puffer) drops into his seat on time as always; behind him the calendar's BLUE row: steady ticks",
+     "subject": "promise_kid",
+     "subject_height_pct": 45
+    }
+   ],
+   "camera": {
+    "preset": "followSide",
+    "params": {
+     "subject": "promise_kid",
+     "fov": 55,
+     "height_m": 1,
+     "dist_m": [
+      4.5,
+      4.5
+     ],
+     "ease": "inOut",
+     "walk_mps": 0.9
+    },
+    "speed_pct_f": 0.8
+   },
+   "light": {
+    "rig": "morning",
+    "notes": "window shafts; the blue row in sun"
+   },
+   "surfaces_near": [
+    {
+     "surface": "wood_floor",
+     "where": "floor",
+     "meso": "board gaps",
+     "wear": [
+      "chair scuffs"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/school_desk",
+     "near_lens": true
+    },
+    {
+     "kit": "local/wall_calendar"
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/potted_plant",
+     "where": "window sill"
+    }
+   ],
+   "life": [
+    {
+     "what": "classmates unpack bags",
+     "kit": "cards/crowd",
+     "audible": true
+    },
+    {
+     "what": "dust motes in the shafts",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "the wall clock's second hand",
+     "kit": "local/clock_hands",
+     "audible": true
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "promise_kid",
+     "on": "nothing",
+     "action": "plops down, a small shrug to camera",
+     "expression": "shrug",
+     "frames_min": 14
+    }
+   ],
+   "boards": [
+    {
+     "text": "PROMISE: NO CHANGE",
+     "on": "changed",
+     "hold_s": 1.6,
+     "caps_px": 48
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "chair scrape + bag thump",
+     "for": "acting:0",
+     "on": "nothing",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "zips and books",
+     "for": "life:0",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "clock tick",
+     "for": "life:2",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "classroom bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1.2,
+    "still": null
+   }
+  },
+  {
+   "id": "s16",
+   "beat": "Answer",
+   "line": "The certificate? Those kids had about 8% more absences than kids who got nothing.",
+   "starts_on": "The#3",
+   "est_t0": 53.9,
+   "set": "classroom",
+   "location": "the wall calendar + the empty desk",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "the YELLOW row of the calendar: ticks, then gaps popping in (red)",
+     "subject": "wall_calendar",
+     "insert": true
+    },
+    {
+     "at_s": 2.5,
+     "desc": "the camera slides to the empty desk with a yellow backpack hook bare; board '+8% ABSENCES' on the calendar edge",
+     "subject": "desks",
+     "subject_height_pct": 40
+    }
+   ],
+   "camera": {
+    "preset": "pushIn",
+    "params": {
+     "subject": "wall_calendar",
+     "fov": 55,
+     "height_m": 1.3,
+     "dist_m": [
+      2.8,
+      1.3
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 0.9
+   },
+   "light": {
+    "rig": "morning",
+    "notes": "a sun patch slides off the empty chair (time passing)"
+   },
+   "surfaces_near": [
+    {
+     "surface": "plaster",
+     "where": "the wall behind the calendar",
+     "meso": "skirting + window inset",
+     "wear": [
+      "tape marks"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "local/wall_calendar",
+     "near_lens": true
+    },
+    {
+     "kit": "props/school_desk"
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "gaps pop in on the yellow row one by one",
+     "kit": "local/calendar_marks",
+     "audible": true
+    },
+    {
+     "what": "kids at the other desks work, one passes a note",
+     "kit": "cards/crowd"
+    },
+    {
+     "what": "dust motes in the sun patch",
+     "kit": "fx/dust"
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "kids_crowd",
+     "on": "absences",
+     "action": "the kid next to the empty desk glances at it",
+     "expression": "puzzled",
+     "frames_min": 14
+    }
+   ],
+   "boards": [
+    {
+     "text": "+8% ABSENCES",
+     "on": "8%",
+     "hold_s": 2.2,
+     "caps_px": 60
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "marker squeak per gap (4)",
+     "for": "life:0",
+     "on": "absences",
+     "kind": "foley",
+     "source": "el"
+    },
+    {
+     "event": "pencil scratch",
+     "for": "acting:0",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "classroom bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 3.6,
+    "still": null
+   }
+  },
+  {
+   "id": "s17",
+   "beat": "Why",
+   "line": "You see, the award didn't just say \"well done.\"",
+   "starts_on": "You",
+   "est_t0": 59.7,
+   "set": "kitchen",
+   "location": "the fridge, evening",
+   "transition_in": "dissolve:10",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "the certificate on the fridge, the pendant lamp now on (evening), the orbit catches the gold seal",
+     "subject": "certificate",
+     "insert": true
+    },
+    {
+     "at_s": 1.8,
+     "desc": "the orbit ends with the pendant lamp's warm pool and the dark window: evening has come",
+     "subject": "certificate",
+     "insert": true
+    }
+   ],
+   "camera": {
+    "preset": "orbit",
+    "params": {
+     "subject": "certificate",
+     "fov": 45,
+     "height_m": 1.35,
+     "dist_m": [
+      1.3,
+      1.3
+     ],
+     "ease": "inOut",
+     "a0": -45,
+     "a1": 40
+    },
+    "speed_pct_f": 0.8
+   },
+   "light": {
+    "rig": "dusk",
+    "practicals_on": [
+     "pendant lamp"
+    ],
+    "notes": "dusk through the window + the warm pendant pool"
+   },
+   "surfaces_near": [
+    {
+     "surface": "marble",
+     "where": "counter",
+     "meso": "edge bevel",
+     "wear": [
+      "mug ring"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/fridge_retro",
+     "near_lens": true
+    },
+    {
+     "kit": "props/alarm_clock"
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/potted_plant",
+     "where": "window sill"
+    }
+   ],
+   "life": [
+    {
+     "what": "the pendant lamp sways slightly",
+     "kit": "local/lamp_sway"
+    },
+    {
+     "what": "steam from a pot on the hob",
+     "kit": "fx/smoke",
+     "audible": true
+    },
+    {
+     "what": "mom passes behind, out of focus, humming",
+     "kit": "cards/card"
+    }
+   ],
+   "fx": [
+    {
+     "kit": "fx/sparks",
+     "what": "a slow gold glint across the seal",
+     "on": "done",
+     "silent": false
+    }
+   ],
+   "acting": [],
+   "boards": [
+    {
+     "text": "WELL DONE",
+     "on": "well",
+     "hold_s": 1.6,
+     "caps_px": 56
+    }
+   ],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "simmering pot",
+     "for": "life:1",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "soft shimmer",
+     "for": "fx:0",
+     "on": "done",
+     "kind": "sfx",
+     "source": "el"
+    },
+    {
+     "event": "kitchen evening bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 2,
+    "still": null
+   }
+  },
+  {
+   "id": "s18",
+   "beat": "Why",
+   "line": "It probably also said: \"you're ahead of the other kids.\"",
+   "starts_on": "It",
+   "est_t0": 63.3,
+   "set": "classroom",
+   "location": "the chalkboard",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "a chalk bar chart: the kid's bar towers with a gold star, the others small",
+     "subject": "chalkboard",
+     "insert": true
+    },
+    {
+     "at_s": 2.2,
+     "desc": "the push lands on the kid at the board, arms folded, smug, chin up",
+     "subject": "kid",
+     "subject_height_pct": 52
+    }
+   ],
+   "camera": {
+    "preset": "pushIn",
+    "params": {
+     "subject": "kid",
+     "fov": 55,
+     "height_m": 1.1,
+     "dist_m": [
+      3,
+      1.8
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 0.9
+   },
+   "light": {
+    "rig": "morning",
+    "notes": "a sun shaft on the kid like a spotlight (comic)"
+   },
+   "surfaces_near": [
+    {
+     "surface": "wood_floor",
+     "where": "floor",
+     "meso": "board gaps",
+     "wear": [
+      "chalk dust"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "local/chalkboard",
+     "near_lens": false
+    },
+    {
+     "kit": "props/school_desk",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "chalk dust drifting off the board",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "classmates roll their eyes and whisper",
+     "kit": "cards/crowd",
+     "audible": true
+    },
+    {
+     "what": "a paper plane glides across the back",
+     "kit": "local/paper_plane",
+     "audible": true
+    }
+   ],
+   "fx": [
+    {
+     "kit": "fx/sparks",
+     "what": "the gold star twinkles",
+     "on": "ahead",
+     "silent": false
+    }
+   ],
+   "acting": [
+    {
+     "who": "kid",
+     "on": "ahead",
+     "action": "folds arms, lifts the chin, a slow smug nod",
+     "expression": "smug",
+     "frames_min": 18
+    }
+   ],
+   "boards": [],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "a cocky little chalk tap",
+     "for": "acting:0",
+     "on": "ahead",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "twinkle",
+     "for": "fx:0",
+     "on": "ahead",
+     "kind": "sfx",
+     "source": "el"
+    },
+    {
+     "event": "whispers",
+     "for": "life:1",
+     "on": "kids",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "paper plane whoosh",
+     "for": "life:2",
+     "on": "shot",
+     "kind": "sfx",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 3,
+    "still": null
+   }
+  },
+  {
+   "id": "s19",
+   "beat": "Why",
+   "line": "And when you're already ahead... one lazy morning feels earned.",
+   "starts_on": "And#2",
+   "est_t0": 67.3,
+   "set": "bedroom",
+   "location": "the bed at dawn",
+   "transition_in": "dissolve:10",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "high over the bed: the kid curled in the duvet, blind bars of dawn light crossing the face",
+     "subject": "kid",
+     "subject_height_pct": 40
+    },
+    {
+     "at_s": 2.5,
+     "desc": "the crane settles beside the pillow: the kid opens one eye at the alarm clock, smiles, burrows",
+     "subject": "kid",
+     "subject_height_pct": 50
+    }
+   ],
+   "camera": {
+    "preset": "craneDown",
+    "params": {
+     "subject": "kid",
+     "fov": 55,
+     "height_m": 2.4,
+     "dist_m": [
+      2.4,
+      1.4
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 0.8
+   },
+   "light": {
+    "rig": "morning",
+    "rig_opts": {
+     "sunEl": 8
+    },
+    "notes": "low dawn sun through the blinds: bars of light across the card (the LOOK_REPORT's strongest card-in-light trick)"
+   },
+   "surfaces_near": [
+    {
+     "surface": "fabric",
+     "where": "duvet near the lens",
+     "meso": "folds (displacement)",
+     "wear": []
+    },
+    {
+     "surface": "carpet",
+     "where": "floor",
+     "meso": "pile",
+     "wear": [
+      "a sock"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/bed_single",
+     "near_lens": true
+    },
+    {
+     "kit": "props/alarm_clock",
+     "near_lens": true
+    },
+    {
+     "kit": "props/window_blinds"
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "the blinds sway, the light bars slide",
+     "kit": "local/cloth_sway"
+    },
+    {
+     "what": "a cat stretches at the foot of the bed",
+     "kit": "cards/cat",
+     "new": true
+    },
+    {
+     "what": "dust motes in the light bars",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "birds outside the window",
+     "kit": "fx/birds",
+     "audible": true
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "kid",
+     "on": "lazy",
+     "action": "one eye opens, a sly smile, burrows back under",
+     "expression": "sleepy",
+     "frames_min": 18
+    }
+   ],
+   "boards": [],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "duvet rustle",
+     "for": "acting:0",
+     "on": "lazy",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "dawn birds",
+     "for": "life:3",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    },
+    {
+     "event": "bedroom bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1.5,
+    "still": null
+   }
+  },
+  {
+   "id": "s20",
+   "beat": "Payoff",
+   "line": "The certificate stays on the fridge...",
+   "starts_on": "The#4",
+   "est_t0": 71.3,
+   "set": "kitchen",
+   "location": "the fridge, the same morning",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "the certificate on the fridge, quiet morning; the counter alarm clock reads 7:00",
+     "subject": "certificate",
+     "insert": true
+    }
+   ],
+   "camera": {
+    "preset": "pushIn",
+    "params": {
+     "subject": "certificate",
+     "fov": 55,
+     "height_m": 1.3,
+     "dist_m": [
+      1.6,
+      1.3
+     ],
+     "ease": "inOut"
+    },
+    "speed_pct_f": 0.5
+   },
+   "light": {
+    "rig": "morning",
+    "notes": "same as s01 (the callback)"
+   },
+   "surfaces_near": [
+    {
+     "surface": "marble",
+     "where": "counter",
+     "meso": "edge",
+     "wear": [
+      "mug ring"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/fridge_retro",
+     "near_lens": true
+    },
+    {
+     "kit": "props/alarm_clock",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/potted_plant",
+     "where": "sill"
+    }
+   ],
+   "life": [
+    {
+     "what": "dust motes in the shaft",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "kettle steam",
+     "kit": "fx/smoke"
+    },
+    {
+     "what": "the clock's second hand",
+     "kit": "local/clock_hands",
+     "audible": true
+    }
+   ],
+   "fx": [],
+   "acting": [],
+   "boards": [],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "clock tick (loud in the silence)",
+     "for": "life:2",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "kitchen bed",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1,
+    "still": null
+   }
+  },
+  {
+   "id": "s21",
+   "beat": "Payoff",
+   "line": "...while you hit snooze.",
+   "starts_on": "while",
+   "est_t0": 73.3,
+   "set": "bedroom",
+   "location": "the bedside table",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "the alarm clock ringing on the bedside table; a hand slaps the snooze button on the word",
+     "subject": "alarm_clock_bed",
+     "insert": true
+    }
+   ],
+   "camera": {
+    "preset": "pushIn",
+    "params": {
+     "subject": "alarm_clock_bed",
+     "fov": 50,
+     "height_m": 0.8,
+     "dist_m": [
+      1,
+      0.7
+     ],
+     "ease": "out"
+    },
+    "speed_pct_f": 0.7
+   },
+   "light": {
+    "rig": "morning",
+    "rig_opts": {
+     "sunEl": 10
+    },
+    "notes": "blind bars on the table and the hand"
+   },
+   "surfaces_near": [
+    {
+     "surface": "planks",
+     "where": "bedside table top",
+     "meso": "edge bevel",
+     "wear": [
+      "a cup ring"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/alarm_clock",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [],
+   "life": [
+    {
+     "what": "the clock's bells shake",
+     "kit": "local/clock_ring",
+     "audible": true
+    },
+    {
+     "what": "dust motes in the light bars",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "the blinds sway",
+     "kit": "local/cloth_sway"
+    }
+   ],
+   "fx": [],
+   "acting": [
+    {
+     "who": "kid",
+     "on": "snooze",
+     "action": "a hand flops out of the duvet and slaps the snooze (squash on impact)",
+     "expression": "sleepy",
+     "frames_min": 12
+    }
+   ],
+   "boards": [],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "alarm ring",
+     "for": "life:0",
+     "on": "while",
+     "kind": "sfx",
+     "source": "lib"
+    },
+    {
+     "event": "snooze slap + ring cut",
+     "for": "acting:0",
+     "on": "snooze",
+     "kind": "foley",
+     "source": "el"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 1,
+    "still": null
+   }
+  },
+  {
+   "id": "s22",
+   "beat": "Payoff",
+   "line": "(tail: the loop)",
+   "starts_on": "snooze.",
+   "cut_offset_f": 4,
+   "est_t0": 75,
+   "set": "kitchen",
+   "location": "the fridge wall = frame 0",
+   "transition_in": "cut",
+   "framings": [
+    {
+     "at_s": 0,
+     "desc": "back on the fridge: the camera eases into EXACTLY frame 0's pose; the last frame = frame 0",
+     "subject": "certificate",
+     "insert": true
+    }
+   ],
+   "camera": {
+    "preset": "pullBack",
+    "params": {
+     "subject": "certificate",
+     "fov": 55,
+     "height_m": 1.3,
+     "dist_m": [
+      2.3,
+      2.6
+     ],
+     "ease": "out",
+     "end_at": "s01.start"
+    },
+    "speed_pct_f": 0.5
+   },
+   "light": {
+    "rig": "morning",
+    "notes": "identical to s01 at frame 0"
+   },
+   "surfaces_near": [
+    {
+     "surface": "marble",
+     "where": "counter",
+     "meso": "edge",
+     "wear": [
+      "mug ring"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kit": "props/fridge_retro",
+     "near_lens": true
+    },
+    {
+     "kit": "props/alarm_clock",
+     "near_lens": true
+    }
+   ],
+   "vegetation": [
+    {
+     "kit": "nature/potted_plant",
+     "where": "sill"
+    }
+   ],
+   "life": [
+    {
+     "what": "dust motes (whole cycles over the film: loop rule)",
+     "kit": "fx/dust"
+    },
+    {
+     "what": "kettle steam",
+     "kit": "fx/smoke"
+    },
+    {
+     "what": "the clock's second hand",
+     "kit": "local/clock_hands",
+     "audible": true
+    }
+   ],
+   "fx": [],
+   "acting": [],
+   "boards": [],
+   "captions": {
+    "mode": "auto"
+   },
+   "sound": [
+    {
+     "event": "clock tick into the loop",
+     "for": "life:2",
+     "on": "shot",
+     "kind": "foley",
+     "source": "lib"
+    },
+    {
+     "event": "kitchen bed (the seam is clean)",
+     "for": "amb",
+     "on": "shot",
+     "kind": "amb",
+     "source": "lib"
+    }
+   ],
+   "storyboard": {
+    "frame_s": 0.6,
+    "still": null
+   }
+  }
+ ],
+ "music": {
+  "mood": "warm, curious, a little cheeky (pizzicato + celesta + soft brushes), no circus",
+  "changes": [
+   {
+    "on": "test.",
+    "what": "a sly turn (minor)"
+   },
+   {
+    "on": "February.",
+    "what": "a hush: only a ticking motif"
+   },
+   {
+    "on": "certificate?",
+    "what": "a small swell into the reveal"
+   },
+   {
+    "on": "snooze.",
+    "what": "stop dead on the slap; the ambience carries the tail"
+   }
+  ],
+  "end": "stops on the last word; only the ambience runs through the loop tail"
+ },
+ "loop": {
+  "frame0": "s01: the certificate on the fridge, the alarm clock beside it, the morning shaft",
+  "last": "s22 eases into s01's start pose; periodic life on whole cycles; frame TOTAL == frame 0 (pixel check)"
+ },
+ "CHANGES": [
+  {
+   "when": "2026-11-19 14:30",
+   "who": "WORKFLOW",
+   "what": "worked example written from briefs/v3/award/SCRIPT.md (lint PASS); kit prop names marked new until NATURE's catalog lands"
+  },
+  {
+   "when": "2026-11-19 14:50",
+   "who": "WORKFLOW",
+   "what": "bible_validate first run: s09 / s12 / s17 got a second framing (<= 2.5 s per framing); classroom + bedroom got practicals"
+  },
+  {
+   "when": "2026-11-19 15:10",
+   "who": "WORKFLOW",
+   "what": "camera params fixed after CORE camSpeedStats(plan): s04/s15 followSide wider (was 2.4-2.8 %/f), s05/s10 creep -> pushIn, s11 was a pushIn whose distance grew (now pullBack), s16 longer travel, s07/s17 wider orbit arcs"
+  },
+  {
+   "when": "2026-11-19 15:40",
+   "who": "WORKFLOW",
+   "what": "names aligned with the kit NOTES: kit_base surfaces/interior + surfaces/facade (SURFACES interior.ts / facade.ts), cast cards -> cards/card (CARDS card()), cards/cat marked new; fx / props names stay kit requests until NATURE publishes its catalog"
+  }
+ ]
+}

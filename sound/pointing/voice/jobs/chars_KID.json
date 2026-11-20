@@ -1,0 +1,87 @@
+[
+ {
+  "folder": "ch_k01",
+  "take": "t4",
+  "voice": "bA58y3FqVI6b6gTNh0oT",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8704,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kavya"
+ },
+ {
+  "folder": "ch_k01",
+  "take": "t5",
+  "voice": "bA58y3FqVI6b6gTNh0oT",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 8705,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kavya"
+ },
+ {
+  "folder": "ch_k01",
+  "take": "t6",
+  "voice": "bA58y3FqVI6b6gTNh0oT",
+  "model": "eleven_v4",
+  "text": "[excited] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8706,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kavya"
+ },
+ {
+  "folder": "ch_k01",
+  "take": "t7",
+  "voice": "bA58y3FqVI6b6gTNh0oT",
+  "model": "eleven_v4",
+  "text": "[proudly] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8707,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kavya"
+ },
+ {
+  "folder": "ch_k01",
+  "take": "t8",
+  "voice": "bA58y3FqVI6b6gTNh0oT",
+  "model": "eleven_v4",
+  "text": "[happily] Bag... check!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 8708,
+  "prev": "Doors... closed!",
+  "next": "Bag... gone.",
+  "lines": [
+   "k01"
+  ],
+  "role": "KID",
+  "candidate": "kavya"
+ }
+]

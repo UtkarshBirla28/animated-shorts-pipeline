@@ -1,0 +1,952 @@
+{
+ "kind": "FILM",
+ "path": "C:\\Users\\utkar\\Desktop\\animated-shorts-studio\\sound\\pointing\\audio\\mix_v4t.wav",
+ "rules": [
+  {
+   "measure": "words / s over the film",
+   "ours": 2.023000522739153,
+   "ref": "2.43 / 3.34 / 3.70",
+   "ok": false
+  },
+  {
+   "measure": "longest voice gap s",
+   "ours": 2.64,
+   "ref": "-",
+   "ok": false
+  },
+  {
+   "measure": "narrator share",
+   "ours": 0.5,
+   "ref": "-",
+   "ok": false
+  },
+  {
+   "measure": "narrator pitch step line to line st (median)",
+   "ours": 4.8,
+   "ref": "-",
+   "ok": false
+  },
+  {
+   "measure": "music under the voice while talking dB",
+   "ours": -21.9,
+   "ref": "-20.3 / None / None",
+   "ok": false
+  },
+  {
+   "measure": "music level jumps > 6 dB per minute",
+   "ours": 21.6,
+   "ref": "6.40 / None / None",
+   "ok": false
+  },
+  {
+   "measure": "music: six-second windows with a clear beat (share)",
+   "ours": 0.35,
+   "ref": "-",
+   "ok": false
+  },
+  {
+   "measure": "ambience under the voice dB",
+   "ours": -29.0,
+   "ref": "-29.1 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "ambience stem LUFS",
+   "ours": -41.5,
+   "ref": "-41.7 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "steady tone in effects + ambience s",
+   "ours": 12.5,
+   "ref": "-",
+   "ok": false
+  },
+  {
+   "measure": "effect onsets per 10 s",
+   "ours": 6.0,
+   "ref": "15.6 / None / None",
+   "ok": false
+  },
+  {
+   "measure": "effects under the voice dB",
+   "ours": -27.7,
+   "ref": "-23.1 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "effect onset centroid Hz",
+   "ours": 1865.0,
+   "ref": "1959.0 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "in-speech floor (p10 vs p75) dB",
+   "ours": -18.8,
+   "ref": "-11.5 / -9.30 / -9.40",
+   "ok": false
+  },
+  {
+   "measure": "mix centroid Hz",
+   "ours": 726.0,
+   "ref": "634.0 / 614.0 / 631.0",
+   "ok": false
+  },
+  {
+   "measure": "120-400 Hz vs 400-2k dB",
+   "ours": 3.6,
+   "ref": "3.30 / 5.40 / 4.80",
+   "ok": true
+  },
+  {
+   "measure": "10-16 kHz vs 400-2k dB",
+   "ours": -14.5,
+   "ref": "-16.2 / -10.0 / -8.90",
+   "ok": false
+  },
+  {
+   "measure": "every line over the bed, 0.5-4 kHz, worst dB",
+   "ours": 10.5,
+   "ref": "-",
+   "ok": false
+  },
+  {
+   "measure": "last 2 s dBFS RMS",
+   "ours": -21.0,
+   "ref": "-15.0 / -16.4 / -16.0",
+   "ok": false
+  },
+  {
+   "measure": "loudness LUFS",
+   "ours": -14.0,
+   "ref": "-14.0 / -14.1 / -14.1",
+   "ok": true
+  },
+  {
+   "measure": "loudness range LU",
+   "ours": 4.4,
+   "ref": "3.50 / 3.20 / 1.80",
+   "ok": false
+  },
+  {
+   "measure": "true peak dBTP",
+   "ours": -2.9,
+   "ref": "-2.90 / -2.20 / -2.10",
+   "ok": true
+  }
+ ],
+ "data": {
+  "ours": {
+   "key": "pointing",
+   "dur": 63.766666666666666,
+   "r128": {
+    "I": -14.0,
+    "LRA": 4.4,
+    "TP": -2.9
+   },
+   "asr_text": "His bag is on that train. He is not. All he did was laugh at a finger. Signal, green. He's pointing at nothing. But that driver has a thousand people behind him. So he checks with a finger and a shout. First stop, his suitcase tries to get off and the boy's finger saves it. Bad suitcase. Doors closed. What's a finger gonna do? Second stop. Stay, be right back. it stays. Vending machine check. This kid gets it. You see, his eyes looked right at it. His mind was on his phone. Japan's railway lab tested it for every six mistakes people made just looking. When they pointed and said it out loud, About one, a finger and a shout drag your mind back doors closed Bag gone",
+   "n_words": 129,
+   "mean_p": 0.9318867957638216,
+   "low_p_words": [
+    [
+     16.98,
+     "and",
+     0.39
+    ],
+    [
+     28.78,
+     "it",
+     0.15
+    ],
+    [
+     32.86,
+     "check.",
+     0.39
+    ],
+    [
+     56.86,
+     "doors",
+     0.15
+    ],
+    [
+     60.72,
+     "gone",
+     0.33
+    ]
+   ],
+   "first_word": 0.0,
+   "last_word_end": 63.46,
+   "wps_film": 2.023000522739153,
+   "wps_span": 2.03277655215884,
+   "gaps_over_0_3": 16,
+   "gaps_over_0_6": 6,
+   "gaps_over_1_0": 4,
+   "gap_time_over_0_3": 13.140000000000008,
+   "longest_gaps": [
+    [
+     2.64,
+     33.72,
+     36.36
+    ],
+    [
+     1.76,
+     20.42,
+     22.18
+    ],
+    [
+     1.44,
+     42.6,
+     44.04
+    ],
+    [
+     1.06,
+     48.9,
+     49.96
+    ],
+    [
+     0.84,
+     30.76,
+     31.6
+    ],
+    [
+     0.6,
+     57.84,
+     58.44
+    ]
+   ],
+   "speech_time": 48.44,
+   "no_voice_s": 5.800000000000001,
+   "dead_air_s": 3.3000000000000003,
+   "very_dead_s": 0.8,
+   "no_voice_runs": [
+    [
+     20.5,
+     22.1,
+     -31.7
+    ],
+    [
+     33.8,
+     36.3,
+     -28.8
+    ]
+   ],
+   "open": {
+    "rms_0_0.05": -38.7,
+    "rms_0_0.3": -17.1,
+    "rms_0.3_1": -15.7,
+    "rms_1_3": -17.2,
+    "peak_0_0.3": -2.9
+   },
+   "close": {
+    "rms_last2": -21.0,
+    "rms_last0.3": -26.0,
+    "tail_after_last_word": 0.31
+   },
+   "side_minus_mid_db": -26.4,
+   "lr_corr": 0.995,
+   "ltas_rel": {
+    "<120": -9.1,
+    "120-400": 3.6,
+    "400-2k": 0.0,
+    "2-5k": -7.2,
+    "5-10k": -8.5,
+    "10-16k": -14.5
+   },
+   "centroid_median": 726.0,
+   "presence_2_5k_per_s_rel_median": [
+    2.6,
+    0.3,
+    -0.3,
+    0.5,
+    2.8,
+    1.0,
+    3.9,
+    3.9,
+    1.7,
+    -1.5,
+    -1.6,
+    1.9,
+    0.4,
+    5.1,
+    -3.9,
+    0.2,
+    -0.1,
+    -1.6,
+    1.9,
+    2.0,
+    -5.4,
+    -18.8,
+    -2.5,
+    -2.7,
+    4.5,
+    -3.8,
+    -1.0,
+    -0.9,
+    1.5,
+    -4.2,
+    1.4,
+    1.6,
+    6.3,
+    4.5,
+    -16.1,
+    -26.3,
+    5.0,
+    1.6,
+    -2.1,
+    -1.3,
+    1.0,
+    -2.9,
+    -2.1,
+    5.8,
+    4.0,
+    0.6,
+    0.0,
+    -0.4,
+    0.7,
+    -8.7,
+    -1.1,
+    -5.3,
+    -7.6,
+    -5.4,
+    8.0,
+    0.6,
+    -11.8,
+    -6.6,
+    -5.0,
+    -8.7,
+    6.1,
+    0.8,
+    -4.6
+   ],
+   "stems_vs_final_corr": 0.9995,
+   "sentences": [
+    {
+     "s": 0.0,
+     "e": 1.56,
+     "text": "His bag is on that train.",
+     "f0_med": 226.0,
+     "range_st": 8.2,
+     "sd_st": 3.61,
+     "end_move_st": null,
+     "word_db_sd": 1.8,
+     "wps": 3.85,
+     "db": -16.7
+    },
+    {
+     "s": 1.74,
+     "e": 2.64,
+     "text": "He is not.",
+     "f0_med": 105.0,
+     "range_st": 8.3,
+     "sd_st": 3.49,
+     "end_move_st": 0.9,
+     "word_db_sd": 3.3,
+     "wps": 3.33,
+     "db": -15.3
+    },
+    {
+     "s": 2.94,
+     "e": 5.34,
+     "text": "All he did was laugh at a finger.",
+     "f0_med": 235.0,
+     "range_st": 14.9,
+     "sd_st": 4.72,
+     "end_move_st": -2.2,
+     "word_db_sd": 1.9,
+     "wps": 3.33,
+     "db": -16.6
+    },
+    {
+     "s": 5.64,
+     "e": 6.92,
+     "text": "Signal, green.",
+     "f0_med": 184.0,
+     "range_st": 14.8,
+     "sd_st": 5.75,
+     "end_move_st": -15.5,
+     "word_db_sd": 1.4,
+     "wps": 1.56,
+     "db": -16.1
+    },
+    {
+     "s": 6.98,
+     "e": 8.56,
+     "text": "He's pointing at nothing.",
+     "f0_med": 235.0,
+     "range_st": 7.5,
+     "sd_st": 3.8,
+     "end_move_st": -17.7,
+     "word_db_sd": 1.4,
+     "wps": 2.53,
+     "db": -16.7
+    },
+    {
+     "s": 8.8,
+     "e": 11.46,
+     "text": "But that driver has a thousand people behind him.",
+     "f0_med": 195.0,
+     "range_st": 11.5,
+     "sd_st": 4.25,
+     "end_move_st": null,
+     "word_db_sd": 3.8,
+     "wps": 3.38,
+     "db": -15.8
+    },
+    {
+     "s": 11.6,
+     "e": 13.7,
+     "text": "So he checks with a finger and a shout.",
+     "f0_med": 281.0,
+     "range_st": 6.6,
+     "sd_st": 2.92,
+     "end_move_st": null,
+     "word_db_sd": 1.8,
+     "wps": 4.29,
+     "db": -16.7
+    },
+    {
+     "s": 14.24,
+     "e": 19.32,
+     "text": "First stop, his suitcase tries to get off and the boy's finger saves it.",
+     "f0_med": 257.0,
+     "range_st": 11.1,
+     "sd_st": 4.05,
+     "end_move_st": null,
+     "word_db_sd": 2.7,
+     "wps": 2.76,
+     "db": -16.6
+    },
+    {
+     "s": 19.5,
+     "e": 20.42,
+     "text": "Bad suitcase.",
+     "f0_med": 138.0,
+     "range_st": 16.9,
+     "sd_st": 7.28,
+     "end_move_st": -12.1,
+     "word_db_sd": 0.9,
+     "wps": 2.17,
+     "db": -20.4
+    },
+    {
+     "s": 22.18,
+     "e": 23.38,
+     "text": "Doors closed.",
+     "f0_med": 113.0,
+     "range_st": 12.3,
+     "sd_st": 5.35,
+     "end_move_st": -12.2,
+     "word_db_sd": 1.8,
+     "wps": 1.67,
+     "db": -17.8
+    },
+    {
+     "s": 23.96,
+     "e": 25.56,
+     "text": "What's a finger gonna do?",
+     "f0_med": 106.0,
+     "range_st": 12.3,
+     "sd_st": 4.4,
+     "end_move_st": 0.7,
+     "word_db_sd": 1.6,
+     "wps": 3.13,
+     "db": -18.0
+    },
+    {
+     "s": 27.26,
+     "e": 28.78,
+     "text": "Stay, be right back.",
+     "f0_med": 150.0,
+     "range_st": 13.1,
+     "sd_st": 5.21,
+     "end_move_st": 8.1,
+     "word_db_sd": 0.7,
+     "wps": 2.63,
+     "db": -17.3
+    },
+    {
+     "s": 31.6,
+     "e": 33.72,
+     "text": "Vending machine check.",
+     "f0_med": 258.0,
+     "range_st": 12.8,
+     "sd_st": 4.38,
+     "end_move_st": null,
+     "word_db_sd": 3.4,
+     "wps": 1.42,
+     "db": -18.0
+    },
+    {
+     "s": 36.36,
+     "e": 38.22,
+     "text": "This kid gets it.",
+     "f0_med": 117.0,
+     "range_st": 10.7,
+     "sd_st": 4.48,
+     "end_move_st": -0.3,
+     "word_db_sd": 3.0,
+     "wps": 2.15,
+     "db": -17.6
+    },
+    {
+     "s": 38.58,
+     "e": 41.06,
+     "text": "You see, his eyes looked right at it.",
+     "f0_med": 173.0,
+     "range_st": 11.9,
+     "sd_st": 4.14,
+     "end_move_st": 0.5,
+     "word_db_sd": 4.6,
+     "wps": 3.23,
+     "db": -15.0
+    },
+    {
+     "s": 41.28,
+     "e": 42.6,
+     "text": "His mind was on his phone.",
+     "f0_med": 116.0,
+     "range_st": 7.9,
+     "sd_st": 2.79,
+     "end_move_st": 0.1,
+     "word_db_sd": 1.3,
+     "wps": 4.55,
+     "db": -14.5
+    },
+    {
+     "s": 44.04,
+     "e": 48.9,
+     "text": "Japan's railway lab tested it for every six mistakes people made just looking.",
+     "f0_med": 207.0,
+     "range_st": 14.5,
+     "sd_st": 5.88,
+     "end_move_st": null,
+     "word_db_sd": 3.8,
+     "wps": 2.67,
+     "db": -15.8
+    },
+    {
+     "s": 49.96,
+     "e": 63.46,
+     "text": "When they pointed and said it out loud, About one, a finger and a shout drag your mind back doors closed Bag gone",
+     "f0_med": 164.0,
+     "range_st": 16.5,
+     "sd_st": 6.03,
+     "end_move_st": -1.3,
+     "word_db_sd": 2.8,
+     "wps": 1.7,
+     "db": -17.9
+    }
+   ],
+   "f0_median_all": 178.5,
+   "f0_range_st_p5_p95": 18.9,
+   "f0_sd_within_sentence_median": 4.39,
+   "f0_range_within_sentence_median": 12.1,
+   "jump_between_sentences_st_median": 6.3,
+   "jump_between_sentences_over_5st": 10,
+   "ends": {
+    "rise": 1,
+    "fall": 5,
+    "flat": 6
+   },
+   "sentence_db_sd": 1.3,
+   "word_db_sd_median": 1.9,
+   "sentence_wps_median": 2.71,
+   "sentence_wps_sd": 0.9,
+   "n_sentences": 18,
+   "sentences_over_5st_from_median": 8,
+   "est_bed_in_gaps_db_vs_speech": -18.4,
+   "est_floor_p10_vs_speech": -18.8,
+   "tonal_frac_gaps": 0.48,
+   "mix_onsets_in_gaps_per10s_gap": 16.4,
+   "gap_time": 12.8,
+   "mix_lowband_tempo": [
+    88.0,
+    0.05
+   ],
+   "stems": {
+    "music_lufs": -32.0,
+    "music_present_pct_film": 91.0,
+    "music_present_pct_speech": 93.0,
+    "music_under_voice_median_db": -21.9,
+    "sfx_lufs": -35.6,
+    "sfx_present_pct_film": 59.0,
+    "sfx_present_pct_speech": 59.0,
+    "sfx_under_voice_median_db": -27.7,
+    "amb_lufs": -41.5,
+    "amb_present_pct_film": 90.0,
+    "amb_present_pct_speech": 87.0,
+    "amb_under_voice_median_db": -29.0,
+    "voice_lufs": -13.8,
+    "music_silent_runs_over_0_5s": [
+     [
+      0.0,
+      2.7
+     ],
+     [
+      21.0,
+      22.7
+     ],
+     [
+      55.9,
+      57.0
+     ]
+    ],
+    "music_silent_total_s": 5.5,
+    "music_level_per_s": [
+     -201.0,
+     -201.0,
+     -124.0,
+     -33.0,
+     -34.0,
+     -39.0,
+     -44.0,
+     -36.0,
+     -37.0,
+     -36.0,
+     -36.0,
+     -40.0,
+     -39.0,
+     -42.0,
+     -47.0,
+     -39.0,
+     -34.0,
+     -29.0,
+     -32.0,
+     -37.0,
+     -38.0,
+     -73.0,
+     -133.0,
+     -28.0,
+     -34.0,
+     -34.0,
+     -32.0,
+     -42.0,
+     -39.0,
+     -35.0,
+     -35.0,
+     -31.0,
+     -36.0,
+     -34.0,
+     -26.0,
+     -83.0,
+     -52.0,
+     -37.0,
+     -34.0,
+     -38.0,
+     -39.0,
+     -37.0,
+     -40.0,
+     -41.0,
+     -33.0,
+     -44.0,
+     -36.0,
+     -34.0,
+     -35.0,
+     -30.0,
+     -39.0,
+     -39.0,
+     -41.0,
+     -33.0,
+     -38.0,
+     -33.0,
+     -149.0,
+     -35.0,
+     -24.0,
+     -31.0,
+     -36.0,
+     -30.0,
+     -34.0
+    ],
+    "music_level_jumps_over_6db_per_min": 21.6,
+    "music_tempo_windows": [
+     [
+      0.0,
+      122.0,
+      0.58
+     ],
+     [
+      3.0,
+      81.0,
+      0.2
+     ],
+     [
+      6.0,
+      72.0,
+      0.2
+     ],
+     [
+      9.0,
+      171.0,
+      0.02
+     ],
+     [
+      12.0,
+      82.0,
+      0.07
+     ],
+     [
+      15.0,
+      162.0,
+      0.24
+     ],
+     [
+      18.0,
+      103.0,
+      0.24
+     ],
+     [
+      21.0,
+      143.0,
+      0.52
+     ],
+     [
+      24.0,
+      143.0,
+      0.35
+     ],
+     [
+      27.0,
+      162.0,
+      0.25
+     ],
+     [
+      30.0,
+      162.0,
+      0.32
+     ],
+     [
+      33.0,
+      62.0,
+      0.31
+     ],
+     [
+      36.0,
+      103.0,
+      0.22
+     ],
+     [
+      39.0,
+      103.0,
+      0.12
+     ],
+     [
+      42.0,
+      130.0,
+      0.7
+     ],
+     [
+      45.0,
+      130.0,
+      0.84
+     ],
+     [
+      48.0,
+      133.0,
+      0.22
+     ],
+     [
+      51.0,
+      130.0,
+      0.2
+     ],
+     [
+      54.0,
+      94.0,
+      0.18
+     ],
+     [
+      57.0,
+      80.0,
+      0.19
+     ]
+    ],
+    "music_centroid_median": 471.0,
+    "sfx_onsets": 38,
+    "sfx_onsets_per10s": 6.0,
+    "sfx_onset_db_vs_voice_median": -29.9,
+    "sfx_onset_db_vs_voice_p90": -23.7,
+    "sfx_onset_centroid_median": 1865.0,
+    "sfx_onset_times": [
+     0.59,
+     0.76,
+     4.14,
+     11.38,
+     12.55,
+     16.96,
+     18.5,
+     18.62,
+     21.91,
+     27.98,
+     28.37,
+     28.67,
+     29.48,
+     31.2,
+     31.36,
+     34.1,
+     40.39,
+     41.65,
+     42.04,
+     46.16,
+     46.27,
+     46.62,
+     47.08,
+     47.54,
+     48.0,
+     48.45,
+     48.56,
+     51.38,
+     51.9,
+     52.58,
+     53.17,
+     56.86,
+     58.25,
+     58.42,
+     59.06,
+     61.54,
+     61.79,
+     62.95
+    ],
+    "voice_side_minus_mid_db": -57.7,
+    "music_side_minus_mid_db": -13.1,
+    "sfx_side_minus_mid_db": -5.7,
+    "amb_side_minus_mid_db": -3.6,
+    "open_0_0.3_dbfs": {
+     "voice": -17.1,
+     "music": -200.0,
+     "sfx": -38.1,
+     "amb": -47.6
+    },
+    "close_last2_dbfs": {
+     "voice": -21.0,
+     "music": -37.3,
+     "sfx": -41.5,
+     "amb": -46.0
+    },
+    "voice_ltas_rel": {
+     "<120": -9.3,
+     "120-400": 3.6,
+     "400-2k": 0.0,
+     "2-5k": -7.2,
+     "5-10k": -8.6,
+     "10-16k": -14.6
+    }
+   }
+  },
+  "extra": {
+   "steady_tone_s": 12.5,
+   "steady_tone_hz": 1128.0,
+   "narrator_share": 0.5,
+   "narrator_pitch_step_st": 4.8,
+   "line_margin_worst": [
+    "v3_d03",
+    10.5
+   ],
+   "line_margins": [
+    [
+     "v3_n01",
+     23.8
+    ],
+    [
+     "v3_n02",
+     15.2
+    ],
+    [
+     "v3_n03",
+     18.9
+    ],
+    [
+     "v3_d01",
+     13.3
+    ],
+    [
+     "v3_t01",
+     22.3
+    ],
+    [
+     "v3_n04",
+     21.8
+    ],
+    [
+     "v3_n05",
+     22.4
+    ],
+    [
+     "v3_n06",
+     27.1
+    ],
+    [
+     "v3_n07",
+     19.5
+    ],
+    [
+     "v3_n08",
+     13.2
+    ],
+    [
+     "v3_t02",
+     19.1
+    ],
+    [
+     "v3_d02",
+     15.1
+    ],
+    [
+     "v3_t03",
+     20.8
+    ],
+    [
+     "v3_n09",
+     17.9
+    ],
+    [
+     "v3_t04",
+     24.9
+    ],
+    [
+     "v3_n10",
+     27.1
+    ],
+    [
+     "v3_t05",
+     14.8
+    ],
+    [
+     "v3_t06",
+     23.1
+    ],
+    [
+     "v3_n11",
+     22.9
+    ],
+    [
+     "v3_r01",
+     23.5
+    ],
+    [
+     "v3_n12",
+     14.1
+    ],
+    [
+     "v3_n13",
+     16.3
+    ],
+    [
+     "v3_n14",
+     22.6
+    ],
+    [
+     "v3_d03",
+     10.5
+    ],
+    [
+     "v3_k01",
+     17.7
+    ],
+    [
+     "v3_t07",
+     20.2
+    ]
+   ]
+  }
+ }
+}

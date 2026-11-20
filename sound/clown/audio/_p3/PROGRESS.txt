@@ -1,0 +1,17 @@
+p3 sound pass (agent 2, 2026-11-18)
+[x] backed up the three stale cue files as sound_cues_p2.json
+[x] regenerated all 3 cue files from current code (quiz 71, story1 105, story2 87); no generator failed
+[ ] el_batch_p3.py all started (counter before 36955)
+[x] el_batch_p3 done: 11 takes, 179 credits (36955 -> 37134), log _el/credits_p3.json
+[x] measured new takes (_p3/measure_new.txt); rejected pigeon_settle_1, juggle_1, idea_ping_1; REG entries added in samples.py; music.py edits (phrase, spun, bag hit, mindblow -27.5, suit -15) in progress
+[x] sfx.py: MAP for all new names, honk singles + open honk, steps (sneaker/hard + scuff + HP120 + featured +6), pips from e1.pop, chip/flip/ding re-timed, E3 hold (soft hit, glint at ring_full, money? gate), mind hush, 80 Hz bus HP, bed hold-out
+[x] mix.py: count lift (+6 score / +4 sfx), preview name mix_p3_preview.mp3; p2 mix/report/doc backed up in _p3/
+[x] mix run 1 OK (08:11): -14.01 LUFS, -2.90 dBTP, margin min 7.6, sync 0 outside
+[ ] run 2 fixes: flat count lift (one span), S1 SHOT_DB, honk word rule, spin chop -6, door -19, featured steps +9, pips -17.5 carve -6, swell compressed (music.py), verify metric
+[x] CREDITS.txt p3 block; _p3/write_p3_section.py ready (writes p3_section.md + SOUND_EVENTS_V2.md)
+[x] mix run 2 OK (08:23): 22/22 checks; verify_p3.json written
+[x] DONE 08:27: SOUND_EVENTS_V2.md (section 0 = p3), MUSIC_V2.md p3 notes, CREDITS.txt p3 block; deliverables mix.wav + 4 stems + mix_report.json (08:22-08:23), studio/out/clown/mix_p3_preview.mp3
+p4 round started 23:24: map new names, wait for .render_lock
+[x] p4 mapping done (24 names, unmapped 0, budget 150, honk gap 6, Q1 ting ban, whip peaks, hush rule, S5 jaw -5, S8 sparkle -3, bag_open_t prefers suit_spring -> 25.0 s so music_v2.wav unchanged)
+[ ] p4 mix started 23:54 (lock gone)
+[x] p4 DONE 23:57: mix 22/22, -14.01 LUFS, -2.90 dBTP, 2246 f; mix_p4_preview.mp3; p4 note in SOUND_EVENTS_V2.md

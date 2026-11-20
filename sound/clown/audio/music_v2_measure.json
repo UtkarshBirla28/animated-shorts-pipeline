@@ -1,0 +1,320 @@
+[
+ {
+  "file": "music_v2.wav",
+  "label": "music_v2.wav",
+  "dur": 70.733,
+  "lufs": -35.8,
+  "lra": 6.3,
+  "tp": -18.0,
+  "crest": 19.8,
+  "bands": [
+   -13.8,
+   -4.5,
+   -6.2,
+   -7.2,
+   -10.5,
+   -12.1,
+   -20.9,
+   -20.4,
+   -20.4
+  ],
+  "side_db": -12.0,
+  "lr_corr": 0.882,
+  "mono_loss": -0.23,
+  "phone_loss": -4.6,
+  "bass_harm_db": -3.0,
+  "bpm": 103.4,
+  "bpm_conf": 0.14,
+  "first_50ms_dbfs": -32.8,
+  "first_note_ms": 1.4,
+  "last_50ms_dbfs": -33.3,
+  "mom_max": -28.0,
+  "sections": [
+   {
+    "name": "quiz",
+    "a": 0.0,
+    "b": 9.06,
+    "lufs": -34.1,
+    "side_db": -12.7,
+    "air_db": -19.0,
+    "top_db": -18.4,
+    "low_db": -5.1
+   },
+   {
+    "name": "answer",
+    "a": 9.06,
+    "b": 12.99,
+    "lufs": -35.2,
+    "side_db": -12.5,
+    "air_db": -24.5,
+    "top_db": -39.3,
+    "low_db": -5.1
+   },
+   {
+    "name": "turn",
+    "a": 12.99,
+    "b": 16.995,
+    "lufs": -37.3,
+    "side_db": -17.6,
+    "air_db": -48.4,
+    "top_db": -51.0,
+    "low_db": -3.1
+   },
+   {
+    "name": "origin",
+    "a": 16.995,
+    "b": 24.6,
+    "lufs": -35.0,
+    "side_db": -14.2,
+    "air_db": -20.8,
+    "top_db": -21.7,
+    "low_db": -4.6
+   },
+   {
+    "name": "suit",
+    "a": 23.925,
+    "b": 25.145,
+    "lufs": -34.4,
+    "side_db": -12.2,
+    "air_db": -21.7,
+    "top_db": -39.3,
+    "low_db": -7.0
+   },
+   {
+    "name": "ride",
+    "a": 25.145,
+    "b": 29.205,
+    "lufs": -33.8,
+    "side_db": -11.3,
+    "air_db": -17.0,
+    "top_db": -16.7,
+    "low_db": -3.8
+   },
+   {
+    "name": "interviews",
+    "a": 29.205,
+    "b": 37.72,
+    "lufs": -38.8,
+    "side_db": -13.8,
+    "air_db": -17.8,
+    "top_db": -18.0,
+    "low_db": -2.6
+   },
+   {
+    "name": "number",
+    "a": 37.72,
+    "b": 42.295,
+    "lufs": -37.2,
+    "side_db": -10.2,
+    "air_db": -36.5,
+    "top_db": -48.4,
+    "low_db": -5.4
+   },
+   {
+    "name": "mystery",
+    "a": 42.295,
+    "b": 50.02,
+    "lufs": -39.4,
+    "side_db": -10.3,
+    "air_db": -40.0,
+    "top_db": -52.4,
+    "low_db": -4.7
+   },
+   {
+    "name": "money",
+    "a": 50.02,
+    "b": 61.45,
+    "lufs": -35.4,
+    "side_db": -11.8,
+    "air_db": -20.1,
+    "top_db": -19.6,
+    "low_db": -5.3
+   },
+   {
+    "name": "mindblow",
+    "a": 61.72,
+    "b": 65.495,
+    "lufs": -39.4,
+    "side_db": -7.7,
+    "air_db": -42.2,
+    "top_db": -45.2,
+    "low_db": -4.4
+   },
+   {
+    "name": "end",
+    "a": 65.495,
+    "b": 68.445,
+    "lufs": -33.4,
+    "side_db": -13.6,
+    "air_db": -19.2,
+    "top_db": -19.6,
+    "low_db": -3.7
+   },
+   {
+    "name": "rewind",
+    "a": 68.775,
+    "b": 70.733,
+    "lufs": -35.2,
+    "side_db": -6.6,
+    "air_db": -21.8,
+    "top_db": -26.1,
+    "low_db": -10.8
+   }
+  ],
+  "novelty_at_edges": [
+   {
+    "edge": "answer",
+    "planned": 9.06,
+    "peak_at": 9.2,
+    "height": 0.625,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "turn",
+    "planned": 12.99,
+    "peak_at": 12.4,
+    "height": 0.386,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "origin",
+    "planned": 16.995,
+    "peak_at": 18.0,
+    "height": 0.274,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "suit",
+    "planned": 23.925,
+    "peak_at": 23.9,
+    "height": 0.785,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "ride",
+    "planned": 25.145,
+    "peak_at": 24.6,
+    "height": 0.719,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "interviews",
+    "planned": 29.205,
+    "peak_at": 30.2,
+    "height": 0.326,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "number",
+    "planned": 37.72,
+    "peak_at": 37.6,
+    "height": 0.829,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "mystery",
+    "planned": 42.295,
+    "peak_at": 42.4,
+    "height": 0.312,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "money",
+    "planned": 50.02,
+    "peak_at": 51.0,
+    "height": 0.535,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "mindblow",
+    "planned": 61.72,
+    "peak_at": 61.7,
+    "height": 0.365,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "end",
+    "planned": 65.495,
+    "peak_at": 65.6,
+    "height": 0.428,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "hush",
+    "planned": 68.445,
+    "peak_at": 68.5,
+    "height": 0.523,
+    "median_elsewhere": 0.185
+   },
+   {
+    "edge": "rewind",
+    "planned": 68.775,
+    "peak_at": 68.6,
+    "height": 0.523,
+    "median_elsewhere": 0.185
+   }
+  ]
+ },
+ {
+  "file": "stem_music.wav",
+  "label": "saladoil score (approved)",
+  "dur": 86.933,
+  "lufs": -32.4,
+  "lra": 3.9,
+  "tp": -16.1,
+  "crest": 18.4,
+  "bands": [
+   -10.2,
+   -3.5,
+   -8.2,
+   -6.6,
+   -14.3,
+   -16.4,
+   -23.6,
+   -19.4,
+   -20.1
+  ],
+  "side_db": -14.7,
+  "lr_corr": 0.935,
+  "mono_loss": -0.17,
+  "phone_loss": -5.6,
+  "bass_harm_db": -4.0,
+  "bpm": 120.0,
+  "bpm_conf": 0.08,
+  "first_50ms_dbfs": -36.0,
+  "first_note_ms": 6.9,
+  "last_50ms_dbfs": -200.0,
+  "mom_max": -26.1
+ },
+ {
+  "file": "stem_music.wav",
+  "label": "clown cut-1 circus score (rejected)",
+  "dur": 62.267,
+  "lufs": -33.6,
+  "lra": 3.7,
+  "tp": -17.6,
+  "crest": 17.9,
+  "bands": [
+   -16.9,
+   -3.3,
+   -6.8,
+   -7.6,
+   -10.1,
+   -15.5,
+   -25.1,
+   -28.1,
+   -42.6
+  ],
+  "side_db": -18.7,
+  "lr_corr": 0.974,
+  "mono_loss": -0.06,
+  "phone_loss": -5.8,
+  "bass_harm_db": -3.8,
+  "bpm": 109.1,
+  "bpm_conf": 0.24,
+  "first_50ms_dbfs": -32.7,
+  "first_note_ms": 8.1,
+  "last_50ms_dbfs": -35.8,
+  "mom_max": -27.7
+ }
+]

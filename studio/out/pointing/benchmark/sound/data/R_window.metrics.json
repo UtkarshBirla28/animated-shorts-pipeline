@@ -1,0 +1,294 @@
+{
+ "key": "R_window",
+ "dur": 45.09316666666667,
+ "r128": {
+  "I": -14.3,
+  "LRA": 2.4,
+  "TP": -1.3
+ },
+ "asr_text": "Gambling is illegal in Japan, yet there's a gambling hall on almost every street. Inside, thousands of machines are flashing and screaming while people carry out buckets full of steel balls. Police stroll right past the door, but nobody ever gets arrested. So you win a bucket yourself and try to cash it in, but the counter won't give you a single yen. Instead, you can pick cookies, chocolate, a bottle of shampoo, or a few tiny plastic tokens. The guy in front of you takes the tokens and heads straight outside. You follow him around corner to a little window in a wall with no sign. You see, that window isn't part of the gambling hall. It's technically a separate shop that just happens to buy those exact tokens. So the hall only ever gives out prizes and the shop is just buying one. He slides the tokens through, a hand slides over cash, and on paper, nobody gambled.",
+ "n_words": 160,
+ "mean_p": 0.9752822875976562,
+ "low_p_words": [
+  [
+   27.58,
+   "corner",
+   0.2
+  ]
+ ],
+ "first_word": 0.0,
+ "last_word_end": 45.06,
+ "wps_film": 3.548209447846865,
+ "wps_span": 3.5508211273857078,
+ "gaps_over_0_3": 3,
+ "gaps_over_0_6": 0,
+ "gaps_over_1_0": 0,
+ "gap_time_over_0_3": 1.4000000000000004,
+ "longest_gaps": [
+  [
+   0.54,
+   5.12,
+   5.66
+  ],
+  [
+   0.54,
+   4.38,
+   4.92
+  ],
+  [
+   0.32,
+   18.52,
+   18.84
+  ],
+  [
+   0.28,
+   36.78,
+   37.06
+  ],
+  [
+   0.24,
+   44.24,
+   44.48
+  ],
+  [
+   0.24,
+   43.38,
+   43.62
+  ]
+ ],
+ "speech_time": 40.280000000000015,
+ "no_voice_s": 0.1,
+ "dead_air_s": 0.0,
+ "very_dead_s": 0.0,
+ "no_voice_runs": [],
+ "open": {
+  "rms_0_0.05": -200.0,
+  "rms_0_0.3": -16.7,
+  "rms_0.3_1": -14.5,
+  "rms_1_3": -18.1,
+  "peak_0_0.3": -3.1
+ },
+ "close": {
+  "rms_last2": -18.6,
+  "rms_last0.3": -20.2,
+  "tail_after_last_word": 0.03
+ },
+ "side_minus_mid_db": -26.6,
+ "lr_corr": 0.996,
+ "ltas_rel": {
+  "<120": -7.5,
+  "120-400": 3.5,
+  "400-2k": 0.0,
+  "2-5k": -7.8,
+  "5-10k": -5.5,
+  "10-16k": -8.6
+ },
+ "centroid_median": 737.0,
+ "presence_2_5k_per_s_rel_median": [
+  1.7,
+  1.9,
+  -0.8,
+  2.0,
+  1.7,
+  0.1,
+  3.1,
+  2.2,
+  -1.0,
+  -1.0,
+  1.5,
+  -1.9,
+  -1.9,
+  -1.0,
+  0.7,
+  3.8,
+  2.4,
+  -3.4,
+  -2.2,
+  1.3,
+  1.3,
+  0.4,
+  -0.8,
+  0.0,
+  1.9,
+  0.6,
+  -0.6,
+  -6.3,
+  -5.7,
+  -2.3,
+  1.1,
+  -1.0,
+  -0.1,
+  -1.3,
+  -0.3,
+  -0.1,
+  -1.4,
+  -1.6,
+  0.1,
+  1.8,
+  -0.4,
+  -0.7,
+  2.0,
+  3.6,
+  0.4
+ ],
+ "sentences": [
+  {
+   "s": 0.0,
+   "e": 4.38,
+   "text": "Gambling is illegal in Japan, yet there's a gambling hall on almost every street.",
+   "f0_med": 208.0,
+   "range_st": 17.5,
+   "sd_st": 6.58,
+   "end_move_st": null,
+   "word_db_sd": 2.5,
+   "wps": 3.2,
+   "db": -17.1
+  },
+  {
+   "s": 4.92,
+   "e": 10.26,
+   "text": "Inside, thousands of machines are flashing and screaming while people carry out buckets full of steel balls.",
+   "f0_med": 218.0,
+   "range_st": 10.0,
+   "sd_st": 3.6,
+   "end_move_st": 4.2,
+   "word_db_sd": 1.9,
+   "wps": 3.18,
+   "db": -17.3
+  },
+  {
+   "s": 10.5,
+   "e": 13.54,
+   "text": "Police stroll right past the door, but nobody ever gets arrested.",
+   "f0_med": 200.0,
+   "range_st": 12.0,
+   "sd_st": 4.8,
+   "end_move_st": null,
+   "word_db_sd": 2.3,
+   "wps": 3.62,
+   "db": -18.4
+  },
+  {
+   "s": 13.72,
+   "e": 18.52,
+   "text": "So you win a bucket yourself and try to cash it in, but the counter won't give you a single yen.",
+   "f0_med": 220.0,
+   "range_st": 10.4,
+   "sd_st": 3.85,
+   "end_move_st": 3.8,
+   "word_db_sd": 2.3,
+   "wps": 4.38,
+   "db": -16.5
+  },
+  {
+   "s": 18.84,
+   "e": 23.78,
+   "text": "Instead, you can pick cookies, chocolate, a bottle of shampoo, or a few tiny plastic tokens.",
+   "f0_med": 228.0,
+   "range_st": 11.1,
+   "sd_st": 4.73,
+   "end_move_st": 0.6,
+   "word_db_sd": 1.8,
+   "wps": 3.24,
+   "db": -18.4
+  },
+  {
+   "s": 23.94,
+   "e": 26.66,
+   "text": "The guy in front of you takes the tokens and heads straight outside.",
+   "f0_med": 168.0,
+   "range_st": 13.6,
+   "sd_st": 5.36,
+   "end_move_st": null,
+   "word_db_sd": 1.3,
+   "wps": 4.78,
+   "db": -16.7
+  },
+  {
+   "s": 26.8,
+   "e": 30.2,
+   "text": "You follow him around corner to a little window in a wall with no sign.",
+   "f0_med": 196.0,
+   "range_st": 14.0,
+   "sd_st": 5.57,
+   "end_move_st": null,
+   "word_db_sd": 2.4,
+   "wps": 4.41,
+   "db": -16.3
+  },
+  {
+   "s": 30.38,
+   "e": 32.82,
+   "text": "You see, that window isn't part of the gambling hall.",
+   "f0_med": 247.0,
+   "range_st": 15.6,
+   "sd_st": 5.76,
+   "end_move_st": null,
+   "word_db_sd": 2.6,
+   "wps": 4.1,
+   "db": -17.3
+  },
+  {
+   "s": 33.04,
+   "e": 36.78,
+   "text": "It's technically a separate shop that just happens to buy those exact tokens.",
+   "f0_med": 182.0,
+   "range_st": 12.9,
+   "sd_st": 5.29,
+   "end_move_st": 0.1,
+   "word_db_sd": 2.4,
+   "wps": 3.48,
+   "db": -19.2
+  },
+  {
+   "s": 37.06,
+   "e": 40.66,
+   "text": "So the hall only ever gives out prizes and the shop is just buying one.",
+   "f0_med": 220.0,
+   "range_st": 14.6,
+   "sd_st": 5.76,
+   "end_move_st": -1.8,
+   "word_db_sd": 2.1,
+   "wps": 4.17,
+   "db": -17.2
+  },
+  {
+   "s": 40.8,
+   "e": 45.06,
+   "text": "He slides the tokens through, a hand slides over cash, and on paper, nobody gambled.",
+   "f0_med": 211.0,
+   "range_st": 12.9,
+   "sd_st": 5.01,
+   "end_move_st": null,
+   "word_db_sd": 0.8,
+   "wps": 3.52,
+   "db": -17.6
+  }
+ ],
+ "f0_median_all": 211.0,
+ "f0_range_st_p5_p95": 16.2,
+ "f0_sd_within_sentence_median": 5.29,
+ "f0_range_within_sentence_median": 12.9,
+ "jump_between_sentences_st_median": 2.2,
+ "jump_between_sentences_over_5st": 2,
+ "ends": {
+  "rise": 2,
+  "fall": 1,
+  "flat": 2
+ },
+ "sentence_db_sd": 0.8,
+ "word_db_sd_median": 2.3,
+ "sentence_wps_median": 3.62,
+ "sentence_wps_sd": 0.54,
+ "n_sentences": 11,
+ "sentences_over_5st_from_median": 0,
+ "est_bed_in_gaps_db_vs_speech": -5.7,
+ "est_floor_p10_vs_speech": -7.8,
+ "tonal_frac_gaps": 0.71,
+ "mix_onsets_in_gaps_per10s_gap": 33.8,
+ "gap_time": 2.7,
+ "mix_lowband_tempo": [
+  68.0,
+  0.02
+ ]
+}

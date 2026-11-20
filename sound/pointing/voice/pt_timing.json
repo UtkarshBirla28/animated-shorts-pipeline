@@ -1,0 +1,166 @@
+{
+ "_doc": "The pause plan of the pointing voice (read by pt_build.py and pt_verify.py). Every value is TRUE silence (10 ms RMS windows under -45 dBFS) between the acoustic end of one line and the start of the next. Decided from the picture column of sound/pointing/SCRIPT_v2.md so the voice never changes after Gate 1 (PIPELINE_V3 A2). Reasons per pause in _why.",
+ "lead_s": 0.12,
+ "tail_s": 0.8,
+ "gaps": {
+  "d01|t01": 0.25,
+  "t01|n01": 0.3,
+  "n01|n02": 0.35,
+  "n02|n03": 0.45,
+  "n03|d02": 0.25,
+  "d02|n04": 0.55,
+  "n04|d03": 0.3,
+  "d03|t02": 0.9,
+  "t02|t03": 0.6,
+  "t03|n05": 0.3,
+  "n05|n06": 0.25,
+  "n06|n07": 0.7,
+  "n07|n08": 0.35,
+  "n08|t04": 0.6,
+  "n08|t05": 0.6,
+  "t04|t05": 0.35,
+  "t05|n09": 0.55,
+  "n09|n10": 0.5,
+  "n10|n11": 0.3,
+  "n11|n12": 0.7,
+  "n12|n13": 0.4,
+  "n13|d04": 0.45,
+  "d04|k01": 1.0,
+  "k01|t06": 0.8
+ },
+ "sentence_gaps": {
+  "t02": 0.3,
+  "n08": 0.35
+ },
+ "inner_exc": {
+  "d01": [
+   0.6,
+   0.5
+  ],
+  "d02": [
+   0.6,
+   0.5
+  ],
+  "d03": [
+   0.6,
+   0.5
+  ],
+  "d04": [
+   0.6,
+   0.5
+  ],
+  "k01": [
+   0.6,
+   0.5
+  ],
+  "t04": [
+   0.6,
+   0.5
+  ],
+  "t06": [
+   0.7,
+   0.6
+  ],
+  "n02": [
+   0.45,
+   0.4
+  ],
+  "n06": [
+   0.45,
+   0.4
+  ],
+  "n09": [
+   0.45,
+   0.4
+  ],
+  "n11": [
+   0.45,
+   0.4
+  ],
+  "n12": [
+   0.45,
+   0.4
+  ]
+ },
+ "keep_pre": [
+  "t01",
+  "t03",
+  "t04",
+  "t05"
+ ],
+ "lift_db": {
+  "t06": -1.5
+ },
+ "section": {
+  "d01": 1,
+  "t01": 2,
+  "n01": 3,
+  "n02": 4,
+  "n03": 5,
+  "d02": 5,
+  "n04": 5,
+  "d03": 5,
+  "t02": 6,
+  "t03": 7,
+  "n05": 8,
+  "n06": 8,
+  "n07": 8,
+  "n08": 8,
+  "t04": 9,
+  "t05": 9,
+  "n09": 10,
+  "n10": 11,
+  "n11": 11,
+  "n12": 12,
+  "n13": 12,
+  "d04": 13,
+  "k01": 13,
+  "t06": 13
+ },
+ "_sections": {
+  "1": "hook (cold open)",
+  "2": "doubter",
+  "3": "hook promise",
+  "4": "stakes",
+  "5": "escalation: call-outs + the doors plant",
+  "6": "plant: the bag",
+  "7": "doubter",
+  "8": "setback: New York does it too",
+  "9": "gag + loop line",
+  "10": "clue (the stove)",
+  "11": "the test + the answer",
+  "12": "why",
+  "13": "payoff"
+ },
+ "_why": {
+  "lead_s": "frame 0 = the glove already mid-snap and the loop seam from 'gone': the call comes at once",
+  "tail_s": "the brief: ~0.8 s after 'Bag... gone.' to end the video (his finger enters the phone screen), then the cut to frame 0",
+  "d01|t01": "pull back out of the phone to the tourist; his laugh starts the line",
+  "t01|n01": "the narrator answers the doubter at once",
+  "n01|n02": "slow push in on his grin, then the camera lifts and glides backward",
+  "n02|n03": "hold on the boy at the cab glass on 'one tiny fan'",
+  "n03|d02": "the glove points at the speedometer as the needle settles, then the call",
+  "d02|n04": "the glove snaps; the boy copies a beat late",
+  "n04|d03": "the glove rises to the door-closed lamp",
+  "d03|t02": "the lamp lights; side view along the platform: the doors slide shut (the plant), then the next station's door chime",
+  "t02|t03": "he pats the handle, hops onto the platform, phone up (the bag must read 2 s in the doorway)",
+  "t03|n05": "hard cut to New York",
+  "n05|n06": "normal",
+  "n06|n07": "the sight gag: doors open on a tunnel wall, a commuter looks out, checks his map, looks back (hold 3 s)",
+  "n07|n08": "next stop: no board in sight",
+  "n08|t04": "the doors stay shut, passengers wait, one taps his watch",
+  "n08|t05": "used only if 'Vending machine... check!' is cut (cut order 1)",
+  "t04|t05": "two-shot: he grins into his phone, the boy frowns",
+  "t05|n09": "the loop line lands; the kitchen at night",
+  "n09|n10": "the question hangs (the hand on the door, the stove knobs all off)",
+  "n10|n11": "normal",
+  "n11|n12": "hold the final 6 vs 1 jars and the -85 % chip (a pause after a number)",
+  "n12|n13": "the door chime starts",
+  "n13|d04": "the glove rises toward the door lamp",
+  "d04|k01": "the brief: hold ~1 s on the doors shutting with the suitcase inside; the train starts to glide",
+  "k01|t06": "'after a beat': he lowers his phone, then lifts it again",
+  "sentence_gaps.t02": "'Stay.' (pats the handle like a dog) 'Be right back.'",
+  "sentence_gaps.n08": "'No board?' (his finger hovers) 'No doors.'",
+  "lift_db.t06": "the tourist last line is small and flat (script 5.1): 1.5 dB under the other lines"
+ }
+}

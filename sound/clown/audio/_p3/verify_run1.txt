@@ -1,0 +1,623 @@
+{
+ "open_honk": {
+  "set_LU": -6.0,
+  "measured_LU": -6.0,
+  "files": "horn_4#1 (frame 0) + horn_5#1 (f 6), two squeezes tuned to A, over by the first word",
+  "sfx_peak_0_to_quick_dBFS": -8.588910669974325,
+  "sfx_peak_after_quick_30ms_dBFS": -26.044725977008277,
+  "sfx_first_10ms_peak": -11.092447186657552,
+  "quick_s": 0.34,
+  "honk_K_level_re_voice_LU": -5.95696471429229,
+  "honk_vs_voice_around_it_dB": -5.83139371462431
+ },
+ "count": {
+  "spans": [
+   [
+    2.44,
+    5.33
+   ],
+   [
+    6.539999999999999,
+    9.33
+   ]
+  ],
+  "mix_LUFS": [
+   -23.47227951751125,
+   -21.89501763641745
+  ],
+  "score_LUFS": [
+   -24.636010330265133,
+   -22.762175615621512
+  ],
+  "sfx_LUFS": [
+   -29.53648459395895,
+   -29.446325858659115
+  ],
+  "bed_LUFS": [
+   -38.57587336488119,
+   -39.475943807184706
+  ],
+  "short_term_min_first_10s": -23.87644457954654,
+  "short_term_min_whole": -23.87644457954654,
+  "short_term_max_whole": -12.264516273320888
+ },
+ "s1": [
+  {
+   "name": "honk",
+   "frame": 452.0,
+   "set_LU": -16.5,
+   "measured_LU": -24.1,
+   "best_band_dB": 9.921352533012627,
+   "at_Hz": 1587.4010519681995
+  },
+  {
+   "name": "honk",
+   "frame": 462.0,
+   "set_LU": -16.5,
+   "measured_LU": -24.2,
+   "best_band_dB": 5.892226628189839,
+   "at_Hz": 1000.0
+  },
+  {
+   "name": "bell_ring",
+   "frame": 490.0,
+   "set_LU": -15.3,
+   "measured_LU": -17.7,
+   "best_band_dB": 14.189755453549644,
+   "at_Hz": 8000.0
+  },
+  {
+   "name": "honk",
+   "frame": 498.0,
+   "set_LU": -16.2,
+   "measured_LU": -24.2,
+   "best_band_dB": -1.7278081836372507,
+   "at_Hz": 5039.684199579493
+  },
+  {
+   "name": "unicycle_brake",
+   "frame": 504.0,
+   "set_LU": -13.3,
+   "measured_LU": -21.2,
+   "best_band_dB": 4.17983708907083,
+   "at_Hz": 793.7005259840998
+  }
+ ],
+ "steps_best_band_median_dB": {
+  "Q1 p1": 5.2,
+  "Q1 p2": 6.0,
+  "Q1 p3": 8.6,
+  "Q1 p4": 0.0,
+  "Q1 p5": 2.8,
+  "S1 the phone guy: a": -2.2,
+  "S14 the headphone dude": 0.6,
+  "S15 the hero": -1.9,
+  "S16 hyman": 0.9,
+  "S18 elder": -3.2,
+  "S18 parka": -0.5,
+  "S18 scarf": 2.4,
+  "S2 hyman: a": -18.7,
+  "S3 hyman: a": -11.6,
+  "S4 the student: a": -11.2
+ },
+ "pigeons": [
+  {
+   "name": "pigeon_land",
+   "frame": 93.0,
+   "files": "pigeon_b_3 + fs384187 + fs721514",
+   "measured_LU": -25.0,
+   "best_band_dB": 3.790989068802567,
+   "at_Hz": 793.7005259840998
+  },
+  {
+   "name": "pigeon_leave",
+   "frame": 123.0,
+   "files": "pigeon_b_1",
+   "measured_LU": -27.0,
+   "best_band_dB": 16.992315977468028,
+   "at_Hz": 4000.0
+  },
+  {
+   "name": "pigeon_scatter",
+   "frame": 157.0,
+   "files": "pigeon_b_2",
+   "measured_LU": -20.9,
+   "best_band_dB": 17.77598592688674,
+   "at_Hz": 1000.0
+  },
+  {
+   "name": "pigeon_scatter",
+   "frame": 183.0,
+   "files": "pigeon_b_3",
+   "measured_LU": -23.9,
+   "best_band_dB": -9.505204524995644,
+   "at_Hz": 8000.0
+  },
+  {
+   "name": "pigeon_flush",
+   "frame": 220.0,
+   "files": "pigeon_b_1",
+   "measured_LU": -19.1,
+   "best_band_dB": 24.630531243052793,
+   "at_Hz": 2519.8420997897465
+  },
+  {
+   "name": "pigeon_scatter",
+   "frame": 292.0,
+   "files": "pigeon_b_1",
+   "measured_LU": -18.5,
+   "best_band_dB": 4.473339064582216,
+   "at_Hz": 1587.4010519681995
+  }
+ ],
+ "sfx_energy_share_under_90Hz_pct": 14.609394716011451,
+ "density": [
+  {
+   "shot": "Q1",
+   "seconds": 9.5,
+   "events": 18,
+   "steps": 18,
+   "events_per_s": 1.89
+  },
+  {
+   "shot": "Q2",
+   "seconds": 2.0,
+   "events": 4,
+   "steps": 0,
+   "events_per_s": 2.0
+  },
+  {
+   "shot": "Q3",
+   "seconds": 2.2,
+   "events": 3,
+   "steps": 0,
+   "events_per_s": 1.36
+  },
+  {
+   "shot": "S1",
+   "seconds": 4.0,
+   "events": 6,
+   "steps": 6,
+   "events_per_s": 1.5
+  },
+  {
+   "shot": "S2",
+   "seconds": 4.1,
+   "events": 6,
+   "steps": 1,
+   "events_per_s": 1.46
+  },
+  {
+   "shot": "S3",
+   "seconds": 1.27,
+   "events": 0,
+   "steps": 1,
+   "events_per_s": 0.0
+  },
+  {
+   "shot": "S4",
+   "seconds": 1.4,
+   "events": 3,
+   "steps": 1,
+   "events_per_s": 2.14
+  },
+  {
+   "shot": "S5",
+   "seconds": 1.37,
+   "events": 7,
+   "steps": 0,
+   "events_per_s": 5.12
+  },
+  {
+   "shot": "S6",
+   "seconds": 4.07,
+   "events": 3,
+   "steps": 0,
+   "events_per_s": 0.74
+  },
+  {
+   "shot": "S7",
+   "seconds": 1.57,
+   "events": 0,
+   "steps": 0,
+   "events_per_s": 0.0
+  },
+  {
+   "shot": "S8",
+   "seconds": 1.4,
+   "events": 0,
+   "steps": 0,
+   "events_per_s": 0.0
+  },
+  {
+   "shot": "S9",
+   "seconds": 1.4,
+   "events": 5,
+   "steps": 0,
+   "events_per_s": 3.57
+  },
+  {
+   "shot": "S10",
+   "seconds": 2.27,
+   "events": 1,
+   "steps": 0,
+   "events_per_s": 0.44
+  },
+  {
+   "shot": "S11",
+   "seconds": 1.87,
+   "events": 3,
+   "steps": 0,
+   "events_per_s": 1.61
+  },
+  {
+   "shot": "S12",
+   "seconds": 4.43,
+   "events": 7,
+   "steps": 0,
+   "events_per_s": 1.58
+  },
+  {
+   "shot": "S13",
+   "seconds": 1.97,
+   "events": 4,
+   "steps": 0,
+   "events_per_s": 2.03
+  },
+  {
+   "shot": "S14",
+   "seconds": 3.6,
+   "events": 4,
+   "steps": 7,
+   "events_per_s": 1.11
+  },
+  {
+   "shot": "S15",
+   "seconds": 4.1,
+   "events": 6,
+   "steps": 7,
+   "events_per_s": 1.46
+  },
+  {
+   "shot": "S16",
+   "seconds": 2.73,
+   "events": 4,
+   "steps": 4,
+   "events_per_s": 1.46
+  },
+  {
+   "shot": "S17",
+   "seconds": 3.23,
+   "events": 5,
+   "steps": 0,
+   "events_per_s": 1.55
+  },
+  {
+   "shot": "S18",
+   "seconds": 2.1,
+   "events": 6,
+   "steps": 6,
+   "events_per_s": 2.86
+  },
+  {
+   "shot": "S19",
+   "seconds": 3.87,
+   "events": 5,
+   "steps": 0,
+   "events_per_s": 1.29
+  },
+  {
+   "shot": "S20",
+   "seconds": 3.67,
+   "events": 3,
+   "steps": 0,
+   "events_per_s": 0.82
+  },
+  {
+   "shot": "E1",
+   "seconds": 2.47,
+   "events": 5,
+   "steps": 0,
+   "events_per_s": 2.03
+  },
+  {
+   "shot": "E2",
+   "seconds": 1.07,
+   "events": 1,
+   "steps": 0,
+   "events_per_s": 0.94
+  },
+  {
+   "shot": "E3",
+   "seconds": 3.23,
+   "events": 4,
+   "steps": 0,
+   "events_per_s": 1.24
+  }
+ ],
+ "longest_gaps_without_a_cue_f": [],
+ "e1_pips": [
+  {
+   "pop": 2048,
+   "cue": [
+    2048.0
+   ],
+   "err": [
+    0.0
+   ]
+  },
+  {
+   "pop": 2062,
+   "cue": [
+    2062.0
+   ],
+   "err": [
+    0.0
+   ]
+  },
+  {
+   "pop": 2076,
+   "cue": [
+    2076.0
+   ],
+   "err": [
+    0.0
+   ]
+  },
+  {
+   "pop": 2090,
+   "cue": [
+    2090.0
+   ],
+   "err": [
+    0.0
+   ]
+  },
+  {
+   "pop": 2104,
+   "cue": [
+    2104.0
+   ],
+   "err": [
+    0.0
+   ]
+  }
+ ],
+ "sync_five_ding": [
+  {
+   "frame": 312.0,
+   "err": 0.0,
+   "mode": "onset"
+  }
+ ],
+ "sync_chip_flip": [
+  {
+   "frame": 307.0,
+   "err": 0.0,
+   "mode": "onset"
+  }
+ ],
+ "sync_chip_in": [
+  {
+   "frame": 71.0,
+   "err": 0.0,
+   "mode": "onset"
+  }
+ ],
+ "sync_freeze_hit": [
+  {
+   "frame": 2196.0,
+   "err": 0.0,
+   "mode": "anchor"
+  }
+ ],
+ "sync_ring_glint": [
+  {
+   "frame": 2204.0,
+   "err": 0.0,
+   "mode": "onset"
+  }
+ ],
+ "sync_tape_rewind": [
+  {
+   "frame": 2149.0,
+   "err": 0.09,
+   "mode": "onset"
+  }
+ ],
+ "sync_tape_rewind_on": [
+  {
+   "frame": 2236.0,
+   "err": 0.16,
+   "mode": "onset"
+  }
+ ],
+ "suit_hit": {
+  "bag_open_s": 25.0,
+  "bag_open_f": 750.0,
+  "score_onset_s": 25.088375,
+  "score_onset_f": 752.65125,
+  "word_suit_s": 25.195
+ },
+ "mindblow": {
+  "hush": [
+   63.84,
+   64.3
+  ],
+  "score_rms_in_hush_dBFS": -113.23335453503832,
+  "score_peak_in_hush_dBFS": -88.84494519491489,
+  "sfx_peak_in_hush_dBFS": -240.0,
+  "mix_rms_in_hush_dBFS": -53.805274423871055,
+  "score_LUFS_under_line": -40.691136880352175,
+  "score_LUFS_money_section": -32.2635771461036,
+  "voice_LUFS_under_line": -13.418911849590327,
+  "air_after_line_s": 0.5049999999999955,
+  "air_before_line_s": 0.4999999999999929,
+  "score_under_line_re_money_LU": -8.427559734248575
+ },
+ "e3": {
+  "cut_s": 71.63333333333334,
+  "hold": [
+   73.2,
+   74.53333333333333
+  ],
+  "ring_full_s": 73.46666666666667,
+  "money_q": [
+   73.53,
+   74.13
+  ],
+  "voice_peak_cut_to_did_dBFS": -53.347623018954394,
+  "score_rms_rewind1_dBFS": -31.86295496765154,
+  "sfx_rms_rewind1_dBFS": -42.03986923333532,
+  "sfx_peak_over_money_dBFS": -240.0,
+  "bed_peak_over_money_dBFS": -240.0,
+  "score_LUFS_over_money": -57.71520749544571,
+  "voice_LUFS_money": -7.651989782204838,
+  "sfx_peak_hold_after_money_dBFS": -240.0,
+  "sfx_rms_rewind2_dBFS": -36.87047056875939,
+  "last_3ms_peak_mix": -23.1316012882731,
+  "last_sample": [
+   0.0044869184494018555,
+   0.007028341293334961
+  ],
+  "first_sample": [
+   0.015956759452819824,
+   0.00726318359375
+  ],
+  "seam_jump": 0.011469841003417969,
+  "freeze_peak_dBFS": -17.45848723603907,
+  "glint_peak_dBFS": -22.898924842808523
+ },
+ "score_marks": {
+  "after_money_rms_dBFS": -112.56597319280225,
+  "hush_clown_to_cut_rms_dBFS": -240.0,
+  "rewind_starts_on_cut": -34.44462884344369
+ },
+ "master": {
+  "I": -14.011846475841978,
+  "TP": -2.899974836054181,
+  "LRA": 3.6611294932664737,
+  "frames": 2246,
+  "samples": 3593600,
+  "mono_loss": -0.01354913762081189,
+  "margin_min": 7.568802713515458,
+  "margin_narr": {
+   "min": 7.568802713515458,
+   "median": 16.98863488208031,
+   "n": 158
+  },
+  "margin_char": {
+   "min": 14.253120924173519,
+   "median": 24.46937136607847,
+   "n": 24
+  },
+  "sync": {
+   "n": 164,
+   "min": 0.0,
+   "max": 0.16,
+   "bad": 0
+  },
+  "stems": {
+   "voice": -13.776827846237223,
+   "music": -30.68590990692667,
+   "sfx": -33.501858372671435,
+   "amb": -41.70292840207942
+  },
+  "phone_loss": 2.794509521069582
+ },
+ "quiz": [
+  {
+   "duck": 141,
+   "rest_peak": 0.0,
+   "ok": [
+    [
+     "clown_wobble",
+     132,
+     0.48
+    ]
+   ],
+   "ok_balance": -7.186446781653438,
+   "bed_pct": 50.29940119760479,
+   "music_level": -25.98924479914453,
+   "music_2b": [
+    -24.390592305321665,
+    -31.71056091825912
+   ]
+  },
+  {
+   "duck": 217,
+   "rest_peak": 0.0,
+   "ok": [
+    [
+     "honk",
+     215,
+     0.54
+    ],
+    [
+     "pigeon_flush",
+     220,
+     0.71
+    ]
+   ],
+   "ok_balance": -10.106557543535466,
+   "bed_pct": 62.048192771084345,
+   "music_level": -23.036289665406827,
+   "music_2b": [
+    -30.700051583817405,
+    -22.24303824275065
+   ]
+  }
+ ],
+ "lowest_words": [
+  [
+   "music",
+   47.13,
+   7.6
+  ],
+  [
+   "who",
+   51.38,
+   7.6
+  ],
+  [
+   "Only",
+   61.4,
+   7.6
+  ],
+  [
+   "for",
+   63.2,
+   7.9
+  ],
+  [
+   "phones.",
+   69.68,
+   8.1
+  ],
+  [
+   "pulls",
+   49.52,
+   8.1
+  ],
+  [
+   "a",
+   21.98,
+   8.2
+  ],
+  [
+   "spun",
+   43.41,
+   8.2
+  ],
+  [
+   "a",
+   60.7,
+   8.2
+  ],
+  [
+   "only",
+   40.03,
+   8.2
+  ]
+ ]
+}

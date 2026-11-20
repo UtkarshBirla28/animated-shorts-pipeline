@@ -1,0 +1,5 @@
+{
+  "extends": "../../../tsconfig.json",
+  "include": ["./**/*", "../../kit/**/*", "../../videos3/pointing/**/*"],
+  "exclude": []
+}

@@ -1,0 +1,260 @@
+[
+ {
+  "folder": "ch_student",
+  "take": "t2",
+  "text": "[proudly] I own a unicycle... and a clown suit.",
+  "stability": 0.5,
+  "seed": 8502,
+  "voice": "n27L8GNoVt7SPUboEQb7",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Psychologist Ira Hyman needed a distraction nobody could miss. Then a student told him:",
+  "next": "So for one hour, the clown rode circles in the middle of campus.",
+  "lines": [
+   "s01",
+   "s02"
+  ],
+  "role": "STUDENT",
+  "candidate": "erby"
+ },
+ {
+  "folder": "ch_student",
+  "take": "t3",
+  "text": "[proudly] I own a unicycle... and a clown suit.",
+  "stability": 0.35,
+  "seed": 8503,
+  "voice": "n27L8GNoVt7SPUboEQb7",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Psychologist Ira Hyman needed a distraction nobody could miss. Then a student told him:",
+  "next": "So for one hour, the clown rode circles in the middle of campus.",
+  "lines": [
+   "s01",
+   "s02"
+  ],
+  "role": "STUDENT",
+  "candidate": "erby"
+ },
+ {
+  "folder": "ch_student",
+  "take": "t4",
+  "text": "[excited] I own a unicycle... and a clown suit.",
+  "stability": 0.5,
+  "seed": 8504,
+  "voice": "n27L8GNoVt7SPUboEQb7",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Psychologist Ira Hyman needed a distraction nobody could miss. Then a student told him:",
+  "next": "So for one hour, the clown rode circles in the middle of campus.",
+  "lines": [
+   "s01",
+   "s02"
+  ],
+  "role": "STUDENT",
+  "candidate": "erby"
+ },
+ {
+  "folder": "ch_interviewer",
+  "take": "t2",
+  "text": "[friendly] Did you see anything unusual?",
+  "stability": 0.5,
+  "seed": 8512,
+  "voice": "yhFUAoS32gPDJFQHbH68",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "So for one hour, the clown rode circles in the middle of campus. Then his team asked people leaving:",
+  "next": "The clown? He was amazing!",
+  "lines": [
+   "i01"
+  ],
+  "role": "INTERVIEWER",
+  "candidate": "nikki"
+ },
+ {
+  "folder": "ch_interviewer",
+  "take": "t3",
+  "text": "[friendly] Did you see anything unusual?",
+  "stability": 0.35,
+  "seed": 8513,
+  "voice": "yhFUAoS32gPDJFQHbH68",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "So for one hour, the clown rode circles in the middle of campus. Then his team asked people leaving:",
+  "next": "The clown? He was amazing!",
+  "lines": [
+   "i01"
+  ],
+  "role": "INTERVIEWER",
+  "candidate": "nikki"
+ },
+ {
+  "folder": "ch_interviewer",
+  "take": "t4",
+  "text": "[curious] Did you see anything unusual?",
+  "stability": 0.5,
+  "seed": 8514,
+  "voice": "yhFUAoS32gPDJFQHbH68",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "So for one hour, the clown rode circles in the middle of campus. Then his team asked people leaving:",
+  "next": "The clown? He was amazing!",
+  "lines": [
+   "i01"
+  ],
+  "role": "INTERVIEWER",
+  "candidate": "nikki"
+ },
+ {
+  "folder": "ch_friend",
+  "take": "t2",
+  "text": "[laughing] The clown? He was amazing!",
+  "stability": 0.5,
+  "seed": 8522,
+  "voice": "FGY2WhTYpPnrIDTdsKH5",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual?",
+  "next": "Dude, the unicycle guy!",
+  "lines": [
+   "f01"
+  ],
+  "role": "FRIEND",
+  "candidate": "laura"
+ },
+ {
+  "folder": "ch_friend",
+  "take": "t3",
+  "text": "[laughing] The clown? He was amazing!",
+  "stability": 0.35,
+  "seed": 8523,
+  "voice": "FGY2WhTYpPnrIDTdsKH5",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual?",
+  "next": "Dude, the unicycle guy!",
+  "lines": [
+   "f01"
+  ],
+  "role": "FRIEND",
+  "candidate": "laura"
+ },
+ {
+  "folder": "ch_friend",
+  "take": "t4",
+  "text": "[laughs] The clown? He was amazing!",
+  "stability": 0.5,
+  "seed": 8524,
+  "voice": "FGY2WhTYpPnrIDTdsKH5",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual?",
+  "next": "Dude, the unicycle guy!",
+  "lines": [
+   "f01"
+  ],
+  "role": "FRIEND",
+  "candidate": "laura"
+ },
+ {
+  "folder": "ch_headphones",
+  "take": "t2",
+  "text": "[relaxed] Dude, the unicycle guy!",
+  "stability": 0.5,
+  "seed": 8532,
+  "voice": "rHWSYoq8UlV0YIBKMryp",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual? The clown? He was amazing!",
+  "next": "Sorry... what clown?",
+  "lines": [
+   "h01"
+  ],
+  "role": "HEADPHONES",
+  "candidate": "jerryb"
+ },
+ {
+  "folder": "ch_headphones",
+  "take": "t3",
+  "text": "[relaxed] Dude, the unicycle guy!",
+  "stability": 0.35,
+  "seed": 8533,
+  "voice": "rHWSYoq8UlV0YIBKMryp",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual? The clown? He was amazing!",
+  "next": "Sorry... what clown?",
+  "lines": [
+   "h01"
+  ],
+  "role": "HEADPHONES",
+  "candidate": "jerryb"
+ },
+ {
+  "folder": "ch_headphones",
+  "take": "t4",
+  "text": "[laughs] Dude, the unicycle guy!",
+  "stability": 0.5,
+  "seed": 8534,
+  "voice": "rHWSYoq8UlV0YIBKMryp",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual? The clown? He was amazing!",
+  "next": "Sorry... what clown?",
+  "lines": [
+   "h01"
+  ],
+  "role": "HEADPHONES",
+  "candidate": "jerryb"
+ },
+ {
+  "folder": "ch_phone_guy",
+  "take": "t2",
+  "text": "[confused] Sorry... what clown?",
+  "stability": 0.5,
+  "seed": 8542,
+  "voice": "5gaEGrWSk4v20HMfIhgC",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual? Dude, the unicycle guy!",
+  "next": "Even asked straight out, only one in four people on a call had seen him.",
+  "lines": [
+   "p01"
+  ],
+  "role": "PHONE_GUY",
+  "candidate": "jeremy"
+ },
+ {
+  "folder": "ch_phone_guy",
+  "take": "t3",
+  "text": "[confused] Sorry... what clown?",
+  "stability": 0.35,
+  "seed": 8543,
+  "voice": "5gaEGrWSk4v20HMfIhgC",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual? Dude, the unicycle guy!",
+  "next": "Even asked straight out, only one in four people on a call had seen him.",
+  "lines": [
+   "p01"
+  ],
+  "role": "PHONE_GUY",
+  "candidate": "jeremy"
+ },
+ {
+  "folder": "ch_phone_guy",
+  "take": "t4",
+  "text": "[distracted] Sorry... what clown?",
+  "stability": 0.5,
+  "seed": 8544,
+  "voice": "5gaEGrWSk4v20HMfIhgC",
+  "model": "eleven_v4",
+  "speed": 1.0,
+  "prev": "Did you see anything unusual? Dude, the unicycle guy!",
+  "next": "Even asked straight out, only one in four people on a call had seen him.",
+  "lines": [
+   "p01"
+  ],
+  "role": "PHONE_GUY",
+  "candidate": "jeremy"
+ }
+]

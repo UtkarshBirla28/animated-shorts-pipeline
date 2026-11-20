@@ -1,0 +1,668 @@
+{
+ "file": "briefs/v3/award/bible.json",
+ "stage": "decide",
+ "rows": [
+  {
+   "id": "F0",
+   "rule": "script linted (tools/v3/script_lint.py)",
+   "status": "PASS",
+   "detail": "script.lint = 'PASS' (briefs/v3/award/SCRIPT.md)"
+  },
+  {
+   "id": "F1",
+   "rule": "voice locked before the build",
+   "status": "WARN",
+   "detail": "not locked yet: timing uses the linter's estimates"
+  },
+  {
+   "id": "F2",
+   "rule": ">= 5 locations (or a reason)",
+   "status": "PASS",
+   "detail": "8 sets (autumn_street, bedroom, classroom, home_hall, kitchen, mail_room, school_gate, staff_room), 9 place + light states"
+  },
+  {
+   "id": "F3",
+   "rule": "every shot's set is defined",
+   "status": "PASS",
+   "detail": "8 sets"
+  },
+  {
+   "id": "F4",
+   "rule": "a new framing about every 2.5 s",
+   "status": "PASS",
+   "detail": "35 framings over 76.0 s = one per 2.17 s"
+  },
+  {
+   "id": "F5",
+   "rule": "<= 2 comic snaps / whips",
+   "status": "PASS",
+   "detail": "none"
+  },
+  {
+   "id": "F6",
+   "rule": "shots cover the voice",
+   "status": "PASS",
+   "detail": "shots 76.0 s, voice 76.0 s"
+  },
+  {
+   "id": "F7",
+   "rule": "shot ids unique, times in order",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "F8",
+   "rule": "the loop: last frame flows into frame 0",
+   "status": "PASS",
+   "detail": "frame0: s01: the certificate on the fridge, the alarm clock beside i | last: s22 eases into s01's start pose; periodic life on whole cycl"
+  },
+  {
+   "id": "F9",
+   "rule": "music plan (mood, changes, end)",
+   "status": "PASS",
+   "detail": "warm, curious, a little cheeky (pizzicato + celesta + soft brushes), no circus"
+  },
+  {
+   "id": "set:kitchen",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "interior: a warm family kitchen, early morning, sun through the window over the "
+  },
+  {
+   "id": "set:home_hall",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "interior: the front hall in January: a door with a brass letterbox, a doormat, w"
+  },
+  {
+   "id": "set:autumn_street",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "exterior: a tree-lined street to school in autumn, low gold sun, leaves falling"
+  },
+  {
+   "id": "set:mail_room",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "interior: a school-district mail room: a long sorting table, thousands of envelo"
+  },
+  {
+   "id": "set:staff_room",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "interior: a cosy school staff room: mugs, a coffee machine, a whiteboard, about "
+  },
+  {
+   "id": "set:school_gate",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "exterior: the school gate on a February morning: frost, puddles, kids arriving, "
+  },
+  {
+   "id": "set:classroom",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "interior: a sunny classroom: rows of desks, a big wall calendar, a chalkboard, m"
+  },
+  {
+   "id": "set:bedroom",
+   "rule": "set meets the DETAIL STANDARD",
+   "status": "PASS",
+   "detail": "interior: the kid's bedroom at dawn: blinds throwing bars of light, the alarm cl"
+  },
+  {
+   "id": "F11",
+   "rule": "camera median >= 0.7 %/f (his 0.72; ours 0.18-0.35)",
+   "status": "PASS",
+   "detail": "0.72 %/f (camSpeedStats(film)); shots faster than 1 %/f: 10 % of the time (target ~30 %); still: 0 %"
+  },
+  {
+   "id": "K",
+   "rule": "kit names to align / request",
+   "status": "WARN",
+   "detail": "39 names not in a published catalog (see 'requests')"
+  }
+ ],
+ "shots": [
+  {
+   "id": "s01",
+   "dur": 4.4,
+   "framings": 2,
+   "s_per_framing": 2.2,
+   "cam": 0.77,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s02",
+   "dur": 2.5,
+   "framings": 1,
+   "s_per_framing": 2.5,
+   "cam": 0.57,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s03",
+   "dur": 2.1,
+   "framings": 1,
+   "s_per_framing": 2.1,
+   "cam": 0.76,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s04",
+   "dur": 4.4,
+   "framings": 2,
+   "s_per_framing": 2.2,
+   "cam": 0.72,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "golden",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s05",
+   "dur": 4.3,
+   "framings": 2,
+   "s_per_framing": 2.15,
+   "cam": 0.97,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "interiorWarm",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s06",
+   "dur": 2.4,
+   "framings": 1,
+   "s_per_framing": 2.4,
+   "cam": 0.25,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s07",
+   "dur": 5.1,
+   "framings": 2,
+   "s_per_framing": 2.55,
+   "cam": 0.76,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s08",
+   "dur": 4.3,
+   "framings": 2,
+   "s_per_framing": 2.15,
+   "cam": 1.39,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "interiorWarm",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s09",
+   "dur": 3.6,
+   "framings": 2,
+   "s_per_framing": 1.8,
+   "cam": 0.4,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "interiorWarm",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "camera measures 0.40 %/f with CORE's preset, planned 1.0 (fix params or the plan)"
+   ]
+  },
+  {
+   "id": "s10",
+   "dur": 1.7,
+   "framings": 1,
+   "s_per_framing": 1.7,
+   "cam": 0.78,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "interiorWarm",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "camera measures 0.78 %/f with CORE's preset, planned 0.35 (fix params or the plan)"
+   ]
+  },
+  {
+   "id": "s11",
+   "dur": 5.5,
+   "framings": 2,
+   "s_per_framing": 2.75,
+   "cam": 0.62,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "interiorWarm",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s12",
+   "dur": 3.5,
+   "framings": 2,
+   "s_per_framing": 1.75,
+   "cam": 0.77,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "interiorWarm",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s13",
+   "dur": 5.4,
+   "framings": 2,
+   "s_per_framing": 2.7,
+   "cam": 0.75,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "interiorWarm",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s14",
+   "dur": 2.4,
+   "framings": 1,
+   "s_per_framing": 2.4,
+   "cam": 0.82,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "overcastWarm",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s15",
+   "dur": 2.3,
+   "framings": 1,
+   "s_per_framing": 2.3,
+   "cam": 0.72,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s16",
+   "dur": 5.8,
+   "framings": 2,
+   "s_per_framing": 2.9,
+   "cam": 0.52,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s17",
+   "dur": 3.6,
+   "framings": 2,
+   "s_per_framing": 1.8,
+   "cam": 1.37,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "dusk",
+   "status": "WARN",
+   "fails": [],
+   "warns": [
+    "camera measures 1.37 %/f with CORE's preset, planned 0.8 (fix params or the plan)"
+   ]
+  },
+  {
+   "id": "s18",
+   "dur": 4.0,
+   "framings": 2,
+   "s_per_framing": 2.0,
+   "cam": 0.51,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s19",
+   "dur": 4.0,
+   "framings": 2,
+   "s_per_framing": 2.0,
+   "cam": 0.69,
+   "cam_src": "core",
+   "life": 4,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s20",
+   "dur": 2.0,
+   "framings": 1,
+   "s_per_framing": 2.0,
+   "cam": 0.41,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s21",
+   "dur": 1.7,
+   "framings": 1,
+   "s_per_framing": 1.7,
+   "cam": 0.67,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  },
+  {
+   "id": "s22",
+   "dur": 0.97,
+   "framings": 1,
+   "s_per_framing": 0.97,
+   "cam": 0.44,
+   "cam_src": "core",
+   "life": 3,
+   "rig": "morning",
+   "status": "PASS",
+   "fails": [],
+   "warns": []
+  }
+ ],
+ "requests": {
+  "surfaces/interior": [
+   "set kitchen kit_base",
+   "set home_hall kit_base",
+   "set mail_room kit_base",
+   "set staff_room kit_base",
+   "set classroom kit_base",
+   "set bedroom kit_base"
+  ],
+  "props/fridge_retro": [
+   "set kitchen (marked new)",
+   "s01",
+   "s07",
+   "s17",
+   "s20",
+   "s22"
+  ],
+  "props/alarm_clock": [
+   "set kitchen (marked new)",
+   "set bedroom (marked new)",
+   "s01",
+   "s07",
+   "s17",
+   "s19",
+   "s20",
+   "s21",
+   "s22"
+  ],
+  "props/kettle": [
+   "set kitchen (marked new)"
+  ],
+  "props/fruit_bowl": [
+   "set kitchen (marked new)",
+   "s06"
+  ],
+  "props/wooden_chair": [
+   "set kitchen (marked new)"
+  ],
+  "nature/potted_plant": [
+   "set kitchen",
+   "set staff_room",
+   "set classroom",
+   "s01",
+   "s13",
+   "s15",
+   "s17",
+   "s20",
+   "s22"
+  ],
+  "props/front_door_letterbox": [
+   "set home_hall (marked new)",
+   "s05"
+  ],
+  "props/doormat": [
+   "set home_hall (marked new)",
+   "s05"
+  ],
+  "props/boots_pair": [
+   "set home_hall (marked new)",
+   "s05"
+  ],
+  "props/coat_hooks": [
+   "set home_hall (marked new)"
+  ],
+  "surfaces/facade": [
+   "set autumn_street kit_base",
+   "set school_gate kit_base"
+  ],
+  "props/iron_gate": [
+   "set autumn_street (marked new)",
+   "set school_gate (marked new)",
+   "s04",
+   "s14"
+  ],
+  "props/wheelie_bin": [
+   "set autumn_street (marked new)",
+   "s03"
+  ],
+  "nature/hedge": [
+   "set autumn_street",
+   "set school_gate",
+   "s04",
+   "s14"
+  ],
+  "nature/grass": [
+   "set autumn_street",
+   "s03"
+  ],
+  "props/work_table": [
+   "set mail_room (marked new)",
+   "s08"
+  ],
+  "props/metal_shelf": [
+   "set mail_room (marked new)",
+   "s08"
+  ],
+  "props/desk_fan": [
+   "set mail_room (marked new)",
+   "s08",
+   "s09"
+  ],
+  "props/coffee_machine": [
+   "set staff_room (marked new)",
+   "s13"
+  ],
+  "props/mug": [
+   "set staff_room (marked new)",
+   "s13"
+  ],
+  "props/sofa": [
+   "set staff_room (marked new)"
+  ],
+  "props/bike_rack": [
+   "set school_gate (marked new)",
+   "s14"
+  ],
+  "props/school_desk": [
+   "set classroom (marked new)",
+   "s02",
+   "s15",
+   "s16",
+   "s18"
+  ],
+  "props/wall_clock": [
+   "set classroom (marked new)"
+  ],
+  "props/bed_single": [
+   "set bedroom (marked new)",
+   "s19"
+  ],
+  "props/window_blinds": [
+   "set bedroom (marked new)",
+   "s19"
+  ],
+  "fx/dust": [
+   "s01",
+   "s01",
+   "s02",
+   "s05",
+   "s06",
+   "s08",
+   "s10",
+   "s10",
+   "s11",
+   "s12",
+   "s15",
+   "s16",
+   "s18",
+   "s19",
+   "s20",
+   "s21",
+   "s22"
+  ],
+  "fx/smoke": [
+   "s01",
+   "s06",
+   "s07",
+   "s13",
+   "s14",
+   "s17",
+   "s20",
+   "s22"
+  ],
+  "fx/footstep_puff": [
+   "s03"
+  ],
+  "fx/blowing_leaves": [
+   "s03",
+   "s04"
+  ],
+  "nature/wind": [
+   "s03"
+  ],
+  "fx/birds": [
+   "s03",
+   "s14",
+   "s19"
+  ],
+  "props/car": [
+   "s04"
+  ],
+  "fx/snow": [
+   "s05"
+  ],
+  "fx/rain": [
+   "s05",
+   "s14"
+  ],
+  "fx/sparks": [
+   "s06",
+   "s17",
+   "s18"
+  ],
+  "cards/cat": [
+   "s06",
+   "s19"
+  ],
+  "props/bus": [
+   "s14"
+  ]
+ },
+ "fails": 0,
+ "warns": 5,
+ "verdict": "PASS",
+ "film_s": 76.0,
+ "framings": 35,
+ "catalog": {
+  "surfaces": {
+   "n": 49,
+   "sources": [
+    "public/kit/surfaces/ (30)",
+    "kit/surfaces/NOTES.md (19 tokens)"
+   ]
+  },
+  "props": {
+   "n": 63,
+   "sources": [
+    "public/kit/props/ (46)",
+    "kit/nature/NOTES.md (17 tokens)"
+   ]
+  },
+  "nature": {
+   "n": 19,
+   "sources": [
+    "public/kit/trees/ (2)",
+    "public/kit/nature/ (1)",
+    "kit/nature/NOTES.md (17 tokens)"
+   ]
+  },
+  "fx": {
+   "n": 17,
+   "sources": [
+    "kit/nature/NOTES.md (17 tokens)"
+   ]
+  },
+  "cards": {
+   "n": 48,
+   "sources": [
+    "kit/cards/NOTES.md (48 tokens)"
+   ]
+  },
+  "core": {
+   "n": 176,
+   "sources": [
+    "kit/core/NOTES.md (176 tokens)"
+   ]
+  }
+ }
+}

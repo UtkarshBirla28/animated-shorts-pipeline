@@ -1,0 +1,409 @@
+{
+ "key": "R_jobjapan",
+ "dur": 60.55764583333333,
+ "r128": {
+  "I": -14.1,
+  "LRA": 1.8,
+  "TP": -2.1
+ },
+ "asr_text": "It's impossible to get fired in Japan, but companies found something way worse. Imagine your boss walks you past your desk to a tiny room with no computer and no work. Just a ticking clock and a guy with his feet up, scrolling on his phone like he's on vacation. Your new job, your boss says, is nothing. Just sit here until six. And you're thinking, wait, I'm getting paid for this? At first, it's paradise. Then, your co -workers start staring when you walk past. The emails stop, and your old desk already has someone else's photos on it. Every Friday your boss pops his head in with a big smile to ask how you're enjoying your new role. Still the guy in the corner has been doing this for three years and looks happier than anyone in the building. So if they want to pay you to do nothing, fine. You kick your feet up right next to him. Then one Monday you walk in and he's gone. His chair is pushed in, his desk is cleared and nobody will tell you where he went. You see Japanese law makes it almost impossible to fire someone but there's no law against making them miserable so They take away your work and your friends and just wait because nobody can do nothing forever",
+ "n_words": 224,
+ "mean_p": 0.9564012799944196,
+ "low_p_words": [
+  [
+   13.66,
+   "Your",
+   0.48
+  ],
+  [
+   18.22,
+   "wait,",
+   0.45
+  ],
+  [
+   22.42,
+   "co",
+   0.4
+  ],
+  [
+   27.5,
+   "photos",
+   0.38
+  ],
+  [
+   29.22,
+   "your",
+   0.47
+  ],
+  [
+   33.6,
+   "the",
+   0.36
+  ],
+  [
+   49.7,
+   "Japanese",
+   0.38
+  ],
+  [
+   52.74,
+   "but",
+   0.45
+  ],
+  [
+   54.98,
+   "so",
+   0.41
+  ]
+ ],
+ "first_word": 0.0,
+ "last_word_end": 60.32,
+ "wps_film": 3.6989548869930062,
+ "wps_span": 3.713527851458886,
+ "gaps_over_0_3": 0,
+ "gaps_over_0_6": 0,
+ "gaps_over_1_0": 0,
+ "gap_time_over_0_3": 0.0,
+ "longest_gaps": [
+  [
+   0.26,
+   4.34,
+   4.6
+  ],
+  [
+   0.22,
+   33.02,
+   33.24
+  ],
+  [
+   0.22,
+   21.5,
+   21.72
+  ],
+  [
+   0.22,
+   20.56,
+   20.78
+  ],
+  [
+   0.22,
+   18.0,
+   18.22
+  ],
+  [
+   0.2,
+   19.76,
+   19.96
+  ]
+ ],
+ "speech_time": 56.52,
+ "no_voice_s": 0.0,
+ "dead_air_s": 0.0,
+ "very_dead_s": 0.0,
+ "no_voice_runs": [],
+ "open": {
+  "rms_0_0.05": -200.0,
+  "rms_0_0.3": -19.0,
+  "rms_0.3_1": -17.3,
+  "rms_1_3": -17.2,
+  "peak_0_0.3": -2.9
+ },
+ "close": {
+  "rms_last2": -16.0,
+  "rms_last0.3": -32.6,
+  "tail_after_last_word": 0.24
+ },
+ "side_minus_mid_db": -29.7,
+ "lr_corr": 0.998,
+ "ltas_rel": {
+  "<120": -5.8,
+  "120-400": 4.8,
+  "400-2k": 0.0,
+  "2-5k": -8.6,
+  "5-10k": -6.4,
+  "10-16k": -8.9
+ },
+ "centroid_median": 631.0,
+ "presence_2_5k_per_s_rel_median": [
+  -0.0,
+  5.7,
+  -0.3,
+  1.5,
+  1.8,
+  -1.0,
+  1.2,
+  -5.3,
+  -4.2,
+  1.0,
+  1.4,
+  1.2,
+  1.9,
+  2.6,
+  -0.2,
+  0.7,
+  2.0,
+  0.4,
+  -1.1,
+  0.3,
+  -1.1,
+  1.2,
+  -2.9,
+  -1.0,
+  -0.5,
+  -0.9,
+  0.6,
+  -0.7,
+  -0.9,
+  1.0,
+  1.6,
+  1.8,
+  -4.2,
+  -1.2,
+  -3.2,
+  -0.6,
+  2.5,
+  1.4,
+  -2.9,
+  2.2,
+  3.7,
+  1.2,
+  -4.4,
+  1.1,
+  -0.1,
+  2.7,
+  0.3,
+  -3.4,
+  -1.0,
+  0.9,
+  -1.9,
+  -1.9,
+  -0.4,
+  0.0,
+  -0.6,
+  -0.7,
+  1.4,
+  -0.4,
+  -0.5,
+  1.0
+ ],
+ "sentences": [
+  {
+   "s": 0.0,
+   "e": 4.34,
+   "text": "It's impossible to get fired in Japan, but companies found something way worse.",
+   "f0_med": 144.0,
+   "range_st": 17.0,
+   "sd_st": 6.28,
+   "end_move_st": 1.8,
+   "word_db_sd": 1.7,
+   "wps": 3.0,
+   "db": -16.7
+  },
+  {
+   "s": 4.6,
+   "e": 9.22,
+   "text": "Imagine your boss walks you past your desk to a tiny room with no computer and no work.",
+   "f0_med": 153.0,
+   "range_st": 15.3,
+   "sd_st": 5.65,
+   "end_move_st": null,
+   "word_db_sd": 4.1,
+   "wps": 3.9,
+   "db": -16.6
+  },
+  {
+   "s": 9.34,
+   "e": 13.46,
+   "text": "Just a ticking clock and a guy with his feet up, scrolling on his phone like he's on vacation.",
+   "f0_med": 208.0,
+   "range_st": 8.5,
+   "sd_st": 3.44,
+   "end_move_st": 6.2,
+   "word_db_sd": 2.2,
+   "wps": 4.61,
+   "db": -17.6
+  },
+  {
+   "s": 13.66,
+   "e": 15.92,
+   "text": "Your new job, your boss says, is nothing.",
+   "f0_med": 157.0,
+   "range_st": 16.1,
+   "sd_st": 6.45,
+   "end_move_st": 0.4,
+   "word_db_sd": 2.8,
+   "wps": 3.54,
+   "db": -17.1
+  },
+  {
+   "s": 16.06,
+   "e": 17.28,
+   "text": "Just sit here until six.",
+   "f0_med": 182.0,
+   "range_st": 4.0,
+   "sd_st": 3.42,
+   "end_move_st": null,
+   "word_db_sd": 2.0,
+   "wps": 4.1,
+   "db": -16.5
+  },
+  {
+   "s": 17.38,
+   "e": 19.76,
+   "text": "And you're thinking, wait, I'm getting paid for this?",
+   "f0_med": 228.0,
+   "range_st": 13.8,
+   "sd_st": 5.52,
+   "end_move_st": -0.2,
+   "word_db_sd": 3.0,
+   "wps": 3.78,
+   "db": -17.9
+  },
+  {
+   "s": 19.96,
+   "e": 21.5,
+   "text": "At first, it's paradise.",
+   "f0_med": 186.0,
+   "range_st": 13.3,
+   "sd_st": 5.83,
+   "end_move_st": null,
+   "word_db_sd": 0.9,
+   "wps": 2.6,
+   "db": -18.2
+  },
+  {
+   "s": 21.72,
+   "e": 24.38,
+   "text": "Then, your co -workers start staring when you walk past.",
+   "f0_med": 156.0,
+   "range_st": 13.4,
+   "sd_st": 4.79,
+   "end_move_st": null,
+   "word_db_sd": 2.7,
+   "wps": 3.76,
+   "db": -17.0
+  },
+  {
+   "s": 24.56,
+   "e": 28.48,
+   "text": "The emails stop, and your old desk already has someone else's photos on it.",
+   "f0_med": 219.0,
+   "range_st": 8.0,
+   "sd_st": 2.92,
+   "end_move_st": null,
+   "word_db_sd": 4.4,
+   "wps": 3.57,
+   "db": -17.0
+  },
+  {
+   "s": 28.52,
+   "e": 33.02,
+   "text": "Every Friday your boss pops his head in with a big smile to ask how you're enjoying your new role.",
+   "f0_med": 232.0,
+   "range_st": 13.2,
+   "sd_st": 4.78,
+   "end_move_st": 1.4,
+   "word_db_sd": 2.1,
+   "wps": 4.44,
+   "db": -16.9
+  },
+  {
+   "s": 33.24,
+   "e": 38.08,
+   "text": "Still the guy in the corner has been doing this for three years and looks happier than anyone in the building.",
+   "f0_med": 191.0,
+   "range_st": 9.8,
+   "sd_st": 3.98,
+   "end_move_st": 0.1,
+   "word_db_sd": 2.4,
+   "wps": 4.34,
+   "db": -16.5
+  },
+  {
+   "s": 38.22,
+   "e": 40.48,
+   "text": "So if they want to pay you to do nothing, fine.",
+   "f0_med": 256.0,
+   "range_st": 7.6,
+   "sd_st": 3.0,
+   "end_move_st": null,
+   "word_db_sd": 1.8,
+   "wps": 4.87,
+   "db": -17.3
+  },
+  {
+   "s": 40.5,
+   "e": 42.3,
+   "text": "You kick your feet up right next to him.",
+   "f0_med": 241.0,
+   "range_st": 10.1,
+   "sd_st": 6.62,
+   "end_move_st": -5.5,
+   "word_db_sd": 4.2,
+   "wps": 5.0,
+   "db": -18.5
+  },
+  {
+   "s": 42.34,
+   "e": 45.02,
+   "text": "Then one Monday you walk in and he's gone.",
+   "f0_med": 215.0,
+   "range_st": 13.7,
+   "sd_st": 5.37,
+   "end_move_st": null,
+   "word_db_sd": 1.7,
+   "wps": 3.36,
+   "db": -15.8
+  },
+  {
+   "s": 45.14,
+   "e": 49.1,
+   "text": "His chair is pushed in, his desk is cleared and nobody will tell you where he went.",
+   "f0_med": 184.0,
+   "range_st": 9.6,
+   "sd_st": 3.98,
+   "end_move_st": null,
+   "word_db_sd": 3.1,
+   "wps": 4.29,
+   "db": -15.6
+  },
+  {
+   "s": 49.24,
+   "e": 60.32,
+   "text": "You see Japanese law makes it almost impossible to fire someone but there's no law against making them miserable so They take away your work and your friends and just wait because nobody can do nothing forever",
+   "f0_med": 179.0,
+   "range_st": 13.5,
+   "sd_st": 5.33,
+   "end_move_st": 1.7,
+   "word_db_sd": 2.7,
+   "wps": 3.34,
+   "db": -16.7
+  }
+ ],
+ "f0_median_all": 188.5,
+ "f0_range_st_p5_p95": 16.4,
+ "f0_sd_within_sentence_median": 5.06,
+ "f0_range_within_sentence_median": 13.2,
+ "jump_between_sentences_st_median": 3.0,
+ "jump_between_sentences_over_5st": 3,
+ "ends": {
+  "rise": 3,
+  "fall": 1,
+  "flat": 4
+ },
+ "sentence_db_sd": 0.8,
+ "word_db_sd_median": 2.5,
+ "sentence_wps_median": 3.84,
+ "sentence_wps_sd": 0.65,
+ "n_sentences": 16,
+ "sentences_over_5st_from_median": 1,
+ "est_bed_in_gaps_db_vs_speech": -18.9,
+ "est_floor_p10_vs_speech": -9.4,
+ "tonal_frac_gaps": 0.67,
+ "mix_onsets_in_gaps_per10s_gap": 42.5,
+ "gap_time": 1.6,
+ "mix_lowband_tempo": [
+  76.0,
+  0.04
+ ]
+}

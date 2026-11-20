@@ -1,0 +1,146 @@
+[
+ {
+  "folder": "c02c",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] And the man he's laughing at? He's got over a thousand people behind him.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7401,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "So he points at the speed.",
+  "lines": [
+   "n02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r3 cut order 2 + 3"
+ },
+ {
+  "folder": "c02c",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] And the man he's laughing at? He's got over a thousand people behind him.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7402,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "So he points at the speed.",
+  "lines": [
+   "n02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r3 cut order 2 + 3"
+ },
+ {
+  "folder": "c02c",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] And the man he's laughing at? He's got over a thousand people behind him.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7403,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "So he points at the speed.",
+  "lines": [
+   "n02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r3 cut order 2 + 3"
+ },
+ {
+  "folder": "c02c",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "And the man he's laughing at? He's got over a thousand people behind him.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7404,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "So he points at the speed.",
+  "lines": [
+   "n02"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r3 cut order 2 + 3"
+ },
+ {
+  "folder": "c08c",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] Japan's railway lab tested it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7411,
+  "prev": "Ever gone back home to check the stove... you'd already checked?",
+  "next": "For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "lines": [
+   "n10"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r3 cut order 2 + 3"
+ },
+ {
+  "folder": "c08c",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] Japan's railway lab tested it.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7412,
+  "prev": "Ever gone back home to check the stove... you'd already checked?",
+  "next": "For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "lines": [
+   "n10"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r3 cut order 2 + 3"
+ },
+ {
+  "folder": "c08c",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[playful] Japan's railway lab tested it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7413,
+  "prev": "Ever gone back home to check the stove... you'd already checked?",
+  "next": "For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "lines": [
+   "n10"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r3 cut order 2 + 3"
+ },
+ {
+  "folder": "c08c",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Japan's railway lab tested it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7414,
+  "prev": "Ever gone back home to check the stove... you'd already checked?",
+  "next": "For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "lines": [
+   "n10"
+  ],
+  "role": "N",
+  "candidate": "james",
+  "round": "r3 cut order 2 + 3"
+ }
+]

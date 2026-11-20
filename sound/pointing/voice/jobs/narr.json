@@ -1,0 +1,630 @@
+[
+ {
+  "folder": "c01",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[amused] Give him a minute. He'll be pointing too.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7001,
+  "prev": "Signal... green! Bro's pointing at nothing!",
+  "next": "And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "lines": [
+   "n01"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c01",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[amused] Give him a minute. He'll be pointing too.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7002,
+  "prev": "Signal... green! Bro's pointing at nothing!",
+  "next": "And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "lines": [
+   "n01"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c01",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[teasing] Give him a minute. He'll be pointing too.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7003,
+  "prev": "Signal... green! Bro's pointing at nothing!",
+  "next": "And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "lines": [
+   "n01"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c01",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Give him a minute. He'll be pointing too.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7004,
+  "prev": "Signal... green! Bro's pointing at nothing!",
+  "next": "And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "lines": [
+   "n01"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c02",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7011,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "So he points at the speed.",
+  "lines": [
+   "n02"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c02",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7012,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "So he points at the speed.",
+  "lines": [
+   "n02"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c02",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7013,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "So he points at the speed.",
+  "lines": [
+   "n02"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c02",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7014,
+  "prev": "Give him a minute. He'll be pointing too.",
+  "next": "So he points at the speed.",
+  "lines": [
+   "n02"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c03",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "So he points at the speed.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7021,
+  "prev": "And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "next": "Speed... check! The doors.",
+  "lines": [
+   "n03"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c03",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "So he points at the speed.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7022,
+  "prev": "And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "next": "Speed... check! The doors.",
+  "lines": [
+   "n03"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c03",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] So he points at the speed.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7023,
+  "prev": "And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "next": "Speed... check! The doors.",
+  "lines": [
+   "n03"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c03",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] So he points at the speed.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7024,
+  "prev": "And the man he's laughing at? He's got over a thousand people behind him... and one tiny fan.",
+  "next": "Speed... check! The doors.",
+  "lines": [
+   "n03"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c04",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "The doors.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7031,
+  "prev": "So he points at the speed. Speed... check!",
+  "next": "Doors... closed!",
+  "lines": [
+   "n04"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c04",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "The doors.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7032,
+  "prev": "So he points at the speed. Speed... check!",
+  "next": "Doors... closed!",
+  "lines": [
+   "n04"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c04",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] The doors.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7033,
+  "prev": "So he points at the speed. Speed... check!",
+  "next": "Doors... closed!",
+  "lines": [
+   "n04"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c04",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[playful] The doors.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7034,
+  "prev": "So he points at the speed. Speed... check!",
+  "next": "Doors... closed!",
+  "lines": [
+   "n04"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c05",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[teasing] Actually, New York does. [amused] Its subway doors kept opening... in tunnels.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7041,
+  "prev": "Nobody does that in New York!",
+  "next": "So now, conductors must point at a striped board first.",
+  "lines": [
+   "n05",
+   "n06"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c05",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[teasing] Actually, New York does. [amused] Its subway doors kept opening... in tunnels.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7042,
+  "prev": "Nobody does that in New York!",
+  "next": "So now, conductors must point at a striped board first.",
+  "lines": [
+   "n05",
+   "n06"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c05",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[playful] Actually, New York does. Its subway doors kept opening... in tunnels.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7043,
+  "prev": "Nobody does that in New York!",
+  "next": "So now, conductors must point at a striped board first.",
+  "lines": [
+   "n05",
+   "n06"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c05",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Actually, New York does. Its subway doors kept opening... in tunnels.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7044,
+  "prev": "Nobody does that in New York!",
+  "next": "So now, conductors must point at a striped board first.",
+  "lines": [
+   "n05",
+   "n06"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c06",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "So now, conductors must point at a striped board first. [playful] No board? No doors.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7051,
+  "prev": "Actually, New York does. Its subway doors kept opening... in tunnels.",
+  "next": "Vending machine... check!",
+  "lines": [
+   "n07",
+   "n08"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c06",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "So now, conductors must point at a striped board first. [playful] No board? No doors.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7052,
+  "prev": "Actually, New York does. Its subway doors kept opening... in tunnels.",
+  "next": "Vending machine... check!",
+  "lines": [
+   "n07",
+   "n08"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c06",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[amused] So now, conductors must point at a striped board first. No board? No doors.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7053,
+  "prev": "Actually, New York does. Its subway doors kept opening... in tunnels.",
+  "next": "Vending machine... check!",
+  "lines": [
+   "n07",
+   "n08"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c06",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "So now, conductors must point at a striped board first. No board? No doors.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7054,
+  "prev": "Actually, New York does. Its subway doors kept opening... in tunnels.",
+  "next": "Vending machine... check!",
+  "lines": [
+   "n07",
+   "n08"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c07",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] Ever gone back home to check the stove... you'd already checked?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7061,
+  "prev": "Vending machine... check! What's a finger gonna do, bro?",
+  "next": "Japan's railway lab put it to a simple test.",
+  "lines": [
+   "n09"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c07",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] Ever gone back home to check the stove... you'd already checked?",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7062,
+  "prev": "Vending machine... check! What's a finger gonna do, bro?",
+  "next": "Japan's railway lab put it to a simple test.",
+  "lines": [
+   "n09"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c07",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[playful] Ever gone back home to check the stove... you'd already checked?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7063,
+  "prev": "Vending machine... check! What's a finger gonna do, bro?",
+  "next": "Japan's railway lab put it to a simple test.",
+  "lines": [
+   "n09"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c07",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Ever gone back home to check the stove... you'd already checked?",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7064,
+  "prev": "Vending machine... check! What's a finger gonna do, bro?",
+  "next": "Japan's railway lab put it to a simple test.",
+  "lines": [
+   "n09"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c08",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] Japan's railway lab put it to a simple test. For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7071,
+  "prev": "Ever gone back home to check the stove... you'd already checked?",
+  "next": "You see, your eyes can look right at something... while your mind is somewhere else.",
+  "lines": [
+   "n10",
+   "n11"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c08",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] Japan's railway lab put it to a simple test. For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7072,
+  "prev": "Ever gone back home to check the stove... you'd already checked?",
+  "next": "You see, your eyes can look right at something... while your mind is somewhere else.",
+  "lines": [
+   "n10",
+   "n11"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c08",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[intrigued] Japan's railway lab put it to a simple test. [incredulous] For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7073,
+  "prev": "Ever gone back home to check the stove... you'd already checked?",
+  "next": "You see, your eyes can look right at something... while your mind is somewhere else.",
+  "lines": [
+   "n10",
+   "n11"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c08",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "Japan's railway lab put it to a simple test. For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7074,
+  "prev": "Ever gone back home to check the stove... you'd already checked?",
+  "next": "You see, your eyes can look right at something... while your mind is somewhere else.",
+  "lines": [
+   "n10",
+   "n11"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c09",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] You see, your eyes can look right at something... while your mind is somewhere else. A finger and a shout drag your mind back to it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7081,
+  "prev": "For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "next": "Doors... closed!",
+  "lines": [
+   "n12",
+   "n13"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c09",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[warmly] You see, your eyes can look right at something... while your mind is somewhere else. A finger and a shout drag your mind back to it.",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7082,
+  "prev": "For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "next": "Doors... closed!",
+  "lines": [
+   "n12",
+   "n13"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c09",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[thoughtful] You see, your eyes can look right at something... while your mind is somewhere else. A finger and a shout drag your mind back to it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7083,
+  "prev": "For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "next": "Doors... closed!",
+  "lines": [
+   "n12",
+   "n13"
+  ],
+  "role": "N",
+  "candidate": "james"
+ },
+ {
+  "folder": "c09",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "You see, your eyes can look right at something... while your mind is somewhere else. A finger and a shout drag your mind back to it.",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7084,
+  "prev": "For every six mistakes people made just looking... they made about one by pointing and saying it out loud.",
+  "next": "Doors... closed!",
+  "lines": [
+   "n12",
+   "n13"
+  ],
+  "role": "N",
+  "candidate": "james"
+ }
+]

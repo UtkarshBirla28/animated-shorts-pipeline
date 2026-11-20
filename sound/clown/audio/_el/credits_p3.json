@@ -1,0 +1,81 @@
+{
+ "_start": 36955,
+ "pigeon_b_1": {
+  "seconds": 1.2,
+  "prompt": "A pigeon bursting into flight right next to the microphone: a quick flurry of bright fluttering wing claps, crisp clapping feathers, no cooing, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "07:53:31"
+ },
+ "pigeon_b_2": {
+  "seconds": 1.2,
+  "prompt": "A pigeon bursting into flight right next to the microphone: a quick flurry of bright fluttering wing claps, crisp clapping feathers, no cooing, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "07:53:34"
+ },
+ "pigeon_b_3": {
+  "seconds": 1.2,
+  "prompt": "A pigeon bursting into flight right next to the microphone: a quick flurry of bright fluttering wing claps, crisp clapping feathers, no cooing, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "07:53:38"
+ },
+ "pigeon_settle_1": {
+  "seconds": 1.0,
+  "prompt": "A pigeon landing close by: a short soft flutter of wings settling, then still, no cooing, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "07:53:42"
+ },
+ "sneaker_steps_1": {
+  "seconds": 4.0,
+  "prompt": "Footsteps of one person walking at a relaxed pace in rubber-soled sneakers on brick paving, crisp light gritty scuffs on every step, evenly spaced, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "07:53:47"
+ },
+ "heel_scuff_1": {
+  "seconds": 2.0,
+  "prompt": "Three separate short shoe heel scuffs on stone paving, bright gritty scrapes, with silence between them, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "07:53:51"
+ },
+ "confetti_1": {
+  "seconds": 1.5,
+  "prompt": "A small party confetti popper pops, then paper confetti flutters down in a light papery shower, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "07:53:55"
+ },
+ "confetti_2": {
+  "seconds": 1.5,
+  "prompt": "A small party confetti popper pops, then paper confetti flutters down in a light papery shower, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.7,
+  "ok": true,
+  "t": "07:53:59"
+ },
+ "juggle_1": {
+  "seconds": 2.5,
+  "prompt": "Juggling: soft cloth balls landing in a person's palms, a light rhythmic pat, pat, pat of catches, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "07:54:04"
+ },
+ "paper_crumple_1": {
+  "seconds": 1.0,
+  "prompt": "A sheet of paper crumpled quickly into a ball in one fist, close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "07:54:10"
+ },
+ "idea_ping_1": {
+  "seconds": 0.8,
+  "prompt": "A cartoon light bulb switching on for a bright idea: a tiny click then a short clear bright 'ding', close microphone, dry, no reverb, no background noise, no music, no voices",
+  "influence": 0.75,
+  "ok": true,
+  "t": "07:54:14"
+ },
+ "_last": 37134
+}

@@ -1,0 +1,165 @@
+{
+ "PT Narrator James": {
+  "voice_id": "QhpsGjDKZmM9qRYdMhBD",
+  "library_voice_id": "QhpsGjDKZmM9qRYdMhBD",
+  "library_name": "James - Conversational, Energetic, Punchy",
+  "role": "N",
+  "candidate": "james"
+ },
+ "PT Driver Hideo": {
+  "voice_id": "FMgBdHe1YV2Xi0B9anXW",
+  "library_voice_id": "FMgBdHe1YV2Xi0B9anXW",
+  "library_name": "Hideo - Warm, Encouraging, and Clear",
+  "role": "D",
+  "candidate": "hideo"
+ },
+ "PT Driver Masaki": {
+  "voice_id": "2Jg786yPJ6zSdiI0EAAH",
+  "library_voice_id": "2Jg786yPJ6zSdiI0EAAH",
+  "library_name": "Masaki - Calm Japanese Narrator",
+  "role": "D",
+  "candidate": "masaki"
+ },
+ "PT Driver Kei": {
+  "voice_id": "qjx83Y0UcERgVPICvVpl",
+  "library_voice_id": "qjx83Y0UcERgVPICvVpl",
+  "library_name": "Kei - Calm, Raspy and Youthful",
+  "role": "D",
+  "candidate": "kei"
+ },
+ "PT Driver Taro": {
+  "voice_id": "UznIBkKIQe3ZG2tGydre",
+  "library_voice_id": "UznIBkKIQe3ZG2tGydre",
+  "library_name": "Taro - Upbeat, Youthful and Friendly",
+  "role": "D",
+  "candidate": "taro"
+ },
+ "PT Tourist Gus": {
+  "voice_id": "wGkprrTXgBM5EC3Znt6U",
+  "library_voice_id": "wGkprrTXgBM5EC3Znt6U",
+  "library_name": "Gus - Natural Goofy Best Friend",
+  "role": "T",
+  "candidate": "gus"
+ },
+ "PT Tourist JerryB": {
+  "voice_id": "rHWSYoq8UlV0YIBKMryp",
+  "library_voice_id": "rHWSYoq8UlV0YIBKMryp",
+  "library_name": "Jerry B - California Surfer Dude",
+  "role": "T",
+  "candidate": "jerryb"
+ },
+ "PT Tourist Hal": {
+  "voice_id": "aLyZxRoKf8CwWlGthFYB",
+  "library_voice_id": "aLyZxRoKf8CwWlGthFYB",
+  "library_name": "Hal - Your Animated Social Media Buddy",
+  "role": "T",
+  "candidate": "hal"
+ },
+ "PT Tourist Peter": {
+  "voice_id": "zfpxqh60b0TrMkJHDLsR",
+  "library_voice_id": "zfpxqh60b0TrMkJHDLsR",
+  "library_name": "Peter - Neutral, Calm, and Clipped",
+  "role": "T",
+  "candidate": "peter"
+ },
+ "PT Tourist Flackoo": {
+  "voice_id": "3lqN2QjRfNc5KxYJLLOR",
+  "library_voice_id": "3lqN2QjRfNc5KxYJLLOR",
+  "library_name": "Flackoo",
+  "role": "T",
+  "candidate": "flackoo"
+ },
+ "PT Kid Teddy": {
+  "voice_id": "XjGYkUkzth8BPs29fmcV",
+  "library_voice_id": "XjGYkUkzth8BPs29fmcV",
+  "library_name": "Teddy Twinkle - Cute Cartoon",
+  "role": "KID",
+  "candidate": "teddy"
+ },
+ "PT Kid Valf": {
+  "voice_id": "loY1uopAz31XyhAEhNSa",
+  "library_voice_id": "loY1uopAz31XyhAEhNSa",
+  "library_name": "Valf - Young, Playful & Sarcastic",
+  "role": "KID",
+  "candidate": "valf"
+ },
+ "PT Kid Austin": {
+  "voice_id": "Xb3zeLrTi6F4ziIcXdwk",
+  "library_voice_id": "Xb3zeLrTi6F4ziIcXdwk",
+  "library_name": "Austin - Timid and Casual",
+  "role": "KID",
+  "candidate": "austin",
+  "removed": true
+ },
+ "PT Kid Ryan": {
+  "voice_id": "tJHJUEHzOkMoPmJJ5jo2",
+  "library_voice_id": "tJHJUEHzOkMoPmJJ5jo2",
+  "library_name": "Ryan Quin",
+  "role": "KID",
+  "candidate": "ryan",
+  "removed": true
+ },
+ "PT Kid Piku": {
+  "voice_id": "EeQEodFZVtBkjtgK3HBc",
+  "library_voice_id": "EeQEodFZVtBkjtgK3HBc",
+  "library_name": "Piku - Expressive Kid Character",
+  "role": "KID",
+  "candidate": "piku"
+ },
+ "PT Kid Kiran": {
+  "voice_id": "o80picuztV1xYiPeIrpa",
+  "library_voice_id": "o80picuztV1xYiPeIrpa",
+  "library_name": "Kiran \u2013 Very Young Adorable Story Narrator",
+  "role": "KID",
+  "candidate": "kiran"
+ },
+ "PT Kid Kavya": {
+  "voice_id": "bA58y3FqVI6b6gTNh0oT",
+  "library_voice_id": "bA58y3FqVI6b6gTNh0oT",
+  "library_name": "Kavya - Cute & Engaging Character",
+  "role": "KID",
+  "candidate": "kavya"
+ },
+ "PT Kid Munni": {
+  "voice_id": "VOGEEZj2Kly5dP9LrQy8",
+  "library_voice_id": "VOGEEZj2Kly5dP9LrQy8",
+  "library_name": "Munni - Animated Kid Character",
+  "role": "KID",
+  "candidate": "munni"
+ },
+ "PT Kid Chutki": {
+  "voice_id": "Jr72SE8p9OcJmr8hyX0D",
+  "library_voice_id": "Jr72SE8p9OcJmr8hyX0D",
+  "library_name": "Chutki - Cute Kids Cartoon Character",
+  "role": "KID",
+  "candidate": "chutki"
+ },
+ "PT4 Driver Samurai": {
+  "voice_id": "TlxVR97quVHvTxE8Qkcm",
+  "library_voice_id": "TlxVR97quVHvTxE8Qkcm",
+  "library_name": "Samurai -  Japanese Natural Male",
+  "role": "v4 shout",
+  "candidate": "PT4 Driver Samurai"
+ },
+ "PT4 Mat": {
+  "voice_id": "pX0Ocua80UVkykZYq5ci",
+  "library_voice_id": "pX0Ocua80UVkykZYq5ci",
+  "library_name": "Mat - Deep Tone",
+  "role": "v4 shout",
+  "candidate": "PT4 Mat"
+ },
+ "PT4 Steam Gregory": {
+  "voice_id": "8TMmdpPgqHKvDOGYP2lN",
+  "library_voice_id": "8TMmdpPgqHKvDOGYP2lN",
+  "library_name": "Gregory Grumble - Old Lovable Bedtime Bear",
+  "role": "v4 shout",
+  "candidate": "PT4 Steam Gregory"
+ },
+ "PT4 Steam David": {
+  "voice_id": "rSLmFOTRq9g87aTxSUr6",
+  "library_voice_id": "rSLmFOTRq9g87aTxSUr6",
+  "library_name": "David - Deep, Cinematic, Documentary",
+  "role": "v4 shout",
+  "candidate": "PT4 Steam David"
+ }
+}

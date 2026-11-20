@@ -1,0 +1,70 @@
+[
+ {
+  "folder": "c06b",
+  "take": "t1",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[delighted] So for one hour, the clown RODE circles in the middle of campus. Then his team asked people leaving:",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7621,
+  "prev": "I own a unicycle. ...and a clown suit.",
+  "next": "Did you see anything unusual?",
+  "lines": [
+   "n08",
+   "n09"
+  ],
+  "note": "retake: rode was heard as wrote / p<0.5 in all c06 takes"
+ },
+ {
+  "folder": "c06b",
+  "take": "t2",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[delighted] So for one hour, the clown RODE circles in the middle of campus. Then his team asked people leaving:",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 7622,
+  "prev": "I own a unicycle. ...and a clown suit.",
+  "next": "Did you see anything unusual?",
+  "lines": [
+   "n08",
+   "n09"
+  ],
+  "note": "retake: rode was heard as wrote / p<0.5 in all c06 takes"
+ },
+ {
+  "folder": "c06b",
+  "take": "t3",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[amused] So for one hour, the clown RODE circles in the middle of campus! Then his team asked people leaving:",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7623,
+  "prev": "I own a unicycle. ...and a clown suit.",
+  "next": "Did you see anything unusual?",
+  "lines": [
+   "n08",
+   "n09"
+  ],
+  "note": "retake: rode was heard as wrote / p<0.5 in all c06 takes"
+ },
+ {
+  "folder": "c06b",
+  "take": "t4",
+  "voice": "QhpsGjDKZmM9qRYdMhBD",
+  "model": "eleven_v4",
+  "text": "[delighted] So for one hour, the clown rode circles in the middle of campus. Then his team asked people leaving:",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 7624,
+  "prev": "I own a unicycle. ...and a clown suit.",
+  "next": "Did you see anything unusual?",
+  "lines": [
+   "n08",
+   "n09"
+  ],
+  "note": "retake: rode was heard as wrote / p<0.5 in all c06 takes"
+ }
+]

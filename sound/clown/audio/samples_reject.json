@@ -1,0 +1,56 @@
+{
+ "_doc": "takes samples.py never plays. 'why' = failed a measurement (el_measure.py); 'manual' = add {name: reason} by hand (e.g. after listening: \"step_soft_2#3\": \"sounds like gravel\"); a cut piece is named <file>#<n>",
+ "reject": [
+  "crowd_2",
+  "drone_1",
+  "drone_2",
+  "freeze_hit_1",
+  "laugh_f_2",
+  "murmur_f_2",
+  "murmur_gib_m_1",
+  "murmur_m_1",
+  "peg_1",
+  "pigeon_settle_1",
+  "juggle_1",
+  "idea_ping_1"
+ ],
+ "why": {
+  "crowd_2": [
+   "clear words: think idea to you I don't. That's I"
+  ],
+  "drone_1": [
+   "near-silent file (peak -61.5 dBFS): no real event, poor signal-to-noise"
+  ],
+  "drone_2": [
+   "near-silent file (peak -61.1 dBFS): no real event, poor signal-to-noise"
+  ],
+  "freeze_hit_1": [
+   "near-silent file (peak -43.4 dBFS): no real event, poor signal-to-noise"
+  ],
+  "laugh_f_2": [
+   "clear words: he he he"
+  ],
+  "murmur_f_2": [
+   "near-silent file (peak -43.2 dBFS): no real event, poor signal-to-noise"
+  ],
+  "murmur_gib_m_1": [
+   "reads as words: -wah -wah -wah -wah -wah -wah -wah -wah"
+  ],
+  "murmur_m_1": [
+   "reads as words: ahead, I'm in it."
+  ],
+  "peg_1": [
+   "near-silent file (peak -55.4 dBFS): no real event, poor signal-to-noise"
+  ],
+  "pigeon_settle_1": [
+   "p3 measure: a sub-bass thump (top edge 1.0 kHz, 0.5-6 kHz share -25 dB): not a wing flutter"
+  ],
+  "juggle_1": [
+   "p3 measure: sub-bass thumps (top edge 394 Hz, 0.5-6 kHz share -32 dB): not a hand catch"
+  ],
+  "idea_ping_1": [
+   "p3 measure: near-silent file (peak -44.9 dBFS): no real event, poor signal-to-noise"
+  ]
+ },
+ "manual": {}
+}

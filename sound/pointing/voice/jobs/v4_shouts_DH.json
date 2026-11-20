@@ -1,0 +1,230 @@
+[
+ {
+  "folder": "v4_D",
+  "take": "t1",
+  "voice": "TlxVR97quVHvTxE8Qkcm",
+  "model": "eleven_v4",
+  "text": "[proudly] Signal clear!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13201,
+  "prev": "Pointing and saying it makes your hand wait. Which is why Japan's train drivers point at their signals, and shout.",
+  "next": null,
+  "lines": [
+   "D"
+  ],
+  "role": "D",
+  "candidate": "samurai",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_D",
+  "take": "t2",
+  "voice": "TlxVR97quVHvTxE8Qkcm",
+  "model": "eleven_v4",
+  "text": "Signal clear!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13202,
+  "prev": "Pointing and saying it makes your hand wait. Which is why Japan's train drivers point at their signals, and shout.",
+  "next": null,
+  "lines": [
+   "D"
+  ],
+  "role": "D",
+  "candidate": "samurai",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_D",
+  "take": "t3",
+  "voice": "FMgBdHe1YV2Xi0B9anXW",
+  "model": "eleven_v4",
+  "text": "[proudly] Signal clear!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13203,
+  "prev": "Pointing and saying it makes your hand wait. Which is why Japan's train drivers point at their signals, and shout.",
+  "next": null,
+  "lines": [
+   "D"
+  ],
+  "role": "D",
+  "candidate": "hideo",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_D",
+  "take": "t4",
+  "voice": "FMgBdHe1YV2Xi0B9anXW",
+  "model": "eleven_v4",
+  "text": "Signal clear!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13204,
+  "prev": "Pointing and saying it makes your hand wait. Which is why Japan's train drivers point at their signals, and shout.",
+  "next": null,
+  "lines": [
+   "D"
+  ],
+  "role": "D",
+  "candidate": "hideo",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_D",
+  "take": "t5",
+  "voice": "pX0Ocua80UVkykZYq5ci",
+  "model": "eleven_v4",
+  "text": "[proudly] Signal clear!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13205,
+  "prev": "Pointing and saying it makes your hand wait. Which is why Japan's train drivers point at their signals, and shout.",
+  "next": null,
+  "lines": [
+   "D"
+  ],
+  "role": "D",
+  "candidate": "mat",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_D",
+  "take": "t6",
+  "voice": "pX0Ocua80UVkykZYq5ci",
+  "model": "eleven_v4",
+  "text": "Signal clear!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13206,
+  "prev": "Pointing and saying it makes your hand wait. Which is why Japan's train drivers point at their signals, and shout.",
+  "next": null,
+  "lines": [
+   "D"
+  ],
+  "role": "D",
+  "candidate": "mat",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t1",
+  "voice": "8TMmdpPgqHKvDOGYP2lN",
+  "model": "eleven_v4",
+  "text": "[urgently] Signal clear!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13207,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "gregory",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t2",
+  "voice": "8TMmdpPgqHKvDOGYP2lN",
+  "model": "eleven_v4",
+  "text": "Signal clear!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13208,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "gregory",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t3",
+  "voice": "rSLmFOTRq9g87aTxSUr6",
+  "model": "eleven_v4",
+  "text": "[urgently] Signal clear!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13209,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "david",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t4",
+  "voice": "rSLmFOTRq9g87aTxSUr6",
+  "model": "eleven_v4",
+  "text": "Signal clear!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13210,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "david",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t5",
+  "voice": "pX0Ocua80UVkykZYq5ci",
+  "model": "eleven_v4",
+  "text": "[urgently] Signal clear!",
+  "stability": 0.5,
+  "speed": 1.0,
+  "seed": 13211,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "mat",
+  "script": "v4",
+  "round": "shout"
+ },
+ {
+  "folder": "v4_H",
+  "take": "t6",
+  "voice": "pX0Ocua80UVkykZYq5ci",
+  "model": "eleven_v4",
+  "text": "Signal clear!",
+  "stability": 0.35,
+  "speed": 1.0,
+  "seed": 13212,
+  "prev": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "next": null,
+  "lines": [
+   "H"
+  ],
+  "role": "H",
+  "candidate": "mat",
+  "script": "v4",
+  "round": "shout"
+ }
+]

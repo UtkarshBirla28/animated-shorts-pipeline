@@ -1,0 +1,456 @@
+{
+ "units": {
+  "v3_n01": {
+   "take": "v3_hook/t13",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 1.51,
+   "f0_med": 234.6,
+   "mid_db": -7.11,
+   "hi_db": -16.39,
+   "centroid_hz": 822.0,
+   "edge_hz": 11391
+  },
+  "v3_n02": {
+   "take": "v3_hook/t13",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 0.89,
+   "f0_med": 105.0,
+   "mid_db": -12.89,
+   "hi_db": -12.63,
+   "centroid_hz": 625.0,
+   "edge_hz": 12176
+  },
+  "v3_n03": {
+   "take": "v3_hook/t13",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 2.54,
+   "f0_med": 240.3,
+   "mid_db": -7.79,
+   "hi_db": -18.52,
+   "centroid_hz": 716.0,
+   "edge_hz": 11660
+  },
+  "v3_d01": {
+   "take": "cast_d/masaki1",
+   "reused": true,
+   "speaker": "D",
+   "dur_s": 1.34,
+   "f0_med": 177.9,
+   "mid_db": -4.31,
+   "hi_db": -26.35,
+   "centroid_hz": 853.0,
+   "edge_hz": 6703
+  },
+  "v3_t01": {
+   "take": "v3_t01/t5",
+   "reused": false,
+   "speaker": "T",
+   "dur_s": 1.52,
+   "f0_med": 229.4,
+   "mid_db": -8.34,
+   "hi_db": -17.22,
+   "centroid_hz": 848.0,
+   "edge_hz": 6703
+  },
+  "v3_n04": {
+   "take": "v3_n04/t4",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 2.6,
+   "f0_med": 161.5,
+   "mid_db": -11.74,
+   "hi_db": -15.91,
+   "centroid_hz": 531.0,
+   "edge_hz": 11320
+  },
+  "v3_n05": {
+   "take": "v3_n05/t4",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 2.19,
+   "f0_med": 264.0,
+   "mid_db": -7.03,
+   "hi_db": -14.84,
+   "centroid_hz": 857.0,
+   "edge_hz": 12012
+  },
+  "v3_n06": {
+   "take": "v3_n0608/t5",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 0.91,
+   "f0_med": 166.1,
+   "mid_db": -3.83,
+   "hi_db": -11.97,
+   "centroid_hz": 1117.0,
+   "edge_hz": 12105
+  },
+  "v3_n07": {
+   "take": "v3_n0608/t5",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 1.71,
+   "f0_med": 256.5,
+   "mid_db": -7.23,
+   "hi_db": -11.61,
+   "centroid_hz": 943.0,
+   "edge_hz": 12879
+  },
+  "v3_n08": {
+   "take": "v3_n0608/t5",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 1.75,
+   "f0_med": 217.1,
+   "mid_db": -13.96,
+   "hi_db": -9.97,
+   "centroid_hz": 1055.0,
+   "edge_hz": 13301
+  },
+  "v3_t02": {
+   "take": "v3_t02/t1",
+   "reused": false,
+   "speaker": "T",
+   "dur_s": 1.02,
+   "f0_med": 135.3,
+   "mid_db": -5.19,
+   "hi_db": -20.0,
+   "centroid_hz": 968.0,
+   "edge_hz": 10582
+  },
+  "v3_d02": {
+   "take": "ch_d03/t3",
+   "reused": true,
+   "speaker": "D",
+   "dur_s": 1.44,
+   "f0_med": 131.3,
+   "mid_db": -12.97,
+   "hi_db": -27.94,
+   "centroid_hz": 596.0,
+   "edge_hz": 4570
+  },
+  "v3_t03": {
+   "take": "v3_t03/t1",
+   "reused": false,
+   "speaker": "T",
+   "dur_s": 1.34,
+   "f0_med": 110.0,
+   "mid_db": -3.57,
+   "hi_db": -13.25,
+   "centroid_hz": 1316.0,
+   "edge_hz": 4383
+  },
+  "v3_n09": {
+   "take": "v3_n0910/t3",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 0.85,
+   "f0_med": 218.0,
+   "mid_db": -8.26,
+   "hi_db": -8.57,
+   "centroid_hz": 1382.0,
+   "edge_hz": 13418
+  },
+  "v3_t04": {
+   "take": "ch_t02/t3",
+   "reused": true,
+   "speaker": "T",
+   "dur_s": 1.29,
+   "f0_med": 149.2,
+   "mid_db": -8.26,
+   "hi_db": -24.16,
+   "centroid_hz": 807.0,
+   "edge_hz": 6879
+  },
+  "v3_n10": {
+   "take": "v3_n0910/t3",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 1.0,
+   "f0_med": 107.2,
+   "mid_db": -9.36,
+   "hi_db": -3.85,
+   "centroid_hz": 2149.0,
+   "edge_hz": 14637
+  },
+  "v3_t05": {
+   "take": "ch_t04/t2",
+   "reused": true,
+   "speaker": "T",
+   "dur_s": 1.86,
+   "f0_med": 256.8,
+   "mid_db": -5.31,
+   "hi_db": -9.45,
+   "centroid_hz": 1311.0,
+   "edge_hz": 6492
+  },
+  "v3_t06": {
+   "take": "v3_t06/t1",
+   "reused": false,
+   "speaker": "T",
+   "dur_s": 1.46,
+   "f0_med": 168.9,
+   "mid_db": -9.87,
+   "hi_db": -13.17,
+   "centroid_hz": 821.0,
+   "edge_hz": 11625
+  },
+  "v3_n11": {
+   "take": "v3_n11/t3",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 3.97,
+   "f0_med": 149.5,
+   "mid_db": -11.65,
+   "hi_db": -11.38,
+   "centroid_hz": 808.0,
+   "edge_hz": 12914
+  },
+  "v3_n12": {
+   "take": "c08c/t1",
+   "reused": true,
+   "speaker": "N",
+   "dur_s": 2.04,
+   "f0_med": 207.6,
+   "mid_db": -10.24,
+   "hi_db": -11.03,
+   "centroid_hz": 895.0,
+   "edge_hz": 12973
+  },
+  "v3_n13": {
+   "take": "v3_n13/t3",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 6.07,
+   "f0_med": 165.0,
+   "mid_db": -10.31,
+   "hi_db": -12.52,
+   "centroid_hz": 796.0,
+   "edge_hz": 12586
+  },
+  "v3_n14": {
+   "take": "v3_n14/t1",
+   "reused": false,
+   "speaker": "N",
+   "dur_s": 2.75,
+   "f0_med": 172.7,
+   "mid_db": -7.56,
+   "hi_db": -14.99,
+   "centroid_hz": 707.0,
+   "edge_hz": 11438
+  },
+  "v3_d03": {
+   "take": "ch_d04/t4",
+   "reused": true,
+   "speaker": "D",
+   "dur_s": 1.56,
+   "f0_med": 126.4,
+   "mid_db": -17.94,
+   "hi_db": -30.22,
+   "centroid_hz": 425.0,
+   "edge_hz": 6223
+  },
+  "v3_k01": {
+   "take": "ch_k01/t5",
+   "reused": true,
+   "speaker": "KID",
+   "dur_s": 1.35,
+   "f0_med": 282.6,
+   "mid_db": 7.51,
+   "hi_db": -3.6,
+   "centroid_hz": 1849.0,
+   "edge_hz": 10020
+  },
+  "v3_t07": {
+   "take": "v3_t07/t2",
+   "reused": false,
+   "speaker": "T",
+   "dur_s": 1.56,
+   "f0_med": 104.5,
+   "mid_db": -13.43,
+   "hi_db": -25.9,
+   "centroid_hz": 596.0,
+   "edge_hz": 4359
+  }
+ },
+ "speakers": {
+  "N": {
+   "new": [
+    "v3_n01",
+    "v3_n02",
+    "v3_n03",
+    "v3_n04",
+    "v3_n05",
+    "v3_n06",
+    "v3_n07",
+    "v3_n08",
+    "v3_n09",
+    "v3_n10",
+    "v3_n11",
+    "v3_n13",
+    "v3_n14"
+   ],
+   "reused": [
+    "v3_n12"
+   ],
+   "new_vs_new_mfcc": {
+    "median": 5.12,
+    "max": 9.6
+   },
+   "largest_mean_distance_of_a_new_unit": 7.62,
+   "to_other_speakers_mfcc": {
+    "median": 10.33,
+    "min": 5.01
+   },
+   "edge_hz_new": [
+    11391,
+    12176,
+    11660,
+    11320,
+    12012,
+    12105,
+    12879,
+    13301,
+    13418,
+    14637,
+    12914,
+    12586,
+    11438
+   ]
+  },
+  "T": {
+   "new": [
+    "v3_t01",
+    "v3_t02",
+    "v3_t03",
+    "v3_t06",
+    "v3_t07"
+   ],
+   "reused": [
+    "v3_t04",
+    "v3_t05"
+   ],
+   "new_vs_new_mfcc": {
+    "median": 7.46,
+    "max": 12.93
+   },
+   "largest_mean_distance_of_a_new_unit": 9.53,
+   "to_other_speakers_mfcc": {
+    "median": 10.07,
+    "min": 4.46
+   },
+   "edge_hz_new": [
+    6703,
+    10582,
+    4383,
+    11625,
+    4359
+   ]
+  },
+  "D": {
+   "new": [],
+   "reused": [
+    "v3_d01",
+    "v3_d02",
+    "v3_d03"
+   ],
+   "new_vs_new_mfcc": null,
+   "largest_mean_distance_of_a_new_unit": null,
+   "to_other_speakers_mfcc": {
+    "median": 8.99,
+    "min": 4.46
+   },
+   "edge_hz_new": []
+  },
+  "KID": {
+   "new": [],
+   "reused": [
+    "v3_k01"
+   ],
+   "new_vs_new_mfcc": null,
+   "largest_mean_distance_of_a_new_unit": null,
+   "to_other_speakers_mfcc": {
+    "median": 17.5,
+    "min": 13.21
+   },
+   "edge_hz_new": []
+  }
+ },
+ "reused": [
+  {
+   "id": "v3_n12",
+   "take": "c08c/t1",
+   "speaker": "N",
+   "mean_mfcc_distance_to_new": 3.85,
+   "limit": 8.38,
+   "edge_hz": 12973,
+   "edge_hz_new_median": 12176,
+   "ok": true
+  },
+  {
+   "id": "v3_t04",
+   "take": "ch_t02/t3",
+   "speaker": "T",
+   "mean_mfcc_distance_to_new": 7.33,
+   "limit": 10.49,
+   "edge_hz": 6879,
+   "edge_hz_new_median": 6703,
+   "ok": true
+  },
+  {
+   "id": "v3_t05",
+   "take": "ch_t04/t2",
+   "speaker": "T",
+   "mean_mfcc_distance_to_new": 5.75,
+   "limit": 10.49,
+   "edge_hz": 6492,
+   "edge_hz_new_median": 6703,
+   "ok": true
+  },
+  {
+   "id": "v3_d01",
+   "take": "cast_d/masaki1",
+   "speaker": "D",
+   "note": "no new take of this speaker in the film: nothing to clash with",
+   "mfcc_distance_to_the_other_reused": [
+    6.28,
+    8.2
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_d02",
+   "take": "ch_d03/t3",
+   "speaker": "D",
+   "note": "no new take of this speaker in the film: nothing to clash with",
+   "mfcc_distance_to_the_other_reused": [
+    6.28,
+    4.95
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_d03",
+   "take": "ch_d04/t4",
+   "speaker": "D",
+   "note": "no new take of this speaker in the film: nothing to clash with",
+   "mfcc_distance_to_the_other_reused": [
+    8.2,
+    4.95
+   ],
+   "ok": true
+  },
+  {
+   "id": "v3_k01",
+   "take": "ch_k01/t5",
+   "speaker": "KID",
+   "note": "no new take of this speaker in the film: nothing to clash with",
+   "mfcc_distance_to_the_other_reused": [],
+   "ok": true
+  }
+ ],
+ "passed": true
+}

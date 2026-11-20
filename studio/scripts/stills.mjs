@@ -6,6 +6,8 @@ import fs from "node:fs";
 import path from "node:path";
 const tmp = process.env.REMOTION_TMP || path.resolve("../_remotion-tmp");
 fs.mkdirSync(tmp, { recursive: true }); process.env.TEMP = process.env.TMP = tmp;
+// disk guard (2026-11-19: 65 GB of leftover bundles filled C:): sweep bundles / browser profiles older than 12 h
+try { const _now = Date.now(); for (const _n of fs.readdirSync(tmp)) { if (!/^(remotion-webpack-bundle-|puppeteer_dev_chrome_profile-|remotion-v\d)/.test(_n)) continue; const _p = path.join(tmp, _n); if (_now - fs.statSync(_p).mtimeMs > 12 * 3600e3) fs.rmSync(_p, { recursive: true, force: true }); } } catch {}
 const { bundle } = await import("@remotion/bundler");
 const { renderStill, selectComposition } = await import("@remotion/renderer");
 const [prefix, frames, scale = "0.5"] = process.argv.slice(2);
@@ -17,6 +19,9 @@ const chromiumOptions = { gl: "angle" };
 fs.mkdirSync(path.dirname(path.resolve(prefix)), { recursive: true });
 const t0 = Date.now();
 const serveUrl = await bundle({ entryPoint: path.resolve(process.env.ENTRY || "src/index.ts"), publicDir: path.resolve("public") });
+// disk guard: every bundle() copies all of public/ (> 1 GB with the kit); delete ours when this process ends
+const _cleanBundle = () => { try { fs.rmSync(serveUrl, { recursive: true, force: true }); } catch {} };
+process.on("exit", _cleanBundle); process.on("SIGINT", () => { _cleanBundle(); process.exit(130); }); process.on("SIGTERM", () => { _cleanBundle(); process.exit(143); });
 console.log("bundled", ((Date.now() - t0) / 1000).toFixed(1) + "s");
 const composition = await selectComposition({ serveUrl, id, inputProps, browserExecutable, chromiumOptions });
 const onBrowserLog = (l) => { if (l.type === "error" || l.type === "warning") console.log(`[${l.type}]`, l.text.slice(0, 300)); };

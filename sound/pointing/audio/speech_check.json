@@ -1,0 +1,448 @@
+{
+ "ride_cruise": {
+  "file": "ride_chuo",
+  "cut": [
+   91.5,
+   105.5
+  ],
+  "seconds": 14.0,
+  "verdict": "no confident speech",
+  "segments": [
+   {
+    "lang": "ja",
+    "a": 0.0,
+    "b": 14.0,
+    "text": "JR東日本E231系電車",
+    "no_speech": 0.639,
+    "logprob": -0.623,
+    "speech": false
+   }
+  ]
+ },
+ "ride_accel": {
+  "file": "ride_chuo",
+  "cut": [
+   23.5,
+   31.5
+  ],
+  "seconds": 8.0,
+  "verdict": "no confident speech",
+  "segments": [
+   {
+    "lang": "ja",
+    "a": 0.0,
+    "b": 8.0,
+    "text": "ご視聴ありがとうございました",
+    "no_speech": 0.833,
+    "logprob": -0.452,
+    "speech": false
+   }
+  ]
+ },
+ "suit_tokyo": {
+  "file": "suitcase_tokyo",
+  "cut": [
+   1.8,
+   5.6
+  ],
+  "seconds": 3.8,
+  "verdict": "no confident speech",
+  "segments": [
+   {
+    "lang": "ja",
+    "a": 0.0,
+    "b": 3.84,
+    "text": "ご視聴ありがとうございました",
+    "no_speech": 0.645,
+    "logprob": -0.843,
+    "speech": false
+   }
+  ]
+ },
+ "steps_group": {
+  "file": "steps_group",
+  "cut": [
+   0.2,
+   9.6
+  ],
+  "seconds": 9.4,
+  "verdict": "no confident speech",
+  "segments": [
+   {
+    "lang": "ja",
+    "a": 0.0,
+    "b": 2.24,
+    "text": "2",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 2.24,
+    "b": 4.24,
+    "text": "2",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 4.24,
+    "b": 6.24,
+    "text": "2",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 6.24,
+    "b": 8.24,
+    "text": "2",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 8.24,
+    "b": 10.24,
+    "text": "2",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 10.24,
+    "b": 12.24,
+    "text": "4",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 12.24,
+    "b": 14.24,
+    "text": "4",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 14.24,
+    "b": 16.24,
+    "text": "4",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 16.24,
+    "b": 18.24,
+    "text": "4",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 18.24,
+    "b": 20.24,
+    "text": "4",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 20.24,
+    "b": 22.24,
+    "text": "4",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 22.24,
+    "b": 24.24,
+    "text": "4",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 24.24,
+    "b": 26.24,
+    "text": "4",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   },
+   {
+    "lang": "ja",
+    "a": 26.24,
+    "b": 28.24,
+    "text": "4",
+    "no_speech": 0.813,
+    "logprob": -0.719,
+    "speech": false
+   }
+  ]
+ },
+ "train_idle": {
+  "file": "door_open_close",
+  "cut": [
+   4.1,
+   8.4
+  ],
+  "seconds": 4.3,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "emu_depart": {
+  "file": "train_depart_emu",
+  "cut": [
+   0.0,
+   24.0
+  ],
+  "seconds": 24.0,
+  "verdict": "no confident speech",
+  "segments": [
+   {
+    "lang": "ja",
+    "a": 0.0,
+    "b": 24.0,
+    "text": "【音楽】",
+    "no_speech": 0.457,
+    "logprob": -1.227,
+    "speech": false
+   },
+   {
+    "lang": "en",
+    "a": 0.0,
+    "b": 24.0,
+    "text": "Music",
+    "no_speech": 0.457,
+    "logprob": -1.396,
+    "speech": false
+   }
+  ]
+ },
+ "emu_pass": {
+  "file": "train_depart_emu",
+  "cut": [
+   9.0,
+   19.5
+  ],
+  "seconds": 10.5,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "walla": {
+  "file": "walla_ext",
+  "cut": [
+   2.0,
+   29.0
+  ],
+  "seconds": 27.0,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "murmur": {
+  "file": "murmuring",
+  "cut": [
+   4.0,
+   34.0
+  ],
+  "seconds": 30.0,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "vending_hum": {
+  "file": "vending_hum",
+  "cut": [
+   2.0,
+   30.0
+  ],
+  "seconds": 28.0,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "sparrows": {
+  "file": "sparrows",
+  "cut": [
+   2.0,
+   32.0
+  ],
+  "seconds": 30.0,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "crows_far": {
+  "file": "crows_sapporo",
+  "cut": [
+   0.5,
+   26.3
+  ],
+  "seconds": 25.8,
+  "verdict": "SPEECH?",
+  "segments": [
+   {
+    "lang": "ja",
+    "a": 0.0,
+    "b": 25.8,
+    "text": "あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ、あ",
+    "no_speech": 0.587,
+    "logprob": -0.148,
+    "speech": false
+   },
+   {
+    "lang": "en",
+    "a": 0.0,
+    "b": 2.0,
+    "text": "I'm not going to be able to do it.",
+    "no_speech": 0.587,
+    "logprob": -0.223,
+    "speech": false
+   },
+   {
+    "lang": "en",
+    "a": 2.0,
+    "b": 25.8,
+    "text": "A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A",
+    "no_speech": 0.476,
+    "logprob": -0.085,
+    "speech": true
+   }
+  ],
+  "review": "REVIEWED 2026-11-20: the only text is the crows themselves (ja: a run of あ / ああ, en: A, A, A ... on the caw times 3.6-10, 16.5-20.3, 22-24.5 s of probe_ride; the en 0-2 s line has no_speech 0.59 over a -48 dBFS floor with no speech-band swing = a stock hallucination). No human speech: PASS.",
+  "verdict_reviewed": "no speech (crow caws read as vowels)"
+ },
+ "clack_bed": {
+  "file": "wheels_clack",
+  "cut": [
+   4.0,
+   34.0
+  ],
+  "seconds": 30.0,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "door_hiss": {
+  "file": "door_close_a",
+  "cut": [
+   0.47,
+   2.6
+  ],
+  "seconds": 2.1,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "air_hiss": {
+  "file": "air_brake",
+  "cut": [
+   0.0,
+   3.4
+  ],
+  "seconds": 3.4,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "suit_roll_a": {
+  "file": "suitcase_roll_5",
+  "cut": [
+   0.0,
+   3.2
+  ],
+  "seconds": 3.2,
+  "verdict": "no confident speech",
+  "segments": [
+   {
+    "lang": "ja",
+    "a": 0.0,
+    "b": 3.16,
+    "text": "【音楽】",
+    "no_speech": 0.516,
+    "logprob": -1.391,
+    "speech": false
+   },
+   {
+    "lang": "en",
+    "a": 0.0,
+    "b": 3.12,
+    "text": "Thank you.",
+    "no_speech": 0.516,
+    "logprob": -1.168,
+    "speech": false
+   }
+  ]
+ },
+ "comb_plate": {
+  "file": "luggage_comb_plate",
+  "cut": [
+   2.4,
+   3.42
+  ],
+  "seconds": 1.0,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "crow_1": {
+  "file": "crows_sapporo",
+  "cut": [
+   9.3,
+   9.7
+  ],
+  "seconds": 0.4,
+  "verdict": "no confident speech",
+  "segments": []
+ },
+ "crow_2": {
+  "file": "crows_sapporo",
+  "cut": [
+   4.93,
+   5.3
+  ],
+  "seconds": 0.4,
+  "verdict": "SPEECH?",
+  "segments": [
+   {
+    "lang": "ja",
+    "a": 0.0,
+    "b": 0.5,
+    "text": "ああ",
+    "no_speech": 0.482,
+    "logprob": -0.646,
+    "speech": true
+   },
+   {
+    "lang": "en",
+    "a": 0.0,
+    "b": 0.5,
+    "text": "Ah.",
+    "no_speech": 0.482,
+    "logprob": -0.97,
+    "speech": false
+   }
+  ],
+  "review": "REVIEWED 2026-11-20: the only text is the crows themselves (ja: a run of あ / ああ, en: A, A, A ... on the caw times 3.6-10, 16.5-20.3, 22-24.5 s of probe_ride; the en 0-2 s line has no_speech 0.59 over a -48 dBFS floor with no speech-band swing = a stock hallucination). No human speech: PASS.",
+  "verdict_reviewed": "no speech (crow caws read as vowels)"
+ },
+ "crow_3": {
+  "file": "crows_sapporo",
+  "cut": [
+   19.85,
+   20.4
+  ],
+  "seconds": 0.5,
+  "verdict": "no confident speech",
+  "segments": []
+ }
+}

@@ -1,0 +1,101 @@
+{
+  "_doc": "DETAIL BIBLE v3: every decision about a Short, made BEFORE the build (PIPELINE_V3.md stage A3). Keys that start with '_' are comments; the validator ignores them. Builders build ONLY what this file says; anything they need that is missing is a bible change (the LEAD edits it, re-validates, notes it in CHANGES). Names in 'kit' / 'surface' / 'rig' / 'preset' fields come from the kit catalogs (studio/src/kit/*/NOTES.md and studio/public/kit/*); an item the kit does not have yet is marked \"new\": true (a kit request) or \"local\": true (built inside videos3/<slug>/sets/). Validate: PYTHONNOUSERSITE=1 tools/.venv/Scripts/python.exe -s tools/v3/bible_validate.py briefs/v3/<slug>/bible.json",
+  "schema": "v3-bible/1",
+  "slug": "<slug>",
+  "title": "<Video title>",
+  "status": {
+    "_doc": "who signed what. gate1 = the owner approved script + voice + storyboard (PIPELINE_V3 stage A5). After gate1 only the LEAD changes this file, and every change is logged in CHANGES.",
+    "script": "draft | linted",
+    "voice": "none | draft | locked",
+    "storyboard": "none | draft | approved",
+    "gate1": false,
+    "gate2": false
+  },
+  "script": { "path": "briefs/v3/<slug>/SCRIPT.md", "target_s": 70, "lint": "PASS | FAIL" },
+  "voice": {
+    "_doc": "locked = the final assembled voice is installed and the owner OK'd the mp3. words_json is the timing source for every shot once locked; before that, shots use the linter's estimates (est_t0).",
+    "narrator": "James - Conversational, Energetic, Punchy (eleven_v4, QhpsGjDKZmM9qRYdMhBD)",
+    "words_json": "sound/<slug>/voice/words.json",
+    "locked": false,
+    "total_frames": null,
+    "tail_frames": 20,
+    "characters": [ { "speaker": "MOM", "voice": "<cast 3 candidates, pick by measurement (LESSONS 51)>", "lines": 1 } ]
+  },
+  "look": {
+    "default_rig": "golden",
+    "_rigs": "CORE rigs.ts: golden (default, the owner's pick), morning, noon, overcastWarm, dusk, interiorWarm, nightPractical",
+    "notes": "warm, bright, golden (memory feedback_warm_bright_look); mean chroma ~24, near-neutral shadows; ink only on the cards"
+  },
+  "locations_reason": "",
+  "cast": [
+    {
+      "id": "<id>", "role": "<who they are in the story>", "build": "small | standard | tall",
+      "body_colour": "#rrggbb", "signature": "<one signature item>", "card": "cards/card | cards/castCard:<who> | cards/crowd",
+      "speaks": false, "expressions": ["neutral", "proud", "smug", "sleepy"], "notes": ""
+    }
+  ],
+  "sets": [
+    {
+      "id": "<set id>",
+      "_doc": "one set = one built place (built once, reused by every shot that names it). kit_base = a reusable kit room / street the set starts from (cheaper than a new set: say which).",
+      "place": "<what it reads as at phone size, in one line>",
+      "kind": "exterior | interior",
+      "kit_base": "surfaces/interior | surfaces/facade | <a set from an earlier v3 film> | null",
+      "ground": { "surface": "<surface name>", "meso": "<joints / boards / displacement>", "wear": ["<dirt at wall bottoms>", "<scuffs>"], "scatter": ["<leaf litter / pebbles / paper scraps>"] },
+      "surfaces": [ { "where": "<walls / kerb / counter>", "surface": "<surface name>", "meso": "<bevels / mortar depth / trims>", "wear": ["<stains>"] } ],
+      "props": [ { "id": "<prop id>", "kit": "props/<name>", "hero": false, "where": "<position words or [x,y,z]>", "new": false, "local": false } ],
+      "vegetation": [ { "kit": "nature/<tree / grass / hedge>", "count": 1, "where": "" } ],
+      "practicals": [ { "kind": "spot | point | area", "what": "<pendant lamp>", "kelvin": 2700, "shadow": true } ],
+      "ambience": "<the bed sound of this place>",
+      "est_build_s": 25
+    }
+  ],
+  "shots": [
+    {
+      "id": "s01",
+      "_doc": "one row of the shot table. est_t0 = seconds from the linter (--json lines[].t) until the voice is locked; starts_on = the first spoken word of the shot (add #2 for its 2nd occurrence) - after the voice lock the scaffold maps it to a frame (a cut lands ~4-6 f before its word).",
+      "beat": "Hook | Stakes | Doubter | Escalation | Gauge | Clue | Loop | Answer | Why | Twist | Payoff",
+      "line": "<the words spoken over this shot>",
+      "starts_on": "<word>",
+      "est_t0": 0.0,
+      "set": "<set id>",
+      "location": "<the spot inside the set, e.g. 'the fridge wall'>",
+      "transition_in": "cut | dissolve:10 | whip",
+      "framings": [
+        {
+          "_doc": "a framing = what a still at that moment shows. A new framing about every 2.5 s (a cut, or a camera move that ends on a new composition). subject_height_pct = the focal character's height as % of the frame (35-60 except wides / inserts).",
+          "at_s": 0.0, "desc": "<the composition in one line>", "subject": "<cast id or prop id>", "subject_height_pct": 45, "wide": false, "insert": false
+        }
+      ],
+      "camera": {
+        "_doc": "a CORE camera preset (camera.ts: lowWideTrack, pushIn, pullBack, droneRise, craneDown, orbit, followSide, povHandheld, macroTopDown, whipPan, lockedWithDrift) + its params; speed_pct_f = the planned median on-screen speed (% of frame per frame, look_metrics formula); bible_validate replaces it with CORE's camSpeedStats() when the film code exists.",
+        "preset": "pushIn",
+        "params": { "subject": "<cast id / prop id / [x,y,z]>", "fov": 60, "height_m": 0.6, "dist_m": [3.2, 1.9], "ease": "inOut", "shake": 0 },
+        "speed_pct_f": 0.7,
+        "freeze": false,
+        "snap": false
+      },
+      "light": { "rig": "golden", "rig_opts": {}, "practicals_on": [], "notes": "<shafts / dapple / window bars across the face>" },
+      "surfaces_near": [ { "surface": "<surface name>", "where": "<floor near the lens>", "meso": "<joint depth>", "wear": ["<scuffs>"] } ],
+      "props": [ { "kit": "props/<name>", "where": "", "near_lens": false } ],
+      "vegetation": [],
+      "life": [
+        { "_doc": ">= 3 things moving besides the camera (wind, people, birds, dust, cars, smoke...). audible: true needs a sound event.", "what": "<a pigeon pecks then flutters off>", "kit": "fx/<name> | cards/<crowd> | nature/<wind>", "audible": false }
+      ],
+      "fx": [ { "kit": "fx/<name>", "what": "<dust puff on the landing>", "on": "<word>", "silent": false } ],
+      "acting": [
+        { "who": "<cast id>", "on": "<word>", "action": "<the verb you can see>", "expression": "<face>", "frames_min": 12, "silent": false }
+      ],
+      "boards": [ { "text": "<= 6-8 words, narrated as written>", "on": "<word>", "hold_s": 2.0, "caps_px": 48 } ],
+      "captions": { "mode": "auto", "_doc": "auto = 1-3 words per chunk from words.ts in the house style (caption band y 1280-1440 at 1080x1920); overrides: [{word, text}]", "overrides": [] },
+      "sound": [
+        { "event": "<what you hear>", "for": "acting:0 | fx:0 | life:1 | amb", "on": "<word or 'shot'>", "kind": "foley | sfx | amb | music", "source": "lib | el | synth" }
+      ],
+      "storyboard": { "frame_s": null, "still": null },
+      "notes": ""
+    }
+  ],
+  "music": { "mood": "<intriguing, playful>", "changes": [ { "on": "<word>", "what": "<hush / swell>" } ], "end": "stops on the last word; only the ambience runs through the loop tail" },
+  "loop": { "frame0": "<what frame 0 shows>", "last": "<how the last frame flows into frame 0>" },
+  "CHANGES": [ { "when": "<YYYY-MM-DD HH:MM>", "who": "LEAD", "what": "<the change and why>" } ]
+}

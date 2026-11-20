@@ -1,0 +1,144 @@
+[
+ {
+  "file": "test_2.wav",
+  "label": "test_2.wav",
+  "dur": 17.04,
+  "lufs": -15.2,
+  "lra": 4.5,
+  "tp": -0.6,
+  "crest": 18.8,
+  "bands": [
+   -37.3,
+   -3.4,
+   -5.7,
+   -6.1,
+   -15.7,
+   -24.6,
+   -30.4,
+   -36.5,
+   -55.1
+  ],
+  "side_db": -10.4,
+  "lr_corr": 0.832,
+  "mono_loss": -0.35,
+  "phone_loss": -8.4,
+  "bass_harm_db": -3.2,
+  "bpm": 103.4,
+  "bpm_conf": 0.41,
+  "first_50ms_dbfs": -13.3,
+  "first_note_ms": 0.6,
+  "last_50ms_dbfs": -102.9,
+  "mom_max": -9.4,
+  "sections": [
+   {
+    "name": "Quiz - the count",
+    "a": 0,
+    "b": 9.1,
+    "lufs": -15.6,
+    "side_db": -13.0,
+    "air_db": -47.5,
+    "top_db": -58.0,
+    "low_db": -2.6
+   },
+   {
+    "name": "Quiz - the answer",
+    "a": 9.1,
+    "b": 13.0,
+    "lufs": -13.7,
+    "side_db": -5.3,
+    "air_db": -30.1,
+    "top_db": -50.8,
+    "low_db": -15.5
+   },
+   {
+    "name": "The turn",
+    "a": 13.0,
+    "b": 17.0,
+    "lufs": -Infinity,
+    "side_db": -1.4,
+    "air_db": -11.5,
+    "top_db": -11.9,
+    "low_db": -6.2
+   }
+  ],
+  "novelty_at_edges": [
+   {
+    "edge": "Quiz - the answer",
+    "planned": 9.1,
+    "peak_at": 9.3,
+    "height": 0.181,
+    "median_elsewhere": 0.079
+   },
+   {
+    "edge": "The turn",
+    "planned": 13.0,
+    "peak_at": 13.2,
+    "height": 0.363,
+    "median_elsewhere": 0.079
+   }
+  ],
+  "words": []
+ },
+ {
+  "file": "stem_music.wav",
+  "label": "saladoil score (approved)",
+  "dur": 86.933,
+  "lufs": -32.4,
+  "lra": 3.9,
+  "tp": -16.1,
+  "crest": 18.4,
+  "bands": [
+   -10.2,
+   -3.5,
+   -8.2,
+   -6.6,
+   -14.3,
+   -16.4,
+   -23.6,
+   -19.4,
+   -20.1
+  ],
+  "side_db": -14.7,
+  "lr_corr": 0.935,
+  "mono_loss": -0.17,
+  "phone_loss": -5.6,
+  "bass_harm_db": -4.0,
+  "bpm": 120.0,
+  "bpm_conf": 0.08,
+  "first_50ms_dbfs": -36.0,
+  "first_note_ms": 6.9,
+  "last_50ms_dbfs": -200.0,
+  "mom_max": -26.1
+ },
+ {
+  "file": "stem_music.wav",
+  "label": "clown cut-1 circus score (rejected)",
+  "dur": 62.267,
+  "lufs": -33.6,
+  "lra": 3.7,
+  "tp": -17.6,
+  "crest": 17.9,
+  "bands": [
+   -16.9,
+   -3.3,
+   -6.8,
+   -7.6,
+   -10.1,
+   -15.5,
+   -25.1,
+   -28.1,
+   -42.6
+  ],
+  "side_db": -18.7,
+  "lr_corr": 0.974,
+  "mono_loss": -0.06,
+  "phone_loss": -5.8,
+  "bass_harm_db": -3.8,
+  "bpm": 109.1,
+  "bpm_conf": 0.24,
+  "first_50ms_dbfs": -32.7,
+  "first_note_ms": 8.1,
+  "last_50ms_dbfs": -35.8,
+  "mom_max": -27.7
+ }
+]

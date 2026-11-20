@@ -1,0 +1,23 @@
+{
+ "installed": "v3 (SCRIPT_v3, final script)",
+ "from": "_v3",
+ "files": [
+  "voice.wav",
+  "words.json",
+  "words_spoken.json",
+  "phrases.json",
+  "captions.json",
+  "_build.json",
+  "voice_info.json",
+  "accept.json",
+  "hook_gate.json",
+  "tone_check.json",
+  "opening_words.json",
+  "stems/",
+  "segments/"
+ ],
+ "duration_s": 63.75,
+ "verify_passed": true,
+ "accept_passed": true,
+ "v1_track": "_full/ (old script, untouched)"
+}
