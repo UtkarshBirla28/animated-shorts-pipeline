@@ -85,7 +85,10 @@ const fr = (sec: number) => Math.round(sec * FPS);
 
 // ---------------------------------------------------------------- the cuts: SHOT_PLAN's rules on words
 export const SHOT_IDS: string[] = SHOT_PLAN.map((p) => p.id);
-const LEAD_S = 0.10, MIN_SHOT_F = 20, TAIL_S = 0.10;
+const LEAD_S = 0.10, MIN_SHOT_F = 20;
+/** the LOOP TAIL (lead 2026-11-21, option B): the film runs on after the last word ("it.") so her arm can come down from
+ *  the point into the exact frame-0 pose and the last frame flows into frame 0 (2066 f = 68.87 s on the real voice) */
+const TAIL_S = 0.49;
 const ruleOf = (p: ShotPlan): number => {
   const [kind, key] = p.start.split(":");
   const base = kind === "line" ? lineStart(key) - (p.lead ?? LEAD_S) : kind === "word" ? S(key) - (p.lead ?? 0.03) : NaN;
@@ -125,9 +128,19 @@ export const EV = {
   /** the six green flashes + presses: one on each of the first six "Go" words */
   goFlashes: GO.slice(0, 6),
   /** the RED: on the seventh "Go!" (the hard cut), then the held beat of silence (0.5 s) */
-  red: GO[6], redBeatEnd: GO[6] + 0.7,
+  red: GO[6],
+  /** the held beat ends when the narrator speaks again ("Did"); without it, 0.7 s after the red */
+  redBeatEnd: isFinite(tryS("did#1")) ? tryS("did#1") : GO[6] + 0.7,
+  /** the hard cut to red (v04's first frame, never before the red word): a set may key its red on this frame */
+  redCut: (() => { const i = SHOT_IDS.indexOf("v04"); return i >= 0 ? CUTS.from[i] / FPS : GO[6]; })(),
   /** the big red X pops on "She" ("She did.") */
   xPop: tryS("she#1"),
   /** the loop: her arm is up and pointing on "point" of the last line (point#6) */
   loopPoint: tryS("point#6"),
+  /** THE LOOP TAIL: from the end of the last word ("it.") to the last frame: her arm comes down into frame 0's hover pose,
+   *  eyes back to the lamp, the lamp + console lights in their frame-0 state/phase; the last frame (TOTAL - 1) must
+   *  equal frame 0 (the seam gate: no bigger than one held-shot frame step; the caption is gone by loopTailClear) */
+  loopTail: (() => { try { return E("it#5"); } catch { return NaN; } })(),
+  /** the caption "and say it." is gone from this time on (6 f before the end), so frame 0 brings "Tap your foot" alone */
+  loopTailClear: (CUTS.total - 6) / FPS,
 };

@@ -5,9 +5,9 @@ import type { KitCtx, V3 } from "../../../kit/core/ctx";
 import { card, type CardBuilt, type CardDrawInfo } from "../../../kit/cards/card";
 import type { CardLook } from "../../../kit/cards/cardlight";
 import type { FootGrassOpts } from "../../../kit/cards/grass";
-import { Pen, rig, type P2 } from "../../../videos/clown/toon";
+import { Pen, rig, INK, type P2 } from "../../../videos/clown/toon";
 import * as PPL from "../../../videos/clown/cast_people";
-import { drawWho, anchorsOf, nativeCrown, lastHands, SPECS, SU, type CPose, type Who } from "./people";
+import { drawWho, anchorsOf, nativeCrown, lastHands, SPECS, SU, CAST_V5, type CPose, type Who } from "./people";
 import { getInputProps } from "remotion";
 import type { ActEnv, Actor } from "./gesture";
 
@@ -44,6 +44,40 @@ export type CastOpts = {
   skin?: string;
   /** false = never draw the on-card hand that points at the lens (a foreground lensGlove card plays it: frame 0) */
   lensHand?: boolean;
+  /** the bold outer ink contour, design units (default inkOutOf(who); 0 = off) */
+  inkOut?: number;
+  /** v5: the aim is a ROUND BUTTON's cap top of this radius (m): the press lands on its far rim as seen (ActEnv.touch).
+   *  Default 0.12 for the young woman (LAB: cap r 0.13 x buttonScale 1.3, top 0.17 x 1.3), else off */
+  touchR?: number;
+};
+
+/** the cap's far rim as seen: the aim moved `R` metres horizontally AWAY from the lens and 0.02 m down, on the card */
+const touchOf = (T: V3, R: number, info: CardDrawInfo, k: number): P2 | null => {
+  info.cam.updateMatrixWorld(); camP.setFromMatrixPosition(info.cam.matrixWorld);
+  const dx = T[0] - camP.x, dz = T[2] - camP.z, n = Math.hypot(dx, dz) || 1;
+  return worldToCard([T[0] + (R * dx) / n, T[1] - 0.02, T[2] + (R * dz) / n], info, k);
+};
+
+/** THE BOLD OUTER CONTOUR (v5, 2026-11-20, lead: "anti-theft and clown have thicker, more confident outlines; ours read
+ *  plain"): the figure is drawn once to a scratch canvas, its silhouette stamped in INK in a ring this many design units
+ *  (1000 = the card height) around it, then the figure on top. Only the OUTER contour thickens (the face, the clothes and
+ *  the thin ink-line arms keep their inner lines); an ink arm gains the ring on both sides (still a line, not a tube).
+ *  Main cast 3.2 du; the far hall / crowd extras a little less */
+const INK_OUT: Partial<Record<Who, number>> = { lab_a: 2.6, lab_b: 2.6, lab_c: 2.6, lab_d: 2.6 };
+export const inkOutOf = (who: Who): number => (CAST_V5 ? INK_OUT[who] ?? 3.2 : 0);
+let inkA: HTMLCanvasElement | null = null, inkB: HTMLCanvasElement | null = null;
+const scratch = (c: HTMLCanvasElement | null, w: number, h: number) => { const q = c ?? document.createElement("canvas"); if (q.width !== w || q.height !== h) { q.width = w; q.height = h; } const g = q.getContext("2d")!; g.setTransform(1, 0, 0, 1, 0, 0); g.globalCompositeOperation = "source-over"; g.clearRect(0, 0, w, h); return q; };
+const drawInked = (c2d: CanvasRenderingContext2D, w: number, h: number, du: number, fig: (g: CanvasRenderingContext2D) => void) => {
+  inkA = scratch(inkA, w, h); inkB = scratch(inkB, w, h);
+  const ga = inkA.getContext("2d")!, gb = inkB.getContext("2d")!;
+  ga.setTransform(h / 1000, 0, 0, h / 1000, (w - 0.6 * h) / 2, 0); fig(ga); ga.setTransform(1, 0, 0, 1, 0, 0);
+  // the silhouette in ink (alpha kept: soft edges stay soft)
+  gb.drawImage(inkA, 0, 0); gb.globalCompositeOperation = "source-in"; gb.fillStyle = INK; gb.fillRect(0, 0, w, h); gb.globalCompositeOperation = "source-over";
+  const r = (du * h) / 1000, n = 16;
+  c2d.save(); c2d.setTransform(1, 0, 0, 1, 0, 0);
+  for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2; c2d.drawImage(inkB, r * Math.cos(a), r * Math.sin(a)); }
+  c2d.drawImage(inkA, 0, 0);
+  c2d.restore();
 };
 
 /** THE CAST'S CARD LIGHT (over the cards kit's default): the golden rig's sun is orange and its grade doubles the
@@ -53,17 +87,24 @@ export type CastOpts = {
 // LOOK TEST 2026-11-20 (was { gain: 0.68, keyK: 0.6, tintK: 0.22, floorK: 0.5, floorBackK: 0.7, ceilK: 1.5 }: flat,
 // grey-beige faces that sat ON the light, not in it): a brighter card, more sun key (form + a real terminator), a clear
 // rim on the sun side, a deeper floor (shade side reads), a little sky-blue fill colour in the shade
-export const CAST_LOOK: Partial<CardLook> = { gain: 0.8, keyK: 0.85, form: 1.2, wrap: 0.3, tintK: 0.3, floorK: 0.4, floorBackK: 0.6, ceilK: 1.6, rim: 1.7, rimPx: 4.4, shadeSat: 0.45 };
+// CAST v5 (2026-11-20 23:10): rimPx 4.4 -> 2.4 with the new bold outer contour (drawInked): the 4.4 px additive rim lit
+// the whole ink ring pale on the sun side (the contour vanished there; on far figures it read as a white dashed edge,
+// f1380). The rim stays as strong, only thinner: a bright hairline OUTSIDE a dark contour. (castV5:0 = the old 4.4)
+export const CAST_LOOK: Partial<CardLook> = { gain: 0.8, keyK: 0.85, form: 1.2, wrap: 0.3, tintK: 0.3, floorK: 0.4, floorBackK: 0.6, ceilK: 1.6, rim: 0.6, rimPx: CAST_V5 ? 2.4 : 4.4, shadeSat: 0.45 };   // (FIX R1, LOOK #17: rim 1.7 -> 0.6: with the bloom the bright rim made every card glow like a sticker)
 /** THE LIT SKIN: what the cards draw skin with (CPose.skin). A little cooler than the sheet's off-white (#f8f3ee), so the
  *  warm key + the golden grade land it on a light cream instead of tan. The sheet keeps the house colour */
 // Measured on the bench (golden rig, sun 24 deg, draft, 2026-11-19 21:35), the brightest skin patch of the same tourist:
 //   cards-kit default look + #f8f3ee -> (208,164,126) tan;  CAST_LOOK + #f8f3ee -> (225,191,153);
 //   CAST_LOOK gain 0.66 + #eef3fb -> (229,204,174) light cream;  gain 0.70 + #e4eefc -> (226,205,178)
+/** v5 (02:40, STATION sheet 0221 + lead): the two New Yorkers turned toward the conductor are lit from behind: on the
+ *  house near-white skin their heads went flat silver-grey ("grey egg"). Warm, clearly different skin tones keep a skin
+ *  hue in the shade; the conductor a touch warmer so his bare pointing hand never reads as a white glove */
+const SKIN_OF: Partial<Record<Who, string>> = { prankA: "#b9794e", prankB: "#f1c39a", ny_conductor: "#f4dcc5" };
 export const CAST_SKIN = "#f7f5f3";   // LOOK TEST 2026-11-20: near-white light skin (the vivid rig's golden sun warms it; #fdf2e6 went peach) (was #eef3fb, cooled for warmth 0.8-1.3)
 /** THE DRIVER in his cab (s03 / s03b / s06 / s21; the lead, Block 13: "flat and beige" on the one golden close-up of the
  *  title's subject): more of the windscreen sun's key, a crisp warm rim on the cap edge, cheek and glove, rounder form */
 // LOOK TEST 2026-11-20: + gain 0.66 (with the brighter CAST_LOOK gain 0.8 his close-up face blew out to flat cream)
-export const DRIVER_LOOK: Partial<CardLook> = { gain: 0.66, keyK: 0.95, rim: 1.8, rimPx: 4.8, form: 1.15, floorK: 0.42 };
+export const DRIVER_LOOK: Partial<CardLook> = { gain: 0.66, keyK: 0.95, rim: 0.65, rimPx: CAST_V5 ? 2.6 : 4.8, form: 1.15, floorK: 0.42 };
 /** THE LIT WHITE of the driver's gloves (and the frame-0 glove card): a shade cooler still, so under the golden sun the
  *  gloves stay the WHITEST thing on him (a pure #ffffff glove comes out warmer than the cooled skin) */
 export const CAST_WHITE = "#c9dcff";      // the driver's GLOVE white. Measured in the cab (C-4): the light there is R/B 1.29 warm and the grade
@@ -124,7 +165,9 @@ export const lookToCard = (T: V3, info: CardDrawInfo, k: number, head: P2): P2 =
 export const castCardOf = async (ctx: KitCtx, who: Who, o: CastOpts, actor?: Actor): Promise<CardBuilt> => {
   const S = SPECS[who], crown = o.crownM ?? S.crownM, k = crown / nativeCrown(S.fit), canvasM = 1000 * SU * k;
   const act = actor ?? idle(S.seed);
-  const R0 = rig(S.fit, { seed: S.seed }), shX = 0.8 * R0.T.a, HH = R0.HH;
+  // a per-card seed from its name (24 hall volunteers of 4 kinds must not breathe / blink in unison)
+  const cardSeed = (() => { const s = o.name ?? who; let h = S.seed * 131; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 100003; return h; })();
+  const R0 = rig(S.fit, { seed: S.seed }), shX = 0.8 * R0.T.a, HH = R0.HH, touchR = o.touchR ?? (who === "lab_woman" ? 0.12 : 0);
   const seat = o.seated === true ? 0.47 : typeof o.seated === "number" ? o.seated : undefined;
   let memoT = NaN, memoS = NaN, memoC = NaN, memoP: CPose | null = null;
   const poseOf = (t: number, info: CardDrawInfo): CPose => {
@@ -139,18 +182,27 @@ export const castCardOf = async (ctx: KitCtx, who: Who, o: CastOpts, actor?: Act
       const A = anchorsOf(who, base);
       const aimW = o.aim?.(t) ?? null, lookW = o.look ? o.look(t) : aimW;
       const L = o.restL?.(t) ?? null, R = o.restR?.(t) ?? null;
-      const env: ActEnv = { t, f: t * 30, s: info.s, c: info.c, light: info.lightAng, back: info.c < -0.35,
+      const env: ActEnv = { t, f: t * 30, seed: cardSeed, s: info.s, c: info.c, light: info.lightAng, back: info.c < -0.35,
         aim: aimW ? aimToCard(aimW, info, k, A.chest, HH) : null, look: lookW ? lookToCard(lookW, info, k, A.head) : null, head: A.head, r: A.r, u: A.u, chest: A.chest, shX, HH, aimLens: aimW ? lensShare(aimW, info, k, A.chest, HH) : 0,
-        restL: L ? worldToCard(L, info, k) : null, restR: R ? worldToCard(R, info, k) : null, seat };
+        restL: L ? worldToCard(L, info, k) : null, restR: R ? worldToCard(R, info, k) : null, seat,
+        touch: aimW && touchR > 0 ? touchOf(aimW, touchR, info, k) : null };
       P = { s: info.s, c: info.c, light: info.lightAng, ...act(env) };
     }
-    if (P.skin === undefined) P.skin = o.skin ?? CAST_SKIN;
+    if (P.skin === undefined) P.skin = o.skin ?? SKIN_OF[who] ?? CAST_SKIN;
     if (P.white === undefined) P.white = CAST_WHITE;
     if (o.lensHand === false && P.lensPoint) P.lensPoint = undefined;
     if (o.act) P = o.act(t, P);
     if (o.profile !== undefined) P.profile = o.profile;
     if (o.cutY !== undefined) P.cutY = o.cutY;
     if (o.glassPress !== undefined) P.press = o.glassPress;
+    // (round 2, lead: the steam driver NEVER blinks (his half-lids read as slit eyes / spectacles); everyone else blinks
+    // OPEN or SHUT, no half-lid in-betweens: a blink is the 1-2 frames at full close)
+    // (round 2, STATION: the conductor's focusB read as eyes drooping shut (its eyes look down): his focus is open-eyed)
+    if (who === "ny_conductor" && P.expr === "focusB") { P.expr = "bright"; P.face = { ...(P.face ?? {}), browUp: [-3, -3] }; }
+    // (lead 09:30: the steam driver's eyes are ALWAYS fully open and round: no lids, no brows pressed onto them)
+    if (who === "hori" && P.face?.browUp) P.face = { ...P.face, browUp: [Math.max(0, P.face.browUp[0]), Math.max(0, P.face.browUp[1])] };
+    if (who === "hori") P.blink = 0; else if (P.blink !== undefined) P.blink = P.blink >= 0.75 ? 1 : 0;
+    if (ARM_DBG && (o.name ?? who) === ARM_DBG) console.warn(`ARMDBG ${Math.round(t * 30)} ${o.name ?? who} s=${info.s.toFixed(2)} ` + JSON.stringify({ L: P.armL, R: P.armR, head: anchorsOf(who, { s: info.s, c: info.c, seat }).head }));
     memoT = t; memoS = info.s; memoC = info.c; memoP = P;
     return P;
   };
@@ -158,7 +210,11 @@ export const castCardOf = async (ctx: KitCtx, who: Who, o: CastOpts, actor?: Act
   // stays motion-blurred, the drawing changes at 30 fps; ~8x fewer canvas redraws at final quality).
   // ROUND, never floor: the kit centres its sub-frames on the frame time (t = f +- shutter / 2), so a floor put half
   // of them on the PREVIOUS frame's drawing: every moving pose came out as a double exposure at final quality
-  const keyOf = (t: number, info: CardDrawInfo) => JSON.stringify(poseOf(frameT(t), info));
+  // (v5 speed work: the card kit's LAZY redraw may draw a key later than it was made: draw() then draws exactly the pose
+  // this key was made from (keyP), never a pose re-derived from the live camera. Immediate draws: keyP is the same
+  // object poseOf returns from its memo, so nothing changes there)
+  let keyP: CPose | null = null;
+  const keyOf = (t: number, info: CardDrawInfo) => { if (DET_CLOCK) detT = frameT(t); keyP = poseOf(frameT(t), info); return JSON.stringify(keyP); };
   // (Block 15, s20: the boy's long point at the suitcase ran off his 0.6-wide canvas and was CUT: his canvas is wider; the
   // design space keeps its scale and its centre, only more room at the sides)
   const ASPECT = who === "kid" ? 1.1 : 0.6;
@@ -170,8 +226,9 @@ export const castCardOf = async (ctx: KitCtx, who: Who, o: CastOpts, actor?: Act
     // camera's own motion blur still applies to the whole picture). Was: pos: o.pos, yaw: o.yaw
     px: o.px ?? 1500, heightM: canvasM, canvasM, aspect: ASPECT, soleY: 0.975, pos: (t: number) => o.pos(frameT(t)), yaw: o.yaw ? (t: number) => o.yaw!(frameT(t)) : undefined, face: "camera",
     shadow: o.shadow, onGrass: o.onGrass, lodM: o.lodM, look: { ...CAST_LOOK, ...(who === "driver" ? DRIVER_LOOK : {}), ...(o.cardLook ?? {}) }, name: o.name ?? who,
-    key: keyOf,
-    draw: (c2d, t, w, h, info) => { c2d.setTransform(h / 1000, 0, 0, h / 1000, (w - 0.6 * h) / 2, 0); const P = poseOf(frameT(t), info); drawWho(new Pen(c2d), who, P);   // design x 300 stays the card centre at any aspect
+    key: keyOf, lazy: CARD_LAZY, ...(CARD_DBG ? { dbg: CARD_DBG } : {}),
+    draw: (c2d, t, w, h, info) => { const t0 = CARD_PROF ? performance.now() : 0; const P = keyP ?? poseOf(frameT(t), info); const ink = o.inkOut ?? inkOutOf(who); if (ink > 0) drawInked(c2d, w, h, ink, (g) => drawWho(new Pen(g), who, P)); else { c2d.setTransform(h / 1000, 0, 0, h / 1000, (w - 0.6 * h) / 2, 0); drawWho(new Pen(c2d), who, P); }
+      if (CARD_PROF) cardProf(Math.round(t * 30), o.name ?? who, w, h, performance.now() - t0);   // design x 300 stays the card centre at any aspect
       if (CAST_LOG_ON) { logDrawn = true; logHands = lastHands().slice(); const A = anchorsOf(who, P); logHead = [A.head[0], A.head[1], A.r]; logArm = armOut(P); } },
     feet: seat !== undefined
       ? () => [{ fwd: 0.45 * k, lat: 0.09 * k, lift: 0 }, { fwd: 0.45 * k, lat: -0.09 * k, lift: 0 }]
@@ -182,7 +239,12 @@ export const castCardOf = async (ctx: KitCtx, who: Who, o: CastOpts, actor?: Act
   const upd = built.update; let lastF = -1;
   built.update = (t: number, cam: THREE.Camera) => {
     upd?.(t, cam);
-    const f = Math.round(t * 30); if (f === lastF || !built.object.visible) return; lastF = f;
+    const f = Math.round(t * 30); if (f === lastF) return;
+    // (round 2, gates_v4 f647: the hall hides whole ROWS by their group (rowG[1].visible = false in v15); the card itself
+    // stayed "visible", so hidden volunteers were logged as arm-out / hand-in-face. A card counts only when it and every
+    // parent are visible, i.e. when it is drawn)
+    for (let q: THREE.Object3D | null = built.object; q; q = q.parent) if (!q.visible) return;
+    lastF = f;
     const P = o.pos(frameT(t)); cam.updateMatrixWorld(); camP.setFromMatrixPosition(cam.matrixWorld);
     const fy = Math.atan2(camP.x - P[0], camP.z - P[2]), rx = Math.cos(fy), rz = -Math.sin(fy);
     const proj = (x: number, y: number): [number, number] | null => {
@@ -200,7 +262,30 @@ export const castCardOf = async (ctx: KitCtx, who: Who, o: CastOpts, actor?: Act
   return built;
 };
 /** is an arm OUT (a point / a reach away from the body) in this pose: the gates count these frames */
-const armOut = (P: CPose): boolean => [P.armL, P.armR].some((a) => !!a && ((a as { ext?: { k: number } }).ext ? (a as { ext: { k: number } }).ext.k > 0.5 : a.hand === "point" && (a.k ?? 0) > 0.5));
+const armOut = (P: CPose): boolean => [P.armL, P.armR].some((a) => !!a && !(a as { touch?: boolean }).touch && ((a as { ext?: { k: number } }).ext ? (a as { ext: { k: number } }).ext.k > 0.5 : a.hand === "point" && (a.k ?? 0) > 0.5));
 /** the log is on when the render passes inputProps.kit.castlog (kit_render --props '{"castlog":1}' --keep-browser-logs) */
+/** CARD PROFILE (v5 speed work, `--props '{"cardprof":1}'`): per film frame, how many cast cards REDREW and the ms of
+ *  their drawing (the card kit then blurs + uploads each redrawn canvas): one console.warn line per frame */
+/** test only: the card shader debug view on every cast card (`--props {"carddbg":1}`: 1 visibility, 3 light only) */
+const CARD_DBG: number = (() => { try { const v = typeof window !== "undefined" ? (getInputProps() as { kit?: { carddbg?: unknown } }).kit?.carddbg : 0; return typeof v === "number" ? v : 0; } catch { return 0; } })();
+if (typeof window !== "undefined") { try { if ((getInputProps() as { kit?: { cardvis?: unknown } }).kit?.cardvis) (globalThis as { __CARDVIS?: boolean }).__CARDVIS = true; } catch { /* no props */ } }
+const CARD_PROF: boolean = (() => { try { return typeof window !== "undefined" && !!(getInputProps() as { kit?: { cardprof?: unknown } }).kit?.cardprof; } catch { return false; } })();
+let profF = -1, profN = 0, profMs = 0, profPx = 0, profWho: string[] = [];
+const cardProf = (f: number, name: string, w: number, h: number, ms: number) => {
+  if (f !== profF) { if (profF >= 0) console.warn(`CARDPROF ${profF} n=${profN} ms=${profMs.toFixed(1)} mpx=${(profPx / 1e6).toFixed(1)} ${profWho.slice(0, 30).join(",")}`); profF = f; profN = 0; profMs = 0; profPx = 0; profWho = []; }
+  profN++; profMs += ms; profPx += w * h; profWho.push(name);
+};
+/** the card kit's lazy redraw for every cast card (default ON; `--props '{"cardlazy":0}'` = the old redraw-on-every-key-change,
+ *  for the pixel A/B test) */
+const CARD_LAZY: boolean = (() => { try { return typeof window === "undefined" || (getInputProps() as { kit?: { cardlazy?: unknown } }).kit?.cardlazy !== 0; } catch { return true; } })();
+/** TEST ONLY (`--props '{"detclock":1}'`): performance.now() returns the FILM time (ms) of the frame being drawn.
+ *  CORRECTION 04:00: it does NOT make renders repeatable. N8AO sets a "time" uniform from the clock but its shaders never
+ *  read it, and two detclock runs of v03 still differ after ~20 frames (ab7 D1 vs D2). The run-to-run drift of the
+ *  pipeline has another cause (not found). Kept only as a harmless test switch; off by default, never in a film render */
+const DET_CLOCK: boolean = (() => { try { return typeof window !== "undefined" && !!(getInputProps() as { kit?: { detclock?: unknown } }).kit?.detclock; } catch { return false; } })();
+let detT = 0;
+if (DET_CLOCK) { try { (window.performance as { now: () => number }).now = () => detT * 1000; } catch { /* keep the real clock */ } }
+/** DEBUG (`--props '{"armdbg":"<card name>"}'`): prints that card's arms + head anchor per frame */
+const ARM_DBG: string = (() => { try { const v = typeof window !== "undefined" ? (getInputProps() as { kit?: { armdbg?: unknown } }).kit?.armdbg : undefined; return typeof v === "string" ? v : ""; } catch { return ""; } })();
 const CAST_LOG_ON: boolean = (() => { try { return typeof window !== "undefined" && !!(getInputProps() as { kit?: { castlog?: unknown } }).kit?.castlog; } catch { return false; } })();
 

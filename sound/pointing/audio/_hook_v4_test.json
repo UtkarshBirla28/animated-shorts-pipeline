@@ -1,68 +1,162 @@
 {
  "beats": [
   0.0,
-  0.48,
-  0.96,
-  1.44,
-  1.92,
-  2.4,
-  2.88,
-  3.36,
-  3.788,
-  4.169,
-  4.509,
-  4.812,
-  5.082
+  0.495,
+  0.99,
+  1.484,
+  1.979,
+  2.474,
+  2.969,
+  3.429,
+  3.849,
+  4.229,
+  4.569,
+  4.869,
+  5.129
  ],
+ "k_pre": 6,
  "go": [
-  2.88,
-  3.36,
-  3.788,
-  4.169,
-  4.509,
-  4.812,
-  5.082
+  2.969,
+  3.429,
+  3.849,
+  4.229,
+  4.569,
+  4.869,
+  5.129
  ],
- "red": 5.082,
- "stop": [
-  5.132,
-  5.632
+ "red": 5.1,
+ "beat": [
+  5.329,
+  5.709
  ],
- "sting": 6.652,
- "groove_back": 6.932,
- "first_gap": 0.48,
- "last_gap": 0.27,
- "pre_beat": 0.48,
- "plan": {
+ "beat_s": 0.38,
+ "sting": 6.705,
+ "groove_back": 6.985,
+ "first_gap": 0.46,
+ "last_gap": 0.26,
+ "pre_beat": 0.495,
+ "times": {
   "line1": [
-   0.1,
-   2.83
+   0.05,
+   2.819
   ],
   "go": [
-   2.88,
-   3.36,
-   3.787824589911841,
-   4.169145172689413,
-   4.509016676755578,
-   4.811944566026051,
-   5.081944566026052
+   2.969,
+   3.429,
+   3.849,
+   4.229,
+   4.569,
+   4.869
   ],
-  "red": 5.081944566026052,
-  "silence": [
-   5.131944566026052,
-   5.631944566026052
+  "go_all": [
+   2.969,
+   3.429,
+   3.849,
+   4.229,
+   4.569,
+   4.869,
+   5.129
   ],
-  "line3": [
-   5.631944566026052,
-   7.231944566026051
-  ],
+  "red": 5.1,
+  "red_word": 5.129,
+  "go7_end": 5.329,
+  "did": 5.829,
+  "she": 6.685,
   "she_did": [
-   6.631944566026052,
-   7.231944566026051
+   6.685,
+   7.367
   ],
-  "line4": 7.481944566026051
+  "l3_end": 7.367,
+  "green": 1.5333333333333334,
+  "line4": 7.517,
+  "silence": [
+   5.329,
+   5.829
+  ]
  },
- "lufs": -28.205768088001324,
- "music_lufs": -29.03454556545226,
- "fx_peak_dbfs": -12.888839103675897
+ "lufs": -28.24545604420329,
+ "music_lufs": -29.024650508167237,
+ "fx_peak_dbfs": -12.950821261477081,
+ "events": [
+  [
+   0.0,
+   "music",
+   "the groove from frame 0: 6 pre-beats of 0.495 s (121 BPM) fitted to the first Go"
+  ],
+  [
+   1.5333333333333334,
+   "lamp.green",
+   "the big lamp lights green (v02's cut): a relay tick and a low bip"
+  ],
+  [
+   2.969,
+   "go.beep1",
+   "green flash 1: the lamp's beep + her button's click"
+  ],
+  [
+   3.429,
+   "go.beep2",
+   "green flash 2: the lamp's beep + her button's click"
+  ],
+  [
+   3.849,
+   "go.beep3",
+   "green flash 3: the lamp's beep + her button's click"
+  ],
+  [
+   4.229,
+   "go.beep4",
+   "green flash 4: the lamp's beep + her button's click"
+  ],
+  [
+   4.569,
+   "go.beep5",
+   "green flash 5: the lamp's beep + her button's click"
+  ],
+  [
+   4.869,
+   "go.beep6",
+   "green flash 6: the lamp's beep + her button's click"
+  ],
+  [
+   5.1,
+   "red.hit",
+   "the cut to RED: a thud and a bright crack"
+  ],
+  [
+   5.1,
+   "red.stab",
+   "THE RED HIT: a low wrong-note pizz stab + tuba + snap (the music's last word)"
+  ],
+  [
+   5.166666666666666,
+   "red.press",
+   "her hand comes down anyway: her button's click, 2 frames after the red"
+  ],
+  [
+   5.329,
+   "BEAT",
+   "the held beat: music, effects and room at zero from 5.329 to 5.709 s (0.38 s; the voice's room tone only)"
+  ],
+  [
+   5.709,
+   "room.back",
+   "the room comes back under 'Did you tap?' (no music: the question hangs)"
+  ],
+  [
+   6.685,
+   "x.pop",
+   "the big red X pops up"
+  ],
+  [
+   6.704999999999999,
+   "sting",
+   "the sting on the red X ('She'): two falling pizz notes, a woodblock, a glock wink"
+  ],
+  [
+   6.984999999999999,
+   "music",
+   "the groove returns: the lab's section (112 BPM bounce)"
+  ]
+ ]
 }

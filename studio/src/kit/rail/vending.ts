@@ -40,7 +40,8 @@ const vendLower = () => memo("vendLow", () => canvasTex(512, 384, (g, w, h) => {
 }));
 /** the header sign: a colour band with three drink pictograms (no text) */
 const vendHeader = (seed: number) => memo("vendHead" + (seed % 2), () => canvasTex(512, 48, (g, w, h) => {
-  g.fillStyle = seed % 2 ? "#f2f2ee" : "#1f5fa8"; g.fillRect(0, 0, w, h); g.fillStyle = seed % 2 ? "#c8261c" : "#f4f6f8";
+  // (AUDIT ROUND 1, facts: red on white read as one cola brand: teal + orange / cobalt + white, no brand colours)
+  g.fillStyle = seed % 2 ? "#1f9a8f" : "#1f5fa8"; g.fillRect(0, 0, w, h); g.fillStyle = seed % 2 ? "#ffb02e" : "#f4f6f8";
   g.fillRect(0, h - 8, w, 4);
   for (const [k, x] of [150, 256, 362].entries()) {
     if (k === 0) { g.fillRect(x - 8, 12, 16, 26); g.fillRect(x - 4, 6, 8, 8); }                                                    // bottle

@@ -10,9 +10,9 @@ export const COL = {
   navy: "#1f2a4a", navyLite: "#2c3a62", gold: "#d9a92e", goldLite: "#ffe08a", glove: "#ffffff", gloveSeam: "#d9dbe6",
   visor: "#14121a", silver: "#c9ced8",
   capRed: "#6c2a27", tee: "#bfc8d6", teeRib: "#8591a8", jeans: "#4f7fc4", lace: "#e23a2e", phoneCobalt: "#2f6fe0",
-  kidTee: "#5fb3e8", kidShorts: "#26365e", kidSock: "#fbf8f2", kidShoe: "#e3402f", kidPack: "#3f9a4e", toyCap: "#22305a",
+  kidTee: "#ffc928", kidShorts: "#26365e", kidSock: "#fbf8f2", kidShoe: "#e3402f", kidPack: "#3f9a4e", toyCap: "#22305a",
   trench: "#d8c3a0", tote: "#e9e0c8",
-  ndNavy: "#24325a", ndShirt: "#a9c6e8", cord: "#c9a24a",
+  ndNavy: "#24325a", ndShirt: "#a9c6e8", cord: "#c9a24a", pjStripe: "#e2453a",
   hoodie: "#8a8f99", beanie: "#c8643b", cans: "#2a2d36", phoneRed: "#e9342c",
   lavender: "#9b8ac9", labCoat: "#f3f3f0", brick: "#a8443a",
   furoshiki: "#2f3f86", stroller: "#7a8aa0",
@@ -29,13 +29,15 @@ export const TOURIST: Outfit = { shirt: COL.tee, pants: COL.jeans, shoes: "#fbfa
   browCol: "#3a2418" };
 /** THE KID (~6, rescaled to 1.12 m): sky-blue tee with a white collar trim, navy shorts, white socks, small red sneakers,
  *  a little green backpack, black hair, round cheeks; the too-big navy TOY driver's cap is a layer */
-export const KID: Outfit = { shirt: COL.kidTee, pants: COL.kidShorts, shoes: COL.kidShoe, hair: "#1c1820", hairStyle: "short", build: "small", fringeUp: 0.02 };
+export const KID: Outfit = { shirt: COL.kidTee, pants: COL.kidShorts, shoes: COL.kidShoe, hair: "#1c1820", hairStyle: "messy", build: "small", fringeUp: 0.02 };
 /** the kid's mum: a beige trench, a dark bob, a canvas tote (layer) */
 export const KID_MUM: Outfit = { shirt: COL.trench, pants: "#4a4458", shoes: "#5a3b3b", hair: "#1f1a22", hairStyle: "bob", fringeUp: 0.02 };   // (collar, lapels, belt, buttons: the trench layer in people.ts)
 /** the NY conductor (upper body in his window): navy vest over a light-blue shirt, grey moustache, reading glasses on a
  *  cord, short grey hair, no cap, no badges */
-export const NY_CONDUCTOR: Outfit = { shirt: COL.ndShirt, vest: COL.ndNavy, collar: true, collarCol: "#d6e6f6", pants: "#2a3350", shoes: "#1e1a20", hair: "#b9bcc6", hairStyle: "crop",
-  moustache: "#a9adb8", browCol: "#8a8e9a", glasses: "half" };   // (v4: no cord: it drew an orange ring round his face)
+// (v4, 17:30, lead + STATION stills: he read as "a grey old man with glasses", not a conductor): a NAVY uniform jacket
+// over a light-blue shirt collar, a navy uniform cap (people.ts), dark hair + a neat dark moustache, NO glasses, no gloves
+export const NY_CONDUCTOR: Outfit = { shirt: COL.ndNavy, collar: true, collarCol: COL.ndShirt, pants: "#1f2740", shoes: "#1e1a20", hair: "#2e231e", hairStyle: "crop",
+  moustache: "#2e231e", browCol: "#2e231e" };
 /** the NY commuter: grey hoodie, dark jeans, the rust-orange beanie + headphones round his neck (layers), red phone */
 export const NY_COMMUTER: Outfit = { shirt: COL.hoodie, hoodie: true, pants: "#2e3442", shoes: "#e8e4da", hair: "#3a2a20", hairStyle: "crop" };
 /** the lab volunteer: a lavender sweater, a high ponytail */
@@ -68,7 +70,7 @@ export const NY_LEAVER: Outfit = { shirt: "#8a6a4a", hoodie: true, pants: "#3a42
 /** HORI, a steam-engine driver around 1910: a deep indigo work jacket (collar, placket, chest pockets), dark trousers, a
  *  black railway cap (a layer), a dark moustache, ROUND glasses (his failing eyes: he squints), short dark hair */
 export const HORI: Outfit = { shirt: "#2f3f8f", workJacket: true, pants: "#22242e", shoes: "#1a1416", hair: "#1c1618", hairStyle: "short", fringeUp: 0.03,
-  glasses: "round", moustache: "#241a1a", browCol: "#241a1a" };
+  moustache: "#241a1a", browCol: "#241a1a" };   // (FIX R1, facts auditor + lead: NO glasses: round glasses on the man whose eyes "had gone bad" made "He never knew about the eyes" absurd)
 /** HIS FIREMAN: rust-orange bib overalls over a cream work shirt with ROLLED sleeves, a charcoal flat cap, soot on his
  *  face (a layer), the coal SHOVEL (a held prop) */
 export const FIREMAN: Outfit = { shirt: "#efe3c8", overalls: "#d0612b", rolled: true, pants: "#d0612b", shoes: "#2a1e18", hair: "#2a2020", hairStyle: "crop",
@@ -94,5 +96,7 @@ export const LAB_WOMAN_B: Outfit = { shirt: "#8a5ad0", pants: "#2a2e3a", shoes: 
 /** the RESEARCHER: a white lab coat over a teal shirt, glasses, a clipboard */
 export const RESEARCHER_V4: Outfit = { shirt: "#f3f3f0", pants: "#2a2e3a", shoes: "#2a1e18", hair: "#2a1e1a", hairStyle: "swept", glasses: "round" };
 /** the person in PYJAMAS at the open fridge: blue-and-white striped pyjamas (one colour, a stripe layer later), messy hair */
-export const PYJAMAS: Outfit = { shirt: "#6aa8e0", pants: "#6aa8e0", shoes: "#f0ece2", hair: "#3a2418", hairStyle: "messy" };
+// (19:05, lead: read as a plain blue shirt): cream top with bold RED stripes (people.ts pyjamaTop), red trousers, pink
+// slippers, messy bed hair
+export const PYJAMAS: Outfit = { shirt: "#fff1d6", pants: COL.pjStripe, shoes: "#f49ab8", hair: "#3a2418", hairStyle: "messy" };
 

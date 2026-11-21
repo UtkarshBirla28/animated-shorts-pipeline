@@ -1,0 +1,404 @@
+{
+ "made": "2026-11-21 09:02:50",
+ "fps": 30,
+ "clock": "clock briefs\\v3\\pointing\\director\\timeline_v4.json (v4/words.ts (the real voice: 185 words)); 2066 f = 68.87 s; 38 shots; 185 words; timing: voice + clock; voice words words.json: 185 of 185 matched to the clock's 185 tokens; 0 drift from the clock by more than a frame",
+ "hook": {
+  "go": [
+   3.56,
+   4.02,
+   4.44,
+   4.82,
+   5.16,
+   5.46,
+   5.78
+  ],
+  "red": 5.8,
+  "beat": [
+   6.17,
+   6.63
+  ],
+  "beat_s": 0.46,
+  "sting": 7.53,
+  "groove_back": 7.81,
+  "beds_in_beat_dbfs": -142.90265470165969,
+  "mix_in_beat_dbfs": -58.54495431353011,
+  "music_first_0_3s_dbfs": -30.762894171602433,
+  "first_0_3s_dbfs": -17.049933651838646,
+  "beeps": [
+   {
+    "t": 3.56,
+    "dbfs": -57.7,
+    "peak_hz": 1762.0,
+    "limiter_db": -0.0
+   },
+   {
+    "t": 4.02,
+    "dbfs": -57.7,
+    "peak_hz": 1762.0,
+    "limiter_db": 0.01
+   },
+   {
+    "t": 4.44,
+    "dbfs": -57.6,
+    "peak_hz": 1762.0,
+    "limiter_db": 0.02
+   },
+   {
+    "t": 4.82,
+    "dbfs": -57.7,
+    "peak_hz": 1762.0,
+    "limiter_db": 0.01
+   },
+   {
+    "t": 5.16,
+    "dbfs": -57.7,
+    "peak_hz": 1762.0,
+    "limiter_db": 0.22
+   },
+   {
+    "t": 5.46,
+    "dbfs": -57.7,
+    "peak_hz": 1762.0,
+    "limiter_db": 1.02
+   }
+  ],
+  "clicks": [
+   {
+    "event": 3.7933,
+    "onset": 3.7934,
+    "off_frames": 0.0
+   },
+   {
+    "event": 4.2533,
+    "onset": 4.2534,
+    "off_frames": 0.0
+   },
+   {
+    "event": 4.6067,
+    "onset": 4.6068,
+    "off_frames": 0.0
+   },
+   {
+    "event": 4.9867,
+    "onset": 4.9868,
+    "off_frames": 0.0
+   },
+   {
+    "event": 5.2933,
+    "onset": 5.2934,
+    "off_frames": 0.0
+   },
+   {
+    "event": 5.5933,
+    "onset": 5.5934,
+    "off_frames": 0.0
+   },
+   {
+    "event": 5.98,
+    "onset": 5.9802,
+    "off_frames": 0.01
+   }
+  ],
+  "red_hit": {
+   "green_200ms": [
+    -28.6,
+    -29.3,
+    -28.4,
+    -28.4,
+    -27.8,
+    -28.6
+   ],
+   "red_200ms": -18.6,
+   "green_lt150": [
+    -32.0,
+    -31.9,
+    -31.2,
+    -31.7,
+    -32.1,
+    -31.8
+   ],
+   "red_lt150": -22.1,
+   "red_30_150_dbfs": -21.7,
+   "red_2k5_6k_dbfs": -34.8,
+   "voice_go7_peak_dbfs": -1.8,
+   "mix_250ms_green": [
+    -15.4,
+    -15.3,
+    -14.7,
+    -14.8,
+    -14.8,
+    -15.3
+   ],
+   "mix_250ms_red": -14.9,
+   "loudest_other_200ms_dbfs": -25.1,
+   "loudest_other_at_s": 5.98,
+   "red_is_loudest": true
+  },
+  "loop_join": {
+   "sample_step": 0.04207,
+   "last_50ms": -36.6,
+   "first_50ms": -27.4,
+   "music": [
+    -34.2,
+    -27.8
+   ],
+   "amb": [
+    -50.0,
+    -47.5
+   ],
+   "voice": [
+    -61.8,
+    -39.9
+   ],
+   "min_50ms_last_0_5s": -36.5,
+   "digital_zero_samples_last_1s": 2
+  }
+ },
+ "music": [
+  {
+   "name": "hook",
+   "t0": 0.0,
+   "t1": 7.81,
+   "bpm": 134.8,
+   "style": "hook grid (speeds up with the Gos)",
+   "prog": "Dm Bb Gm A7",
+   "lu": 17.5
+  },
+  {
+   "name": "lab (from 'She did.')",
+   "t0": 7.81,
+   "t1": 21.605,
+   "bpm": 112,
+   "style": "bounce",
+   "prog": "F C Dm Bb",
+   "lu": 17.5
+  },
+  {
+   "name": "why",
+   "t0": 21.605,
+   "t1": 30.745,
+   "bpm": 105.0,
+   "style": "halftime",
+   "prog": "Bb Gm7 Dm A7",
+   "lu": 19.0,
+   "gain_db": -27.5
+  },
+  {
+   "name": "today",
+   "t0": 30.745,
+   "t1": 35.285,
+   "bpm": 118.9,
+   "style": "bounce",
+   "prog": "F Bb C F",
+   "lu": 17.0,
+   "gain_db": -26.6
+  },
+  {
+   "name": "steam",
+   "t0": 35.285,
+   "t1": 52.62,
+   "bpm": 96.9,
+   "style": "tiptoe",
+   "prog": "Gm Gm Dm A7",
+   "lu": 18.0,
+   "gain_db": -25.9
+  },
+  {
+   "name": "newyork",
+   "t0": 52.62,
+   "t1": 65.307,
+   "bpm": 113.5,
+   "style": "build",
+   "prog": "Gm A7 Bb A7",
+   "lu": 17.0,
+   "gain_db": -27.6
+  },
+  {
+   "name": "loop",
+   "t0": 65.307,
+   "t1": 68.867,
+   "bpm": 134.8,
+   "style": "bounce",
+   "prog": "Dm Bb Gm A7",
+   "lu": 16.5,
+   "gain_db": -26.7
+  }
+ ],
+ "cues": [
+  {
+   "id": "music",
+   "t": 0.0,
+   "frame": 0,
+   "what": "the groove from frame 0: 8 pre-beats of 0.445 s (135 BPM) fitted to the first Go",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "lab.pen1",
+   "t": 0.55,
+   "frame": 16,
+   "what": "v01: the researcher behind the glass writes",
+   "anchor": "('+', ('S', 'v01', 'a'), 0.55)"
+  },
+  {
+   "id": "lamp.green",
+   "t": 1.58,
+   "frame": 47,
+   "what": "the big lamp lights green (v02's cut): a relay tick and a low bip",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.beep1",
+   "t": 3.56,
+   "frame": 107,
+   "what": "green flash 1: the lamp's beep (on the flash)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.press1",
+   "t": 3.793,
+   "frame": 114,
+   "what": "her fingertip lands (7.0 f after flash 1, EV.press): the button's click",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.beep2",
+   "t": 4.02,
+   "frame": 121,
+   "what": "green flash 2: the lamp's beep (on the flash)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "lab.pen3",
+   "t": 4.22,
+   "frame": 127,
+   "what": "v03: the researcher's pen ticking along with the run",
+   "anchor": "('+', ('K', 'go#2'), 0.2)"
+  },
+  {
+   "id": "go.press2",
+   "t": 4.253,
+   "frame": 128,
+   "what": "her fingertip lands (7.0 f after flash 2, EV.press): the button's click",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.beep3",
+   "t": 4.44,
+   "frame": 133,
+   "what": "green flash 3: the lamp's beep (on the flash)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.press3",
+   "t": 4.607,
+   "frame": 138,
+   "what": "her fingertip lands (5.0 f after flash 3, EV.press): the button's click",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.beep4",
+   "t": 4.82,
+   "frame": 145,
+   "what": "green flash 4: the lamp's beep (on the flash)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.press4",
+   "t": 4.987,
+   "frame": 150,
+   "what": "her fingertip lands (5.0 f after flash 4, EV.press): the button's click",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.beep5",
+   "t": 5.16,
+   "frame": 155,
+   "what": "green flash 5: the lamp's beep (on the flash)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.press5",
+   "t": 5.293,
+   "frame": 159,
+   "what": "her fingertip lands (4.0 f after flash 5, EV.press): the button's click",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.beep6",
+   "t": 5.46,
+   "frame": 164,
+   "what": "green flash 6: the lamp's beep (on the flash)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "go.press6",
+   "t": 5.593,
+   "frame": 168,
+   "what": "her fingertip lands (4.0 f after flash 6, EV.press): the button's click",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "red.hit",
+   "t": 5.8,
+   "frame": 174,
+   "what": "the cut to RED: a boom with body, the recorded hit, a bright crack (the loudest effect of the film)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "red.stab",
+   "t": 5.8,
+   "frame": 174,
+   "what": "THE RED HIT: a low wrong-note pizz stab + tuba + snap (the music's last word)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "red.press",
+   "t": 5.98,
+   "frame": 179,
+   "what": "her hand comes down anyway (EV.redPress, 5.4 f after the red): her button's click",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "BEAT",
+   "t": 6.17,
+   "frame": 185,
+   "what": "the held beat: music, effects and room at zero from 6.170 to 6.630 s (0.46 s; the voice's room tone only)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "room.back",
+   "t": 6.63,
+   "frame": 199,
+   "what": "the room fades back in under 'Did you tap?' (no music: the question hangs)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "x.pop",
+   "t": 7.51,
+   "frame": 225,
+   "what": "the big red X pops up",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "sting",
+   "t": 7.53,
+   "frame": 226,
+   "what": "the sting on the red X ('She'): two falling pizz notes, a woodblock, a glock wink",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "music",
+   "t": 7.81,
+   "frame": 234,
+   "what": "the groove returns: the lab's section (112 BPM bounce)",
+   "anchor": "hook_times"
+  },
+  {
+   "id": "bed.lab",
+   "t": 8.095,
+   "frame": 243,
+   "what": "the lab's room: the 1994 trap, the rows, the counter",
+   "anchor": "(('+', ('L', 3, 'e'), 0.05), ('S', 'v17', 'a'))"
+  }
+ ]
+}

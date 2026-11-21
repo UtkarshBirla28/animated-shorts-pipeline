@@ -1,0 +1,206 @@
+{
+ "passed": false,
+ "gates": {
+  "step median <= 3.5 st": [
+   true,
+   2.64
+  ],
+  "no step > 6 st": [
+   false,
+   6.35
+  ],
+  "centre 175-200 Hz": [
+   false,
+   172.2
+  ],
+  "no line > 240 Hz": [
+   false,
+   249.7
+  ],
+  "pace 3.4-3.7 w/s": [
+   false,
+   2.98
+  ],
+  "pace sd <= 0.6": [
+   true,
+   0.54
+  ],
+  "gaps 0.15-0.30 s (one beat <= 0.8)": [
+   true,
+   {
+    "min": 0.145,
+    "over_0.3": [
+     0.5
+    ],
+    "planned_beat": 0.6
+   }
+  ],
+  "every sentence heard as written": [
+   true,
+   "all"
+  ],
+  "no digital silence (longest exact-zero run < 5 ms)": [
+   true,
+   "0.02 ms"
+  ],
+  "sentence tails 40-90 ms (measured, 30 dB decay; a tail may run into the next word)": [
+   false,
+   {
+    "min": 0.02,
+    "max": 0.24
+   }
+  ],
+  "loudness -17.5 +- 1 LUFS": [
+   true,
+   -17.48
+  ],
+  "peak <= -1 dBFS": [
+   true,
+   "-1.20 dBFS"
+  ],
+  "run: every Go on its grid onset (+-10 ms)": [
+   true,
+   [
+    3.295,
+    3.755,
+    4.175,
+    4.555,
+    4.895,
+    5.195,
+    5.515
+   ]
+  ],
+  "run: pitch rises (no word > 1 st under the one before), the last Go! the highest": [
+   true,
+   [
+    233,
+    235,
+    239,
+    238,
+    254,
+    249,
+    292
+   ]
+  ],
+  "run: level rises, the last Go! the loudest": [
+   false,
+   [
+    -20.5,
+    -20.0,
+    -19.5,
+    -19.01,
+    -18.5,
+    -18.99,
+    -17.5
+   ]
+  ],
+  "run: step INTO the run <= 6 st": [
+   true,
+   3.46
+  ],
+  "run: the held beat after it 0.5 s (+-0.03)": [
+   true,
+   0.5
+  ],
+  "shout D (D) one or two words": [
+   true,
+   "Signal clear!"
+  ],
+  "shout D no pause over 0.25 s inside": [
+   true,
+   0
+  ],
+  "shout D full band (10-16 kHz within 6 dB of the narrator)": [
+   false,
+   "-27.8 dB vs narrator -19.7"
+  ],
+  "shout H (H) one or two words": [
+   true,
+   "Signal clear!"
+  ],
+  "shout H no pause over 0.25 s inside": [
+   true,
+   0
+  ],
+  "shout H full band (10-16 kHz within 6 dB of the narrator)": [
+   true,
+   "-16.5 dB vs narrator -19.7"
+  ],
+  "shout C (C) one or two words": [
+   true,
+   "Clear!"
+  ],
+  "shout C no pause over 0.25 s inside": [
+   true,
+   0
+  ],
+  "shout C full band (10-16 kHz within 6 dB of the narrator)": [
+   false,
+   "-35.2 dB vs narrator -19.7"
+  ],
+  "shouts >= 5 st from each other and from the narrator": [
+   true,
+   {
+    "D": 234,
+    "H": 123,
+    "C": 330,
+    "closest": [
+     5.3,
+     "narrator",
+     "D"
+    ]
+   }
+  ],
+  "at most 4 shouts": [
+   true,
+   3
+  ]
+ },
+ "narrator": {
+  "sentences": 24,
+  "words": 173,
+  "speaking_s": 57.8,
+  "wps_over_speech": 2.99,
+  "wps_median": 2.98,
+  "wps_sd": 0.54,
+  "centre_hz": 172.2,
+  "line_median_max_hz": 249.7,
+  "line_median_min_hz": 134.5,
+  "step_median_st": 2.64,
+  "step_max_st": 6.35,
+  "steps_over_6": 1,
+  "steps": [
+   3.19,
+   4.64,
+   6.35,
+   1.33,
+   2.87,
+   2.64,
+   0.14,
+   1.25,
+   4.19,
+   4.75,
+   0.19,
+   0.44,
+   0.78,
+   1.26,
+   1.34,
+   4.79,
+   4.86,
+   1.43,
+   2.81,
+   0.32,
+   3.85,
+   2.02,
+   5.84
+  ],
+  "gap_median_s": 0.18,
+  "gap_max_s": 3.26,
+  "gaps_over_0.3": 4,
+  "lufs_sd": 1.22,
+  "ends": {
+   "rise": 8,
+   "fall": 11
+  }
+ }
+}

@@ -1,0 +1,1186 @@
+{
+ "kind": "FILM",
+ "path": "C:\\Users\\Administrator\\Desktop\\POINTING_V4_HANDOVER\\animated-shorts-studio\\sound\\pointing\\audio\\mix_v4.wav",
+ "rules": [
+  {
+   "measure": "words / s over the film",
+   "ours": 2.731256085686465,
+   "ref": "2.43 / 3.34 / 3.70",
+   "ok": false
+  },
+  {
+   "measure": "longest voice gap s",
+   "ours": 0.54,
+   "ref": "-",
+   "ok": true
+  },
+  {
+   "measure": "narrator share",
+   "ours": 0.9,
+   "ref": "-",
+   "ok": true
+  },
+  {
+   "measure": "narrator pitch step line to line st (median)",
+   "ours": 4.0,
+   "ref": "-",
+   "ok": false
+  },
+  {
+   "measure": "music under the voice while talking dB",
+   "ours": -19.3,
+   "ref": "-20.3 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "music level jumps > 6 dB per minute",
+   "ours": 3.5,
+   "ref": "6.40 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "music: six-second windows with a clear beat (share)",
+   "ours": 0.86,
+   "ref": "-",
+   "ok": true
+  },
+  {
+   "measure": "ambience under the voice dB",
+   "ours": -33.5,
+   "ref": "-29.1 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "ambience stem LUFS",
+   "ours": -47.9,
+   "ref": "-41.7 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "steady tone in effects + ambience s",
+   "ours": 1.5,
+   "ref": "-",
+   "ok": true
+  },
+  {
+   "measure": "effect onsets per 10 s",
+   "ours": 24.0,
+   "ref": "15.6 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "effects under the voice dB",
+   "ours": -29.3,
+   "ref": "-23.1 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "effect onset centroid Hz",
+   "ours": 2301.0,
+   "ref": "1959.0 / None / None",
+   "ok": true
+  },
+  {
+   "measure": "in-speech floor (p10 vs p75) dB",
+   "ours": -10.8,
+   "ref": "-11.5 / -9.30 / -9.40",
+   "ok": true
+  },
+  {
+   "measure": "mix centroid Hz",
+   "ours": 641.0,
+   "ref": "634.0 / 614.0 / 631.0",
+   "ok": true
+  },
+  {
+   "measure": "120-400 Hz vs 400-2k dB",
+   "ours": 3.7,
+   "ref": "3.30 / 5.40 / 4.80",
+   "ok": true
+  },
+  {
+   "measure": "10-16 kHz vs 400-2k dB",
+   "ours": -8.1,
+   "ref": "-16.2 / -10.0 / -8.90",
+   "ok": true
+  },
+  {
+   "measure": "every line over the bed, 0.5-4 kHz, worst dB",
+   "ours": 16.1,
+   "ref": "-",
+   "ok": true
+  },
+  {
+   "measure": "last 2 s dBFS RMS",
+   "ours": -17.8,
+   "ref": "-15.0 / -16.4 / -16.0",
+   "ok": true
+  },
+  {
+   "measure": "loudness LUFS",
+   "ours": -14.0,
+   "ref": "-14.0 / -14.1 / -14.1",
+   "ok": true
+  },
+  {
+   "measure": "loudness range LU",
+   "ours": 1.7,
+   "ref": "3.50 / 3.20 / 1.80",
+   "ok": true
+  },
+  {
+   "measure": "true peak dBTP",
+   "ours": -2.9,
+   "ref": "-2.90 / -2.20 / -2.10",
+   "ok": true
+  }
+ ],
+ "data": {
+  "ours": {
+   "key": "pointing",
+   "dur": 68.46666666666667,
+   "r128": {
+    "I": -14.0,
+    "LRA": 1.7,
+    "TP": -2.9
+   },
+   "asr_text": "Tap your foot on every green light. Only green. Go, go, go, go, go, go, go. Did you tap? She did. Japan's railway lab set a trap like this. A hundred lights, then red. Twelve people just watch. Five press anyway. Twelve others have to point at the light and say it. Not one presses. After a hundred times, your hand stops waiting for your brain. That's how the cereal ends up in the fridge. Pointing and saying it makes your hand wait. So Japan's train drivers point at their signals and shout. Signal clear. But the shouting rule didn't start as science. The story goes, a steam train driver's eyes had gone bad. Signal clear. So he shouted every signal to his coal man. Clear. His boss rode along, loved it and made it a rule. He never knew about the eyes. New York copied the pointing. Again, subway conductors must point at a striped board. So two New Yorkers held up a sign, point here if you are dead sexy. And the conductors had to point. Now try again. This time point and say it.",
+   "n_words": 187,
+   "mean_p": 0.9490329756496105,
+   "low_p_words": [
+    [
+     3.66,
+     "Go,",
+     0.49
+    ],
+    [
+     11.18,
+     "A",
+     0.45
+    ],
+    [
+     34.3,
+     "Signal",
+     0.4
+    ],
+    [
+     54.36,
+     "Again,",
+     0.03
+    ],
+    [
+     60.22,
+     "point",
+     0.09
+    ]
+   ],
+   "first_word": 0.0,
+   "last_word_end": 68.44,
+   "wps_film": 2.731256085686465,
+   "wps_span": 2.732320280537697,
+   "gaps_over_0_3": 24,
+   "gaps_over_0_6": 0,
+   "gaps_over_1_0": 0,
+   "gap_time_over_0_3": 10.16000000000001,
+   "longest_gaps": [
+    [
+     0.54,
+     64.48,
+     65.02
+    ],
+    [
+     0.54,
+     62.34,
+     62.88
+    ],
+    [
+     0.52,
+     30.42,
+     30.94
+    ],
+    [
+     0.52,
+     14.92,
+     15.44
+    ],
+    [
+     0.5,
+     57.58,
+     58.08
+    ],
+    [
+     0.5,
+     54.54,
+     55.04
+    ]
+   ],
+   "speech_time": 56.139999999999986,
+   "no_voice_s": 0.1,
+   "dead_air_s": 0.0,
+   "very_dead_s": 0.0,
+   "no_voice_runs": [],
+   "open": {
+    "rms_0_0.05": -30.2,
+    "rms_0_0.3": -17.5,
+    "rms_0.3_1": -16.5,
+    "rms_1_3": -16.7,
+    "peak_0_0.3": -4.0
+   },
+   "close": {
+    "rms_last2": -17.8,
+    "rms_last0.3": -23.3,
+    "tail_after_last_word": 0.03
+   },
+   "side_minus_mid_db": -32.4,
+   "lr_corr": 0.999,
+   "ltas_rel": {
+    "<120": -9.0,
+    "120-400": 3.7,
+    "400-2k": 0.0,
+    "2-5k": -8.1,
+    "5-10k": -3.3,
+    "10-16k": -8.1
+   },
+   "centroid_median": 641.0,
+   "presence_2_5k_per_s_rel_median": [
+    -0.2,
+    3.1,
+    -1.0,
+    -2.9,
+    -4.7,
+    -2.2,
+    2.5,
+    5.4,
+    2.7,
+    3.3,
+    1.7,
+    -1.5,
+    -2.6,
+    -0.3,
+    6.7,
+    -3.5,
+    0.1,
+    0.8,
+    -0.8,
+    -0.2,
+    -7.5,
+    1.4,
+    -0.6,
+    2.0,
+    0.9,
+    -0.1,
+    -1.0,
+    -0.2,
+    -0.4,
+    4.4,
+    -2.6,
+    2.9,
+    0.1,
+    8.2,
+    1.1,
+    5.6,
+    -2.7,
+    0.0,
+    -0.6,
+    -1.4,
+    -1.1,
+    -3.2,
+    8.0,
+    5.6,
+    7.1,
+    -2.8,
+    10.3,
+    0.6,
+    -8.0,
+    2.2,
+    -7.3,
+    -0.4,
+    -1.8,
+    1.5,
+    -2.8,
+    -1.3,
+    2.1,
+    -6.5,
+    2.3,
+    -1.2,
+    3.6,
+    0.8,
+    3.4,
+    4.7,
+    -5.6,
+    2.1,
+    -0.0,
+    1.0
+   ],
+   "stems_vs_final_corr": 0.9999,
+   "sentences": [
+    {
+     "s": 0.0,
+     "e": 2.22,
+     "text": "Tap your foot on every green light.",
+     "f0_med": 149.0,
+     "range_st": 15.1,
+     "sd_st": 5.13,
+     "end_move_st": null,
+     "word_db_sd": 2.5,
+     "wps": 3.15,
+     "db": -17.0
+    },
+    {
+     "s": 2.56,
+     "e": 3.4,
+     "text": "Only green.",
+     "f0_med": 203.0,
+     "range_st": 6.8,
+     "sd_st": 2.75,
+     "end_move_st": 0.5,
+     "word_db_sd": 2.1,
+     "wps": 2.38,
+     "db": -15.2
+    },
+    {
+     "s": 3.66,
+     "e": 6.18,
+     "text": "Go, go, go, go, go, go, go.",
+     "f0_med": 257.0,
+     "range_st": 12.5,
+     "sd_st": 5.24,
+     "end_move_st": 0.6,
+     "word_db_sd": 1.2,
+     "wps": 2.78,
+     "db": -17.1
+    },
+    {
+     "s": 6.56,
+     "e": 7.26,
+     "text": "Did you tap?",
+     "f0_med": 212.0,
+     "range_st": 13.6,
+     "sd_st": 6.57,
+     "end_move_st": 0.1,
+     "word_db_sd": 0.9,
+     "wps": 4.29,
+     "db": -18.4
+    },
+    {
+     "s": 7.54,
+     "e": 8.06,
+     "text": "She did.",
+     "f0_med": 201.0,
+     "range_st": 16.6,
+     "sd_st": 5.81,
+     "end_move_st": 6.9,
+     "word_db_sd": 1.1,
+     "wps": 3.85,
+     "db": -16.0
+    },
+    {
+     "s": 8.44,
+     "e": 11.04,
+     "text": "Japan's railway lab set a trap like this.",
+     "f0_med": 142.0,
+     "range_st": 16.6,
+     "sd_st": 6.6,
+     "end_move_st": null,
+     "word_db_sd": 1.8,
+     "wps": 3.08,
+     "db": -17.5
+    },
+    {
+     "s": 11.18,
+     "e": 12.92,
+     "text": "A hundred lights, then red.",
+     "f0_med": 137.0,
+     "range_st": 14.5,
+     "sd_st": 5.79,
+     "end_move_st": null,
+     "word_db_sd": 3.3,
+     "wps": 2.87,
+     "db": -17.6
+    },
+    {
+     "s": 13.4,
+     "e": 14.92,
+     "text": "Twelve people just watch.",
+     "f0_med": 160.0,
+     "range_st": 14.6,
+     "sd_st": 5.89,
+     "end_move_st": null,
+     "word_db_sd": 0.9,
+     "wps": 2.63,
+     "db": -17.1
+    },
+    {
+     "s": 15.44,
+     "e": 16.68,
+     "text": "Five press anyway.",
+     "f0_med": 172.0,
+     "range_st": 12.1,
+     "sd_st": 5.06,
+     "end_move_st": 4.2,
+     "word_db_sd": 0.2,
+     "wps": 2.42,
+     "db": -17.7
+    },
+    {
+     "s": 17.12,
+     "e": 19.88,
+     "text": "Twelve others have to point at the light and say it.",
+     "f0_med": 217.0,
+     "range_st": 12.9,
+     "sd_st": 5.04,
+     "end_move_st": null,
+     "word_db_sd": 5.1,
+     "wps": 3.99,
+     "db": -17.8
+    },
+    {
+     "s": 20.14,
+     "e": 21.32,
+     "text": "Not one presses.",
+     "f0_med": 132.0,
+     "range_st": 8.3,
+     "sd_st": 2.97,
+     "end_move_st": null,
+     "word_db_sd": 0.4,
+     "wps": 2.54,
+     "db": -17.6
+    },
+    {
+     "s": 21.68,
+     "e": 25.36,
+     "text": "After a hundred times, your hand stops waiting for your brain.",
+     "f0_med": 176.0,
+     "range_st": 11.6,
+     "sd_st": 4.8,
+     "end_move_st": -0.5,
+     "word_db_sd": 1.3,
+     "wps": 2.99,
+     "db": -16.6
+    },
+    {
+     "s": 25.7,
+     "e": 27.72,
+     "text": "That's how the cereal ends up in the fridge.",
+     "f0_med": 221.0,
+     "range_st": 10.7,
+     "sd_st": 4.56,
+     "end_move_st": null,
+     "word_db_sd": 2.0,
+     "wps": 4.46,
+     "db": -16.8
+    },
+    {
+     "s": 27.72,
+     "e": 30.42,
+     "text": "Pointing and saying it makes your hand wait.",
+     "f0_med": 206.0,
+     "range_st": 14.1,
+     "sd_st": 5.07,
+     "end_move_st": 0.2,
+     "word_db_sd": 1.5,
+     "wps": 2.96,
+     "db": -17.3
+    },
+    {
+     "s": 30.94,
+     "e": 34.06,
+     "text": "So Japan's train drivers point at their signals and shout.",
+     "f0_med": 222.0,
+     "range_st": 16.2,
+     "sd_st": 6.27,
+     "end_move_st": null,
+     "word_db_sd": 1.9,
+     "wps": 3.21,
+     "db": -17.5
+    },
+    {
+     "s": 34.3,
+     "e": 35.16,
+     "text": "Signal clear.",
+     "f0_med": 236.0,
+     "range_st": 10.4,
+     "sd_st": 3.9,
+     "end_move_st": 9.8,
+     "word_db_sd": 0.3,
+     "wps": 2.33,
+     "db": -17.4
+    },
+    {
+     "s": 35.46,
+     "e": 37.82,
+     "text": "But the shouting rule didn't start as science.",
+     "f0_med": 163.0,
+     "range_st": 14.8,
+     "sd_st": 5.81,
+     "end_move_st": null,
+     "word_db_sd": 1.5,
+     "wps": 3.39,
+     "db": -17.1
+    },
+    {
+     "s": 38.24,
+     "e": 41.94,
+     "text": "The story goes, a steam train driver's eyes had gone bad.",
+     "f0_med": 185.0,
+     "range_st": 15.7,
+     "sd_st": 6.07,
+     "end_move_st": null,
+     "word_db_sd": 1.6,
+     "wps": 2.97,
+     "db": -18.0
+    },
+    {
+     "s": 42.38,
+     "e": 43.4,
+     "text": "Signal clear.",
+     "f0_med": 133.0,
+     "range_st": 2.1,
+     "sd_st": 0.89,
+     "end_move_st": null,
+     "word_db_sd": 0.4,
+     "wps": 1.96,
+     "db": -18.1
+    },
+    {
+     "s": 43.68,
+     "e": 46.3,
+     "text": "So he shouted every signal to his coal man.",
+     "f0_med": 229.0,
+     "range_st": 6.8,
+     "sd_st": 2.96,
+     "end_move_st": null,
+     "word_db_sd": 3.5,
+     "wps": 3.44,
+     "db": -17.6
+    },
+    {
+     "s": 46.78,
+     "e": 47.12,
+     "text": "Clear.",
+     "f0_med": 358.0,
+     "range_st": 0.1,
+     "sd_st": 0.04,
+     "end_move_st": 0.0,
+     "word_db_sd": null,
+     "wps": 2.94,
+     "db": -16.8
+    },
+    {
+     "s": 47.38,
+     "e": 50.44,
+     "text": "His boss rode along, loved it and made it a rule.",
+     "f0_med": 163.0,
+     "range_st": 13.0,
+     "sd_st": 4.11,
+     "end_move_st": null,
+     "word_db_sd": 2.7,
+     "wps": 3.59,
+     "db": -16.4
+    },
+    {
+     "s": 50.88,
+     "e": 52.44,
+     "text": "He never knew about the eyes.",
+     "f0_med": 180.0,
+     "range_st": 14.3,
+     "sd_st": 5.76,
+     "end_move_st": null,
+     "word_db_sd": 2.0,
+     "wps": 3.85,
+     "db": -16.0
+    },
+    {
+     "s": 52.9,
+     "e": 54.36,
+     "text": "New York copied the pointing.",
+     "f0_med": 190.0,
+     "range_st": 15.4,
+     "sd_st": 6.51,
+     "end_move_st": 7.4,
+     "word_db_sd": 1.8,
+     "wps": 3.42,
+     "db": -17.1
+    },
+    {
+     "s": 54.36,
+     "e": 57.58,
+     "text": "Again, subway conductors must point at a striped board.",
+     "f0_med": 158.0,
+     "range_st": 13.1,
+     "sd_st": 5.94,
+     "end_move_st": 13.9,
+     "word_db_sd": 4.6,
+     "wps": 2.8,
+     "db": -17.8
+    },
+    {
+     "s": 58.08,
+     "e": 62.34,
+     "text": "So two New Yorkers held up a sign, point here if you are dead sexy.",
+     "f0_med": 193.0,
+     "range_st": 15.9,
+     "sd_st": 6.03,
+     "end_move_st": null,
+     "word_db_sd": 2.4,
+     "wps": 3.52,
+     "db": -17.8
+    },
+    {
+     "s": 62.88,
+     "e": 64.48,
+     "text": "And the conductors had to point.",
+     "f0_med": 196.0,
+     "range_st": 8.5,
+     "sd_st": 3.65,
+     "end_move_st": null,
+     "word_db_sd": 3.7,
+     "wps": 3.75,
+     "db": -17.7
+    },
+    {
+     "s": 65.02,
+     "e": 65.96,
+     "text": "Now try again.",
+     "f0_med": 221.0,
+     "range_st": 7.5,
+     "sd_st": 4.01,
+     "end_move_st": null,
+     "word_db_sd": 2.5,
+     "wps": 3.19,
+     "db": -15.3
+    },
+    {
+     "s": 66.38,
+     "e": 68.44,
+     "text": "This time point and say it.",
+     "f0_med": 154.0,
+     "range_st": 14.8,
+     "sd_st": 6.11,
+     "end_move_st": null,
+     "word_db_sd": 5.2,
+     "wps": 2.91,
+     "db": -17.5
+    }
+   ],
+   "f0_median_all": 190.0,
+   "f0_range_st_p5_p95": 16.4,
+   "f0_sd_within_sentence_median": 5.13,
+   "f0_range_within_sentence_median": 13.1,
+   "jump_between_sentences_st_median": 3.4,
+   "jump_between_sentences_over_5st": 9,
+   "ends": {
+    "rise": 5,
+    "fall": 0,
+    "flat": 6
+   },
+   "sentence_db_sd": 0.8,
+   "word_db_sd_median": 1.9,
+   "sentence_wps_median": 3.08,
+   "sentence_wps_sd": 0.59,
+   "n_sentences": 29,
+   "sentences_over_5st_from_median": 6,
+   "est_bed_in_gaps_db_vs_speech": -17.1,
+   "est_floor_p10_vs_speech": -10.8,
+   "tonal_frac_gaps": 0.53,
+   "mix_onsets_in_gaps_per10s_gap": 33.6,
+   "gap_time": 8.9,
+   "mix_lowband_tempo": [
+    73.0,
+    0.02
+   ],
+   "stems": {
+    "music_lufs": -32.2,
+    "music_present_pct_film": 98.0,
+    "music_present_pct_speech": 99.0,
+    "music_under_voice_median_db": -19.3,
+    "sfx_lufs": -41.4,
+    "sfx_present_pct_film": 40.0,
+    "sfx_present_pct_speech": 40.0,
+    "sfx_under_voice_median_db": -29.3,
+    "amb_lufs": -47.9,
+    "amb_present_pct_film": 76.0,
+    "amb_present_pct_speech": 78.0,
+    "amb_under_voice_median_db": -33.5,
+    "voice_lufs": -14.1,
+    "music_silent_runs_over_0_5s": [
+     [
+      6.1,
+      7.5
+     ]
+    ],
+    "music_silent_total_s": 1.4,
+    "music_level_per_s": [
+     -35.0,
+     -35.0,
+     -35.0,
+     -34.0,
+     -29.0,
+     -29.0,
+     -137.0,
+     -97.0,
+     -32.0,
+     -33.0,
+     -33.0,
+     -33.0,
+     -33.0,
+     -33.0,
+     -32.0,
+     -32.0,
+     -32.0,
+     -32.0,
+     -33.0,
+     -33.0,
+     -33.0,
+     -28.0,
+     -34.0,
+     -36.0,
+     -33.0,
+     -37.0,
+     -33.0,
+     -34.0,
+     -29.0,
+     -36.0,
+     -35.0,
+     -32.0,
+     -32.0,
+     -32.0,
+     -33.0,
+     -31.0,
+     -36.0,
+     -35.0,
+     -37.0,
+     -35.0,
+     -34.0,
+     -35.0,
+     -36.0,
+     -36.0,
+     -36.0,
+     -33.0,
+     -36.0,
+     -35.0,
+     -37.0,
+     -37.0,
+     -34.0,
+     -36.0,
+     -37.0,
+     -33.0,
+     -32.0,
+     -32.0,
+     -32.0,
+     -32.0,
+     -38.0,
+     -38.0,
+     -37.0,
+     -37.0,
+     -37.0,
+     -37.0,
+     -35.0,
+     -31.0,
+     -34.0,
+     -34.0
+    ],
+    "music_level_jumps_over_6db_per_min": 3.5,
+    "music_tempo_windows": [
+     [
+      0.0,
+      67.0,
+      0.37
+     ],
+     [
+      3.0,
+      75.0,
+      0.17
+     ],
+     [
+      6.0,
+      113.0,
+      0.61
+     ],
+     [
+      9.0,
+      113.0,
+      0.86
+     ],
+     [
+      12.0,
+      113.0,
+      0.86
+     ],
+     [
+      15.0,
+      113.0,
+      0.8
+     ],
+     [
+      18.0,
+      113.0,
+      0.61
+     ],
+     [
+      21.0,
+      71.0,
+      0.11
+     ],
+     [
+      24.0,
+      60.0,
+      0.12
+     ],
+     [
+      27.0,
+      120.0,
+      0.42
+     ],
+     [
+      30.0,
+      120.0,
+      0.56
+     ],
+     [
+      33.0,
+      97.0,
+      0.51
+     ],
+     [
+      36.0,
+      97.0,
+      0.8
+     ],
+     [
+      39.0,
+      97.0,
+      0.73
+     ],
+     [
+      42.0,
+      97.0,
+      0.77
+     ],
+     [
+      45.0,
+      97.0,
+      0.75
+     ],
+     [
+      48.0,
+      97.0,
+      0.58
+     ],
+     [
+      51.0,
+      78.0,
+      0.33
+     ],
+     [
+      54.0,
+      78.0,
+      0.53
+     ],
+     [
+      57.0,
+      78.0,
+      0.52
+     ],
+     [
+      60.0,
+      78.0,
+      0.43
+     ]
+    ],
+    "music_centroid_median": 290.0,
+    "sfx_onsets": 164,
+    "sfx_onsets_per10s": 24.0,
+    "sfx_onset_db_vs_voice_median": -32.8,
+    "sfx_onset_db_vs_voice_p90": -24.9,
+    "sfx_onset_centroid_median": 2301.0,
+    "sfx_onset_times": [
+     0.57,
+     0.71,
+     1.56,
+     1.66,
+     1.76,
+     3.55,
+     4.01,
+     4.12,
+     4.24,
+     4.43,
+     4.81,
+     5.15,
+     5.45,
+     5.79,
+     5.91,
+     7.5,
+     8.42,
+     8.56,
+     8.92,
+     9.22,
+     9.35,
+     9.62,
+     9.93,
+     10.08,
+     10.24,
+     11.23,
+     11.39,
+     11.53,
+     12.62,
+     12.75,
+     12.89,
+     15.4,
+     15.54,
+     15.66,
+     16.18,
+     16.35,
+     17.55,
+     17.67,
+     18.23,
+     18.39,
+     18.54,
+     18.72,
+     18.87,
+     19.03,
+     19.2,
+     19.34,
+     20.2,
+     20.36,
+     21.47,
+     21.58,
+     23.97,
+     25.04,
+     25.19,
+     25.3,
+     25.75,
+     25.86,
+     26.53,
+     26.63,
+     26.79,
+     26.89,
+     27.06,
+     27.61,
+     27.71,
+     27.9,
+     28.11,
+     30.12,
+     30.23,
+     30.35,
+     30.45,
+     30.93,
+     31.07,
+     31.27,
+     31.38,
+     31.49,
+     31.64,
+     31.78,
+     31.89,
+     32.02,
+     32.2,
+     32.32,
+     32.42,
+     34.08,
+     34.23,
+     35.27,
+     35.45,
+     35.57,
+     35.68,
+     35.84,
+     35.94,
+     36.05,
+     36.16,
+     36.36,
+     36.47,
+     36.59,
+     36.77,
+     36.95,
+     37.08,
+     37.26,
+     37.38,
+     37.53,
+     42.06,
+     42.22,
+     42.4,
+     43.49,
+     43.68,
+     43.8,
+     43.91,
+     44.03,
+     44.29,
+     44.46,
+     44.58,
+     44.7,
+     45.35,
+     45.47,
+     45.59,
+     47.53,
+     47.69,
+     48.94,
+     49.12,
+     49.8,
+     49.91,
+     50.08,
+     50.23,
+     50.35,
+     52.61,
+     52.73,
+     52.84,
+     52.94,
+     53.1,
+     53.25,
+     53.42,
+     53.54,
+     53.65,
+     53.8,
+     53.97,
+     54.16,
+     54.29,
+     54.41,
+     54.55,
+     56.16,
+     56.32,
+     56.95,
+     57.07,
+     57.19,
+     57.3,
+     57.42,
+     57.52,
+     57.68,
+     57.78,
+     57.97,
+     58.17,
+     58.33,
+     59.64,
+     59.82,
+     59.98,
+     60.2,
+     60.33,
+     60.45,
+     64.16,
+     64.32,
+     64.89,
+     66.82,
+     67.04,
+     67.18
+    ],
+    "voice_side_minus_mid_db": -57.3,
+    "music_side_minus_mid_db": -17.5,
+    "sfx_side_minus_mid_db": -12.9,
+    "amb_side_minus_mid_db": -3.5,
+    "open_0_0.3_dbfs": {
+     "voice": -17.6,
+     "music": -32.4,
+     "sfx": -200.0,
+     "amb": -49.9
+    },
+    "close_last2_dbfs": {
+     "voice": -17.8,
+     "music": -35.9,
+     "sfx": -52.9,
+     "amb": -56.2
+    },
+    "voice_ltas_rel": {
+     "<120": -11.0,
+     "120-400": 3.6,
+     "400-2k": 0.0,
+     "2-5k": -8.1,
+     "5-10k": -3.3,
+     "10-16k": -8.1
+    }
+   }
+  },
+  "extra": {
+   "steady_tone_s": 1.5,
+   "steady_tone_hz": 1729.0,
+   "narrator_share": 0.9,
+   "narrator_pitch_step_st": 4.0,
+   "line_margin_worst": [
+    "L11",
+    16.1
+   ],
+   "line_margins": [
+    [
+     "L01",
+     20.2
+    ],
+    [
+     "L02",
+     18.6
+    ],
+    [
+     "L03",
+     16.3
+    ],
+    [
+     "L04",
+     21.5
+    ],
+    [
+     "L05",
+     17.5
+    ],
+    [
+     "L07",
+     21.7
+    ],
+    [
+     "L08",
+     24.4
+    ],
+    [
+     "L09",
+     18.6
+    ],
+    [
+     "L10",
+     18.3
+    ],
+    [
+     "L11",
+     16.1
+    ],
+    [
+     "L12",
+     17.3
+    ],
+    [
+     "L13",
+     21.4
+    ],
+    [
+     "L14",
+     21.5
+    ],
+    [
+     "L15",
+     20.2
+    ],
+    [
+     "L16",
+     29.9
+    ],
+    [
+     "L17",
+     22.7
+    ],
+    [
+     "L18",
+     23.7
+    ],
+    [
+     "L19",
+     18.8
+    ],
+    [
+     "L20",
+     22.1
+    ],
+    [
+     "L21",
+     24.0
+    ],
+    [
+     "L22",
+     20.7
+    ]
+   ]
+  }
+ }
+}

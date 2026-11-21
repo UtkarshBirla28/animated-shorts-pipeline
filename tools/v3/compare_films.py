@@ -19,7 +19,10 @@ STEP = float(arg("--step", "2.5")); NREF = int(arg("--refs", "3"))
 MAX = float(arg("--max", "0"))          # > 0: only the first MAX seconds of every film (the opening comparison)
 LIM = ["-t", "%.2f" % MAX] if MAX > 0 else []
 os.makedirs(OUT, exist_ok=True)
-REFDIR = "C:/Users/utkar/Desktop/yt short videos"
+# the reference Shorts: $REF_SHORTS_DIR, else "yt short videos" beside the project folder, else <ROOT>/_external/...
+REFDIR = next((d for d in [os.environ.get("REF_SHORTS_DIR", ""), os.path.join(ROOT, "..", "yt short videos"),
+                           os.path.join(ROOT, "_external", "yt short videos")] if d and os.path.isdir(d)), "")
+if not REFDIR: print("compare_films: NO reference Shorts folder found (set REF_SHORTS_DIR): only our own films are compared")
 # the reference Shorts in the benchmark order of preference (the channel's new look first), then anything else there
 PREF = ["Why Perfect Railroads Don't Work", "The Ancient Jar That Warned an Empire", "The Job Nobody Wants in Japan", "How One Cart Stopped an Entire Army", "Why Sailors Carried Storm Oil"]
 refs = []

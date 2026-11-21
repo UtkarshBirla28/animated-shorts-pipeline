@@ -1,0 +1,100 @@
+[
+ {
+  "i": 0,
+  "id": "p1s1",
+  "line": "L01",
+  "lines": [
+   "L01"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 0.05,
+  "e": 2.3,
+  "text": "Tap your foot on every green light.",
+  "markup": "Tap your foot on every green light.",
+  "take_text": "Tap your foot on every green light.",
+  "take": "v4_p1/t5",
+  "heard": "Tap your foot on every green light.",
+  "wrong": []
+ },
+ {
+  "i": 1,
+  "id": "p1s2",
+  "line": "L01",
+  "lines": [
+   "L01"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 2.55,
+  "e": 3.41,
+  "text": "Only green.",
+  "markup": "Only green.",
+  "take_text": "Only green.",
+  "take": "v4_p1/t5",
+  "heard": "Only green.",
+  "wrong": []
+ },
+ {
+  "i": 2,
+  "id": "go",
+  "line": "L02",
+  "lines": [
+   "L02"
+  ],
+  "speaker": "N",
+  "para": null,
+  "s": 3.56,
+  "e": 6.11,
+  "text": "Go. Go. Go. Go. Go. Go. Go!",
+  "markup": "Go. Go. Go. Go. Go. Go. Go!",
+  "take": "v4_go/t1 v4_go/t5 v4_go/t3 v4_go/t8 v4_go/t4 v4_go/t7 v4_go/t9",
+  "grid_onsets": [
+   3.56,
+   4.02,
+   4.44,
+   4.82,
+   5.16,
+   5.46,
+   5.72
+  ],
+  "heard": "Go, go, go, go, go, go, go!",
+  "wrong": []
+ },
+ {
+  "i": 3,
+  "id": "p1s3",
+  "line": "L03",
+  "lines": [
+   "L03"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 6.61,
+  "e": 7.2,
+  "text": "Did you tap?",
+  "markup": "Did you tap?",
+  "take_text": "Did you tap?",
+  "take": "v4_p1/t5",
+  "heard": "Did you tap?",
+  "wrong": []
+ },
+ {
+  "i": 4,
+  "id": "p1s4",
+  "line": "L03",
+  "lines": [
+   "L03"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 7.45,
+  "e": 7.985,
+  "text": "She did.",
+  "markup": "She did.",
+  "take_text": "She did.",
+  "take": "v4_p1/t5",
+  "heard": "She did.",
+  "wrong": []
+ }
+]

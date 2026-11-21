@@ -1,0 +1,922 @@
+{
+ "kind": "OPENING 0-8.2 s",
+ "path": "C:\\Users\\Administrator\\Desktop\\POINTING_V4_HANDOVER\\animated-shorts-studio\\sound\\pointing\\audio\\mix_opening_v4.wav",
+ "rules": [
+  {
+   "measure": "words heard (whisper)",
+   "ours": 21,
+   "ref": "11 / 27 / 27",
+   "ok": true
+  },
+  {
+   "measure": "words / s over the opening",
+   "ours": 2.57,
+   "ref": "1.35 / 3.31 / 3.31",
+   "ok": true
+  },
+  {
+   "measure": "first word s",
+   "ours": 0.0,
+   "ref": "0.00 / 0.00 / 0.00",
+   "ok": true
+  },
+  {
+   "measure": "longest voice gap outside the held beat s",
+   "ours": 0.4,
+   "ref": "3.08 / 0.08 / 0.26",
+   "ok": true
+  },
+  {
+   "measure": "the held beat s (designed: 0.4-0.6)",
+   "ours": 0.46,
+   "ref": "-",
+   "ok": true
+  },
+  {
+   "measure": "beds inside the held beat dBFS (real silence)",
+   "ours": -143.1,
+   "ref": "-",
+   "ok": true
+  },
+  {
+   "measure": "music 0-0.3 s dBFS (music from frame 0)",
+   "ours": -32.0,
+   "ref": "- / - / -",
+   "ok": true
+  },
+  {
+   "measure": "narrator share",
+   "ours": 0.9,
+   "ref": "0.38 / - / -",
+   "ok": true
+  },
+  {
+   "measure": "narrator pitch step line to line st (median)",
+   "ours": 4.9,
+   "ref": "4.10 / - / -",
+   "ok": false
+  },
+  {
+   "measure": "music under the voice while talking dB",
+   "ours": -16.1,
+   "ref": "-16.2 / - / -",
+   "ok": true
+  },
+  {
+   "measure": "music: clear beat in 6 s windows (share)",
+   "ours": 1.0,
+   "ref": "1.00 / - / -",
+   "ok": true
+  },
+  {
+   "measure": "ambience under the voice dB",
+   "ours": -32.4,
+   "ref": "-24.3 / - / -",
+   "ok": true
+  },
+  {
+   "measure": "steady tone in effects + ambience s",
+   "ours": 0.8,
+   "ref": "3.50 / - / -",
+   "ok": true
+  },
+  {
+   "measure": "effect onsets per 10 s",
+   "ours": 23.3,
+   "ref": "13.5 / - / -",
+   "ok": true
+  },
+  {
+   "measure": "effects under the voice dB",
+   "ours": -25.3,
+   "ref": "-24.6 / - / -",
+   "ok": true
+  },
+  {
+   "measure": "effect onset centroid Hz",
+   "ours": 2061.0,
+   "ref": "1823.0 / - / -",
+   "ok": true
+  },
+  {
+   "measure": "in-speech floor (p10 vs p75) dB",
+   "ours": -14.1,
+   "ref": "-14.1 / -6.90 / -7.90",
+   "ok": false
+  },
+  {
+   "measure": "mix centroid Hz",
+   "ours": 672.0,
+   "ref": "730.0 / 571.0 / 658.0",
+   "ok": true
+  },
+  {
+   "measure": "120-400 Hz vs 400-2k dB",
+   "ours": 3.1,
+   "ref": "0.50 / 7.00 / 5.90",
+   "ok": true
+  },
+  {
+   "measure": "10-16 kHz vs 400-2k dB",
+   "ours": -11.2,
+   "ref": "-18.5 / -8.20 / -7.60",
+   "ok": true
+  },
+  {
+   "measure": "every line over the bed, 0.5-4 kHz, worst dB",
+   "ours": 16.3,
+   "ref": "14.2 / - / -",
+   "ok": true
+  },
+  {
+   "measure": "first 0.3 s dBFS RMS (no dry open)",
+   "ours": -16.9,
+   "ref": "-23.5 / -16.8 / -19.0",
+   "ok": true
+  },
+  {
+   "measure": "true peak dBTP",
+   "ours": -2.9,
+   "ref": "-2.90 / -2.40 / -2.40",
+   "ok": true
+  }
+ ],
+ "data": {
+  "ours": {
+   "key": "pointing",
+   "dur": 8.166666666666666,
+   "r128": {
+    "I": -13.7,
+    "LRA": 1.4,
+    "TP": -2.9
+   },
+   "asr_text": "Tap your foot on every green light. Only green. Go, go, go, go, go, go, go. Did you tap? She did.",
+   "n_words": 21,
+   "mean_p": 0.9780045435542152,
+   "low_p_words": [],
+   "first_word": 0.0,
+   "last_word_end": 7.98,
+   "wps_film": 2.5714285714285716,
+   "wps_span": 2.631578947368421,
+   "gaps_over_0_3": 4,
+   "gaps_over_0_6": 0,
+   "gaps_over_1_0": 0,
+   "gap_time_over_0_3": 1.5999999999999992,
+   "longest_gaps": [
+    [
+     0.5,
+     6.14,
+     6.64
+    ],
+    [
+     0.4,
+     2.22,
+     2.62
+    ],
+    [
+     0.38,
+     3.38,
+     3.76
+    ],
+    [
+     0.32,
+     7.24,
+     7.56
+    ],
+    [
+     0.16,
+     4.46,
+     4.62
+    ],
+    [
+     0.08,
+     3.98,
+     4.06
+    ]
+   ],
+   "speech_time": 6.1400000000000015,
+   "no_voice_s": 0.0,
+   "dead_air_s": 0.0,
+   "very_dead_s": 0.0,
+   "no_voice_runs": [],
+   "open": {
+    "rms_0_0.05": -29.6,
+    "rms_0_0.3": -16.9,
+    "rms_0.3_1": -15.6,
+    "rms_1_3": -15.9,
+    "peak_0_0.3": -3.4
+   },
+   "close": {
+    "rms_last2": -18.4,
+    "rms_last0.3": -19.1,
+    "tail_after_last_word": 0.19
+   },
+   "side_minus_mid_db": -32.4,
+   "lr_corr": 0.999,
+   "ltas_rel": {
+    "<120": -11.0,
+    "120-400": 3.1,
+    "400-2k": 0.0,
+    "2-5k": -11.0,
+    "5-10k": -9.4,
+    "10-16k": -11.2
+   },
+   "centroid_median": 672.0,
+   "presence_2_5k_per_s_rel_median": [
+    0.3,
+    3.5,
+    -0.3,
+    -2.2,
+    -4.2,
+    -1.6,
+    3.2,
+    5.9
+   ],
+   "stems_vs_final_corr": 0.9995,
+   "sentences": [
+    {
+     "s": 0.0,
+     "e": 2.22,
+     "text": "Tap your foot on every green light.",
+     "f0_med": 151.0,
+     "range_st": 15.0,
+     "sd_st": 5.14,
+     "end_move_st": null,
+     "word_db_sd": 2.4,
+     "wps": 3.15,
+     "db": -16.1
+    },
+    {
+     "s": 2.62,
+     "e": 3.38,
+     "text": "Only green.",
+     "f0_med": 201.0,
+     "range_st": 6.8,
+     "sd_st": 2.77,
+     "end_move_st": 1.1,
+     "word_db_sd": 1.9,
+     "wps": 2.63,
+     "db": -14.5
+    },
+    {
+     "s": 3.76,
+     "e": 6.14,
+     "text": "Go, go, go, go, go, go, go.",
+     "f0_med": 257.0,
+     "range_st": 12.7,
+     "sd_st": 5.39,
+     "end_move_st": 0.6,
+     "word_db_sd": 3.2,
+     "wps": 2.94,
+     "db": -16.7
+    },
+    {
+     "s": 6.64,
+     "e": 7.24,
+     "text": "Did you tap?",
+     "f0_med": 211.0,
+     "range_st": 13.6,
+     "sd_st": 6.57,
+     "end_move_st": 0.0,
+     "word_db_sd": 1.3,
+     "wps": 5.0,
+     "db": -16.9
+    },
+    {
+     "s": 7.56,
+     "e": 7.98,
+     "text": "She did.",
+     "f0_med": 245.0,
+     "range_st": 16.6,
+     "sd_st": 6.31,
+     "end_move_st": 0.5,
+     "word_db_sd": 0.9,
+     "wps": 4.76,
+     "db": -14.5
+    }
+   ],
+   "f0_median_all": 211.0,
+   "f0_range_st_p5_p95": 15.6,
+   "f0_sd_within_sentence_median": 5.39,
+   "f0_range_within_sentence_median": 13.6,
+   "jump_between_sentences_st_median": 3.8,
+   "jump_between_sentences_over_5st": 0,
+   "ends": {
+    "rise": 0,
+    "fall": 0,
+    "flat": 4
+   },
+   "sentence_db_sd": 1.0,
+   "word_db_sd_median": 1.9,
+   "sentence_wps_median": 3.15,
+   "sentence_wps_sd": 0.98,
+   "n_sentences": 5,
+   "sentences_over_5st_from_median": 1,
+   "est_bed_in_gaps_db_vs_speech": -35.0,
+   "est_floor_p10_vs_speech": -14.1,
+   "tonal_frac_gaps": 0.29,
+   "mix_onsets_in_gaps_per10s_gap": 43.0,
+   "gap_time": 1.4,
+   "mix_lowband_tempo": [
+    67.0,
+    0.17
+   ],
+   "stems": {
+    "music_lufs": -30.3,
+    "music_present_pct_film": 86.0,
+    "music_present_pct_speech": 90.0,
+    "music_under_voice_median_db": -16.1,
+    "sfx_lufs": -38.1,
+    "sfx_present_pct_film": 51.0,
+    "sfx_present_pct_speech": 53.0,
+    "sfx_under_voice_median_db": -25.3,
+    "amb_lufs": -46.0,
+    "amb_present_pct_film": 94.0,
+    "amb_present_pct_speech": 100.0,
+    "amb_under_voice_median_db": -32.4,
+    "voice_lufs": -13.7,
+    "music_silent_runs_over_0_5s": [
+     [
+      6.1,
+      7.5
+     ]
+    ],
+    "music_silent_total_s": 1.4,
+    "music_level_per_s": [
+     -35.0,
+     -34.0,
+     -35.0,
+     -33.0,
+     -29.0,
+     -28.0,
+     -137.0,
+     -97.0
+    ],
+    "music_level_jumps_over_6db_per_min": 14.7,
+    "music_tempo_windows": [
+     [
+      0.0,
+      67.0,
+      0.38
+     ]
+    ],
+    "music_centroid_median": 253.0,
+    "sfx_onsets": 19,
+    "sfx_onsets_per10s": 23.3,
+    "sfx_onset_db_vs_voice_median": -32.1,
+    "sfx_onset_db_vs_voice_p90": -25.8,
+    "sfx_onset_centroid_median": 2061.0,
+    "sfx_onset_times": [
+     0.57,
+     0.71,
+     1.56,
+     1.66,
+     1.76,
+     3.55,
+     3.67,
+     4.01,
+     4.13,
+     4.24,
+     4.43,
+     4.81,
+     4.93,
+     5.15,
+     5.45,
+     5.57,
+     5.79,
+     5.91,
+     7.5
+    ],
+    "voice_side_minus_mid_db": -57.8,
+    "music_side_minus_mid_db": -17.5,
+    "sfx_side_minus_mid_db": -10.6,
+    "amb_side_minus_mid_db": -10.4,
+    "open_0_0.3_dbfs": {
+     "voice": -16.7,
+     "music": -32.0,
+     "sfx": -200.0,
+     "amb": -49.2
+    },
+    "close_last2_dbfs": {
+     "voice": -18.4,
+     "music": -32.8,
+     "sfx": -57.2,
+     "amb": -50.9
+    },
+    "voice_ltas_rel": {
+     "<120": -13.7,
+     "120-400": 2.9,
+     "400-2k": 0.0,
+     "2-5k": -11.0,
+     "5-10k": -9.4,
+     "10-16k": -11.3
+    }
+   }
+  },
+  "extra": {
+   "steady_tone_s": 0.8,
+   "steady_tone_hz": 1758.0,
+   "narrator_share": 0.9,
+   "narrator_pitch_step_st": 4.9,
+   "line_margin_worst": [
+    "L03",
+    16.3
+   ],
+   "line_margins": [
+    [
+     "L01",
+     20.1
+    ],
+    [
+     "L02",
+     18.6
+    ],
+    [
+     "L03",
+     16.3
+    ]
+   ]
+  },
+  "refs": {
+   "clown": {
+    "key": "clown",
+    "dur": 8.166666666666666,
+    "r128": {
+     "I": -16.9,
+     "LRA": 6.7,
+     "TP": -2.9
+    },
+    "asr_text": "Quick test! Count the people on a phone. Don't lose count!",
+    "n_words": 11,
+    "mean_p": 0.9560546875,
+    "low_p_words": [],
+    "first_word": 0.0,
+    "last_word_end": 6.5,
+    "wps_film": 1.3469387755102042,
+    "wps_span": 1.6923076923076923,
+    "gaps_over_0_3": 1,
+    "gaps_over_0_6": 1,
+    "gaps_over_1_0": 1,
+    "gap_time_over_0_3": 3.0799999999999996,
+    "longest_gaps": [
+     [
+      3.08,
+      2.44,
+      5.52
+     ],
+     [
+      0.1,
+      1.02,
+      1.12
+     ]
+    ],
+    "speech_time": 3.3200000000000003,
+    "no_voice_s": 3.8000000000000003,
+    "dead_air_s": 0.0,
+    "very_dead_s": 0.0,
+    "no_voice_runs": [
+     [
+      2.5,
+      5.4,
+      -23.5
+     ],
+     [
+      6.6,
+      8.1,
+      -22.0
+     ]
+    ],
+    "open": {
+     "rms_0_0.05": -20.3,
+     "rms_0_0.3": -23.5,
+     "rms_0.3_1": -17.9,
+     "rms_1_3": -17.9,
+     "peak_0_0.3": -11.2
+    },
+    "close": {
+     "rms_last2": -22.5,
+     "rms_last0.3": -29.9,
+     "tail_after_last_word": 1.67
+    },
+    "side_minus_mid_db": -18.7,
+    "lr_corr": 0.974,
+    "ltas_rel": {
+     "<120": -8.6,
+     "120-400": 0.5,
+     "400-2k": 0.0,
+     "2-5k": -10.2,
+     "5-10k": -11.1,
+     "10-16k": -18.5
+    },
+    "centroid_median": 730.0,
+    "presence_2_5k_per_s_rel_median": [
+     6.1,
+     4.7,
+     -9.1,
+     -3.8,
+     -5.1,
+     1.2,
+     1.8,
+     -1.2
+    ],
+    "stems_vs_final_corr": 0.9997,
+    "sentences": [
+     {
+      "s": 1.12,
+      "e": 2.44,
+      "text": "Count the people on a phone.",
+      "f0_med": 262.0,
+      "range_st": 6.8,
+      "sd_st": 2.72,
+      "end_move_st": -1.2,
+      "word_db_sd": 1.3,
+      "wps": 4.55,
+      "db": -16.4
+     },
+     {
+      "s": 5.52,
+      "e": 6.5,
+      "text": "Don't lose count!",
+      "f0_med": 208.0,
+      "range_st": 4.8,
+      "sd_st": 2.23,
+      "end_move_st": -1.4,
+      "word_db_sd": 0.5,
+      "wps": 3.06,
+      "db": -16.1
+     }
+    ],
+    "f0_median_all": 235.0,
+    "f0_range_st_p5_p95": 10.7,
+    "f0_sd_within_sentence_median": 2.48,
+    "f0_range_within_sentence_median": 5.8,
+    "jump_between_sentences_st_median": 4.0,
+    "jump_between_sentences_over_5st": 0,
+    "ends": {
+     "rise": 0,
+     "fall": 0,
+     "flat": 2
+    },
+    "sentence_db_sd": 0.1,
+    "word_db_sd_median": 0.9,
+    "sentence_wps_median": 3.8,
+    "sentence_wps_sd": 0.74,
+    "n_sentences": 2,
+    "sentences_over_5st_from_median": 0,
+    "est_bed_in_gaps_db_vs_speech": -12.7,
+    "est_floor_p10_vs_speech": -14.1,
+    "tonal_frac_gaps": 0.84,
+    "mix_onsets_in_gaps_per10s_gap": 21.8,
+    "gap_time": 4.6,
+    "mix_lowband_tempo": [
+     102.0,
+     0.1
+    ],
+    "stems": {
+     "music_lufs": -25.4,
+     "music_present_pct_film": 100.0,
+     "music_present_pct_speech": 100.0,
+     "music_under_voice_median_db": -16.2,
+     "sfx_lufs": -28.1,
+     "sfx_present_pct_film": 95.0,
+     "sfx_present_pct_speech": 88.0,
+     "sfx_under_voice_median_db": -24.6,
+     "amb_lufs": -38.7,
+     "amb_present_pct_film": 100.0,
+     "amb_present_pct_speech": 100.0,
+     "amb_under_voice_median_db": -24.3,
+     "voice_lufs": -14.3,
+     "music_silent_runs_over_0_5s": [],
+     "music_silent_total_s": 0,
+     "music_level_per_s": [
+      -35.0,
+      -34.0,
+      -30.0,
+      -24.0,
+      -26.0,
+      -27.0,
+      -26.0,
+      -23.0
+     ],
+     "music_level_jumps_over_6db_per_min": 7.3,
+     "music_tempo_windows": [
+      [
+       0.0,
+       103.0,
+       0.75
+      ]
+     ],
+     "music_centroid_median": 483.0,
+     "sfx_onsets": 11,
+     "sfx_onsets_per10s": 13.5,
+     "sfx_onset_db_vs_voice_median": -15.5,
+     "sfx_onset_db_vs_voice_p90": -12.6,
+     "sfx_onset_centroid_median": 1823.0,
+     "sfx_onset_times": [
+      0.19,
+      2.36,
+      3.09,
+      3.36,
+      3.6,
+      5.22,
+      6.79,
+      7.16,
+      7.33,
+      7.44,
+      7.86
+     ],
+     "voice_side_minus_mid_db": -179.1,
+     "music_side_minus_mid_db": -14.0,
+     "sfx_side_minus_mid_db": -8.0,
+     "amb_side_minus_mid_db": -7.8,
+     "open_0_0.3_dbfs": {
+      "voice": -200.0,
+      "music": -31.2,
+      "sfx": -24.3,
+      "amb": -38.5
+     },
+     "close_last2_dbfs": {
+      "voice": -24.6,
+      "music": -27.0,
+      "sfx": -33.3,
+      "amb": -44.7
+     },
+     "voice_ltas_rel": {
+      "<120": -19.6,
+      "120-400": 0.1,
+      "400-2k": 0.0,
+      "2-5k": -11.0,
+      "5-10k": -11.4,
+      "10-16k": -19.1
+     }
+    }
+   },
+   "R_railroads": {
+    "key": "R_railroads",
+    "dur": 8.166666666666666,
+    "r128": {
+     "I": -12.6,
+     "LRA": 0.4,
+     "TP": -2.4
+    },
+    "asr_text": "He sawed gaps into a railroad every 39 feet. You see, two companies are racing to build a railroad along a canyon so deep you can't see",
+    "n_words": 27,
+    "mean_p": 0.9616247106481481,
+    "low_p_words": [],
+    "first_word": 0.0,
+    "last_word_end": 8.12,
+    "wps_film": 3.306122448979592,
+    "wps_span": 3.32512315270936,
+    "gaps_over_0_3": 0,
+    "gaps_over_0_6": 0,
+    "gaps_over_1_0": 0,
+    "gap_time_over_0_3": 0.0,
+    "longest_gaps": [
+     [
+      0.08,
+      3.74,
+      3.82
+     ],
+     [
+      0.08,
+      3.32,
+      3.4
+     ]
+    ],
+    "speech_time": 7.959999999999999,
+    "no_voice_s": 0.0,
+    "dead_air_s": 0.0,
+    "very_dead_s": 0.0,
+    "no_voice_runs": [],
+    "open": {
+     "rms_0_0.05": -200.0,
+     "rms_0_0.3": -16.8,
+     "rms_0.3_1": -17.3,
+     "rms_1_3": -14.6,
+     "peak_0_0.3": -3.9
+    },
+    "close": {
+     "rms_last2": -15.8,
+     "rms_last0.3": -15.2,
+     "tail_after_last_word": 0.05
+    },
+    "side_minus_mid_db": -29.4,
+    "lr_corr": 0.998,
+    "ltas_rel": {
+     "<120": -7.5,
+     "120-400": 7.0,
+     "400-2k": 0.0,
+     "2-5k": -7.5,
+     "5-10k": -4.3,
+     "10-16k": -8.2
+    },
+    "centroid_median": 571.0,
+    "presence_2_5k_per_s_rel_median": [
+     0.3,
+     -2.6,
+     -2.5,
+     1.8,
+     -0.0,
+     -3.5,
+     0.0,
+     1.0
+    ],
+    "sentences": [
+     {
+      "s": 0.0,
+      "e": 3.32,
+      "text": "He sawed gaps into a railroad every 39 feet.",
+      "f0_med": 255.0,
+      "range_st": 14.8,
+      "sd_st": 5.26,
+      "end_move_st": 3.7,
+      "word_db_sd": 2.2,
+      "wps": 2.71,
+      "db": -15.5
+     },
+     {
+      "s": 3.4,
+      "e": 8.12,
+      "text": "You see, two companies are racing to build a railroad along a canyon so deep you can't see",
+      "f0_med": 186.0,
+      "range_st": 12.8,
+      "sd_st": 5.12,
+      "end_move_st": -4.0,
+      "word_db_sd": 1.6,
+      "wps": 3.81,
+      "db": -15.3
+     }
+    ],
+    "f0_median_all": 220.5,
+    "f0_range_st_p5_p95": 17.4,
+    "f0_sd_within_sentence_median": 5.19,
+    "f0_range_within_sentence_median": 13.8,
+    "jump_between_sentences_st_median": 5.5,
+    "jump_between_sentences_over_5st": 1,
+    "ends": {
+     "rise": 1,
+     "fall": 1,
+     "flat": 0
+    },
+    "sentence_db_sd": 0.1,
+    "word_db_sd_median": 1.9,
+    "sentence_wps_median": 3.26,
+    "sentence_wps_sd": 0.55,
+    "n_sentences": 2,
+    "sentences_over_5st_from_median": 0,
+    "est_bed_in_gaps_db_vs_speech": null,
+    "est_floor_p10_vs_speech": -6.9,
+    "tonal_frac_gaps": null,
+    "mix_onsets_in_gaps_per10s_gap": 0.0,
+    "gap_time": 0,
+    "mix_lowband_tempo": [
+     98.0,
+     0.15
+    ]
+   },
+   "R_jobjapan": {
+    "key": "R_jobjapan",
+    "dur": 8.166666666666666,
+    "r128": {
+     "I": -13.9,
+     "LRA": 1.6,
+     "TP": -2.4
+    },
+    "asr_text": "It's impossible to get fired in Japan, but companies found something way worse. Imagine your boss walks you past your desk to a tiny room with no",
+    "n_words": 27,
+    "mean_p": 0.9764359085648148,
+    "low_p_words": [],
+    "first_word": 0.0,
+    "last_word_end": 7.96,
+    "wps_film": 3.306122448979592,
+    "wps_span": 3.391959798994975,
+    "gaps_over_0_3": 0,
+    "gaps_over_0_6": 0,
+    "gaps_over_1_0": 0,
+    "gap_time_over_0_3": 0.0,
+    "longest_gaps": [
+     [
+      0.26,
+      4.34,
+      4.6
+     ],
+     [
+      0.2,
+      2.14,
+      2.34
+     ]
+    ],
+    "speech_time": 7.5,
+    "no_voice_s": 0.0,
+    "dead_air_s": 0.0,
+    "very_dead_s": 0.0,
+    "no_voice_runs": [],
+    "open": {
+     "rms_0_0.05": -200.0,
+     "rms_0_0.3": -19.0,
+     "rms_0.3_1": -17.3,
+     "rms_1_3": -17.2,
+     "peak_0_0.3": -2.9
+    },
+    "close": {
+     "rms_last2": -17.3,
+     "rms_last0.3": -16.5,
+     "tail_after_last_word": 0.21
+    },
+    "side_minus_mid_db": -31.7,
+    "lr_corr": 0.999,
+    "ltas_rel": {
+     "<120": -2.8,
+     "120-400": 5.9,
+     "400-2k": 0.0,
+     "2-5k": -6.7,
+     "5-10k": -5.3,
+     "10-16k": -7.6
+    },
+    "centroid_median": 658.0,
+    "presence_2_5k_per_s_rel_median": [
+     -0.6,
+     5.2,
+     -0.8,
+     0.9,
+     1.2,
+     -1.6,
+     0.6,
+     -5.9
+    ],
+    "sentences": [
+     {
+      "s": 0.0,
+      "e": 4.34,
+      "text": "It's impossible to get fired in Japan, but companies found something way worse.",
+      "f0_med": 144.0,
+      "range_st": 17.0,
+      "sd_st": 6.28,
+      "end_move_st": 1.8,
+      "word_db_sd": 1.7,
+      "wps": 3.0,
+      "db": -16.7
+     },
+     {
+      "s": 4.6,
+      "e": 7.96,
+      "text": "Imagine your boss walks you past your desk to a tiny room with no",
+      "f0_med": 165.0,
+      "range_st": 15.6,
+      "sd_st": 6.05,
+      "end_move_st": null,
+      "word_db_sd": 2.6,
+      "wps": 4.17,
+      "db": -17.2
+     }
+    ],
+    "f0_median_all": 154.5,
+    "f0_range_st_p5_p95": 18.4,
+    "f0_sd_within_sentence_median": 6.17,
+    "f0_range_within_sentence_median": 16.3,
+    "jump_between_sentences_st_median": 2.4,
+    "jump_between_sentences_over_5st": 0,
+    "ends": {
+     "rise": 1,
+     "fall": 0,
+     "flat": 0
+    },
+    "sentence_db_sd": 0.2,
+    "word_db_sd_median": 2.1,
+    "sentence_wps_median": 3.58,
+    "sentence_wps_sd": 0.58,
+    "n_sentences": 2,
+    "sentences_over_5st_from_median": 0,
+    "est_bed_in_gaps_db_vs_speech": -2.1,
+    "est_floor_p10_vs_speech": -7.9,
+    "tonal_frac_gaps": 0.57,
+    "mix_onsets_in_gaps_per10s_gap": 48.0,
+    "gap_time": 0.4,
+    "mix_lowband_tempo": [
+     146.0,
+     0.08
+    ]
+   }
+  },
+  "clown_extra": {
+   "steady_tone_s": 3.5,
+   "steady_tone_hz": 896.0,
+   "narrator_share": 0.38,
+   "narrator_pitch_step_st": 4.1,
+   "line_margin_worst": [
+    "n02",
+    14.2
+   ],
+   "line_margins": [
+    [
+     "n01",
+     22.1
+    ],
+    [
+     "n02",
+     14.2
+    ]
+   ]
+  }
+ }
+}

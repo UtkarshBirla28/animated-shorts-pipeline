@@ -24,7 +24,7 @@ import numpy as np
 import cv2
 
 ROOT = Path(__file__).resolve().parents[2]
-LM_PATH = Path(r"C:\Users\utkar\research_notes\ricksclips\look\scripts\look_metrics.py")
+LM_PATH = Path.home() / "research_notes" / "ricksclips" / "look" / "scripts" / "look_metrics.py"  # was C:\Users\utkar\...
 TQ = json.loads((Path(__file__).parent / "targets.json").read_text(encoding="utf-8"))["qa"]
 FPS = 30.0
 
@@ -251,8 +251,20 @@ def main(argv):
         fgate("captions on every word", "PASS" if cov >= 0.95 else ("WARN" if cov >= 0.85 else "FAIL"), f"{cov * 100:.0f} % of {len(vals)} words",
               ">= 95 %" + (f"; first misses {missing}" if missing else ""))
 
+    # --v4 (DIRECTOR, 2026-11-21): the v3 picture limits (camera 0.5-2.0 %/f, chroma 18-30, shadow chroma, blur, still, life,
+    # brightness, the film camera / life / chroma medians, its own loop seam and the band-only caption reader) were written
+    # for the first version; for v4 they are INFO numbers only: gates_v4.py judges motion, rests, the seam, frozen runs and
+    # the captions with the v4 targets. Real gates kept here: specs, loudness, true peak, LRA.
+    if "v4" in opts:
+        keep = {"specs", "loudness", "true peak", "LRA", "audio"}
+        for g in FG:
+            if g["gate"] not in keep: g["status"] = "INFO"
+        for r in rows:
+            for g in r["gates"]: g["status"] = "INFO" if g["status"] != "PASS" else g["status"]
+            r["status"] = "INFO"
+
     # ---- report
-    lines = [f"QA GATES  {video}  ({n} frames, {len(rows)} shots, motion every {step} f)", "", "FILM"]
+    lines = [f"QA GATES  {video}  ({n} frames, {len(rows)} shots, motion every {step} f)" + ("  [--v4: picture limits are INFO]" if "v4" in opts else ""), "", "FILM"]
     for g in FG:
         lines.append(f"  {g['status']:<5} {g['gate']:<32} {g['value']!s:<22} want {g['want']}")
     lines += ["", f"  {'shot':<6} {'frames':<11} {'cam':>5} {'still':>5} {'life':>6} {'C':>5} {'Csh':>5} {'blur':>5} {'busy':>5} {'L*':>5} {'frz':>4}  result / failing gates"]

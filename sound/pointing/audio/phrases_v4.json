@@ -1,0 +1,149 @@
+[
+ {
+  "id": "L01",
+  "speaker": "N",
+  "s": 0.05,
+  "e": 3.41,
+  "text": "Tap your foot on every green light. Only green."
+ },
+ {
+  "id": "L02",
+  "speaker": "N",
+  "s": 3.56,
+  "e": 6.17,
+  "text": "Go. Go. Go. Go. Go. Go. Go!"
+ },
+ {
+  "id": "L03",
+  "speaker": "N",
+  "s": 6.67,
+  "e": 8.045,
+  "text": "Did you tap? She did."
+ },
+ {
+  "id": "L04",
+  "speaker": "N",
+  "s": 8.265,
+  "e": 13.2,
+  "text": "Japan's railway lab set a trap like this. A hundred lights, then red."
+ },
+ {
+  "id": "L05",
+  "speaker": "N",
+  "s": 13.35,
+  "e": 16.87,
+  "text": "Twelve people just watch. Five press anyway."
+ },
+ {
+  "id": "L07",
+  "speaker": "N",
+  "s": 17.05,
+  "e": 19.95,
+  "text": "Twelve others have to point at the light, and say it."
+ },
+ {
+  "id": "L08",
+  "speaker": "N",
+  "s": 20.1,
+  "e": 21.435,
+  "text": "Not one presses."
+ },
+ {
+  "id": "L09",
+  "speaker": "N",
+  "s": 21.655,
+  "e": 25.45,
+  "text": "After a hundred times, your hand stops waiting for your brain."
+ },
+ {
+  "id": "L10",
+  "speaker": "N",
+  "s": 25.7,
+  "e": 27.85,
+  "text": "That's how the cereal ends up in the fridge."
+ },
+ {
+  "id": "L11",
+  "speaker": "N",
+  "s": 28.0,
+  "e": 34.035,
+  "text": "Pointing and saying it makes your hand wait. So Japan's train drivers point at their signals, and shout."
+ },
+ {
+  "id": "L12",
+  "speaker": "D",
+  "s": 34.13,
+  "e": 35.195,
+  "text": "Signal clear!"
+ },
+ {
+  "id": "L13",
+  "speaker": "N",
+  "s": 35.335,
+  "e": 42.025,
+  "text": "But the shouting rule didn't start as science. The story goes, a steam-train driver's eyes had gone bad."
+ },
+ {
+  "id": "L14",
+  "speaker": "H",
+  "s": 42.175,
+  "e": 43.465,
+  "text": "Signal clear!"
+ },
+ {
+  "id": "L15",
+  "speaker": "N",
+  "s": 43.615,
+  "e": 46.48,
+  "text": "So he shouted every signal to his coal man."
+ },
+ {
+  "id": "L16",
+  "speaker": "C",
+  "s": 46.6,
+  "e": 47.29,
+  "text": "Clear!"
+ },
+ {
+  "id": "L17",
+  "speaker": "N",
+  "s": 47.37,
+  "e": 50.735,
+  "text": "His boss rode along, loved it, and made it a rule."
+ },
+ {
+  "id": "L18",
+  "speaker": "N",
+  "s": 50.905,
+  "e": 52.45,
+  "text": "He never knew about the eyes."
+ },
+ {
+  "id": "L19",
+  "speaker": "N",
+  "s": 52.67,
+  "e": 57.8,
+  "text": "New York copied the pointing: subway conductors must point at a striped board."
+ },
+ {
+  "id": "L20",
+  "speaker": "N",
+  "s": 57.95,
+  "e": 62.62,
+  "text": "So two New Yorkers held up a sign: \"Point here if you are dead sexy.\""
+ },
+ {
+  "id": "L21",
+  "speaker": "N",
+  "s": 62.775,
+  "e": 64.81,
+  "text": "And the conductors had to point."
+ },
+ {
+  "id": "L22",
+  "speaker": "N",
+  "s": 65.015,
+  "e": 68.375,
+  "text": "Now try again. This time, point, and say it."
+ }
+]

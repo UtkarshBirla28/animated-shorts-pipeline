@@ -1,0 +1,105 @@
+[01:59:56] timeline: timeline -> C:\Users\utkar\Desktop\animated-shorts-studio\sound\saladoil\audio\timeline.json: 16 shots, 121 beats, 2712 frames (90.40 s)
+[01:59:59] inputs hash b87d330aa7f0 (music fcc53fd61909, sfx b18e824f2638); voice take eleven_v4:james:tempo1.0; picture 2712 f = 90.400 s -> 4339200 samples
+[02:00:12] shout lift: APPLIED +0.9 st on 25.32-26.52 s: F0 median 324 Hz, measured ratio 1.0571 (target 1.0534), harmonicity 0.907 -> 0.908 (engine at 0 st 0.900)
+[02:00:13] voice clean: 59 join fades, 15 phrase tails gated (median speech -30.2 dB): king. 12.26->12.40, down: 24.83->25.15, them. 30.01->30.41, more. 33.07->33.27, crashed. 46.27->46.39, tanks. 49.97->50.32, was 51.29->51.72, water. 55.63->55.87, out? 57.25->57.44, top. 59.55->59.81, again. 72.16->72.47, brand. 83.71->83.99, name? 84.56->84.87, fake. 87.80->88.14, real. 89.61->90.36
+[02:00:21] take match: beat  1   0.00-  8.13 s  dev +1.5 +0.6 -2.3 -2.6 -0.4 -0.1 -0.3  -> EQ -1.2 +0.0 +2.0 +2.2 +0.0 +0.0 +0.8  -> dev +0.2 +0.4 -0.7 -0.9 -0.6 -0.3 -0.1  (max |dev| 2.6 -> 0.9 dB)
+[02:00:21] take match: beat  2   8.39- 15.07 s  dev -2.0 +1.3 +0.3 -2.3 +3.0 +4.6 +3.1  -> EQ +2.8 -1.1 +0.0 +3.2 -2.6 -3.9 -3.8  -> dev -0.8 +0.6 -0.2 -1.0 +0.1 -0.5 +0.9  (max |dev| 4.6 -> 1.0 dB)
+[02:00:21] take match: beat  3  15.35- 20.21 s  dev -0.4 +0.2 +1.3 +1.8 +1.3 -1.2 -2.3  -> EQ +0.0 +0.0 -1.1 -1.5 -1.1 +1.0 +1.9  -> dev -0.3 +0.1 +0.3 +0.4 -0.0 -0.2 -0.2  (max |dev| 2.3 -> 0.4 dB)
+[02:00:21] take match: beat  4  20.40- 26.55 s  dev -1.8 -0.8 +3.8 +2.5 +1.1 +1.2 -1.2  -> EQ +1.6 +0.0 -4.5 -2.8 -1.0 -2.4 +1.0  -> dev +0.1 -0.1 +0.8 +0.3 -0.4 +0.5 +0.3  (max |dev| 3.8 -> 0.8 dB)
+[02:00:21] take match: beat  5  26.81- 38.14 s  dev -0.1 +0.8 -0.0 -0.6 -1.1 -0.9 -0.3  -> EQ +0.0 +0.0 +0.0 +0.0 +0.9 +0.8 +0.0  -> dev -0.4 +0.5 -0.3 -0.7 -1.0 -0.4 -0.2  (max |dev| 1.1 -> 1.0 dB)
+[02:00:21] take match: beat  6  38.38- 40.77 s  dev +3.1 -0.1 -6.6 -4.9 -2.7 -0.4 -0.2  -> EQ -4.0 +0.0 +5.0 +4.2 +2.3 +0.0 +0.0  -> dev +1.3 -0.1 -1.9 -0.3 +0.4 +0.6 +0.4  (max |dev| 6.6 -> 1.9 dB)
+[02:00:21] take match: beat  7  41.17- 49.87 s  dev -0.3 +0.8 -0.1 +0.7 -0.6 -2.3 -0.4  -> EQ +0.0 +0.0 +0.0 +0.0 +0.0 +2.6 +0.0  -> dev -0.6 +0.5 -0.3 +0.5 -0.8 -0.5 +0.1  (max |dev| 2.3 -> 0.8 dB)
+[02:00:21] take match: beat  8  50.27- 53.02 s  dev +4.6 -6.3 +0.1 +0.3 +1.8 +4.3 +4.0  -> EQ -5.0 +5.0 +0.0 +1.4 -1.6 -2.9 -4.5  -> dev +2.0 -3.5 +2.3 +0.6 +5.9 +2.9 -2.7  (max |dev| 6.3 -> 5.9 dB)
+[02:00:21] take match: beat  9  53.39- 59.55 s  dev -2.8 +0.8 +2.2 +0.4 -4.0 -0.3 +0.6  -> EQ +3.5 -0.7 -2.7 +0.0 +4.5 -1.0 -1.2  -> dev -0.6 +0.3 +0.3 +0.5 -1.1 +0.1 +1.0  (max |dev| 4.0 -> 1.1 dB)
+[02:00:21] take match: beat 10  59.80- 65.46 s  dev -1.9 +0.9 +1.0 +1.2 -1.0 -0.0 -2.5  -> EQ +2.5 -0.8 -0.8 -1.1 +0.8 -0.9 +2.8  -> dev -0.7 +0.5 +0.0 +0.4 -1.3 +0.0 -0.5  (max |dev| 2.5 -> 1.3 dB)
+[02:00:21] take match: beat 11  65.69- 74.47 s  dev +0.4 +0.8 -1.0 -0.9 +1.2 -0.9 +0.3  -> EQ +0.0 +0.0 +0.8 +0.8 -1.0 +1.5 +0.0  -> dev -0.0 +0.5 -0.7 -0.8 +0.0 -0.5 +0.3  (max |dev| 1.2 -> 0.8 dB)
+[02:00:21] take match: beat 12  74.94- 78.26 s  dev -0.5 +0.1 +0.5 +3.7 +2.6 -1.4 -0.7  -> EQ +0.0 +0.0 +0.0 -4.2 -2.2 +2.0 +0.0  -> dev -0.3 +0.2 +0.2 +0.4 -0.1 -0.5 +0.1  (max |dev| 3.7 -> 0.5 dB)
+[02:00:21] take match: beat 13  78.57- 86.05 s  dev -0.4 +0.8 +0.1 -0.1 -1.4 -0.7 -0.3  -> EQ +0.0 -0.7 +0.0 +0.0 +1.2 +0.0 +0.0  -> dev -0.5 +0.4 +0.0 +0.2 -0.9 -0.5 -0.2  (max |dev| 1.4 -> 0.9 dB)
+[02:00:21] take match: beat 14  86.35- 89.57 s  dev +0.8 -0.0 +0.8 +0.7 -0.0 -1.9 +0.2  -> EQ +0.0 +0.0 -0.7 +0.0 +0.0 +1.6 +0.0  -> dev +0.7 -0.3 +0.3 +0.4 -0.2 -0.7 +0.7  (max |dev| 1.9 -> 0.7 dB)
+[02:00:26] voice level   0.03-  4.94 phrase +0.2 dB vs median -> -0.00 dB
+[02:00:26] voice level   4.94-  8.10 phrase -0.7 dB vs median -> +0.00 dB
+[02:00:26] voice level   8.42- 12.24 phrase +1.5 dB vs median -> -0.26 dB
+[02:00:26] voice level  12.53- 15.04 phrase -0.1 dB vs median -> +0.00 dB
+[02:00:26] voice level  15.38- 17.52 phrase +0.3 dB vs median -> -0.00 dB
+[02:00:26] voice level  17.98- 20.18 phrase +0.0 dB vs median -> -0.00 dB
+[02:00:26] voice level  20.43- 24.95 phrase +0.1 dB vs median -> -0.00 dB
+[02:00:26] voice level  25.32- 26.52 phrase -2.5 dB vs median -> +1.35 dB
+[02:00:26] voice level  26.84- 30.12 phrase -0.9 dB vs median -> +0.00 dB
+[02:00:26] voice level  30.51- 32.05 phrase +1.0 dB vs median -> -0.00 dB
+[02:00:26] voice level  32.32- 33.08 phrase +2.5 dB vs median -> -0.82 dB
+[02:00:26] voice level  33.41- 38.11 phrase +0.6 dB vs median -> -0.00 dB
+[02:00:26] voice level  38.41- 40.74 phrase -0.8 dB vs median -> +0.00 dB
+[02:00:26] voice level  41.20- 46.22 phrase +0.0 dB vs median -> -0.00 dB
+[02:00:26] voice level  46.52- 47.77 phrase -1.2 dB vs median -> +0.11 dB
+[02:00:26] voice level  48.04- 49.84 phrase -1.2 dB vs median -> +0.10 dB
+[02:00:26] voice level  50.30- 51.06 phrase -2.7 dB vs median -> +0.92 dB
+[02:00:26] voice level  51.06- 52.99 phrase -8.4 dB vs median -> +2.50 dB
+[02:00:26] voice level  53.42- 55.70 phrase +0.6 dB vs median -> -0.00 dB
+[02:00:26] voice level  55.91- 57.29 phrase +0.8 dB vs median -> -0.00 dB
+[02:00:26] voice level  57.56- 59.52 phrase +0.7 dB vs median -> -0.00 dB
+[02:00:26] voice level  59.83- 62.76 phrase +0.3 dB vs median -> -0.00 dB
+[02:00:26] voice level  63.14- 65.43 phrase -0.8 dB vs median -> +0.00 dB
+[02:00:26] voice level  65.72- 66.66 phrase +1.3 dB vs median -> -0.17 dB
+[02:00:26] voice level  66.93- 69.17 phrase -1.7 dB vs median -> +0.36 dB
+[02:00:26] voice level  69.33- 72.19 phrase +0.6 dB vs median -> -0.00 dB
+[02:00:26] voice level  72.58- 74.44 phrase -0.1 dB vs median -> +0.00 dB
+[02:00:26] voice level  74.97- 78.23 phrase -0.4 dB vs median -> +0.00 dB
+[02:00:26] voice level  78.60- 81.34 phrase +0.1 dB vs median -> -0.00 dB
+[02:00:26] voice level  81.59- 83.73 phrase -0.7 dB vs median -> +0.00 dB
+[02:00:26] voice level  84.03- 84.59 phrase +0.1 dB vs median -> -0.00 dB
+[02:00:26] voice level  85.26- 86.02 phrase -0.7 dB vs median -> +0.00 dB
+[02:00:26] voice level  86.38- 87.74 phrase -0.0 dB vs median -> +0.00 dB
+[02:00:26] voice level  88.32- 89.54 phrase -2.1 dB vs median -> +0.60 dB
+[02:00:30] de-esser {'thr': -27.14, 'max': 6.0, 'pct_over_1': 6.28, 'extra_max': 0.0}
+[02:00:31] shout echo on 25.32-26.52 s: wet -11.4 dB vs the dry shout, tail at the next line -94.4 dB
+[02:00:38] voice comp {'thr': -23.21, 'max': 8.06, 'p95_speech': 4.49, 'med_speech': 1.61, 'pct_over_1': 63.57, 'tp_before_peak': -4.76, 'peak_max': 5.83, 'peak_pct_over_1': 1.55}
+[02:00:39] voice ride +2.5 dB on 'ninety' .. 'full' (25.20-26.53 s)
+[02:00:39] voice ride +1.5 dB on 'inside@inside' .. 'inside' (50.36-51.06 s)
+[02:00:39] voice ride +4.5 dB on 'was' .. 'water' (51.07-53.06 s)
+[02:00:39] voice ride +1.0 dB on 'youSee' .. 'see' (53.50-53.93 s)
+[02:00:39] voice ride +1.5 dB on 'theTrust' .. 'real' (88.17-89.65 s)
+[02:00:39] voice ride +1.0 dB on 'warren' .. 'Buffett' (84.90-85.98 s)
+[02:00:42] voice: -18.86 LUFS (as stereo), TP -7.77 dBTP; LTAS re 120-500 Hz: 0.5-3k -4.4 dB, 3-8k -12.3 dB, 8-11k -13.2 dB, 5-8k -14.6 dB
+[02:00:42] acoustic onsets: 0 word starts moved >= 30 ms: 
+[02:01:22] cache hit music_raw-fcc53fd61909.npy
+[02:01:22] music rendered -18.75 LUFS raw
+[02:01:23] music bus: HP 60 Hz 12 dB/oct, air shelf +2.0 dB at 6000 Hz -> -19.02 LUFS raw
+[02:03:58] sfx rendered events -38.77 LUFS, beds -47.51 LUFS
+[02:04:00] speech-band ducks (1-4 kHz under the words): sfx -5.0 dB, music -4.0 dB (exempt: believed)
+[02:04:04] master iter 0: gain +4.80 dB -> -14.03 LUFS, TP -2.90 dBTP, max GR 1.00 dB
+[02:04:08] master iter 1: gain +4.84 dB -> -14.00 LUFS, TP -2.90 dBTP, max GR 1.03 dB
+[02:04:09] wrote mix + 4 stems
+[02:04:16] {"I": -14.0, "TP": -2.9, "LRA": 2.36, "Mmax": -9.53, "Smax": -12.14, "G": 4.84, "v_ref": -18.86, "voice_I": -14.03, "music_I": -32.19, "sfx_I": -33.93, "amb_I": -42.67, "g0": -15.38, "key": "b87d330aa7f0", "take": "eleven_v4:james:tempo1.0", "samples": 4339200}
+[02:04:16] GR {'max': 1.030723760536519, 'pct_over_0_5': 0.1464325221238938, 'pct_over_0_1': 5.816302544247788} seam {'jump': 0.0017, 'step_p99_tail': 0.00457, 'step_p99_head': 0.0672, 'rms_last_0_3s_dbfs': np.float64(-43.08261), 'rms_first_30ms_dbfs': np.float64(-36.7635)}
+[02:04:16] hook        voice  -13.8  music  -32.2 (-18.3)  sfx  -46.6  amb  -41.3  bed  -31.6  speech med  17.7 p10  15.2  music med  18.3
+[02:04:16] setting     voice  -13.3  music  -31.5 (-18.2)  sfx  -43.2  amb  -41.1  bed  -31.0  speech med  17.8 p10  14.5  music med  18.4
+[02:04:16] bank        voice  -13.6  music  -32.2 (-18.6)  sfx  -31.2  amb  -48.2  bed  -30.8  speech med  18.0 p10  13.6  music med  18.6
+[02:04:16] climb       voice  -13.9  music  -32.0 (-18.1)  sfx  -37.8  amb  -43.7  bed  -30.8  speech med  18.0 p10  12.1  music med  19.5
+[02:04:16] shout       voice  -12.3  music  -68.1 (-55.9)  sfx  -99.0  amb  -41.4  bed  -41.4  speech med  29.6 p10  28.0  music med   nan
+[02:04:16] deadpan     voice  -15.1  music  -35.1 (-20.0)  sfx  -35.2  amb  -41.5  bed  -35.2  speech med  20.2 p10  15.8  music med  20.9
+[02:04:16] more        voice  -13.3  music  -31.5 (-18.2)  sfx  -34.9  amb  -48.4  bed  -30.5  speech med  17.9 p10  14.9  music med  18.7
+[02:04:16] mystery     voice  -14.7  music  -35.3 (-20.5)  sfx  -36.4  amb  -44.6  bed  -34.2  speech med  18.3 p10  15.9  music med  20.9
+[02:04:16] crash       voice  -14.0  music  -32.2 (-18.1)  sfx  -23.5  amb  -40.5  bed  -28.3  speech med  18.0 p10   8.2  music med  18.6
+[02:04:16] storm       voice  -14.6  music  -32.8 (-18.1)  sfx  -32.1  amb  -36.6  bed  -28.9  speech med  13.9 p10  11.1  music med  19.5
+[02:04:16] reveal      voice  -15.7  music  -99.0 (- nan)  sfx  -27.2  amb  -51.2  bed  -30.1  speech med  40.5 p10  22.5  music med  23.9
+[02:04:16] pivot       voice  -13.5  music  -31.7 (-18.1)  sfx  -40.4  amb  -49.8  bed  -31.4  speech med  18.2 p10  13.7  music med  18.8
+[02:04:16] explain     voice  -14.2  music  -32.8 (-18.6)  sfx  -43.8  amb  -56.9  bed  -32.6  speech med  18.5 p10  15.8  music med  18.8
+[02:04:16] pipes       voice  -14.0  music  -32.1 (-18.1)  sfx  -43.1  amb  -43.8  bed  -31.6  speech med  17.2 p10  14.1  music med  17.8
+[02:04:16] tired       voice  -14.7  music  -33.8 (-19.1)  sfx  -36.4  amb  -44.1  bed  -32.7  speech med  18.2 p10  14.0  music med  18.6
+[02:04:16] fallout     voice  -14.4  music  -31.9 (-17.5)  sfx  -34.9  amb  -42.6  bed  -30.4  speech med  17.0 p10   9.5  music med  17.7
+[02:04:16] investor    voice  -14.4  music  -32.4 (-18.0)  sfx  -44.9  amb  -46.8  bed  -32.2  speech med  18.3 p10  15.2  music med  18.5
+[02:04:16] swell       voice  -13.0  music  -29.4 (-16.4)  sfx  -99.0  amb  -47.8  bed  -29.3  speech med  18.3 p10   5.7  music med  18.4
+[02:04:16] payoff      voice  -14.3  music  -33.4 (-19.1)  sfx  -39.4  amb  -42.0  bed  -32.4  speech med  18.0 p10  11.4  music med  18.5
+[02:04:16] tail        voice  -99.0  music  -49.1 (- nan)  sfx  -99.0  amb  -41.5  bed  -41.3  speech med   nan p10   nan  music med   nan
+Summary:
+  Integrated loudness:
+    I:         -14.0 LUFS
+    Threshold: -24.3 LUFS
+  Loudness range:
+    LRA:         2.4 LU
+    Threshold: -34.3 LUFS
+    LRA low:   -15.4 LUFS
+    LRA high:  -13.0 LUFS
+  True peak:
+    Peak:       -2.9 dBFS
+[02:04:16] done in 257 s

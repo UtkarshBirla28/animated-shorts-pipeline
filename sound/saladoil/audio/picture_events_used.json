@@ -1,0 +1,698 @@
+{
+ "_doc": "frames (30 fps) every SFX used in the last mix.py run; copy a key into picture_events.json to override it (a frame, a list of frames, the same dict shape, a 'beat+n' expression, or null to drop the cue)",
+ "_probes": [
+  "flapState: digits roll 54.0..78.8 (T 2 f) from sets_ext.ts; lands 60.0, 66.6, 69.2, 71.8, 72.4, 75.0, 75.6, 76.2, 78.8",
+  "PLUNK (sets_ext.ts) = 649.0",
+  "shot-7 bubble ring BL (sets_ext.ts) = 1151.0",
+  "shot-4 perched gull takes off (sets_ext.ts tOff) = 717.0",
+  "shot-14 car: CAR14_ON = false in sets_ext.ts (no car in the picture: no car sound)",
+  "shot-15 cafe card taken (cast.ts take) 2413 + 6 f",
+  "lightning (SaladOil.tsx FLASHES): 1313, 1342, 1391 far",
+  "S4 (cast.ts): pulls 547, 557, 567, 577, rim 588, roof 594, kneel 626, stand 659, rail 673",
+  "STAMPS5 (cast.ts): R 823.9, 854.1, 884.4, 914.6, 944.9; L 839.0, 869.2, 899.5, 929.8",
+  "bottleShake (cast.ts): 1599 + 36 f, 0.524 rad/f (a stroke every 6.0 f)",
+  "PULLS13 (cast.ts): 1909, 1924, 1939, 1999, 2014, 2029 | 1971, 1986, 2001, 2084, 2099",
+  "shot-7 bubble pops / ring starts (cast.ts) = 1151",
+  "shot-4 pencil tick stroke (cast.ts) 801 + 8 f",
+  "shot-6 papers fan raised (cast.ts) 951 + 13 f",
+  "shot-8 handset slam (cast.ts SLAM + rise) lands 1215",
+  "shot-11 bottle set back down (cast.ts kitchen pop) 1639",
+  "sources in frame: ticker hammer on 'November' no, shot-13 steam puff on 'got' no",
+  "pump room (sets_int.ts): flywheel 2.005 turns / s; flange drip lands at VF % 40 == 12"
+ ],
+ "reel_1": {
+  "value": [
+   0,
+   46
+  ],
+  "source": "shot 1 (BUILD_PLAN): the tape slides into the oil from frame 0 - a soft reel whirr, 0 .. 46"
+ },
+ "flaps_1": {
+  "value": {
+   "a": 54.0,
+   "lock": 78.8,
+   "digits": [
+    [
+     54.0,
+     60.0,
+     2.0
+    ],
+    [
+     54.6,
+     66.6,
+     2.0
+    ],
+    [
+     55.2,
+     69.2,
+     2.0
+    ],
+    [
+     55.8,
+     71.8,
+     2.0
+    ],
+    [
+     56.4,
+     72.4,
+     2.0
+    ],
+    [
+     57.0,
+     75.0,
+     2.0
+    ],
+    [
+     57.6,
+     75.6,
+     2.0
+    ],
+    [
+     58.2,
+     76.2,
+     2.0
+    ],
+    [
+     58.8,
+     78.8,
+     2.0
+    ]
+   ]
+  },
+  "source": "sets_ext.ts flapState (probed): each LOANS digit flips every T f from s(i) and lands on land(i)"
+ },
+ "horn_1": {
+  "value": 114,
+  "source": "shot 1: the far ship (harbour) in the pull-out: its horn INSIDE the pause after '$150 million...' (millionEnd + 3), faded out before 'tanks'"
+ },
+ "gull_1": {
+  "value": 184,
+  "source": "shot 1: a gull cries as it flaps off the rail in the gap after 'water.' (CHAR: the rail gull takes off ~water1 + 9)"
+ },
+ "wings_1": {
+  "value": 180,
+  "source": "shot 1: the rail gull's wing flaps as it takes off (CHAR cast.ts gull(..., 150, 238))"
+ },
+ "wings_1_land": {
+  "value": 143,
+  "source": "shot 1: the rail gull flutters down onto the rail (CHAR: flies in 136 -> lands 150)"
+ },
+ "flags_2": {
+  "value": [
+   244
+  ],
+  "source": "picture_events.json override"
+ },
+ "horn_2": {
+  "value": 246.75,
+  "source": "A3 ADD: a far ship's horn across the harbour, deep under 'New Jersey's' (1-4 kHz carved)"
+ },
+ "halyard_2": {
+  "value": 306.15,
+  "source": "A3 ADD: the gate flagpole's halyard clinks on the pole in the 'king.|His' breath (the gust that snaps the flag)"
+ },
+ "gull_2": {
+  "value": 306,
+  "source": "shot 2: a gull over the tank farm in the gap after 'king.'"
+ },
+ "fence_2": {
+  "value": null,
+  "source": "picture_events.json override"
+ },
+ "clank_2": {
+  "value": 331,
+  "source": "shot 2: a far clank across the tank farm (under 'giant tanks')"
+ },
+ "plip_2": {
+  "value": 396,
+  "source": "sets_ext.ts: the drip leaves the valve at oil1End - 6 and lands 12 f later (u = 1) = oil1End + 6"
+ },
+ "stamp_3": {
+  "value": 424,
+  "source": "cast.ts / sets_int.ts: the stamp comes down on 'money' (|f - money| < 5), the APPROVED mark from money + 2"
+ },
+ "cash_3": {
+  "value": [
+   433,
+   449
+  ],
+  "source": "sets_int.ts: the cash slides on 'against it' - smooth((f - againstIt) / 16)"
+ },
+ "register_3": {
+  "value": 449,
+  "source": "the cash lands (againstIt + 16): A2 P2 - the register's ka-CHING plays in the breath after the WORD 'it.' (never inside it), its bell ringing into 'American'"
+ },
+ "chair_3": {
+  "value": 418,
+  "source": "A2 ADD: the banker's leather chair creaks as he leans into the stamp (money - 6)"
+ },
+ "climb_4": {
+  "value": [
+   547.0,
+   557.0,
+   567.0,
+   577.0
+  ],
+  "source": "cast.ts S4.pulls (probed): a rung clang on every hand-over-hand pull of the climb"
+ },
+ "rim_4": {
+  "value": 588.0,
+  "source": "cast.ts S4.rim (probed): he swings over the rim (a last clang), onto the roof by S4.onRoof"
+ },
+ "roof_4": {
+  "value": [
+   600.5,
+   607.0,
+   613.5,
+   620.0
+  ],
+  "source": "cast.ts scurry (probed): round the hatch from S4.onRoof, a footfall every 6.5 f (phase / 13, a step per half cycle)"
+ },
+ "knee_4": {
+  "value": 626.0,
+  "source": "cast.ts S4.kneel (probed): he drops to his knees on the far side of the hatch"
+ },
+ "reel_4": {
+  "value": [
+   613,
+   649
+  ],
+  "source": "sets_ext.ts: the tape pays out k4 = smooth((f - drop) / (inside1 + 16 - drop))"
+ },
+ "plunk_4": {
+  "value": 649.0,
+  "source": "sets_ext.ts PLUNK (probed): the plumb weight hits the oil (+ the hollow tank's ring)"
+ },
+ "gulls_4": {
+  "value": [
+   573,
+   611
+  ],
+  "source": "shot 4 A: far gulls circling the tank top (soft, -38 / -28 LU; 'up,|drop' gap)"
+ },
+ "gull_perch_4": {
+  "value": 717.0,
+  "source": "sets_ext.ts tOff (probed): the gull perched on the rail by the shout spot is startled into the air by 'full!' (wings; a squawk in the breath after the shout)"
+ },
+ "gull_far_4": {
+  "value": 753,
+  "source": "shot 4B (the ground two-shot after the hard cut): a far gull wheels over the yard in the 'inspector,|on' gap"
+ },
+ "stand_4": {
+  "value": [
+   659.0,
+   668.5
+  ],
+  "source": "cast.ts S4.stand + scurry (probed): he rises, then scurries round to the rail (a footfall every 6.5 f)"
+ },
+ "rail_4": {
+  "value": 673.0,
+  "source": "cast.ts S4.rail (probed): his hands grip the rail and he leans over it"
+ },
+ "shout_4": {
+  "value": [
+   686,
+   726
+  ],
+  "source": "the shout 'Ninety percent full!' (lip flaps ninety .. shoutEnd): mix.py's metal-tank echo"
+ },
+ "yard_4": {
+  "value": [
+   731,
+   737
+  ],
+  "source": "picture_events.json override"
+ },
+ "tick_4": {
+  "value": [
+   803.0,
+   8.0
+  ],
+  "source": "cast.ts tick = clamp01((f - X) / L) (probed): the graphite check mark from the stroke's first visible frame (X + 2), L f long [onset, length]"
+ },
+ "taps_4": {
+  "value": [
+   798.0
+  ],
+  "source": "A3 ADD: the inspector taps his pencil twice on the clipboard in the 'ground...|believed' silence, one beat before the tick (CHAR: two 2-3 f pencil dips on these frames)"
+ },
+ "stamps_5": {
+  "value": [
+   854.1,
+   884.4,
+   914.6
+  ],
+  "source": "cast.ts STAMPS5.R (probed): the banker's right hand stamps (the picture's landing frames)"
+ },
+ "stamps_5L": {
+  "value": [
+   839.0,
+   869.25,
+   899.5
+  ],
+  "source": "cast.ts STAMPS5.L (probed): the left hand's stamps, half way between the beats"
+ },
+ "dings_5": {
+  "value": [
+   878,
+   911
+  ],
+  "source": "sets_int.ts: the cash stacks pop taller on more1 / more2 (smooth((f - more) / 8)): the register bells from 3 f after, the top bell in the breath after 'more.'"
+ },
+ "ratchet_6": {
+  "value": [
+   974,
+   1034
+  ],
+  "source": "sets_int.ts: TINO'S OIL pile grows: stage 1 on moreOf, stage 2 on united"
+ },
+ "marker_6": {
+  "value": [
+   972,
+   1032
+  ],
+  "source": "A3 ADD: a felt-marker squeak as each stage of TINO'S OIL is drawn onto the chart (under the ratchet)"
+ },
+ "papers_6": {
+  "value": [
+   951.0,
+   964.0
+  ],
+  "source": "cast.ts pap = gest2(f, X, L, ...) (probed): Tino raises the fan of OIL RECEIPTS on 'papers' (the paper rustle, A2 P3)"
+ },
+ "drums_6": {
+  "value": {
+   "st1": [
+    971,
+    973,
+    975,
+    977,
+    979,
+    981,
+    983
+   ],
+   "st2": [
+    1031.0,
+    1032.08,
+    1033.16,
+    1034.24,
+    1035.32,
+    1036.4,
+    1037.48,
+    1038.56,
+    1039.64,
+    1040.72,
+    1041.8,
+    1042.88,
+    1043.96,
+    1045.04,
+    1046.12,
+    1047.2,
+    1048.28,
+    1049.36,
+    1050.44,
+    1051.52,
+    1052.6,
+    1053.68,
+    1054.76,
+    1055.84,
+    1056.92,
+    1058.0
+   ]
+  },
+  "source": "sets_int.ts drumSlot t: stage 1 = moreOf - 3 + 2 n (7 drums), stage 2 = united - 3 + 1.08 n (26 drums): one tonk per drum landing"
+ },
+ "clock_6": {
+  "value": [
+   930,
+   960,
+   990,
+   1020,
+   1050
+  ],
+  "source": "shot 6: the wall clock's second hand steps on every whole second of the film clock (frame % 30 == 0; the bank bed's clock has the same phase) - WORLD-INT: step the second hand on these frames"
+ },
+ "gull_7": {
+  "value": 1083.0,
+  "source": "picture_events.json override"
+ },
+ "drone_7": {
+  "value": [
+   1082,
+   1151
+  ],
+  "source": "A2 ADD: the empty tank's hollow drone under the mystery, swelling on 'look inside?', cut with the bloop"
+ },
+ "creak_7": {
+  "value": 1105,
+  "source": "shot 7: the lender leans in over the hatch on 'someone': the steel lid / roof plate creaks"
+ },
+ "bloop_7": {
+  "value": 1151.0,
+  "source": "cast.ts ring / sets_ext.ts BL (probed): the bubble pops at the reflection's chin as 'inside?' ends (the bloop's pop lands on it)"
+ },
+ "drip_7": {
+  "value": 1158.0,
+  "source": "A3 ADD: after the bloop, one drop falls from the hatch rim into the near-empty tank: a hollow drip and the steel cavity's 1.2 s answer, faded under 'Then,' (the 'inside?|Then' gap)"
+ },
+ "phones_8": {
+  "value": [
+   1171,
+   1233,
+   1265
+  ],
+  "source": "shot 8: desk phones ringing on the trading floor (one in the '1963,|his' breath)"
+ },
+ "crash_8": {
+  "value": 1289,
+  "source": "sets_int.ts: the chalk line dives on 'crashed' (dive = f >= crashed1) + story KICK"
+ },
+ "groan_8": {
+  "value": 1298,
+  "source": "shot 8: the traders' dismayed 'ohhh' under the THOOM's tail (CHAR: the staggered shock); A2: it rises at the END of the word 'crashed.' (never on it)"
+ },
+ "tickbell_8": {
+  "value": 1190,
+  "source": "A2 ADD: a ticker machine's bell on 'November' (a quote comes in); A3 P3: at bed level, carved (no ticker machine's hammer in frame yet)"
+ },
+ "chalk_8": {
+  "value": 1312.1999999999998,
+  "source": "A3 ADD: a short chalk squeal on the diving line in the breath after 'crashed.' (under the THOOM's tail)"
+ },
+ "handset_8": {
+  "value": 1215.0,
+  "source": "cast.ts SLAM + gest2 rise (probed): trader 3 slams his handset down onto the phone base at his hip"
+ },
+ "lightning_9": {
+  "value": [
+   [
+    1313.0,
+    0
+   ],
+   [
+    1342.0,
+    0
+   ],
+   [
+    1391.0,
+    1
+   ]
+  ],
+  "source": "SaladOil.tsx FLASHES / sets_ext.ts flashAt (probed): [flash frame, far]: a near flash in a breath gets its crack ON the flash; one that lands on a word ('bust') gets its thunder late, in the next breath (light first, sound after); a far flash's roll 4 f after it"
+ },
+ "slap_9": {
+  "value": 1342,
+  "source": "sets_ext.ts: the BANKRUPT notice appears at f >= bust - 2"
+ },
+ "splash_9": {
+  "value": 1343,
+  "source": "A3 ADD: the slap knocks the water off the sign's gutter lip: a short splash under the BANKRUPT notice"
+ },
+ "lenders_9": {
+  "value": {
+   "t0": [
+    1360,
+    1366,
+    1372
+   ],
+   "step": 10.0,
+   "end": 1431
+  },
+  "source": "cast.ts shot 9 (CHAR): lenders 0 / 2 / 3 of TF.lenderFile start walking in through the gate at lenders - 6 + 6 k' (a footfall every 10 f: walk phase / 20, a step per half cycle) - wet steps + rain on their umbrellas"
+ },
+ "ladder_9": {
+  "value": {
+   "a": 1336,
+   "step": 15.0,
+   "land": 6.0,
+   "end": 1432
+  },
+  "source": "cast.ts shot 9 (CHAR): the far climber's feet snap to the treads, a step every 15 f from lenders - 30 (lands 6 f in)"
+ },
+ "blips_10": {
+  "value": [
+   1461,
+   1465,
+   1470
+  ],
+  "source": "shot 10: tiny bubbles in the held breath after 'Inside...'"
+ },
+ "slosh_10": {
+  "value": 1513,
+  "source": "BUILD_PLAN shot 10: ONE slosh after 'water.' (waterEnd), in the music's silence (peaks inside the gap)"
+ },
+ "blub_10": {
+  "value": 1515.0,
+  "source": "picture_events.json override"
+ },
+ "shake_11": {
+  "value": [
+   1599.0,
+   1635.0,
+   0.5235987755982988
+  ],
+  "source": "cast.ts bottleShake (probed): the hand shakes the bottle from 'Ever' (amplitude sin(pi t / len), sin(w t) strokes)"
+ },
+ "glug_11": {
+  "value": [
+   1648,
+   1711
+  ],
+  "source": "sets_int.ts: the oil rises smooth((f - theOilRises) / (top + 8 - theOilRises))"
+ },
+ "clunk_11": {
+  "value": 1639.0,
+  "source": "cast.ts kitchen: after the shake the hand lifts the bottle (pop, ever + 24 .. 29) and sets it down: a soft glass clunk on the table"
+ },
+ "chirps_11": {
+  "value": [
+   1531,
+   1576,
+   1621,
+   1666,
+   1711
+  ],
+  "source": "sets_int.ts kitchen: the sparrow on the fence hops every 45 f of the video clock (VF % 45 < 9): one chirrup per hop"
+ },
+ "pour_12": {
+  "value": [
+   1720.0,
+   1771.0
+  ],
+  "source": "picture_events.json override"
+ },
+ "fish_12": {
+  "value": 1758.0,
+  "source": "A3 P2: the fish drops from the pipe into the rising water: one small 'blub' in the 'water,|add' breath"
+ },
+ "trickle_12": {
+  "value": [
+   1773,
+   1809
+  ],
+  "source": "sets_int.ts: the oil stream po = thin - 2 .. oilIn + 12"
+ },
+ "ding_12": {
+  "value": 1887.4,
+  "source": "shot 12: the tag ding in the gap just after 'full.' (LOOKS FULL)"
+ },
+ "blip_12": {
+  "value": null,
+  "source": "A2 P3: dropped - the fish has left the tank by 'full.' (no source)"
+ },
+ "valves_13": {
+  "value": {
+   "w0": [
+    1909.0,
+    1924.0,
+    1939.0,
+    1999.0,
+    2014.0,
+    2029.0
+   ],
+   "w1": [
+    1971.0,
+    1986.0,
+    2001.0,
+    2084.0,
+    2099.0
+   ]
+  },
+  "source": "cast.ts PULLS13 (probed): each worker's hand-over-hand pulls (30 deg per 10 f pull); the first pull of each burst squeals"
+ },
+ "drips_13": {
+  "value": [
+   1932.0,
+   1972.0,
+   2012.0,
+   2052.0,
+   2092.0,
+   2132.0
+  ],
+  "source": "sets_int.ts (probed): the gold drip off the flange lands every 40 f (VF % 40 == 12)"
+ },
+ "knock_13": {
+  "value": 1983,
+  "source": "shot 13: a far pipe knock down the line under 'tank to tank'"
+ },
+ "blob_13": {
+  "value": [
+   1973,
+   2080
+  ],
+  "source": "sets_int.ts / story.ts: the blob rides the pipe tank A -> C (COUNT_AT[0] - 4 .. [2])"
+ },
+ "plates_13": {
+  "value": [
+   1977,
+   2031,
+   2078
+  ],
+  "source": "story.ts COUNT_AT = [tankTo + 6, got, again2]: each COUNTED plate ticks over"
+ },
+ "squeak_13": {
+  "value": [
+   1973,
+   2027,
+   2074
+  ],
+  "source": "A2 ADD: the blob squeezes out of each pipe mouth into the tank (COUNT_AT - 4): a rubbery squeak"
+ },
+ "steam_13": {
+  "value": null,
+  "source": "A2 ADD: a steam puff from a valve on the second COUNTED plate; A3 P3: only when WORLD-INT's puff on 'got' is in the picture (probed: not found - dropped)"
+ },
+ "squelch_13": {
+  "value": [
+   1975,
+   2029,
+   2076
+  ],
+  "source": "A3 ADD: the blob lands at each COUNTED plate with a tiny wet squelch, 1 f before the plate's bell (COUNT_AT - 2)"
+ },
+ "pclock_13": {
+  "value": [
+   1920,
+   1950,
+   1980,
+   2010,
+   2040,
+   2070,
+   2100,
+   2130,
+   2160
+  ],
+  "source": "A3 ADD: the pump-room wall clock (sets_int.ts prClock) ticks on every whole second of the film clock, very low under the night bed"
+ },
+ "sweat_13": {
+  "value": 2104,
+  "source": "cast.ts: tired = f >= hardestW - 2 (a sweat drop) ..."
+ },
+ "wipe_13": {
+  "value": [
+   2124,
+   2142
+  ],
+  "source": "cast.ts wipe = clamp01((f - X) / L) (probed, X = PW(27, 'oil')): the brow wipe X .. X + L (A2 P1: the swipe ON the arm), its sweat flecks flicked off 2 f after it ends"
+ },
+ "sigh_13": {
+  "value": null,
+  "source": "the blob's tired sigh: in the true silence after 'America.' (computed)"
+ },
+ "spin_14": {
+  "value": {
+   "a": 2173.0,
+   "land": 2186.0
+  },
+  "source": "picture_events.json override"
+ },
+ "vendor_14": {
+  "value": null,
+  "source": "picture_events.json override"
+ },
+ "car_14": {
+  "value": null,
+  "source": "picture_events.json override"
+ },
+ "tyre_14": {
+  "value": 2267.2,
+  "source": "A3 ADD: a far 1960s car's tyres hiss past on the grey street (off screen, two blocks down), peaking in the 'crashed.|But' breath"
+ },
+ "clack_14": {
+  "value": 2227,
+  "source": "sets_ext.ts: the CLOSED sign is visible from shares - 2"
+ },
+ "bwomp_14": {
+  "value": 2236,
+  "source": "sets_ext.ts: the SHARES arrows drop at f >= crashed2 - 2"
+ },
+ "pigeons_14": {
+  "value": 2240.0,
+  "source": "picture_events.json override"
+ },
+ "scribble_15": {
+  "value": [
+   2307,
+   2325
+  ],
+  "source": "cast.ts: the investor's hand reaches + writes from 'bought'; BUY visible from bought + 4"
+ },
+ "chaching_15": {
+  "value": 2338,
+  "source": "A2 / LEAD: the cha-ching's source is the BUY slip - the 'ka' as the pencil finishes BUY and lifts (cheap: sc ends, the smug nod), the bell in the breath after the word 'cheap.'"
+ },
+ "taps_15": {
+  "value": [
+   2406,
+   2446,
+   2486
+  ],
+  "source": "cast.ts: the resting pencil hand taps the desk every 40 f (tap = VF % 40 < 6: down on VF % 40 == 6) once 'back' has settled (heBet + 20)"
+ },
+ "cafe_rack_15": {
+  "value": [
+   2393,
+   2452
+  ],
+  "source": "story.ts DOF: racks to the cafe window on 'trusted', back on 'Warren' (the cafe swells)"
+ },
+ "cafe_life_15": {
+  "value": {
+   "laugh": 2413,
+   "cup": 2431,
+   "bike": null,
+   "carriage": 2324.0
+  },
+  "source": "picture_events.json override"
+ },
+ "card_15": {
+  "value": 2423.4,
+  "source": "cast.ts take = gest2(f, X, L, ...) (probed): the waiter takes the card at X + L; the cafe register rings it up 2 f later, or in the breath after the word it would land on"
+ },
+ "espresso_15": {
+  "value": 2395,
+  "source": "A3 ADD: the focus racks to the cafe on 'trusted': its espresso wand hisses across the street"
+ },
+ "part_16": {
+  "value": [
+   2520,
+   2536
+  ],
+  "source": "sets_ext.ts: the reveal disc opens smooth((f - fake) / 16)"
+ },
+ "gull_16": {
+  "value": 2537,
+  "source": "shot 16: a far gull in the gap 'fake.|The' (WORLD-EXT's gull shadow is gone by then)"
+ },
+ "settle_16": {
+  "value": [
+   2554,
+   2578
+  ],
+  "source": "sets_ext.ts: ... and closes 1 - smooth((f - trust) / 24)"
+ },
+ "glop_16": {
+  "value": 2569,
+  "source": "A2 P3: the gold seals over the water (the disc ~85 % closed at trust + 15): one soft oily glop, done before 'real.'"
+ }
+}

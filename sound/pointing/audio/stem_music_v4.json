@@ -1,0 +1,84 @@
+{
+ "sections": [
+  {
+   "name": "hook",
+   "t0": 0.0,
+   "t1": 7.81,
+   "bpm": 134.8,
+   "style": "hook grid (speeds up with the Gos)",
+   "prog": "Dm Bb Gm A7",
+   "lu": 17.5
+  },
+  {
+   "name": "lab (from 'She did.')",
+   "t0": 7.81,
+   "t1": 21.605,
+   "bpm": 112,
+   "style": "bounce",
+   "prog": "F C Dm Bb",
+   "lu": 17.5
+  },
+  {
+   "name": "why",
+   "t0": 21.605,
+   "t1": 30.745,
+   "bpm": 105.0,
+   "style": "halftime",
+   "prog": "Bb Gm7 Dm A7",
+   "lu": 19.0,
+   "gain_db": -27.5
+  },
+  {
+   "name": "today",
+   "t0": 30.745,
+   "t1": 35.285,
+   "bpm": 118.9,
+   "style": "bounce",
+   "prog": "F Bb C F",
+   "lu": 17.0,
+   "gain_db": -26.6
+  },
+  {
+   "name": "steam",
+   "t0": 35.285,
+   "t1": 52.62,
+   "bpm": 96.9,
+   "style": "tiptoe",
+   "prog": "Gm Gm Dm A7",
+   "lu": 18.0,
+   "gain_db": -25.9
+  },
+  {
+   "name": "newyork",
+   "t0": 52.62,
+   "t1": 65.307,
+   "bpm": 113.5,
+   "style": "build",
+   "prog": "Gm A7 Bb A7",
+   "lu": 17.0,
+   "gain_db": -27.6
+  },
+  {
+   "name": "loop",
+   "t0": 65.307,
+   "t1": 68.867,
+   "bpm": 134.8,
+   "style": "bounce",
+   "prog": "Dm Bb Gm A7",
+   "lu": 16.5,
+   "gain_db": -26.7
+  }
+ ],
+ "vref": -14.03312642823356,
+ "L": 68.86666666666666,
+ "designed_silences": [
+  [
+   6.17,
+   6.63
+  ],
+  [
+   5.8,
+   7.53
+  ]
+ ]
+}

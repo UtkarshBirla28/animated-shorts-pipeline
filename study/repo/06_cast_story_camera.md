@@ -1,7 +1,7 @@
 # 06 — Cast, story timeline, camera and the Remotion composition
 
 Slice: `templates/bridge/cast.ts`, `templates/bridge/story.ts`, `templates/bridge/Bridge.tsx`
-(repo = `<ROOT>\repo`, read-only study copy of `mromidev/claude-animated-shorts`).
+(repo = `C:\Users\utkar\Desktop\animated-shorts-studio\repo`, read-only study copy of `mromidev/claude-animated-shorts`).
 
 ## Files read
 

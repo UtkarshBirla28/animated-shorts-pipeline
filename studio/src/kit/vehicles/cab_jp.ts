@@ -38,6 +38,19 @@ export type CabJPOpts = {
   blind?: number;
   /** add a small RECT practical for the instrument glow (default false: the dials are emissive + the cab env) */
   lights?: boolean;
+  /** false at t = the PARTITION wall (both faces, windows, door, its fittings) is hidden: a cut-away for a lens just
+   *  behind the driver in the car (the v4 film's v20). Default: always shown */
+  partition?: (t: number) => boolean;
+  /** false at t = the driver's seat BACK + headrest hidden (a lens in the car behind him: v4's v21 sees his arm) */
+  seatBack?: (t: number) => boolean;
+  /** false = no chrome handrails under the partition windows (car side): v4's v21, the kid's thin ink arm ran along one */
+  passengerRails?: boolean;
+  /** false = no radio handset (+ cord) on the pillar by the crew window (v4 v20 / v21: next to his glove it read as a phone) */
+  handset?: boolean;
+  /** colour overrides (sRGB hex) for the partition's PASSENGER face + the cab door panel (a film's look) */
+  carFace?: string; doorPanel?: string;
+  /** the crew window [z0, z1] (default [0.55, 1.30], two sashes); a custom one is ONE clear pane (trainJP crewWindow) */
+  crewWindow?: [number, number] | [number, number, number];
 };
 
 // the instrument plate: the binnacle face from its bottom edge (u = 0: y 0.82, z 0.64, nearest the driver) up to the
@@ -149,6 +162,8 @@ export const cabJP = async (ctx: KitCtx, o: CabJPOpts = {}): Promise<Built & { m
     glassG: glass("cab-gauge-glass", { tint: 0x080808, opacity: 0.05, rough: 0.02, ...E }),
     blind: glass("cab-blind", { tint: 0x14211c, opacity: 0.75, rough: 0.6, ...E }),
   };
+  if (o.carFace) (M.creamCar as THREE.MeshStandardMaterial).color.set(o.carFace);
+  if (o.doorPanel) (M.creamDoor as THREE.MeshStandardMaterial).color.set(o.doorPanel);
   const P = parts();
   // ---- floor: a ribbed rubber floor + the driver's raised platform + a mat in front of the seat + a foot bar
   quadN(P, "floor", [-X, 0, zi], [X, 0, zi], [X, 0, Z], [-X, 0, Z], [0, 1, 0]);
@@ -183,24 +198,33 @@ export const cabJP = async (ctx: KitCtx, o: CabJPOpts = {}): Promise<Built & { m
     if (r === 0) { cyl(P, "chrome", [x, 0.884, z], [x, 0.888, z], 0.012, 10); cyl(P, "chrome", [x, 0.888, z], [x + 0.004, 0.912, z + ((i * 7) % 3 === 0 ? 0.012 : -0.012)], 0.004, 6); }   // toggle switches
     else rbox(P, ["btnW", "btnG", "btnW", "btnY", "btnW", "btnR", "btnW"][(i + r) % 7], x - 0.015, 0.884, z - 0.015, x + 0.015, 0.895, z + 0.015, 0.004);
   }
-  cyl(P, "red", [1.22, 0.88, 0.6], [1.22, 1.28, 0.6], 0.06, 18); cyl(P, "black", [1.22, 1.28, 0.6], [1.22, 1.34, 0.6], 0.025, 10); tube(P, "black", [[1.22, 1.33, 0.6], [1.16, 1.36, 0.6], [1.12, 1.26, 0.62], [1.14, 1.1, 0.64]], 0.008, 6);
+  // (a film's wide crew pane: no red extinguisher / red flag behind the driver's glove: v4 v20 side-on)
+  if (!o.crewWindow) cyl(P, "red", [1.22, 0.88, 0.6], [1.22, 1.28, 0.6], 0.06, 18); cyl(P, "black", [1.22, 1.28, 0.6], [1.22, 1.34, 0.6], 0.025, 10); tube(P, "black", [[1.22, 1.33, 0.6], [1.16, 1.36, 0.6], [1.12, 1.26, 0.62], [1.14, 1.1, 0.64]], 0.008, 6);
   rbox(P, "steel", 1.14, 1.0, 0.57, 1.3, 1.03, 0.63, 0.004);
-  cyl(P, "flagR", [1.08, 0.88, 0.3], [1.17, 1.33, 0.25], 0.018, 10); cyl(P, "flagG", [1.12, 0.88, 0.32], [1.22, 1.31, 0.28], 0.018, 10);
+  if (!o.crewWindow) cyl(P, "flagR", [1.08, 0.88, 0.3], [1.17, 1.33, 0.25], 0.018, 10); cyl(P, "flagG", [1.12, 0.88, 0.32], [1.22, 1.31, 0.28], 0.018, 10);
   rbox(P, "steel", 1.04, 1.02, 0.22, 1.28, 1.045, 0.36, 0.006);
   // ---- side walls (inner linings) with the crew window + door openings, from the corner posts back to the partition
   for (const s of [1, -1]) {
     const x = s * X, In: V3 = [-s, 0, 0];
-    const holes = [{ u0: 0.55, u1: 1.3, y0: 0.98, y1: 1.86 }, { u0: 1.42, u1: 2.02, y0: 0.0, y1: 1.88 }];
+    const cw = o.crewWindow ?? [0.55, 1.3];
+    const sill = cw[2] ?? 0.98;   // (a film may lower the crew window's sill: v4 v20, the glove mid-pane)
+    const holes = [{ u0: cw[0], u1: cw[1], y0: sill, y1: 1.86 }, { u0: 1.42, u1: 2.02, y0: 0.0, y1: 1.88 }];
     gridHoles(zB, Z, 0.0, 2.22, holes, (u0, y0, u1, y1) => quadN(P, "lining", [x, y0, u0], [x, y0, u1], [x, y1, u1], [x, y1, u0], In));
     // the inner corner (lined) between the side lining and the front wall
     arcWall(P, "lining", s * fw, zB, X - fw, s > 0 ? 0 : Math.PI, s > 0 ? -Math.PI / 2 : Math.PI * 1.5, 0, 2.22, 8, true);
     // the crew window frame (sliding sash) and its glass, the crew door's inner panel with a window
     const xa = Math.min(x, s * D.hw), xb = Math.max(x, s * D.hw);
-    rbox(P, "black", xa, 0.96, 0.53, xb, 0.99, 1.32, 0.006); rbox(P, "black", xa, 1.85, 0.53, xb, 1.88, 1.32, 0.006);
-    rbox(P, "black", xa, 0.98, 0.53, xb, 1.86, 0.56, 0.006); rbox(P, "black", xa, 0.98, 1.29, xb, 1.86, 1.32, 0.006); rbox(P, "black", xa, 0.98, 0.9, xb, 1.86, 0.93, 0.006);
-    quad(P, "glass", [s * (D.hw - 0.035), 0.98, 0.56], [s * (D.hw - 0.035), 0.98, 0.9], [s * (D.hw - 0.035), 1.86, 0.9], [s * (D.hw - 0.035), 1.86, 0.56]);
-    quad(P, "glass", [s * (D.hw - 0.045), 0.98, 0.93], [s * (D.hw - 0.045), 0.98, 1.29], [s * (D.hw - 0.045), 1.86, 1.29], [s * (D.hw - 0.045), 1.86, 0.93]);
-    rbox(P, "steel", s > 0 ? X - 0.03 : -X + 0.0, 1.3, 0.905, s > 0 ? X - 0.0 : -X + 0.03, 1.42, 0.925, 0.004);            // the sash latch
+    if (!o.crewWindow) {
+      rbox(P, "black", xa, 0.96, 0.53, xb, 0.99, 1.32, 0.006); rbox(P, "black", xa, 1.85, 0.53, xb, 1.88, 1.32, 0.006);
+      rbox(P, "black", xa, 0.98, 0.53, xb, 1.86, 0.56, 0.006); rbox(P, "black", xa, 0.98, 1.29, xb, 1.86, 1.32, 0.006); rbox(P, "black", xa, 0.98, 0.9, xb, 1.86, 0.93, 0.006);
+      quad(P, "glass", [s * (D.hw - 0.035), 0.98, 0.56], [s * (D.hw - 0.035), 0.98, 0.9], [s * (D.hw - 0.035), 1.86, 0.9], [s * (D.hw - 0.035), 1.86, 0.56]);
+      quad(P, "glass", [s * (D.hw - 0.045), 0.98, 0.93], [s * (D.hw - 0.045), 0.98, 1.29], [s * (D.hw - 0.045), 1.86, 1.29], [s * (D.hw - 0.045), 1.86, 0.93]);
+    } else {
+      // ONE big clear pane in a thin black frame (no sash bar): nothing crosses the driver's arm
+      rbox(P, "black", xa, sill - 0.02, cw[0] - 0.02, xb, sill + 0.01, cw[1] + 0.02, 0.006); rbox(P, "black", xa, 1.85, cw[0] - 0.02, xb, 1.88, cw[1] + 0.02, 0.006);
+      rbox(P, "black", xa, sill, cw[0] - 0.02, xb, 1.86, cw[0] + 0.01, 0.006); rbox(P, "black", xa, sill, cw[1] - 0.01, xb, 1.86, cw[1] + 0.02, 0.006);
+    }
+    if (!o.crewWindow) rbox(P, "steel", s > 0 ? X - 0.03 : -X + 0.0, 1.3, 0.905, s > 0 ? X - 0.0 : -X + 0.03, 1.42, 0.925, 0.004);            // the sash latch
     const xd = s * (X - 0.01);
     gridHoles(1.42, 2.02, 0.0, 1.88, [{ u0: 1.54, u1: 1.9, y0: 1.0, y1: 1.76 }], (u0, y0, u1, y1) => quadN(P, "lining", [xd, y0, u0], [xd, y0, u1], [xd, y1, u1], [xd, y1, u0], In));
     rbox(P, "steel", s > 0 ? X - 0.06 : -X + 0.02, 0.98, 1.9, s > 0 ? X - 0.02 : -X + 0.06, 1.0, 1.98, 0.006);
@@ -231,54 +255,58 @@ export const cabJP = async (ctx: KitCtx, o: CabJPOpts = {}): Promise<Built & { m
   for (let i = 0; i < 9; i++) rbox(P, "black", -1.2, 2.205, 0.4 + i * 0.03, -0.9, 2.215, 0.415 + i * 0.03, 0.002, 1);
   for (let i = 0; i < 5; i++) for (let j = 0; j < 5; j++) cyl(P, "black", [0.7 + i * 0.03, 2.2, 1.6 + j * 0.03], [0.7 + i * 0.03, 2.215, 1.6 + j * 0.03], 0.007, 6);
   // ---- the radio handset in its cradle on the pillar between the crew window and the crew door, with a coiled cord
-  rbox(P, "black", -X, 1.15, 1.325, -X + 0.03, 1.42, 1.395, 0.008);
-  rbox(P, "black", -X + 0.025, 1.17, 1.335, -X + 0.07, 1.4, 1.385, 0.02, 3);
+  if (o.handset ?? true) { rbox(P, "black", -X, 1.15, 1.325, -X + 0.03, 1.42, 1.395, 0.008);
+  rbox(P, "black", -X + 0.025, 1.17, 1.335, -X + 0.07, 1.4, 1.385, 0.02, 3); }
   const coil: V3[] = []; for (let i = 0; i <= 80; i++) { const a = i * 0.7; coil.push([-X + 0.05 + Math.cos(a) * 0.012, 1.17 - i * 0.0045, 1.36 + Math.sin(a) * 0.012]); }
-  tube(P, "black", coil, 0.0025, 5, true, 240);
+  if (o.handset ?? true) tube(P, "black", coil, 0.0025, 5, true, 240);
   // ---- the driver's seat on its pedestal: a foot ring, a dished cushion, a curved back, a headrest
   cyl(P, "steel", [-0.83, 0.12, 1.5], [-0.83, 0.5, 1.5], 0.04, 14); disc(P, "black", [-0.83, 0.14, 1.5], [0, 1, 0], 0.22, 0.03, 20);
   ring(P, "steel", [-0.83, 0.3, 1.5], [0, 1, 0], 0.2, 0.012, 24, 6); for (const a of [0.6, 2.2, 4.2]) cyl(P, "steel", [-0.83, 0.3, 1.5], [-0.83 + Math.cos(a) * 0.2, 0.3, 1.5 + Math.sin(a) * 0.2], 0.008, 6);
   rbox(P, "black", -1.06, 0.47, 1.28, -0.6, 0.52, 1.72, 0.02);
   rbox(P, "seat", -1.08, 0.5, 1.26, -0.58, 0.62, 1.74, 0.045, 3);
-  for (const [yy, zz, tt, ww] of [[0.72, 1.775, 0.09, 0.46], [0.9, 1.795, 0.1, 0.48], [1.08, 1.81, 0.09, 0.46]] as const) rbox(P, "seat", -0.83 - ww / 2, yy - 0.1, zz - tt / 2, -0.83 + ww / 2, yy + 0.1, zz + tt / 2, 0.04, 3);
-  rbox(P, "seat", -0.97, 1.24, 1.8, -0.69, 1.42, 1.885, 0.045, 3);
-  for (const x of [-0.9, -0.76]) cyl(P, "steel", [x, 1.16, 1.83], [x, 1.26, 1.84], 0.008, 6);
+  const SBk = parts();   // the seat BACK + headrest: their own mesh (CabJPOpts.seatBack hides them: v21 sees the driver from behind)
+  for (const [yy, zz, tt, ww] of [[0.72, 1.775, 0.09, 0.46], [0.9, 1.795, 0.1, 0.48], [1.08, 1.81, 0.09, 0.46]] as const) rbox(SBk, "seat", -0.83 - ww / 2, yy - 0.1, zz - tt / 2, -0.83 + ww / 2, yy + 0.1, zz + tt / 2, 0.04, 3);
+  rbox(SBk, "seat", -0.97, 1.24, 1.8, -0.69, 1.42, 1.885, 0.045, 3);
+  for (const x of [-0.9, -0.76]) cyl(SBk, "steel", [x, 1.16, 1.83], [x, 1.26, 1.84], 0.008, 6);
   rbox(P, "black", -0.58, 0.7, 1.38, -0.53, 0.74, 1.7, 0.015); cyl(P, "steel", [-0.555, 0.56, 1.66], [-0.555, 0.7, 1.66], 0.012, 8);
+  const PP = parts();   // the partition: its own mesh (CabJPOpts.partition hides it)
   // ---- the partition wall: two faces + reveals, windows, door
   const Lw = CAB.windowL, Rw = CAB.windowR, Dd = CAB.door, T = 0.05, fogW = o.fogWindow === "left" ? Lw : Rw;
   const pHoles = [{ u0: Lw.x0, u1: Lw.x1, y0: Lw.y0, y1: Lw.y1 }, { u0: Rw.x0, u1: Rw.x1, y0: Rw.y0, y1: Rw.y1 }, { u0: Dd.x0, u1: Dd.x1, y0: 0, y1: 1.92 }];
-  for (const [z, dir] of [[Z - T, -1], [Z, 1]] as const) gridHoles(-X, X, 0, 2.34, pHoles, (u0, y0, u1, y1) => quadN(P, dir > 0 ? "creamCar" : "cream", [u0, y0, z], [u1, y0, z], [u1, y1, z], [u0, y1, z], [0, 0, dir]));
+  for (const [z, dir] of [[Z - T, -1], [Z, 1]] as const) gridHoles(-X, X, 0, 2.34, pHoles, (u0, y0, u1, y1) => quadN(PP, dir > 0 ? "creamCar" : "cream", [u0, y0, z], [u1, y0, z], [u1, y1, z], [u0, y1, z], [0, 0, dir]));
   for (const h of pHoles) {
-    box(P, "cream", h.u0, h.y1, Z - T, h.u1, h.y1 + 0.01, Z); box(P, "cream", h.u0 - 0.01, h.y0, Z - T, h.u0, h.y1, Z); box(P, "cream", h.u1, h.y0, Z - T, h.u1 + 0.01, h.y1, Z);
-    if (h.y0 > 0) box(P, "cream", h.u0, h.y0 - 0.01, Z - T, h.u1, h.y0, Z);
+    box(PP, "cream", h.u0, h.y1, Z - T, h.u1, h.y1 + 0.01, Z); box(PP, "cream", h.u0 - 0.01, h.y0, Z - T, h.u0, h.y1, Z); box(PP, "cream", h.u1, h.y0, Z - T, h.u1 + 0.01, h.y1, Z);
+    if (h.y0 > 0) box(PP, "cream", h.u0, h.y0 - 0.01, Z - T, h.u1, h.y0, Z);
   }
   for (const w of [Lw, Rw]) {
     const g = 0.018;
-    quad(P, w === fogW ? "glassP" : "glass", [w.x0, w.y0, Z - T / 2], [w.x1, w.y0, Z - T / 2], [w.x1, w.y1, Z - T / 2], [w.x0, w.y1, Z - T / 2]);
-    for (const z of [Z - T - 0.004, Z - 0.006]) { rbox(P, "rubber", w.x0, w.y0, z, w.x1, w.y0 + g, z + 0.01, 0.004); rbox(P, "rubber", w.x0, w.y1 - g, z, w.x1, w.y1, z + 0.01, 0.004); rbox(P, "rubber", w.x0, w.y0, z, w.x0 + g, w.y1, z + 0.01, 0.004); rbox(P, "rubber", w.x1 - g, w.y0, z, w.x1, w.y1, z + 0.01, 0.004); }
+    quad(PP, w === fogW ? "glassP" : "glass", [w.x0, w.y0, Z - T / 2], [w.x1, w.y0, Z - T / 2], [w.x1, w.y1, Z - T / 2], [w.x0, w.y1, Z - T / 2]);
+    for (const z of [Z - T - 0.004, Z - 0.006]) { rbox(PP, "rubber", w.x0, w.y0, z, w.x1, w.y0 + g, z + 0.01, 0.004); rbox(PP, "rubber", w.x0, w.y1 - g, z, w.x1, w.y1, z + 0.01, 0.004); rbox(PP, "rubber", w.x0, w.y0, z, w.x0 + g, w.y1, z + 0.01, 0.004); rbox(PP, "rubber", w.x1 - g, w.y0, z, w.x1, w.y1, z + 0.01, 0.004); }
     // the roll-up blind box above (rolled up), passenger side
-    rbox(P, "creamCar", w.x0 - 0.02, w.y1 + 0.02, Z - 0.002, w.x1 + 0.02, w.y1 + 0.08, Z + 0.05, 0.012);
+    rbox(PP, "creamCar", w.x0 - 0.02, w.y1 + 0.02, Z - 0.002, w.x1 + 0.02, w.y1 + 0.08, Z + 0.05, 0.012);
   }
   // the cab door (closed): a panel with a window, a lever handle each side
-  gridHoles(Dd.x0 + 0.01, Dd.x1 - 0.01, 0.01, 1.91, [{ u0: Dd.x0 + 0.1, u1: Dd.x1 - 0.1, y0: 1.02, y1: 1.78 }], (u0, y0, u1, y1) => { rbox(P, "creamDoor", u0, y0, Z - T * 0.8, u1, y1, Z - T * 0.2, 0.003); });
-  quad(P, "glass", [Dd.x0 + 0.1, 1.02, Z - T / 2], [Dd.x1 - 0.1, 1.02, Z - T / 2], [Dd.x1 - 0.1, 1.78, Z - T / 2], [Dd.x0 + 0.1, 1.78, Z - T / 2]);
-  for (const z of [Z - T * 0.82, Z - T * 0.2]) { rbox(P, "rubber", Dd.x0 + 0.085, 1.005, z, Dd.x1 - 0.085, 1.02, z + 0.006, 0.003); rbox(P, "rubber", Dd.x0 + 0.085, 1.78, z, Dd.x1 - 0.085, 1.795, z + 0.006, 0.003); rbox(P, "rubber", Dd.x0 + 0.085, 1.02, z, Dd.x0 + 0.1, 1.78, z + 0.006, 0.003); rbox(P, "rubber", Dd.x1 - 0.1, 1.02, z, Dd.x1 - 0.085, 1.78, z + 0.006, 0.003); }
-  for (const z of [Z + 0.03, Z - T - 0.03]) { rbox(P, "steel", Dd.x1 - 0.1, 0.98, z - 0.012, Dd.x1 - 0.08, 1.02, z + 0.012, 0.006); rbox(P, "steel", Dd.x1 - 0.22, 0.99, z - 0.01, Dd.x1 - 0.08, 1.01, z + 0.01, 0.006); }
-  rbox(P, "rubber", Dd.x0 - 0.012, 0, Z - T, Dd.x0, 1.93, Z, 0.003); rbox(P, "rubber", Dd.x1, 0, Z - T, Dd.x1 + 0.012, 1.93, Z, 0.003);
+  gridHoles(Dd.x0 + 0.01, Dd.x1 - 0.01, 0.01, 1.91, [{ u0: Dd.x0 + 0.1, u1: Dd.x1 - 0.1, y0: 1.02, y1: 1.78 }], (u0, y0, u1, y1) => { rbox(PP, "creamDoor", u0, y0, Z - T * 0.8, u1, y1, Z - T * 0.2, 0.003); });
+  quad(PP, "glass", [Dd.x0 + 0.1, 1.02, Z - T / 2], [Dd.x1 - 0.1, 1.02, Z - T / 2], [Dd.x1 - 0.1, 1.78, Z - T / 2], [Dd.x0 + 0.1, 1.78, Z - T / 2]);
+  for (const z of [Z - T * 0.82, Z - T * 0.2]) { rbox(PP, "rubber", Dd.x0 + 0.085, 1.005, z, Dd.x1 - 0.085, 1.02, z + 0.006, 0.003); rbox(PP, "rubber", Dd.x0 + 0.085, 1.78, z, Dd.x1 - 0.085, 1.795, z + 0.006, 0.003); rbox(PP, "rubber", Dd.x0 + 0.085, 1.02, z, Dd.x0 + 0.1, 1.78, z + 0.006, 0.003); rbox(PP, "rubber", Dd.x1 - 0.1, 1.02, z, Dd.x1 - 0.085, 1.78, z + 0.006, 0.003); }
+  for (const z of [Z + 0.03, Z - T - 0.03]) { rbox(PP, "steel", Dd.x1 - 0.1, 0.98, z - 0.012, Dd.x1 - 0.08, 1.02, z + 0.012, 0.006); rbox(PP, "steel", Dd.x1 - 0.22, 0.99, z - 0.01, Dd.x1 - 0.08, 1.01, z + 0.01, 0.006); }
+  rbox(PP, "rubber", Dd.x0 - 0.012, 0, Z - T, Dd.x0, 1.93, Z, 0.003); rbox(PP, "rubber", Dd.x1, 0, Z - T, Dd.x1 + 0.012, 1.93, Z, 0.003);
   // passenger side: a stainless kick plate, screws along the panel seams, a handrail under the right window
-  rbox(P, "steel", -X, 0.0, Z, X, 0.22, Z + 0.006, 0.003);
-  for (const xs of [-1.38, -0.42, 0.37, 1.37]) for (let y = 0.3; y < 2.1; y += 0.25) cyl(P, "chrome", [xs, y, Z], [xs, y, Z + 0.004], 0.0045, 8);
-  box(P, "rubber", -0.43, 0.22, Z, -0.428, 2.2, Z + 0.002); box(P, "rubber", 0.365, 0.22, Z, 0.367, 2.2, Z + 0.002);
-  for (const [xa, xb, yh] of [[0.5, 1.25, Rw.y0 - 0.08], [-1.25, -0.5, Lw.y0 - 0.08]]) { cyl(P, "chrome", [xa, yh, Z + 0.06], [xb, yh, Z + 0.06], 0.013, 10); for (const x of [xa + 0.02, xb - 0.02]) cyl(P, "chrome", [x, yh, Z], [x, yh, Z + 0.06], 0.01, 8); }
+  rbox(PP, "steel", -X, 0.0, Z, X, 0.22, Z + 0.006, 0.003);
+  for (const xs of [-1.38, -0.42, 0.37, 1.37]) for (let y = 0.3; y < 2.1; y += 0.25) cyl(PP, "chrome", [xs, y, Z], [xs, y, Z + 0.004], 0.0045, 8);
+  box(PP, "rubber", -0.43, 0.22, Z, -0.428, 2.2, Z + 0.002); box(PP, "rubber", 0.365, 0.22, Z, 0.367, 2.2, Z + 0.002);
+  if (o.passengerRails ?? true) for (const [xa, xb, yh] of [[0.5, 1.25, Rw.y0 - 0.08], [-1.25, -0.5, Lw.y0 - 0.08]]) { cyl(PP, "chrome", [xa, yh, Z + 0.06], [xb, yh, Z + 0.06], 0.013, 10); for (const x of [xa + 0.02, xb - 0.02]) cyl(PP, "chrome", [x, yh, Z], [x, yh, Z + 0.06], 0.01, 8); }
   // cab side of the partition: a coat hook, a clipboard with a blank sheet, a red emergency-stop box
   // (all clear of the three panes: the hook over the door, the clipboard on the door's lower panel, the box low right)
-  cyl(P, "chrome", [0.37, 1.98, Z - T], [0.37, 1.99, Z - T - 0.05], 0.007, 8);
-  rbox(P, "black", -0.16, 0.42, Z - T - 0.022, 0.1, 0.8, Z - T - 0.01, 0.006); rbox(P, "card", -0.145, 0.43, Z - T - 0.025, 0.085, 0.75, Z - T - 0.022, 0.002); rbox(P, "steel", -0.085, 0.75, Z - T - 0.032, 0.025, 0.79, Z - T - 0.022, 0.004);
-  rbox(P, "red", 0.95, 0.28, Z - T - 0.05, 1.1, 0.46, Z - T, 0.01); cyl(P, "black", [1.025, 0.37, Z - T - 0.05], [1.025, 0.37, Z - T - 0.07], 0.025, 12);
+  cyl(PP, "chrome", [0.37, 1.98, Z - T], [0.37, 1.99, Z - T - 0.05], 0.007, 8);
+  rbox(PP, "black", -0.16, 0.42, Z - T - 0.022, 0.1, 0.8, Z - T - 0.01, 0.006); rbox(PP, "card", -0.145, 0.43, Z - T - 0.025, 0.085, 0.75, Z - T - 0.022, 0.002); rbox(PP, "steel", -0.085, 0.75, Z - T - 0.032, 0.025, 0.79, Z - T - 0.022, 0.004);
+  rbox(PP, "red", 0.95, 0.28, Z - T - 0.05, 1.1, 0.46, Z - T, 0.01); cyl(PP, "black", [1.025, 0.37, Z - T - 0.05], [1.025, 0.37, Z - T - 0.07], 0.025, 12);
   // grime: the partition at child height (passenger side) + the corners, the desk round the controller
-  dirtKey(P, "cream", (_x, y) => sstep(0.25, 0.0, y) * 0.3);
-  dirtKey(P, "creamDoor", (_x, y) => sstep(0.3, 0.0, y) * 0.3 + sstep(0.85, 1.0, y) * sstep(1.2, 1.05, y) * 0.12);
-  dirtKey(P, "creamCar", (x, y) => sstep(1.3, 0.9, y) * sstep(0.4, 0.95, y) * 0.16 * (x > 0.4 ? 1.4 : 0.6) + sstep(0.25, 0.0, y) * 0.25);
+  for (const Q of [P, PP]) {
+    dirtKey(Q, "cream", (_x, y) => sstep(0.25, 0.0, y) * 0.3);
+    dirtKey(Q, "creamDoor", (_x, y) => sstep(0.3, 0.0, y) * 0.3 + sstep(0.85, 1.0, y) * sstep(1.2, 1.05, y) * 0.12);
+    dirtKey(Q, "creamCar", (x, y) => sstep(1.3, 0.9, y) * sstep(0.4, 0.95, y) * 0.16 * (x > 0.4 ? 1.4 : 0.6) + sstep(0.25, 0.0, y) * 0.25);
+  }
   dirtKey(P, "desk", (x, y, z) => Math.max(0, 1 - Math.hypot((x + 1.14) / 0.16, (z - 0.86) / 0.12)) * 0.35 * sstep(0.7, 0.78, y) + sstep(0.45, 0.2, y) * 0.3);
   dirtKey(P, "lining", (_x, y) => sstep(0.35, 0.0, y) * 0.3);
 
@@ -357,7 +385,9 @@ export const cabJP = async (ctx: KitCtx, o: CabJPOpts = {}): Promise<Built & { m
   ctl.position.set(CAB.controller[0], 0.812, CAB.controller[2] - 0.045); cluster.add(ctl);
 
   const root = new THREE.Group(); root.name = "cabJP";
-  root.add(meshes(P, M, { name: "cab-shell", noCast: ["glassP", "glass", "blind", "glassG"] }), cluster);
+  const partitionG = meshes(PP, M, { name: "cab-partition", noCast: ["glassP", "glass", "blind", "glassG"] });
+  const seatBackG = meshes(SBk, M, { name: "cab-seatback" });
+  root.add(meshes(P, M, { name: "cab-shell", noCast: ["glassP", "glass", "blind", "glassG"] }), partitionG, seatBackG, cluster);
   if (o.lights && ctx.practical) {
     const L = ctx.practical({ kind: "rect", pos: panelAt(-0.83, 0.5, 0.05), target: [-0.83, 1.3, 1.5], size: [0.75, 0.16], kelvin: 4000, lumens: 40, bulb: false });
     root.add(L.object);
@@ -365,6 +395,8 @@ export const cabJP = async (ctx: KitCtx, o: CabJPOpts = {}): Promise<Built & { m
   const speed = o.speed ?? (() => 80), pilot = o.pilot ?? (() => 1), fog = o.fog ?? (() => 0), brake = o.brake ?? (() => [0.0, 0.55] as [number, number]), leverA = o.lever ?? (() => 0.3);
   const D2R = Math.PI / 180;
   const update = (t: number) => {
+    partitionG.visible = o.partition ? o.partition(t) : true;
+    seatBackG.visible = o.seatBack ? o.seatBack(t) : true;
     const v = Math.max(0, Math.min(120, speed(t)));
     needle.rotation.z = (135 - (v / 120) * 270) * D2R;          // 0 km/h at lower-left (135 deg from up), clockwise
     const [b1, b2] = brake(t); bN[0].rotation.z = (135 - b1 * 270) * D2R; bN[1].rotation.z = (135 - b2 * 270) * D2R;

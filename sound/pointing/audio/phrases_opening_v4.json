@@ -1,0 +1,23 @@
+[
+ {
+  "id": "L01",
+  "speaker": "N",
+  "s": 0.05,
+  "e": 3.41,
+  "text": "Tap your foot on every green light. Only green."
+ },
+ {
+  "id": "L02",
+  "speaker": "N",
+  "s": 3.56,
+  "e": 6.17,
+  "text": "Go. Go. Go. Go. Go. Go. Go!"
+ },
+ {
+  "id": "L03",
+  "speaker": "N",
+  "s": 6.67,
+  "e": 8.045,
+  "text": "Did you tap? She did."
+ }
+]

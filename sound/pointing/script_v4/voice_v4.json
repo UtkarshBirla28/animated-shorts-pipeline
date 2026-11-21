@@ -18,19 +18,15 @@
   },
   {
    "id": "p2",
-   "text": "In 1994, a railway lab in Japan set a trap like this. A hundred lights. Then, red. Twelve people just watched. Five pressed anyway. Ten lights later, three of them did it again. Twelve others got one extra rule: point at the light and say it. Not one pressed.",
+   "text": "Japan's railway lab set a trap like this. A hundred lights, then red. Twelve people just watch. Five press anyway. Twelve others have to point at the light, and say it. Not one presses.",
    "lines": [
     [
      4,
-     3
+     2
     ],
     [
      5,
      2
-    ],
-    [
-     6,
-     1
     ],
     [
      7,
@@ -40,11 +36,26 @@
      8,
      1
     ]
-   ]
+   ],
+   "variants": [
+    [
+     "[amused]",
+     0.35
+    ],
+    [
+     "[amused]",
+     0.5
+    ],
+    [
+     "",
+     0.5
+    ]
+   ],
+   "_why": "VOICE r4 (Ricks text, lead 16:11): [amused] 0.35 / [amused] 0.5 / untagged 0.5; text = the script's own punctuation (no model_text)"
   },
   {
    "id": "p3",
-   "text": "After a hundred times, your hand stops waiting for your brain. That's how the cereal ends up in the fridge. Pointing and saying it makes your hand wait. Which is why Japan's train drivers point at their signals, and shout.",
+   "text": "After a hundred times, your hand stops waiting for your brain. That's how the cereal ends up in the fridge. Pointing and saying it makes your hand wait. So Japan's train drivers point at their signals, and shout.",
    "lines": [
     [
      9,
@@ -58,11 +69,26 @@
      11,
      2
     ]
-   ]
+   ],
+   "variants": [
+    [
+     "[amused]",
+     0.35
+    ],
+    [
+     "[amused]",
+     0.5
+    ],
+    [
+     "",
+     0.5
+    ]
+   ],
+   "_why": "VOICE r4 (Ricks text, lead 16:11): [amused] 0.35 / [amused] 0.5 / untagged 0.5; text = the script's own punctuation (no model_text)"
   },
   {
    "id": "p4",
-   "text": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad. So he shouted every signal to his coal man, who checked it and shouted back. His boss rode along, loved it, and made it a rule. He never knew about the eyes.",
+   "text": "But the shouting rule didn't start as science. The story goes, a steam-train driver's eyes had gone bad. So he shouted every signal to his coal man. His boss rode along, loved it, and made it a rule. He never knew about the eyes.",
    "lines": [
     [
      13,
@@ -80,11 +106,26 @@
      18,
      1
     ]
-   ]
+   ],
+   "variants": [
+    [
+     "[mischievously]",
+     0.5
+    ],
+    [
+     "[mischievously]",
+     0.35
+    ],
+    [
+     "",
+     0.35
+    ]
+   ],
+   "_why": "VOICE r4 (Ricks text, lead 16:11): [amused] 0.35 / [amused] 0.5 / untagged 0.5; text = the script's own punctuation (no model_text)"
   },
   {
    "id": "p5",
-   "text": "New York copied the pointing: conductors must point at this board before the doors open. So two New Yorkers held up a sign: \"Point here if you are dead sexy.\" And the conductors had to point. Now try again. This time, point, and say it.",
+   "text": "New York copied the pointing: subway conductors must point at a striped board. So two New Yorkers held up a sign: \"Point here if you are dead sexy.\" And the conductors had to point. Now try again. This time, point, and say it.",
    "lines": [
     [
      19,
@@ -102,7 +143,22 @@
      22,
      2
     ]
-   ]
+   ],
+   "variants": [
+    [
+     "[amused]",
+     0.35
+    ],
+    [
+     "[amused]",
+     0.5
+    ],
+    [
+     "",
+     0.5
+    ]
+   ],
+   "_why": "VOICE r4 (Ricks text, lead 16:11): [amused] 0.35 / [amused] 0.5 / untagged 0.5; text = the script's own punctuation (no model_text)"
   }
  ],
  "run": {
@@ -116,10 +172,30 @@
    0.38,
    0.34,
    0.3,
-   0.26
+   0.32
   ],
   "gap_before": 0.15,
-  "beat_after_s": 0.5
+  "beat_after_s": 0.5,
+  "takes": [
+   "t1",
+   "t5",
+   "t3",
+   "t8",
+   "t4",
+   "t7",
+   "t9"
+  ],
+  "gain_db": [
+   -0.37,
+   -0.43,
+   -0.38,
+   -0.11,
+   0.52,
+   0.89,
+   2.69
+  ],
+  "_pick": "VOICE 2026-11-20 (new PC), pt4_pick.py: six 'Go.' in rising pitch t1 229, t5 239, t3 243, t8 245, t4 248, t7 249 Hz (the two shortest, t4 0.34 s and t7 0.37 s, sit in the two shortest slots), then 'Go!' t9 295 Hz (the loudest Go!, flat emphatic end). Not used: t2 256 / t6 265 (0.40-0.42 s: would lose 0.15 s in the last slots), t10 297, t11 317 (quiet), t12 269 (dark). gain_db = a gentle level ramp on top of the matched level (each word matched by tiled BS.1770). Ramp set from the built words' RMS so the run rises about 0.5 dB a word (-20.5 .. -17.5 dB RMS), the Go! the loudest.",
+  "_grid": "SOUND 16:50: last gap 0.26 -> 0.32 s (Go 6 was cut at -15 dB into the Go!); cut words get a 30 ms raised-cosine fade in pt4_build"
  },
  "shouts": [
   {
@@ -128,7 +204,9 @@
    "who": "D",
    "text": "Signal clear!",
    "after": "p3:4",
-   "voice": "<cast>"
+   "voice": "FMgBdHe1YV2Xi0B9anXW",
+   "take": "t4",
+   "_pick": "Hideo t4 \"Signal clear!\" 234 Hz, bright (voiced air -4.6 dB), 1.00 s, no inner pause"
   },
   {
    "id": "H",
@@ -136,7 +214,9 @@
    "who": "H",
    "text": "Signal clear!",
    "after": "p4:2",
-   "voice": "<cast>"
+   "voice": "8TMmdpPgqHKvDOGYP2lN",
+   "take": "t7",
+   "_pick": "Gregory t7 \"[gruffly] Signal clear.\" 123 Hz (130 Hz on a 90 Hz-floor track), 1.29 s, inner pause 0.07 s. t8/t12 [low voice] sit at 81-85 Hz but are creaky/breathy murmurs (few voiced frames), not a call; t9 152 Hz is too close to the narrator"
   },
   {
    "id": "C",
@@ -144,12 +224,17 @@
    "who": "C",
    "text": "Clear!",
    "after": "p4:3",
-   "voice": "UznIBkKIQe3ZG2tGydre"
+   "voice": "UznIBkKIQe3ZG2tGydre",
+   "take": "t2",
+   "_pick": "Taro t2 \"[cheerfully] Clear!\" 324 Hz: 5.6 st over D (t3 318 Hz gives only 5.3 st); 0.59 s, no inner pause"
   }
  ],
  "gaps": {
   "sentence": 0.15,
   "paragraph": 0.22,
-  "lead_s": 0.05
- }
+  "lead_s": 0.05,
+  "inner_max": 0.25
+ },
+ "_length_cut": "lead, 2026-11-20 (new PC): line 6 cut; lines 13, 15, 19 tightened; line ids not renumbered. Reserves if the built voice is still over 68 s: six Go instead of seven, then cut line 10 (cereal).",
+ "_v5_lock": "lead, 2026-11-20 evening: Ricks-style narration (script_v5_ricks/), order kept; texts of lines 4, 5, 7, 8, 11, 13, 15, 19 changed; p2-p5 need new takes. Reserves if the built voice is over 68 s: six Go, then line 10."
 }

@@ -1,0 +1,516 @@
+[
+ {
+  "i": 0,
+  "id": "p1s1",
+  "line": "L01",
+  "lines": [
+   "L01"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 0.05,
+  "e": 2.3,
+  "text": "Tap your foot on every green light.",
+  "markup": "Tap your foot on every green light.",
+  "take_text": "Tap your foot on every green light.",
+  "take": "v4_p1/t5",
+  "heard": "Tap your foot on every green light.",
+  "wrong": []
+ },
+ {
+  "i": 1,
+  "id": "p1s2",
+  "line": "L01",
+  "lines": [
+   "L01"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 2.55,
+  "e": 3.41,
+  "text": "Only green.",
+  "markup": "Only green.",
+  "take_text": "Only green.",
+  "take": "v4_p1/t5",
+  "heard": "Only green.",
+  "wrong": []
+ },
+ {
+  "i": 2,
+  "id": "go",
+  "line": "L02",
+  "lines": [
+   "L02"
+  ],
+  "speaker": "N",
+  "para": null,
+  "s": 3.56,
+  "e": 6.17,
+  "text": "Go. Go. Go. Go. Go. Go. Go!",
+  "markup": "Go. Go. Go. Go. Go. Go. Go!",
+  "take": "v4_go/t1 v4_go/t5 v4_go/t3 v4_go/t8 v4_go/t4 v4_go/t7 v4_go/t9",
+  "grid_onsets": [
+   3.56,
+   4.02,
+   4.44,
+   4.82,
+   5.16,
+   5.46,
+   5.78
+  ],
+  "heard": "Go, go, go, go, go, go, go!",
+  "wrong": []
+ },
+ {
+  "i": 3,
+  "id": "p1s3",
+  "line": "L03",
+  "lines": [
+   "L03"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 6.67,
+  "e": 7.26,
+  "text": "Did you tap?",
+  "markup": "Did you tap?",
+  "take_text": "Did you tap?",
+  "take": "v4_p1/t5",
+  "heard": "Did you tap?",
+  "wrong": []
+ },
+ {
+  "i": 4,
+  "id": "p1s4",
+  "line": "L03",
+  "lines": [
+   "L03"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 7.51,
+  "e": 8.045,
+  "text": "She did.",
+  "markup": "She did.",
+  "take_text": "She did.",
+  "take": "v4_p1/t5",
+  "heard": "She did.",
+  "wrong": []
+ },
+ {
+  "i": 5,
+  "id": "p2s1",
+  "line": "L04",
+  "lines": [
+   "L04"
+  ],
+  "speaker": "N",
+  "para": "p2",
+  "s": 8.265,
+  "e": 10.975,
+  "text": "Japan's railway lab set a trap like this.",
+  "markup": "Japan's railway lab set a trap like this.",
+  "take_text": "Japan's railway lab set a trap like this.",
+  "take": "v4_p2/t7",
+  "heard": "Japan's railway lab set a trap like this.",
+  "wrong": []
+ },
+ {
+  "i": 6,
+  "id": "p2s2",
+  "line": "L04",
+  "lines": [
+   "L04"
+  ],
+  "speaker": "N",
+  "para": "p2",
+  "s": 11.125,
+  "e": 13.2,
+  "text": "A hundred lights, then red.",
+  "markup": "A hundred lights, then red.",
+  "take_text": "A hundred lights, then red.",
+  "take": "v4_p2/t9",
+  "heard": "A hundred lights, then red.",
+  "wrong": []
+ },
+ {
+  "i": 7,
+  "id": "p2s3",
+  "line": "L05",
+  "lines": [
+   "L05"
+  ],
+  "speaker": "N",
+  "para": "p2",
+  "s": 13.35,
+  "e": 15.23,
+  "text": "Twelve people just watch.",
+  "markup": "Twelve people just watch.",
+  "take_text": "Twelve people just watch.",
+  "take": "v4_p2/t9",
+  "heard": "12 people just watch.",
+  "wrong": []
+ },
+ {
+  "i": 8,
+  "id": "p2s4",
+  "line": "L05",
+  "lines": [
+   "L05"
+  ],
+  "speaker": "N",
+  "para": "p2",
+  "s": 15.375,
+  "e": 16.87,
+  "text": "Five press anyway.",
+  "markup": "Five press anyway.",
+  "take_text": "Five press anyway.",
+  "take": "v4_p2/t9",
+  "heard": "5 press anyway",
+  "wrong": []
+ },
+ {
+  "i": 9,
+  "id": "p2s5",
+  "line": "L07",
+  "lines": [
+   "L07"
+  ],
+  "speaker": "N",
+  "para": "p2",
+  "s": 17.05,
+  "e": 19.95,
+  "text": "Twelve others have to point at the light, and say it.",
+  "markup": "Twelve others have to point at the light, and say it.",
+  "take_text": "Twelve others have to point at the light, and say it.",
+  "take": "v4_p2/t9",
+  "heard": "12 others have to point at the light and say it.",
+  "wrong": []
+ },
+ {
+  "i": 10,
+  "id": "p2s6",
+  "line": "L08",
+  "lines": [
+   "L08"
+  ],
+  "speaker": "N",
+  "para": "p2",
+  "s": 20.1,
+  "e": 21.435,
+  "text": "Not one presses.",
+  "markup": "Not one presses.",
+  "take_text": "Not one presses.",
+  "take": "v4_p2/t9",
+  "heard": "Not one presses.",
+  "wrong": []
+ },
+ {
+  "i": 11,
+  "id": "p3s1",
+  "line": "L09",
+  "lines": [
+   "L09"
+  ],
+  "speaker": "N",
+  "para": "p3",
+  "s": 21.655,
+  "e": 25.45,
+  "text": "After a hundred times, your hand stops waiting for your brain.",
+  "markup": "After a hundred times, your hand stops waiting for your brain.",
+  "take_text": "After a hundred times, your hand stops waiting for your brain.",
+  "take": "v4_p3/t4",
+  "heard": "After a hundred times, your hand stops waiting for your brain.",
+  "wrong": []
+ },
+ {
+  "i": 12,
+  "id": "p3s2",
+  "line": "L10",
+  "lines": [
+   "L10"
+  ],
+  "speaker": "N",
+  "para": "p3",
+  "s": 25.7,
+  "e": 27.85,
+  "text": "That's how the cereal ends up in the fridge.",
+  "markup": "That's how the cereal ends up in the fridge.",
+  "take_text": "That's how the cereal ends up in the fridge.",
+  "take": "v4_p3/t4",
+  "heard": "That's how the cereal ends up in the fridge.",
+  "wrong": []
+ },
+ {
+  "i": 13,
+  "id": "p3s3",
+  "line": "L11",
+  "lines": [
+   "L11"
+  ],
+  "speaker": "N",
+  "para": "p3",
+  "s": 28.0,
+  "e": 30.605,
+  "text": "Pointing and saying it makes your hand wait.",
+  "markup": "Pointing and saying it makes your hand wait.",
+  "take_text": "Pointing and saying it makes your hand wait.",
+  "take": "v4_p3/t5",
+  "heard": "Pointing and saying it makes your hand wait.",
+  "wrong": []
+ },
+ {
+  "i": 14,
+  "id": "p3s4",
+  "line": "L11",
+  "lines": [
+   "L11"
+  ],
+  "speaker": "N",
+  "para": "p3",
+  "s": 30.795,
+  "e": 34.035,
+  "text": "So Japan's train drivers point at their signals, and shout.",
+  "markup": "So Japan's train drivers point at their signals, and shout.",
+  "take_text": "So Japan's train drivers point at their signals, and shout.",
+  "take": "v4_p3/t5",
+  "heard": "So Japan's train drivers point at their signals and shout.",
+  "wrong": []
+ },
+ {
+  "i": 15,
+  "id": "D",
+  "line": "L12",
+  "lines": [
+   "L12"
+  ],
+  "speaker": "D",
+  "para": null,
+  "s": 34.13,
+  "e": 35.195,
+  "text": "Signal clear!",
+  "markup": "Signal clear!",
+  "take_text": "Signal clear!",
+  "take": "v4_D/t7",
+  "heard": null,
+  "wrong": [],
+  "swap_note": "Hideo [shouting]: 305 Hz (5.6 st over the narrator's line before, 219.6 Hz), tilt -5.4 dB (t4 -13.8 = the narrator's), 10-16 kHz -15.3 dB; 1.085 s: laid 65 ms earlier so 'clear!' ends on the hard cut to the steam engine"
+ },
+ {
+  "i": 16,
+  "id": "p4s1",
+  "line": "L13",
+  "lines": [
+   "L13"
+  ],
+  "speaker": "N",
+  "para": "p4",
+  "s": 35.335,
+  "e": 38.0,
+  "text": "But the shouting rule didn't start as science.",
+  "markup": "But the shouting rule didn't start as science.",
+  "take_text": "But the shouting rule didn't start as science.",
+  "take": "v4_p4/t4",
+  "heard": "But the shouting rule didn't start as science.",
+  "wrong": []
+ },
+ {
+  "i": 17,
+  "id": "p4s2",
+  "line": "L13",
+  "lines": [
+   "L13"
+  ],
+  "speaker": "N",
+  "para": "p4",
+  "s": 38.15,
+  "e": 42.025,
+  "text": "The story goes, a steam-train driver's eyes had gone bad.",
+  "markup": "The story goes, a steam-train driver's eyes had gone bad.",
+  "take_text": "The story goes, a steam-train driver's eyes had gone bad.",
+  "take": "v4_p4/t9",
+  "heard": "The story goes, a steam train driver's eyes had gone bad.",
+  "wrong": []
+ },
+ {
+  "i": 18,
+  "id": "H",
+  "line": "L14",
+  "lines": [
+   "L14"
+  ],
+  "speaker": "H",
+  "para": null,
+  "s": 42.175,
+  "e": 43.465,
+  "text": "Signal clear!",
+  "markup": "Signal clear!",
+  "take_text": "Signal clear!",
+  "take": "v4_H/t7",
+  "heard": "Signal clear.",
+  "wrong": []
+ },
+ {
+  "i": 19,
+  "id": "p4s3",
+  "line": "L15",
+  "lines": [
+   "L15"
+  ],
+  "speaker": "N",
+  "para": "p4",
+  "s": 43.615,
+  "e": 46.48,
+  "text": "So he shouted every signal to his coal man.",
+  "markup": "So he shouted every signal to his coal man.",
+  "take_text": "So he shouted every signal to his coal man.",
+  "take": "v4_p4/t9",
+  "heard": "So he shouted every signal to his coal man.",
+  "wrong": []
+ },
+ {
+  "i": 20,
+  "id": "C",
+  "line": "L16",
+  "lines": [
+   "L16"
+  ],
+  "speaker": "C",
+  "para": null,
+  "s": 46.6,
+  "e": 47.29,
+  "text": "Clear!",
+  "markup": "Clear!",
+  "take_text": "Clear!",
+  "take": "v4_C/t5",
+  "heard": null,
+  "wrong": [],
+  "swap_note": "Manato [shouting, grinning]: 336 Hz, voiced 6-12 kHz -15.9 dB (Taro t2 -26.0), 10-16 kHz -29.1 (t2 -34.4; James's own 'Now try again.' -28.2: no sibilant in 'Clear!'); 0.715 s: laid 40 ms earlier to keep 75 ms before 'His'"
+ },
+ {
+  "i": 21,
+  "id": "p4s4",
+  "line": "L17",
+  "lines": [
+   "L17"
+  ],
+  "speaker": "N",
+  "para": "p4",
+  "s": 47.37,
+  "e": 50.735,
+  "text": "His boss rode along, loved it, and made it a rule.",
+  "markup": "His boss rode along, loved it, and made it a rule.",
+  "take_text": "His boss rode along, loved it, and made it a rule.",
+  "take": "v4_p4/t9",
+  "heard": "His boss rode along, loved it, and made it a rule.",
+  "wrong": []
+ },
+ {
+  "i": 22,
+  "id": "p4s5",
+  "line": "L18",
+  "lines": [
+   "L18"
+  ],
+  "speaker": "N",
+  "para": "p4",
+  "s": 50.905,
+  "e": 52.45,
+  "text": "He never knew about the eyes.",
+  "markup": "He never knew about the eyes.",
+  "take_text": "He never knew about the eyes.",
+  "take": "v4_p4/t9",
+  "heard": "He never knew about the eyes.",
+  "wrong": []
+ },
+ {
+  "i": 23,
+  "id": "p5s1",
+  "line": "L19",
+  "lines": [
+   "L19"
+  ],
+  "speaker": "N",
+  "para": "p5",
+  "s": 52.67,
+  "e": 57.8,
+  "text": "New York copied the pointing: subway conductors must point at a striped board.",
+  "markup": "New York copied the pointing: subway conductors must point at a striped board.",
+  "take_text": "New York copied the pointing: subway conductors must point at a striped board.",
+  "take": "v4_p5/t4",
+  "heard": "New York copied the pointing subway conductors must point at a striped board",
+  "wrong": []
+ },
+ {
+  "i": 24,
+  "id": "p5s2",
+  "line": "L20",
+  "lines": [
+   "L20"
+  ],
+  "speaker": "N",
+  "para": "p5",
+  "s": 57.95,
+  "e": 62.62,
+  "text": "So two New Yorkers held up a sign: \"Point here if you are dead sexy.\"",
+  "markup": "So two New Yorkers held up a sign: \"Point here if you are dead sexy.\"",
+  "take_text": "So two New Yorkers held up a sign: \"Point here if you are dead sexy.\"",
+  "take": "v4_p5/t4",
+  "heard": "So two New Yorkers held up a sign. Point here if you are dead sexy.",
+  "wrong": []
+ },
+ {
+  "i": 25,
+  "id": "p5s3",
+  "line": "L21",
+  "lines": [
+   "L21"
+  ],
+  "speaker": "N",
+  "para": "p5",
+  "s": 62.775,
+  "e": 64.81,
+  "text": "And the conductors had to point.",
+  "markup": "And the conductors had to point.",
+  "take_text": "And the conductors had to point.",
+  "take": "v4_p5/t4",
+  "heard": "and the conductors had to point!",
+  "wrong": []
+ },
+ {
+  "i": 26,
+  "id": "p5s4",
+  "line": "L22",
+  "lines": [
+   "L22"
+  ],
+  "speaker": "N",
+  "para": "p5",
+  "s": 65.015,
+  "e": 66.09,
+  "text": "Now try again.",
+  "markup": "Now try again.",
+  "take_text": "Now try again.",
+  "take": "v4_p5/t4",
+  "heard": "Now try again.",
+  "wrong": []
+ },
+ {
+  "i": 27,
+  "id": "p5s5",
+  "line": "L22",
+  "lines": [
+   "L22"
+  ],
+  "speaker": "N",
+  "para": "p5",
+  "s": 66.24,
+  "e": 68.375,
+  "text": "This time, point, and say it.",
+  "markup": "This time, point, and say it.",
+  "take_text": "This time, point, and say it.",
+  "take": "v4_p5/t6",
+  "heard": "This time, point and say it.",
+  "wrong": []
+ }
+]

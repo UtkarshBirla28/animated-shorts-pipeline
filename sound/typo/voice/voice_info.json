@@ -1,0 +1,334 @@
+{
+ "take": "eleven_v4:james:tempo1.0",
+ "tightened_pauses": [
+  {
+   "at_s": 3.91,
+   "removed_s": 0.08
+  },
+  {
+   "at_s": 7.11,
+   "removed_s": 0.27
+  },
+  {
+   "at_s": 9.63,
+   "removed_s": 0.13
+  },
+  {
+   "at_s": 14.34,
+   "removed_s": 0.23
+  },
+  {
+   "at_s": 17.91,
+   "removed_s": 0.08
+  },
+  {
+   "at_s": 20.985,
+   "removed_s": 0.235
+  },
+  {
+   "at_s": 24.5,
+   "removed_s": 0.11
+  },
+  {
+   "at_s": 25.785,
+   "removed_s": 0.036
+  },
+  {
+   "at_s": 28.11,
+   "removed_s": 0.23
+  },
+  {
+   "at_s": 33.375,
+   "removed_s": 0.21
+  },
+  {
+   "at_s": 34.99,
+   "removed_s": 0.04
+  },
+  {
+   "at_s": 38.985,
+   "removed_s": 0.21
+  },
+  {
+   "at_s": 42.325,
+   "removed_s": 0.17
+  },
+  {
+   "at_s": 43.83,
+   "removed_s": 0.226
+  },
+  {
+   "at_s": 45.605,
+   "removed_s": 0.196
+  },
+  {
+   "at_s": 47.1,
+   "removed_s": 0.38
+  },
+  {
+   "at_s": 48.42,
+   "removed_s": 0.16
+  },
+  {
+   "at_s": 49.785,
+   "removed_s": 0.19
+  },
+  {
+   "at_s": 52.345,
+   "removed_s": 0.07
+  },
+  {
+   "at_s": 55.885,
+   "removed_s": 0.13
+  },
+  {
+   "at_s": 60.615,
+   "removed_s": 0.19
+  },
+  {
+   "at_s": 64.37,
+   "removed_s": 0.12
+  },
+  {
+   "at_s": 68.445,
+   "removed_s": 0.266
+  },
+  {
+   "at_s": 69.99,
+   "removed_s": 0.14
+  },
+  {
+   "at_s": 72.755,
+   "removed_s": 0.245
+  },
+  {
+   "at_s": 75.17,
+   "removed_s": 0.06
+  },
+  {
+   "at_s": 80.105,
+   "removed_s": 0.1
+  },
+  {
+   "at_s": 80.88,
+   "removed_s": 0.08
+  },
+  {
+   "at_s": 82.94,
+   "removed_s": 0.2
+  },
+  {
+   "at_s": 86.975,
+   "removed_s": 0.13
+  },
+  {
+   "at_s": 89.095,
+   "removed_s": 0.05
+  }
+ ],
+ "duration_s": 84.222,
+ "inserted_pauses": [
+  {
+   "at_s": 5.265,
+   "added_s": 0.05
+  },
+  {
+   "at_s": 27.976,
+   "added_s": 0.06
+  },
+  {
+   "at_s": 30.601,
+   "added_s": 0.13
+  }
+ ],
+ "stats_assembled": {
+  "duration_s": 91.71,
+  "last_word_end_s": 91.506,
+  "n_words": 200,
+  "words_per_s": 2.19,
+  "tempo": 1.0,
+  "thr": 0.1
+ },
+ "stats": {
+  "duration_s": 84.222,
+  "first_word_s": 0.08,
+  "last_word_end_s": 84.05,
+  "n_display_tokens": 195,
+  "n_spoken_words": 222,
+  "spoken_words_per_s": 2.56
+ },
+ "p2_edits": {
+  "cut_phrase5": {
+   "at_s": 17.24,
+   "removed_s": 2.85
+  },
+  "boss": {
+   "voice": "Mister Gruff (mSOmKHC6GZcZbSTGlqHO) eleven_v4",
+   "take": "b08_t3.mp3",
+   "at_s": 38.03,
+   "shift_s": 0.02
+  }
+ },
+ "retake": {
+  "date": "2026-11-15",
+  "voice": "James (QhpsGjDKZmM9qRYdMhBD) eleven_v4",
+  "takes_dir": "takes/james_retake",
+  "backup": "_prev_retake",
+  "duration_before_s": 84.152,
+  "replaced": {
+   "hook1": {
+    "take": "t3",
+    "old_sound_s": 3.6,
+    "new_sound_s": 3.55,
+    "shift_s": -0.05,
+    "at_s": 0.08,
+    "lufs_old_line": -19.23,
+    "lufs_neighbours": [
+     -18.72
+    ],
+    "lufs_target": -18.72,
+    "lufs_new": -18.72,
+    "gain_db": 2.35,
+    "peak": 0.566,
+    "silence_before": [
+     0.08,
+     0.07
+    ],
+    "silence_after": [
+     0.33,
+     0.33
+    ],
+    "inner_tightened": [],
+    "min_whisper_p": 0.67,
+    "heard": "One typo cost a Tokyo bank 40 billion yen, and it sold shares that didn't even exist"
+   },
+   "question": {
+    "take": "t4",
+    "old_sound_s": 2.77,
+    "new_sound_s": 2.83,
+    "shift_s": 0.06,
+    "at_s": 34.68,
+    "lufs_old_line": -20.18,
+    "lufs_neighbours": [
+     -17.72,
+     -19.76
+    ],
+    "lufs_target": -18.74,
+    "lufs_new": -18.74,
+    "gain_db": 4.17,
+    "peak": 0.476,
+    "silence_before": [
+     0.24,
+     0.23
+    ],
+    "silence_after": [
+     0.53,
+     0.53
+    ],
+    "inner_tightened": [],
+    "min_whisper_p": 0.84,
+    "heard": "But how do you sell something that doesn't exist?"
+   },
+   "easy": {
+    "take": "t3",
+    "old_sound_s": 1.02,
+    "new_sound_s": 0.98,
+    "shift_s": -0.04,
+    "at_s": 29.44,
+    "lufs_old_line": -20.05,
+    "lufs_neighbours": [
+     -20.26,
+     -17.72
+    ],
+    "lufs_target": -18.99,
+    "lufs_new": -18.99,
+    "gain_db": 5.32,
+    "peak": 0.505,
+    "silence_before": [
+     0.46,
+     0.46
+    ],
+    "silence_after": [
+     0.48,
+     0.47
+    ],
+    "inner_tightened": [],
+    "min_whisper_p": 0.8,
+    "heard": "Easy mistake."
+   },
+   "last": {
+    "take": "t2",
+    "old_sound_s": 4.37,
+    "new_sound_s": 4.86,
+    "shift_s": 0.49,
+    "at_s": 79.61,
+    "lufs_old_line": -20.09,
+    "lufs_neighbours": [
+     -19.11
+    ],
+    "lufs_target": -19.11,
+    "lufs_new": -19.11,
+    "gain_db": 4.2,
+    "peak": 0.544,
+    "silence_before": [
+     0.25,
+     0.24
+    ],
+    "silence_after": [
+     0.14,
+     0.14
+    ],
+    "inner_tightened": [
+     {
+      "between": "second. | The",
+      "was_s": 0.46,
+      "now_s": 0.28
+     }
+    ],
+    "min_whisper_p": 0.74,
+    "heard": "The typo took one second, the fight over it took eight years."
+   }
+  },
+  "tightened": [
+   {
+    "between": "for {¥1.|one yen.} | Easy mistake.",
+    "at_s": 29.33,
+    "was_s": 0.46,
+    "now_s": 0.28
+   },
+   {
+    "between": "Easy mistake. | That's {41|for",
+    "at_s": 30.605,
+    "was_s": 0.47,
+    "now_s": 0.28
+   },
+   {
+    "between": "\"Cancel it!\" | They press can",
+    "at_s": 38.8,
+    "was_s": 0.42,
+    "now_s": 0.28
+   }
+  ],
+  "hook_beat": {
+   "between": "shares... | that",
+   "at_s": 5.245,
+   "was_s": 0.33,
+   "now_s": 0.45
+  },
+  "credits": {
+   "before": 16987,
+   "after": 17496,
+   "spent": 509,
+   "left": 22504,
+   "takes": 22,
+   "characters_sent": 1273
+  },
+  "decisions": {
+   "hook": "sentence 1 REPLACED by retake t3 (S1 only; \"forty billion yen\" +6.4 st / +2.6 dB over the sentence body vs +3.3 st / +1.4 dB, S1 range 14.4 vs 12.3 st, median 233 vs 159 Hz); sentence 2 KEPT (no take ends lower: final vowel of exist 253-324 Hz vs 278 Hz installed; beats 0.18-0.32 s vs 0.32 s); the beat shares... | that lengthened 0.33 -> 0.45 s with inserted silence",
+   "question": "REPLACED by t4: final vowel of exist? glides 194 -> 263 Hz (+5.3 st over 80 ms) vs 228 -> 242 Hz (+1.0 st over 40 ms); 2.83 s vs 2.77 s",
+   "easy": "REPLACED by t3: F0 range 7.1 vs 12.2 st, sd 2.96 vs 4.92 st, median 114 vs 140 Hz, 0.98 vs 1.02 s; mistake. sits 8.3 dB under Easy (was 5.5 dB)",
+   "cancelbtn": "KEPT: button? peaks 282 Hz installed vs 277-289 Hz in t1-t3 (within 0.4 st), reveal contour the same; t4 ([wry]) fades to -34 dB on bug. and is +19 % long",
+   "last": "REPLACED by t2: 2.61 vs 2.95 words/s, 0.44 s set-up pause before took eight years (was 0.18 s), eight ends at 113 Hz; years. peaks 151 Hz (installed 133 Hz); +0.49 s"
+  }
+ }
+}

@@ -1,6 +1,6 @@
 # 05 - World building: `paint.ts`, `build.ts`, `world.ts`
 
-Repo: `mromidev/claude-animated-shorts`, read-only clone at `<ROOT>\repo`.
+Repo: `mromidev/claude-animated-shorts`, read-only clone at `C:\Users\utkar\Desktop\animated-shorts-studio\repo`.
 All paths below are relative to `templates/bridge/` unless stated. `file:line` refers to the clone as read on 2026-11-10.
 
 ## Files read

@@ -26,6 +26,8 @@ export const carSway = (t: number) => 0.55 * Math.sin(t * 2 * Math.PI * 0.42) + 
 export type InteriorJPOpts = {
   /** a cab car (the interior starts at the partition) */
   cab?: boolean;
+  /** false = no wall handrails in the cab car's front standing zone (v4's v21: one ended at the kid's head) */
+  frontRails?: boolean;
   /** door open fraction 0..1 at t (any side; drives the red door lamps: they BLINK while the leaves move) */
   doors?: (t: number) => number;
   /** the red door lamps while the doors STAND open: 0 = dark (default: only the blinking while they move is a checked
@@ -40,6 +42,8 @@ export type InteriorJPOpts = {
   /** the blank hanging ads over the aisle (default true; they hang down to 1.86 m: turn off for a camera that flies
    *  along the ceiling) */
   hangingAds?: boolean;
+  /** colour overrides (sRGB hex) for a film's look: wall laminate, seats, priority seats, strap rings, floor */
+  colors?: Partial<Record<"lam" | "seat" | "seatP" | "ringW" | "ringO" | "belt" | "floor" | "blind", string>>;
   seed?: number;
   /** add the two LED strips as real RECT practical lights too (default false: the environment map + the emissive
    *  covers already light the car, and every extra light costs every shader of the set) */
@@ -141,6 +145,7 @@ export const interiorJP = async (ctx: KitCtx, o: InteriorJPOpts = {}): Promise<B
     door: vmat("in-doorframe", { color: "#b7babd", rough: 0.5, metal: 1, map: "brush", tile: 0.3, normalScale: 0.1, dirtColor: "#3e3b36", ...E }),
     paper: vmat("in-paper", { color: "#f4f2ea", rough: 0.8, side: THREE.DoubleSide, useDirt: false, ...E }),
   };
+  for (const [k, c] of Object.entries(o.colors ?? {})) { const m = M[k] as THREE.MeshStandardMaterial | undefined; if (m && c) m.color.set(c); }
   const P = parts();
   // ---- the floor: speckled vinyl, grime along the bench fronts + in the doorway corners, a polished walking line
   {
@@ -316,7 +321,7 @@ export const interiorJP = async (ctx: KitCtx, o: InteriorJPOpts = {}): Promise<B
   endW(z1, 1);
   if (!cab) endW(z0, -1);
   // ---- cab car front standing zone: wall handrails between the partition and the first door
-  if (cab) for (const s of [1, -1]) { const za = z0 + 0.12, zb = doors[0] - D.doorW / 2 - 0.1; cyl(P, "chrome", [s * (X - 0.045), 0.95, za], [s * (X - 0.045), 0.95, zb], 0.014, 10); for (const z of [za + 0.03, zb - 0.03]) cyl(P, "chrome", [s * X, 0.95, z], [s * (X - 0.045), 0.95, z], 0.01, 8); }
+  if (cab && (o.frontRails ?? true)) for (const s of [1, -1]) { const za = z0 + 0.12, zb = doors[0] - D.doorW / 2 - 0.1; cyl(P, "chrome", [s * (X - 0.045), 0.95, za], [s * (X - 0.045), 0.95, zb], 0.014, 10); for (const z of [za + 0.03, zb - 0.03]) cyl(P, "chrome", [s * X, 0.95, z], [s * (X - 0.045), 0.95, z], 0.01, 8); }
   // ---- grime: kick panels + lower walls, hand marks on the door posts, dusty louvres
   dirtKey(P, "lam", (x, y, z) => sstep(0.5, 0.06, y) * 0.22 + 0.04 * Math.max(0, Math.sin(z * 3.1 + x)));
   dirtKey(P, "louvre", () => 0.25);

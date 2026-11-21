@@ -195,3 +195,60 @@ Each lesson is a real failure from the antitheft build, its cause, and the rule 
     `_remotion-tmp`; 2,500 leftover bundles (65 GB) filled C: to 0 bytes mid-day, truncating files. `stills.mjs`,
     `render.mjs` and `kit_render.mjs` now delete their bundle on exit and sweep bundles older than 12 h at start. Any
     new script that calls `bundle()` must do the same. Check `df -h /c` before long renders.
+
+## From the pointing short (2026-11-19/21, `pointing` v4 "the trap"): SHELVED by the owner before any preview
+Owner, 2026-11-21 09:40: "this script is not good at all ... keep all the learning ... next video we will make it more
+good". All files are kept (studio/src/videos3/pointing/, briefs/v3/pointing/, sound/pointing/, studio/out/pointing_v4/
+incl. the audit reports in audit_r1 and audit_r3). FINAL v1 (rejected 1/10) and every v4 draft must NOT be uploaded.
+64. **The story decides everything; lock it only when it beats a Ricks Clips script in blind reads.** v4 had three
+    stories stapled together (a 1994 lab test, a steam driver with bad eyes, a New York prank) plus a game on the
+    viewer. Blind readers kept ranking at least one Ricks script above ours and said New York felt stapled on. One
+    spine: one person (or group), one object, one twist, one payoff, as in our hit (anti-theft) and the channel data
+    ([[project_one_small_thing_story_data]]). Do not start building until the script wins.
+65. **Every line needs ONE picture that can actually be drawn and read in one glance at phone size.** The lines that
+    cost the most rounds were abstract: "your hand stops waiting for your brain", "eyes had gone bad", "loved it,
+    and made it a rule", a game the viewer plays with his foot. Before writing a line, sketch its picture; if the
+    picture needs a caption to explain it, change the line.
+66. **Scope kills quality.** 38 shots (mean 1.8 s) across 7 sets (lab booth, 1994 hall, kitchen, platform, modern
+    cab, steam engine, New York subway) with ~20 characters for a 69-s film. Each set was built shallow and each
+    shot staged in a hurry. Anti-theft (our best) has 6 shots; Ricks has 15-19 cuts and few locations. Next film:
+    1-2 main sets, 12-20 shots, more held key poses.
+67. **Removing glitches does not make a film good.** After fix round 1 the glitches were mostly gone (83 findings
+    fixed) but the audit scores rose only ~1 point: what was left was STAGING and ACTING: key pictures that do not
+    show their point, a hook that is one composition shown four times, people lined up facing the lens, empty
+    bottom thirds, soft blank characters (no brows, brown bloomed outline, faces tinted by the room). Storyboard
+    every key picture at 180 px wide BEFORE building sets.
+68. **Staging rules learned (apply in every shot):** nothing that matters below y 0.80 or right of x 0.90 (the Shorts
+    UI covers it); every cut changes size by 1.5x or angle by 30 degrees (else it reads as a zoom glitch); nobody
+    lines up facing the lens; a pointing hand stops a hand-width SHORT of what it points at (touching reads as
+    holding); arms drawn over sills and window frames (a toon sill clipped the conductor's arm to a 1-3 px line);
+    the payoff shot pushes in on the action; a sleeve arm in the clothing colour with a clear hand reads, a thin
+    stick arm does not; mouths shut under narration.
+69. **Characters next to the reference look soft.** Keep cards OUT of the bloom (crisp near-black ink, ~3 px at 1080),
+    cap how much a coloured room tints a face (~50 %), give everyone eyebrows and 3-4 acted faces (smug, side-eye,
+    alarm, delight). Do this on the first test shot, not after the film is built.
+70. **Judge only rendered film frames, never stills alone.** Stills differ from the film: the kit takes its light
+    probe at a shot's first frame, and a card's private shadow map can lose a caster mid-shot (an instanced
+    streaming tree / pole culled with a stale bounding sphere) so a whole card jumps paler or strobes dark; only a
+    whole-shot clip shows it. Cut the film into frames and per-shot sheets (`briefs/v3/pointing/director/
+    audit_sheets.py`) and audit those.
+71. **The audit machine works; reuse it.** Seven independent lenses (hook, glitch hunt x2, first-time viewer,
+    side-by-side with anti-theft / clown / Ricks, sound by measurement, facts and on-screen text) plus a sceptic that
+    re-checks every serious finding on the frames (Workflow script under `.claude/projects/.../workflows/scripts/
+    pointing-v4-audit-round-2-*.js`; reports in `studio/out/pointing_v4/audit_r1`, `audit_r3`). Run it on the FIRST
+    rough draft, not late. Scores: 7 = our best film, 9 = the reference.
+72. **Sound: seen actions get buried.** Cues on the right frame were still 10-38 dB under voice + music in their own
+    band. Carve music under each cue and lift the cue (never the voice); better, time actions into the gaps between
+    words when the picture is planned. The red-hit style accent cannot beat a shouted word on the same beat.
+73. **Pipeline speed that stays:** shared Remotion bundle + per-shot chunk cache + one stills slot while a video
+    renders + cards redrawn only when their drawing changes -> draft ~0.17 s/frame (was 2.7-3.6). `--conc 2` gives
+    different pixels and no gain. One render slot (RAM token) is the real bottleneck for a 7-agent team.
+74. **Team and limits:** owners per set (LAB / TRAIN / STATION) + CAST + LOOK + DIRECTOR + SOUND with per-owner fix
+    lists and "PAUSED / done / next" blocks in their notes survived two machine moves and a usage limit. The Opus
+    weekly limit was hit mid-build (06:20): big multi-agent rounds cost a lot; plan the story first so the
+    expensive build happens once.
+75. **Speed of the working folder (2026-11-21).** The type check took ~25 s and every agent ran it after every edit:
+    `incremental: true` + `tsBuildInfoFile` (under `studio/node_modules/.cache/tsc/`) brings repeat checks to ~6 s.
+    The project is not a git repo, so ripgrep (Claude Code's Grep / Glob) searched ~55,000 files incl. frames,
+    packages and temp bundles: the `.ignore` / `.rgignore` at the root cut that to ~7,000. Keep both when the folder
+    is copied; give every new film's tsconfig the two incremental lines.

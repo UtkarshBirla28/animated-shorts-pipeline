@@ -1,7 +1,7 @@
 # 09 — Reference images: 38 frames + 20 contact sheets
 
 Study notes for the repo `mromidev/claude-animated-shorts` (read-only clone at
-`<ROOT>\repo`). Slice: every image in `references/frames/` and
+`C:\Users\utkar\Desktop\animated-shorts-studio\repo`). Slice: every image in `references/frames/` and
 `references/sheets/`, plus the text files needed to understand them.
 
 ## Files read

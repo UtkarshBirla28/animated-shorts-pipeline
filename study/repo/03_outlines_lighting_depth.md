@@ -1,6 +1,6 @@
 # Slice 03: ink outlines, lighting, depth (study notes)
 
-Repo: `mromidev/claude-animated-shorts`, read-only clone at `<ROOT>\repo`.
+Repo: `mromidev/claude-animated-shorts`, read-only clone at `C:\Users\utkar\Desktop\animated-shorts-studio\repo`.
 Paths below are relative to that repo root.
 
 ## Files read
@@ -1210,7 +1210,7 @@ and raise `farFade` to ~600. Shipped: ×0.3, starting at max(fogNear, 60 m), fad
   - Bloom patch overrides `b.mipmapBlurPass.setSize` (private-ish API of postprocessing 6.37).
 - Python tool versions used for measurements: numpy 2.4, PIL 12, scipy 1.18, no OpenCV (CONTEXT.md:43).
 - Placeholder path `your Remotion project` (CONTEXT.md:22-42; reports) = the user's Remotion project root (on this
-  machine that was `an older unrelated project folder` per memory — do not touch it while Codex works there).
+  machine that was `C:\Users\utkar\cartoon-shorts` per memory — do not touch it while Codex works there).
   Paths named: `out/bridge/test/` (stills `b_*.jpg`, `c_*.jpg`, `sheet_c1.jpg`, `sheet_c2.jpg`),
   `src/videos/bridge/` (ink.ts, story.ts, world.ts, build.ts, paint.ts, toon.ts, cast.ts, Bridge.tsx).
 - Composition: `BridgeShort` 1080x1920 30 fps; final render 1440x2560 (`--scale 1.333`); stills at `--scale 0.5` still

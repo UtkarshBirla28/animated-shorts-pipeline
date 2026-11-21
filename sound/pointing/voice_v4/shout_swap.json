@@ -1,0 +1,57 @@
+[
+ {
+  "speaker": "D",
+  "line": "L12",
+  "old_take": null,
+  "new_take": "v4_D/t7",
+  "old": [
+   34.185,
+   35.185
+  ],
+  "new": [
+   34.13,
+   35.195
+  ],
+  "words": [
+   {
+    "w": "Signal",
+    "s": 34.13,
+    "e": 34.52
+   },
+   {
+    "w": "clear!",
+    "s": 34.68,
+    "e": 35.195
+   }
+  ],
+  "gain_db": -0.31,
+  "narrator_before_end": 34.035,
+  "narrator_after_start": 35.335,
+  "why": "Hideo [shouting]: 305 Hz (5.6 st over the narrator's line before, 219.6 Hz), tilt -5.4 dB (t4 -13.8 = the narrator's), 10-16 kHz -15.3 dB; 1.085 s: laid 65 ms earlier so 'clear!' ends on the hard cut to the steam engine"
+ },
+ {
+  "speaker": "C",
+  "line": "L16",
+  "old_take": null,
+  "new_take": "v4_C/t5",
+  "old": [
+   46.63,
+   47.22
+  ],
+  "new": [
+   46.6,
+   47.29
+  ],
+  "words": [
+   {
+    "w": "Clear!",
+    "s": 46.6,
+    "e": 47.29
+   }
+  ],
+  "gain_db": -7.43,
+  "narrator_before_end": 46.48,
+  "narrator_after_start": 47.37,
+  "why": "Manato [shouting, grinning]: 336 Hz, voiced 6-12 kHz -15.9 dB (Taro t2 -26.0), 10-16 kHz -29.1 (t2 -34.4; James's own 'Now try again.' -28.2: no sibilant in 'Clear!'); 0.715 s: laid 40 ms earlier to keep 75 ms before 'His'"
+ }
+]

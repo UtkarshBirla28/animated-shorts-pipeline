@@ -1,0 +1,20 @@
+# Search speed (added 2026-11-21): ripgrep, and with it Claude Code's Grep and Glob, skips these folders when it
+# searches the whole project. They hold generated renders, frames, logs, temp bundles, installed packages and media.
+# A search that names one of these folders as its path still works (e.g. Glob with path studio/out/pointing_v4).
+node_modules/
+.venv/
+__pycache__/
+_remotion-tmp*/
+studio/out/
+studio/backup/
+/out/
+kit_preview/
+lookpilot/
+channel_art/
+pointing_preview/
+study/videos/
+study/voices/pool/
+sound/*/audio/_cache/
+sound/*/audio/_bak*/
+*.tsbuildinfo
+*.log

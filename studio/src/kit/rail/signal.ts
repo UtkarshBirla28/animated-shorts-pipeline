@@ -74,7 +74,7 @@ export const signalJP = async (ctx: KitCtx, o: SignalOpts = {}) => {
     // hood: an open half tube over the top of the lens
     const hood = new THREE.CylinderGeometry(0.17, 0.17, 0.32, 18, 1, true, Math.PI * 0.425, Math.PI * 1.15);
     hood.rotateX(Math.PI / 2); hood.translate(hx, ly, 0.2);
-    (P.get("hood") ?? P.set("hood", []).get("hood")!).push(hood.toNonIndexed());
+    (P.get("hood") ?? P.set("hood", []).get("hood")!).push(hood.index ? hood.toNonIndexed() : hood);
   }
   const plate = digitPlate(o.num ?? "12");
   const M: Record<string, THREE.Material> = {

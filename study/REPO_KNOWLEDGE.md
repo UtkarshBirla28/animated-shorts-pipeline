@@ -1,6 +1,6 @@
 # REPO_KNOWLEDGE — `mromidev/claude-animated-shorts` (master synthesis)
 
-Master notes for the read-only clone at `<ROOT>\repo`
+Master notes for the read-only clone at `C:\Users\utkar\Desktop\animated-shorts-studio\repo`
 (commit `e3b817b` "Add 20 reference contact sheets", 2026-11-01, author "Mr omi"; first commit `744b75f`).
 Written 2026-11-10 from the nine slice notes in `study\repo\01_…09_…md`, the six older digests in
 `C:\Users\utkar\claude-animated-shorts-study\`, and direct checks of the repo source (cited as `file:line`).
@@ -18,14 +18,14 @@ difference in dB; **tau** = story time (s) inside a shot; **NOINK** = three.js l
 
 - The skill is already installed at `C:\Users\utkar\.claude\skills\cartoon-3d-short\` (same files as the repo, but its
   `SKILL.md` has an extra "Local setup on this PC (added 2026-11-09)" block). That block says: the earlier Remotion
-  project is `an older unrelated project folder` (pinned remotion/@remotion/* 4.0.290, three 0.175.0, @react-three/fiber
+  project is `C:\Users\utkar\cartoon-shorts` (pinned remotion/@remotion/* 4.0.290, three 0.175.0, @react-three/fiber
   9.1.2, @react-three/postprocessing 3.0.4, postprocessing 6.37.2, **react 19.1.0**); all 26 Kenney GLBs (Nature Kit 2.1
   + Fantasy Town Kit) are in its `public/bridge/kenney/` **plus `Textures/colormap.png` (needed by the Fantasy Town
-  GLBs)**; sound project `an older unrelated project folder\` has a Windows-TTS placeholder voice; stills take ~25 s each here
+  GLBs)**; sound project `C:\Users\utkar\bridge-short\` has a Windows-TTS placeholder voice; stills take ~25 s each here
   (Chrome may use the Intel iGPU); `npx tsc --noEmit` shows 6 known harmless errors in `Bridge.tsx:66-72` (null children
   in EffectComposer); the day↔golden crossfade light bug was verified there; `SendUserFile` does not exist here.
-- **Do not open, run or edit `an older unrelated project folder` or `an older unrelated project folder`** (Codex is working there).
-  A new short needs its own new project folder (suggestion: inside `<ROOT>\`).
+- **Do not open, run or edit `C:\Users\utkar\cartoon-shorts` or `C:\Users\utkar\bridge-short`** (Codex is working there).
+  A new short needs its own new project folder (suggestion: inside `C:\Users\utkar\Desktop\animated-shorts-studio\`).
 - Tools present now: Python 3.12.3 with numpy 2.2.6, scipy 1.13.1, Pillow 11.1.0 (user site-packages, so `python -I`
   cannot import them); ffmpeg/ffprobe 9.0.2 (winget, on PATH); Node 22.14.0 + npx. The older digest (2026-11-09) said
   numpy/scipy/ffmpeg were missing — that is outdated. The author used numpy 2.4 / Pillow 12 / scipy 1.18.
@@ -751,7 +751,7 @@ The six older digests (`code_audio.md`, `code_characters_post.md`, `code_world_s
 
 ## 12. Index
 
-Slice notes (this study, 2026-11-10), all in `<ROOT>\study\repo\`:
+Slice notes (this study, 2026-11-10), all in `C:\Users\utkar\Desktop\animated-shorts-studio\study\repo\`:
 1. `01_process_rules_scripts.md` — SKILL.md, README, LICENSE, STYLE_BIBLE, CONTEXT, motion.md, grade.md, SCRIPT example,
    sandbox entry, the 5 helper scripts; pipeline, rules, measured camera/animation and grade numbers.
 2. `02_textures_characters.md` — textures.md, characters.md vs shipped paint.ts/toon.ts/cast.ts/cardshade.ts.
@@ -770,4 +770,4 @@ Older digests (2026-11-09) in `C:\Users\utkar\claude-animated-shorts-study\`: `c
 
 Installed skill copy (with the local-setup block): `C:\Users\utkar\.claude\skills\cartoon-3d-short\SKILL.md`.
 Next study input (per the user): the videos in `C:\Users\utkar\Desktop\yt short videos` (notes folder
-`<ROOT>\study\videos\`).
+`C:\Users\utkar\Desktop\animated-shorts-studio\study\videos\`).

@@ -1,0 +1,156 @@
+[
+ {
+  "id": 1,
+  "speaker": "N",
+  "text": "Tap your foot on every green light. Only green.",
+  "words": 9,
+  "picture": "Frame 0, the LAB, bright and colourful: a big signal lamp fills the top of the frame; under it a young woman sits at one big button, finger ready, eyes wide. The lamp turns green on \"green\"."
+ },
+ {
+  "id": 2,
+  "speaker": "N",
+  "text": "Go. Go. Go. Go. Go. Go. Go!",
+  "words": 7,
+  "picture": "The lamp flashes green on every \"Go\", with a bright beep, faster and faster; she presses each time, surer each time; the camera pushes in. On the last \"Go!\" the lamp is RED. Her hand comes down anyway. Half a second of silence."
+ },
+ {
+  "id": 3,
+  "speaker": "N",
+  "text": "Did you tap? She did.",
+  "words": 5,
+  "picture": "She freezes, hand on the button, staring up at the red lamp. A big red X."
+ },
+ {
+  "id": 4,
+  "speaker": "N",
+  "text": "In 1994, a railway lab in Japan set a trap like this. A hundred lights. Then, red.",
+  "words": 17,
+  "picture": "Wide: the lab, two rows of twelve people at button boards; a grinning researcher at a big switch; a board \"1994\"; a counter runs 98, 99, 100; one big RED floods the room."
+ },
+ {
+  "id": 5,
+  "speaker": "N",
+  "text": "Twelve people just watched. Five pressed anyway.",
+  "words": 7,
+  "picture": "The first row: five hands slam down, five red X's pop up, five faces freeze. Board: 5 OF 12."
+ },
+ {
+  "id": 6,
+  "speaker": "N",
+  "text": "Ten lights later, three of them did it again.",
+  "words": 9,
+  "picture": "Closer on three of them: red again, three hands down again; the researcher's clipboard drops."
+ },
+ {
+  "id": 7,
+  "speaker": "N",
+  "text": "Twelve others got one extra rule: point at the light and say it.",
+  "words": 13,
+  "picture": "The second row: twelve people point at their lamps and call, one after another, like a wave."
+ },
+ {
+  "id": 8,
+  "speaker": "N",
+  "text": "Not one pressed.",
+  "words": 3,
+  "picture": "RED: all twelve point at it, mouths open; twelve untouched buttons. Board: 0 OF 12."
+ },
+ {
+  "id": 9,
+  "speaker": "N",
+  "text": "After a hundred times, your hand stops waiting for your brain.",
+  "words": 11,
+  "picture": "A bored volunteer stares straight at the red lamp while his hand taps the button by itself."
+ },
+ {
+  "id": 10,
+  "speaker": "N",
+  "text": "That's how the cereal ends up in the fridge.",
+  "words": 9,
+  "picture": "A KITCHEN, morning: someone in pyjamas stands at the open fridge, staring at the cereal box sitting inside it."
+ },
+ {
+  "id": 11,
+  "speaker": "N",
+  "text": "Pointing and saying it makes your hand wait. Which is why Japan's train drivers point at their signals, and shout.",
+  "words": 20,
+  "picture": "The young woman from the start points at the red lamp and says it; her other hand stays off the button; a green tick. Cut on \"Which\": TODAY, a bright train glides into a sunny platform; in the cab the driver (cap, white gloves) snaps a crisp side-on point at a green signal; a kid at the front window copies him."
+ },
+ {
+  "id": 12,
+  "speaker": "D",
+  "text": "Signal clear!",
+  "words": 2,
+  "picture": "(same)"
+ },
+ {
+  "id": 13,
+  "speaker": "N",
+  "text": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad.",
+  "words": 19,
+  "picture": "Hard cut: a black STEAM ENGINE thunders through bright green fields under a blue sky, long white smoke. Cut on \"The story\": in the cab the driver leans forward to the little round window, peering hard; the signal ahead is a soft blur."
+ },
+ {
+  "id": 14,
+  "speaker": "H",
+  "text": "Signal clear!",
+  "words": 2,
+  "picture": "He turns and shouts across the cab."
+ },
+ {
+  "id": 15,
+  "speaker": "N",
+  "text": "So he shouted every signal to his coal man, who checked it and shouted back.",
+  "words": 15,
+  "picture": "The coal man, mid-shovel, fire glowing, leans out and looks at the signal post (arm lowered = clear),"
+ },
+ {
+  "id": 16,
+  "speaker": "C",
+  "text": "Clear!",
+  "words": 1,
+  "picture": "and bellows it back with a huge grin."
+ },
+ {
+  "id": 17,
+  "speaker": "N",
+  "text": "His boss rode along, loved it, and made it a rule.",
+  "words": 11,
+  "picture": "The boss (dark suit, bowler hat) squeezed into the corner of the cab, delighted, writing in a notebook."
+ },
+ {
+  "id": 18,
+  "speaker": "N",
+  "text": "He never knew about the eyes.",
+  "words": 6,
+  "picture": "The driver nose to the glass, peering; behind him the boss beams and nods. Held."
+ },
+ {
+  "id": 19,
+  "speaker": "N",
+  "text": "New York copied the pointing: conductors must point at this board before the doors open.",
+  "words": 15,
+  "picture": "A NEW YORK SUBWAY station: a conductor (navy uniform) leans from the middle window and points at a black-and-white striped board; only then do the doors open."
+ },
+ {
+  "id": 20,
+  "speaker": "N",
+  "text": "So two New Yorkers held up a sign: \"Point here if you are dead sexy.\"",
+  "words": 15,
+  "picture": "A young man and a young woman hold up a big cardboard sign right under the board: POINT HERE IF YOU ARE DEAD SEXY."
+ },
+ {
+  "id": 21,
+  "speaker": "N",
+  "text": "And the conductors had to point.",
+  "words": 6,
+  "picture": "The conductor points at it, deadpan, then grins."
+ },
+ {
+  "id": 22,
+  "speaker": "N",
+  "text": "Now try again. This time, point, and say it.",
+  "words": 9,
+  "picture": "The big lamp and the young woman at the button, exactly as in frame 0; this time her arm is already up, pointing, mouth open. The film loops into line 1."
+ }
+]

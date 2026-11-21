@@ -1,6 +1,6 @@
 # 08 - Audio: SFX synthesis, cue list and cue sheet
 
-Repo: `mromidev/claude-animated-shorts` (read-only clone at `<ROOT>\repo`).
+Repo: `mromidev/claude-animated-shorts` (read-only clone at `C:\Users\utkar\Desktop\animated-shorts-studio\repo`).
 
 ## Files read
 
@@ -627,7 +627,7 @@ All one-off rows (the non-repeating events), exactly as in cues.md:
 
 - No absolute paths in sfx.py / sfx_gen.py / cues.md. Paths live in mix.py:
   - `HERE = dirname(abspath(__file__))`, `ROOT = dirname(HERE)`; voice at `ROOT/voice/voice.wav`, words at `ROOT/voice/words.json`; cache `HERE/_cache/`; outputs `HERE/mix.wav`, `HERE/stem_*.wav`, `HERE/cues.md`. So the layout must be `<project>/audio/*.py` + `<project>/voice/`.
-  - SKILL.md:67 puts the sound code in `~/bridge-short/audio/` (user home folder). On this PC the user's copy is `an older unrelated project folder` (do not touch: another session works there).
+  - SKILL.md:67 puts the sound code in `~/bridge-short/audio/` (user home folder). On this PC the user's copy is `C:\Users\utkar\bridge-short` (do not touch: another session works there).
 - `voice.wav` must be 48 kHz (`assert sr == SR`, mix.py:62).
 - External tool: `ffmpeg` on PATH for the ebur128 cross-check (mix.py:187-202). It fails soft ("ffmpeg check failed").
 - Python libs: numpy, scipy (`scipy.signal`, `scipy.ndimage`), stdlib `wave`. **No version pins anywhere.** Uses `np.random.default_rng` (numpy >= 1.17) and `signal.butter(..., output="sos", fs=...)` (scipy >= 1.2).

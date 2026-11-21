@@ -548,6 +548,8 @@ def cues():
              one(clatter), -21, pe="flaps_1", p=0.35)
         ev("flap", lock, "the counter LOCKS on $150,000,000 (the last card's double tap)", one(lambda r: G.counter_tick(r, True)), -24,
            pe="flaps_1", p=0.35)
+    ev("hook", 2, "hook pass: a quick whoosh under the hook title popping in (frame 2; frame 0 stays clean for the loop)",
+       one(lambda r: G4.spin_whoosh(r, 0.32)), -23, p=0.0)
     if D.get("horn_1") is not None:
         ev("horn", D["horn_1"], "a far ship's horn across the harbour, inside the '$150 million...' pause (out before 'tanks')",
            one(lambda r: G.ship_horn(r, 0.75)), -27, pe="horn_1", p=-0.4, send=0.15, post=ring_cut(0.85, 0.12))

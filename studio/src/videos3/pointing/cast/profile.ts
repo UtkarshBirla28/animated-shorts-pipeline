@@ -308,13 +308,13 @@ export const drawProfileHat = (p: Pen, S: ProfileSpec, h: HatP) => {
     const band = R([[-1.04, -0.43], [-1.08, -0.66], [0.94, -0.72], [0.9, -0.5]]);
     p.poly(band, mix(col, "#000000", 0.35), 1.2 * u);
     p.stroke(R([[-1.06, -0.63], [0.93, -0.69]]), 2.2 * u, h.band ?? "#d9a92e");
-    p.stroke(R([[-0.6, -0.64], [0.4, -0.67]]), 0.9 * u, "#fff0b0");
+    if (!h.band) p.stroke(R([[-0.6, -0.64], [0.4, -0.67]]), 0.9 * u, "#fff0b0");   // (round 2: a plain band (the NY conductor) has no gold glint)
     p.stroke(R(spline([[-1.0, -1.04], [0.1, -1.14], [0.9, -1.1]], 4, false)), 1.6 * u, mix(col, "#ffffff", 0.28));
     const visor = R(spline([[0.84, -0.5], [1.08, -0.5], [1.34, -0.44], [1.36, -0.38], [1.12, -0.37], [0.86, -0.41]], 3));
     p.poly(visor, h.visor ?? "#14121a", 1.8 * u);
     p.stroke(R([[0.95, -0.47], [1.28, -0.43]]), 1.5 * u, "#8e93a6");
     p.poly(R(ellPts(0.99, -0.9, 0.035, 0.1)), h.badge ?? "#d9a92e", 1.1 * u);
-    p.stroke(R([[0.985, -0.96], [0.985, -0.86]]), 0.8 * u, "#fff0b0");
+    if (!h.badge) p.stroke(R([[0.985, -0.96], [0.985, -0.86]]), 0.8 * u, "#fff0b0");
   } else if (h.k === "ball") {
     const crown = R(spline([[-1.02, -0.4], [-0.9, -0.86], [-0.3, -1.14], [0.3, -1.12], [0.76, -0.9], [0.94, -0.48], [0.0, -0.38]], 4));
     p.shadedFill(crown, col, shd, light, S.H.a, 0.4); p.inkRing(crown, ow * 0.8, thick);

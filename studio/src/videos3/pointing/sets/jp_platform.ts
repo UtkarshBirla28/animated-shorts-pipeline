@@ -94,6 +94,9 @@ export type PlanRow = {
   /** arrive: seconds after the shot start when the train comes to rest (default 1.0); the doors start to open at
    *  `doorsAt` s after the shot start (default 0.5 s after the stop) and take 1.5 s */
   arriveAt?: number; doorsAt?: number;
+  /** arrive: braking (m/s^2, default 0.9) and the speed before braking (m/s, default 14). A short shot that must SHOW the
+   *  glide in (v4 v19) brakes harder so the last metres are visible inside the shot */
+  arriveDec?: number; arriveV0?: number;
   /** the orange train passes on track 2; passAt = seconds after the shot start when its nose reaches z = +25 (default 2.1) */
   pass?: boolean; passAt?: number;
   /** where the tourist stands (false = not on the platform); default TOURIST_DEFAULT */
@@ -268,7 +271,7 @@ export const platformLife = (TABLE: Row[], PLAN: Record<string, PlanRow> = PLATF
   rows.forEach((r, k) => {
     if (r.plan.train === "arrive") {
       const stop = r.t0 + (r.plan.arriveAt ?? 1.0);
-      dep.set(r.id, arriveRun(stop, 0.9, 14));
+      dep.set(r.id, arriveRun(stop, r.plan.arriveDec ?? 0.9, r.plan.arriveV0 ?? 14));
       close.set(r.id, doorCycle({ side: "left", openAt: r.plan.doorsAt !== undefined ? r.t0 + r.plan.doorsAt : stop + 0.5, closeAt: 1e9, dur: 1.5 }));
     } else if (r.plan.train === "depart") {
       const go = r.plan.departAt !== undefined ? r.t0 + r.plan.departAt : Math.min(r.t0 + 1.0, r.t1 - 0.3);
@@ -295,7 +298,8 @@ export const platformLife = (TABLE: Row[], PLAN: Record<string, PlanRow> = PLATF
   return { rows, at, trainRun, trainDoors, passRun, first };
 };
 
-export type PlatformOpts = { table: Row[]; plan?: Record<string, PlanRow> };
+/** `motes: false` = no floating dust specks (the v4 template rule); default true (v3 unchanged) */
+export type PlatformOpts = { table: Row[]; plan?: Record<string, PlanRow>; motes?: boolean };
 /** THE BUILDER (the film's SetBuilder is `build_jp_platform` below; sandboxes call this with their own table + plan) */
 export const buildPlatform = async (ctx: KitCtx, o: PlatformOpts): Promise<Built> => {
   const tStart = performance.now();
@@ -464,7 +468,7 @@ export const buildPlatform = async (ctx: KitCtx, o: PlatformOpts): Promise<Built
   const gone = first("gone"); if (gone) singles.push({ from: [4.4, 7.9, -48], to: [-20, 12, -90], t0: gone.t0 + 0.6, t1: gone.t0 + 3.6, arc: 1.5 });
   const crows = fx.birds(ctx, { singles, size: 0.42, color: 0x1a1a1e, seed: 11 });
   g.add(crows.object); if (crows.update) ups.push(crows.update);
-  const motes = fx.motes(ctx, { box: [[-8.8, 0.2, -10], [0.3, 3.4, 30]], count: 1800, seed: 3 }); g.add(motes.object); if (motes.update) ups.push(motes.update);
+  if (o.motes !== false) { const motes = fx.motes(ctx, { box: [[-8.8, 0.2, -10], [0.3, 3.4, 30]], count: 1800, seed: 3 }); g.add(motes.object); if (motes.update) ups.push(motes.update); }
   const leaves = await fx.debris(ctx, "blowing", { box: [[-3.5, 0, 2], [-0.3, 0.6, 14]], count: 14, seed: 5, groundY: 0 }); g.add(leaves.object); if (leaves.update) ups.push(leaves.update);
 
   tag = "litter + weeds";

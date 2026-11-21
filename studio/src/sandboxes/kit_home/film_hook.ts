@@ -1,17 +1,21 @@
-// LAB sandbox film for the v4 HOOK (owner LAB): the v4 lab set (videos3/pointing/v4/sets/lab.ts) on the hook's own clock
-// (lab_plan.ts: the v4 clock's words when they exist, else the plan of the locked hook), without the film's other sets.
-//   A    0 .. "Did"          frame 0, the green, the seven Go's (push-in), the red, the stillness
-//   B    "Did" .. +1.45 s    her frozen stare up at the red lamp, the big red X
-//   gap  (nothing)
-//   loop 9.0 .. 11.2 s       the LAST shot: frame 0's lens, her arm up at the lamp, mouth open (here moved after the hook)
-// Stills: node scripts/kit_render.mjs --entry src/sandboxes/kit_home/index.ts --comp KitHomeHook --quality draft --stills 0,..
+// LAB sandbox film for v4 (owner LAB): LAB's v4 sets ALONE (the lab = booth + 1994 hall, videos3/pointing/v4/sets/lab.ts;
+// the morning kitchen, v4/sets/kitchen.ts) on the FILM's own frames (v4/timeline.ts FRAMES): every lab / kitchen shot of
+// the v4 plan with the FILM's own camera wrapper (cams.ts camOf: LAB's camera by role + the director's drift, freeze and
+// rest), so a sandbox still at frame N is the film's frame N for every LAB shot; every other frame shows frame 0's lens held.
+// Stills: node scripts/kit_render.mjs --entry src/sandboxes/kit_home/index.ts --comp KitHomeHook --quality draft --stills 0,60,..
 import type { Film, ShotDef } from "../../kit/core/ctx";
-import { build, camHookA, camHookB, camLoop } from "../../videos3/pointing/v4/sets/lab";
-import { HOOK, fr } from "../../videos3/pointing/v4/sets/lab_plan";
+import { build, VIEWS } from "../../videos3/pointing/v4/sets/lab";
+import { build as buildKitchen } from "../../videos3/pointing/v4/sets/kitchen";
+import { SHOT_PLAN } from "../../videos3/pointing/v4/shot_plan";
+import { FRAMES, TOTAL } from "../../videos3/pointing/v4/timeline";
+import { withRest, pushRest } from "../../videos3/pointing/v4/camkit";
+import { camOf } from "../../videos3/pointing/v4/cams";
 
-if (HOOK.source === "plan") HOOK.loop = [9.0, 11.2];
-const RIG = { sunAz: 95, sunEl: 25 };
-const a1 = fr(HOOK.A[1]), b1 = fr(HOOK.B[1]), l0 = fr(HOOK.loop[0]), l1 = fr(HOOK.loop[1]);
-const row = (id: string, from: number, to: number, cam: ShotDef["cam"]): ShotDef => ({ id, from, to, set: "lab4", rig: "interiorWarm", rigOpts: RIG, cam });
-export const HOOK_FILM: Film = { slug: "kit_home_hook", fps: 30, total: Math.max(l1, b1) + 1, sets: { lab4: build },
-  shots: [row("A", 0, a1, camHookA(0, a1)), row("B", a1, b1, camHookB(a1, b1)), ...(l0 > b1 ? [row("gap", b1, l0, camLoop(b1, l0))] : []), row("loop", Math.max(l0, b1), l1 + 1, camLoop(l0, l1))] };
+const filler = pushRest(VIEWS.A0, 0, 15);
+const missing: string[] = [];
+const shots: ShotDef[] = SHOT_PLAN.map((p) => {
+  const [from, to] = FRAMES[p.id], kit = p.set === "kitchen", mine = kit || p.set === "lab";
+  return { id: p.id, from, to, set: kit ? "kitchen4" : "lab4", rig: "interiorWarm",
+    cam: mine ? camOf(p.id, p.set, from, to, p.rest, missing, p.drift, p.freeze) : withRest(filler(from, to), from, to, p.rest) };
+});
+export const HOOK_FILM: Film = { slug: "kit_home_hook", fps: 30, total: TOTAL, sets: { lab4: build, kitchen4: buildKitchen }, shots };

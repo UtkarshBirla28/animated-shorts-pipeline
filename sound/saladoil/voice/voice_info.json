@@ -18,7 +18,7 @@
    "added_s": 0.24
   }
  ],
- "duration_s": 88.063,
+ "duration_s": 86.363,
  "tightened_pauses": [
   {
    "at_s": 5.785,
@@ -128,5 +128,10 @@
    "at_s": 89.655,
    "removed_s": 0.119
   }
- ]
+ ],
+ "cut_head": {
+  "from_s": 0.1,
+  "removed_s": 1.7,
+  "words": 2
+ }
 }

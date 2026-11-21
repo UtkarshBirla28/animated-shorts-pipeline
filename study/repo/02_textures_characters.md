@@ -1,7 +1,7 @@
 # 02 - Textures and Characters (study notes)
 
 Slice: `references/reports/textures.md` and `references/reports/characters.md` of the repo
-`mromidev/claude-animated-shorts` (read-only clone at `<ROOT>\repo`).
+`mromidev/claude-animated-shorts` (read-only clone at `C:\Users\utkar\Desktop\animated-shorts-studio\repo`).
 
 ## Files read
 

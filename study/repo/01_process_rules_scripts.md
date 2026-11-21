@@ -1,7 +1,7 @@
 # 01 — Process, rules, reference measurements and helper scripts
 
 Study notes for the repo `mromidev/claude-animated-shorts` (read-only clone at
-`<ROOT>\repo`). Slice: the process docs, the rules, the two measured reports
+`C:\Users\utkar\Desktop\animated-shorts-studio\repo`). Slice: the process docs, the rules, the two measured reports
 (motion, grade), the reference-study brief, the script example and the five helper scripts.
 
 ## Files read (every line)
@@ -79,7 +79,7 @@ no `public/` assets, no Kenney models, no voice files. You must supply those you
 
 ```
 ~/.claude/skills/cartoon-3d-short/        <- this repo (SKILL.md, references/, templates/)
-<your Remotion project>/                  <- NOT in the repo; an older unrelated project folder
+<your Remotion project>/                  <- NOT in the repo; on this machine the old one is C:\Users\utkar\cartoon-shorts (Codex - do not touch)
   src/index.ts                            <- main entry (registerRoot) - passed to `remotion render`
   src/Root.tsx                            <- register compositions; add a new one next to BridgeShort
   src/videos/bridge/                      <- = templates/bridge/* (13 files)
@@ -91,7 +91,7 @@ no `public/` assets, no Kenney models, no voice files. You must supply those you
   out/<name>/                             <- stills (x_<frame>.jpg), video.mp4, qa/, per-sandbox REPORT.md
   out/bridge/shots.json                   <- written by bridge_shots.py (hard-coded path)
   backup/bridge_<YYYYmmdd_HHMMSS>/        <- written by bridge_merge.py
-~/bridge-short/                           <- story/voice/sound folder (an older unrelated project folder
+~/bridge-short/                           <- story/voice/sound folder (on this machine C:\Users\utkar\bridge-short - Codex, do not touch)
   SCRIPT.md                               <- facts + sources at the top, then the script
   voice/voice.wav, voice/words.json       <- narration + hand-fixed word timings
   audio/ timeline.py sfx_gen.py sfx.py music.py instruments.py dsp.py mix.py  (= templates/audio/*)

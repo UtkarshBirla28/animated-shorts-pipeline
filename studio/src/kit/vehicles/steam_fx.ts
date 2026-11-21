@@ -103,7 +103,7 @@ export const plume = (ctx: KitCtx, o: PlumeOpts): Built => {
 /** the chimney smoke of a working engine: a dense, rolling, grey-white plume laid back by the train's wind */
 export const locoSmoke = (ctx: KitCtx, o: { pos: V3; speed: number | ((t: number) => number); sunDir?: V3; count?: number; dark?: number; seed?: number }) => plume(ctx, {
   pos: o.pos, count: o.count ?? 520, life: 3.6, wind: o.speed, windTau: 0.45, vel: [0, 5.5, -2], spread: 1.2, size: [0.55, 4.2], alpha: 0.72,
-  lit: o.dark ? "#d9d4cc" : "#fbf4e8", shade: o.dark ? "#3c3f47" : "#6a7180", radius: 0.12, rise: 0.5, turb: 0.55, sunDir: o.sunDir, seed: o.seed ?? 11,
+  lit: o.dark ? "#d9d4cc" : "#fbf4e8", shade: o.dark ? "#3c3f47" : "#a3afc4", radius: 0.12, rise: 0.5, turb: 0.55, sunDir: o.sunDir, seed: o.seed ?? 11,
 });
 /** white steam: the safety valve's feather (up + back) */
 export const valveSteam = (ctx: KitCtx, o: { pos: V3; speed: number | ((t: number) => number); sunDir?: V3; on?: (t: number) => number }) => plume(ctx, {

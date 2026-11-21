@@ -1,0 +1,133 @@
+{
+ "passed": false,
+ "gates": {
+  "step median <= 3.5 st": [
+   false,
+   4.54
+  ],
+  "no step > 6 st": [
+   true,
+   5.04
+  ],
+  "centre 175-200 Hz": [
+   false,
+   168.1
+  ],
+  "no line > 240 Hz": [
+   true,
+   177.8
+  ],
+  "pace 3.4-3.7 w/s": [
+   false,
+   4.09
+  ],
+  "pace sd <= 0.6": [
+   false,
+   0.99
+  ],
+  "gaps 0.15-0.30 s (one beat <= 0.8)": [
+   true,
+   {
+    "min": 0.15,
+    "over_0.3": [
+     0.5
+    ],
+    "planned_beat": 0.6
+   }
+  ],
+  "every sentence heard as written": [
+   true,
+   "all"
+  ],
+  "no digital silence (longest exact-zero run < 5 ms)": [
+   true,
+   "0.02 ms"
+  ],
+  "sentence tails 40-90 ms (measured, 30 dB decay; a tail may run into the next word)": [
+   true,
+   {
+    "min": 0.03,
+    "max": 0.24
+   }
+  ],
+  "loudness -17.5 +- 1 LUFS": [
+   true,
+   -17.52
+  ],
+  "peak <= -1 dBFS": [
+   true,
+   "-1.84 dBFS"
+  ],
+  "run: every Go on its grid onset (+-10 ms)": [
+   true,
+   [
+    3.56,
+    4.02,
+    4.44,
+    4.82,
+    5.16,
+    5.46,
+    5.72
+   ]
+  ],
+  "run: pitch rises (no word > 1 st under the one before), the last Go! the highest": [
+   true,
+   [
+    227,
+    230,
+    238,
+    238,
+    254,
+    245,
+    292
+   ]
+  ],
+  "run: level rises, the last Go! the loudest": [
+   true,
+   [
+    -20.5,
+    -20.0,
+    -19.5,
+    -19.0,
+    -18.5,
+    -18.0,
+    -17.5
+   ]
+  ],
+  "run: step INTO the run <= 6 st": [
+   true,
+   4.73
+  ],
+  "run: the held beat after it 0.5 s (+-0.03)": [
+   true,
+   0.5
+  ]
+ },
+ "narrator": {
+  "sentences": 4,
+  "words": 14,
+  "speaking_s": 4.24,
+  "wps_over_speech": 3.31,
+  "wps_median": 4.09,
+  "wps_sd": 0.99,
+  "centre_hz": 168.1,
+  "line_median_max_hz": 177.8,
+  "line_median_min_hz": 132.9,
+  "step_median_st": 4.54,
+  "step_max_st": 5.04,
+  "steps_over_6": 0,
+  "steps": [
+   0.96,
+   4.54,
+   5.04
+  ],
+  "gap_median_s": 0.25,
+  "gap_max_s": 3.2,
+  "gaps_over_0.3": 1,
+  "lufs_sd": 1.24,
+  "ends": {
+   "rise": 0,
+   "fall": 3
+  }
+ }
+}

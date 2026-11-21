@@ -28,6 +28,8 @@ from dsp import SR, ns, rng, pan, place, dbg, make_ir, convolve_st, integrated, 
 import instruments as I
 
 F = I.m2f
+RAMP_IN, RAMP_FLOOR = 0.5, 0.45     # a section's first 0.5 s rises from 0.45 (-7 dB) of its level (audit r1: level steps at changes)
+RAMP_BY = {"today": (1.1, 0.30)}   # the two changes that stepped most (+7.6 / +5.5 dB after a sparse bar)
 AIR = (5000.0, 3.0)              # high shelf on the score bus (air: the benchmark's 10-16 kHz was -17 dB, the references -9)
 WARM = (220.0, 2.0)              # a low shelf: the bass line carries the 120-400 Hz warmth the mix was missing
 BASS_DRIVE = (2.2, 0.45)
@@ -124,6 +126,12 @@ def render_section(sec, n, r):
             for e in range(8):
                 if inside(beat(k0 + e / 2)) and e % 2:
                     B["perc"].add(I.brush_tap(0.22, r), beat(k0 + e / 2), -0.2)
+            # AUDIT r1 (2026-11-21): the tiptoe pizz swung -27..-65 dBFS on every beat (a bed with holes under the steam story):
+            # a HELD layer under it (a soft string chord per bar + a long low bassoon root), so the music never falls into a hole
+            if inside(beat(k0)):
+                dur = min(4 * b, t1 - beat(k0))
+                B["pad"].add(I.strings([F(m) for m in tones], dur + 0.15, 0.16, r, att=0.12, rel=0.35, trem=0.0, bright=0.42), beat(k0), 0.0)
+                B["pad"].add(I.bassoon(F(R + 12), 0.95 * dur, 0.20, r, att=0.06, rel=0.2), beat(k0), 0.1)
         elif style == "halftime":
             if inside(beat(k0)):
                 B["bass"].add(I.bass_pizz(F(R), 0.78, r, length=1.6 * b), beat(k0), 0.0)
@@ -163,6 +171,15 @@ def render_section(sec, n, r):
                 B["pad"].add(I.strings([F(m) for m in tones], dur, 0.12, r, att=dur * 0.8, rel=0.2, trem=1.0, bright=0.55, swell=lambda tt: 0.2 + 0.8 * np.clip(tt / max(dur, 0.1), 0, 1) ** 1.5), t0, 0.0)
         else:
             raise ValueError(style)
+    if sec.get("loop_end"):
+        # AUDIT r1: the last 40 ms dipped (-36 -> -43 dBFS) before frame 0's downbeat. The loop's last beat now HOLDS to the
+        # final sample: a shaker roll rising through it and a bass pickup into frame 0's D (its ring folds onto frame 0)
+        tl = t1 - b
+        for q in range(4):
+            B["perc"].add(I.shaker(0.18 + 0.07 * q, r, dur=0.07, accent=(q == 3)), tl + q * b / 4, 0.3)
+        B["bass"].add(I.bass_pizz(F(38 + 12 * oct_), 0.62, r, length=0.6 * b, slide=1.0), t1 - b / 2, 0.0)
+        lr, liv = chord(prog[(nbars - 1) % len(prog)])                  # the last bar's chord (A7) held over the last beat: it
+        B["pad"].add(I.strings([F(48 + lr + i + 12 * oct_) for i in liv[:3]], b + 0.35, 0.26, r, att=0.12, rel=0.3, trem=0.0, bright=0.5), tl, 0.0)
     return B
 
 
@@ -200,15 +217,29 @@ def render(sections, L, vref, hits=(), stops=(), seed=4040, tail=1.2):
         a, z = ns(sec["t0"]), ns(min(sec["t1"] + 0.02, L + tail))
         lvl = integrated(y[:, a:z]) if z - a > ns(1.0) else -60.0
         g = dbg(vref - sec["lu"] - lvl) if np.isfinite(lvl) else 0.0
-        # the section's own edges: dry cut at t1 (8 ms), its hall tail rings 0.6 s into the next section
+        # the section's own edges: dry cut at t1 (8 ms), its hall tail rings 0.6 s into the next section; the LAST section
+        # (the loop) is not cut: everything that rings past L folds onto frame 0
         e = np.ones(n)
         k1 = ns(sec["t1"])
+        if sec.get("loop_end"):
+            k1 = n
+        # AUDIT r1: the music stepped +5..+8 dB under speech at section changes: every section now comes in over RAMP_IN s
+        # (from RAMP_FLOOR of its level), so a change of section is never a jump under a word
+        if sec.get("ramp_in", True):
+            ri, rf = sec.get("ramp", (RAMP_IN, RAMP_FLOOR))
+            a0 = ns(sec["t0"])
+            m0 = min(n - a0, ns(ri))
+            if m0 > 0:
+                u = np.linspace(0, 1, m0)
+                e[a0:a0 + m0] *= rf + (1 - rf) * (u * u * (3 - 2 * u))
         if k1 < n:
             e[k1:] = 0.0
             m = min(n - k1, ns(0.008))
             e[k1 - m:k1] = np.linspace(1, 0, m) if m > 0 else e[k1 - m:k1]
         dry_e = dry * e[None, :]
         wet_e = wet * np.concatenate([np.ones(k1), np.exp(-np.arange(n - k1) / SR / 0.25)])[None, :n] if k1 < n else wet
+        if sec.get("ramp_in", True):
+            wet_e = wet_e * np.minimum(1.0, e + (np.arange(n) >= k1))[None, :]
         out += g * (dry_e + 0.55 * wet_e)
         table.append(dict(name=sec["name"], t0=round(sec["t0"], 3), t1=round(sec["t1"], 3), bpm=round(sec["bpm_used"], 1), style=sec["style"],
                           prog=" ".join(sec["prog"]), lu=sec["lu"], gain_db=round(20 * np.log10(g + 1e-12), 1)))
@@ -241,14 +272,14 @@ V4_SECTIONS = [
     # name      starts at          bpm  style       chords                                 LU under the voice
     ("lab", (4, None), 112, "bounce", ["F", "C", "Dm", "Bb"], 17.5),            # 4-8   the trap; five / three / not one (a countdown)
     ("why", (9, None), 104, "halftime", ["Bb", "Gm7", "Dm", "A7"], 19.0),       # 9-11  half-time; the cereal button on line 10
-    ("today", (11, "which"), 116, "bounce", ["F", "Bb", "C", "F"], 17.0),       # 11-12 "Which is why Japan's train drivers": bright, proud
+    ("today", (11, "so"), 116, "bounce", ["F", "Bb", "C", "F"], 17.0),       # 11-12 "Which is why Japan's train drivers": bright, proud
     ("steam", (13, None), 100, "tiptoe", ["Gm", "Gm", "Dm", "A7"], 18.0),       # 13-18 HARD cut to 1910; tiptoe over the engine
     ("newyork", (19, None), 112, "build", ["Gm", "A7", "Bb", "A7"], 17.0),      # 19-21 the board, the sign: a build
     ("loop", (22, None), 125, "bounce", ["Dm", "Bb", "Gm", "A7"], 16.5),        # 22    the hook's groove returns and runs into frame 0
 ]
 V4_HITS = [((8, "end"), "Dm", 1.0), ((21, "end"), "F", 1.2)]                    # after "Not one pressed." / after "had to point."
 V4_BUTTONS = [(10, "end")]                                                       # a tiny comic button after the cereal line
-V4_DRY = [18]                                                                    # "He never knew about the eyes.": no music under it
+V4_DRY = []                                                                       # (was line 18 dry: a second full stop; the rules allow ONE, the held beat)
 
 
 def _norm(w):
@@ -263,12 +294,16 @@ def v4_map(lines, words, L):
         if w is None:
             return a
         ws = [x for x in words if a - 0.02 <= x["s"] <= b + 0.02 and _norm(x["w"]) == _norm(w)]
+        if not ws:
+            print(f"score_v4: section anchor word '{w}' is not in line {k}: the line's start is used", flush=True)
         return float(ws[0]["s"]) if ws else a
     S = []
     for j, (nm, (k, w), bpm, style, prog, lu) in enumerate(V4_SECTIONS):
         t0 = at(k, w) - 0.05
         t1 = (at(*V4_SECTIONS[j + 1][1]) - 0.05) if j + 1 < len(V4_SECTIONS) else L
         S.append(dict(name=nm, t0=t0, t1=t1, bpm=bpm, style=style, prog=prog, lu=lu, fit=True))
+        if nm in RAMP_BY:
+            S[-1]["ramp"] = RAMP_BY[nm]
     H = [(float(lines[k - 1]["e"]) + 0.03, ch, big) for (k, _), ch, big in V4_HITS if k <= len(lines)]
     Z = [(float(lines[k - 1]["s"]) - 0.08, float(lines[k - 1]["e"]) + 0.05) for k in V4_DRY if k <= len(lines)]
     Bt = [float(lines[k - 1]["e"]) + 0.03 for k, _ in V4_BUTTONS if k <= len(lines)]
@@ -281,37 +316,48 @@ def v4_map(lines, words, L):
         k = max(4, int(round((L - S[-1]["t0"]) / beat / 4.0)) * 4)
         S[-1]["t0"] = L - k * beat
         S[-2]["t1"] = S[-1]["t0"]
-        S[-1].update(bpm=60.0 / beat, fit=False)
+        S[-1].update(bpm=60.0 / beat, fit=False, loop_end=True)
     hook = dict(go=go, red=go[-1] if go else None, she_did=(float(she[0]["s"]) if she else float(lines[2]["e"]) - 0.5, float(lines[2]["e"])),
                 silence=((go[-1] + 0.05, go[-1] + 0.55) if go else None))
     return S, H, Z, Bt, hook
 
 
-def film_score(lines, words, L, vref, seed=4040):
-    """the whole v4 score -> music (2, ns(L)), the hook's effects (beeps, clicks, thud), table, hook report"""
+def film_score(lines, words, L, vref, seed=4040, hook_T=None):
+    """the whole v4 score -> music (2, ns(L)), the hook's effects (beeps, clicks, the red hit), table, hook report, hook
+    events. hook_T = clock_v4.Clock.hook_times() (the clock's cuts + the voice's words); without it the hook is read from
+    the words of lines 1-3 here."""
     import hook_v4 as HK
     S, H, Z, Bt, hk = v4_map(lines, words, L)
     n = ns(L)
-    if hk["red"] is None:
-        raise SystemExit("v4 score: no 'Go' words in line 2 of the voice (VOICE publishes the seven onsets as words)")
+    if hook_T is None:
+        if hk["red"] is None:
+            raise SystemExit("v4 score: no 'Go' words in line 2 of the voice (VOICE publishes the seven onsets as words)")
+        go = hk["go"]
+        did = next((float(x["s"]) for x in words if x.get("id") == 3), go[-1] + 0.7)
+        hook_T = dict(line1=(lines[0]["s"], lines[0]["e"]), go=go[:6], go_all=go, red=go[-1], red_word=go[-1], go7_end=go[-1] + 0.2, did=did,
+                      she=hk["she_did"][0], she_did=hk["she_did"], l3_end=float(lines[2]["e"]), green=None)
     first = dict(S[0])
-    first["t0"] = hk["she_did"][0] + 0.30                       # the groove returns on "She did." into the lab's section
-    mus_h, fx_h, _, rep = HK.render_hook(dict(hk, line1=(lines[0]["s"], lines[0]["e"])), S[0]["t1"] + 1.0, vref, after=first)
-    body, table = render(S[1:], L, vref, hits=H, stops=Z)
+    first["t0"] = hook_T["she"] + 0.30                          # the groove returns on "She did." into the lab's section
+    mus_h, fx_h, amb_h, rep, hev = HK.render_hook(hook_T, min(L, S[0]["t1"] + 1.0), vref, after=first)
+    body, table = render(S[1:], L, vref, hits=H, stops=Z) if len(S) > 1 else (np.zeros((2, n)), [])
     out = body.copy()
     m = min(n, mus_h.shape[1])
-    a = ns(S[1]["t0"])
+    a = ns(S[1]["t0"]) if len(S) > 1 else n
     xf = np.clip((np.arange(m) - a) / max(1, ns(0.05)), 0, 1)        # the hook part ends where the 'why' section begins
     out[:, :m] += mus_h[:, :m] * (1 - xf)[None, :]
     r = rng(seed + 7)
     for t in Bt:                                                     # the small comic button(s)
-        place(out, HK.lv_to(HK.sting(r), vref - 15.0), t)
-    head = [dict(name="hook", t0=0.0, t1=round(first["t0"], 3), bpm=round(60 / rep["pre_beat"], 1) if rep["pre_beat"] else None, style="hook grid",
-                 prog=" ".join(HK.KEY), lu=HK.LV["music"]),
+        if t < L - 0.3:
+            place(out, HK.lv_to(HK.sting(r), vref - 15.0), t)
+    head = [dict(name="hook", t0=0.0, t1=round(first["t0"], 3), bpm=round(60 / rep["pre_beat"], 1) if rep["pre_beat"] else None, style="hook grid (speeds up with the Gos)",
+                 prog=" ".join(HK.PRE_KEY + ["A7"]), lu=HK.LV["music"]),
             dict(name="lab (from 'She did.')", t0=round(first["t0"], 3), t1=round(S[0]["t1"], 3), bpm=S[0]["bpm"], style=S[0]["style"],
                  prog=" ".join(S[0]["prog"]), lu=S[0]["lu"])]
-    fx = fx_h[:, :n] if fx_h.shape[1] >= n else np.pad(fx_h, ((0, 0), (0, n - fx_h.shape[1])))
-    return out, fx, head + table, rep
+    pad = lambda x: x[:, :n] if x.shape[1] >= n else np.pad(x, ((0, 0), (0, n - x.shape[1])))
+    rep["hits"] = [round(h[0], 3) for h in H]
+    rep["dry"] = [[round(a_, 3), round(b_, 3)] for a_, b_ in Z]
+    rep["buttons"] = [round(b_, 3) for b_ in Bt]
+    return out, pad(fx_h), head + table, rep, dict(amb=pad(amb_h), events=hev)
 
 
 def plan_lines(path=None, wps=3.25, join=0.18):
@@ -365,12 +411,14 @@ if __name__ == "__main__":
     ap.add_argument("--vref", type=float, default=-13.7)
     a = ap.parse_args()
     if a.film_plan:
-        lines, words, L = plan_lines()
-        y, fx, table, rep = film_score(lines, words, L, a.vref)
+        import clock_v4
+        C = clock_v4.Clock()
+        lines, words, L = C.v4_lines(), C.v4_words(), C.L
+        y, fx, table, rep, _ = film_score(lines, words, L, a.vref, hook_T=C.hook_times())
         o = os.path.join(HERE, "_score_v4_film_plan.wav")
         write_wav(o, y)
         _, _, Zs, _, hk = v4_map(lines, words, L)
-        designed = [(hk["red"], hk["she_did"][0] + 0.02)] + [list(z) for z in Zs]       # the red's stop + line 18 dry (both by direction)
+        designed = [tuple(rep["beat"]), (rep["red"], rep["sting"])] + [list(z) for z in Zs]       # the red's stop + line 18 dry (both by direction)
         json.dump(dict(sections=table, vref=a.vref, L=L, lines=lines, hook=rep, designed_silences=designed), open(o.replace(".wav", ".json"), "w"), indent=1, default=float)
         for row in table:
             print(row)

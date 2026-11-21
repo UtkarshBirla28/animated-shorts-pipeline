@@ -172,10 +172,15 @@ float rimEdge( vec3 Lv, vec2 uv, vec2 dU, vec2 dV, float rimW ) {
   if ( sl < 0.05 ) return 0.0;
   sd /= sl;
   float back = 0.25 + 0.75 * smoothstep( 0.45, -0.55, Lv.z );
+  // LOOK 2026-11-21 02:30: at draft / preview scale (0.5) rimW was ~1.2 px and the one-sample test flipped pixel by pixel
+  // along the contour = a WHITE DASHED rim on small / far figures. Now: at least 2 px, three samples along the light
+  // direction averaged (not max), a softer alpha step
   vec2 duv = rimW * ( sd.x * dU + sd.y * dV );
-  float e1 = 1.0 - smoothstep( uAlphaTest * 0.6, uAlphaTest, texture2D( map, uv + duv ).a );
-  float e2 = 1.0 - smoothstep( uAlphaTest * 0.6, uAlphaTest, texture2D( map, uv + duv * 0.5 ).a );
-  return max( e1, e2 * 0.7 ) * back * smoothstep( 0.05, 0.4, sl );
+  duv *= max( 1.0, 2.0 / max( rimW, 1e-3 ) );
+  float e1 = 1.0 - smoothstep( uAlphaTest * 0.3, uAlphaTest * 1.2, texture2D( map, uv + duv ).a );
+  float e2 = 1.0 - smoothstep( uAlphaTest * 0.3, uAlphaTest * 1.2, texture2D( map, uv + duv * 0.6 ).a );
+  float e3 = 1.0 - smoothstep( uAlphaTest * 0.3, uAlphaTest * 1.2, texture2D( map, uv + duv * 1.4 ).a );
+  return ( 0.4 * e1 + 0.25 * e2 + 0.35 * e3 ) * back * smoothstep( 0.05, 0.4, sl );
 }
 vec2 cellUv( vec2 uv ) {
 #ifdef CARD_ATLAS
@@ -264,6 +269,9 @@ void main() {
   // the cartoon keeps its own colours in shade: the fill's tint (blue sky) is only partly applied; key lights keep theirs
   fill = mix( vec3( lum3( fill ) ), fill, uTintK );
   vec3 light = ( key * uKeyK * RECIPROCAL_PI + fill * RECIPROCAL_PI * gao ) * uGain;
+  // FACE-TINT CAP (round 2, LOOK + lead: faces took the room colour: red in the hall, orange on the steam deck): the summed
+  // light on a card keeps only half its colour; a face may lean toward the room but stays a face colour
+  light = mix( vec3( lum3( light ) ), light, 0.5 );
 
   // ---- exposure guard: floor + ceiling relative to the strongest light's unoccluded key. The floor rises when that light
   // is behind the card (backlight: a readable front) and is ADDED in the key light's own colour (a warm reflector fill,
@@ -373,6 +381,7 @@ export class CardLight {
   /** testing: skip the private pass (the cards keep the last map) */
   skipVis = false;
   private pendingCam: THREE.Camera | null = null;
+  private instCasters: THREE.InstancedMesh[] | null = null; private instScanN = 0;
   private hook: THREE.Mesh;
 
   static of(ctx: KitCtx, o: CardLightOpts = {}): CardLight {
@@ -463,6 +472,7 @@ export class CardLight {
     let R = 0;
     for (const r of near) { const p = r.pos(t); R = Math.max(R, Math.hypot(p[0] - ctr.x, p[1] + r.heightM * 0.5 - ctr.y, p[2] - ctr.z) + r.heightM * 0.62); }
     R = Math.max(2.2, R + 0.35);
+    if ((globalThis as { __CARDVIS?: boolean }).__CARDVIS) console.warn(`CARDVIS ${Math.round(t * 30 * 8) / 8} n=${near.length}/${this.regs.length} R=${R.toFixed(2)} ctr=${ctr.toArray().map((v) => v.toFixed(2))} src=${this.source}`);
     const size = this.light.shadow.mapSize.x, texM = (2 * R) / size;
     // snap the centre to the texel grid in light space (no swimming between sub-frames)
     const up = Math.abs(L.y) > 0.99 ? new THREE.Vector3(1, 0, 0) : new THREE.Vector3(0, 1, 0);
@@ -487,9 +497,22 @@ export class CardLight {
     this.pendingCam = null;
     const gl = this.ctx.gl, lt = this.light;
     const t0 = this.measure ? (gl.getContext().finish(), performance.now()) : 0;
+    // (round 2, the v23 "pale card" at f1209 / v20 strobing: three culls an InstancedMesh caster by a bounding sphere it
+    // computes ONCE, at its first render; the streaming world (trees, stakes: instances moved every frame) then left that
+    // stale sphere and the whole mesh dropped out of this pass at once, mid-shot (a still computes it fresh: no step).
+    // Every instanced caster gets its sphere recomputed for this pass)
+    if (!this.instCasters || this.instScanN++ % 30 === 0) { const L: THREE.InstancedMesh[] = []; this.ctx.scene.traverse((o) => { const m = o as THREE.InstancedMesh; if (m.isInstancedMesh && m.castShadow) L.push(m); }); this.instCasters = L; }
+    for (const m of this.instCasters) if (m.visible) m.computeBoundingSphere();
     const sm = gl.shadowMap, nu = sm.needsUpdate;
     sm.needsUpdate = true;
     sm.render([lt], this.ctx.scene, cam);
+    if ((globalThis as { __CARDVIS?: boolean }).__CARDVIS) {   // TEST ONLY (round 2 pale-card hunt): the casters this pass saw
+      const fr = new THREE.Frustum().setFromProjectionMatrix(new THREE.Matrix4().multiplyMatrices(lt.shadow.camera.projectionMatrix, lt.shadow.camera.matrixWorldInverse));
+      const names: string[] = [];
+      this.ctx.scene.traverseVisible((o) => { const m = o as THREE.Mesh; if (!m.isMesh || !m.castShadow || !m.geometry) return; if (!m.geometry.boundingSphere) m.geometry.computeBoundingSphere(); const bs = m.geometry.boundingSphere!.clone().applyMatrix4(m.matrixWorld); if (m.frustumCulled === false || fr.intersectsSphere(bs)) names.push((m.name || m.parent?.name || "?") + "@" + bs.center.toArray().map((v) => v.toFixed(1)).join(",")); });
+      const key = names.sort().join("|"); const G = globalThis as { __CARDVISK?: string };
+      if (key !== G.__CARDVISK) { const prev = new Set((G.__CARDVISK ?? "").split("|")), now = new Set(names); console.warn("CARDVISC +" + names.filter((n) => !prev.has(n)).join(" ") + " -" + [...prev].filter((n) => !now.has(n)).join(" ")); G.__CARDVISK = key; }
+    }
     sm.needsUpdate = nu;
     if (this.measure) { gl.getContext().finish(); this.costVisMs = performance.now() - t0; }
     this.U.tVis.value = lt.shadow.map ? lt.shadow.map.texture : null;

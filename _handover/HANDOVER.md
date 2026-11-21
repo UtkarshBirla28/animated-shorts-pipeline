@@ -1,3 +1,54 @@
+# LATEST (2026-11-21 09:40): POINTING IS SHELVED BY THE OWNER (script not good). Do not resume it unless he asks. Lessons: LESSONS.md 64-74.
+# Its last state (if he ever asks to resume): the last blocks of briefs/v3/pointing/LEAD_DECISIONS.md. The rest of this file is older.
+
+# HANDOVER 2 (2026-11-20 19:30, from the office PC to the owner's next PC). READ THIS BLOCK FIRST.
+
+You are the LEAD. The old handover (below, from 09:00) still explains the project; this block is the state now.
+State of play in detail: the blocks dated "NEW PC" at the end of `briefs/v3/pointing/LEAD_DECISIONS.md`. Team facts
+and the owner's orders of today: `_handover/TEAM_BRIEF_NEW_PC.md` (fix its paths for the PC you are on).
+
+## Done today
+- SCRIPT locked in the Ricks Clips manner (owner's order): `sound/pointing/SCRIPT_v4.md` (+ script_v4/lines_v4.json,
+  voice_v4.json). Study, blind reads, fact check: `sound/pointing/script_v5_ricks/`. No line 6; ids not renumbered.
+- VOICE built and installed: `sound/pointing/voice_v4/`, `studio/src/videos3/pointing/v4/words.ts` (real). Film =
+  2054 f = 68.47 s (limit 70). ALT with a rising "Did you tap?!": `sound/pointing/voice_v4_alt_rising_tap/`.
+- SOUND: `sound/pointing/audio/mix_v4.wav` (exactly 2054 f) and `opening_v4_mix.wav`; full gate 20 of 22 next to clown.
+- CLOCK: 38 shots, `retime_v4.py --no-script` = ALL CHECKS PASS, tsc 0 (checked 19:23). Captions break on cuts.
+- UPLOAD KIT: `studio/out/pointing_v4/upload/UPLOAD_KIT_v4.md` (title pick "Why Japan's Train Drivers Shout at Green
+  Lights": check "green lights" against FACTS_v4 before use).
+- Render instructions for the proper render: `_handover/RENDER_ON_OTHER_PC.md` (one command: film_v4.py).
+- Previews for the owner: `pointing_preview/` (voice_v4_FULL..., SOUND_v4_full_mix..., the *_v4_* sheets).
+
+## NOT done: the pictures are not render-ready. Each owner stopped mid-list and wrote a "V5 HANDOVER" block at the
+## top of its notes file (open list in order, frames checked, commands). Launch one agent per role and continue.
+| role | notes file | biggest open items |
+|---|---|---|
+| LAB | studio/src/kit/home/NOTES.md | frame 0 moved in (lamp big, her head and shoulders, button): stills only; LIFE in the still lab shots (they hold 77-100 % of frames); v10b / v14 / v13 need a row ACROSS the frame (lead decision: do it); cereal box must read in v17; faster glides v01 v15 v18 v36; hall deep red from LOOK |
+| CAST | studio/src/videos3/pointing/cast/NOTES.md | default idle life (written, not seen in a render); driver's PROFILE point for the side-on v20; kid's copy-point bigger; coal man shading his eyes; pyjamas; arm-out recount (was 25.3 %; lead allows up to 16 %) |
+| TRAIN | studio/src/kit/vehicles/NOTES.md | v20 side-on exterior (lead chose it; flag `V20_SIDE_ON` in v4/sets/cab.ts is still false until the arm reads); glides v20 v23 v25 v26 v28; no cab shake in the last 15 f |
+| STATION | studio/src/kit/rail/NOTES.md | v35 conductor whole in frame with a visible arm to the sign; v32 hand-to-board gap; door reads; glides >= 0.25 %/f; movers alive in rests |
+| LOOK | studio/out/pointing/look_test/LOOK_PLAN.md | hall alarm red (works in lookdev, not in lab_hall.ts); kitchen palette; frame 0 light on the new lens; re-check NY and the car |
+| DIRECTOR | briefs/v3/pointing/DIRECTOR_NOTES.md | hold frames about 26 % estimated (target 12-20 %): re-run probe_cams_v4 after owners' camera + life changes; then the DRAFT FILM PASS |
+| SOUND / VOICE | sound/pointing/audio/NOTES.md, sound/pointing/voice/NOTES.md | done; re-run mix.py only if the clock changes; owner to choose low or rising "Did you tap?" by ear |
+
+## Order of work from here
+1. Setup on the new PC (`_handover/setup/SETUP_NEW_PC.ps1`), key file in `~/.secrets/elevenlabs_api_key` (not in the
+   zip; counter 34,974 / 40,000 at 19:25, stop 38,500). If `~/research_notes` already exists there, copy
+   `_external/research_notes/ricksclips` over it by hand (new transcripts and narration stats of 2026-11-20).
+2. Finish the owners' open lists (stills and DRAFT renders are allowed for testing; look at every frame you render).
+3. LEAD'S GATE before the proper render: independent bug hunt on all 38 shots; DRAFT film pass
+   (`film_v4.py --quality=draft --no-copy`: render, mux, gates_v4 with the cast log, qa_gates, compare_films,
+   storyboard); motion audits (hook, story and fun, picture and glitches, sound) next to anti-theft, clown and
+   Ricks Clips; fix; repeat. Then the proper preview render, then show the owner.
+## Owner's orders of 2026-11-20 (binding)
+- Story and narration like Ricks Clips (youtube.com/@RicksClips3000) and based on our studies. Done for the text.
+- Stills are VERY important: take images, look, fix the code, repeat. Low-quality renders for testing are fine.
+- "when we are rendering i need things without any bugs": check again and again before the proper render.
+- Never upload, commit or push unless asked. Never time-stretch the voice. Film under 70 s.
+- Weak spots every blind reader named: New York feels stapled on; at least one Ricks script still ranks above ours.
+
+---
+
 # HANDOVER: finish the Short "the trap" (pointing v4) on this PC
 
 Written by the lead on 2026-11-20 at 09:00, when the owner switched off the first laptop and moved the project.

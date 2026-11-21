@@ -16,7 +16,7 @@ HOME = os.path.expanduser("~")
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DESKTOP = os.path.dirname(ROOT)
 TOP = "animated-shorts-studio"          # folder name inside the zip
-OUT_ZIP = os.path.join(DESKTOP, "POINTING_V4_HANDOVER.zip")
+OUT_ZIP = os.path.join(os.path.expanduser("~"), "Desktop", "POINTING_V5_HANDOVER_2026-11-20.zip")
 
 # Folder names that never go in, wherever they are.
 SKIP_DIRS = {"node_modules", ".venv", "venv", "__pycache__", ".git", "_remotion-tmp",
@@ -50,6 +50,7 @@ GROUPS = [
     # ---- chosen outputs: reports, yardstick films, stills (never render caches)
     ("out pointing",     rel("studio", "out", "pointing"),  TOP + "/studio/out/pointing", None, 60),
     ("out pointing_v4",  rel("studio", "out", "pointing_v4"), TOP + "/studio/out/pointing_v4", None, 120),
+    ("out pointing_cast", rel("studio", "out", "pointing_cast"), TOP + "/studio/out/pointing_cast", None, 120),
     ("out kit_vehicles", rel("studio", "out", "kit_vehicles"), TOP + "/studio/out/kit_vehicles", None, 30),
     ("out kit_home",     rel("studio", "out", "kit_home"),  TOP + "/studio/out/kit_home", None, 30),
     ("film antitheft",   rel("studio", "out", "antitheft"), TOP + "/studio/out/antitheft", "FINAL_ONLY", None),
@@ -57,7 +58,7 @@ GROUPS = [
     ("owner previews",   rel("pointing_preview"),           TOP + "/pointing_preview",   None, 60),
     ("channel art",      rel("channel_art"),                TOP + "/channel_art",        None, 30),
     # ---- things that live OUTSIDE the project on this PC
-    ("research notes",   os.path.join(HOME, "research_notes"), "_external/research_notes", None, 40),
+    ("research notes",   os.path.join(DESKTOP, "_external", "research_notes") if os.path.isdir(os.path.join(DESKTOP, "_external", "research_notes")) else os.path.join(HOME, "research_notes"), "_external/research_notes", None, 40),
     ("reference shorts", os.path.join(DESKTOP, "yt short videos"), "_external/yt short videos", None, 200),
 ]
 

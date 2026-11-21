@@ -1,147 +1,259 @@
 {
- "total": 2063,
- "source": "v4/plan_words.ts (the plan of sound/pointing/script_v4/lines_v4.json)",
- "notes": [
-  "shot v05: its rule gives frame 172, moved to 173",
-  "shot v10: its rule gives frame 384, moved to 390"
- ],
+ "total": 2066,
+ "source": "v4/words.ts (the real voice: 185 words)",
+ "notes": [],
+ "EV": {
+  "lampGreen": 1.58,
+  "goFlashes": [
+   3.56,
+   4.02,
+   4.44,
+   4.82,
+   5.16,
+   5.46
+  ],
+  "red": 5.78,
+  "redBeatEnd": 6.67,
+  "redCut": 5.8,
+  "xPop": 7.51,
+  "loopPoint": 67.07,
+  "loopTail": 68.375,
+  "loopTailClear": 68.66666666666667,
+  "press": [
+   3.7933333333333334,
+   4.253333333333333,
+   4.606666666666667,
+   4.986666666666667,
+   5.293333333333334,
+   5.593333333333334
+  ],
+  "pressHoldF": [
+   2,
+   2,
+   2,
+   2,
+   2,
+   2
+  ],
+  "redPress": 5.98,
+  "fiveLand": [
+   15.608333333333333,
+   15.808333333333334,
+   16.008333333333333,
+   16.208333333333332,
+   16.408333333333335
+  ],
+  "wavePoint": [
+   18.18,
+   18.28,
+   18.38,
+   18.48,
+   18.58,
+   18.68,
+   18.78,
+   18.88,
+   18.98,
+   19.08,
+   19.18,
+   19.28
+  ],
+  "notOne": 20.1,
+  "engineIn": 35.233333333333334,
+  "enginePass": 36.483333333333334,
+  "nyPoint": 55.15,
+  "nyDoors": 55.9,
+  "nyDoorsOpen": 56.5,
+  "nyArmDrop": 55.983333333333334,
+  "xPops": [
+   15.608333333333333,
+   15.808333333333334,
+   16.008333333333333,
+   16.208333333333332,
+   16.408333333333335
+  ],
+  "boardFlips": [
+   15.808333333333334,
+   16.008333333333333,
+   16.208333333333332,
+   16.408333333333335
+  ],
+  "autoTaps": [
+   23.555,
+   23.955
+  ],
+  "birdsLift": 35.28333333333333,
+  "birdsLiftEach": [
+   35.28333333333333,
+   35.35333333333333,
+   35.42333333333333,
+   35.49333333333333,
+   35.56333333333333,
+   35.63333333333333
+  ],
+  "doorsOpen": 55.9,
+  "loopLampOn": 67.07,
+  "loopLampOff": 68.375
+ },
  "shots": [
   {
    "id": "v01",
    "start": "line:L01",
+   "closeUp": true,
    "set": "lab",
    "owner": "LAB",
    "place": "FRAME 0: the big signal lamp (dark) at the top, the young woman at the one big button below, finger ready, eyes wide",
    "from": 0,
-   "to": 46,
+   "to": 40,
    "words": "Tap your foot on every"
   },
   {
    "id": "v02",
    "start": "word:green#1",
-   "lead": 0.05,
+   "lead": 0.25,
+   "drift": 0.1,
+   "closeUp": true,
    "set": "lab",
    "owner": "LAB",
    "place": "cut in: the lamp lights GREEN, her face below it, looking up",
-   "from": 46,
-   "to": 87,
+   "from": 40,
+   "to": 105,
    "words": "green light. Only green."
   },
   {
    "id": "v03",
    "start": "word:go#1",
    "lead": 0.07,
+   "rest": 0,
+   "closeUp": true,
    "set": "lab",
    "owner": "LAB",
    "place": "the Go run: the lamp flashes green on each Go, she presses each time, the camera pushes in (pressure)",
-   "rest": 6,
-   "from": 87,
-   "to": 153,
-   "words": "Go. Go. Go. Go. Go. Go."
+   "from": 105,
+   "to": 174,
+   "words": "Go. Go. Go. Go. Go. Go. Go!"
   },
   {
    "id": "v04",
    "start": "word:go#7",
-   "lead": 0.03,
+   "lead": -0.017,
+   "drift": 0.05,
+   "rest": 0,
    "set": "lab",
    "owner": "LAB",
    "place": "HARD CUT TO RED: the lamp RED, red light floods the room, her hand comes down anyway; the held beat",
    "closeUp": true,
-   "rest": 20,
-   "from": 153,
-   "to": 173,
-   "words": "Go!"
+   "from": 174,
+   "to": 197,
+   "words": ""
   },
   {
    "id": "v05",
    "start": "line:L03",
+   "drift": 0.1,
+   "rest": 0,
    "set": "lab",
    "owner": "LAB",
    "place": "her frozen face, hand on the button, staring up at the red lamp; a big red X pops on 'She'",
    "closeUp": true,
-   "from": 173,
-   "to": 223,
+   "from": 197,
+   "to": 245,
    "words": "Did you tap? She did."
   },
   {
    "id": "v06",
    "start": "line:L04",
+   "drift": 0.08,
+   "driftMaxM": 0.5,
    "set": "lab",
    "owner": "LAB",
-   "place": "WIDE: the 1994 lab, two rows of twelve at button boards; board 1994",
-   "from": 223,
-   "to": 291,
-   "words": "In 1994, a railway lab in Japan"
+   "place": "WIDE: the lab, two rows of twelve at button boards; the board 1994 BIG on the wall (the only date in the film: on screen >= 1 s)",
+   "from": 245,
+   "to": 289,
+   "words": "Japan's railway lab"
   },
   {
    "id": "v07",
    "start": "word:set#1",
+   "drift": 0.12,
    "set": "lab",
    "owner": "LAB",
    "place": "a grinning researcher's hand on a big switch: the trap",
-   "from": 291,
+   "from": 289,
    "to": 333,
    "words": "set a trap like this."
   },
   {
    "id": "v08",
-   "start": "word:a#3",
+   "start": "word:a#2",
+   "drift": 0.1,
+   "driftMaxM": 0.5,
+   "rest": 0,
    "set": "lab",
    "owner": "LAB",
    "place": "the counter runs 98, 99, 100",
    "from": 333,
-   "to": 370,
-   "words": "A hundred lights. Then,"
+   "to": 378,
+   "words": "A hundred lights, then"
   },
   {
    "id": "v09",
    "start": "word:red#1",
+   "drift": 0.08,
+   "driftMaxM": 0.5,
    "set": "lab",
    "owner": "LAB",
    "place": "one big RED floods the whole room (hard cut)",
-   "from": 370,
-   "to": 390,
-   "words": "red. Twelve"
+   "from": 378,
+   "to": 398,
+   "words": "red."
   },
   {
    "id": "v10",
    "start": "line:L05",
+   "drift": 0.1,
+   "driftMaxM": 0.5,
    "set": "lab",
    "owner": "LAB",
-   "place": "the first row watching their lamps; on 'Five' five hands slam down, five red X's pop, five faces freeze. Board: 5 OF 12",
-   "from": 390,
-   "to": 453,
-   "words": "people just watched. Five pressed anyway."
+   "place": "the first row of twelve watching their lamps, bored (held); the lamps go red",
+   "from": 398,
+   "to": 460,
+   "words": "Twelve people just watch."
   },
   {
-   "id": "v11",
-   "start": "line:L06",
+   "id": "v10b",
+   "start": "word:five#1",
+   "drift": 0.22,
+   "driftMaxM": 0.5,
    "set": "lab",
    "owner": "LAB",
-   "place": "closer on three of them: red again, three hands down again; the researcher's clipboard drops",
-   "from": 453,
-   "to": 541,
-   "words": "Ten lights later, three of them did it again."
+   "place": "CLOSER on the same row: five hands SLAM down, five red X's pop, five faces freeze; board 5 OF 12",
+   "from": 460,
+   "to": 509,
+   "words": "Five press anyway."
   },
   {
    "id": "v12",
    "start": "line:L07",
+   "drift": 0.15,
+   "driftMaxM": 1,
    "set": "lab",
    "owner": "LAB",
    "place": "the second row: the researcher holds up a card with a pointing hand on it (the extra rule)",
-   "from": 541,
-   "to": 603,
-   "words": "Twelve others got one extra rule:"
+   "from": 509,
+   "to": 545,
+   "words": "Twelve others have to"
   },
   {
    "id": "v13",
    "start": "word:point#1",
+   "drift": 0.14,
+   "driftMaxM": 0.5,
    "set": "lab",
    "owner": "LAB",
    "place": "twelve point at their lamps and call, one after another, like a wave",
-   "from": 603,
-   "to": 665,
-   "words": "point at the light and say it."
+   "from": 545,
+   "to": 600,
+   "words": "point at the light, and say it."
   },
   {
    "id": "v14",
@@ -149,9 +261,9 @@
    "set": "lab",
    "owner": "LAB",
    "place": "RED: all twelve point at it, mouths open; twelve untouched buttons. Board: 0 OF 12",
-   "from": 665,
-   "to": 697,
-   "words": "Not one pressed."
+   "from": 600,
+   "to": 647,
+   "words": "Not one presses."
   },
   {
    "id": "v15",
@@ -159,49 +271,52 @@
    "set": "lab",
    "owner": "LAB",
    "place": "a bored volunteer stares straight at the red lamp",
-   "from": 697,
-   "to": 749,
-   "words": "After a hundred times, your"
+   "from": 647,
+   "to": 698,
+   "words": "After a hundred times,"
   },
   {
    "id": "v16",
-   "start": "word:hand#1",
+   "start": "word:your#2",
+   "drift": -0.14,
    "set": "lab",
    "owner": "LAB",
    "place": "...his hand taps the button by itself",
-   "from": 749,
-   "to": 803,
-   "words": "hand stops waiting for your brain."
+   "from": 698,
+   "to": 768,
+   "words": "your hand stops waiting for your brain."
   },
   {
    "id": "v17",
    "start": "line:L10",
+   "drift": 0.18,
    "set": "kitchen",
    "owner": "LAB",
    "place": "kitchen, morning: someone in pyjamas at the open fridge, staring at the cereal box inside it",
-   "from": 803,
-   "to": 891,
+   "from": 768,
+   "to": 837,
    "words": "That's how the cereal ends up in the fridge."
   },
   {
    "id": "v18",
    "start": "line:L11",
+   "closeUp": true,
    "set": "lab",
    "owner": "LAB",
    "place": "the young woman from the start points at the red lamp and says it; her other hand off the button; a green tick",
-   "from": 891,
-   "to": 966,
+   "from": 837,
+   "to": 923,
    "words": "Pointing and saying it makes your hand wait."
   },
   {
    "id": "v19",
-   "start": "word:which#1",
+   "start": "word:so#1",
    "set": "jp_platform",
    "owner": "TRAIN",
    "place": "TODAY: a bright train glides into a sunny platform",
-   "from": 966,
-   "to": 1022,
-   "words": "Which is why Japan's train drivers"
+   "from": 923,
+   "to": 969,
+   "words": "So Japan's train drivers"
   },
   {
    "id": "v20",
@@ -209,19 +324,21 @@
    "set": "cab",
    "owner": "TRAIN",
    "place": "the cab: the driver (cap, white gloves) snaps a crisp side-on point at a green signal",
-   "from": 1022,
-   "to": 1080,
-   "words": "point at their signals, and shout."
+   "from": 969,
+   "to": 1033,
+   "words": "point at their signals, and shout. Signal"
   },
   {
    "id": "v21",
    "start": "line:L12",
+   "lead": -0.3,
+   "drift": 0.18,
    "set": "car",
    "owner": "TRAIN",
    "place": "SIGNAL CLEAR!: a kid at the front window copies him",
-   "from": 1080,
-   "to": 1103,
-   "words": "Signal clear!"
+   "from": 1033,
+   "to": 1057,
+   "words": "clear!"
   },
   {
    "id": "v22",
@@ -229,28 +346,42 @@
    "set": "steam",
    "owner": "TRAIN",
    "place": "HARD CUT: a black steam engine thunders through bright green fields, blue sky, long white smoke",
-   "from": 1103,
-   "to": 1172,
-   "words": "The strange part is where it came from."
+   "from": 1057,
+   "to": 1144,
+   "words": "But the shouting rule didn't start as science."
   },
   {
    "id": "v23",
    "start": "word:the#5",
    "set": "steam",
    "owner": "TRAIN",
-   "place": "the cab: the driver leans to the little round window, peering hard; the signal ahead a soft blur",
-   "from": 1172,
-   "to": 1274,
-   "words": "The story goes, a steam-train driver's eyes had gone bad."
+   "place": "the cab: the driver leans to the little round window, peering hard",
+   "from": 1144,
+   "to": 1214,
+   "words": "The story goes, a steam-train driver's"
+  },
+  {
+   "id": "v23b",
+   "start": "word:eyes#1",
+   "lead": 0.12,
+   "drift": 0.25,
+   "set": "steam",
+   "owner": "TRAIN",
+   "place": "HIS VIEW through the little round window: the signal ahead is a soft blur (eyes had gone bad)",
+   "from": 1214,
+   "to": 1262,
+   "words": "eyes had gone bad."
   },
   {
    "id": "v24",
    "start": "line:L14",
+   "drift": 0.2,
+   "driftMaxM": 0.3,
    "set": "steam",
    "owner": "TRAIN",
    "place": "he turns and shouts across the cab: SIGNAL CLEAR!",
-   "from": 1274,
-   "to": 1297,
+   "from": 1262,
+   "to": 1305,
    "words": "Signal clear!"
   },
   {
@@ -259,58 +390,64 @@
    "set": "steam",
    "owner": "TRAIN",
    "place": "the coal man mid-shovel, fire glowing, hears it",
-   "from": 1297,
-   "to": 1382,
-   "words": "So he shouted every signal to his coal man,"
+   "from": 1305,
+   "to": 1359,
+   "words": "So he shouted every signal"
   },
   {
    "id": "v26",
-   "start": "word:who#1",
+   "start": "word:to#2",
    "set": "steam",
    "owner": "TRAIN",
-   "place": "the coal man leans out and looks at the signal post (arm lowered = clear)",
-   "from": 1382,
-   "to": 1440,
-   "words": "who checked it and shouted back."
+   "place": "the coal man leans out and LOOKS at the semaphore (arm lowered = clear) BEFORE he shouts",
+   "from": 1359,
+   "to": 1388,
+   "words": "to his coal man."
   },
   {
    "id": "v27",
    "start": "line:L16",
+   "lead": 0.35,
+   "drift": 0.12,
+   "closeUp": true,
    "set": "steam",
    "owner": "TRAIN",
    "place": "...and bellows CLEAR! back with a huge grin",
-   "from": 1440,
-   "to": 1462,
+   "from": 1388,
+   "to": 1420,
    "words": "Clear!"
   },
   {
    "id": "v28",
    "start": "line:L17",
+   "lead": 0.05,
    "set": "steam",
    "owner": "TRAIN",
    "place": "the boss (dark suit, bowler) squeezed into the corner of the cab, delighted",
-   "from": 1462,
-   "to": 1530,
-   "words": "His boss rode along, loved it, and"
+   "from": 1420,
+   "to": 1486,
+   "words": "His boss rode along, loved it,"
   },
   {
    "id": "v29",
-   "start": "word:made#1",
+   "start": "word:and#4",
+   "closeUp": true,
    "set": "steam",
    "owner": "TRAIN",
    "place": "the boss writes RULE in his notebook",
-   "from": 1530,
-   "to": 1568,
-   "words": "made it a rule."
+   "from": 1486,
+   "to": 1524,
+   "words": "and made it a rule."
   },
   {
    "id": "v30",
    "start": "line:L18",
+   "drift": -0.28,
    "set": "steam",
    "owner": "TRAIN",
    "place": "the driver nose to the glass, peering; behind him the boss beams and nods (held)",
-   "from": 1568,
-   "to": 1628,
+   "from": 1524,
+   "to": 1577,
    "words": "He never knew about the eyes."
   },
   {
@@ -319,19 +456,19 @@
    "set": "ny_station",
    "owner": "STATION",
    "place": "New York subway station: the train in, the conductor leans from the middle window",
-   "from": 1628,
-   "to": 1675,
+   "from": 1577,
+   "to": 1639,
    "words": "New York copied the pointing:"
   },
   {
    "id": "v32",
-   "start": "word:conductors#1",
+   "start": "word:subway#1",
    "set": "ny_station",
    "owner": "STATION",
    "place": "he points at the black-and-white striped board; only then the doors open",
-   "from": 1675,
-   "to": 1771,
-   "words": "conductors must point at this board before the doors open."
+   "from": 1639,
+   "to": 1736,
+   "words": "subway conductors must point at a striped board."
   },
   {
    "id": "v33",
@@ -339,8 +476,8 @@
    "set": "ny_station",
    "owner": "STATION",
    "place": "a young man and a young woman hold up a big cardboard sign right under the board",
-   "from": 1771,
-   "to": 1842,
+   "from": 1736,
+   "to": 1806,
    "words": "So two New Yorkers held up a sign:"
   },
   {
@@ -350,8 +487,8 @@
    "owner": "STATION",
    "place": "the sign, big: POINT HERE IF YOU ARE DEAD SEXY",
    "closeUp": true,
-   "from": 1842,
-   "to": 1914,
+   "from": 1806,
+   "to": 1880,
    "words": "\"Point here if you are dead sexy.\""
   },
   {
@@ -360,19 +497,33 @@
    "set": "ny_station",
    "owner": "STATION",
    "place": "the conductor points at it, deadpan, then grins",
-   "from": 1914,
-   "to": 1974,
+   "from": 1880,
+   "to": 1947,
    "words": "And the conductors had to point."
   },
   {
-   "id": "v36",
+   "id": "v36a",
    "start": "line:L22",
+   "drift": -0.18,
+   "closeUp": true,
+   "rest": 0,
    "set": "lab",
    "owner": "LAB",
-   "place": "the big lamp and the young woman at the button, exactly as frame 0; her arm already up, pointing, mouth open (the loop match)",
-   "from": 1974,
-   "to": 2063,
-   "words": "Now try again. This time, point, and say it."
+   "place": "'Now try again.': v02's cut-in lens: the big lamp DARK again (re-armed), her face below looking up at it, finger ready",
+   "from": 1947,
+   "to": 1986,
+   "words": "Now try again."
+  },
+  {
+   "id": "v36",
+   "start": "word:this#2",
+   "closeUp": true,
+   "set": "lab",
+   "owner": "LAB",
+   "place": "from 'This time': frame 0's lens; her arm already up, pointing side-on at the lamp, mouth open (the loop match on the LAST frame)",
+   "from": 1986,
+   "to": 2066,
+   "words": "This time, point, and say it."
   }
  ],
  "toks": [
@@ -385,8 +536,8 @@
    "li": 0,
    "i": 0,
    "s": 0.05,
-   "e": 0.283,
-   "src": "plan"
+   "e": 0.34,
+   "src": "voice"
   },
   {
    "w": "your",
@@ -396,9 +547,9 @@
    "line": "L01",
    "li": 0,
    "i": 1,
-   "s": 0.303,
-   "e": 0.536,
-   "src": "plan"
+   "s": 0.34,
+   "e": 0.62,
+   "src": "voice"
   },
   {
    "w": "foot",
@@ -408,9 +559,9 @@
    "line": "L01",
    "li": 0,
    "i": 2,
-   "s": 0.556,
-   "e": 0.789,
-   "src": "plan"
+   "s": 0.62,
+   "e": 0.8,
+   "src": "voice"
   },
   {
    "w": "on",
@@ -420,9 +571,9 @@
    "line": "L01",
    "li": 0,
    "i": 3,
-   "s": 0.809,
-   "e": 1.042,
-   "src": "plan"
+   "s": 0.8,
+   "e": 1.005,
+   "src": "voice"
   },
   {
    "w": "every",
@@ -432,9 +583,9 @@
    "line": "L01",
    "li": 0,
    "i": 4,
-   "s": 1.062,
-   "e": 1.559,
-   "src": "plan"
+   "s": 1.16,
+   "e": 1.58,
+   "src": "voice"
   },
   {
    "w": "green",
@@ -444,9 +595,9 @@
    "line": "L01",
    "li": 0,
    "i": 5,
-   "s": 1.579,
-   "e": 1.812,
-   "src": "plan"
+   "s": 1.58,
+   "e": 1.88,
+   "src": "voice"
   },
   {
    "w": "light.",
@@ -456,9 +607,9 @@
    "line": "L01",
    "li": 0,
    "i": 6,
-   "s": 1.832,
-   "e": 2.065,
-   "src": "plan"
+   "s": 1.88,
+   "e": 2.3,
+   "src": "voice"
   },
   {
    "w": "Only",
@@ -468,9 +619,9 @@
    "line": "L01",
    "li": 0,
    "i": 7,
-   "s": 2.085,
-   "e": 2.45,
-   "src": "plan"
+   "s": 2.55,
+   "e": 2.95,
+   "src": "voice"
   },
   {
    "w": "green.",
@@ -480,9 +631,9 @@
    "line": "L01",
    "li": 0,
    "i": 8,
-   "s": 2.47,
-   "e": 2.819,
-   "src": "plan"
+   "s": 2.95,
+   "e": 3.41,
+   "src": "voice"
   },
   {
    "w": "Go.",
@@ -492,9 +643,9 @@
    "line": "L02",
    "li": 1,
    "i": 9,
-   "s": 2.969,
-   "e": 3.169,
-   "src": "plan"
+   "s": 3.56,
+   "e": 3.965,
+   "src": "voice"
   },
   {
    "w": "Go.",
@@ -504,9 +655,9 @@
    "line": "L02",
    "li": 1,
    "i": 10,
-   "s": 3.429,
-   "e": 3.629,
-   "src": "plan"
+   "s": 4.02,
+   "e": 4.405,
+   "src": "voice"
   },
   {
    "w": "Go.",
@@ -516,9 +667,9 @@
    "line": "L02",
    "li": 1,
    "i": 11,
-   "s": 3.849,
-   "e": 4.049,
-   "src": "plan"
+   "s": 4.44,
+   "e": 4.785,
+   "src": "voice"
   },
   {
    "w": "Go.",
@@ -528,9 +679,9 @@
    "line": "L02",
    "li": 1,
    "i": 12,
-   "s": 4.229,
-   "e": 4.429,
-   "src": "plan"
+   "s": 4.82,
+   "e": 5.125,
+   "src": "voice"
   },
   {
    "w": "Go.",
@@ -540,9 +691,9 @@
    "line": "L02",
    "li": 1,
    "i": 13,
-   "s": 4.569,
-   "e": 4.769,
-   "src": "plan"
+   "s": 5.16,
+   "e": 5.425,
+   "src": "voice"
   },
   {
    "w": "Go.",
@@ -552,9 +703,9 @@
    "line": "L02",
    "li": 1,
    "i": 14,
-   "s": 4.869,
-   "e": 5.069,
-   "src": "plan"
+   "s": 5.46,
+   "e": 5.745,
+   "src": "voice"
   },
   {
    "w": "Go!",
@@ -564,9 +715,9 @@
    "line": "L02",
    "li": 1,
    "i": 15,
-   "s": 5.129,
-   "e": 5.329,
-   "src": "plan"
+   "s": 5.78,
+   "e": 6.17,
+   "src": "voice"
   },
   {
    "w": "Did",
@@ -576,9 +727,9 @@
    "line": "L03",
    "li": 2,
    "i": 16,
-   "s": 5.829,
-   "e": 6.094,
-   "src": "plan"
+   "s": 6.67,
+   "e": 6.79,
+   "src": "voice"
   },
   {
    "w": "you",
@@ -588,9 +739,9 @@
    "line": "L03",
    "li": 2,
    "i": 17,
-   "s": 6.114,
-   "e": 6.379,
-   "src": "plan"
+   "s": 6.79,
+   "e": 6.95,
+   "src": "voice"
   },
   {
    "w": "tap?",
@@ -600,9 +751,9 @@
    "line": "L03",
    "li": 2,
    "i": 18,
-   "s": 6.399,
-   "e": 6.665,
-   "src": "plan"
+   "s": 6.95,
+   "e": 7.26,
+   "src": "voice"
   },
   {
    "w": "She",
@@ -612,9 +763,9 @@
    "line": "L03",
    "li": 2,
    "i": 19,
-   "s": 6.685,
-   "e": 6.95,
-   "src": "plan"
+   "s": 7.51,
+   "e": 7.75,
+   "src": "voice"
   },
   {
    "w": "did.",
@@ -624,45 +775,21 @@
    "line": "L03",
    "li": 2,
    "i": 20,
-   "s": 6.97,
-   "e": 7.367,
-   "src": "plan"
+   "s": 7.75,
+   "e": 8.045,
+   "src": "voice"
   },
   {
-   "w": "In",
-   "key": "in#1",
+   "w": "Japan's",
+   "key": "japan's#1",
    "n": 1,
    "who": "N",
    "line": "L04",
    "li": 3,
    "i": 21,
-   "s": 7.517,
-   "e": 7.773,
-   "src": "plan"
-  },
-  {
-   "w": "1994,",
-   "key": "1994#1",
-   "n": 1,
-   "who": "N",
-   "line": "L04",
-   "li": 3,
-   "i": 22,
-   "s": 7.793,
-   "e": 8.049,
-   "src": "plan"
-  },
-  {
-   "w": "a",
-   "key": "a#1",
-   "n": 1,
-   "who": "N",
-   "line": "L04",
-   "li": 3,
-   "i": 23,
-   "s": 8.069,
-   "e": 8.325,
-   "src": "plan"
+   "s": 8.265,
+   "e": 9.045,
+   "src": "voice"
   },
   {
    "w": "railway",
@@ -671,10 +798,10 @@
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 24,
-   "s": 8.345,
-   "e": 8.745,
-   "src": "plan"
+   "i": 22,
+   "s": 9.045,
+   "e": 9.405,
+   "src": "voice"
   },
   {
    "w": "lab",
@@ -683,34 +810,10 @@
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 25,
-   "s": 8.765,
-   "e": 9.021,
-   "src": "plan"
-  },
-  {
-   "w": "in",
-   "key": "in#2",
-   "n": 2,
-   "who": "N",
-   "line": "L04",
-   "li": 3,
-   "i": 26,
-   "s": 9.041,
-   "e": 9.297,
-   "src": "plan"
-  },
-  {
-   "w": "Japan",
-   "key": "japan#1",
-   "n": 1,
-   "who": "N",
-   "line": "L04",
-   "li": 3,
-   "i": 27,
-   "s": 9.317,
-   "e": 9.717,
-   "src": "plan"
+   "i": 23,
+   "s": 9.405,
+   "e": 9.665,
+   "src": "voice"
   },
   {
    "w": "set",
@@ -719,22 +822,22 @@
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 28,
-   "s": 9.737,
-   "e": 9.993,
-   "src": "plan"
+   "i": 24,
+   "s": 9.665,
+   "e": 9.885,
+   "src": "voice"
   },
   {
    "w": "a",
-   "key": "a#2",
-   "n": 2,
+   "key": "a#1",
+   "n": 1,
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 29,
-   "s": 10.013,
-   "e": 10.269,
-   "src": "plan"
+   "i": 25,
+   "s": 9.885,
+   "e": 10.145,
+   "src": "voice"
   },
   {
    "w": "trap",
@@ -743,10 +846,10 @@
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 30,
-   "s": 10.289,
-   "e": 10.545,
-   "src": "plan"
+   "i": 26,
+   "s": 10.145,
+   "e": 10.285,
+   "src": "voice"
   },
   {
    "w": "like",
@@ -755,10 +858,10 @@
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 31,
-   "s": 10.565,
-   "e": 10.821,
-   "src": "plan"
+   "i": 27,
+   "s": 10.285,
+   "e": 10.54,
+   "src": "voice"
   },
   {
    "w": "this.",
@@ -767,22 +870,22 @@
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 32,
-   "s": 10.841,
-   "e": 11.097,
-   "src": "plan"
+   "i": 28,
+   "s": 10.54,
+   "e": 10.975,
+   "src": "voice"
   },
   {
    "w": "A",
-   "key": "a#3",
-   "n": 3,
+   "key": "a#2",
+   "n": 2,
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 33,
-   "s": 11.117,
-   "e": 11.372,
-   "src": "plan"
+   "i": 29,
+   "s": 11.125,
+   "e": 11.385,
+   "src": "voice"
   },
   {
    "w": "hundred",
@@ -791,34 +894,34 @@
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 34,
-   "s": 11.392,
-   "e": 11.793,
-   "src": "plan"
+   "i": 30,
+   "s": 11.385,
+   "e": 11.705,
+   "src": "voice"
   },
   {
-   "w": "lights.",
+   "w": "lights,",
    "key": "lights#1",
    "n": 1,
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 35,
-   "s": 11.813,
-   "e": 12.069,
-   "src": "plan"
+   "i": 31,
+   "s": 11.705,
+   "e": 12.115,
+   "src": "voice"
   },
   {
-   "w": "Then,",
+   "w": "then",
    "key": "then#1",
    "n": 1,
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 36,
-   "s": 12.089,
-   "e": 12.344,
-   "src": "plan"
+   "i": 32,
+   "s": 12.28,
+   "e": 12.625,
+   "src": "voice"
   },
   {
    "w": "red.",
@@ -827,10 +930,10 @@
    "who": "N",
    "line": "L04",
    "li": 3,
-   "i": 37,
-   "s": 12.364,
-   "e": 12.748,
-   "src": "plan"
+   "i": 33,
+   "s": 12.625,
+   "e": 13.2,
+   "src": "voice"
   },
   {
    "w": "Twelve",
@@ -839,10 +942,10 @@
    "who": "N",
    "line": "L05",
    "li": 4,
-   "i": 38,
-   "s": 12.898,
-   "e": 13.095,
-   "src": "plan"
+   "i": 34,
+   "s": 13.35,
+   "e": 13.725,
+   "src": "voice"
   },
   {
    "w": "people",
@@ -851,10 +954,10 @@
    "who": "N",
    "line": "L05",
    "li": 4,
-   "i": 39,
-   "s": 13.115,
-   "e": 13.312,
-   "src": "plan"
+   "i": 35,
+   "s": 13.725,
+   "e": 14.13,
+   "src": "voice"
   },
   {
    "w": "just",
@@ -863,22 +966,22 @@
    "who": "N",
    "line": "L05",
    "li": 4,
-   "i": 40,
-   "s": 13.332,
-   "e": 13.529,
-   "src": "plan"
+   "i": 36,
+   "s": 14.13,
+   "e": 14.51,
+   "src": "voice"
   },
   {
-   "w": "watched.",
-   "key": "watched#1",
+   "w": "watch.",
+   "key": "watch#1",
    "n": 1,
    "who": "N",
    "line": "L05",
    "li": 4,
-   "i": 41,
-   "s": 13.549,
-   "e": 13.857,
-   "src": "plan"
+   "i": 37,
+   "s": 14.51,
+   "e": 15.23,
+   "src": "voice"
   },
   {
    "w": "Five",
@@ -887,22 +990,22 @@
    "who": "N",
    "line": "L05",
    "li": 4,
-   "i": 42,
-   "s": 13.877,
-   "e": 14.074,
-   "src": "plan"
+   "i": 38,
+   "s": 15.375,
+   "e": 15.89,
+   "src": "voice"
   },
   {
-   "w": "pressed",
-   "key": "pressed#1",
+   "w": "press",
+   "key": "press#1",
    "n": 1,
    "who": "N",
    "line": "L05",
    "li": 4,
-   "i": 43,
-   "s": 14.094,
-   "e": 14.403,
-   "src": "plan"
+   "i": 39,
+   "s": 15.89,
+   "e": 16.175,
+   "src": "voice"
   },
   {
    "w": "anyway.",
@@ -911,118 +1014,10 @@
    "who": "N",
    "line": "L05",
    "li": 4,
-   "i": 44,
-   "s": 14.423,
-   "e": 15.052,
-   "src": "plan"
-  },
-  {
-   "w": "Ten",
-   "key": "ten#1",
-   "n": 1,
-   "who": "N",
-   "line": "L06",
-   "li": 5,
-   "i": 45,
-   "s": 15.202,
-   "e": 15.441,
-   "src": "plan"
-  },
-  {
-   "w": "lights",
-   "key": "lights#2",
-   "n": 2,
-   "who": "N",
-   "line": "L06",
-   "li": 5,
-   "i": 46,
-   "s": 15.461,
-   "e": 15.7,
-   "src": "plan"
-  },
-  {
-   "w": "later,",
-   "key": "later#1",
-   "n": 1,
-   "who": "N",
-   "line": "L06",
-   "li": 5,
-   "i": 47,
-   "s": 15.72,
-   "e": 16.094,
-   "src": "plan"
-  },
-  {
-   "w": "three",
-   "key": "three#1",
-   "n": 1,
-   "who": "N",
-   "line": "L06",
-   "li": 5,
-   "i": 48,
-   "s": 16.114,
-   "e": 16.354,
-   "src": "plan"
-  },
-  {
-   "w": "of",
-   "key": "of#1",
-   "n": 1,
-   "who": "N",
-   "line": "L06",
-   "li": 5,
-   "i": 49,
-   "s": 16.374,
-   "e": 16.613,
-   "src": "plan"
-  },
-  {
-   "w": "them",
-   "key": "them#1",
-   "n": 1,
-   "who": "N",
-   "line": "L06",
-   "li": 5,
-   "i": 50,
-   "s": 16.633,
-   "e": 16.872,
-   "src": "plan"
-  },
-  {
-   "w": "did",
-   "key": "did#3",
-   "n": 3,
-   "who": "N",
-   "line": "L06",
-   "li": 5,
-   "i": 51,
-   "s": 16.892,
-   "e": 17.131,
-   "src": "plan"
-  },
-  {
-   "w": "it",
-   "key": "it#1",
-   "n": 1,
-   "who": "N",
-   "line": "L06",
-   "li": 5,
-   "i": 52,
-   "s": 17.151,
-   "e": 17.39,
-   "src": "plan"
-  },
-  {
-   "w": "again.",
-   "key": "again#1",
-   "n": 1,
-   "who": "N",
-   "line": "L06",
-   "li": 5,
-   "i": 53,
-   "s": 17.41,
-   "e": 17.971,
-   "src": "plan"
+   "i": 40,
+   "s": 16.175,
+   "e": 16.87,
+   "src": "voice"
   },
   {
    "w": "Twelve",
@@ -1030,11 +1025,11 @@
    "n": 2,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 54,
-   "s": 18.121,
-   "e": 18.369,
-   "src": "plan"
+   "li": 5,
+   "i": 41,
+   "s": 17.05,
+   "e": 17.43,
+   "src": "voice"
   },
   {
    "w": "others",
@@ -1042,59 +1037,35 @@
    "n": 1,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 55,
-   "s": 18.389,
-   "e": 18.776,
-   "src": "plan"
+   "li": 5,
+   "i": 42,
+   "s": 17.43,
+   "e": 17.79,
+   "src": "voice"
   },
   {
-   "w": "got",
-   "key": "got#1",
+   "w": "have",
+   "key": "have#1",
    "n": 1,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 56,
-   "s": 18.796,
-   "e": 19.043,
-   "src": "plan"
+   "li": 5,
+   "i": 43,
+   "s": 17.79,
+   "e": 18.03,
+   "src": "voice"
   },
   {
-   "w": "one",
-   "key": "one#1",
+   "w": "to",
+   "key": "to#1",
    "n": 1,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 57,
-   "s": 19.063,
-   "e": 19.451,
-   "src": "plan"
-  },
-  {
-   "w": "extra",
-   "key": "extra#1",
-   "n": 1,
-   "who": "N",
-   "line": "L07",
-   "li": 6,
-   "i": 58,
-   "s": 19.471,
-   "e": 19.858,
-   "src": "plan"
-  },
-  {
-   "w": "rule:",
-   "key": "rule#1",
-   "n": 1,
-   "who": "N",
-   "line": "L07",
-   "li": 6,
-   "i": 59,
-   "s": 19.878,
-   "e": 20.126,
-   "src": "plan"
+   "li": 5,
+   "i": 44,
+   "s": 18.03,
+   "e": 18.18,
+   "src": "voice"
   },
   {
    "w": "point",
@@ -1102,11 +1073,11 @@
    "n": 1,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 60,
-   "s": 20.146,
-   "e": 20.393,
-   "src": "plan"
+   "li": 5,
+   "i": 45,
+   "s": 18.18,
+   "e": 18.47,
+   "src": "voice"
   },
   {
    "w": "at",
@@ -1114,11 +1085,11 @@
    "n": 1,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 61,
-   "s": 20.413,
-   "e": 20.66,
-   "src": "plan"
+   "li": 5,
+   "i": 46,
+   "s": 18.47,
+   "e": 18.63,
+   "src": "voice"
   },
   {
    "w": "the",
@@ -1126,23 +1097,23 @@
    "n": 1,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 62,
-   "s": 20.68,
-   "e": 20.928,
-   "src": "plan"
+   "li": 5,
+   "i": 47,
+   "s": 18.63,
+   "e": 18.81,
+   "src": "voice"
   },
   {
-   "w": "light",
+   "w": "light,",
    "key": "light#2",
    "n": 2,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 63,
-   "s": 20.948,
-   "e": 21.195,
-   "src": "plan"
+   "li": 5,
+   "i": 48,
+   "s": 18.81,
+   "e": 19.045,
+   "src": "voice"
   },
   {
    "w": "and",
@@ -1150,11 +1121,11 @@
    "n": 1,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 64,
-   "s": 21.215,
-   "e": 21.463,
-   "src": "plan"
+   "li": 5,
+   "i": 49,
+   "s": 19.045,
+   "e": 19.35,
+   "src": "voice"
   },
   {
    "w": "say",
@@ -1162,23 +1133,23 @@
    "n": 1,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 65,
-   "s": 21.483,
-   "e": 21.73,
-   "src": "plan"
+   "li": 5,
+   "i": 50,
+   "s": 19.35,
+   "e": 19.53,
+   "src": "voice"
   },
   {
    "w": "it.",
-   "key": "it#2",
-   "n": 2,
+   "key": "it#1",
+   "n": 1,
    "who": "N",
    "line": "L07",
-   "li": 6,
-   "i": 66,
-   "s": 21.75,
-   "e": 22.121,
-   "src": "plan"
+   "li": 5,
+   "i": 51,
+   "s": 19.53,
+   "e": 19.95,
+   "src": "voice"
   },
   {
    "w": "Not",
@@ -1186,35 +1157,35 @@
    "n": 1,
    "who": "N",
    "line": "L08",
-   "li": 7,
-   "i": 67,
-   "s": 22.271,
-   "e": 22.451,
-   "src": "plan"
+   "li": 6,
+   "i": 52,
+   "s": 20.1,
+   "e": 20.52,
+   "src": "voice"
   },
   {
    "w": "one",
-   "key": "one#2",
-   "n": 2,
+   "key": "one#1",
+   "n": 1,
    "who": "N",
    "line": "L08",
-   "li": 7,
-   "i": 68,
-   "s": 22.471,
-   "e": 22.752,
-   "src": "plan"
+   "li": 6,
+   "i": 53,
+   "s": 20.52,
+   "e": 20.88,
+   "src": "voice"
   },
   {
-   "w": "pressed.",
-   "key": "pressed#2",
-   "n": 2,
+   "w": "presses.",
+   "key": "presses#1",
+   "n": 1,
    "who": "N",
    "line": "L08",
-   "li": 7,
-   "i": 69,
-   "s": 22.772,
-   "e": 23.194,
-   "src": "plan"
+   "li": 6,
+   "i": 54,
+   "s": 20.88,
+   "e": 21.435,
+   "src": "voice"
   },
   {
    "w": "After",
@@ -1222,23 +1193,23 @@
    "n": 1,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 70,
-   "s": 23.344,
-   "e": 23.707,
-   "src": "plan"
+   "li": 7,
+   "i": 55,
+   "s": 21.655,
+   "e": 22.115,
+   "src": "voice"
   },
   {
    "w": "a",
-   "key": "a#4",
-   "n": 4,
+   "key": "a#3",
+   "n": 3,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 71,
-   "s": 23.727,
-   "e": 23.958,
-   "src": "plan"
+   "li": 7,
+   "i": 56,
+   "s": 22.115,
+   "e": 22.415,
+   "src": "voice"
   },
   {
    "w": "hundred",
@@ -1246,11 +1217,11 @@
    "n": 2,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 72,
-   "s": 23.978,
-   "e": 24.34,
-   "src": "plan"
+   "li": 7,
+   "i": 57,
+   "s": 22.415,
+   "e": 22.655,
+   "src": "voice"
   },
   {
    "w": "times,",
@@ -1258,11 +1229,11 @@
    "n": 1,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 73,
-   "s": 24.36,
-   "e": 24.723,
-   "src": "plan"
+   "li": 7,
+   "i": 58,
+   "s": 22.655,
+   "e": 23.145,
+   "src": "voice"
   },
   {
    "w": "your",
@@ -1270,11 +1241,11 @@
    "n": 2,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 74,
-   "s": 24.743,
-   "e": 24.974,
-   "src": "plan"
+   "li": 7,
+   "i": 59,
+   "s": 23.28,
+   "e": 23.555,
+   "src": "voice"
   },
   {
    "w": "hand",
@@ -1282,11 +1253,11 @@
    "n": 1,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 75,
-   "s": 24.994,
-   "e": 25.225,
-   "src": "plan"
+   "li": 7,
+   "i": 60,
+   "s": 23.555,
+   "e": 23.815,
+   "src": "voice"
   },
   {
    "w": "stops",
@@ -1294,11 +1265,11 @@
    "n": 1,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 76,
-   "s": 25.245,
-   "e": 25.477,
-   "src": "plan"
+   "li": 7,
+   "i": 61,
+   "s": 23.815,
+   "e": 24.175,
+   "src": "voice"
   },
   {
    "w": "waiting",
@@ -1306,11 +1277,11 @@
    "n": 1,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 77,
-   "s": 25.497,
-   "e": 25.859,
-   "src": "plan"
+   "li": 7,
+   "i": 62,
+   "s": 24.175,
+   "e": 24.515,
+   "src": "voice"
   },
   {
    "w": "for",
@@ -1318,11 +1289,11 @@
    "n": 1,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 78,
-   "s": 25.879,
-   "e": 26.11,
-   "src": "plan"
+   "li": 7,
+   "i": 63,
+   "s": 24.515,
+   "e": 24.775,
+   "src": "voice"
   },
   {
    "w": "your",
@@ -1330,11 +1301,11 @@
    "n": 3,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 79,
-   "s": 26.13,
-   "e": 26.362,
-   "src": "plan"
+   "li": 7,
+   "i": 64,
+   "s": 24.775,
+   "e": 25.055,
+   "src": "voice"
   },
   {
    "w": "brain.",
@@ -1342,11 +1313,11 @@
    "n": 1,
    "who": "N",
    "line": "L09",
-   "li": 8,
-   "i": 80,
-   "s": 26.382,
-   "e": 26.729,
-   "src": "plan"
+   "li": 7,
+   "i": 65,
+   "s": 25.055,
+   "e": 25.45,
+   "src": "voice"
   },
   {
    "w": "That's",
@@ -1354,11 +1325,11 @@
    "n": 1,
    "who": "N",
    "line": "L10",
-   "li": 9,
-   "i": 81,
-   "s": 26.879,
-   "e": 27.138,
-   "src": "plan"
+   "li": 8,
+   "i": 66,
+   "s": 25.7,
+   "e": 26,
+   "src": "voice"
   },
   {
    "w": "how",
@@ -1366,11 +1337,11 @@
    "n": 1,
    "who": "N",
    "line": "L10",
-   "li": 9,
-   "i": 82,
-   "s": 27.158,
-   "e": 27.417,
-   "src": "plan"
+   "li": 8,
+   "i": 67,
+   "s": 26,
+   "e": 26.18,
+   "src": "voice"
   },
   {
    "w": "the",
@@ -1378,11 +1349,11 @@
    "n": 2,
    "who": "N",
    "line": "L10",
-   "li": 9,
-   "i": 83,
-   "s": 27.437,
-   "e": 27.697,
-   "src": "plan"
+   "li": 8,
+   "i": 68,
+   "s": 26.18,
+   "e": 26.4,
+   "src": "voice"
   },
   {
    "w": "cereal",
@@ -1390,11 +1361,11 @@
    "n": 1,
    "who": "N",
    "line": "L10",
-   "li": 9,
-   "i": 84,
-   "s": 27.717,
-   "e": 28.122,
-   "src": "plan"
+   "li": 8,
+   "i": 69,
+   "s": 26.4,
+   "e": 26.7,
+   "src": "voice"
   },
   {
    "w": "ends",
@@ -1402,11 +1373,11 @@
    "n": 1,
    "who": "N",
    "line": "L10",
-   "li": 9,
-   "i": 85,
-   "s": 28.142,
-   "e": 28.402,
-   "src": "plan"
+   "li": 8,
+   "i": 70,
+   "s": 26.7,
+   "e": 26.94,
+   "src": "voice"
   },
   {
    "w": "up",
@@ -1414,23 +1385,23 @@
    "n": 1,
    "who": "N",
    "line": "L10",
-   "li": 9,
-   "i": 86,
-   "s": 28.422,
-   "e": 28.681,
-   "src": "plan"
+   "li": 8,
+   "i": 71,
+   "s": 26.94,
+   "e": 27.14,
+   "src": "voice"
   },
   {
    "w": "in",
-   "key": "in#3",
-   "n": 3,
+   "key": "in#1",
+   "n": 1,
    "who": "N",
    "line": "L10",
-   "li": 9,
-   "i": 87,
-   "s": 28.701,
-   "e": 28.96,
-   "src": "plan"
+   "li": 8,
+   "i": 72,
+   "s": 27.14,
+   "e": 27.24,
+   "src": "voice"
   },
   {
    "w": "the",
@@ -1438,11 +1409,11 @@
    "n": 3,
    "who": "N",
    "line": "L10",
-   "li": 9,
-   "i": 88,
-   "s": 28.98,
-   "e": 29.239,
-   "src": "plan"
+   "li": 8,
+   "i": 73,
+   "s": 27.24,
+   "e": 27.48,
+   "src": "voice"
   },
   {
    "w": "fridge.",
@@ -1450,11 +1421,11 @@
    "n": 1,
    "who": "N",
    "line": "L10",
-   "li": 9,
-   "i": 89,
-   "s": 29.259,
-   "e": 29.648,
-   "src": "plan"
+   "li": 8,
+   "i": 74,
+   "s": 27.48,
+   "e": 27.85,
+   "src": "voice"
   },
   {
    "w": "Pointing",
@@ -1462,11 +1433,11 @@
    "n": 1,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 90,
-   "s": 29.798,
-   "e": 30.186,
-   "src": "plan"
+   "li": 9,
+   "i": 75,
+   "s": 28,
+   "e": 28.52,
+   "src": "voice"
   },
   {
    "w": "and",
@@ -1474,11 +1445,11 @@
    "n": 2,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 91,
-   "s": 30.206,
-   "e": 30.453,
-   "src": "plan"
+   "li": 9,
+   "i": 76,
+   "s": 28.52,
+   "e": 28.86,
+   "src": "voice"
   },
   {
    "w": "saying",
@@ -1486,23 +1457,23 @@
    "n": 1,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 92,
-   "s": 30.473,
-   "e": 30.721,
-   "src": "plan"
+   "li": 9,
+   "i": 77,
+   "s": 28.86,
+   "e": 29.08,
+   "src": "voice"
   },
   {
    "w": "it",
-   "key": "it#3",
-   "n": 3,
+   "key": "it#2",
+   "n": 2,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 93,
-   "s": 30.741,
-   "e": 30.988,
-   "src": "plan"
+   "li": 9,
+   "i": 78,
+   "s": 29.08,
+   "e": 29.32,
+   "src": "voice"
   },
   {
    "w": "makes",
@@ -1510,11 +1481,11 @@
    "n": 1,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 94,
-   "s": 31.008,
-   "e": 31.396,
-   "src": "plan"
+   "li": 9,
+   "i": 79,
+   "s": 29.32,
+   "e": 29.54,
+   "src": "voice"
   },
   {
    "w": "your",
@@ -1522,11 +1493,11 @@
    "n": 4,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 95,
-   "s": 31.416,
-   "e": 31.663,
-   "src": "plan"
+   "li": 9,
+   "i": 80,
+   "s": 29.54,
+   "e": 29.78,
+   "src": "voice"
   },
   {
    "w": "hand",
@@ -1534,11 +1505,11 @@
    "n": 2,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 96,
-   "s": 31.683,
-   "e": 31.931,
-   "src": "plan"
+   "li": 9,
+   "i": 81,
+   "s": 29.78,
+   "e": 30.04,
+   "src": "voice"
   },
   {
    "w": "wait.",
@@ -1546,59 +1517,35 @@
    "n": 1,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 97,
-   "s": 31.951,
-   "e": 32.198,
-   "src": "plan"
+   "li": 9,
+   "i": 82,
+   "s": 30.04,
+   "e": 30.605,
+   "src": "voice"
   },
   {
-   "w": "Which",
-   "key": "which#1",
+   "w": "So",
+   "key": "so#1",
    "n": 1,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 98,
-   "s": 32.218,
-   "e": 32.466,
-   "src": "plan"
-  },
-  {
-   "w": "is",
-   "key": "is#1",
-   "n": 1,
-   "who": "N",
-   "line": "L11",
-   "li": 10,
-   "i": 99,
-   "s": 32.486,
-   "e": 32.733,
-   "src": "plan"
-  },
-  {
-   "w": "why",
-   "key": "why#1",
-   "n": 1,
-   "who": "N",
-   "line": "L11",
-   "li": 10,
-   "i": 100,
-   "s": 32.753,
-   "e": 33.001,
-   "src": "plan"
+   "li": 9,
+   "i": 83,
+   "s": 30.795,
+   "e": 31.015,
+   "src": "voice"
   },
   {
    "w": "Japan's",
-   "key": "japan's#1",
-   "n": 1,
+   "key": "japan's#2",
+   "n": 2,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 101,
-   "s": 33.021,
-   "e": 33.408,
-   "src": "plan"
+   "li": 9,
+   "i": 84,
+   "s": 31.015,
+   "e": 31.675,
+   "src": "voice"
   },
   {
    "w": "train",
@@ -1606,11 +1553,11 @@
    "n": 1,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 102,
-   "s": 33.428,
-   "e": 33.676,
-   "src": "plan"
+   "li": 9,
+   "i": 85,
+   "s": 31.675,
+   "e": 31.875,
+   "src": "voice"
   },
   {
    "w": "drivers",
@@ -1618,11 +1565,11 @@
    "n": 1,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 103,
-   "s": 33.696,
-   "e": 34.083,
-   "src": "plan"
+   "li": 9,
+   "i": 86,
+   "s": 31.875,
+   "e": 32.33,
+   "src": "voice"
   },
   {
    "w": "point",
@@ -1630,11 +1577,11 @@
    "n": 2,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 104,
-   "s": 34.103,
-   "e": 34.351,
-   "src": "plan"
+   "li": 9,
+   "i": 87,
+   "s": 32.33,
+   "e": 32.615,
+   "src": "voice"
   },
   {
    "w": "at",
@@ -1642,11 +1589,11 @@
    "n": 2,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 105,
-   "s": 34.371,
-   "e": 34.618,
-   "src": "plan"
+   "li": 9,
+   "i": 88,
+   "s": 32.615,
+   "e": 32.755,
+   "src": "voice"
   },
   {
    "w": "their",
@@ -1654,11 +1601,11 @@
    "n": 1,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 106,
-   "s": 34.638,
-   "e": 34.886,
-   "src": "plan"
+   "li": 9,
+   "i": 89,
+   "s": 32.755,
+   "e": 32.935,
+   "src": "voice"
   },
   {
    "w": "signals,",
@@ -1666,11 +1613,11 @@
    "n": 1,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 107,
-   "s": 34.906,
-   "e": 35.293,
-   "src": "plan"
+   "li": 9,
+   "i": 90,
+   "s": 32.935,
+   "e": 33.295,
+   "src": "voice"
   },
   {
    "w": "and",
@@ -1678,11 +1625,11 @@
    "n": 3,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 108,
-   "s": 35.313,
-   "e": 35.561,
-   "src": "plan"
+   "li": 9,
+   "i": 91,
+   "s": 33.295,
+   "e": 33.42,
+   "src": "voice"
   },
   {
    "w": "shout.",
@@ -1690,11 +1637,11 @@
    "n": 1,
    "who": "N",
    "line": "L11",
-   "li": 10,
-   "i": 109,
-   "s": 35.581,
-   "e": 35.952,
-   "src": "plan"
+   "li": 9,
+   "i": 92,
+   "s": 33.42,
+   "e": 34.035,
+   "src": "voice"
   },
   {
    "w": "Signal",
@@ -1702,11 +1649,11 @@
    "n": 1,
    "who": "D",
    "line": "L12",
-   "li": 11,
-   "i": 110,
-   "s": 36.102,
-   "e": 36.406,
-   "src": "plan"
+   "li": 10,
+   "i": 93,
+   "s": 34.13,
+   "e": 34.52,
+   "src": "voice"
   },
   {
    "w": "clear!",
@@ -1714,107 +1661,107 @@
    "n": 1,
    "who": "D",
    "line": "L12",
-   "li": 11,
-   "i": 111,
-   "s": 36.426,
-   "e": 36.717,
-   "src": "plan"
+   "li": 10,
+   "i": 94,
+   "s": 34.68,
+   "e": 35.195,
+   "src": "voice"
   },
   {
-   "w": "The",
+   "w": "But",
+   "key": "but#1",
+   "n": 1,
+   "who": "N",
+   "line": "L13",
+   "li": 11,
+   "i": 95,
+   "s": 35.335,
+   "e": 35.595,
+   "src": "voice"
+  },
+  {
+   "w": "the",
    "key": "the#4",
    "n": 4,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 112,
-   "s": 36.867,
-   "e": 37.125,
-   "src": "plan"
+   "li": 11,
+   "i": 96,
+   "s": 35.595,
+   "e": 35.895,
+   "src": "voice"
   },
   {
-   "w": "strange",
-   "key": "strange#1",
+   "w": "shouting",
+   "key": "shouting#1",
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 113,
-   "s": 37.145,
-   "e": 37.402,
-   "src": "plan"
+   "li": 11,
+   "i": 97,
+   "s": 35.895,
+   "e": 36.175,
+   "src": "voice"
   },
   {
-   "w": "part",
-   "key": "part#1",
+   "w": "rule",
+   "key": "rule#1",
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 114,
-   "s": 37.422,
-   "e": 37.68,
-   "src": "plan"
+   "li": 11,
+   "i": 98,
+   "s": 36.175,
+   "e": 36.475,
+   "src": "voice"
   },
   {
-   "w": "is",
-   "key": "is#2",
-   "n": 2,
-   "who": "N",
-   "line": "L13",
-   "li": 12,
-   "i": 115,
-   "s": 37.7,
-   "e": 37.957,
-   "src": "plan"
-  },
-  {
-   "w": "where",
-   "key": "where#1",
+   "w": "didn't",
+   "key": "didn't#1",
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 116,
-   "s": 37.977,
-   "e": 38.234,
-   "src": "plan"
+   "li": 11,
+   "i": 99,
+   "s": 36.475,
+   "e": 36.895,
+   "src": "voice"
   },
   {
-   "w": "it",
-   "key": "it#4",
-   "n": 4,
-   "who": "N",
-   "line": "L13",
-   "li": 12,
-   "i": 117,
-   "s": 38.254,
-   "e": 38.512,
-   "src": "plan"
-  },
-  {
-   "w": "came",
-   "key": "came#1",
+   "w": "start",
+   "key": "start#1",
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 118,
-   "s": 38.532,
-   "e": 38.789,
-   "src": "plan"
+   "li": 11,
+   "i": 100,
+   "s": 36.895,
+   "e": 37.175,
+   "src": "voice"
   },
   {
-   "w": "from.",
-   "key": "from#1",
+   "w": "as",
+   "key": "as#1",
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 119,
-   "s": 38.809,
-   "e": 39.067,
-   "src": "plan"
+   "li": 11,
+   "i": 101,
+   "s": 37.175,
+   "e": 37.475,
+   "src": "voice"
+  },
+  {
+   "w": "science.",
+   "key": "science#1",
+   "n": 1,
+   "who": "N",
+   "line": "L13",
+   "li": 11,
+   "i": 102,
+   "s": 37.475,
+   "e": 38,
+   "src": "voice"
   },
   {
    "w": "The",
@@ -1822,11 +1769,11 @@
    "n": 5,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 120,
-   "s": 39.087,
-   "e": 39.344,
-   "src": "plan"
+   "li": 11,
+   "i": 103,
+   "s": 38.15,
+   "e": 38.35,
+   "src": "voice"
   },
   {
    "w": "story",
@@ -1834,11 +1781,11 @@
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 121,
-   "s": 39.364,
-   "e": 39.767,
-   "src": "plan"
+   "li": 11,
+   "i": 104,
+   "s": 38.35,
+   "e": 38.61,
+   "src": "voice"
   },
   {
    "w": "goes,",
@@ -1846,23 +1793,23 @@
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 122,
-   "s": 39.787,
-   "e": 40.044,
-   "src": "plan"
+   "li": 11,
+   "i": 105,
+   "s": 38.61,
+   "e": 39.05,
+   "src": "voice"
   },
   {
    "w": "a",
-   "key": "a#5",
-   "n": 5,
+   "key": "a#4",
+   "n": 4,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 123,
-   "s": 40.064,
-   "e": 40.322,
-   "src": "plan"
+   "li": 11,
+   "i": 106,
+   "s": 39.275,
+   "e": 39.63,
+   "src": "voice"
   },
   {
    "w": "steam-train",
@@ -1870,11 +1817,11 @@
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 124,
-   "s": 40.342,
-   "e": 40.745,
-   "src": "plan"
+   "li": 11,
+   "i": 107,
+   "s": 39.63,
+   "e": 40.11,
+   "src": "voice"
   },
   {
    "w": "driver's",
@@ -1882,11 +1829,11 @@
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 125,
-   "s": 40.765,
-   "e": 41.168,
-   "src": "plan"
+   "li": 11,
+   "i": 108,
+   "s": 40.11,
+   "e": 40.6,
+   "src": "voice"
   },
   {
    "w": "eyes",
@@ -1894,11 +1841,11 @@
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 126,
-   "s": 41.188,
-   "e": 41.445,
-   "src": "plan"
+   "li": 11,
+   "i": 109,
+   "s": 40.6,
+   "e": 40.97,
+   "src": "voice"
   },
   {
    "w": "had",
@@ -1906,11 +1853,11 @@
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 127,
-   "s": 41.465,
-   "e": 41.722,
-   "src": "plan"
+   "li": 11,
+   "i": 110,
+   "s": 40.97,
+   "e": 41.21,
+   "src": "voice"
   },
   {
    "w": "gone",
@@ -1918,11 +1865,11 @@
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 128,
-   "s": 41.742,
-   "e": 42,
-   "src": "plan"
+   "li": 11,
+   "i": 111,
+   "s": 41.21,
+   "e": 41.41,
+   "src": "voice"
   },
   {
    "w": "bad.",
@@ -1930,11 +1877,11 @@
    "n": 1,
    "who": "N",
    "line": "L13",
-   "li": 12,
-   "i": 129,
-   "s": 42.02,
-   "e": 42.406,
-   "src": "plan"
+   "li": 11,
+   "i": 112,
+   "s": 41.41,
+   "e": 42.025,
+   "src": "voice"
   },
   {
    "w": "Signal",
@@ -1942,11 +1889,11 @@
    "n": 2,
    "who": "H",
    "line": "L14",
-   "li": 13,
-   "i": 130,
-   "s": 42.556,
-   "e": 42.86,
-   "src": "plan"
+   "li": 12,
+   "i": 113,
+   "s": 42.175,
+   "e": 42.855,
+   "src": "voice"
   },
   {
    "w": "clear!",
@@ -1954,23 +1901,23 @@
    "n": 2,
    "who": "H",
    "line": "L14",
-   "li": 13,
-   "i": 131,
-   "s": 42.88,
-   "e": 43.171,
-   "src": "plan"
+   "li": 12,
+   "i": 114,
+   "s": 42.855,
+   "e": 43.465,
+   "src": "voice"
   },
   {
    "w": "So",
-   "key": "so#1",
-   "n": 1,
+   "key": "so#2",
+   "n": 2,
    "who": "N",
    "line": "L15",
-   "li": 14,
-   "i": 132,
-   "s": 43.321,
-   "e": 43.551,
-   "src": "plan"
+   "li": 13,
+   "i": 115,
+   "s": 43.615,
+   "e": 43.815,
+   "src": "voice"
   },
   {
    "w": "he",
@@ -1978,11 +1925,11 @@
    "n": 1,
    "who": "N",
    "line": "L15",
-   "li": 14,
-   "i": 133,
-   "s": 43.571,
-   "e": 43.8,
-   "src": "plan"
+   "li": 13,
+   "i": 116,
+   "s": 43.815,
+   "e": 44.115,
+   "src": "voice"
   },
   {
    "w": "shouted",
@@ -1990,11 +1937,11 @@
    "n": 1,
    "who": "N",
    "line": "L15",
-   "li": 14,
-   "i": 134,
-   "s": 43.82,
-   "e": 44.179,
-   "src": "plan"
+   "li": 13,
+   "i": 117,
+   "s": 44.115,
+   "e": 44.555,
+   "src": "voice"
   },
   {
    "w": "every",
@@ -2002,11 +1949,11 @@
    "n": 2,
    "who": "N",
    "line": "L15",
-   "li": 14,
-   "i": 135,
-   "s": 44.199,
-   "e": 44.688,
-   "src": "plan"
+   "li": 13,
+   "i": 118,
+   "s": 44.555,
+   "e": 44.955,
+   "src": "voice"
   },
   {
    "w": "signal",
@@ -2014,23 +1961,23 @@
    "n": 3,
    "who": "N",
    "line": "L15",
-   "li": 14,
-   "i": 136,
-   "s": 44.708,
-   "e": 45.068,
-   "src": "plan"
+   "li": 13,
+   "i": 119,
+   "s": 44.955,
+   "e": 45.335,
+   "src": "voice"
   },
   {
    "w": "to",
-   "key": "to#1",
-   "n": 1,
+   "key": "to#2",
+   "n": 2,
    "who": "N",
    "line": "L15",
-   "li": 14,
-   "i": 137,
-   "s": 45.088,
-   "e": 45.317,
-   "src": "plan"
+   "li": 13,
+   "i": 120,
+   "s": 45.335,
+   "e": 45.575,
+   "src": "voice"
   },
   {
    "w": "his",
@@ -2038,11 +1985,11 @@
    "n": 1,
    "who": "N",
    "line": "L15",
-   "li": 14,
-   "i": 138,
-   "s": 45.337,
-   "e": 45.567,
-   "src": "plan"
+   "li": 13,
+   "i": 121,
+   "s": 45.575,
+   "e": 45.795,
+   "src": "voice"
   },
   {
    "w": "coal",
@@ -2050,95 +1997,23 @@
    "n": 1,
    "who": "N",
    "line": "L15",
-   "li": 14,
-   "i": 139,
-   "s": 45.587,
-   "e": 45.816,
-   "src": "plan"
+   "li": 13,
+   "i": 122,
+   "s": 45.795,
+   "e": 45.975,
+   "src": "voice"
   },
   {
-   "w": "man,",
+   "w": "man.",
    "key": "man#1",
    "n": 1,
    "who": "N",
    "line": "L15",
-   "li": 14,
-   "i": 140,
-   "s": 45.836,
-   "e": 46.066,
-   "src": "plan"
-  },
-  {
-   "w": "who",
-   "key": "who#1",
-   "n": 1,
-   "who": "N",
-   "line": "L15",
-   "li": 14,
-   "i": 141,
-   "s": 46.086,
-   "e": 46.315,
-   "src": "plan"
-  },
-  {
-   "w": "checked",
-   "key": "checked#1",
-   "n": 1,
-   "who": "N",
-   "line": "L15",
-   "li": 14,
-   "i": 142,
-   "s": 46.335,
-   "e": 46.694,
-   "src": "plan"
-  },
-  {
-   "w": "it",
-   "key": "it#5",
-   "n": 5,
-   "who": "N",
-   "line": "L15",
-   "li": 14,
-   "i": 143,
-   "s": 46.714,
-   "e": 46.944,
-   "src": "plan"
-  },
-  {
-   "w": "and",
-   "key": "and#4",
-   "n": 4,
-   "who": "N",
-   "line": "L15",
-   "li": 14,
-   "i": 144,
-   "s": 46.964,
-   "e": 47.193,
-   "src": "plan"
-  },
-  {
-   "w": "shouted",
-   "key": "shouted#2",
-   "n": 2,
-   "who": "N",
-   "line": "L15",
-   "li": 14,
-   "i": 145,
-   "s": 47.213,
-   "e": 47.572,
-   "src": "plan"
-  },
-  {
-   "w": "back.",
-   "key": "back#1",
-   "n": 1,
-   "who": "N",
-   "line": "L15",
-   "li": 14,
-   "i": 146,
-   "s": 47.592,
-   "e": 47.937,
-   "src": "plan"
+   "li": 13,
+   "i": 123,
+   "s": 45.975,
+   "e": 46.48,
+   "src": "voice"
   },
   {
    "w": "Clear!",
@@ -2146,11 +2021,11 @@
    "n": 3,
    "who": "C",
    "line": "L16",
-   "li": 15,
-   "i": 147,
-   "s": 48.087,
-   "e": 48.687,
-   "src": "plan"
+   "li": 14,
+   "i": 124,
+   "s": 46.6,
+   "e": 47.29,
+   "src": "voice"
   },
   {
    "w": "His",
@@ -2158,11 +2033,11 @@
    "n": 2,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 148,
-   "s": 48.837,
-   "e": 49.089,
-   "src": "plan"
+   "li": 15,
+   "i": 125,
+   "s": 47.37,
+   "e": 47.61,
+   "src": "voice"
   },
   {
    "w": "boss",
@@ -2170,11 +2045,11 @@
    "n": 1,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 149,
-   "s": 49.109,
-   "e": 49.361,
-   "src": "plan"
+   "li": 15,
+   "i": 126,
+   "s": 47.61,
+   "e": 47.91,
+   "src": "voice"
   },
   {
    "w": "rode",
@@ -2182,11 +2057,11 @@
    "n": 1,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 150,
-   "s": 49.381,
-   "e": 49.633,
-   "src": "plan"
+   "li": 15,
+   "i": 127,
+   "s": 47.91,
+   "e": 48.21,
+   "src": "voice"
   },
   {
    "w": "along,",
@@ -2194,11 +2069,11 @@
    "n": 1,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 151,
-   "s": 49.653,
-   "e": 50.048,
-   "src": "plan"
+   "li": 15,
+   "i": 128,
+   "s": 48.21,
+   "e": 48.58,
+   "src": "voice"
   },
   {
    "w": "loved",
@@ -2206,35 +2081,35 @@
    "n": 1,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 152,
-   "s": 50.068,
-   "e": 50.462,
-   "src": "plan"
+   "li": 15,
+   "i": 129,
+   "s": 48.775,
+   "e": 49.19,
+   "src": "voice"
   },
   {
    "w": "it,",
-   "key": "it#6",
-   "n": 6,
+   "key": "it#3",
+   "n": 3,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 153,
-   "s": 50.482,
-   "e": 50.735,
-   "src": "plan"
+   "li": 15,
+   "i": 130,
+   "s": 49.19,
+   "e": 49.37,
+   "src": "voice"
   },
   {
    "w": "and",
-   "key": "and#5",
-   "n": 5,
+   "key": "and#4",
+   "n": 4,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 154,
-   "s": 50.755,
-   "e": 51.007,
-   "src": "plan"
+   "li": 15,
+   "i": 131,
+   "s": 49.55,
+   "e": 49.83,
+   "src": "voice"
   },
   {
    "w": "made",
@@ -2242,35 +2117,35 @@
    "n": 1,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 155,
-   "s": 51.027,
-   "e": 51.279,
-   "src": "plan"
+   "li": 15,
+   "i": 132,
+   "s": 49.83,
+   "e": 49.97,
+   "src": "voice"
   },
   {
    "w": "it",
-   "key": "it#7",
-   "n": 7,
+   "key": "it#4",
+   "n": 4,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 156,
-   "s": 51.299,
-   "e": 51.551,
-   "src": "plan"
+   "li": 15,
+   "i": 133,
+   "s": 49.97,
+   "e": 50.15,
+   "src": "voice"
   },
   {
    "w": "a",
-   "key": "a#6",
-   "n": 6,
+   "key": "a#5",
+   "n": 5,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 157,
-   "s": 51.571,
-   "e": 51.823,
-   "src": "plan"
+   "li": 15,
+   "i": 134,
+   "s": 50.15,
+   "e": 50.29,
+   "src": "voice"
   },
   {
    "w": "rule.",
@@ -2278,11 +2153,11 @@
    "n": 2,
    "who": "N",
    "line": "L17",
-   "li": 16,
-   "i": 158,
-   "s": 51.843,
-   "e": 52.221,
-   "src": "plan"
+   "li": 15,
+   "i": 135,
+   "s": 50.29,
+   "e": 50.735,
+   "src": "voice"
   },
   {
    "w": "He",
@@ -2290,11 +2165,11 @@
    "n": 2,
    "who": "N",
    "line": "L18",
-   "li": 17,
-   "i": 159,
-   "s": 52.371,
-   "e": 52.6,
-   "src": "plan"
+   "li": 16,
+   "i": 136,
+   "s": 50.905,
+   "e": 51.085,
+   "src": "voice"
   },
   {
    "w": "never",
@@ -2302,11 +2177,11 @@
    "n": 1,
    "who": "N",
    "line": "L18",
-   "li": 17,
-   "i": 160,
-   "s": 52.62,
-   "e": 52.978,
-   "src": "plan"
+   "li": 16,
+   "i": 137,
+   "s": 51.085,
+   "e": 51.425,
+   "src": "voice"
   },
   {
    "w": "knew",
@@ -2314,11 +2189,11 @@
    "n": 1,
    "who": "N",
    "line": "L18",
-   "li": 17,
-   "i": 161,
-   "s": 52.998,
-   "e": 53.227,
-   "src": "plan"
+   "li": 16,
+   "i": 138,
+   "s": 51.425,
+   "e": 51.645,
+   "src": "voice"
   },
   {
    "w": "about",
@@ -2326,11 +2201,11 @@
    "n": 1,
    "who": "N",
    "line": "L18",
-   "li": 17,
-   "i": 162,
-   "s": 53.247,
-   "e": 53.605,
-   "src": "plan"
+   "li": 16,
+   "i": 139,
+   "s": 51.645,
+   "e": 51.945,
+   "src": "voice"
   },
   {
    "w": "the",
@@ -2338,11 +2213,11 @@
    "n": 6,
    "who": "N",
    "line": "L18",
-   "li": 17,
-   "i": 163,
-   "s": 53.625,
-   "e": 53.854,
-   "src": "plan"
+   "li": 16,
+   "i": 140,
+   "s": 51.945,
+   "e": 52.145,
+   "src": "voice"
   },
   {
    "w": "eyes.",
@@ -2350,11 +2225,11 @@
    "n": 2,
    "who": "N",
    "line": "L18",
-   "li": 17,
-   "i": 164,
-   "s": 53.874,
-   "e": 54.217,
-   "src": "plan"
+   "li": 16,
+   "i": 141,
+   "s": 52.145,
+   "e": 52.45,
+   "src": "voice"
   },
   {
    "w": "New",
@@ -2362,11 +2237,11 @@
    "n": 1,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 165,
-   "s": 54.367,
-   "e": 54.594,
-   "src": "plan"
+   "li": 17,
+   "i": 142,
+   "s": 52.67,
+   "e": 53.15,
+   "src": "voice"
   },
   {
    "w": "York",
@@ -2374,11 +2249,11 @@
    "n": 1,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 166,
-   "s": 54.614,
-   "e": 54.84,
-   "src": "plan"
+   "li": 17,
+   "i": 143,
+   "s": 53.15,
+   "e": 53.425,
+   "src": "voice"
   },
   {
    "w": "copied",
@@ -2386,11 +2261,11 @@
    "n": 1,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 167,
-   "s": 54.86,
-   "e": 55.214,
-   "src": "plan"
+   "li": 17,
+   "i": 144,
+   "s": 53.425,
+   "e": 53.79,
+   "src": "voice"
   },
   {
    "w": "the",
@@ -2398,11 +2273,11 @@
    "n": 7,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 168,
-   "s": 55.234,
-   "e": 55.46,
-   "src": "plan"
+   "li": 17,
+   "i": 145,
+   "s": 53.79,
+   "e": 54.05,
+   "src": "voice"
   },
   {
    "w": "pointing:",
@@ -2410,11 +2285,23 @@
    "n": 2,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 169,
-   "s": 55.48,
-   "e": 55.834,
-   "src": "plan"
+   "li": 17,
+   "i": 146,
+   "s": 54.05,
+   "e": 54.38,
+   "src": "voice"
+  },
+  {
+   "w": "subway",
+   "key": "subway#1",
+   "n": 1,
+   "who": "N",
+   "line": "L19",
+   "li": 17,
+   "i": 147,
+   "s": 54.67,
+   "e": 55.25,
+   "src": "voice"
   },
   {
    "w": "conductors",
@@ -2422,11 +2309,11 @@
    "n": 1,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 170,
-   "s": 55.854,
-   "e": 56.335,
-   "src": "plan"
+   "li": 17,
+   "i": 148,
+   "s": 55.25,
+   "e": 55.585,
+   "src": "voice"
   },
   {
    "w": "must",
@@ -2434,11 +2321,11 @@
    "n": 1,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 171,
-   "s": 56.355,
-   "e": 56.581,
-   "src": "plan"
+   "li": 17,
+   "i": 149,
+   "s": 55.585,
+   "e": 56.21,
+   "src": "voice"
   },
   {
    "w": "point",
@@ -2446,11 +2333,11 @@
    "n": 3,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 172,
-   "s": 56.601,
-   "e": 56.828,
-   "src": "plan"
+   "li": 17,
+   "i": 150,
+   "s": 56.21,
+   "e": 56.59,
+   "src": "voice"
   },
   {
    "w": "at",
@@ -2458,95 +2345,59 @@
    "n": 3,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 173,
-   "s": 56.848,
-   "e": 57.074,
-   "src": "plan"
+   "li": 17,
+   "i": 151,
+   "s": 56.59,
+   "e": 56.79,
+   "src": "voice"
   },
   {
-   "w": "this",
-   "key": "this#2",
-   "n": 2,
+   "w": "a",
+   "key": "a#6",
+   "n": 6,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 174,
-   "s": 57.094,
-   "e": 57.32,
-   "src": "plan"
+   "li": 17,
+   "i": 152,
+   "s": 56.79,
+   "e": 57.01,
+   "src": "voice"
   },
   {
-   "w": "board",
+   "w": "striped",
+   "key": "striped#1",
+   "n": 1,
+   "who": "N",
+   "line": "L19",
+   "li": 17,
+   "i": 153,
+   "s": 57.01,
+   "e": 57.25,
+   "src": "voice"
+  },
+  {
+   "w": "board.",
    "key": "board#1",
    "n": 1,
    "who": "N",
    "line": "L19",
-   "li": 18,
-   "i": 175,
-   "s": 57.34,
-   "e": 57.566,
-   "src": "plan"
-  },
-  {
-   "w": "before",
-   "key": "before#1",
-   "n": 1,
-   "who": "N",
-   "line": "L19",
-   "li": 18,
-   "i": 176,
-   "s": 57.586,
-   "e": 57.94,
-   "src": "plan"
-  },
-  {
-   "w": "the",
-   "key": "the#8",
-   "n": 8,
-   "who": "N",
-   "line": "L19",
-   "li": 18,
-   "i": 177,
-   "s": 57.96,
-   "e": 58.186,
-   "src": "plan"
-  },
-  {
-   "w": "doors",
-   "key": "doors#1",
-   "n": 1,
-   "who": "N",
-   "line": "L19",
-   "li": 18,
-   "i": 178,
-   "s": 58.206,
-   "e": 58.432,
-   "src": "plan"
-  },
-  {
-   "w": "open.",
-   "key": "open#1",
-   "n": 1,
-   "who": "N",
-   "line": "L19",
-   "li": 18,
-   "i": 179,
-   "s": 58.452,
-   "e": 58.983,
-   "src": "plan"
+   "li": 17,
+   "i": 154,
+   "s": 57.25,
+   "e": 57.8,
+   "src": "voice"
   },
   {
    "w": "So",
-   "key": "so#2",
-   "n": 2,
+   "key": "so#3",
+   "n": 3,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 180,
-   "s": 59.133,
-   "e": 59.381,
-   "src": "plan"
+   "li": 18,
+   "i": 155,
+   "s": 57.95,
+   "e": 58.19,
+   "src": "voice"
   },
   {
    "w": "two",
@@ -2554,11 +2405,11 @@
    "n": 1,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 181,
-   "s": 59.401,
-   "e": 59.649,
-   "src": "plan"
+   "li": 18,
+   "i": 156,
+   "s": 58.19,
+   "e": 58.45,
+   "src": "voice"
   },
   {
    "w": "New",
@@ -2566,11 +2417,11 @@
    "n": 2,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 182,
-   "s": 59.669,
-   "e": 59.917,
-   "src": "plan"
+   "li": 18,
+   "i": 157,
+   "s": 58.45,
+   "e": 58.71,
+   "src": "voice"
   },
   {
    "w": "Yorkers",
@@ -2578,11 +2429,11 @@
    "n": 1,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 183,
-   "s": 59.937,
-   "e": 60.325,
-   "src": "plan"
+   "li": 18,
+   "i": 158,
+   "s": 58.71,
+   "e": 59.07,
+   "src": "voice"
   },
   {
    "w": "held",
@@ -2590,11 +2441,11 @@
    "n": 1,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 184,
-   "s": 60.345,
-   "e": 60.593,
-   "src": "plan"
+   "li": 18,
+   "i": 159,
+   "s": 59.07,
+   "e": 59.23,
+   "src": "voice"
   },
   {
    "w": "up",
@@ -2602,11 +2453,11 @@
    "n": 2,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 185,
-   "s": 60.613,
-   "e": 60.861,
-   "src": "plan"
+   "li": 18,
+   "i": 160,
+   "s": 59.23,
+   "e": 59.47,
+   "src": "voice"
   },
   {
    "w": "a",
@@ -2614,11 +2465,11 @@
    "n": 7,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 186,
-   "s": 60.881,
-   "e": 61.129,
-   "src": "plan"
+   "li": 18,
+   "i": 161,
+   "s": 59.47,
+   "e": 59.63,
+   "src": "voice"
   },
   {
    "w": "sign:",
@@ -2626,11 +2477,11 @@
    "n": 1,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 187,
-   "s": 61.149,
-   "e": 61.397,
-   "src": "plan"
+   "li": 18,
+   "i": 162,
+   "s": 59.63,
+   "e": 59.79,
+   "src": "voice"
   },
   {
    "w": "\"Point",
@@ -2638,11 +2489,11 @@
    "n": 4,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 188,
-   "s": 61.417,
-   "e": 61.665,
-   "src": "plan"
+   "li": 18,
+   "i": 163,
+   "s": 60.22,
+   "e": 60.51,
+   "src": "voice"
   },
   {
    "w": "here",
@@ -2650,11 +2501,11 @@
    "n": 1,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 189,
-   "s": 61.685,
-   "e": 61.933,
-   "src": "plan"
+   "li": 18,
+   "i": 164,
+   "s": 60.51,
+   "e": 60.89,
+   "src": "voice"
   },
   {
    "w": "if",
@@ -2662,11 +2513,11 @@
    "n": 1,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 190,
-   "s": 61.953,
-   "e": 62.202,
-   "src": "plan"
+   "li": 18,
+   "i": 165,
+   "s": 60.89,
+   "e": 61.11,
+   "src": "voice"
   },
   {
    "w": "you",
@@ -2674,11 +2525,11 @@
    "n": 2,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 191,
-   "s": 62.222,
-   "e": 62.47,
-   "src": "plan"
+   "li": 18,
+   "i": 166,
+   "s": 61.11,
+   "e": 61.29,
+   "src": "voice"
   },
   {
    "w": "are",
@@ -2686,11 +2537,11 @@
    "n": 1,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 192,
-   "s": 62.49,
-   "e": 62.878,
-   "src": "plan"
+   "li": 18,
+   "i": 167,
+   "s": 61.29,
+   "e": 61.56,
+   "src": "voice"
   },
   {
    "w": "dead",
@@ -2698,11 +2549,11 @@
    "n": 1,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 193,
-   "s": 62.898,
-   "e": 63.146,
-   "src": "plan"
+   "li": 18,
+   "i": 168,
+   "s": 61.56,
+   "e": 61.93,
+   "src": "voice"
   },
   {
    "w": "sexy.\"",
@@ -2710,35 +2561,35 @@
    "n": 1,
    "who": "N",
    "line": "L20",
-   "li": 19,
-   "i": 194,
-   "s": 63.166,
-   "e": 63.748,
-   "src": "plan"
+   "li": 18,
+   "i": 169,
+   "s": 61.93,
+   "e": 62.62,
+   "src": "voice"
   },
   {
    "w": "And",
-   "key": "and#6",
-   "n": 6,
+   "key": "and#5",
+   "n": 5,
    "who": "N",
    "line": "L21",
-   "li": 20,
-   "i": 195,
-   "s": 63.898,
-   "e": 64.127,
-   "src": "plan"
+   "li": 19,
+   "i": 170,
+   "s": 62.775,
+   "e": 62.995,
+   "src": "voice"
   },
   {
    "w": "the",
-   "key": "the#9",
-   "n": 9,
+   "key": "the#8",
+   "n": 8,
    "who": "N",
    "line": "L21",
-   "li": 20,
-   "i": 196,
-   "s": 64.147,
-   "e": 64.376,
-   "src": "plan"
+   "li": 19,
+   "i": 171,
+   "s": 62.995,
+   "e": 63.275,
+   "src": "voice"
   },
   {
    "w": "conductors",
@@ -2746,11 +2597,11 @@
    "n": 2,
    "who": "N",
    "line": "L21",
-   "li": 20,
-   "i": 197,
-   "s": 64.396,
-   "e": 64.883,
-   "src": "plan"
+   "li": 19,
+   "i": 172,
+   "s": 63.275,
+   "e": 63.425,
+   "src": "voice"
   },
   {
    "w": "had",
@@ -2758,23 +2609,23 @@
    "n": 2,
    "who": "N",
    "line": "L21",
-   "li": 20,
-   "i": 198,
-   "s": 64.903,
-   "e": 65.132,
-   "src": "plan"
+   "li": 19,
+   "i": 173,
+   "s": 63.425,
+   "e": 63.975,
+   "src": "voice"
   },
   {
    "w": "to",
-   "key": "to#2",
-   "n": 2,
+   "key": "to#3",
+   "n": 3,
    "who": "N",
    "line": "L21",
-   "li": 20,
-   "i": 199,
-   "s": 65.152,
-   "e": 65.381,
-   "src": "plan"
+   "li": 19,
+   "i": 174,
+   "s": 63.975,
+   "e": 64.215,
+   "src": "voice"
   },
   {
    "w": "point.",
@@ -2782,11 +2633,11 @@
    "n": 5,
    "who": "N",
    "line": "L21",
-   "li": 20,
-   "i": 200,
-   "s": 65.401,
-   "e": 65.744,
-   "src": "plan"
+   "li": 19,
+   "i": 175,
+   "s": 64.215,
+   "e": 64.81,
+   "src": "voice"
   },
   {
    "w": "Now",
@@ -2794,11 +2645,11 @@
    "n": 1,
    "who": "N",
    "line": "L22",
-   "li": 21,
-   "i": 201,
-   "s": 65.894,
-   "e": 66.154,
-   "src": "plan"
+   "li": 20,
+   "i": 176,
+   "s": 65.015,
+   "e": 65.275,
+   "src": "voice"
   },
   {
    "w": "try",
@@ -2806,35 +2657,35 @@
    "n": 1,
    "who": "N",
    "line": "L22",
-   "li": 21,
-   "i": 202,
-   "s": 66.174,
-   "e": 66.433,
-   "src": "plan"
+   "li": 20,
+   "i": 177,
+   "s": 65.275,
+   "e": 65.535,
+   "src": "voice"
   },
   {
    "w": "again.",
-   "key": "again#2",
-   "n": 2,
+   "key": "again#1",
+   "n": 1,
    "who": "N",
    "line": "L22",
-   "li": 21,
-   "i": 203,
-   "s": 66.453,
-   "e": 66.859,
-   "src": "plan"
+   "li": 20,
+   "i": 178,
+   "s": 65.535,
+   "e": 66.09,
+   "src": "voice"
   },
   {
    "w": "This",
-   "key": "this#3",
-   "n": 3,
+   "key": "this#2",
+   "n": 2,
    "who": "N",
    "line": "L22",
-   "li": 21,
-   "i": 204,
-   "s": 66.879,
-   "e": 67.138,
-   "src": "plan"
+   "li": 20,
+   "i": 179,
+   "s": 66.24,
+   "e": 66.54,
+   "src": "voice"
   },
   {
    "w": "time,",
@@ -2842,11 +2693,11 @@
    "n": 1,
    "who": "N",
    "line": "L22",
-   "li": 21,
-   "i": 205,
-   "s": 67.158,
-   "e": 67.417,
-   "src": "plan"
+   "li": 20,
+   "i": 180,
+   "s": 66.54,
+   "e": 66.825,
+   "src": "voice"
   },
   {
    "w": "point,",
@@ -2854,23 +2705,23 @@
    "n": 6,
    "who": "N",
    "line": "L22",
-   "li": 21,
-   "i": 206,
-   "s": 67.437,
-   "e": 67.696,
-   "src": "plan"
+   "li": 20,
+   "i": 181,
+   "s": 67.07,
+   "e": 67.45,
+   "src": "voice"
   },
   {
    "w": "and",
-   "key": "and#7",
-   "n": 7,
+   "key": "and#6",
+   "n": 6,
    "who": "N",
    "line": "L22",
-   "li": 21,
-   "i": 207,
-   "s": 67.716,
-   "e": 67.976,
-   "src": "plan"
+   "li": 20,
+   "i": 182,
+   "s": 67.765,
+   "e": 68.04,
+   "src": "voice"
   },
   {
    "w": "say",
@@ -2878,23 +2729,23 @@
    "n": 2,
    "who": "N",
    "line": "L22",
-   "li": 21,
-   "i": 208,
-   "s": 67.996,
-   "e": 68.255,
-   "src": "plan"
+   "li": 20,
+   "i": 183,
+   "s": 68.04,
+   "e": 68.24,
+   "src": "voice"
   },
   {
    "w": "it.",
-   "key": "it#8",
-   "n": 8,
+   "key": "it#5",
+   "n": 5,
    "who": "N",
    "line": "L22",
-   "li": 21,
-   "i": 209,
-   "s": 68.275,
-   "e": 68.664,
-   "src": "plan"
+   "li": 20,
+   "i": 184,
+   "s": 68.24,
+   "e": 68.375,
+   "src": "voice"
   }
  ]
 }

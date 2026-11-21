@@ -23,6 +23,12 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+# v4 ("the trap", 2026-11-20): the mix is mix_v4.py (the clock, the hook, score_v4's sections, cues_v4's sheet, the rules).
+# mix.py hands over to it with the same arguments; --v3 runs the old v3 machinery below (tl / cues / beds / score).
+if __name__ == "__main__" and "--v3" not in sys.argv:
+    import mix_v4
+    mix_v4.main()
+    sys.exit(0)
 from dsp import SR, ns, st, dbg, read_wav, write_wav, integrated, momentary, momentary_max, short_term, lra, true_peak, shelf, hp, lp, fades, peq
 import tl
 import cues as Q

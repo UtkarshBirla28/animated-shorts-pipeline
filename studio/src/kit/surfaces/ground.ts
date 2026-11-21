@@ -290,7 +290,7 @@ export const railTrack = async (ctx: KitCtx, o: { x?: number; z0: number; z1: nu
     const web = new THREE.BoxGeometry(0.017, 0.1, L); web.translate(rx, y0 + 0.062, zc); rb.push(web);
     const hd = new RoundedBoxGeometry(0.065, 0.04, L, 2, 0.008); hd.translate(rx, y0 + 0.132, zc); rh.push(hd);
   }
-  const m1 = new THREE.Mesh(mergeGeometries(rb)!, body), m2 = new THREE.Mesh(mergeGeometries(rh.map((g) => g.toNonIndexed()))!, head);
+  const m1 = new THREE.Mesh(mergeGeometries(rb)!, body), m2 = new THREE.Mesh(mergeGeometries(rh.map((g) => (g.index ? g.toNonIndexed() : g)))!, head);
   for (const m of [m1, m2]) { m.castShadow = true; m.receiveShadow = true; G.add(m); }
   return { object: G, mats: { ballast, sleepers: conc }, railTopY: sTop + 0.018 + 0.152 } as Built & { mats: Record<string, SurfMaterial>; railTopY: number };
 };

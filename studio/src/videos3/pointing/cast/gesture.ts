@@ -23,6 +23,14 @@ export type ActEnv = {
   /** resting hand targets on the card (from world points), screen-agnostic: the figure's LEFT / RIGHT hand */
   restL: P2 | null; restR: P2 | null;
   seat?: number;
+  /** a per-CARD seed (member.ts: from the card's name): idle-life phases differ between people of the same kind */
+  seed?: number;
+  /** v5: the TOUCH POINT of a round button as seen (member.ts, CastOpts.touchR): the cap's far rim at its top, i.e. the
+   *  highest point of the dome on screen in this lens, where a fingertip on top of it stays visible */
+  touch?: P2 | null;
+  /** round 2 (lead, v10): the hall volunteers WAIT nervously: a hovering hand twitches and trembles, the eyes dart between
+   *  the button and the lamp (moves.ts actBeats sets it for lab_a..lab_d; mButton hover reads it) */
+  nervy?: number;
 };
 export type Actor = (e: ActEnv) => CPose;
 
@@ -51,6 +59,8 @@ export type CallOpt = {
   /** a LIMP call ("Bag... gone."): the last move is not a snap: the arm SAGS forward for 12 f, elbow soft, to ~60 % of
    *  full stretch, then locks out straight over 6 f at the driver's snap speed (v3 s24); no body punch until the lock-out */
   limp?: boolean;
+  /** v4: the frame the hand goes back to the chest fist (default: 16 f before the snap); e.g. on a word of its own */
+  earAt?: number;
 };
 /** THE GESTURE: on the NAME word the arm is straight with the index finger out; on the held beat the hand draws back
  *  beside the right ear (8 f, a loose fist); on the STATUS word it snaps out again (6 f, crisp stop, overshoot, 2 f
@@ -71,7 +81,7 @@ export type CallState = { k: number; base: ArmTo | P2; hand: "point" | "fist" | 
  *   - only when the words start less than 23 f apart does the ear hold get shorter (beatReport flags it) */
 export const callTimes = (o: CallOpt) => {
   // v4 (BENCHMARK: hold, then SNAP): every move is 3 f, every pose holds; the snap lands ON the status word
-  const snapAt = o.status - 2, earAt = Math.max(snapAt - 16, o.name + 6), earLen = 3;
+  const snapAt = o.status - 2, earAt = o.earAt !== undefined && Number.isFinite(o.earAt) ? Math.max(o.name + 6, Math.min(o.earAt, snapAt - 6)) : Math.max(snapAt - 16, o.name + 6), earLen = 3;
   const rm = Math.min(o.riseMove ?? 3, 4), rise = o.out ? (o.rise ?? o.name - 10) : Math.min(o.rise ?? o.name - 4 - rm, earAt - 14 - rm);
   return { rise, earAt, earLen, snapAt, snapLen: o.limp ? 9 : 3, until: o.until ?? o.statusEnd + 26, dwell: snapAt - earAt - earLen };
 };
@@ -115,7 +125,7 @@ type AimEnv = Pick<ActEnv, "s" | "c" | "head" | "r"> & Partial<Pick<ActEnv, "che
  *  kit's bent arm to ONE STRAIGHT LINE shoulder -> wrist by `straight` (0 at rest / at the ear .. 1 on the point), the
  *  wrist is moved on by `by` x k (the forearm lengthened so the fingertip lands on a far target), and the hand `hand` is
  *  drawn along that same line: the index finger continues the forearm */
-export type AimedArm = Arm & { lens?: number; ext?: { by: P2; k: number; hand: HandKind; straight: number } };
+export type AimedArm = Arm & { lens?: number; ext?: { by: P2; k: number; hand: HandKind; straight: number; /** v5: the index finger's own screen direction (rad; the button press: straight DOWN), drawn as the long skin point hand */ fdir?: number };/** a hand ON a prop at the body (the button press): not an "arm out" gesture for the cast log */ touch?: boolean };
 /** AIM AN ARM at a card point with the right FORESHORTENING. A far point (beyond the arm's reach on the card) = a
  *  straight arm along the line shoulder -> point (the kit's aim mode). A NEAR point (the target sits close to his
  *  shoulder on screen: he points INTO or OUT OF the picture, e.g. the driver seen from behind) = the hand goes TO the
@@ -123,6 +133,28 @@ export type AimedArm = Arm & { lens?: number; ext?: { by: P2; k: number; hand: H
  *  out sideways. k blends from the rest target; left = the figure's left arm */
 /** v4 RIG LIMITS (BENCHMARK 6.3): an arm is never longer than the rig, a hand never bigger than 1.1 */
 export const STRETCH_MAX = 1.0, HS_MAX = 1.1;
+/** is the straight arm S -> S + u * len clear of the face? The shoulder sits right under the big head, so the upper arm
+ *  (the first 40 %) only has to stay off the face itself; the forearm and the HAND must stay one hand-width outside */
+const armClear = (H: P2, r: number, R: number, S: P2, ux: number, uy: number, len: number) => {
+  for (let i = 0; i <= 24; i++) { const t = (len * i) / 24, d = Math.hypot(S[0] + ux * t - H[0], S[1] + uy * t - H[1]); if (d < (i < 10 ? 1.02 * r : R)) return false; }
+  return true;
+};
+/** FACE GUARD: the aim, turned away from the head (if needed) so the straight arm + hand from shoulder S never crosses
+ *  the face and the hand stays one hand-width outside the head outline. Returns the (possibly turned) aim, same distance */
+export const faceGuard = (e: Pick<ActEnv, "head" | "r"> & { u?: number }, S: P2, aim: P2, tip: number, reach: number): P2 => {
+  const dx = aim[0] - S[0], dy = aim[1] - S[1], n = Math.hypot(dx, dy); if (n < 1e-6) return aim;
+  const len = Math.min(n, reach + tip), R = 1.02 * e.r + 13 * (e.u ?? 1) * 1.1, H = e.head;
+  const a0 = Math.atan2(dy, dx);
+  if (armClear(H, e.r, R, S, dx / n, dy / n, len)) return aim;
+  // turn away from the head: the sign that increases the angle between the arm and the shoulder -> head direction
+  const cr = dx * (H[1] - S[1]) - dy * (H[0] - S[0]), sgn = cr > 0 ? -1 : 1;
+  for (let deg = 2; deg <= 110; deg += 2) {
+    const a = a0 + sgn * (deg * Math.PI) / 180, ux = Math.cos(a), uy = Math.sin(a);
+    if (armClear(H, e.r, R, S, ux, uy, len)) return [S[0] + ux * n, S[1] + uy * n];
+  }
+  // nothing clears: the most-turned direction (never snap back to the face-crossing aim: that read as a jump, f119)
+  const a = a0 + sgn * (110 * Math.PI) / 180; return [S[0] + Math.cos(a) * n, S[1] + Math.sin(a) * n];
+};
 export const aimArm = (e: AimEnv, rest: ArmTo | P2, aim: P2 | null, k: number, hand: HandKind, hs0 = 1.2, dy = 0, left = false, stretch0 = 1, gap = 0): AimedArm => {
   const hs = Math.min(hs0, HS_MAX), stretch = Math.min(stretch0, STRETCH_MAX);
   const HH = e.HH ?? 2.1 * e.r, ch = e.chest ?? [e.head[0], e.head[1] + 1.9 * e.r], back = e.back ?? e.c < -0.35;
@@ -133,6 +165,22 @@ export const aimArm = (e: AimEnv, rest: ArmTo | P2, aim: P2 | null, k: number, h
   if (!aim) { if (Math.abs(e.s) > 0.3) aim = [S[0] + Math.sign(e.s) * 12 * HH, S[1] - 0.8 * HH]; else return { to: rest, to2: "point", k, hand, hs, front: true, dy }; }
   // (v4: NEVER a point at the lens: a target toward / past the lens is pointed at SIDEWAYS, out to the arm's own side)
   if ((e.aimLens ?? 0) > 0.8 && hand === "point") aim = [S[0] + side * 1.4 * HH, S[1] - 0.15 * HH];
+  // THE FACE GUARD (v4, 2026-11-20 film drafts f850 / f1860: her point up at the lamp right above her ran straight
+  // across her face). The big head sits right over the short arms, so a point steeper than ~50 deg crosses it. The arm
+  // line (shoulder -> fingertip) must stay one HAND-WIDTH outside the head outline: if it does not, the direction turns
+  // AWAY from the head (outward, keeping its length) by the least angle that clears it. Front, 3/4 and back views alike
+  // PROFILE POINT AT A TARGET IN FRONT OF THE FACE (v5 04:10, the director's full pass v13 / v14: the hall volunteers seen
+  // side-on point at their little lamp at face height just ahead of them: on screen the lamp sits ON the face, the arm ran
+  // across the chin and the hand landed on the mouth, 363 hand-frames). The fingertip goes at least a hand-width + a
+  // finger AHEAD of the face, no higher than a little under the eye line: the arm passes in front of the chin, not over it
+  if (prof > 0.5 && hand === "point") {
+    const fs = Math.sign(e.s) || 1, Hh = e.head, Rr = 1.02 * e.r + 13 * (e.u ?? 1) * 1.1, tipL = 22 * (e.u ?? 1) * Math.min(hs0, HS_MAX);
+    // (04:20 stills f550-f640: the PROFILE head reaches further forward than the round head (the nose), and the shoulder
+    // sits behind the face: the arm stays at CHIN height until it is well clear ahead of the nose)
+    const ahead = (aim[0] - Hh[0]) * fs;
+    if (aim[1] < Hh[1] + 1.0 * e.r && ahead < Rr + tipL + 0.8 * e.r) aim = [Hh[0] + fs * Math.max(ahead, Rr + tipL + 0.8 * e.r), Math.max(aim[1], Hh[1] + 1.0 * e.r)];
+  }
+  aim = faceGuard(e, S, aim, hand === "point" ? 22 * (e.u ?? 1) * Math.min(hs0, HS_MAX) : 0, 0.888 * HH * Math.max(1, Math.min(stretch0, STRETCH_MAX)));
   const dx = aim[0] - S[0], dyy = aim[1] - S[1], n = Math.hypot(dx, dyy) || 1, reach = 0.888 * HH, ux = dx / n, uy = dyy / n;
   // the WRIST stops one finger-length short of the target, so the FINGERTIP lands on it (a point hand's tip is ~22 u out)
   const tip = hand === "point" ? (back ? 14 : 22) * (e.u ?? 1) * hs : 0, m = Math.max(0, n - tip - Math.max(0, gap) * HH), sK = clamp(k, 0, 1);   // gap (head heights): the tip stops SHORT of the aim (frame 0: it leads to the bag, never covers it)

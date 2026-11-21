@@ -570,6 +570,8 @@ export type FaceX = { fdx?: number; fdy?: number; browUp?: [number, number]; win
   freckles?: number;
   /** clown p3: CROSS-EYED (0..1: both pupils pulled toward the nose: looking at something on his own hat / nose) */
   cross?: number;
+  /** pointing v5 (CAST): every eye drawn this much bigger about its own centre (default 1); the brows ride up with it */
+  eyeK?: number;
 };
 const faceFront = (p: Pen, cx: number, cy: number, W: number, expr: Expr, facing: number, look: number, lookY: number, lid: number,
   brim: boolean, skin: string, talk: number, glasses: string | null | undefined, X: FaceX = {}) => {
@@ -582,10 +584,13 @@ const faceFront = (p: Pen, cx: number, cy: number, W: number, expr: Expr, facing
     let kind = eyeKind(F.eye[(facing ? side === facing : side > 0) ? 1 : 0], lid);
     if (X.wink && side === Math.sign(X.wink)) kind = "happy";
     if (X.open1 && side === Math.sign(X.open1)) kind = "gaze";
+    const ek = X.eyeK ?? 1;
+    if (ek !== 1) { const g = p.g, [qx, qy] = p.P(x, ey); g.save(); g.translate(qx, qy); g.scale(ek, ek); g.translate(-qx, -qy); }
     eye(p, kind, x, ey, u, side, look - side * 1.25 * (X.cross ?? 0), lookY, skin);
+    if (ek !== 1) p.g.restore();
     const [dI, dO] = side > 0 && F.brow2 ? F.brow2 : F.brow;
     const up = X.browUp ? X.browUp[side < 0 ? 0 : 1] : 0;
-    let by = ey - (X.browGap ?? (brim ? 17 : 20)) * u + Math.min(0, lookY) * 1.6 * u - up * u;
+    let by = ey - (X.browGap ?? (brim ? 17 : 20)) * u - (ek - 1) * 10 * u + Math.min(0, lookY) * 1.6 * u - up * u;
     if (X.browMin !== undefined) by = Math.max(by, cy + (X.browMin + 2.5 - Math.min(dI, dO)) * u); // brow tops stay under a brim
     const halo = (pts: () => void) => { if (X.browHalo) pts(); };
     if (kind === "shock" || kind === "shockHalf" || kind === "goggle" || kind === "goggleHalf") {

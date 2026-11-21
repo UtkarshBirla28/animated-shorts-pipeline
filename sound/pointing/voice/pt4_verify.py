@@ -34,7 +34,8 @@ def gate(name, passed, val):
     print(f"  {'ok ' if passed else 'NO '} {name}: {val}")
 
 
-N = [q for q in phr if q["speaker"] == "N"]
+RUNP = [q for q in phr if q.get("grid_onsets")]          # the "Go" run: one phrase, judged on its own (below), not as a sentence
+N = [q for q in phr if q["speaker"] == "N" and not q.get("grid_onsets")]
 S = []
 for i, q in enumerate(N):
     nxt = next((c["s"] for c in phr if c["s"] > q["e"]), q["e"] + 0.3)
@@ -75,6 +76,16 @@ def band(seg):
     return 10 * np.log10(np.sum(P[(f >= 10000) & (f < 16000)]) / ref + 1e-20)
 
 
+ri = b.get("run")
+if RUNP and ri:
+    f0w, lv = ri["f0"], ri["rms_db"]
+    gate("run: every Go on its grid onset (+-10 ms)", all(abs(a - g) <= 0.011 for a, g in zip(ri["onsets"], RUNP[0]["grid_onsets"])), ri["onsets"])
+    gate("run: pitch rises (no word > 1 st under the one before), the last Go! the highest", all(V.st(a, c) >= -1.0 for a, c in zip(f0w, f0w[1:])) and f0w[-1] == max(f0w),
+         [round(x) for x in f0w])
+    gate("run: level rises, the last Go! the loudest", all(c >= a - 0.3 for a, c in zip(lv, lv[1:])) and lv[-1] == max(lv), lv)
+    gate("run: step INTO the run <= 6 st", ri["step_in_st"] is not None and abs(ri["step_in_st"]) <= 6, ri["step_in_st"])
+    print(f"  --  run: step OUT of the run (Go! -> the next sentence, after the held beat) {ri['step_out_st']} st: reported, not gated")
+    gate("run: the held beat after it 0.5 s (+-0.03)", ri["beat_after_s"] is not None and abs(ri["beat_after_s"] - 0.5) <= 0.03, ri["beat_after_s"])
 X = [q for q in phr if q["speaker"] != "N"]
 if X:
     nar_air = np.median([band(y[int(q["s"] * SR):int(q["e"] * SR)]) for q in N if q["e"] - q["s"] > 0.8])

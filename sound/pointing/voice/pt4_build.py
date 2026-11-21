@@ -45,6 +45,14 @@ PRE, FADE_OUT, XF = 0.020, 0.015, 0.010
 CACHE = {}
 
 
+def speech_lufs(spk, min_s=1.6):
+    """BS.1770 on a take's speech; speech shorter than 1.2 s (a 0.3-0.4 s "Go", a 1 s shout) is TILED to >= 1.6 s first:
+    one 400 ms gating block would otherwise hold the word plus whatever silence surrounds it, and the gain comes out wrong"""
+    if len(spk) < 1.2 * SR:
+        spk = np.tile(spk, int(np.ceil(min_s * SR / max(1, len(spk)))))
+    return L.lufs(spk)
+
+
 def take(folder, name):
     key = f"{folder}/{name}"
     if key not in CACHE:
@@ -53,9 +61,32 @@ def take(folder, name):
         pr = V.jload(mp3.with_suffix(".p4.json"))
         g = 10 ** (pr["raw_gain_db"] / 20)               # the probe's scale (-18 LUFS whole take): its spans live there
         spk = np.concatenate([m[int(x["s"] * SR):int(x["e"] * SR)] for x in pr["sentences"]]) * g
-        g2 = g * 10 ** ((TGT_MONO - L.lufs(spk)) / 20)
+        g2 = g * 10 ** ((TGT_MONO - speech_lufs(spk)) / 20)
         CACHE[key] = {"m": m * g2, "pr": pr, "gain_db": round(20 * np.log10(g2), 2), "folder": folder, "take": name}
     return CACHE[key]
+
+
+# ---------------------------------------------------------------- the script's own tokens + LINE ids (L01 .. L22, no L06)
+LINES_JSON = V.jload(arg("--lines", str(L.HERE.parent / "script_v4" / "lines_v4.json")))
+LTOK = {l["id"]: l["text"].split() for l in LINES_JSON}
+lid = lambda n: f"L{int(n):02d}"
+PTOK = {}            # paragraph id -> [(script token, line id)] in order (the paragraph's "lines" from voice_v4.json)
+for p_ in SC["paragraphs"]:
+    PTOK[p_["id"]] = [(w, lid(n)) for n, _ in p_["lines"] for w in LTOK[n]]
+
+
+def script_tokens(pid, take_sentences, ks):
+    """the script's tokens + line ids for sentences ks of a take of paragraph pid, by cumulative word counts. A take may
+    punctuate differently ("A hundred lights, then red."): the COUNT of words decides, the take's punctuation does not."""
+    toks = PTOK[pid]
+    nw = [len(x["text"].split()) for x in take_sentences]
+    if sum(nw) != len(toks):
+        raise SystemExit(f"{pid}: the take has {sum(nw)} words, the script's lines {[n for n, _ in next(q for q in SC['paragraphs'] if q['id'] == pid)['lines']]} have {len(toks)}: wrong take text?")
+    out = []
+    for k in ks:
+        a = sum(nw[:k])
+        out.append(toks[a:a + nw[k]])
+    return out
 
 
 def quiet_frames(m, a, b, thr=-50):
@@ -82,7 +113,7 @@ order = []      # [(kind, ...)] in film order
 for c in CH["chain"]:
     pid = c["para"]
     for t, a, b in c["segs"]:
-        order.append({"kind": "N", "para": pid, "folder": f"v4_{pid}", "take": t, "from": a, "to": b})
+        order.append({"kind": "N", "para": pid, "folder": f"{SC.get('prefix', 'v4')}_{pid}", "take": t, "from": a, "to": b})
 shouts = {s["after"]: s for s in SC.get("shouts", []) if s.get("after")}
 RUN = SC.get("run")              # the "Go" run: single-word takes laid on a speeding-up onset grid (never stretched)
 pieces = []
@@ -97,10 +128,10 @@ for o in order:
             pieces.append({"kind": "N", "para": o["para"], "folder": o["folder"], "take": o["take"], "ks": cur})
             cur = []
             if RUN and here == RUN["after"]:
-                pieces.append({"kind": "RUN", "id": RUN["id"], "who": "N", "folder": f"v4_{RUN['id']}", "take": RUN["takes"][0], "spec": RUN})
+                pieces.append({"kind": "RUN", "id": RUN["id"], "who": "N", "folder": RUN.get("folder", f"v4_{RUN['id']}"), "take": RUN["takes"][0], "spec": RUN})
             if here in shouts:
                 s = shouts[here]
-                pieces.append({"kind": "SHOUT", "id": s["id"], "who": s["who"], "folder": f"v4_{s['id']}", "take": s.get("take", "t1"), "spec": s})
+                pieces.append({"kind": "SHOUT", "id": s["id"], "who": s["who"], "folder": s.get("folder", f"v4_{s['id']}"), "take": s.get("take", "t1"), "spec": s})
 SH_UNPLACED = [s["id"] for s in SC.get("shouts", []) if not s.get("after") or s["after"] not in {f"{p['para']}:{p['ks'][-1] + 1}" for p in pieces if p["kind"] == "N"}]
 
 # ---------------------------------------------------------------- cut each piece (its own pauses fixed inside)
@@ -110,33 +141,44 @@ def run_piece(p):
     a word longer than its grid slot is cut short (15 ms fade) 20 ms before the next onset: a cut, never a stretch"""
     R = p["spec"]
     gaps = R["grid_gaps"]
+    assert len(R["takes"]) == len(gaps) + 1, f"run: {len(R['takes'])} takes for {len(gaps) + 1} grid onsets"
     onsets = [0.0] + list(np.cumsum(gaps))
+    ramp = R.get("gain_db", [0.0] * len(R["takes"]))          # an optional per-word level ramp on top of the matched level
+    PRE_R = 0.01
     segs = []
     for k, tn in enumerate(R["takes"]):
         tk = take(p["folder"], tn)
         pr = tk["pr"]
         on, off = pr["on"], pr["off"]
         tail = min(max(V.Track(tk["m"]).tail(off), 0.03), 0.06)
-        x = tk["m"][int(max(0, on - 0.01) * SR):int((off + tail + FADE_OUT) * SR)].copy()
-        lim = (onsets[k + 1] - onsets[k] - 0.02) if k + 1 < len(onsets) else None
-        if lim is not None and len(x) / SR - 0.01 > lim:
-            n = int((lim + 0.01) * SR)
-            notes.append(f"Go {k + 1} ({tn}): {len(x) / SR - 0.01:.3f} s long, cut to {lim:.3f} s (its grid slot)")
-            x = x[:n]
+        a0 = max(0.0, on - PRE_R)
+        pre = on - a0                                          # 0 for a CLIPSTART take (its sound starts at sample 0)
+        x = tk["m"][int(a0 * SR):int((off + tail + FADE_OUT) * SR)].copy()
+        lim = (onsets[k + 1] - onsets[k] - 0.02) if k + 1 < len(onsets) else None     # from ITS on to 20 ms before the next on
+        cut = lim is not None and len(x) / SR - pre > lim
+        if cut:
+            notes.append(f"Go {k + 1} ({tn}): {len(x) / SR - pre:.3f} s from its onset, cut to {lim:.3f} s (its grid slot)")
+            x = x[:int((lim + pre) * SR)]
         x[:int(0.004 * SR)] *= np.linspace(0, 1, int(0.004 * SR))
-        x[-int(FADE_OUT * SR):] *= np.linspace(1, 0, int(FADE_OUT * SR))
-        segs.append((onsets[k], x, min(off - on, len(x) / SR - 0.01 - FADE_OUT), tn, tk["gain_db"] + R.get("gain_db", [0] * 7)[k]))
-    total = onsets[-1] + len(segs[-1][1]) / SR + 0.01
+        # a word the grid cuts while it still sounds gets a 30 ms raised-cosine fade (SOUND 2026-11-20: a 15 ms linear fade
+        # at -15 dB under the word's peak ran straight into the next onset); an uncut word keeps the 15 ms fade on its tail
+        nf = int((0.030 if cut else FADE_OUT) * SR)
+        x[-nf:] *= (0.5 + 0.5 * np.cos(np.linspace(0, np.pi, nf))) if cut else np.linspace(1, 0, nf)
+        dur = min(off - on, len(x) / SR - pre - FADE_OUT)
+        segs.append((onsets[k], pre, x * 10 ** (ramp[k] / 20), dur, tn, tk["gain_db"] + ramp[k]))
+    total = PRE_R + onsets[-1] + len(segs[-1][2]) / SR
     y = np.zeros(int(total * SR) + SR // 10)
-    spans, sel = [], []
-    for k, (t0, x, dur, tn, g) in enumerate(segs):
-        a = int(round(t0 * SR))
-        gx = x * 10 ** (R.get("gain_db", [0] * 7)[k] / 20)
-        y[a:a + len(gx)] += gx
-        spans.append([t0 + 0.01, t0 + 0.01 + dur])
-        sel.append({"text": "Go!" if k == len(segs) - 1 else "Go.", "nw": 1, "take": tn})
-    p.update({"y": y, "spans": spans, "sel": sel, "cut": [], "tail_s": None, "gain_db": [round(s_[4], 2) for s_ in segs], "room": [],
-              "grid_onsets": [round(o + 0.01, 3) for o in onsets], "takes": R["takes"]})
+    spans = []
+    for t0, pre, x, dur, tn, g in segs:
+        a = int(round((PRE_R + t0 - pre) * SR))                # the word's acoustic ON lands on PRE_R + its grid onset
+        y[a:a + len(x)] += x
+        spans.append([PRE_R + t0, PRE_R + t0 + dur])
+    toks = LTOK[R["line"]]
+    assert len(toks) == len(segs), f"run: line {R['line']} has {len(toks)} words, {len(segs)} takes"
+    # ONE phrase for the whole run (its words carry the exact acoustic on / off of every "Go")
+    sel = [{"text": " ".join(toks), "nw": len(toks), "toks": [(w, lid(R["line"])) for w in toks], "word_spans": spans}]
+    p.update({"y": y, "spans": [[spans[0][0], spans[-1][1]]], "sel": sel, "cut": [], "tail_s": None, "gain_db": [round(s_[5], 2) for s_ in segs],
+              "room": [], "grid_onsets": [round(PRE_R + o, 3) for o in onsets], "takes": R["takes"], "word_spans": spans})
 
 
 for p in pieces:
@@ -147,14 +189,15 @@ for p in pieces:
     m = tk["m"]
     if p["kind"] == "N":
         S = tk["pr"]["sentences"]
-        sel = [S[k] for k in p["ks"]]
+        sel = [dict(S[k], toks=tt) for k, tt in zip(p["ks"], script_tokens(p["para"], S, p["ks"]))]
         on, off = sel[0]["s"], sel[-1]["e"]
         tail = min(max(sel[-1].get("tail_s") or 0.06, V.TARGET["tail_s"][0]), V.TARGET["tail_s"][1])
     else:
         pr = tk["pr"]
         on, off = pr["on"], pr["off"]
         tail = min(max(V.Track(m).tail(off), 0.04), 0.09)
-        sel = [{"s": on, "e": off, "text": p["spec"]["text"], "nw": len(p["spec"]["text"].split())}]
+        stoks = LTOK[p["spec"]["line"]]
+        sel = [{"s": on, "e": off, "text": " ".join(stoks), "nw": len(stoks), "toks": [(w, lid(p["spec"]["line"])) for w in stoks]}]
     a, b = max(0.0, on - PRE), min(len(m) / SR, off + tail + FADE_OUT)
     y = m[int(a * SR):int(b * SR)].copy()
     y[:int(0.005 * SR)] *= np.linspace(0, 1, int(0.005 * SR))
@@ -291,10 +334,24 @@ for n, L_ in enumerate(lay):
         x = p["sel"][q]
         sid = f"{p['para']}s{p['ks'][q] + 1}" if p["kind"] == "N" else p["id"]
         a_abs, b_abs = t0 + s_on, t0 + s_off
-        toks = x["text"].split()
+        toks = [w for w, _ in x["toks"]]
+        tlines = [l_ for _, l_ in x["toks"]]
+        line_ids = list(dict.fromkeys(tlines))
+        spk_ = "N" if p["kind"] == "N" else p["who"]
         hw = L.whisper(y24[int(max(0, a_abs - 0.06) * 24000):int((b_abs + 0.06) * 24000)]) if WH else []
         for h in hw:
             h["s"] += max(0, a_abs - 0.06)
+        heard_txt = " ".join(h["w"] for h in hw)
+        if p["kind"] == "RUN":
+            # the run's words ARE its grid: each "Go" from its acoustic on to its off (no Whisper timing on 0.3 s words)
+            for k, (w_on, w_off) in enumerate(x["word_spans"]):
+                words.append({"w": toks[k], "s": round(t0 + w_on, 3), "e": round(t0 + w_off, 3)})
+                spoken.append({"w": toks[k], "s": round(t0 + w_on, 3), "e": round(t0 + w_off, 3), "id": sid, "line": tlines[k], "speaker": spk_})
+            phr.append({"i": len(phr), "id": sid, "line": line_ids[0], "lines": line_ids, "speaker": spk_, "para": None, "s": round(a_abs, 3),
+                        "e": round(b_abs, 3), "text": x["text"], "markup": x["text"], "take": " ".join(f"{p['folder']}/{t_}" for t_ in p["takes"]),
+                        "grid_onsets": [round(t0 + o, 3) for o in [w[0] for w in x["word_spans"]]],
+                        "heard": heard_txt if WH else None, "wrong": L.word_diff(x["text"], heard_txt) if WH else None})
+            continue
         exp = [(L.norm_text(tk_)[:1] or ["?"])[0] for tk_ in toks]
         heard = [(L.norm_text(h["w"])[:1] or ["?"])[0] for h in hw]
         st_ = [None] * len(toks)
@@ -322,10 +379,11 @@ for n, L_ in enumerate(lay):
                 if rr:
                     e = rr[-1][0] * H + 0.005
             words.append({"w": tk_, "s": round(st_[k], 3), "e": round(e, 3)})
-            spoken.append({"w": tk_, "s": round(st_[k], 3), "e": round(e, 3), "id": sid, "speaker": "N" if p["kind"] == "N" else p["who"]})
-        phr.append({"i": len(phr), "id": sid, "speaker": "N" if p["kind"] == "N" else p["who"], "para": p.get("para"), "s": round(a_abs, 3),
-                    "e": round(b_abs, 3), "text": x["text"], "markup": x["text"], "take": f"{p['folder']}/{p['take']}",
-                    "heard": " ".join(h["w"] for h in hw) if WH else None, "wrong": L.word_diff(x["text"], " ".join(h["w"] for h in hw)) if WH else None})
+            spoken.append({"w": tk_, "s": round(st_[k], 3), "e": round(e, 3), "id": sid, "line": tlines[k], "speaker": spk_})
+        stext = " ".join(toks)
+        phr.append({"i": len(phr), "id": sid, "line": line_ids[0], "lines": line_ids, "speaker": spk_, "para": p.get("para"), "s": round(a_abs, 3),
+                    "e": round(b_abs, 3), "text": stext, "markup": stext, "take_text": x["text"], "take": f"{p['folder']}/{p['take']}",
+                    "heard": heard_txt if WH else None, "wrong": L.word_diff(stext, heard_txt) if WH else None})
 
 # ---------------------------------------------------------------- write
 OUT.mkdir(parents=True, exist_ok=True)
@@ -337,18 +395,38 @@ V.jsave(OUT / "words.json", words)
 V.jsave(OUT / "words_spoken.json", spoken)
 V.jsave(OUT / "phrases.json", phr)
 tr = V.Track(y)
-S = [dict(tr.sentence(q["s"], q["e"], len(q["text"].split())), text=q["text"], id=q["id"]) for q in phr if q["speaker"] == "N"]
+RUN_ID = RUN["id"] if RUN else None
+S = [dict(tr.sentence(q["s"], q["e"], len(q["text"].split())), text=q["text"], id=q["id"]) for q in phr if q["speaker"] == "N" and q["id"] != RUN_ID]
 sm = V.summary(S)
+# the run is not a sentence: its words are measured one by one, and the steps INTO and OUT OF it are reported
+run_info = None
+for L_ in lay:
+    if L_["p"]["kind"] == "RUN":
+        ws = [(L_["t0"] + a, L_["t0"] + b) for a, b in L_["p"]["word_spans"]]
+        f0w = [tr.sentence(a, b, 1)["f0"] for a, b in ws]
+        lv = [round(20 * np.log10(np.sqrt(np.mean(y[int(a * SR):int(b * SR)] ** 2)) + 1e-12), 2) for a, b in ws]
+        prev_ = [x for x in S if x["e"] <= ws[0][0] + 0.01]
+        next_ = [x for x in S if x["s"] >= ws[-1][1] - 0.01]
+        run_info = {"onsets": [round(a, 3) for a, _ in ws], "offs": [round(b, 3) for _, b in ws], "f0": f0w, "rms_db": lv,
+                    "step_in_st": round(float(V.st(prev_[-1]["f0"], f0w[0])), 2) if prev_ and prev_[-1]["f0"] and f0w[0] else None,
+                    "step_out_st": round(float(V.st(f0w[-1], next_[0]["f0"])), 2) if next_ and next_[0]["f0"] and f0w[-1] else None,
+                    "beat_after_s": round(next_[0]["s"] - ws[-1][1], 3) if next_ else None,
+                    "takes": L_["p"]["takes"], "gain_db": L_["p"]["gain_db"]}
 build = {"script": arg("--script", "script_v4/voice_v4.json"), "chain": CH["chain"], "duration_s": round(N / SR, 3), "gaps_plan": GAPS,
          "room_tone": room_src, "notes": notes, "shouts_not_placed": SH_UNPLACED,
          "pieces": [{"kind": L_["p"]["kind"], "id": L_["p"].get("para", L_["p"].get("id")), "take": f"{L_['p']['folder']}/{L_['p']['take']}",
                      "sentences": [k + 1 for k in L_["p"].get("ks", [])], "cut_in_take_s": L_["p"]["cut"], "gain_db": L_["p"]["gain_db"], "tail_s": L_["p"]["tail_s"],
                      "on_s": round(L_["on_abs"], 3), "off_s": round(L_["off_abs"], 3), "gap_before_s": L_["gap_before"]} for L_ in lay],
-         "narrator": sm, "gates": {k: [bool(a), b] for k, (a, b) in V.check(sm).items()}, "lufs_stereo": round(L.lufs(st2), 2), "peak": round(float(np.max(np.abs(y))), 4)}
+         "run": run_info, "narrator": sm, "gates": {k: [bool(a), b] for k, (a, b) in V.check(sm).items()}, "lufs_stereo": round(L.lufs(st2), 2), "peak": round(float(np.max(np.abs(y))), 4)}
 V.jsave(OUT / "_build.json", build)
 for L_ in lay:
-    print(f"  {L_['on_abs']:6.2f}-{L_['off_abs']:6.2f}  {L_['p']['kind']:5s} {L_['p'].get('para', L_['p'].get('id')):4s} {L_['p']['folder']}/{L_['p']['take']} "
-          f"s{[k + 1 for k in L_['p'].get('ks', [])]} gain {L_['p']['gain_db']:+.1f} dB  gap before {L_['gap_before']}")
+    g_ = L_["p"]["gain_db"]
+    gs = " ".join(f"{v:+.1f}" for v in g_) if isinstance(g_, list) else f"{g_:+.1f}"
+    tk_s = ",".join(L_["p"]["takes"]) if L_["p"]["kind"] == "RUN" else L_["p"]["take"]
+    print(f"  {L_['on_abs']:6.2f}-{L_['off_abs']:6.2f}  {L_['p']['kind']:5s} {L_['p'].get('para', L_['p'].get('id')):4s} {L_['p']['folder']}/{tk_s} "
+          f"s{[k + 1 for k in L_['p'].get('ks', [])]} gain {gs} dB  gap before {L_['gap_before']}")
+if run_info:
+    print("run:", {k: v for k, v in run_info.items()})
 for n_ in notes:
     print("  note:", n_)
 if SH_UNPLACED:

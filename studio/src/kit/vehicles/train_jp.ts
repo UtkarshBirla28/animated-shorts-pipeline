@@ -34,6 +34,9 @@ export type TrainJPOpts = {
   pantographs?: number[];
   /** metres the train has moved toward -Z (its heading) at film time t (default 0) */
   run?: (t: number) => number;
+  /** the cab's crew window [z0, z1] (car-local z, default [0.55, 1.30]): a film may widen it into one big clear pane
+   *  (the v4 film's side-on v20). Passed to the hero cab too (cabJP crewWindow) */
+  crewWindow?: [number, number] | [number, number, number];   // [z0, z1, sill above the floor (default 0.98)]
   /** door state at t: which side and how open (0 closed .. 1 open) */
   doors?: TrainDoors;
   /** the car-side lamps go out `lampDelay` s (default 0.3, script v3) after the leaves meet, plus `doorDelay` s per
@@ -148,7 +151,7 @@ const sweep = (P: Parts, prof: [number, number][], za: number, zb: number, key: 
   }
 };
 
-const bodyParts = (cab: boolean, near: boolean, seed: number) => {
+const bodyParts = (cab: boolean, near: boolean, seed: number, crew: [number, number] | [number, number, number] = [0.55, 1.3]) => {
   const P = parts(), R = rng(seed), rivets: V3[] = [];
   const z0 = cab ? FACE.zB : D.body0, z1 = D.body1, F = D.floor, HW = D.hw;
   const doors = cab ? DOORS_CAB : DOORS_MID, wins = windowsOf(doors, (cab ? 0.2 : D.body0) + 0.3, z1 - 0.3, cab);
@@ -156,7 +159,7 @@ const bodyParts = (cab: boolean, near: boolean, seed: number) => {
   const holes: Hole[] = [];
   for (const dz of doors) holes.push({ u0: dz - D.doorW / 2, u1: dz + D.doorW / 2, y0: F, y1: F + D.doorH, kind: "door" });
   for (const [a, b] of wins) holes.push({ u0: a, u1: b, y0: F + D.winY0, y1: F + D.winY1, kind: "win" });
-  if (cab) { holes.push({ u0: 0.55, u1: 1.3, y0: F + 0.98, y1: F + 1.86, kind: "crew" }); holes.push({ u0: 1.42, u1: 2.02, y0: F + 0.02, y1: F + 1.86, kind: "crewDoor" }); }
+  if (cab) { holes.push({ u0: crew[0], u1: crew[1], y0: F + (crew[2] ?? 0.98), y1: F + 1.86, kind: "crew" }); holes.push({ u0: 1.42, u1: 2.02, y0: F + 0.02, y1: F + 1.86, kind: "crewDoor" }); }
   /** a rounded box standing on the skin of side s: from `a` to `b` metres outward of the skin (negative = inward) */
   const sb = (k: string, s: number, a: number, b: number, y0: number, y1: number, u0: number, u1: number, r = 0.004) =>
     rbox(P, k, s > 0 ? HW + a : -HW - b, y0, u0, s > 0 ? HW + b : -HW - a, y1, u1, r);
@@ -494,7 +497,7 @@ export const trainJP = async (ctx: KitCtx, o: TrainJPOpts = {}): Promise<Built &
   const moving = new THREE.Group(); root.add(moving);
   // ---- shared car geometry: mid / cab, near / far
   const lodMode = o.lod ?? "auto";
-  const build = (cab: boolean, near: boolean) => { const b = bodyParts(cab, near, (o.seed ?? 3) + (cab ? 11 : 0)); if (cab) faceParts(b.P, near); return b; };
+  const build = (cab: boolean, near: boolean) => { const b = bodyParts(cab, near, (o.seed ?? 3) + (cab ? 11 : 0), o.crewWindow); if (cab) faceParts(b.P, near); return b; };
   const want = (near: boolean) => lodMode === "auto" || (lodMode === "near") === near;
   const G: Record<string, { grp: THREE.Group; meta: ReturnType<typeof bodyParts> } | null> = {};
   for (const cab of [false, true]) for (const near of [true, false]) {
@@ -570,7 +573,7 @@ export const trainJP = async (ctx: KitCtx, o: TrainJPOpts = {}): Promise<Built &
         b.object.position.y = D.floor; inner.add(b.object); inHero = b.object; hero.interior = b as Built & Record<string, unknown>;
         if (b.update) updates.push(b.update);
         if (cab && k === 0 && o.heroCab !== false) {
-          const c = await cabJP(ctx, { pilot: (t) => pilotOf(t), ...(o.cab ?? {}) });
+          const c = await cabJP(ctx, { pilot: (t) => pilotOf(t), ...(o.crewWindow ? { crewWindow: o.crewWindow } : {}), ...(o.cab ?? {}) });
           c.object.position.y = D.floor; inner.add(c.object); hero.cab = c as Built & Record<string, unknown>;
           if (c.update) updates.push(c.update);
         }

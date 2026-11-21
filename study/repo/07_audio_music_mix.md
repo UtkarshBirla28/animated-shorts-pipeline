@@ -1,6 +1,6 @@
 # 07 - Audio engine: DSP kit, instruments, march music, timeline, final mix
 
-Repo: `mromidev/claude-animated-shorts` (read-only clone at `<ROOT>\repo`).
+Repo: `mromidev/claude-animated-shorts` (read-only clone at `C:\Users\utkar\Desktop\animated-shorts-studio\repo`).
 Slice: the synthesized sound engine in `templates/audio/`.
 
 ## Files read (every line)
@@ -478,7 +478,7 @@ Bridge result (cues.md:52): applied section gains hook −7.6, town −3.2, marc
 
 - `SR = 48000` everywhere (dsp.py:9); the K-weighting coefficients (dsp.py:249-252) are the 48 kHz set, so the loudness meter is wrong at any other rate. `load_voice` asserts 48 kHz (mix.py:62): TTS output at 44.1/24 kHz must be resampled first (e.g. `ffmpeg -i in.wav -ar 48000 -c:a pcm_s24le voice.wav`). Float WAV is not readable (dsp.py:318-331).
 - Folder layout: `ROOT = dirname(HERE)`, `ROOT/voice/voice.wav`, `ROOT/voice/words.json`, outputs into `HERE` (mix.py:16-18, 61, 208, 259-262, 350). In the repo the files sit in `templates/audio/`, so running them in place would look for `templates/voice/` (not present). Copy to `<project>/audio/` first.
-- SKILL.md:67 names `~/bridge-short/audio/` (a POSIX home path). On this machine that folder is `an older unrelated project folder`, which Codex is using: a new story must get its own new project folder.
+- SKILL.md:67 names `~/bridge-short/audio/` (a POSIX home path). On this machine that folder is `C:\Users\utkar\bridge-short`, which Codex is using: a new story must get its own new project folder.
 - timeline.py:1 refers to "your Remotion project/src/videos/bridge/story.ts + cast.ts" (placeholder text). The mirror is manual.
 - `ffmpeg` called by bare name (mix.py:189): must be on PATH (Windows: `ffmpeg.exe`); failure is tolerated.
 - No version pins for Python, numpy or scipy anywhere. APIs used (`default_rng`, `sosfilt`, `sosfiltfilt`, `stft/istft(boundary=...)`, `resample_poly`, `fftconvolve`, `ndimage.uniform_filter1d / minimum_filter1d`) need numpy ≥ 1.17 and a modern scipy (≥ 1.2 or so).

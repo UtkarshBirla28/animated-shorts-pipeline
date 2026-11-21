@@ -1,0 +1,177 @@
+[
+{
+"id": "v3_n01",
+"speaker": "N",
+"s": 0.07,
+"e": 1.72,
+"markup": "His bag is on that train."
+},
+{
+"id": "v3_n02",
+"speaker": "N",
+"s": 1.87,
+"e": 2.97,
+"markup": "He is not."
+},
+{
+"id": "v3_n03",
+"speaker": "N",
+"s": 3.12,
+"e": 5.47,
+"markup": "All he did was laugh... at a finger."
+},
+{
+"id": "v3_d01",
+"speaker": "D",
+"s": 5.65,
+"e": 7.105,
+"markup": "Signal... green!"
+},
+{
+"id": "v3_t01",
+"speaker": "T",
+"s": 7.3,
+"e": 8.85,
+"markup": "He's pointing at nothing!"
+},
+{
+"id": "v3_n04",
+"speaker": "N",
+"s": 9.0,
+"e": 11.85,
+"markup": "But that driver has a thousand people behind him."
+},
+{
+"id": "v3_n05",
+"speaker": "N",
+"s": 12.0,
+"e": 14.6,
+"markup": "So he checks with a finger and a shout."
+},
+{
+"id": "v3_n06",
+"speaker": "N",
+"s": 15.0,
+"e": 15.85,
+"markup": "First stop."
+},
+{
+"id": "v3_n07",
+"speaker": "N",
+"s": 16.1,
+"e": 17.95,
+"markup": "His suitcase tries to get off..."
+},
+{
+"id": "v3_n08",
+"speaker": "N",
+"s": 18.45,
+"e": 20.25,
+"markup": "...and the boy's finger saves it."
+},
+{
+"id": "v3_t02",
+"speaker": "T",
+"s": 20.4,
+"e": 21.35,
+"markup": "Bad suitcase."
+},
+{
+"id": "v3_d02",
+"speaker": "D",
+"s": 22.95,
+"e": 24.375,
+"markup": "Doors... closed!"
+},
+{
+"id": "v3_t03",
+"speaker": "T",
+"s": 25.125,
+"e": 26.795,
+"markup": "What's a finger gonna do?"
+},
+{
+"id": "v3_n09",
+"speaker": "N",
+"s": 27.145,
+"e": 28.095,
+"markup": "Second stop."
+},
+{
+"id": "v3_t04",
+"speaker": "T",
+"s": 28.545,
+"e": 30.1,
+"markup": "Stay. Be right back."
+},
+{
+"id": "v3_n10",
+"speaker": "N",
+"s": 31.05,
+"e": 31.9,
+"markup": "It stays."
+},
+{
+"id": "v3_t05",
+"speaker": "T",
+"s": 33.0,
+"e": 34.86,
+"markup": "Vending machine... check!"
+},
+{
+"id": "v3_t06",
+"speaker": "T",
+"s": 37.64,
+"e": 38.94,
+"markup": "This kid gets it!"
+},
+{
+"id": "v3_n11",
+"speaker": "N",
+"s": 39.59,
+"e": 43.77,
+"markup": "You see, his eyes looked right at it. His mind was on his phone."
+},
+{
+"id": "v3_n12",
+"speaker": "N",
+"s": 45.22,
+"e": 47.25,
+"markup": "Japan's railway lab tested it."
+},
+{
+"id": "v3_n13",
+"speaker": "N",
+"s": 47.4,
+"e": 54.19,
+"markup": "For every six mistakes people made just looking... when they pointed and said it out loud: about one."
+},
+{
+"id": "v3_n14",
+"speaker": "N",
+"s": 54.75,
+"e": 57.72,
+"markup": "A finger and a shout drag your mind back."
+},
+{
+"id": "v3_d03",
+"speaker": "D",
+"s": 58.47,
+"e": 60.695,
+"markup": "Doors... closed!"
+},
+{
+"id": "v3_k01",
+"speaker": "KID",
+"s": 61.48,
+"e": 62.785,
+"markup": "Bag... check!"
+},
+{
+"id": "v3_t07",
+"speaker": "T",
+"s": 63.51,
+"e": 65.025,
+"markup": "Bag... gone."
+}
+]

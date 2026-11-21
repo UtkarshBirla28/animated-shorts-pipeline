@@ -10,6 +10,9 @@ import { heldPose, holdingPose, LIFT } from "../lift";
 import { callOut, callArm, filmTarget, type ActEnv } from "../gesture";
 import { actBeats, timeBeats, hookK, type Beat, type Resolver } from "../moves";
 import { drawBigHand, drawKeys, drawCallBubble, drawTick, drawChip } from "../draw_hands";
+import * as MV from "../moves";
+import { timedV4, evF } from "../v4";
+import { R_V4 as R4 } from "../../v4/resolver";
 
 export const SW = 2400, SH = 1600;
 const LIGHT = (-120 * Math.PI) / 180;
@@ -270,8 +273,52 @@ const PAGES: Record<string, (g: CanvasRenderingContext2D, f: number) => void> = 
   },
 };
 
+// ---------------- v4: THE YOUNG WOMAN (lab_woman) on the REAL v4 beat table + clock (cast/v4.ts timedV4), front view,
+// seated, with a sketch of LAB's lamp (behind her) and button (IN FRONT of her: the dome hides what is behind it, as in
+// the film). Design-space places measured on the film's frame 0 draft (2026-11-20 16:10): dome centre (178, 600), its
+// visible top y 544; the lamp x 100..516, y 11..244, lenses (200, 122) green / (405, 122) red
+const WB: P2 = [180, 548], WLG: P2 = [200, 122], WLR: P2 = [405, 122];
+const lampSketch = (lit: 0 | 1 | 2) => (p: Pen) => { p.poly(rrect(100, 11, 516, 244, 30), "#ff5a1f", 4); p.poly(rrect(122, 30, 494, 222, 24), "#141418", 4);
+  p.ell(WLG[0], WLG[1], 78, 78, lit === 2 ? "#3dff6a" : "#0e2a16", 5); p.ell(WLR[0], WLR[1], 78, 78, lit === 1 ? "#ff3020" : "#2a0e0e", 5); };
+const domeSketch = (p: Pen) => { p.poly(rrect(98, 590, 258, 650, 16), "#14161e", 4); p.ell(178, 590, 70, 44, "#ff4a3a", 4); p.ell(178, 560, 6, 6, "#ff4a3a", 0); };
+const W4 = "lab_woman" as const;
+const womanCell = (label: string, f: number, aim: P2, lit: 0 | 1 | 2, v = { s: 0, c: 1 }): Cell => {
+  const P = actBeats(W4, timedV4(), envAt(W4, v, f, { aim, look: lit === 1 && aim !== WB ? WLR : WLG, seat: 0.47 }));
+  return { label, who: W4, P: { ...v, ...P }, pre: lampSketch(lit), extra: domeSketch };
+};
+/** a test POINT AT THE LAMP: the right arm (mPoint, the film's own move) along a screen direction / at a card point */
+const pointTest = (label: string, v: { s: number; c: number }, o: { aim?: P2; dir?: [number, number]; lean?: number; head?: number; left?: boolean }): Cell => {
+  const e = envAt(W4, v, 40, { aim: o.aim ?? WLG, look: o.aim ?? WLG, seat: 0.47 });
+  const A = MV.mPoint(e, 0, 200, { still: true, dir: o.dir, left: o.left, hs: 1.15 });
+  const base = actBeats(W4, [], e);
+  const arms = o.left ? { left: A?.left } : { right: A?.right };
+  const P = MV.compose(e, MV.baseOf(W4, e), [A, { ...arms, lean: o.lean ?? 0, headTilt: o.head ?? 0, expr: "brightO", mouth: "O", gaze: o.aim ?? WLG, gazeK: 1 }]);
+  void base;
+  return { label, who: W4, P: { ...v, ...P }, pre: lampSketch(o.aim === WLR ? 1 : 2), extra: domeSketch };
+};
+PAGES.woman = (g) => {
+  title(g, "POINTING v4 · THE YOUNG WOMAN on the real v4 beats (frame numbers = the v4 clock) + tests: pointing UP at the lamp without crossing her face");
+  const ev = (n: string) => evF(n), go = (k: number) => evF(`go${k}`);
+  const cells: Cell[] = [
+    womanCell(`f0 frame 0: hover, eyes wide`, 0, WB, 0), womanCell(`f${ev("lampGreen") + 3} green: wider, lift`, ev("lampGreen") + 3, WB, 2),
+    womanCell(`f${go(1) + 1} press 1 (full)`, go(1) + 1, WB, 2), womanCell(`f${go(1) + 7} back up`, go(1) + 7, WB, 0),
+    womanCell(`f${go(3) + 1} press 3 (steady)`, go(3) + 1, WB, 2), womanCell(`f${go(5) + 1} press 5 (sure)`, go(5) + 1, WB, 2),
+    womanCell(`f${ev("red") + 1} RED: down anyway`, ev("red") + 1, WB, 1), womanCell(`f${ev("red") + 10} frozen`, ev("red") + 10, WB, 1),
+  ];
+  const v18 = R4.shot("v18"), v36 = R4.shot("v36");
+  if (v18) cells.push(womanCell(`v18 f${v18[0] + 30} point at the red lamp`, v18[0] + 30, WLR, 1));
+  if (v36) cells.push(womanCell(`v36 f${v36[0] + 10} loop: arm up`, v36[0] + 10, WLG, 0), womanCell(`v36 f${v36[1] - 5} loop: say it`, v36[1] - 5, WLG, 0));
+  cells.push(
+    pointTest("T1 front, at the green lens", Vf, {}), pointTest("T2 front, dir 45 deg out", Vf, { dir: [-0.75, -0.75] }), pointTest("T3 front, dir 55 + lean", Vf, { dir: [-0.62, -0.88], lean: -6 }),
+    pointTest("T4 3/4 (s 0.35) at the green lens", { s: 0.35, c: 0.94 }, {}), pointTest("T5 3/4 (s -0.35) at the green lens", { s: -0.35, c: 0.94 }, {}),
+    pointTest("T6 3/4 (s 0.55) at the green lens", Vq, {}), pointTest("T7 3/4 (s -0.55) at the green lens", VqL, {}),
+    pointTest("T8 front, LEFT arm, red lens", Vf, { aim: WLR, left: true }), pointTest("T9 3/4 (s -0.55) LEFT arm red", VqL, { aim: WLR, left: true }), pointTest("T10 3/4 (s 0.55) LEFT arm red", Vq, { aim: WLR, left: true }),
+  );
+  grid(g, cells, 7, 3);
+};
+
 /** page "all": frame n renders ALL[n] (one bundle for every page) */
-export const ALL = ["main", "faces", "others", "acting", "crowd", "tourist", "kiddriver", "mum", "lift"];
+export const ALL = ["main", "faces", "others", "acting", "crowd", "tourist", "kiddriver", "mum", "lift", "woman"];
 export const Sheet: React.FC<{ page: string }> = ({ page }) => {
   const f = useCurrentFrame(), ref = useRef<HTMLCanvasElement>(null);
   const [h] = useState(() => delayRender("cast sheet"));

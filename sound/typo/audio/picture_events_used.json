@@ -1,0 +1,66 @@
+{
+ "_doc": "frames (30 fps) every SFX used in the last mix.py run; copy a key into picture_events.json to override it (a frame, a list of frames, the same dict shape, a 'beat+n' expression, or null to drop the cue)",
+ "_probes": [
+  "typo: no picture probes (every cue is keyed to BEAT names from words.json / story.ts)"
+ ],
+ "enter_1": {
+  "value": 15,
+  "source": "default (BEAT-keyed)"
+ },
+ "over14500_1": {
+  "value": 79,
+  "source": "default (BEAT-keyed)"
+ },
+ "taxi_2": {
+  "value": 255,
+  "source": "default (BEAT-keyed)"
+ },
+ "debut_bell_3_0": {
+  "value": 326,
+  "source": "default (BEAT-keyed)"
+ },
+ "debut_bell_3_1": {
+  "value": 340,
+  "source": "default (BEAT-keyed)"
+ },
+ "spot_4": {
+  "value": 425,
+  "source": "default (BEAT-keyed)"
+ },
+ "price_key_6": {
+  "value": 855,
+  "source": "default (BEAT-keyed)"
+ },
+ "tea_6": {
+  "value": 918,
+  "source": "default (BEAT-keyed)"
+ },
+ "boss_in_8": {
+  "value": 1125,
+  "source": "default (BEAT-keyed)"
+ },
+ "cancel_press_8a": {
+  "value": 1188,
+  "source": "default (BEAT-keyed)"
+ },
+ "dots_8a": {
+  "value": 1214,
+  "source": "default (BEAT-keyed)"
+ },
+ "cancel_press_8b": {
+  "value": 1257,
+  "source": "default (BEAT-keyed)"
+ },
+ "dots_8b": {
+  "value": 1281,
+  "source": "default (BEAT-keyed)"
+ },
+ "ding_10": {
+  "value": 1617,
+  "source": "default (BEAT-keyed)"
+ },
+ "tick_14": {
+  "value": 2408,
+  "source": "default (BEAT-keyed)"
+ }
+}

@@ -53,8 +53,11 @@ def step_cost(a, b):
 
 def options(pid):
     takes = []
-    for pj in sorted((L.TAKES / f"v4_{pid}").glob("t*.p4.json"), key=lambda p: int(p.name.split(".")[0][1:])):
+    for pj in sorted((L.TAKES / f"{SC.get('prefix', 'v4')}_{pid}").glob("t*.p4.json"), key=lambda p: int(p.name.split(".")[0][1:])):
         r = V.jload(pj)
+        want = next(p for p in SC["paragraphs"] if p["id"] == pid)
+        if L.norm_text(r["text"]) != L.norm_text(want["text"]):
+            continue                               # a take of an older text of this paragraph
         if r.get("wrong_words"):
             ok_s = [not x.get("wrong") for x in r["sentences"]]
         else:

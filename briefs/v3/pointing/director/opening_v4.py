@@ -2,6 +2,9 @@
 # and compared with the reference openings and our own. Never plays anything.
 #   PYTHONNOUSERSITE=1 tools/.venv/Scripts/python.exe -s briefs/v3/pointing/director/opening_v4.py --audio=<opening mix wav>
 #       [--quality=preview|draft|final] [--shots=v01,v02,v03,v04,v05,v06] [--no-render] [--no-copy (a test: nothing to pointing_preview)]
+#       [--clip=<an opening mp4 rendered elsewhere>: skip render + assemble, only the audit (this PC: no renders since 15:35)]
+# --audio defaults to sound/pointing/audio/opening_v4_mix.wav (SOUND's opening mix). Resumable: kit_render reuses every
+# finished shot chunk (studio/out/pointing_v4/shots/<quality>/), so a killed run is simply started again.
 # 1) tsc; 2) the clock (probe_v4.mjs json); 3) kit_render the opening shots (--conc 1, the RAM token is kit_render's);
 # 4) concat the newest chunk of each shot, mux the audio cut to the picture (never a silent clip) ->
 #    studio/out/pointing_v4/opening_v4.mp4 (+ a copy in pointing_preview/VIDEO_v4_opening.mp4);
@@ -14,12 +17,13 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.pat
 ST = os.path.join(ROOT, "studio"); OUT = os.path.join(ST, "out", "pointing_v4"); AUD = os.path.join(OUT, "opening_audit")
 PY = os.path.join(ROOT, "tools", ".venv", "Scripts", "python.exe")
 arg = lambda k, d=None: next((a.split("=", 1)[1] for a in sys.argv if a.startswith(k + "=")), d)
-Q = arg("--quality", "preview"); SHOTS = arg("--shots", "v01,v02,v03,v04,v05,v06").split(","); AUDIO = arg("--audio")
-if not AUDIO or not os.path.exists(AUDIO): sys.exit("opening_v4: --audio=<the opening mix> is required (the clip is never silent)")
+Q = arg("--quality", "preview"); SHOTS = arg("--shots", "v01,v02,v03,v04,v05,v06").split(",")
+AUDIO = arg("--audio", os.path.join(ROOT, "sound", "pointing", "audio", "opening_v4_mix.wav")); CLIP = arg("--clip")
+if not CLIP and (not AUDIO or not os.path.exists(AUDIO)): sys.exit("opening_v4: the opening mix %s is missing: pass --audio=<the opening mix> (the clip is never silent)" % AUDIO)
 os.makedirs(AUD, exist_ok=True)
 run = lambda cmd, **k: subprocess.run(cmd, check=True, **k)
 
-if "--no-render" not in sys.argv:
+if "--no-render" not in sys.argv and not CLIP:
     print("[opening] tsc"); run("npx tsc --noEmit -p src/videos3/pointing/tsconfig.json", cwd=ST, shell=True)
     run(["node", os.path.join(HERE, "probe_v4.mjs"), "json", os.path.join(HERE, "timeline_v4.json")])
     print("[opening] render", Q, ",".join(SHOTS))
@@ -28,21 +32,25 @@ if "--no-render" not in sys.argv:
 TL = json.load(open(os.path.join(HERE, "timeline_v4.json"), encoding="utf-8"))
 shots = [s for s in TL["shots"] if s["id"] in SHOTS]
 
-# ---- assemble (the newest chunk of each shot, in order) + the sound
-files = []
-for s in shots:
-    fs = [f for f in glob.glob(os.path.join(OUT, "shots", Q, s["id"] + "_*.mp4")) if ".part" not in f]
-    if not fs: sys.exit("opening_v4: no %s chunk for %s" % (Q, s["id"]))
-    files.append(max(fs, key=os.path.getmtime))
-lst = os.path.join(OUT, "_opening.txt"); open(lst, "w").write("".join("file '%s'\n" % f.replace("\\", "/") for f in files))
-silent = os.path.join(OUT, "_opening_silent.mp4")
-run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", silent])
+# ---- assemble (the newest chunk of each shot, in order) + the sound; with --clip: the given clip as it is
 dur = lambda p: float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", p], capture_output=True, text=True).stdout.strip())
-t = min(dur(silent), dur(AUDIO)); clip = os.path.join(OUT, "opening_v4.mp4")
-run(["ffmpeg", "-v", "error", "-y", "-i", silent, "-i", AUDIO, "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-t", "%.3f" % t, "-movflags", "+faststart", clip])
-os.remove(silent); os.remove(lst)
-if "--no-copy" not in sys.argv: shutil.copyfile(clip, os.path.join(ROOT, "pointing_preview", "VIDEO_v4_opening.mp4"))
-print("[opening] %s: %.2f s (picture %d shots, sound %.2f s)" % (os.path.relpath(clip, ROOT), t, len(files), dur(AUDIO)))
+if CLIP:
+    clip = os.path.abspath(CLIP); t = dur(clip)
+    print("[opening] auditing the clip %s (%.2f s), no render" % (clip, t))
+else:
+    files = []
+    for s in shots:
+        fs = [f for f in glob.glob(os.path.join(OUT, "shots", Q, s["id"] + "_*.mp4")) if ".part" not in f]
+        if not fs: sys.exit("opening_v4: no %s chunk for %s" % (Q, s["id"]))
+        files.append(max(fs, key=os.path.getmtime))
+    lst = os.path.join(OUT, "_opening.txt"); open(lst, "w").write("".join("file '%s'\n" % f.replace("\\", "/") for f in files))
+    silent = os.path.join(OUT, "_opening_silent.mp4")
+    run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", silent])
+    t = min(dur(silent), dur(AUDIO)); clip = os.path.join(OUT, "opening_v4.mp4")
+    run(["ffmpeg", "-v", "error", "-y", "-i", silent, "-i", AUDIO, "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-t", "%.3f" % t, "-movflags", "+faststart", clip])
+    os.remove(silent); os.remove(lst)
+    if "--no-copy" not in sys.argv: shutil.copyfile(clip, os.path.join(ROOT, "pointing_preview", "VIDEO_v4_opening.mp4"))
+    print("[opening] %s: %.2f s (picture %d shots, sound %.2f s)" % (os.path.relpath(clip, ROOT), t, len(files), dur(AUDIO)))
 
 # ---- the audit: hook numbers from the clock
 toks = [x for x in TL["toks"]]
@@ -87,6 +95,8 @@ if go: strip([x["s"] + 0.04 for x in go] + [go[-1]["s"] + 0.35, go[-1]["s"] + 0.
 sj = os.path.join(AUD, "shots_opening.json")
 json.dump([{"id": s["id"], "from": s["from"], "to": min(s["to"], int(t * 30)), "closeUp": s.get("closeUp", False)} for s in shots], open(sj, "w"))
 env = dict(os.environ, PYTHONNOUSERSITE="1", PYTHONIOENCODING="utf-8")
-subprocess.run([PY, "-s", os.path.join(ROOT, "tools", "v3", "gates_v4.py"), clip, "--shots=" + sj, "--out=" + AUD], env=env)
+# "every shot moves, then RESTS" on the CAMERA (probe_cams_v4), as in film_v4: the movers keep the picture alive in a rest
+camj = os.path.join(AUD, "cams_v4.json"); subprocess.run(["node", os.path.join(HERE, "probe_cams_v4.mjs"), "json", camj], cwd=ST, env=env, capture_output=True)
+subprocess.run([PY, "-s", os.path.join(ROOT, "tools", "v3", "gates_v4.py"), clip, "--shots=" + sj, "--out=" + AUD] + (["--cams=" + camj] if os.path.exists(camj) else []), env=env)
 subprocess.run([PY, "-s", os.path.join(ROOT, "tools", "v3", "compare_films.py"), clip, "--out=" + os.path.join(AUD, "compare"), "--step=0.5", "--max=8", "--label=OPENING v4"], env=env)
 print("[opening] audit in", os.path.relpath(AUD, ROOT))

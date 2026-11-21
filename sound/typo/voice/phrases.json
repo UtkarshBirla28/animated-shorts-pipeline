@@ -1,0 +1,234 @@
+[
+ {
+  "i": 0,
+  "beat": 1,
+  "s": 0.08,
+  "e": 3.63,
+  "markup": "One typo cost a Tokyo bank {¥40|forty} {billion.|billion yen.}",
+  "style": null
+ },
+ {
+  "i": 1,
+  "beat": 1,
+  "s": 3.93,
+  "e": 6.85,
+  "markup": "And it sold shares... that didn't even exist.",
+  "style": null
+ },
+ {
+  "i": 2,
+  "beat": 2,
+  "s": 7.16,
+  "e": 9.23,
+  "markup": "December {8th,|eighth,} {2005.|two thousand five.}",
+  "style": null
+ },
+ {
+  "i": 3,
+  "beat": 2,
+  "s": 9.45,
+  "e": 13.718,
+  "markup": "A small company called J-Com starts trading on the Tokyo Stock Exchange.",
+  "style": null
+ },
+ {
+  "i": 4,
+  "beat": 3,
+  "s": 13.99,
+  "e": 17.118,
+  "markup": "It has only about {14,500|fourteen thousand five hundred} shares.",
+  "style": null
+ },
+ {
+  "i": 6,
+  "beat": 4,
+  "s": 17.465,
+  "e": 20.621,
+  "markup": "At Mizuho Securities, a trader gets a simple job:",
+  "style": null
+ },
+ {
+  "i": 7,
+  "beat": 4,
+  "s": 20.909,
+  "e": 23.953,
+  "markup": "sell one share, for {¥610,000.|six hundred and ten thousand yen.}",
+  "style": null
+ },
+ {
+  "i": 8,
+  "beat": 5,
+  "s": 24.219,
+  "e": 29.103,
+  "markup": "He types... {610,000|six hundred and ten thousand} shares... for {¥1.|one yen.}",
+  "style": null
+ },
+ {
+  "i": 9,
+  "beat": 6,
+  "s": 29.38,
+  "e": 30.3,
+  "markup": "Easy mistake.",
+  "style": null
+ },
+ {
+  "i": 10,
+  "beat": 7,
+  "s": 30.623,
+  "e": 34.163,
+  "markup": "That's {41|forty-one} times more shares than the whole company has.",
+  "style": null
+ },
+ {
+  "i": 11,
+  "beat": 7,
+  "s": 34.39,
+  "e": 37.22,
+  "markup": "But how do you sell something that doesn't exist?",
+  "style": null
+ },
+ {
+  "i": 12,
+  "beat": 8,
+  "s": 37.75,
+  "e": 38.59,
+  "markup": "\"Cancel it!\"",
+  "style": "shout"
+ },
+ {
+  "i": 13,
+  "beat": 9,
+  "s": 38.873,
+  "e": 39.937,
+  "markup": "They press cancel.",
+  "style": null
+ },
+ {
+  "i": 14,
+  "beat": 9,
+  "s": 40.557,
+  "e": 40.961,
+  "markup": "Nothing.",
+  "style": null
+ },
+ {
+  "i": 15,
+  "beat": 9,
+  "s": 41.767,
+  "e": 42.161,
+  "markup": "Again.",
+  "style": null
+ },
+ {
+  "i": 16,
+  "beat": 9,
+  "s": 42.807,
+  "e": 43.261,
+  "markup": "Nothing.",
+  "style": null
+ },
+ {
+  "i": 17,
+  "beat": 10,
+  "s": 44.017,
+  "e": 46.021,
+  "markup": "The price crashes to the floor.",
+  "style": null
+ },
+ {
+  "i": 18,
+  "beat": 10,
+  "s": 46.451,
+  "e": 49.431,
+  "markup": "And all over Japan, buyers grab the cheap shares.",
+  "style": null
+ },
+ {
+  "i": 19,
+  "beat": 10,
+  "s": 49.687,
+  "e": 53.921,
+  "markup": "One {27-year-old|twenty-seven-year-old} with an online account makes over {¥2|two} {billion.|billion yen.}",
+  "style": null
+ },
+ {
+  "i": 20,
+  "beat": 11,
+  "s": 54.307,
+  "e": 57.611,
+  "markup": "You see, a stock exchange is like a giant notice board.",
+  "style": null
+ },
+ {
+  "i": 21,
+  "beat": 11,
+  "s": 57.871,
+  "e": 61.471,
+  "markup": "You pin up \"selling\", and it doesn't stop to check if you really have it.",
+  "style": null
+ },
+ {
+  "i": 22,
+  "beat": 12,
+  "s": 61.761,
+  "e": 62.815,
+  "markup": "And the cancel button?",
+  "style": null
+ },
+ {
+  "i": 23,
+  "beat": 12,
+  "s": 63.101,
+  "e": 65.383,
+  "markup": "The exchange's own system had a bug.",
+  "style": null
+ },
+ {
+  "i": 24,
+  "beat": 13,
+  "s": 65.656,
+  "e": 67.658,
+  "markup": "Mizuho bought most shares back.",
+  "style": null
+ },
+ {
+  "i": 25,
+  "beat": 13,
+  "s": 67.88,
+  "e": 72.544,
+  "markup": "But over {96,000|ninety-six thousand} of them never existed, so it paid cash instead.",
+  "style": null
+ },
+ {
+  "i": 26,
+  "beat": 13,
+  "s": 72.764,
+  "e": 75.092,
+  "markup": "The bill: about {¥40|forty} {billion.|billion yen.}",
+  "style": null
+ },
+ {
+  "i": 27,
+  "beat": 14,
+  "s": 75.412,
+  "e": 79.016,
+  "markup": "Years later, a court ruled the exchange had to pay part of it.",
+  "style": null
+ },
+ {
+  "i": 28,
+  "beat": 14,
+  "s": 79.22,
+  "e": 81.02,
+  "markup": "The typo took one second.",
+  "style": null
+ },
+ {
+  "i": 29,
+  "beat": 14,
+  "s": 81.26,
+  "e": 84.05,
+  "markup": "The fight over it took eight years.",
+  "style": null
+ }
+]

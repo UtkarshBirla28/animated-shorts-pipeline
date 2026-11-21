@@ -47,6 +47,12 @@ export type CardOpts = {
   onGrass?: boolean | FootGrassOpts;
   /** redraw only when this changes */
   key?: (t: number, info: CardDrawInfo) => string;
+  /** LAZY REDRAW (pointing v5 speed work, CAST 2026-11-21): a key change on a card that cannot touch the picture (beyond
+   *  lodM, i.e. no shadow proxies, AND its whole canvas plane outside the lens's view) is only REMEMBERED; the canvas
+   *  redraw, its two blurs and the texture uploads happen when the card can be seen again, from the key it then has.
+   *  Pixel-identical by construction (an unseen card's canvas is never sampled). Only for draw() functions that draw
+   *  from what the key describes (CAST's member.ts draws the pose its key was made from), not from the live camera */
+  lazy?: boolean;
   /** the feet in the body frame (contact blobs per foot): cast adapters pass PPL.feetOf */
   feet?: (t: number, info: CardDrawInfo) => FootPt[] | null;
   mirror?: (t: number) => boolean;
@@ -108,7 +114,26 @@ export const card = async (ctx: KitCtx, o: CardOpts): Promise<CardBuilt> => {
   };
 
   const heading = new THREE.Vector3();
+  // lazy redraw: the key change waiting for the card to be seen, and a CONSERVATIVE view test: a sphere round the whole
+  // canvas plane (any turn), 1.5x its half diagonal + 1 m of slack (shader bulge, sub-frame lens drift, a projection
+  // matrix updated after this call), against the lens's frustum
+  let pend: [number, CardDrawInfo] | null = null;
+  const vFr = new THREE.Frustum(), vM = new THREE.Matrix4(), vS = new THREE.Sphere(), vC = new THREE.Vector3();
+  const vR = 1.5 * 0.5 * Math.hypot(widthM, canvasM) + 1.0;
+  const inView = (cam: THREE.Camera, p: V3) => {
+    vM.copy(cam.matrixWorld).invert().premultiply((cam as THREE.PerspectiveCamera).projectionMatrix);
+    vFr.setFromProjectionMatrix(vM);
+    vC.set(p[0], p[1] + canvasM * (soleY - 0.5), p[2]);
+    return vFr.intersectsSphere(vS.set(vC, vR));
+  };
+  // any OTHER camera that draws this card (the shot's GI bounce-probe cube capture: core/gi.ts bakeProbe renders the
+  // whole set, cards included; a reflection capture) first gets the pending drawing: found by the A/B test (f105:
+  // the booth's probe saw the 25 hall cards 40 m away, undrawn they changed the bounce light of the whole frame).
+  // The lens itself skips it: inView() already said the card is outside its frustum
+  let lastCam: THREE.Camera | null = null;
+  if (o.lazy) mesh.onBeforeRender = (_r, _s, camera) => { if (pend && camera !== lastCam) { redraw(pend[0], pend[1]); pend = null; } };
   const update = (t: number, cam: THREE.Camera) => {
+    lastCam = cam;
     const p = o.pos(t);
     cam.updateMatrixWorld();
     const cp = tmpV.setFromMatrixPosition(cam.matrixWorld);
@@ -142,7 +167,11 @@ export const card = async (ctx: KitCtx, o: CardOpts): Promise<CardBuilt> => {
     const info: CardDrawInfo = { cam, s, c, heading: hy, pos: p, dist, lightAng, t };
     lastInfo = info;
     const k = o.key ? o.key(t, info) : `${t}`;
-    if (k !== key) { key = k; redraw(t, info); }
+    if (!o.lazy) { if (k !== key) { key = k; redraw(t, info); } }
+    else {
+      if (k !== key) { key = k; pend = [t, info]; }
+      if (pend && (near || inView(cam, p))) { redraw(pend[0], pend[1]); pend = null; }
+    }
     // place: turned to the lens (yaw only) or to yaw(t)
     const fy = o.face === "yaw" && o.yaw ? o.yaw(t) : Math.atan2(cp.x - p[0], cp.z - p[2]);
     const mir = o.mirror?.(t) ? -1 : 1;

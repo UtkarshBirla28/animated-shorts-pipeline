@@ -1,7 +1,7 @@
 # 04 — Render look: shaders, light rig, ink, lens blur, grade
 
 Slice `04_render_shaders` of the study of `mromidev/claude-animated-shorts`, cloned read-only at
-`<ROOT>\repo`. All paths below are relative to `repo/templates/bridge/`
+`C:\Users\utkar\Desktop\animated-shorts-studio\repo`. All paths below are relative to `repo/templates/bridge/`
 unless written in full. `file:N` means line N of that file.
 
 ## Files read

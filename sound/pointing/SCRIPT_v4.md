@@ -6,7 +6,24 @@ and played it on the viewer: all five readers chose it over the time-order versi
 and next to anti-theft (fun 6.5-7.5, grip 6-7), and said its ending makes them watch again and comment. Their fixes
 and the fact-checker's wordings are in this text. Earlier versions: script_v4/ (draft, rev3, ROUND5_AB, read*.md).
 
-**The shape:** the viewer fails a 6-second test -> a real lab ran it: five of twelve failed, three failed twice ->
+**RICKS-STYLE LOCK (lead, 2026-11-20 evening):** the owner asked for the story and narration in the manner of Ricks
+Clips. Study, proposal, blind reads and fact check: script_v5_ricks/ (RICKS_NARRATION_STUDY.md, SCRIPT_v5_proposal.md,
+read6_*.md, read7_*.md). Four of five blind readers chose this text over the 15:20 text; all five rejected a
+fact-first opening (it gives the red away); two of three kept this order over "the why after the legend". Changed:
+lines 4, 5, 7, 8 (the lab in the present tense, fewer tag sentences, the year only on the board), 11 ("So"), 13 ("But
+the shouting rule didn't start as science": the fact-checker's wording), 15 (the coal man's own "Clear!" answers), 19
+("subway conductors ... a striped board"). PICTURE CONDITIONS from the fact check: the "1994" board big and on screen
+for at least 1 s; the coal man looks at the semaphore before he shouts; nobody in the steam cab points; one man and
+one woman hold the sign; no Japanese text, logos or brands anywhere (the boss's notebook: scribbles only). The 15:20
+text: script_v4/SCRIPT_v4_cut_1520_before_v5.md.
+
+**LENGTH CUT (lead, 2026-11-20 afternoon, on the new PC):** the narrator's real pace put the 08:25 text at about 76 s
+(limit 70 s, aim 66-68 s; the voice is never time-stretched). Cut: line 6 ("Ten lights later, three of them did it
+again."). Tightened: lines 13, 15, 19. Line numbers are NOT renumbered (there is no line 6 any more). Reserves, in this
+order, only if the built voice is still over 68 s: six "Go" instead of seven, then line 10 (cereal). The 08:25 text is
+kept in script_v4/SCRIPT_v4_locked_0825_before_length_cut.md (+ the two .json copies beside it).
+
+**The shape:** the viewer fails a 6-second test -> a real lab ran it: five of twelve failed ->
 twelve who pointed and said it: none -> why -> who does this for a living -> the strange place it came from ->
 New York copied it, and got pranked -> "now try again, and point" -> the film loops into the test.
 
@@ -22,28 +39,28 @@ C = his coal man. Each shout is one breath with no pause inside and sits in a na
 | 1 | N | Tap your foot on every green light. Only green. | Frame 0, the LAB, bright and colourful: a big signal lamp fills the top of the frame; under it a young woman sits at one big button, finger ready, eyes wide. The lamp turns green on "green". |
 | 2 | N | Go. Go. Go. Go. Go. Go. Go! | The lamp flashes green on every "Go", with a bright beep, faster and faster; she presses each time, surer each time; the camera pushes in. On the last "Go!" the lamp is RED. Her hand comes down anyway. Half a second of silence. |
 | 3 | N | Did you tap? She did. | She freezes, hand on the button, staring up at the red lamp. A big red X. |
-| 4 | N | In 1994, a railway lab in Japan set a trap like this. A hundred lights. Then, red. | Wide: the lab, two rows of twelve people at button boards; a grinning researcher at a big switch; a board "1994"; a counter runs 98, 99, 100; one big RED floods the room. |
-| 5 | N | Twelve people just watched. Five pressed anyway. | The first row: five hands slam down, five red X's pop up, five faces freeze. Board: 5 OF 12. |
-| 6 | N | Ten lights later, three of them did it again. | Closer on three of them: red again, three hands down again; the researcher's clipboard drops. |
-| 7 | N | Twelve others got one extra rule: point at the light and say it. | The second row: twelve people point at their lamps and call, one after another, like a wave. |
-| 8 | N | Not one pressed. | RED: all twelve point at it, mouths open; twelve untouched buttons. Board: 0 OF 12. |
+| 4 | N | Japan's railway lab set a trap like this. A hundred lights, then red. | Wide: the lab, two rows of twelve people at button boards; a grinning researcher at a big switch; a board "1994"; a counter runs 98, 99, 100; one big RED floods the room. |
+| 5 | N | Twelve people just watch. Five press anyway. | The first row: five hands slam down, five red X's pop up, five faces freeze. Board: 5 OF 12. |
+| 7 | N | Twelve others have to point at the light, and say it. | The second row: twelve people point at their lamps and call, one after another, like a wave. |
+| 8 | N | Not one presses. | RED: all twelve point at it, mouths open; twelve untouched buttons. Board: 0 OF 12. |
 | 9 | N | After a hundred times, your hand stops waiting for your brain. | A bored volunteer stares straight at the red lamp while his hand taps the button by itself. |
 | 10 | N | That's how the cereal ends up in the fridge. | A KITCHEN, morning: someone in pyjamas stands at the open fridge, staring at the cereal box sitting inside it. |
-| 11 | N | Pointing and saying it makes your hand wait. Which is why Japan's train drivers point at their signals, and shout. | The young woman from the start points at the red lamp and says it; her other hand stays off the button; a green tick. Cut on "Which": TODAY, a bright train glides into a sunny platform; in the cab the driver (cap, white gloves) snaps a crisp side-on point at a green signal; a kid at the front window copies him. |
+| 11 | N | Pointing and saying it makes your hand wait. So Japan's train drivers point at their signals, and shout. | The young woman from the start points at the red lamp and says it; her other hand stays off the button; a green tick. Cut on "Which": TODAY, a bright train glides into a sunny platform; in the cab the driver (cap, white gloves) snaps a crisp side-on point at a green signal; a kid at the front window copies him. |
 | 12 | D | Signal clear! | (same) |
-| 13 | N | The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad. | Hard cut: a black STEAM ENGINE thunders through bright green fields under a blue sky, long white smoke. Cut on "The story": in the cab the driver leans forward to the little round window, peering hard; the signal ahead is a soft blur. |
+| 13 | N | But the shouting rule didn't start as science. The story goes, a steam-train driver's eyes had gone bad. | Hard cut: a black STEAM ENGINE thunders through bright green fields under a blue sky, long white smoke. Cut on "The story": in the cab the driver leans forward to the little round window, peering hard; the signal ahead is a soft blur. |
 | 14 | H | Signal clear! | He turns and shouts across the cab. |
-| 15 | N | So he shouted every signal to his coal man, who checked it and shouted back. | The coal man, mid-shovel, fire glowing, leans out and looks at the signal post (arm lowered = clear), |
+| 15 | N | So he shouted every signal to his coal man. | The coal man, mid-shovel, fire glowing, leans out and looks at the signal post (arm lowered = clear), |
 | 16 | C | Clear! | and bellows it back with a huge grin. |
 | 17 | N | His boss rode along, loved it, and made it a rule. | The boss (dark suit, bowler hat) squeezed into the corner of the cab, delighted, writing in a notebook. |
 | 18 | N | He never knew about the eyes. | The driver nose to the glass, peering; behind him the boss beams and nods. Held. |
-| 19 | N | New York copied the pointing: conductors must point at this board before the doors open. | A NEW YORK SUBWAY station: a conductor (navy uniform) leans from the middle window and points at a black-and-white striped board; only then do the doors open. |
+| 19 | N | New York copied the pointing: subway conductors must point at a striped board. | A NEW YORK SUBWAY station: a conductor (navy uniform) leans from the middle window and points at a black-and-white striped board; only then do the doors open. |
 | 20 | N | So two New Yorkers held up a sign: "Point here if you are dead sexy." | A young man and a young woman hold up a big cardboard sign right under the board: POINT HERE IF YOU ARE DEAD SEXY. |
 | 21 | N | And the conductors had to point. | The conductor points at it, deadpan, then grins. |
 | 22 | N | Now try again. This time, point, and say it. | The big lamp and the young woman at the button, exactly as in frame 0; this time her arm is already up, pointing, mouth open. The film loops into line 1. |
 
-**Words:** narrator about 200 (7 of them the "Go" run), shouts 5. **Length:** about 65-68 s at James's real pace
-(3.2-3.3 words a second); 70 s is the hard limit. If the voice runs over 68 s, cut line 6 first.
+**Words (after the length cut):** narrator 188 (7 of them the "Go" run), shouts 5. **Length:** aim 66-68 s on the
+built voice (James really reads 2.9-3.4 words a second inside sentences); 70 s is the hard limit. If the built voice is
+still over 68 s: six "Go" instead of seven, then cut line 10.
 
 **The one held beat:** half a second of silence after the last "Go!" (the red). Nowhere else over 0.3 s.
 

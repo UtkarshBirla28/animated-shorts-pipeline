@@ -20,6 +20,10 @@ export type SteamWorldOpts = {
   signalAhead?: (t: number) => number;
   /** the arm: 0 = horizontal (stop), 1 = lowered 45 deg (clear); default clear */
   signalArm?: (t: number) => number;
+  /** false at t = the semaphore hidden (a shot that draws its own soft-blur stand-in: v4 v23b) */
+  signalVisible?: (t: number) => boolean;
+  /** false at t = the telegraph poles hidden (audit r1: a pole grew out of the dome in v22 / the bowler in v28) */
+  polesVisible?: (t: number) => boolean;
   /** treadmill period for the repeating dressing (m) */
   period?: number;
   seed?: number;
@@ -136,7 +140,7 @@ export const steamWorld = async (ctx: KitCtx, o: SteamWorldOpts): Promise<Built>
       return u;
     };
     const units = Array.from({ length: n }, () => { const u = unit(); u.position.x = 5.6; g.add(u); return u; });   // the RIGHT side: the left (the driver's side, the event lens) stays clear
-    ups.push((t) => { const d = o.dist(t); units.forEach((u, i) => { u.position.z = wrapZ(i * SPAN + d, Lp) - 60; }); });
+    ups.push((t) => { const d = o.dist(t), on = o.polesVisible?.(t) ?? true; units.forEach((u, i) => { u.visible = on; u.position.z = wrapZ(i * SPAN + d, Lp) - 60; }); });
   }
 
   // ---------------- trees (pine, cedar, round broadleaf), farmhouses with thatched roofs: instanced, wrapping
@@ -232,7 +236,7 @@ export const steamWorld = async (ctx: KitCtx, o: SteamWorldOpts): Promise<Built>
     const lever = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.05, 0.05), black); lever.position.set(0.1, GROUND_Y + 1.4, -0.2); sg.add(lever);
     sg.position.x = -3.1; g.add(sg);
     const armK = o.signalArm ?? (() => 1);
-    ups.push((t) => { sg.position.z = o.signalAhead ? -o.signalAhead(t) : -(o.signalAt as number) + o.dist(t); arm.rotation.z = (Math.PI / 4) * Math.max(0, Math.min(1, armK(t))); sg.visible = sg.position.z < 60; });
+    ups.push((t) => { sg.position.z = o.signalAhead ? -o.signalAhead(t) : -(o.signalAt as number) + o.dist(t); arm.rotation.z = (Math.PI / 4) * Math.max(0, Math.min(1, armK(t))); sg.visible = sg.position.z < 60 && (o.signalVisible?.(t) ?? true); });
   }
 
   // ---------------- THE NEAR LEFT SIDE (the event lens's foreground): rows of young rice in the paddy beside the line,
@@ -284,6 +288,25 @@ export const steamWorld = async (ctx: KitCtx, o: SteamWorldOpts): Promise<Built>
     const shimaki = new THREE.Mesh(new THREE.BoxGeometry(3.1, 0.16, 0.26), red); shimaki.position.y = 3.05; torii.add(shimaki);
     const nuki = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.14, 0.14), red); nuki.position.y = 2.55; torii.add(nuki);
     torii.traverse((o2) => { (o2 as THREE.Mesh).castShadow = true; }); torii.position.set(18.0, GROUND_Y, 0); torii.rotation.y = Math.PI / 2; g.add(torii);
+    // SPEED (lead round 4, v22): a line of wooden boundary stakes along the paddy edge near the lens (every 3.2 m, white
+    // painted tops): at 12 m/s each one whips through the near frame = the classic speed cue; + sun glints on the water
+    // between the rice rows (small bright flecks streaming with the run)
+    const STK = 9.0, stakes: { x: number; z: number; h: number }[] = [];   // (r2 still: at x -5.75 one stake filled the near frame like a pole: further + shorter)
+    for (let z = 0; z < LOOP; z += STK) stakes.push({ x: -4.75 + (R() - 0.5) * 0.12, z: z + (R() - 0.5) * 0.4, h: 0.7 + R() * 0.25 });
+    const stakeGeo = new THREE.CylinderGeometry(0.035, 0.045, 1, 7); stakeGeo.translate(0, 0.5, 0);
+    const stakeIM = new THREE.InstancedMesh(stakeGeo, new THREE.MeshStandardMaterial({ color: "#6b4a2c", roughness: 0.85 }), stakes.length); stakeIM.castShadow = true; g.add(stakeIM);
+    const capGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.12, 7);
+    const capIM = new THREE.InstancedMesh(capGeo, new THREE.MeshStandardMaterial({ color: "#f4f1ea", roughness: 0.6 }), stakes.length); g.add(capIM);
+    const glints: { x: number; z: number; s: number }[] = []; for (let i = 0; i < 260; i++) glints.push({ x: -5.0 - R() * 9.5, z: R() * LOOP, s: 0.5 + R() });
+    const glintIM = new THREE.InstancedMesh(new THREE.PlaneGeometry(0.16, 0.05).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: new THREE.Color(2.2, 2.1, 1.8), transparent: true, opacity: 0.85, depthWrite: false }), glints.length); g.add(glintIM);
+    ups.push((t) => {
+      const d = o.dist(t);
+      stakes.forEach((s, i) => { m.makeScale(1, s.h, 1).setPosition(s.x, GROUND_Y, wz(s.z, d)); stakeIM.setMatrixAt(i, m); m.makeTranslation(s.x, GROUND_Y + s.h + 0.06, wz(s.z, d)); capIM.setMatrixAt(i, m); });
+      stakeIM.instanceMatrix.needsUpdate = capIM.instanceMatrix.needsUpdate = true;
+      // a glint twinkles (its size breathes on its own phase) as the ripples move
+      glints.forEach((gl, i) => { const k = gl.s * (0.4 + 0.6 * Math.max(0, Math.sin(t * 6 + gl.z * 3.1))); m.makeScale(k, 1, k).setPosition(gl.x, GROUND_Y + 0.035, wz(gl.z, d)); glintIM.setMatrixAt(i, m); });
+      glintIM.instanceMatrix.needsUpdate = true;
+    });
     ups.push((t) => {
       const d = o.dist(t);
       rows.forEach((r, i) => { v.set(r.x, GROUND_Y, wz(r.z, d)); e.set(0, r.z * 7.3, 0); q.setFromEuler(e); sc.setScalar(r.s); m.compose(v, q, sc); rice.setMatrixAt(i, m); }); rice.instanceMatrix.needsUpdate = true;

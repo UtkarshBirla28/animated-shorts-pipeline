@@ -863,7 +863,7 @@ SFX rules:
 
 ## 13. Production recipe for our pipeline
 
-Paths are inside a new project folder (never `an older unrelated project folder` or `an older unrelated project folder`).
+Paths are inside a new project folder (never `C:\Users\utkar\cartoon-shorts` or `C:\Users\utkar\bridge-short`).
 File names follow the repo templates (`story.ts`, `toon.ts`, `cast.ts`, `cardshade.ts`, `ink.ts`, `lensblur.ts`,
 `grade.ts`, `lights.ts`, `mix.py`, `music.py`, `sfx.py`). "Shipped" = what the bridge template does today (REPO section 4).
 

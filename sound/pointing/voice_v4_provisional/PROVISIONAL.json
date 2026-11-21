@@ -1,0 +1,13 @@
+{
+ "_doc": "NOT the final voice: lines 1-3 real (from voice_v4_opening), every later line = plan_words.ts shifted",
+ "opening_dir": "sound\\pointing\\voice\\..\\voice_v4_opening",
+ "real_lines": [
+  "L01",
+  "L02",
+  "L03"
+ ],
+ "plan_shift_s": 0.618,
+ "plan_words_ts_bytes": 9864,
+ "words": 185,
+ "voice_end_s": 61.439
+}

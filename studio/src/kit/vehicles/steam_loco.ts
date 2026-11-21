@@ -29,8 +29,21 @@ export type SteamLocoOpts = {
   fireLight?: boolean;
   /** tender on (default true) */
   tender?: boolean;
+  /** the cab's INSIDE faces (side sheets, front plate round the backhead, roof underside): a warm colour so the cab is
+   *  not a black hole on screen (the outside stays black, as the fact-checker wants). Default an Indian red */
+  cabInner?: THREE.ColorRepresentation;
+  /** the cab's UPPER inside (walls above the waist + the roof underside + the spectacle band): period engines were often
+   *  painted a light buff here (default = cabInner) */
+  cabInnerUpper?: THREE.ColorRepresentation;
+  /** a warm fill light under the cab roof (intensity at 1 m; 0 = none). Default 2.2 */
+  cabFill?: number;
   /** at t: true = a CUT-AWAY view (the cab's LEFT side sheets hidden, so a lens beside the cab sees both men whole) */
   cutaway?: (t: number) => boolean;
+  /** at t: true = the cab's RIGHT side sheets hidden (a lens outside the right side looks in: v4's v30) */
+  cutawayR?: (t: number) => boolean;
+  /** the fire's strength at t (x the default: the light out of the firehole, the warm spill on the men, the floor pool
+   *  and the glow at the firehole). LOOK: the fire's strength is set here every frame; 1 = default */
+  fireK?: (t: number) => number;
 };
 
 /** the loco's sizes and marks (loco frame: rail top y 0, front buffer beam z 0, toward +Z) */
@@ -62,7 +75,7 @@ export const LOCO = {
   coal: [0, 2.0, 8.6] as V3,
 };
 
-const PAINT_DEFAULT = "#1a1a1c";   // JGR black (the fact-checker: Japanese steam engines were black); brass + a red buffer beam + red-lined wheels carry the colour
+const PAINT_DEFAULT = "#0f0f10";   // (R2b: the clearcoat reflected the blue sky: the engine read navy: deeper black, a duller coat below)   // JGR black (the fact-checker: Japanese steam engines were black); brass + a red buffer beam + red-lined wheels carry the colour
 const C = { black: "#141415", smoke: "#1b1b1c", brass: "#d9a93a", copper: "#c4693a", steel: "#c8ccd1", beam: "#d0321f", wood: "#7a5232", coal: "#121213", glass: "#cfe7ef", rubber: "#0c0c0c", dial: "#f3efe4" };
 
 type Bag = Map<string, THREE.BufferGeometry[]>;
@@ -118,10 +131,10 @@ const wheelGeo = (r: number, spokes: number, side: number, weight: boolean): Bag
 export const steamLoco = async (ctx: KitCtx, o: SteamLocoOpts = {}): Promise<Built & { group: THREE.Group }> => {
   void ctx;
   const S = STEAM, run = o.run ?? (() => 0);
-  const paint = new THREE.MeshPhysicalMaterial({ color: o.paint ?? PAINT_DEFAULT, roughness: 0.32, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.12, side: THREE.DoubleSide });   // (double: the cab sheets are seen from inside)
+  const paint = new THREE.MeshPhysicalMaterial({ color: o.paint ?? PAINT_DEFAULT, roughness: 0.5, metalness: 0, clearcoat: 0.35, clearcoatRoughness: 0.35, side: THREE.DoubleSide });   // (double: the cab sheets are seen from inside)
   const mats: Record<string, THREE.Material> = {
     paint,
-    black: new THREE.MeshPhysicalMaterial({ color: C.black, roughness: 0.42, metalness: 0.2, clearcoat: 0.6, clearcoatRoughness: 0.25, side: THREE.DoubleSide }),
+    black: new THREE.MeshPhysicalMaterial({ color: C.black, roughness: 0.55, metalness: 0.1, clearcoat: 0.2, clearcoatRoughness: 0.4, side: THREE.DoubleSide }),
     smoke: new THREE.MeshStandardMaterial({ color: C.smoke, roughness: 0.75, metalness: 0.3 }),
     brass: new THREE.MeshStandardMaterial({ color: C.brass, roughness: 0.22, metalness: 1 }),
     copper: new THREE.MeshStandardMaterial({ color: C.copper, roughness: 0.28, metalness: 1 }),
@@ -131,8 +144,10 @@ export const steamLoco = async (ctx: KitCtx, o: SteamLocoOpts = {}): Promise<Bui
     coal: new THREE.MeshStandardMaterial({ color: C.coal, roughness: 0.55, metalness: 0.15 }),
     rubber: new THREE.MeshStandardMaterial({ color: C.rubber, roughness: 0.9 }),
     white: new THREE.MeshStandardMaterial({ color: "#f2f0ea", roughness: 0.5, side: THREE.DoubleSide }),
+    inner: new THREE.MeshStandardMaterial({ color: o.cabInner ?? "#b33a22", roughness: 0.55, side: THREE.DoubleSide }),
+    innerUp: new THREE.MeshStandardMaterial({ color: o.cabInnerUpper ?? o.cabInner ?? "#b33a22", roughness: 0.6, side: THREE.DoubleSide }),
   };
-  const B: Bag = new Map(), LB: Bag = new Map();
+  const B: Bag = new Map(), LB: Bag = new Map(), RB: Bag = new Map();
   const hw = 1.22, P = S.plateY;
   // ---- frames, buffer beam, buffers, coupling, running board, valances
   box(B, "black", -0.62, 0.55, 0.15, -0.56, P - 0.02, 8.05); box(B, "black", 0.56, 0.55, 0.15, 0.62, P - 0.02, 8.05);
@@ -202,9 +217,12 @@ export const steamLoco = async (ctx: KitCtx, o: SteamLocoOpts = {}): Promise<Bui
     for (const [x0, x1] of [[-chw, -wx[1]], [-wx[0], wx[0]], [wx[1], chw]] as [number, number][]) box(B, "paint", x0, wy0, cz0, x1, wy1, cz0 + 0.03);
     put(B, "paint", new THREE.CylinderGeometry(2.4, 2.4, 0.03, 64, 1, false, -0.48, 0.96), M4([0, R - 2.5, cz0 + 0.015], [Math.PI / 2, 0, 0]));   // the arched top
     for (const sx of [-1, 1]) put(B, "paint", new THREE.RingGeometry(0.17, 0.27, 40), M4([sx * 0.82, 2.72, cz0 + 0.015]));
+    // (audit r1: "no round window visible": a polished BRASS rim round each spectacle window, inside + out: the little
+    // round window reads at a glance from any angle in the cab)
+    for (const sx of [-1, 1]) for (const dz of [-0.004, 0.034]) put(B, "brass", new THREE.TorusGeometry(0.18, 0.022, 10, 40), M4([sx * 0.82, 2.72, cz0 + dz]));
     // side sheets: lower panel to 2.25 m with a cut-out entrance at the back; a pillar up to the roof at the front
     for (const sx of [-1, 1]) {
-      const SB = sx < 0 ? LB : B;   // the LEFT side sheets are their own mesh (the cut-away hides them)
+      const SB = sx < 0 ? LB : RB;   // each side's sheets are their own mesh (the cut-aways hide them)
       box(SB, "paint", sx * chw - 0.015, P, cz0, sx * chw + 0.015, 2.25, cz0 + 1.05);
       box(SB, "paint", sx * chw - 0.015, 2.25, cz0, sx * chw + 0.015, R - 0.1, cz0 + 0.12);
       box(SB, "paint", sx * chw - 0.015, P, cz1 - 0.12, sx * chw + 0.015, 2.25, cz1);
@@ -215,6 +233,18 @@ export const steamLoco = async (ctx: KitCtx, o: SteamLocoOpts = {}): Promise<Bui
     // roof: a curved sheet over the cab, overhanging the back
     const rg = new THREE.CylinderGeometry(2.6, 2.6, cz1 + 0.25 - (cz0 - 0.05), 64, 1, true, -0.47, 0.94);
     put(B, "black", rg, M4([0, R - 2.56, (cz0 - 0.05 + cz1 + 0.25) / 2], [Math.PI / 2, 0, 0]));
+    // the INSIDE liners (v4: a warm colour inside, black outside): side sheets, the front plate round the backhead, roof
+    for (const sx of [-1, 1]) {
+      const SB = sx < 0 ? LB : RB, xi = sx * (chw - 0.022);
+      box(SB, "inner", xi - 0.006, P + 0.02, cz0 + 0.04, xi + 0.006, 2.24, cz0 + 1.04);
+      box(SB, "innerUp", xi - 0.006, 2.24, cz0 + 0.04, xi + 0.006, R - 0.12, cz0 + 0.11);
+      box(SB, "inner", xi - 0.006, P + 0.02, cz1 - 0.11, xi + 0.006, 2.24, cz1 - 0.01);
+      box(B, "inner", sx * 0.66, P + 0.02, cz0 + 0.031, sx * (chw - 0.03), wy0, cz0 + 0.034);
+      box(B, "innerUp", sx * 0.2, wy0, cz0 + 0.031, sx * wx[0], wy1, cz0 + 0.034);
+      box(B, "innerUp", sx * wx[1], wy0, cz0 + 0.031, sx * (chw - 0.03), wy1, cz0 + 0.034);
+    }
+    box(B, "innerUp", -chw + 0.03, wy1, cz0 + 0.031, chw - 0.03, R - 0.14, cz0 + 0.034);
+    put(B, "innerUp", new THREE.CylinderGeometry(2.55, 2.55, cz1 - cz0, 64, 1, true, -0.45, 0.9), M4([0, R - 2.56, (cz0 + cz1) / 2], [Math.PI / 2, 0, 0]));
     // cab floor (wooden planks) + the fall plate to the tender
     box(B, "wood", -chw, P, cz0, chw, F, cz1); box(B, "steel", -0.8, F - 0.02, cz1, 0.8, F, 8.4);
   }
@@ -262,11 +292,14 @@ export const steamLoco = async (ctx: KitCtx, o: SteamLocoOpts = {}): Promise<Bui
       const y = T - 0.2 + 0.7 * Math.sqrt(Math.max(0, 1 - (x / 1.1) ** 2 - ((z - t0 - 2.5) / 1.3) ** 2));
       const s = 0.03 + 0.045 * R2(); const geo = new THREE.IcosahedronGeometry(s, 0); geo.applyMatrix4(M4([x, y, z], [R2() * 3, R2() * 3, R2() * 3], [1, 0.7 + 0.4 * R2(), 1])); cg.push(geo); }
     for (const geo of cg) put(B, "coal", geo);
-    // a few coal lumps on the cab floor + the shovel plate
-    for (let i = 0; i < 40; i++) { const geo = new THREE.IcosahedronGeometry(0.03 + 0.04 * R2(), 0); geo.applyMatrix4(M4([(R2() - 0.5) * 1.4, F + 0.02, 7.3 + R2() * 0.9], [R2() * 3, R2() * 3, R2() * 3])); put(B, "coal", geo); }
+    // coal on the cab floor: ONE gathered heap on the shovel plate by the tender (lead 02:45: 40 lumps scattered over the
+    // floor read as floating black blobs at phone size): a low mound + small lumps on it
+    put(B, "coal", new THREE.SphereGeometry(1, 18, 6, 0, Math.PI * 2, 0, Math.PI / 2), M4([0.3, F, 7.98], [0, 0, 0], [0.3, 0.13, 0.2]));
+    for (let i = 0; i < 26; i++) { const a = R2() * Math.PI * 2, rr = Math.sqrt(R2()); const x = 0.3 + Math.cos(a) * rr * 0.27, z = 7.98 + Math.sin(a) * rr * 0.17;
+      const y = F + 0.13 * Math.sqrt(Math.max(0, 1 - rr * rr)); const geo = new THREE.IcosahedronGeometry(0.025 + 0.025 * R2(), 0); geo.applyMatrix4(M4([x, y, z], [R2() * 3, R2() * 3, R2() * 3])); put(B, "coal", geo); }
   }
-  const body = bake(B, mats, "loco-body"), leftSide = bake(LB, mats, "loco-cab-left");
-  const group = new THREE.Group(); group.name = "steam-loco"; group.add(body, leftSide);
+  const body = bake(B, mats, "loco-body"), leftSide = bake(LB, mats, "loco-cab-left"), rightSide = bake(RB, mats, "loco-cab-right");
+  const group = new THREE.Group(); group.name = "steam-loco"; group.add(body, leftSide, rightSide);
 
   // ---- moving parts: wheels, coupling + connecting rods, crossheads, the firehole doors, the regulator handle
   const wheels: { m: THREE.Object3D; r: number }[] = [];
@@ -296,13 +329,33 @@ export const steamLoco = async (ctx: KitCtx, o: SteamLocoOpts = {}): Promise<Bui
   const fire = new THREE.Mesh(new THREE.CircleGeometry(0.2, 40), fireMat); fire.scale.set(1.2, 0.82, 1); fire.position.set(LOCO.firehole[0], LOCO.firehole[1], bz + 0.012); group.add(fire);
   const doors = [-1, 1].map((sx) => { const d = mk(new THREE.BoxGeometry(0.26, 0.36, 0.02), mats.black); d.position.set(sx * 0.13, LOCO.firehole[1], bz + 0.06); return { d, sx }; });
   const regHandle = mk(new THREE.BoxGeometry(0.035, 0.035, 0.36), mats.brass);
+  // the pressure gauge's white dial + a trembling needle (a small mover inside the cab)
+  { const dial = new THREE.Mesh(new THREE.CircleGeometry(0.125, 40), new THREE.MeshStandardMaterial({ color: C.dial, roughness: 0.4 })); dial.position.set(0, 2.86, bz + 0.072); group.add(dial); }
+  const needle = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.105, 0.006).translate(0, 0.045, 0), new THREE.MeshStandardMaterial({ color: "#c41f17", roughness: 0.4 }));
+  needle.position.set(0, 2.86, bz + 0.078); group.add(needle);
+  // the warm fill under the roof (bounce of the fire + the sky): the cab reads warm and lit, not a black hole
+  if ((o.cabFill ?? 2.2) > 0) { const fill = new THREE.PointLight(0xffc89a, o.cabFill ?? 2.2, 3.6, 1.2); fill.position.set(0, 3.05, 7.0); fill.castShadow = false; group.add(fill); }
   // the fire's glow in the cab (one point light; it flickers)
   let fireLight: THREE.PointLight | null = null;
-  if (o.fireLight ?? true) { fireLight = new THREE.PointLight(0xff8a2a, 2.5, 3.2, 1.6); fireLight.position.set(0, 1.85, bz + 0.45); fireLight.castShadow = false; group.add(fireLight); }
+  // (lead 02:15: the fire must be the WARM CENTRE of the cab shots: a stronger, wider glow out of the firehole onto the
+  // men + the floor, + a warm pool on the floor planks in front of it (an additive decal that flickers with the fire))
+  if (o.fireLight ?? true) { fireLight = new THREE.PointLight(0xff7a1e, 6.0, 4.6, 1.3); fireLight.position.set(0, 1.75, bz + 0.6); fireLight.castShadow = false; group.add(fireLight); }
+  const poolTex = canvasTex(256, 256, (g) => { const gr = g.createRadialGradient(128, 128, 6, 128, 128, 128); gr.addColorStop(0, "rgba(255,170,70,0.95)"); gr.addColorStop(0.45, "rgba(255,120,30,0.45)"); gr.addColorStop(1, "rgba(255,90,20,0)"); g.fillStyle = gr; g.fillRect(0, 0, 256, 256); });
+  const poolMat = new THREE.MeshBasicMaterial({ map: poolTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false });
+  const pool = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.2), poolMat); pool.rotation.x = -Math.PI / 2; pool.position.set(0, S.cabFloorY + 0.006, bz + 0.62); pool.renderOrder = 2;
+  if (o.fireLight ?? true) group.add(pool);
+  // the warm SPILL on the men (a second, softer light at chest height in front of the backhead) + a soft orange GLOW at
+  // the firehole that reads from any side of the cab (an additive billboard; toneMapped off: it never greys)
+  const spill = new THREE.PointLight(0xff8c3c, 0, 2.8, 1.2); spill.position.set(0, 2.25, bz + 0.85); spill.castShadow = false;
+  const glowTex = canvasTex(128, 128, (g) => { const gr = g.createRadialGradient(64, 64, 2, 64, 64, 64); gr.addColorStop(0, "rgba(255,200,110,1)"); gr.addColorStop(0.35, "rgba(255,130,40,0.55)"); gr.addColorStop(1, "rgba(255,90,20,0)"); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); });
+  const glowMat = new THREE.SpriteMaterial({ map: glowTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false, opacity: 0 });
+  const glow = new THREE.Sprite(glowMat); glow.scale.set(0.95, 0.8, 1); glow.position.set(LOCO.firehole[0], LOCO.firehole[1], bz + 0.22); glow.renderOrder = 3;
+  if (o.fireLight ?? true) group.add(spill, glow);
   const fireDoor = o.fireDoor ?? ((t: number) => 0.45 + 0.12 * Math.sin(t * 1.3));
 
   const update = (t: number) => {
     leftSide.visible = !(o.cutaway?.(t) ?? false);
+    rightSide.visible = !(o.cutawayR?.(t) ?? false);
     const d = run(t), a = -d / S.drvR;
     for (const w of wheels) w.m.rotation.x = -d / w.r;
     for (const R of rods) {
@@ -322,7 +375,12 @@ export const steamLoco = async (ctx: KitCtx, o: SteamLocoOpts = {}): Promise<Bui
     for (const D of doors) D.d.position.x = D.sx * (0.13 + 0.17 * k);
     const fl = 0.75 + 0.15 * Math.sin(t * 17.3) + 0.1 * Math.sin(t * 7.1 + 1.3) + 0.08 * Math.sin(t * 31.7);
     fireMat.color.setRGB(2.4 * fl, 2.0 * fl, 1.6 * fl);
-    if (fireLight) fireLight.intensity = (0.6 + 2.6 * k) * fl;
+    const fk = Math.max(0, o.fireK?.(t) ?? 1);
+    if (fireLight) fireLight.intensity = (2.4 + 4.2 * k) * fl * fk;
+    poolMat.opacity = Math.min(1, (0.5 + 0.45 * k) * fl * Math.sqrt(fk));
+    spill.intensity = Math.max(0, fk - 1) * (1.6 + 1.4 * k) * fl;   // only where a shot asks for more than the default
+    glowMat.opacity = Math.min(1, Math.max(0, fk - 1) * (0.45 + 0.35 * k) * fl);
+    needle.rotation.z = -0.9 + 0.05 * Math.sin(t * 23.0) + 0.03 * Math.sin(t * 9.1 + 0.7);
     regHandle.position.set(-0.12, 2.62, bz + 0.12); regHandle.rotation.set(0, 0, 0.5 + 0.05 * Math.sin(t * 0.7)); regHandle.rotateY(Math.PI / 2);
   };
   update(0);

@@ -10,6 +10,13 @@ import * as F from "./fits";
 import { drawProfileHead, type HatP, type HairStyleP } from "./profile";
 import { drawFlatGlove, drawLensPoint, drawPointGlove } from "./draw_hands";
 
+import { getInputProps } from "remotion";
+
+/** CAST v5 LOOK SWITCH (2026-11-20): `--props '{"castV5":0}'` renders the pre-v5 drawing (thin contour, kit-size eyes,
+ *  no new costume details) for before / after sheets. Default on */
+export const CAST_V5: boolean = (() => { try { return typeof window === "undefined" || (getInputProps() as { kit?: { castV5?: unknown } }).kit?.castV5 !== 0; } catch { return true; } })();
+/** v5: the main cast's eyes a size up (the lead: "big clear eyes" on a phone; anti-theft / clown read bolder) */
+const EYE_V5: Partial<Record<string, number>> = { lab_woman: 1.22, driver: 1.12, hori: 1.1, fireman: 1.12, official: 1.1, kid: 1.15, pyjamas: 1.1, ny_conductor: 1.1, researcher_v4: 1.08, prankA: 1.1, prankB: 1.1 };
 export const SU = 0.00216, UM = 1 / SU;
 const TAU = Math.PI * 2;
 const clamp = (x: number, a: number, b: number) => Math.max(a, Math.min(b, x));
@@ -38,6 +45,9 @@ export type CPose = PPL.Pose & {
   hold?: { k: "stopwatch" | "pen" | "furoshiki" | "tote" | "watch" | "shovel" | "notebook"; side: -1 | 1; open?: number }[];
   /** the kid's toy cap slip (deg of tilt, + = toward screen right) */
   capTilt?: number;
+  /** v4 the boss's NOTEBOOK held open at his chest (moves.ts `write`): its big word, how far it is underlined (0..1), the
+   *  pen's scribble phase. Without it a `notebook` hold is the small closed book */
+  note?: { text: string; under: number; write: number };
   /** the kid's cap SLIDING DOWN over his eyes: 0 = on his head (a bit low, as always), 1 = over the eyes, < 0 = shoved too high */
   capDrop?: number;
   /** the SKIN colour to draw with (head, bare arms, hands): the lit cards pass a slightly cool tone that lands on a light
@@ -71,7 +81,7 @@ const profD = (X: LX): 0 | 1 | -1 => { const P = X.pose as CPose; return (P.prof
 
 /** the DRIVER's peaked uniform cap (front / 3-4 / back): a flared crown over a dark band, a thin gold cord, the glossy
  *  black peak, a plain round gold badge (no symbol). k = scale (the kid's toy cap: 1.16), tilt deg, drop (head half-heights) */
-const uniformCap = (col: string, k = 1, tiltDeg = 0, drop = 0): Layer => (p, X) => {
+const uniformCap = (col: string, k = 1, tiltDeg = 0, drop = 0, plain = false): Layer => (p, X) => {
   const { R, u } = X, H = R.H, hc = R.hc, f = X.facing, back = X.back;
   if (profD(X)) return;
   const tl = (tiltDeg * Math.PI) / 180, lagD = (X.pose.hatLag ?? 0) * (Math.PI / 180);
@@ -88,12 +98,12 @@ const uniformCap = (col: string, k = 1, tiltDeg = 0, drop = 0): Layer => (p, X) 
   p.stroke(S([[300 - 1.12 * H.a + f * 6 * u, topY + 0.1 * H.b], [300 + f * 6 * u, topY + 0.02 * H.b], [300 + 1.12 * H.a + f * 6 * u, topY + 0.1 * H.b]]), 1.6 * u, mix(col, "#ffffff", 0.25));
   const band = S([[300 - 1.03 * H.a, by - 0.16 * H.b], [300 + 1.03 * H.a, by - 0.16 * H.b], [300 + 1.0 * H.a, by + 0.03 * H.b], [300 - 1.0 * H.a, by + 0.03 * H.b]]);
   p.poly(band, mix(col, "#000000", 0.35), 1.6 * u);
-  p.stroke(S([[300 - 1.02 * H.a, by - 0.12 * H.b], [300 + 1.02 * H.a, by - 0.12 * H.b]]), 2.4 * u, F.COL.gold);
-  p.stroke(S([[300 - 0.6 * H.a, by - 0.125 * H.b], [300 + 0.2 * H.a, by - 0.125 * H.b]]), 0.9 * u, F.COL.goldLite);
+  if (!plain) { p.stroke(S([[300 - 1.02 * H.a, by - 0.12 * H.b], [300 + 1.02 * H.a, by - 0.12 * H.b]]), 2.4 * u, F.COL.gold);
+    p.stroke(S([[300 - 0.6 * H.a, by - 0.125 * H.b], [300 + 0.2 * H.a, by - 0.125 * H.b]]), 0.9 * u, F.COL.goldLite); }
   if (!back) {
     // the badge (a plain round gold disc with a raised ring) and the glossy peak toward the lens / the facing side
     const bx = 300 + f * 0.34 * H.a, byy = hc - 0.8 * H.b;
-    p.poly(S(ellP(bx, byy, 0.12 * H.a * (f ? 0.8 : 1), 0.12 * H.a)), F.COL.gold, 1.4 * u);
+    p.poly(S(ellP(bx, byy, 0.12 * H.a * (f ? 0.8 : 1), 0.12 * H.a)), plain ? "#c9ccd6" : F.COL.gold, 1.4 * u);
     p.poly(S(ellP(bx, byy, 0.07 * H.a * (f ? 0.8 : 1), 0.07 * H.a)), null, 1.1 * u, "#9a6e14");
     p.dot(...S([[bx - 0.03 * H.a, byy - 0.04 * H.a]])[0], 1.3 * u, F.COL.goldLite);
     const vx = 300 + f * 14 * u, vw = 0.86 * H.a, vis: P2[] = [];
@@ -263,6 +273,19 @@ const kidShorts: Layer = (p, X) => {
   p.rot = null;
   if (!X.back) torsoClip(p, X, () => p.arc(tcx + (profD(X) || X.facing) * 0.3 * T.a * (profD(X) ? 2 : 1), R.chin - 0.02 * HH, 0.42 * T.a, 0.09 * HH, 15, 165, 3.4 * u, "#fbf8f2"));
 };
+/** PYJAMAS (v17, 19:05 lead: "a plain blue shirt and trousers"): bold warm stripes over the whole top, a white piped
+ *  collar + a button placket, read at phone size. The trousers are the same red (Outfit.pants) */
+const pyjamaTop: Layer = (p, X) => {
+  const { R, u } = X, { tcx, chin, HH, T, torsoBot } = R;
+  torsoClip(p, X, () => { for (let k = -6; k <= 6; k++) { const x = tcx + k * 0.3 * T.a; p.stroke([[x, chin - 0.2 * HH], [x, torsoBot + 0.3 * HH]], 5 * u, F.COL.pjStripe); } });
+  if (X.back) return;
+  const f = profD(X) || 0, cx = tcx + f * 0.45 * T.a;
+  torsoClip(p, X, () => {
+    if (!f) for (const sd of [-1, 1]) p.poly([[cx, chin + 0.2 * HH], [cx + sd * 0.42 * T.a, chin - 0.06 * HH], [cx + sd * 0.24 * T.a, chin + 0.02 * HH]], "#fffaf0", 1.6 * u);
+    p.stroke([[cx, chin + 0.2 * HH], [cx, torsoBot]], 2 * u, "#fffaf0");
+    for (const k of [0.32, 0.5, 0.68]) p.dot(cx + 3 * u, chin + k * HH, 2.4 * u, "#fffaf0");
+  });
+};
 /** a small plain backpack (the kid: green): straps in front, the pack from behind / in profile */
 const backpack = (col: string): { pre: Layer; post: Layer } => ({
   pre: (p, X) => { if (X.back) return; const { R, u } = X, { T, tcx, chin, HH, torsoBot } = R, d = profD(X); p.rot = X.bodyRot as number[] | null;
@@ -371,6 +394,8 @@ const bobTopL: Layer = (p, X) => {
   p.arc(300 - 0.3 * H.a, hc - 0.72 * H.b, 16 * u, 7 * u, 200, 290, 2.6 * u, mix(col, "#ffffff", 0.5));
   p.rot = null;
 };
+/* (v5 00:55: her yellow HAIR CLIP removed: in the close lenses (v05) it sat on her fringe right over the brows and read
+   as an ORANGE SLASH across them (the director's v05 draft). No colour but ink touches her face lines) */
 const maskL: Layer = (p, X) => { if (X.back || profD(X)) return; const { R, u } = X, H = R.H, f = X.facing; p.rot = X.headRot as number[] | null;
   p.poly(rrect(300 + f * 8 * u - 0.5 * H.a, R.hc + 0.2 * H.b, 300 + f * 8 * u + 0.5 * H.a, R.hc + 0.72 * H.b, 9 * u), "#fbfbf8", 1.8 * u);
   for (const k of [0.36, 0.5]) p.stroke([[300 + f * 8 * u - 0.42 * H.a, R.hc + k * H.b], [300 + f * 8 * u + 0.42 * H.a, R.hc + k * H.b]], 1 * u, "#d6d6dc"); p.rot = null; };
@@ -412,12 +437,25 @@ const heldProps: Layer = (p, X) => {
   for (const h of P.hold) {
     const hand = X.hands.find((q) => q.side === h.side); if (!hand) continue; const [x, y] = hand.h;
     if (h.k === "stopwatch") { p.poly(ellP(x, y - 9 * u, 9 * u, 9 * u), "#d9dbe2", 2 * u); p.poly(ellP(x, y - 9 * u, 6.4 * u, 6.4 * u), "#fbfbf8", 1 * u); p.stroke([[x, y - 9 * u], [x + 3 * u * Math.sin(h.open ?? 0), y - 9 * u - 5 * u * Math.cos(h.open ?? 0)]], 1.2 * u, "#c8332e"); p.poly(rrect(x - 2 * u, y - 22 * u, x + 2 * u, y - 18 * u, 1 * u), "#b9bcc8", 1 * u); }
-    else if (h.k === "pen") p.band([[x - 2 * u, y + 2 * u], [x + 4 * u, y - 16 * u]], "#2f6fe0", 2.8 * u, 0.9 * u, "round");
+    else if (h.k === "pen") { p.band([[x - 2 * u, y + 2 * u], [x + 4 * u, y - 16 * u]], "#2f6fe0", 2.8 * u, 0.9 * u, "round");
+      // (FIX R1, v29 audit: "the pen moves by itself"): the hand that holds it, drawn over the page: a mitten round the pen's
+      // lower end, the thumb along it
+      if (P.note) { const sk = P.skin ?? F.COL.skin; p.poly(ellP(x, y + 1 * u, 6 * u, 5 * u, 0.4), sk, 1.4 * u); p.band([[x - 3.5 * u, y - 2 * u], [x + 0.5 * u, y - 7 * u]], sk, 3.4 * u, 1.1 * u, "round"); } }
     else if (h.k === "watch") p.band([[x - 4 * u, y + 6 * u], [x + 4 * u, y + 6 * u]], "#c9ced8", 4 * u, 1 * u, "round");
     else if (h.k === "shovel") { // v4 fireman: a long wooden handle down through the hand, the blade at the floor end
       p.stroke([[x - 6 * u, y - 26 * u], [x + 10 * u, y + 62 * u]], 3.4 * u, "#8a5a32"); p.stroke([[x - 6 * u, y - 26 * u], [x + 10 * u, y + 62 * u]], 1 * u, INK);
       p.poly([[x + 2 * u, y + 60 * u], [x + 22 * u, y + 64 * u], [x + 20 * u, y + 82 * u], [x + 2 * u, y + 80 * u]], "#5a5f6a", 1.6 * u);
       p.poly([[x + 5 * u, y + 66 * u], [x + 18 * u, y + 68 * u], [x + 17 * u, y + 76 * u], [x + 6 * u, y + 75 * u]], "#1c1a1e", 0);   // coal on it
+    } else if (h.k === "notebook" && P.note) { // v4 v29: the OPEN notebook at his chest, the big word on it (readable), scribbles, the underline
+      const w = 25 * u, hh = 30 * u, cx = x - h.side * 8 * u, cy = y - 24 * u, n = P.note;   // (17:55 f1518: "RULE" ran past a 34 u page: 50 u wide now)
+      p.poly(rrect(cx - w, cy - hh, cx + w, cy + hh, 1.6 * u), "#fbf6e6", 1.6 * u);
+      p.band([[cx, cy - hh], [cx, cy + hh]], "#c9bfa6", 1.2 * u, 0, "butt");   // the fold
+      for (const [k, y0] of [[0, -22], [1, -16], [2, 16], [3, 22]] as [number, number][]) { const x0 = cx - w + 3 * u, len = (k % 2 ? 0.75 : 0.9) * (2 * w - 6 * u); p.stroke([[x0, cy + y0 * u], [x0 + len * (k === 3 ? Math.min(1, 0.3 + n.write) : 1), cy + y0 * u + 0.6 * u]], 1.1 * u, "#9aa2b4"); }
+      const g2 = p.g; g2.save(); g2.fillStyle = "#1f2a4a"; g2.font = `900 ${16 * u}px Arial`; g2.textAlign = "center"; g2.textBaseline = "middle"; g2.fillText(n.text, cx, cy + 1.5 * u); g2.restore();
+      if (n.under > 0.01) p.stroke([[cx - 19 * u, cy + 10 * u], [cx - 19 * u + 38 * u * Math.min(1, n.under), cy + 9 * u - 2 * u * Math.min(1, n.under)]], 2.2 * u, "#c8332e");
+      // (FIX R1, v29 audit: "the notebook is held by no hand"): the holding hand on the pad's bottom edge, over the page:
+      // the fingers behind it, the palm + thumb in front (the kit's own hand sat hidden under the pad)
+      { const sk = P.skin ?? F.COL.skin, hy = cy + hh; p.poly(ellP(x, hy + 2.5 * u, 7 * u, 5 * u), sk, 1.4 * u); p.band([[x - h.side * 2 * u, hy + 1 * u], [x - h.side * 4 * u, hy - 6 * u]], sk, 3.6 * u, 1.1 * u, "round"); }
     } else if (h.k === "notebook") { p.poly(rrect(x - 7 * u, y - 16 * u, x + 7 * u, y + 2 * u, 1.2 * u), "#f2ead6", 1.4 * u); p.band([[x - 7 * u, y - 16 * u], [x - 7 * u, y + 2 * u]], "#8a2a2a", 2.2 * u, 0.8 * u, "butt"); }
   }
 };
@@ -436,21 +474,54 @@ const lensHand = (glove?: string, arm?: { col: string; cuff?: string }): Layer =
  *  elbow is out, on the point the arm is a ruler), run on by ext.by when the target is further than the arm, and the
  *  hand ALONG THAT LINE: the index finger continues the forearm toward the target (never an upright hand on a
  *  diagonal forearm). Seen from behind the arm goes INTO the picture: it tapers and the hand is smaller (foreshortened) */
-type ArmExt = { by: P2; k: number; hand: PPL.HandKind; straight: number };
-const armWrap = (base: PPL.Extras["sleeve"] | undefined, o: Outfit, glove: string | undefined, taper?: { col: string; cuff?: string }, skinPoint?: string): NonNullable<PPL.Extras["sleeve"]> => (p, pts, side, X) => {
+type ArmExt = { by: P2; k: number; hand: PPL.HandKind; straight: number; fdir?: number };
+type SleeveSpec = { col: string; hand: string; line?: string; k: number; cuff?: string; glove?: boolean };
+/** the sleeve band width of a pointing arm (u; the thin ink arm is INK_ARM_W) */
+const SLEEVE_W = 12;
+const armWrap = (base: PPL.Extras["sleeve"] | undefined, o: Outfit, glove: string | undefined, taper?: { col: string; cuff?: string }, skinPoint?: string, sleeve?: SleeveSpec): NonNullable<PPL.Extras["sleeve"]> => (p, pts, side, X) => {
   const P = X.pose as CPose, A = (side < 0 ? P.armL : P.armR) as (PPL.Arm & { ext?: ArmExt }) | null | undefined, ext = A?.ext, u = X.u;
   const plain = (q: P2[]) => { if (base) base(p, q, side, X); else p.stroke(q, 5.6 * u, mix(o.cardigan ?? o.shirt, INK, 0.88)); };
-  if (!ext) { plain(pts); return; }
+  // (FIX R1, v35 f1910: the conductor's board point is a "reach" arm (the kit's own arm + hand, no ext): its arm was still
+  // the 1-2 px line. A kit arm ending in the POINT hand gets the same sleeve band; the kit draws its hand on top)
+  if ((A as { hide?: boolean } | null | undefined)?.hide) return;   // (round 2: the New Yorkers' free arm behind their sign: not drawn, no shadow on the words)
+  if (!ext) { if (sleeve && ["point", "grip"].includes((A as { hand?: string } | null | undefined)?.hand ?? "")) { p.band(pts, sleeve.col, SLEEVE_W * u, 1.7 * u, "round"); return; } plain(pts); return; }
   const n = pts.length, S = pts[0], q1 = clamp(ext.k, 0, 1.12), bx = ext.by[0] * q1, by = ext.by[1] * q1, W: P2 = [pts[n - 1][0] + bx, pts[n - 1][1] + by], sK = clamp(ext.straight, 0, 1);
   const Q = pts.map(([x, y], i) => { const t = i / (n - 1), ex = x + bx * t, ey = y + by * t, lx = S[0] + (W[0] - S[0]) * t, ly = S[1] + (W[1] - S[1]) * t; return [ex + (lx - ex) * sK, ey + (ly - ey) * sK] as P2; });
   const a = Q[n - 1], b = Q[Math.max(0, n - 4)], dir = Math.atan2(a[1] - b[1], a[0] - b[0]), far = clamp((-(P.c ?? 1) - 0.2) / 0.45, 0, 1) * sK, kind0 = ext.hand;   // seen from behind: the arm goes INTO the picture
   const gloved = !!taper && kind0 === "point";            // the driver: OUR glove, long along the arm (never a fist with a finger up)
+  // FIX R1 THE SLEEVE ARM (lead: "the point does not exist on screen": a 1-2 px ink line read as a microphone wire, a stick,
+  // an invisible stub). A POINTING arm (an aimed, straight arm with the point hand; not the button press) is drawn as a
+  // real SLEEVE: a band ~2.4x the ink-arm width in the clothing colour, inked, a darker fold line along it, a cuff, then a
+  // big clear hand: the long point hand, index along the arm, thumb on top (white glove: the driver; skin: everyone else).
+  // Arm length unchanged (stretch <= 1); hand <= 1.1x, the driver's glove 1.3x. The other arms stay thin ink lines
+  if (sleeve && kind0 === "point" && sK > 0.6) {   // (also the button press: one arm look for her, and the loop tail blends point -> press)
+    // (round 2, v35 blocker: the conductor stands in his window with the card CUT at the sill (CastOpts.cutY: the toon clips
+    // everything below it); his point goes DOWN to the sign, so the sleeve and the hand were clipped away and only a 1-3 px
+    // sliver showed. A pointing arm reaches OUT of the window: it is drawn over the cut (the clip is lifted for it and put back))
+    const cutY = (P as { cutY?: number }).cutY;
+    if (cutY !== undefined) { const T = p.g.getTransform(); p.g.restore(); p.g.setTransform(T); }
+    const sw = SLEEVE_W * u * (1 - 0.3 * far), L = Math.hypot(a[0] - S[0], a[1] - S[1]) || 1, ux = (a[0] - S[0]) / L, uy = (a[1] - S[1]) / L;
+    // the sleeve stops a cuff short of the wrist; the cuff band in a lighter tone, the hand from the wrist on
+    const cuffP: P2 = [a[0] - ux * 3.2 * u, a[1] - uy * 3.2 * u];
+    const SL: P2[] = [S, ...Q.slice(1, -1).filter((q) => Math.hypot(q[0] - S[0], q[1] - S[1]) < L - 3.2 * u), cuffP];
+    p.band(SL, sleeve.col, sw, 1.7 * u, "round");
+    const nx = -uy, ny = ux, off = 0.18 * sw;
+    p.stroke([[S[0] + nx * off + ux * 0.2 * L, S[1] + ny * off + uy * 0.2 * L], [cuffP[0] + nx * off - ux * 2 * u, cuffP[1] + ny * off - uy * 2 * u]], 1.2 * u, shade(sleeve.col, 0.62));
+    p.band([cuffP, [a[0] + ux * 0.4 * u, a[1] + uy * 0.4 * u]], sleeve.cuff ?? shade(sleeve.col, 1.25), sw * 1.04, 1.5 * u, "butt");
+    const z1 = Math.min((A!.hs ?? 1) * (P.handK ?? 1), 1.1) * sleeve.k;
+    drawPointGlove(p, a, ext.fdir ?? dir + (0.2 * (A!.ang ?? 0) * Math.PI) / 180, u * z1 * (1 - 0.3 * far), { fill: sleeve.hand, line: sleeve.line ?? mix(sleeve.hand, "#a0705e", 0.55), far, ow: 1.6 * u, cuff: sleeve.glove });
+    if (cutY !== undefined) { p.g.save(); p.g.beginPath(); p.g.rect(-3000, -3000, 6600, cutY + 3000); p.g.clip(); }
+    return;
+  }
   if (taper && far > 0.3) { // from behind, into the picture: a wide near end at the shoulder, a slim far end at the wrist
     const L = Math.hypot(a[0] - S[0], a[1] - S[1]) || 1, nx = -(a[1] - S[1]) / L, ny = (a[0] - S[0]) / L, w0 = (3.8 + 5.4 * far) * u, w1 = (3.8 - 1.2 * far) * u;
     void L; void nx; void ny; void w0; void w1; p.stroke([S, a], INK_ARM_W * u, mix(taper.col, INK, 0.5));   // v4: a thin ink line into the picture too
   } else if (gloved) p.stroke(Q, INK_ARM_W * u, mix(taper!.col, INK, 0.5));      // v4: the thin ink arm (the glove brings its own cuff)
   else plain(Q);
   const z0 = (A!.hs ?? 1) * (P.handK ?? 1);
+  // v5 THE BUTTON PRESS (moves.ts mButton): the long point hand in skin with the index along its OWN direction (straight
+  // down at the dome), whatever the forearm's angle: a clear "finger on the button", never a sideways finger in the air
+  if (ext.fdir !== undefined && kind0 === "point") { const sk = P.skin ?? glove ?? F.COL.skin; drawPointGlove(p, a, ext.fdir, u * z0 * 1.05, { fill: sk, line: mix(sk, "#a0705e", 0.55), ow: 1.5 * u }); return; }
   // (the wrist's accent is all but dropped: hand and forearm stay ONE line; the hand is smaller than the sleeve's near end)
   if (gloved) { drawPointGlove(p, a, dir + (0.2 * (A!.ang ?? 0) * Math.PI) / 180, u * z0 * (1 - 0.36 * far), { fill: glove ?? taper!.cuff, far, cuff: true, ow: 1.5 * u }); return; }
   // C-9: the driver's NON-pointing hand on an aimed arm (by his ear between the words, the wind-up): a flat glove with
@@ -518,23 +589,26 @@ export const SPECS = {
     x: () => ({ post: cmb(nyTee, stubble(0.9), gapTooth, backHairLayer("#5a3b2a", 0.05)), shoe: sneaker("#fbfaf6", F.COL.lace), sleeve: teeSleeve(LOOK_TOURIST.tee, LOOK_TOURIST.rib), top: cmb(filmPhone, lensHand()) }),
     pro: () => ({ hair: "short" as HairStyleP, hat: { k: "ball", col: LOOK_TOURIST.cap } as HatP, stubble: 0.9 }) },
   kid: { fit: F.KID, crownM: 1.12, seed: 2, face: { browGap: 14, browMin: -20, browHalo: F.COL.skin, blush: 0.35 },
-    x: (P: CPose) => ({ pre: KIDPACK.pre, post: cmb(kidShorts, KIDPACK.post, uniformCap(F.COL.toyCap, 1.16, P.capTilt ?? -7, 0.07 + 0.5 * (P.capDrop ?? 0))), legCol: ["#f1ddd0", "#f1ddd0"] as [string, string], legW: 6.6 * 2.4,
+    // (v4, 17:40, lead + TRAIN stills: the toy peaked cap made him read as a SECOND DRIVER: v4 = bare messy hair, a bright
+    // yellow tee, the green backpack: a kid. The v3 toy cap (capDrop / capPush) is gone with it)
+    x: () => ({ pre: KIDPACK.pre, post: cmb(kidShorts, KIDPACK.post), legCol: ["#f1ddd0", "#f1ddd0"] as [string, string], legW: 6.6 * 2.4,
       shoe: sneaker(F.COL.kidShoe, "#fbf8f2", F.COL.kidSock), sleeve: teeSleeve(F.COL.kidTee, "#fbf8f2"), top: cmb(heldArms, lensHand()) }),
-    pro: (P: CPose) => ({ hair: "short" as HairStyleP, hat: { k: "uniform", col: F.COL.toyCap, scale: 1.16, tilt: P.capTilt ?? -7, drop: 0.07 + 0.5 * (P.capDrop ?? 0) } as HatP }) },
+    pro: () => ({ hair: "messy" as HairStyleP }) },
   kid_mum: { fit: MUM_FIT, crownM: 1.52, seed: 5, face: { blush: 0.22 },
     x: () => ({ post: cmb(trench, toteStrap, bobTopL), sleeve: trenchSleeve }), pro: () => ({ hair: "bob" as HairStyleP }) },
   // ---- the v4 cast (the true story)
-  lab_woman: { fit: F.LAB_WOMAN, crownM: 1.55, seed: 41, face: { blush: 0.25, browGap: 14 }, x: () => ({ sleeve: inkArm(F.LAB_WOMAN.shirt), top: heldProps }),
+  lab_woman: { fit: F.LAB_WOMAN, crownM: 1.55, seed: 41, face: { blush: 0.25, browGap: 14, browMin: -24 },   // (v5 01:00: with the bigger eyes her raised brows (browUp 6-11) went up INTO her dark fringe and read as pale rings there (f0, f52): a brow ceiling just under the fringe line)
+    x: () => ({ sleeve: inkArm(F.LAB_WOMAN.shirt), top: heldProps }),
     pro: () => ({ hair: "pony" as HairStyleP }) },
   lab_a: { fit: F.LAB_MAN_A, crownM: 1.6, seed: 42, x: () => ({ sleeve: inkArm(F.LAB_MAN_A.shirt) }), pro: () => ({ hair: "short" as HairStyleP }) },
   lab_b: { fit: F.LAB_MAN_B, crownM: 1.6, seed: 43, x: () => ({ sleeve: inkArm(F.LAB_MAN_B.shirt) }), pro: () => ({ hair: "side" as HairStyleP }) },
   lab_c: { fit: F.LAB_MAN_C, crownM: 1.6, seed: 44, x: () => ({ sleeve: inkArm(F.LAB_MAN_C.shirt) }), pro: () => ({ hair: "crop" as HairStyleP }) },
   lab_d: { fit: F.LAB_WOMAN_B, crownM: 1.52, seed: 45, x: () => ({ sleeve: inkArm(F.LAB_WOMAN_B.shirt), post: bobTopL }), pro: () => ({ hair: "bob" as HairStyleP }) },
   researcher_v4: { fit: F.RESEARCHER_V4, crownM: 1.6, seed: 46, x: () => ({ post: labCoat, sleeve: inkArm("#e8e8e4"), top: heldProps }), pro: () => ({ hair: "swept" as HairStyleP, glasses: "round" as const }) },
-  pyjamas: { fit: F.PYJAMAS, crownM: 1.58, seed: 47, x: () => ({ sleeve: inkArm(F.PYJAMAS.shirt) }), pro: () => ({ hair: "messy" as HairStyleP }) },
+  pyjamas: { fit: F.PYJAMAS, crownM: 1.58, seed: 47, x: () => ({ post: pyjamaTop, sleeve: inkArm(F.COL.pjStripe) }), pro: () => ({ hair: "messy" as HairStyleP }) },
   hori: { fit: F.HORI, crownM: 1.55, seed: 31, face: { browGap: 14, browMin: -18.5, browHalo: F.COL.skin },
     x: () => ({ post: uniformCap("#1c1a24", 1.04, 0, 0.02), sleeve: inkArm(F.HORI.shirt), top: heldProps }),
-    pro: () => ({ hair: "short" as HairStyleP, hat: { k: "uniform", col: "#1c1a24" } as HatP, glasses: "round" as const, moustache: "#241a1a" }) },
+    pro: () => ({ hair: "short" as HairStyleP, hat: { k: "uniform", col: "#1c1a24" } as HatP, moustache: "#241a1a" }) },   // (FIX R1: no glasses)
   fireman: { fit: F.FIREMAN, crownM: 1.6, seed: 32, x: () => ({ post: soot, sleeve: inkArm(F.FIREMAN.shirt), top: heldProps }),
     pro: () => ({ hair: "crop" as HairStyleP, hat: { k: "beanie", col: "#3a3a44" } as HatP }) },
   official: { fit: F.OFFICIAL, crownM: 1.6, seed: 33, x: () => ({ post: bowler, sleeve: inkArm(F.OFFICIAL.shirt), top: heldProps }),
@@ -542,7 +616,9 @@ export const SPECS = {
   cook: { fit: F.COOK, crownM: 1.5, seed: 34, x: () => ({ sleeve: inkArm(F.COOK.shirt), top: heldProps }), pro: () => ({ hair: "bun" as HairStyleP }) },
   prankA: { fit: F.PRANK_A, crownM: 1.55, seed: 35, x: () => ({ sleeve: inkArm(F.PRANK_A.shirt) }), pro: () => ({ hair: "messy" as HairStyleP }) },
   prankB: { fit: F.PRANK_B, crownM: 1.5, seed: 36, x: () => ({ sleeve: inkArm(F.PRANK_B.shirt) }), pro: () => ({ hair: "pony" as HairStyleP }) },
-  ny_conductor: { fit: F.NY_CONDUCTOR, crownM: 1.52, seed: 8, pro: () => ({ hair: "crop" as HairStyleP, glasses: "half" as const, moustache: F.NY_CONDUCTOR.moustache }) },
+  // (round 2, lead: a PLAIN navy cap, no gold band: the gold made him read as the Japanese driver again; a small silver badge)
+  ny_conductor: { fit: F.NY_CONDUCTOR, crownM: 1.52, seed: 8, x: () => ({ post: uniformCap(F.COL.ndNavy, 1, 0, 0, true), sleeve: inkArm(F.NY_CONDUCTOR.shirt), top: heldProps }),
+    pro: () => ({ hair: "crop" as HairStyleP, hat: { k: "uniform", col: F.COL.ndNavy, band: "#1a2442", badge: "#c9ccd6" } as HatP, moustache: F.NY_CONDUCTOR.moustache }) },
   ny_commuter: { fit: F.NY_COMMUTER, crownM: 1.52, seed: 3, face: { browGap: 15, browMin: -16, browHalo: F.COL.skin },
     x: () => ({ post: cmb(neckCans(F.COL.cans), beanie(F.COL.beanie)) }), pro: () => ({ hair: "crop" as HairStyleP, hat: { k: "beanie", col: F.COL.beanie } as HatP }) },
   volunteer: { fit: F.VOLUNTEER, crownM: 1.52, seed: 6, pro: () => ({ hair: "pony" as HairStyleP }) },
@@ -649,6 +725,16 @@ const standLegs = (p: Pen, o: Outfit, P: CPose, X: PPL.Extras) => {
   g.restore();
 };
 
+/** FIX R1: the pointing-arm SLEEVE per character: uniforms navy (the driver ends in his white glove, the NY conductor in a bare
+ *  hand), the kid a bare arm (short tee sleeve), everyone else the colour of the top they wear */
+const sleeveOf = (who: Who, o: Outfit, P: CPose, skin: string): SleeveSpec => {
+  if (who === "driver") { const g = P.white ?? DRIVER_GLOVE; return { col: F.COL.navy, hand: g, line: mix(g, "#4a5b8c", 0.42), k: 1.18, cuff: g, glove: true }; }
+  if (who === "ny_conductor") return { col: F.COL.ndNavy, hand: skin, k: 1.25, cuff: F.COL.ndShirt };   // (round 2: a BIG bare hand, the payoff)
+  if (who === "hori" || who === "official") return { col: o.shirt, hand: skin, k: 1 };
+  if (who === "kid") return { col: skin, hand: skin, k: 1, cuff: skin };
+  if (who === "researcher_v4" || who === "researcher") return { col: F.COL.labCoat, hand: skin, k: 1 };
+  return { col: o.cardigan ?? o.shirt, hand: skin, k: 1 };
+};
 /** THE DRAW CALL: any character in any pose (600 x 1000 design units, soles at y 975) */
 let LAST_HANDS: P2[] = [];
 /** the hands of the figure drawn last (design units), for the cast log */
@@ -656,7 +742,7 @@ export const lastHands = (): P2[] => LAST_HANDS;
 export const drawWho = (p: Pen, who: Who, P0: CPose) => {
   const S: Spec = SPECS[who], g = p.g;
   const d = profileOf(P0);
-  const P: CPose = { seed: S.seed, ...P0, face: { ...(S.face ?? {}), ...(P0.face ?? {}) } };
+  const P: CPose = { seed: S.seed, ...P0, face: { ...(S.face ?? {}), ...(CAST_V5 && EYE_V5[who] ? { eyeK: EYE_V5[who] } : {}), ...(P0.face ?? {}) } };
   if (d) { P.facing = d; P.profile = d; }
   let o = S.fit;
   const skin = P.skin ?? S.fit.skin ?? F.COL.skin;
@@ -665,7 +751,7 @@ export const drawWho = (p: Pen, who: Who, P0: CPose) => {
   const X0: PPL.Extras = S.x ? S.x(P) : {};
   const X: PPL.Extras = { ...X0 };
   if (P.skin && !X.glove) X.glove = P.skin;          // the bare hands take the same tone (the kit's hand fill)
-  X.sleeve = armWrap(X0.sleeve, o, X.glove, who === "driver" ? { col: F.COL.navy, cuff: P.white ?? DRIVER_GLOVE } : undefined, who === "kid" ? (P.skin ?? F.COL.skin) : undefined);   // aimed pointing arms are ours (C-4)
+  X.sleeve = armWrap(X0.sleeve, o, X.glove, who === "driver" ? { col: F.COL.navy, cuff: P.white ?? DRIVER_GLOVE } : undefined, who === "kid" || who === "ny_conductor" ? (P.skin ?? F.COL.skin) : undefined, CAST_V5 ? sleeveOf(who, o, P, skin) : undefined);   // (v5 02:40, STATION / lead: the NY conductor wears NO glove: his point = the long skin point hand, like the kid's)   // aimed pointing arms are ours (C-4)
   const seat = P.seat;
   if (seat !== undefined) { X.noLegs = true; X.lift = seat + 0.07 - hipM(o, P.seed ?? 1) + (X.lift ?? 0); }
   // standing still (no walk, no explicit feet, no duck): our own standing legs (see standLegs)

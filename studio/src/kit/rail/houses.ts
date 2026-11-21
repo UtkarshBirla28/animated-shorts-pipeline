@@ -64,7 +64,7 @@ const gable = (x0: number, x1: number, z0: number, z1: number, y: number, eave =
   e.setAttribute("position", new THREE.Float32BufferAttribute([x0, y, z0, cx, y + r, z0, x1, y, z0, x0, y, z1, x1, y, z1, cx, y + r, z1], 3));
   e.setAttribute("uv", new THREE.Float32BufferAttribute([0, 0, hw, r, 2 * hw, 0, 0, 0, 2 * hw, 0, hw, r], 2));
   e.computeVertexNormals();
-  return { roof: g, ends: e.toNonIndexed() };
+  return { roof: g, ends: e.index ? e.toNonIndexed() : e };
 };
 /** a window on a facade plane x = xf (facing face), z0..z1, y0..y1: alu frame, mullion, sill, glass + what's behind it */
 const windowAt = (P: Parts, glassG: THREE.BufferGeometry[], backG: THREE.BufferGeometry[], xf: number, face: number, z0: number, z1: number, y0: number, y1: number, seed: number) => {

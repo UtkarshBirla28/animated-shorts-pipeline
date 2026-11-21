@@ -18,10 +18,8 @@ const browserExecutable = "C:/Program Files/Google/Chrome/Application/chrome.exe
 const chromiumOptions = { gl: "angle" };
 fs.mkdirSync(path.dirname(path.resolve(out)), { recursive: true });
 const t0 = Date.now();
-const serveUrl = await bundle({ entryPoint: path.resolve(process.env.ENTRY || "src/index.ts"), publicDir: path.resolve("public") });
-// disk guard: every bundle() copies all of public/ (> 1 GB with the kit); delete ours when this process ends
-const _cleanBundle = () => { try { fs.rmSync(serveUrl, { recursive: true, force: true }); } catch {} };
-process.on("exit", _cleanBundle); process.on("SIGINT", () => { _cleanBundle(); process.exit(130); }); process.on("SIGTERM", () => { _cleanBundle(); process.exit(143); });
+// SPEED (pipeline, 2026-11-20): shared bundle cache (scripts/bundle_cache.mjs; KIT_BUNDLE_DIR / KIT_BUNDLE=off as in stills.mjs)
+const { serveUrl } = await getBundle({ entry: path.resolve(process.env.ENTRY || "src/index.ts"), studio: process.cwd(), bundleDir: process.env.KIT_BUNDLE_DIR || null });
 const composition = await selectComposition({ serveUrl, id, inputProps, browserExecutable, chromiumOptions });
 const frameRange = range ? range.split("-").map(Number) : null;
 let last = 0;

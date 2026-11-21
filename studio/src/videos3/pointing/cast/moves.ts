@@ -11,7 +11,7 @@ import * as PPL from "../../../videos/clown/cast_people";
 import type { Arm, ArmTo, Gait } from "../../../videos/clown/cast_people";
 import type { Expr, MouthK, P2 } from "../../../videos/clown/toon";
 import type { CPose, FootP, Who } from "./people";
-import { callOut, callTimes, callArm, aimArm, gazeTo, mixG, filmTarget, type ActEnv, type CallOpt, type AimedArm } from "./gesture";
+import { callOut, callTimes, callArm, aimArm, gazeTo, mixG, filmTarget, faceGuard, type ActEnv, type CallOpt, type AimedArm } from "./gesture";
 
 const clamp = (x: number, a: number, b: number) => Math.max(a, Math.min(b, x));
 const sm = (x: number) => { const c = clamp(x, 0, 1); return c * c * (3 - 2 * c); };
@@ -56,18 +56,30 @@ export type Base = { seed: number; life: number; expr: Expr; handK: number; righ
   gaze?: P2 | null; gazeK?: number };
 
 const QUIET: Partial<Record<MouthK, MouthK>> = { laugh: "vE", vA: "vI", O: "o", vO: "vU", vE: "vI", grin: "vI", y1: "vI", y0: "vI" };
+/** the loop wrap (beats_v4 registers it from the director's EV: from = the loop tail's first frame, len = the film's
+ *  frames, ease = frames to blend the idle clock onto the film start) */
+let LOOP_WRAP: { from: number; len: number; ease: number } | null = null;
+export const setLoopWrap = (w: { from: number; len: number; ease: number } | null) => { LOOP_WRAP = w && Number.isFinite(w.from) && Number.isFinite(w.len) ? w : null; };
 /** MERGE the acts (in order: later ones win on arms / face / gaze, numbers add) over the character's living base state */
 export const compose = (e: ActEnv, base: Base, acts: (Act | null | undefined)[], voice?: { mouth?: MouthK }): CPose => {
   const f = e.f, seated = e.seat !== undefined;
   let lifeK = 1; for (const a of acts) if (a && a.lifeK !== undefined) lifeK = Math.min(lifeK, a.lifeK);
-  const L = PPL.holdLife(f, base.seed, base.life * lifeK);
+  // THE LOOP WRAP (FIX R1, director's seam gate: the film's last frames must equal frame 0): from LOOP_WRAP.from on, the idle
+  // life eases (over LOOP_WRAP.ease frames) onto the clock of the film's START (f - len), so the last frame breathes,
+  // leans and blinks exactly like frame 0 would one frame later
+  const wrapW = LOOP_WRAP && f >= LOOP_WRAP.from ? clamp((f - LOOP_WRAP.from) / LOOP_WRAP.ease, 0, 1) : 0, fW = LOOP_WRAP ? f - LOOP_WRAP.len : f;
+  const L0 = PPL.holdLife(f, base.seed, base.life * lifeK), L1 = wrapW > 0 ? PPL.holdLife(fW, base.seed, base.life * lifeK) : L0;
+  const L = wrapW > 0 ? (Object.fromEntries(Object.entries(L0).map(([k, v]) => [k, typeof v === "number" ? v + ((L1 as Record<string, unknown>)[k] as number - v) * wrapW : v])) as typeof L0) : L0;
   let right = base.right, left = base.left, expr = base.expr, mouth: MouthK | undefined, browUp = base.browUp, wink: number | undefined;
   let gz: Gz = { look: L.look * 0.6, lookY: L.lookY * 0.6 }, held = 0;
   let nod = 0, tilt = L.tilt, headTilt = L.headTilt;
   // a resting eye-line (the mum on her boy): the eyes go there, the head leans and dips a little with them
   if (base.gaze) { const g0 = gazeTo(e, base.gaze), k0 = base.gazeK ?? 0.85; gz = mixG(gz, g0, k0); held = k0; headTilt += 3.2 * g0.look * k0; nod += 0.9 * Math.max(0, g0.lookY) * k0; }
   // (a stunned / deadpan stare does not blink by itself: only the beat's own slow blink plays)
-  let lean = 0, hop = 0, breath = L.breath, hatLag = 0, stretch = 1, blink = lifeK < 0.5 ? 0 : PPL.blinkAt(f, base.seed);
+  // (19:35, DIRECTOR: 46 % hold frames, nobody moves once a pose is hit): idle blinks keep running under a `still` face
+  // (lifeK 0.45); only a freeze (lifeK < 0.3) stops them. Each card blinks on its OWN phase (e.seed: per card)
+  const sd = e.seed ?? base.seed;
+  let lean = 0, hop = 0, breath = L.breath, hatLag = 0, stretch = 1, blink = lifeK < 0.3 ? 0 : PPL.blinkAt(wrapW > 0.5 ? fW : f, sd);
   let laughing = false, quiet = false, mute = false;
   const set: Partial<CPose> = {};
   for (const a of acts) {
@@ -84,6 +96,15 @@ export const compose = (e: ActEnv, base: Base, acts: (Act | null | undefined)[],
     laughing = laughing || !!a.laughing; quiet = quiet || !!a.quiet; mute = mute || !!a.mute;
     if (a.set) Object.assign(set, a.set);
   }
+  // DEFAULT IDLE LIFE under every hold (19:35): a weight shift, a drifting head, a slow lean, small nods, a breath, on
+  // irregular periods and a per-card phase (a row never breathes in unison); small enough not to blur a snap; a freeze
+  // (lifeK < 0.3) fades it out to a dead stop
+  // (FIX R1, lead: "our film moves 6.9 % of the picture, the references 13-17 %": the idle life ~1.6x bigger, still slow)
+  { const aK = lifeK < 0.3 ? (lifeK / 0.3) * 0.25 : 1, ph = (sd * 1.37) % TAU;
+    const idle = (ff: number) => [2.4 * Math.sin((TAU * ff) / 41 + ph), 3.8 * Math.sin((TAU * ff) / 57 + 1.7 * ph) + 1.7 * Math.sin((TAU * ff) / 23 + ph),
+      1.6 * Math.sin((TAU * ff) / 67 + 0.6 * ph), 0.65 * Math.sin((TAU * ff) / 29 + 2.1 * ph), 0.18 * Math.sin((TAU * ff) / 52 + ph)];
+    const i0 = idle(f), i1 = wrapW > 0 ? idle(fW) : i0, iv = i0.map((v, k) => aK * (v + (i1[k] - v) * wrapW));
+    tilt += iv[0]; headTilt += iv[1]; lean += iv[2]; nod += iv[3]; breath += iv[4]; }
   // a hand pointing AT THE LENS (aimArm marks the arm): our front-on hand on that screen side
   for (const [a, scr] of [[right, e.back ? 1 : -1], [left, e.back ? -1 : 1]] as [AimedArm | null, -1 | 1][]) if (a && a.lens && a.lens > 0.03 && !set.lensPoint) set.lensPoint = { side: scr, k: a.lens, hs: a.hs };
   // a held gaze still breathes: a quarter of the idle darts stays on top of it
@@ -144,8 +165,17 @@ export const pointK = (f: number, f0: number, f1: number, o: { move?: number; st
 };
 /** a calm single POINT at the aim (no call): anticipation, move, small overshoot, hold until f1, back. `reach` = the
  *  hand goes TO the aim (a hover beside a lamp) instead of pointing along it; `jabs` = extra stabs every 9 f */
-export const mPoint = (e: ActEnv, f0: number, f1: number, o: { reach?: boolean; move?: number; still?: boolean; hs?: number; rest?: ArmTo | P2; jabs?: number; left?: boolean; noGaze?: boolean; stretch?: number; gap?: number; hy?: number; dir?: [number, number] } = {}): Act | null => {
+export const mPoint = (e: ActEnv, f0: number, f1: number, o: { reach?: boolean; move?: number; still?: boolean; hs?: number; rest?: ArmTo | P2; jabs?: number; left?: boolean; noGaze?: boolean; stretch?: number; gap?: number; hy?: number; dir?: [number, number]; /** use the arm on the AIM's side of the head (the target on screen-right of her head = the arm on screen-right): never across the face */ auto?: boolean; /** a profile point along the heading: [ahead, down] head heights (see below) */ fwd?: [number, number] } = {}): Act | null => {
   const f = e.f; if (f < f0 - 8 || f > f1 + 14) return null;
+  if (o.auto && e.aim) { const scrRightIsLeft = !e.back; o = { ...o, left: e.aim[0] > e.head[0] ? scrRightIsLeft : !scrRightIsLeft }; }
+  // fwd (v5): a PROFILE point along his own heading, whatever side the lens is on: x follows the way he faces on screen
+  // (s > 0 = facing screen right), the NEAR arm points (facing screen right = his LEFT side to the lens), so the arm
+  // always leaves his silhouette in front of him and never hides behind his body
+  // (05:00: TRAIN (driver facing screen-left) and LAB (volunteers facing screen-right) both found `left: true` = the arm drawn
+  // IN FRONT in a profile, whichever way he faces: fwd always uses it)
+  // (06:20: only when he is NOT seen from behind and is turned at least a little (|s| > 0.2): from behind a "forward"
+  // screen direction is meaningless (v20 now from behind him: the arm went up-right, away from the signal): the world aim)
+  if (o.fwd && !e.back && Math.abs(e.s) > 0.2) { const sg = e.s >= 0 ? 1 : -1; o = { ...o, dir: [sg * o.fwd[0], o.fwd[1]], left: true }; }
   const k = pointK(f, f0, f1, o);
   const rest = o.rest ?? "hang", hand = k > 0.45 ? "point" : "ball", hs = o.hs ?? 1.2;
   // dir: a SCREEN direction from the chest in head heights (when the set's world aim cannot land on his card, e.g. a
@@ -164,11 +194,11 @@ export const mNod = (e: ActEnv, f0: number, amt = 1): Act | null => {
 };
 /** LOOK at something for a while: the eyes dart there in 3 f, the head follows 2 f later, a blink on a big change.
  *  to = a card point / a raw gaze / null (the lens). head = how much the head turns with it (deg at full gaze) */
-export const mLook = (e: ActEnv, f0: number, f1: number, to: P2 | Gz | null, head = 4): Act | null => {
+export const mLook = (e: ActEnv, f0: number, f1: number, to: P2 | Gz | null, head = 4, noBlink = false): Act | null => {
   const f = e.f; if (f < f0 - 1 || f > f1 + 10) return null;
   const k = sm((f - f0) / 3) * (1 - sm((f - f1) / 4)), kh = sm((f - f0 - 2) / 8) * (1 - sm((f - f1 - 2) / 8));
   const g = to === null ? { look: 0, lookY: 0 } : Array.isArray(to) ? gazeTo(e, to) : to;
-  return { gaze: g, gazeK: k, headTilt: head * g.look * 0.7 * kh, nod: 1.1 * g.lookY * kh * (head / 4), blink: Math.abs(g.look) + Math.abs(g.lookY) > 0.8 ? Math.max(swapLid(f, f0 + 1), swapLid(f, f1 + 1)) : 0 };
+  return { gaze: g, gazeK: k, headTilt: head * g.look * 0.7 * kh, nod: 1.1 * g.lookY * kh * (head / 4), blink: !noBlink && Math.abs(g.look) + Math.abs(g.lookY) > 0.8 ? Math.max(swapLid(f, f0 + 1), swapLid(f, f1 + 1)) : 0 };
 };
 /** ALIVE (Block 14: no character frozen for more than ~12 frames): a living hold on top of whatever plays: weight
  *  shifts (body tilt), a drifting head, a slow lean, small nods, on irregular periods (amp 1 = clearly visible at phone
@@ -183,19 +213,141 @@ export const mAlive = (e: ActEnv, f0: number, f1: number, amp = 1): Act | null =
  *  open (never slits), a slow small search left / right; snaps in 3 f, holds */
 export const mPeer = (e: ActEnv, f0: number, f1: number, amt = 1): Act | null => {
   const f = e.f; if (f < f0 - 3 || f > f1 + 3) return null;
-  const k = win(f, f0, f1, 3, 3) * amt, srch = Math.sin((TAU * (f - f0)) / 46);
-  return { lean: 9 * k, nod: 1.8 * k, headTilt: 2.5 * k * srch, expr: f >= f0 && f < f1 ? "bright" : undefined, browUp: [-8 * k, -7 * k], mouth: f >= f0 && f < f1 ? "tight" : undefined,
-    gaze: { look: 0.35 * srch, lookY: 0.15 }, gazeK: k, lifeK: 0.6 };
+  // (round 2 blocker v23 / v30: the 20-degree lean came on in 1-2 frames (the whole card seemed to fall) and its 3-frame
+  // release at v23 f1209 swung his head out of the cab shadow into the sun in ONE frame (the "pale card" step). Acted now:
+  // 8 frames in, 8 out, eased; the rows start it before the cut and hold it past the cut)
+  const k = win(f, f0, f1, 8, 8) * amt, srch = Math.sin((TAU * (f - f0)) / 46);
+  // (17:45, TRAIN: v23 / v30 read as a plain upright profile: a REAL lean now, the head pushed well forward and a touch down)
+  // (audit r2 #24: he read SLEEPY: heavy lids, eyes down at the gauge. Eyes OPEN, brows squeezed only a little, the gaze
+  // level through the round window)
+  return { lean: 20 * k, nod: 2 * k, headTilt: 2.5 * k * srch, expr: f >= f0 && f < f1 ? "bright" : undefined, browUp: [-4 * k, -3.5 * k], mouth: f >= f0 && f < f1 ? "tight" : undefined,
+    gaze: { look: 0.35 * srch, lookY: -0.05 }, gazeK: k, lifeK: 0.6 };
 };
-/** v4 BUTTON (the lab): HOVER = the finger held just ABOVE the button (aim), the hand still; TAP = one press at f0
- *  (2 f down, 2 f up), back to the hover; DOWN = the hand pressed and LEFT on the button (the press on the red) */
-export const mButton = (e: ActEnv, f0: number, f1: number, mode: "hover" | "tap" | "down"): Act | null => {
-  const f = e.f; if (!e.aim || f < f0 - 3 || f > f1 + 3) return null;
-  const on = f >= f0 - 1 && f <= f1, up = e.r * 0.55;
-  const d = mode === "down" ? 1 : mode === "tap" ? Math.max(0, 1 - Math.abs(f - f0 - 2) / 2) : 0;
-  const T: P2 = [e.aim[0], e.aim[1] - up * (1 - d)];
-  return on ? { right: { to: e.restR ?? "belly", to2: T, k: 1, hand: "point", hs: 1.05, front: true }, gaze: e.aim, gazeK: 0.5, nod: 0.25 * d } : null;
+/** v4 BUTTON (the lab): HOVER = the finger held just ABOVE the button (aim), the hand still (`lift` = higher); TAP = one
+ *  press; DOWN = the hand pressed and LEFT on the button (the press on the red). The EYES are never touched here (LAB: the
+ *  press must not pull her eyes off the lamp: a `look` row owns the gaze).
+ *  v5 (2026-11-20 22:55, the DIRECTOR's opening audit "THE PRESS IS BACKWARDS": with the dome right under her chin the v4
+ *  solver bent the finger back along the arm and lifted the hand into a SIDEWAYS finger in the air on each Go, and rested
+ *  it as a fist on the dome between). Now the hand never changes shape: the long point hand, the index STRAIGHT DOWN (a
+ *  touch toward the dome's middle from her shoulder's side) on every frame. HOVER = the fingertip ~0.3 head radius above the
+ *  dome's top edge; TAP (cue it 1 f before the Go): the hand drops in 2 f, the tip ON the dome (a hair into its top edge:
+ *  the dome hides the very tip = contact) from goN to goN+2, a small press-down of the body (nod, 1.5 % squash), back up
+ *  by goN+5; DOWN = the same drop, LEFT there. When the hand over the dome would come near her face the WHOLE hand slides
+ *  sideways along the dome away from her head (continuous; never a bend of the finger, never across the face) */
+// (v5: the hand ON the dome goN+1 .. goN+5 = LAB's dome dip (lab_plan buttonDipAt: down 1 f after the onset, held, up by +7))
+const TAP_D = [0.5, 1, 1, 1, 1, 1, 0.5, 0], DOWN_D = [0.55, 1], SLAM_D = [-0.3, 0.08, 0.4, 0.85, 1.22, 1, 1];
+export const mButton = (e: ActEnv, f0: number, f1: number, mode: "hover" | "tap" | "down", o: { lift?: number; hs?: number; lag?: number; travel?: number; hold?: number; up?: number; blendFrom?: number } = {}): Act | null => {
+  const f = e.f; if (!e.aim || f < f0 - 1 || f > f1) return null;
+  const i = Math.round(f - f0);
+  // FIX R1 (audit: "each press is a one-frame teleport, and it lands WITH the lamp: her button seems to switch the lamp on"):
+  // a TIMED press when the row gives "travel": still for "lag" frames after the cue (the lamp first), down over "travel"
+  // frames (ease in-out), ON the dome for "hold", back up over "up" (ease). A timed DOWN: down over "travel", then stays
+  const ez = (x: number) => { const k = clamp(x, 0, 1); return k * k * (3 - 2 * k); };
+  // (round 2, lead: "3 frames down with ease-IN": the finger falls faster and faster onto the dome, no soft landing)
+  const ezIn = (x: number) => { const k = clamp(x, 0, 1); return k * k; };
+  const tf = f - f0, tv = o.travel, lg = o.lag ?? 0;
+  // SLAM (round 2, lead v10b: the five hands SLAM down one after another): a hall volunteer's timed DOWN lifts a hair
+  // first, falls ACCELERATING (no ease-out), lands a touch deep for one frame and settles (SLAM_D over the row's travel)
+  const slamI = mode === "down" && tv && e.nervy ? ((tf - lg) * 4) / tv : NaN;
+  const d = Number.isFinite(slamI) ? (slamI < 0 ? 0 : (() => { const j = Math.min(Math.floor(slamI), SLAM_D.length - 2), x = Math.min(slamI - j, 1); return SLAM_D[j] + (SLAM_D[j + 1] - SLAM_D[j]) * x; })())
+    : tv ? (mode === "down" ? ezIn((tf - lg) / tv) : tf < lg ? 0 : tf < lg + tv ? ezIn((tf - lg) / tv) : tf < lg + tv + (o.hold ?? 2) ? 1 : 1 - ez((tf - lg - tv - (o.hold ?? 2)) / (o.up ?? 4)))
+    : mode === "down" ? (i < 0 ? 0 : DOWN_D[Math.min(i, DOWN_D.length - 1)]) : mode === "tap" ? (i < 0 || i >= TAP_D.length ? 0 : TAP_D[i]) : 0;
+  const u = e.u ?? 1, hs = Math.min(o.hs ?? 1.1, 1.1), tipL = 23.35 * 1.05 * u * hs, HH = e.HH ?? 2.1 * e.r;
+  const ch = e.chest ?? [e.head[0], e.head[1] + 1.9 * e.r], prof = clamp((Math.abs(e.s) - 0.45) / 0.45, 0, 1), side = e.back ? 1 : -1;
+  const S: P2 = [ch[0] + side * (e.shX ?? 0.62 * e.r) * (1 - 0.62 * prof), ch[1] - 0.28 * HH];
+  // the touch point: the dome's TOP EDGE as seen (0.12 r above the aim: the dome stands in front of her card and hides
+  // whatever of her card is drawn inside its outline); the press puts the tip 0.06 r into it
+  // (v5 23:40: with LAB's big foreground dome the 0.12 r guess put the tip INSIDE the dome (hidden, f1948): member.ts now
+  // gives the cap's far rim as seen (e.touch: the dome's highest point on screen) when the set names the button's radius)
+  // (round 2, lead: the press must READ: the finger starts a full HAND-HEIGHT above the dome (0.6 r; the hall volunteers keep
+  // their small 0.28 r hover)
+  const D: P2 = e.touch ?? [e.aim[0], e.aim[1] - 0.12 * e.r], g = e.r * (e.nervy ? 0.28 : 0.6) * (1 + (o.lift ?? 0));   // (v5d f0 / f115: at 0.42 r the far rim sits right under her chin, the hover slid out beside her cheek)
+  // (04:25, the director's full pass v13 / v14: the hall volunteers' set switches their aim to the little LAMP at face
+  // height while they point; a hover / tap row still running then sent this arm up ACROSS the face to the lamp (the dark
+  // line chest -> nose, 363 hand-frames). A button is never above the mouth: no button move then, the arm rests)
+  if (D[1] < e.head[1] + 0.6 * e.r) return null;
+  // (04:40 debug, hall_1_0 f580: side-on, the lamp at CHIN height still pulled the hover arm up level with the face. Seen
+  // side-on a desk button always lies below the shoulder line: above it = not a button, the arm rests)
+  if (prof > 0.5 && D[1] < S[1]) return null;
+  const lean = clamp((D[0] - S[0]) / (0.6 * HH), -1, 1); let fA = Math.PI / 2 - 0.28 * lean; const fx = Math.cos(fA), fy = Math.sin(fA);
+  // NERVOUS WAIT (round 2, lead: in v10 every hand hovers over its button with small nervous life): a quick 3-frame
+  // twitch toward the dome every 13-19 f (each card its own phase and period) and a fine tremble; a hover only
+  const nv = mode === "hover" && e.nervy ? e.nervy : 0, sd = e.seed ?? 0, per = 13 + (Math.round(sd * 7) % 7), ph = (Math.floor(f) + Math.round(sd * 31)) % per;
+  const tw = nv * (ph < 3 ? [0.45, 0.7, 0.3][ph] : 0), trem = nv * 0.035 * e.r * Math.sin(f * 2.3 + sd * 11);
+  let tip: P2 = [D[0] + trem, D[1] + 0.06 * e.r * d - g * (1 - d) * (1 - tw)];
+  let W: P2 = [tip[0] - tipL * fx, tip[1] - tipL * fy];
+  // FACE CLEARANCE: the wrist and the knuckles one hand-width outside the head outline, by sliding the hand sideways
+  const Hc = e.head, Rf = 1.02 * e.r + 13 * u * 1.1, sx = D[0] >= Hc[0] ? 1 : -1;
+  const need = (q: P2) => { const dy = q[1] - Hc[1]; return Math.abs(dy) >= Rf ? -1e9 : Math.sqrt(Rf * Rf - dy * dy) - (q[0] - Hc[0]) * sx; };
+  const K: P2 = [W[0] + 0.45 * tipL * fx, W[1] + 0.45 * tipL * fy];
+  const dx = clamp(Math.max(need(W), need(K), 0), 0, 1.1 * e.r);
+  tip = [tip[0] + sx * dx, tip[1]]; W = [W[0] + sx * dx, W[1]];
+  // (v5 stills f0 / f115: the dome stands IN FRONT of her, so through her card it lands lower than her arm's length: a
+  // 0.95 HH clamp pulled the hover hand back up to her cheek. The ink arm runs on to the dome; only an absurd reach is cut)
+  const nW = Math.hypot(W[0] - S[0], W[1] - S[1]), reach = 1.7 * HH;
+  if (nW > reach) W = [S[0] + ((W[0] - S[0]) * reach) / nW, S[1] + ((W[1] - S[1]) * reach) / nW];
+  // THE LOOP TAIL (FIX R1, director: the film's last frames must BE frame 0): blendFrom = over this many frames the hand
+  // eases from the POINT (the faceGuarded straight arm at the look target: the lamp) into this hover / press pose
+  if (o.blendFrom && e.look && f - f0 < o.blendFrom) {
+    const t = clamp((f - f0) / o.blendFrom, 0, 1), tt = t * t * (3 - 2 * t), reachP = 0.888 * HH;
+    const Lg = faceGuard(e, S, e.look, tipL, reachP), dl = Math.hypot(Lg[0] - S[0], Lg[1] - S[1]) || 1, ax = (Lg[0] - S[0]) / dl, ay = (Lg[1] - S[1]) / dl, wl = Math.max(0.36 * reachP, Math.min(dl - tipL, reachP));
+    const Wp: P2 = [S[0] + ax * wl, S[1] + ay * wl], fP = Math.atan2(ay, ax);
+    W = [Wp[0] + (W[0] - Wp[0]) * tt, Wp[1] + (W[1] - Wp[1]) * tt]; fA = fP + Math.atan2(Math.sin(fA - fP), Math.cos(fA - fP)) * tt;
+  }
+  const aW = Math.atan2(W[1] - S[1], W[0] - S[0]), ang = (Math.atan2(Math.sin(fA - aW), Math.cos(fA - aW)) * 180) / Math.PI;
+  // the kit's arm reaches 0.888 HH; past that its wrist stops there and OUR ink forearm runs on by `by` (as aimArm does)
+  const kitR = 0.87 * HH, nn = Math.hypot(W[0] - S[0], W[1] - S[1]) || 1, ux = (W[0] - S[0]) / nn, uy = (W[1] - S[1]) / nn, over = Math.max(0, nn - kitR);
+  const to2: P2 = over > 0 ? [S[0] + ux * kitR, S[1] + uy * kitR] : W;
+  const arm: AimedArm = { to: e.restR ?? "belly", to2, k: 1, hand: "none", hs, front: true, ang, touch: true, ext: { by: [ux * over, uy * over], k: 1, hand: "point", straight: 1, fdir: fA } };
+  // the eyes dart: on the button, up to the lamp (e.look) for ~5 f, back: per-card timing (only while waiting)
+  const dart = nv && e.look ? ((Math.floor(f) + Math.round(sd * 17)) % (per + 9)) < 5 : false;
+  return { right: arm, nod: 1.1 * d + 0.5 * tw, lean: 1.5 * d, stretch: 1 - 0.015 * d, ...(nv ? { gaze: dart ? e.look : e.aim, gazeK: 1 } : {}) };
 };
+/** HOLD (FIX R1, the New Yorkers' sign): both hands GRIP the set's rest points (CastOpts.restL / restR: world points on the
+ *  sign's side edges, they follow the sign as it is raised), the arms drawn as sleeves (people.ts: a kit arm ending in a
+ *  grip hand gets the sleeve band). In over 4 f, out over 4 f; a missing rest point leaves that arm alone */
+export const mHold = (e: ActEnv, f0: number, f1: number): Act | null => {
+  const f = e.f; if (f < f0 - 4 || f > f1 + 4) return null;
+  const k = sm((f - f0 + 4) / 4) * (1 - sm((f - f1) / 4)), A: Act = {};
+  // (06:40 cast log: with the sign raised to chin height the grips sat INSIDE their own faces (330 hand-frames): a grip
+  // near the head slides sideways along the sign's edge, out of the head outline + a hand-width)
+  const Rr = 1.14 * e.r + 13 * (e.u ?? 1) * 1.1;   // (round 2: +0.12 r, prankB f1784-1793 sat at 0.97-0.99 of his head outline)
+  const clear = (q: P2): P2 => { const dx = q[0] - e.head[0], dy = q[1] - e.head[1]; if (Math.hypot(dx, dy) >= Rr || Math.abs(dy) >= Rr) return q; const need = Math.sqrt(Rr * Rr - dy * dy); return [e.head[0] + (dx >= 0 ? 1 : -1) * need, q[1]]; };
+  if (e.restL) A.left = { to: "hang", to2: clear(e.restL), k, hand: "grip", hs: 1.1, front: true };
+  if (e.restR) A.right = { to: "hang", to2: clear(e.restR), k, hand: "grip", hs: 1.1, front: true };
+  // (round 2, lead: the FREE arm hung down as a line across "IF" and "DEAD": the sign's words are the joke. A hand with no
+  // grip point is HIDDEN (07:35 clips: a hanging, belly or hip arm behind the sign threw its SHADOW onto the sign, a dark
+  // stroke across "IF" / "DEAD"; the sign covers that side anyway): people.ts armWrap draws nothing for hide, hand none)
+  if (!A.left && A.right) A.left = { to: "belly", k: 1, hand: "none", front: false, hide: true } as Arm;
+  if (!A.right && A.left) A.right = { to: "belly", k: 1, hand: "none", front: false, hide: true } as Arm;
+  return A.left || A.right ? A : null;
+};
+/** WRITE (v4, the boss in v29): the notebook comes up OPEN to his chest in his LEFT hand ("clip"), the pen in his RIGHT
+ *  hand on the page ("write"): 3 f snap up, the pen scribbles (small dips) until `underF`, then ONE underline flourish
+ *  (5 f) under the big word, held. The set's `hold` puts the notebook + pen props on those hands */
+export const mWrite = (e: ActEnv, f0: number, f1: number, o: { underF?: number; text?: string } = {}): Act | null => {
+  const f = e.f; if (f < f0 - 3 || f > f1 + 4) return null;
+  const k = sm((f - f0 + 3) / 3) * (1 - sm((f - f1) / 4)), uf = o.underF ?? f1 - 10, writing = f < uf ? 1 : 0;
+  const under = sm((f - uf) / 5), dip = writing * 2.2 * Math.max(0, Math.sin((TAU * (f - f0)) / 5));
+  return { right: { to: "hang", to2: "write", k, hand: "grip", hs: 1.1, front: true, dy: dip - 4 * k, dx: -6 * under * k }, left: { to: "hang", to2: "clip", k, hand: "grip", hs: 1.1, front: true, dy: -10 * k },
+    nod: 1.4 * k, set: { note: { text: o.text ?? "RULE", under, write: Math.min(1, (f - f0) / 20) } } };
+};
+/** SHADE (v4, the coal man looking out at the semaphore, v26): a flat hand at the BROW shading the eyes, snapped up in
+ *  3 f and held. The hand sits just OUTSIDE the head's outline (never over the face): in a profile in front of the
+ *  forehead, from behind / the front at the side of the head at brow height, the elbow out */
+export const mShade = (e: ActEnv, f0: number, f1: number, o: { left?: boolean } = {}): Act | null => {
+  const f = e.f; if (f < f0 - 3 || f > f1 + 4) return null;
+  const k = sm((f - f0 + 3) / 3) * (1 - sm((f - f1) / 4)), prof = Math.abs(e.s) > 0.7, fs = Math.sign(e.s) || 1;
+  const armScr = (e.back ? 1 : -1) * (o.left ? -1 : 1);
+  // (v5 f1380: from BEHIND the hand at 1.2 r sat behind his own head: nothing showed but a raised arm line. From behind the
+  // flat hand now sits clear OUTSIDE the head's outline at brow height, fingers toward the brow: a salute-shade you can read)
+  const T: P2 = prof ? [e.head[0] + fs * 1.18 * e.r, e.head[1] - 0.42 * e.r] : [e.head[0] + armScr * (e.back ? 1.5 : 1.2) * e.r, e.head[1] - (e.back ? 0.3 : 0.38) * e.r];
+  const arm: Arm = { to: "hang", to2: T, k, hand: "flat", hs: 1.1, front: true, ang: prof ? -fs * 70 : armScr * 80 };
+  return { ...(o.left ? { left: arm } : { right: arm }), nod: 0.6 * k };
+};
+/** FREEZE (v4, the red): everything stops: no breath, no eye darts, no idle blink (amt = how much life is left: 0 = a
+ *  dead stop, 0.15 = a breath you can just see). Put it over the rows that hold the pose */
+export const mFreeze = (e: ActEnv, f0: number, f1: number, amt = 0): Act | null => (e.f >= f0 && e.f < f1 ? { lifeK: Math.max(0, Math.min(0.45, amt)) } : null);
 /** a HEAD SHAKE (amused disbelief): three quick swings over ~14 frames */
 export const mShake = (e: ActEnv, f0: number): Act | null => { const t = e.f - f0; if (t < 0 || t > 16) return null; return { headTilt: 7 * Math.sin((TAU * t) / 7) * (1 - t / 16), blink: t > 1 && t < 4 ? 0.5 : 0 }; };
 /** SCROLLING: the free (right) hand comes to the phone in his left hand and the thumb flicks up the screen */
@@ -253,13 +405,16 @@ export const mFilm = (e: ActEnv, f0: number, f1: number, o: { k?: number; lift?:
 };
 /** THE BIG LAUGH: eyes shut happy, the mouth pumping, the shoulders bouncing at ~7 Hz, the head tipped back, a lean back,
  *  the free hand clutching his belly. amt 0.5 = a chuckle */
-export const mLaugh = (e: ActEnv, f0: number, f1: number, amt = 1, o: { hand?: boolean; open?: boolean } = {}): Act | null => {
+export const mLaugh = (e: ActEnv, f0: number, f1: number, amt = 1, o: { hand?: boolean; open?: boolean; silent?: boolean } = {}): Act | null => {
   const f = e.f; if (f < f0 - 4 || f > f1 + 8) return null;
   const k = win(f, f0, f1, 4, 6) * amt, ls = PPL.laughShake(f, f0, f1, amt), on = f >= f0 && f < f1, sd = e.s >= 0 ? 1 : -1;
   const A: Act = { stretch: ls.stretch, nod: ls.nod, headTilt: ls.headTilt * sd * 0.6, lean: -3.5 * k, tilt: 1.2 * k * Math.sin((TAU * (f - f0)) / 8.6), blink: Math.max(swapLid(f, f0), swapLid(f, f1)), laughing: on };
   // the mouth pumps: a ROAR (amt >= 0.8) swings between the wide D and the tall jaw-drop (both big: the s02 still with
   // "laugh" / "vA" read as a smile at phone size, 2026-11-20); a chuckle stays small
   if (on) { A.expr = o.open ? "delightB" : "laughBig"; A.mouth = Math.floor(f / 3) % 2 ? "laugh" : amt >= 0.8 ? "jaw" : "vA"; }
+  // SILENT LAUGH (round 2, lead: mouths shut under the narrator; v35 the woman flapped O / grin every 3 frames): one held
+  // closed grin, the eyes squeezed happy, the shoulders shake small; the body stays put (no bob behind the sign)
+  if (o.silent) { A.stretch = 1 + (A.stretch! - 1) * 0.5; A.nod = (A.nod ?? 0) * 0.5; A.lean = -1.5 * k; if (on) { A.expr = "laughBig"; A.mouth = "grin"; } }
   if (o.hand !== false && on) A.right = { to: "hang", to2: "belly", k: clamp(PPL.gesture(f, f0 + 2), -0.1, 1.1), hand: "open", hs: 1.25, front: true, dy: -3 * Math.abs(Math.sin((TAU * (f - f0)) / 8.6)) };
   return A;
 };
@@ -443,9 +598,10 @@ export type Beat =
       /** LENS MODE from this cue on: the point comes AT the lens (front-on glove), the fist at lensAim (head heights from the chest), size x lensHs */ lensFrom?: Cue; lensAim?: [number, number]; lensHs?: number;
       /** DIRECTION MODE from this cue on: the arm points along a screen direction from the chest (head heights) */ dirFrom?: Cue; dirAim?: [number, number];
       /** the ear pose at [out, down] head radii from the head centre (outside the head), and its hand shape */ ear?: [number, number]; earHand?: "fist" | "point";
+      /** v4: the hand goes back to the chest fist on this cue (default 16 f before the snap) */ earFrom?: Cue;
       /** the LEFT arm calls (frame 0 / s24: across his chest) */ left?: boolean; /** the tip stops this many head heights SHORT of the aim */ gap?: number }
-  | (T0 & { m: "point"; reach?: boolean; still?: boolean; move?: number; hs?: number; jabs?: number; left?: boolean; noGaze?: boolean; rest?: ArmTo; /** ON TARGET: see call.stretch */ stretch?: number; /** the tip stops this many head heights SHORT of the aim */ gap?: number; /** the target this many head radii BELOW the aim (- = above) */ hy?: number; /** a SCREEN direction from his chest, head heights [x, y] (overrides the aim) */ dir?: [number, number] })
-  | (T0 & { m: "look"; to: "aim" | "look" | "lens" | "down" | "up" | "phone" | "phoneLow" | [number, number]; head?: number })
+  | (T0 & { m: "point"; /** the arm on the aim's side of the head */ auto?: boolean; reach?: boolean; still?: boolean; move?: number; hs?: number; jabs?: number; left?: boolean; noGaze?: boolean; rest?: ArmTo; /** ON TARGET: see call.stretch */ stretch?: number; /** the tip stops this many head heights SHORT of the aim */ gap?: number; /** the target this many head radii BELOW the aim (- = above) */ hy?: number; /** a SCREEN direction from his chest, head heights [x, y] (overrides the aim) */ dir?: [number, number]; /** v5: a PROFILE point along his heading [ahead, down] head heights, the near arm (overrides dir / left) */ fwd?: [number, number] })
+  | (T0 & { m: "look"; to: "aim" | "look" | "lens" | "down" | "up" | "phone" | "phoneLow" | [number, number]; head?: number; /** no blink on the swap (a cut hides it) */ noBlink?: boolean })
   | (T0 & { m: "face"; expr: Expr; browUp?: number; mouth?: MouthK; /** no blink while it holds */ still?: boolean })
   | (T0 & { m: "nod" | "take"; amt?: number })
   | (T0 & { m: "walk"; gait?: Gait })
@@ -467,7 +623,13 @@ export type Beat =
   | (T0 & { m: "alive"; /** how much (1 = clearly visible) */ amp?: number })   /* Block 14: a living hold over the rows that play */
   | (T0 & { m: "shake" | "scroll" })
   | (T0 & { m: "peer"; amt?: number })
-  | (T0 & { m: "hover" | "tap" | "down" })   /* v4 lab: the finger over / pressing / left on the button (aim = the button) */   /* v4: Hori's bad eyes: head forward, brows scrunched, eyes open */   /* the free (left) hand down in his lap: off the T-handle, so it never crosses his chest (s03b) */
+  | (T0 & { m: "shade"; left?: boolean })
+  | (T0 & { m: "freeze"; /** life left 0..0.45 (0 = a dead stop) */ amt?: number })
+  | (T0 & { m: "blink" })   /* round 2: ONE hard blink, shut for 2 frames from at */
+  | (T0 & { m: "tremble"; amt?: number })   /* round 2: a 1-2 px shock tremble of the head and body */
+  | (T0 & { m: "hold" })   /* both hands on the set's rest points (the NY sign) */
+  | (T0 & { m: "write"; /** the cue of the underline flourish */ under?: Cue; /** the big word on the page */ text?: string })
+  | (T0 & { m: "hover" | "tap" | "down"; /** hover higher (0.35 = a hair) */ lift?: number; hs?: number; /** a TIMED press: frames still after the cue, frames down, frames on the dome, frames back up */ lag?: number; travel?: number; hold?: number; up?: number; /** ease in from the point at the look target over this many frames (the loop tail) */ blendFrom?: number })   /* v4 lab: the finger over / pressing / left on the button (aim = the button) */   /* v4: Hori's bad eyes: head forward, brows scrunched, eyes open */   /* the free (left) hand down in his lap: off the T-handle, so it never crosses his chest (s03b) */
   | (T0 & { m: "jab" | "lunge" | "thumbsUp" | "overShoulder" | "shrug" | "frown" | "quiet" | "tongue" | "mute" });
 export type Resolver = {
   /** frames of a word key ("check#2") start / end; NaN when the script has no such word */
@@ -479,16 +641,22 @@ export type Resolver = {
   /** the first frame of the shot that contains frame f (optional: without it nothing is gated at the cuts) */
   shotStart?: (f: number) => number;
 };
+/** EVENT CUES ("ev:<name>[+-n]", v4): a film's shared events (the lamp's flashes, the red, the X) as frames. A film's beat
+ *  table registers its events once (cast/beats_v4.ts: the director's v4/timeline.ts EV); any resolver then reads them,
+ *  so a set may time BEATS_V4 with the plain R_V4. Unregistered = NaN (the row does not play) */
+let EVENT_CUE: ((name: string) => number) | null = null;
+export const setEventCues = (fn: (name: string) => number) => { EVENT_CUE = fn; };
+const wordF = (R: Resolver, key: string, end: boolean) => (key.startsWith("ev:") ? (EVENT_CUE ? EVENT_CUE(key.slice(3)) : NaN) : end ? R.wordEnd(key) : R.word(key));
 /** a cue -> frames (NaN = not in this script) */
 export const cueF = (c: Cue | undefined, R: Resolver): number => {
   if (c === undefined) return NaN; if (typeof c === "number") return c;
   const m = /^(.*?)(\.end)?([+-]\d+(?:\.\d+)?)?$/.exec(c.trim()); if (!m) return NaN;
   const key = m[1], end = !!m[2], off = m[3] ? +m[3] : 0;
   if (key.startsWith("@")) { const s = R.shot(key.slice(1)); return s ? (end ? s[1] : s[0]) + off : NaN; }
-  return (end ? R.wordEnd(key) : R.word(key)) + off;
+  return wordF(R, key, end) + off;
 };
 /** default lengths (frames) of the moves that end by themselves */
-const LEN: Partial<Record<Beat["m"], number>> = { tap: 5, point: 40, jab: 34, wag: 40, guns: 44, lunge: 30, thumbsUp: 40, overShoulder: 30, shrug: 34, urgent: 50, look: 15 };
+const LEN: Partial<Record<Beat["m"], number>> = { tap: 8, point: 40, jab: 34, wag: 40, guns: 44, lunge: 30, thumbsUp: 40, overShoulder: 30, shrug: 34, urgent: 50, look: 15 };
 export type Timed = { b: Beat; f0: number; f1: number; call?: CallOpt; ok: boolean; why?: string; y?: number;
   /** HARD-CUT GATES: the beat is not played before `gate` (the first frame of the shot its start cue belongs to: a
    *  pre-roll like "@s02-20" shapes the move but never shows in the shot before) nor from `stop` on (the end of the
@@ -501,7 +669,7 @@ const baseF = (c: Cue | undefined, R: Resolver): number => {
   if (c === undefined) return NaN; if (typeof c === "number") return c;
   const m = /^(.*?)(\.end)?([+-]\d+(?:\.\d+)?)?$/.exec(c.trim()); if (!m) return NaN;
   if (m[1].startsWith("@")) { const sh = R.shot(m[1].slice(1)); return sh ? (m[2] ? sh[1] - 1 : sh[0]) : NaN; }
-  return R.word(m[1]);
+  return wordF(R, m[1], false);
 };
 const gates = (start: Cue | undefined, until: Cue | undefined, R: Resolver): { gate?: number; stop?: number } => {
   const b = baseF(start, R), gate = R.shotStart && Number.isFinite(b) ? R.shotStart(b) : undefined;
@@ -516,14 +684,14 @@ export const timeBeats = (beats: Beat[], R: Resolver): Timed[] => beats.map((b) 
     const nameEnd = typeof b.name === "string" ? cueF(b.name + ".end", R) : name + 10, statusEnd = typeof b.status === "string" ? cueF(b.status + ".end", R) : status + 9;
     if (!Number.isFinite(name) || !Number.isFinite(status)) return { b, f0: NaN, f1: NaN, ok: false, why: `call: word ${!Number.isFinite(name) ? b.name : b.status} not in the script` };
     const out = cueF(b.out, R), rise = Number.isFinite(out) ? out : cueF(b.rise, R), until = cueF(b.until, R);
-    const call: CallOpt = { name, nameEnd, status, statusEnd, out: Number.isFinite(out), rise: Number.isFinite(rise) ? rise : undefined, until: Number.isFinite(until) ? until : Math.min(statusEnd + 26, Math.max(statusEnd + 12, R.shotEnd(status) + 8)), over: b.over, limp: b.limp, riseMove: b.riseMove };
+    const call: CallOpt = { name, nameEnd, status, statusEnd, out: Number.isFinite(out), rise: Number.isFinite(rise) ? rise : undefined, until: Number.isFinite(until) ? until : Math.min(statusEnd + 26, Math.max(statusEnd + 12, R.shotEnd(status) + 8)), over: b.over, limp: b.limp, riseMove: b.riseMove, earAt: b.earFrom !== undefined ? cueF(b.earFrom, R) : undefined };
     const ct = callTimes(call), late = b.late ?? (b.style === "kid" ? 6 : 0);
     return { b, f0: ct.rise - 4, f1: call.until! + 14 + late, call, ok: true, ...gates(b.out ?? b.rise ?? b.name, b.until, R), x: b.lensFrom !== undefined ? cueF(b.lensFrom, R) : undefined, y: b.dirFrom !== undefined ? cueF(b.dirFrom, R) : undefined,
       why: ct.dwell < 9 ? `call ${b.name} -> ${b.status}: the words start ${(status - name).toFixed(0)} f apart, the hand is back by the ear only ${Math.max(0, ct.dwell).toFixed(0)} f (0.35-0.45 s wanted: leave >= 23 f between the two word starts)` : undefined };
   }
   const f0 = cueF(b.at, R); if (!Number.isFinite(f0)) return { b, f0: NaN, f1: NaN, ok: false, why: `${b.m}: cue ${b.at} not in the script` };
   const u = cueF(b.until, R), f1 = Number.isFinite(u) ? u : LEN[b.m] !== undefined ? f0 + LEN[b.m]! : R.shotEnd(f0);
-  return { b, f0, f1, ok: true, ...gates(b.at, b.until, R), x: b.m === "stun" && b.blink !== undefined ? cueF(b.blink, R) : undefined, why: b.m === "point" && f1 - f0 < 12 ? `point at ${b.at}: ${(f1 - f0).toFixed(0)} f (< 12 f)` : undefined };
+  return { b, f0, f1, ok: true, ...gates(b.at, b.until, R), x: b.m === "stun" && b.blink !== undefined ? cueF(b.blink, R) : b.m === "write" && b.under !== undefined ? cueF(b.under, R) : undefined, why: b.m === "point" && f1 - f0 < 12 ? `point at ${b.at}: ${(f1 - f0).toFixed(0)} f (< 12 f)` : undefined };
 });
 const DOWN: Gz = { look: 0.15, lookY: 1.0 }, UP: Gz = { look: 0, lookY: -0.9 };
 /** ONE timed beat -> its Act at this frame (null = not playing) */
@@ -533,16 +701,16 @@ export const runBeat = (t: Timed, e: ActEnv): Act | null => {
   if (b.m === "call") return mCall(e, t.call!, b.style ?? "driver", b.rest ?? (b.style && b.style !== "driver" ? "hang" : e.restR ?? "low"), b.late, b.stretch, { left: b.left, gap: b.gap, lensF: t.x, lensAim: b.lensAim, lensHs: b.lensHs, dirF: b.dirFrom !== undefined ? t.y : undefined, dir: b.dirAim, ear: b.ear, earHand: b.earHand });
   const f0 = t.f0, f1 = t.f1;
   switch (b.m) {
-    case "point": return mPoint(e, f0, f1, { reach: b.reach, still: b.still, move: b.move, hs: b.hs, jabs: b.jabs, left: b.left, noGaze: b.noGaze, stretch: b.stretch, gap: b.gap, hy: b.hy, dir: b.dir, rest: b.rest ?? e.restR ?? "hang" });
+    case "point": return mPoint(e, f0, f1, { auto: b.auto, reach: b.reach, still: b.still, move: b.move, hs: b.hs, jabs: b.jabs, left: b.left, noGaze: b.noGaze, stretch: b.stretch, gap: b.gap, hy: b.hy, dir: b.dir, fwd: b.fwd, rest: b.rest ?? e.restR ?? "hang" });
     case "look": return mLook(e, f0, f1, b.to === "aim" ? e.aim ?? { look: 1.1 * e.s, lookY: 0 } : b.to === "look" ? e.look ?? e.aim ?? null : b.to === "lens" ? null : b.to === "down" ? DOWN : b.to === "up" ? UP
       : b.to === "phone" ? { look: Math.abs(e.s) > 0.8 ? 0.9 * Math.sign(e.s) : 0.75 * (e.back ? -1 : 1), lookY: 0.5 }
-      : b.to === "phoneLow" ? { look: Math.abs(e.s) > 0.8 ? 0.7 * Math.sign(e.s) : 0.35 * (e.back ? -1 : 1), lookY: 1.2 } : { look: b.to[0], lookY: b.to[1] }, b.head);
+      : b.to === "phoneLow" ? { look: Math.abs(e.s) > 0.8 ? 0.7 * Math.sign(e.s) : 0.35 * (e.back ? -1 : 1), lookY: 1.2 } : { look: b.to[0], lookY: b.to[1] }, b.head, b.noBlink);
     case "face": return mFace(e, f0, f1, b.expr, { browUp: b.browUp, mouth: b.mouth, still: b.still });
     case "nod": return mNod(e, f0, b.amt);
     case "take": return mTake(e, f0, b.amt);
     case "walk": return mWalk(e, f0, f1, b.gait);
     case "film": return mFilm(e, f0, f1, b);
-    case "laugh": return mLaugh(e, f0, f1, b.amt, { hand: b.hand, open: b.open });
+    case "laugh": return mLaugh(e, f0, f1, b.amt, { hand: b.hand, open: b.open, silent: b.who === "prankA" || b.who === "prankB" || (b as { silent?: boolean }).silent });   // (round 2: the New Yorkers laugh SILENTLY)
     case "jab": return mJab(e, f0, f1);
     case "stun": return mStun(e, f0, f1, { toLens: b.lens, blinkF: t.x, hands: b.hands, take: b.take });
     case "pat": return mPat(e, f0, b.n);
@@ -551,7 +719,13 @@ export const runBeat = (t: Timed, e: ActEnv): Act | null => {
     case "alive": return mAlive(e, f0, f1, b.amp);
     case "shake": return mShake(e, f0);
     case "peer": return mPeer(e, f0, f1, b.amt);
-    case "hover": case "tap": case "down": return mButton(e, f0, f1, b.m);
+    case "hover": case "tap": case "down": return mButton(e, f0, f1, b.m, { lift: b.lift, hs: b.hs, lag: b.lag, travel: b.travel, hold: b.hold, up: b.up, blendFrom: b.blendFrom });
+    case "freeze": return mFreeze(e, f0, f1, b.amt);
+    case "blink": return e.f >= f0 && e.f < f0 + 2 ? { blink: 1 } : null;
+    case "tremble": return e.f >= f0 && e.f < f1 ? { headTilt: (b.amt ?? 1) * (0.9 * Math.sin(e.f * 2.9) + 0.5 * Math.sin(e.f * 5.3 + 1)), tilt: (b.amt ?? 1) * 0.35 * Math.sin(e.f * 3.7 + 2) } : null;
+    case "shade": return mShade(e, f0, f1, { left: b.left });
+    case "hold": return mHold(e, f0, f1);
+    case "write": return mWrite(e, f0, f1, { underF: Number.isFinite(t.x ?? NaN) ? t.x : undefined, text: b.text });
     case "scroll": return mScroll(e, f0, f1);
     case "lap": return f >= f0 - 4 && f <= f1 + 6 ? { left: { to: "low", hand: "ball", hs: 1.1 } } : null;
     case "wag": return mWag(e, f0, f1, { hip: b.hip });
@@ -560,7 +734,7 @@ export const runBeat = (t: Timed, e: ActEnv): Act | null => {
     case "thumbsUp": return mThumbsUp(e, f0, f1);
     case "overShoulder": return mOverShoulder(e, f0, f1);
     case "shrug": return mShrug(e, f0, f1);
-    case "hop": return mHop(e, f0, b.h);
+    case "hop": return mHop(e, f0, (b.who === "prankA" || b.who === "prankB" ? 0.3 : 1) * (b.h ?? 0.12));   // (round 2: no head bob behind the sign)
     case "urgent": return mUrgent(e, f0, f1, { shut: b.shut });
     case "press": return mPress(e, f0, f1, b.per);
     case "capPush": return mCapPush(e, f0, { left: b.left });
@@ -590,8 +764,12 @@ export const baseOf = (who: Who, e: ActEnv): Base => {
 /** THE RUNNER: a character's pose at this frame from its timed beats (in table order) */
 export const actBeats = (who: Who, timed: Timed[], e: ActEnv, voice?: { mouth?: MouthK }): CPose => {
   const acts: (Act | null)[] = [];
-  for (const t of timed) if (t.ok && t.b.who === who && e.f >= t.f0 - 16 && e.f <= t.f1 + 30 && (t.gate === undefined || e.f >= t.gate) && (t.stop === undefined || e.f < t.stop)) acts.push(runBeat(t, e));
-  const P = compose(e, baseOf(who, e), acts, voice);
+  const eN: ActEnv = who === "lab_a" || who === "lab_b" || who === "lab_c" || who === "lab_d" ? { ...e, nervy: 1 } : e;
+  for (const t of timed) if (t.ok && t.b.who === who && e.f >= t.f0 - 16 && e.f <= t.f1 + 30 && (t.gate === undefined || e.f >= t.gate) && (t.stop === undefined || e.f < t.stop)) acts.push(runBeat(t, eN));
+  // (FIX R1: the two New Yorkers HOLD their sign whenever the set gives them hand points on it: STATION's onSign restL /
+  // restR. First in the list, so any row of theirs that moves an arm still wins)
+  if ((who === "prankA" || who === "prankB") && (e.restL || e.restR)) acts.unshift(mHold(e, -1e6, 1e6));
+  const P = compose(e, baseOf(who, e), acts, voice);   // (acts read eN: the hall volunteers wait nervously)
   if (who === "kid" && P.blush === undefined) P.blush = 0.35;
   return P;
 };

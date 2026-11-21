@@ -1,8 +1,9 @@
 // v4 CAMERA RULES (DIRECTOR): every v4 shot GLIDES, then RESTS. The rest is the owner's rule from the benchmark (our best
 // film holds 15.6 % of its frames, the references ~11.5 %; v1 held 0 % and crept for 83 %). A shot's camera:
 //   1) the owner's camera for the shot (v4/sets/<set>.cams via CAMS[id]), else the director's default view of the set;
-//   2) wrapped by `withRest`: the camera is FROZEN for the last `rest` frames (default 20; short shots 30 % of their
-//      length, at least 15): no creep, no shake, no focus breathing while the picture lands.
+//   2) wrapped by `withRest`: the camera is FROZEN for the last `rest` frames (restFrames: 10-14 f, 6-8 f under
+//      1.2 s; round 1): no creep, no shake, no focus breathing while the picture lands.
+//   3) a shot plan `drift` adds the director's slow push (or pull) on top of a STILL owner camera (cams.ts).
 // Owners write ONE clean move (a glide: ease in-out, 0.3-1.2 %/frame on screen) and nothing else; the rest is added here.
 import type { CamState, V3 } from "../../../kit/core/ctx";
 
@@ -10,13 +11,22 @@ export type ShotCam = (from: number, to: number) => (t: number) => CamState;
 const FPS = 30;
 const lerp = (a: number, b: number, u: number) => a + (b - a) * u;
 const lerp3 = (a: V3, b: V3, u: number): V3 => [lerp(a[0], b[0], u), lerp(a[1], b[1], u), lerp(a[2], b[2], u)];
-/** ease in-out (smoothstep of smoothstep: starts and lands softly, no creep at the ends) */
-export const easeGlide = (u: number) => { const s = Math.max(0, Math.min(1, u)); const a = s * s * (3 - 2 * s); return a * a * (3 - 2 * a); };
+/** ease in-out (one smoothstep: starts and lands softly; 2026-11-20 evening: was smoothstep of smoothstep, whose long
+ *  near-zero ends read as standing still: the film held 46 % of its frames) */
+/** the glide's ease (lead 2026-11-21, round 1: "more of the picture moving"): half smoothstep, half ease-out, so the move
+ *  starts ON the cut at half speed (no dead first frames) and still lands softly into the rest */
+export const easeGlide = (u: number) => { const s = Math.max(0, Math.min(1, u)); return 0.5 * s * s * (3 - 2 * s) + 0.5 * s * (2 - s); };
 
-/** the rest of a shot, in frames: `rest` if given, else 20, never more than 40 % of the shot, at least 15 (or the shot) */
+/** the REST of a shot, in frames (2026-11-20 evening, the hold-frame fix: the film held 46 %, target 12-20 %):
+ *  shots under 36 f (1.2 s): 8-10 f; longer shots: 15-20 f (an asked `rest` is clamped into that band); never more than
+ *  40 % of the shot. Shots whose stillness IS the picture are FREEZE shots (cams.ts FREEZE), not long rests. */
 export const restFrames = (from: number, to: number, rest?: number) => {
-  const n = to - from; const want = rest ?? 20;
-  return Math.max(Math.min(15, n), Math.min(want, Math.round(n * 0.4)));
+  // round 1 (lead 2026-11-21: moving area 6.9 % vs 13-17 % for the references, hold 18.0 %): shorter rests, longer glides:
+  // under 36 f: 6-8 f; longer shots: 10-14 f (was 8-10 / 15-20); never more than 35 % of the shot
+  if (rest === 0) return 0;   // rest: 0 = NO rest: the move never stops (audit r1: the shock beat v04 / v05 must not freeze)
+  const n = to - from, want = rest ?? 12;
+  const r = n < 36 ? Math.min(8, Math.max(6, want)) : Math.min(14, Math.max(10, want));
+  return Math.max(1, Math.min(r, Math.round(n * 0.35)));
 };
 /** FREEZE a camera for the last `rest` frames of [from, to): the picture lands and holds */
 export const withRest = (cam: (t: number) => CamState, from: number, to: number, rest?: number) => {

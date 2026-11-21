@@ -1,0 +1,155 @@
+{
+ "_doc": "SCRIPT v4 (sound/pointing/SCRIPT_v4.md, LOCKED) for the paragraph-take tools. text = the model's text (no '...', no dashes); lines = [script line id, sentences of this paragraph in that line]; caption tokens come from script_v4/lines_v4.json.",
+ "tag": "[amused]",
+ "paragraphs": [
+  {
+   "id": "p1",
+   "text": "Tap your foot on every green light. Only green. Did you tap? She did.",
+   "lines": [
+    [
+     1,
+     2
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  {
+   "id": "p2",
+   "text": "In 1994, a railway lab in Japan set a trap like this. A hundred lights. Then, red. Twelve people just watched. Five pressed anyway. Ten lights later, three of them did it again. Twelve others got one extra rule: point at the light and say it. Not one pressed.",
+   "lines": [
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     8,
+     1
+    ]
+   ]
+  },
+  {
+   "id": "p3",
+   "text": "After a hundred times, your hand stops waiting for your brain. That's how the cereal ends up in the fridge. Pointing and saying it makes your hand wait. Which is why Japan's train drivers point at their signals, and shout.",
+   "lines": [
+    [
+     9,
+     1
+    ],
+    [
+     10,
+     1
+    ],
+    [
+     11,
+     2
+    ]
+   ]
+  },
+  {
+   "id": "p4",
+   "text": "The strange part is where it came from. The story goes, a steam-train driver's eyes had gone bad. So he shouted every signal to his coal man, who checked it and shouted back. His boss rode along, loved it, and made it a rule. He never knew about the eyes.",
+   "lines": [
+    [
+     13,
+     2
+    ],
+    [
+     15,
+     1
+    ],
+    [
+     17,
+     1
+    ],
+    [
+     18,
+     1
+    ]
+   ]
+  },
+  {
+   "id": "p5",
+   "text": "New York copied the pointing: conductors must point at this board before the doors open. So two New Yorkers held up a sign: \"Point here if you are dead sexy.\" And the conductors had to point. Now try again. This time, point, and say it.",
+   "lines": [
+    [
+     19,
+     1
+    ],
+    [
+     20,
+     1
+    ],
+    [
+     21,
+     1
+    ],
+    [
+     22,
+     2
+    ]
+   ]
+  }
+ ],
+ "run": {
+  "id": "go",
+  "line": 2,
+  "after": "p1:2",
+  "n": 7,
+  "grid_gaps": [
+   0.46,
+   0.42,
+   0.38,
+   0.34,
+   0.3,
+   0.26
+  ],
+  "gap_before": 0.15,
+  "beat_after_s": 0.5
+ },
+ "shouts": [
+  {
+   "id": "D",
+   "line": 12,
+   "who": "D",
+   "text": "Signal clear!",
+   "after": "p3:4",
+   "voice": "<cast>"
+  },
+  {
+   "id": "H",
+   "line": 14,
+   "who": "H",
+   "text": "Signal clear!",
+   "after": "p4:2",
+   "voice": "<cast>"
+  },
+  {
+   "id": "C",
+   "line": 16,
+   "who": "C",
+   "text": "Clear!",
+   "after": "p4:3",
+   "voice": "UznIBkKIQe3ZG2tGydre"
+  }
+ ],
+ "gaps": {
+  "sentence": 0.15,
+  "paragraph": 0.22,
+  "lead_s": 0.05
+ }
+}

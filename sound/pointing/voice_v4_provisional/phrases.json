@@ -1,0 +1,352 @@
+[
+ {
+  "i": 0,
+  "id": "p1s1",
+  "line": "L01",
+  "lines": [
+   "L01"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 0.05,
+  "e": 2.3,
+  "text": "Tap your foot on every green light.",
+  "markup": "Tap your foot on every green light.",
+  "take_text": "Tap your foot on every green light.",
+  "take": "v4_p1/t5",
+  "heard": "Tap your foot on every green light.",
+  "wrong": []
+ },
+ {
+  "i": 1,
+  "id": "p1s2",
+  "line": "L01",
+  "lines": [
+   "L01"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 2.55,
+  "e": 3.41,
+  "text": "Only green.",
+  "markup": "Only green.",
+  "take_text": "Only green.",
+  "take": "v4_p1/t5",
+  "heard": "Only green.",
+  "wrong": []
+ },
+ {
+  "i": 2,
+  "id": "go",
+  "line": "L02",
+  "lines": [
+   "L02"
+  ],
+  "speaker": "N",
+  "para": null,
+  "s": 3.56,
+  "e": 6.11,
+  "text": "Go. Go. Go. Go. Go. Go. Go!",
+  "markup": "Go. Go. Go. Go. Go. Go. Go!",
+  "take": "v4_go/t1 v4_go/t5 v4_go/t3 v4_go/t8 v4_go/t4 v4_go/t7 v4_go/t9",
+  "grid_onsets": [
+   3.56,
+   4.02,
+   4.44,
+   4.82,
+   5.16,
+   5.46,
+   5.72
+  ],
+  "heard": "Go, go, go, go, go, go, go!",
+  "wrong": []
+ },
+ {
+  "i": 3,
+  "id": "p1s3",
+  "line": "L03",
+  "lines": [
+   "L03"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 6.61,
+  "e": 7.2,
+  "text": "Did you tap?",
+  "markup": "Did you tap?",
+  "take_text": "Did you tap?",
+  "take": "v4_p1/t5",
+  "heard": "Did you tap?",
+  "wrong": []
+ },
+ {
+  "i": 4,
+  "id": "p1s4",
+  "line": "L03",
+  "lines": [
+   "L03"
+  ],
+  "speaker": "N",
+  "para": "p1",
+  "s": 7.45,
+  "e": 7.985,
+  "text": "She did.",
+  "markup": "She did.",
+  "take_text": "She did.",
+  "take": "v4_p1/t5",
+  "heard": "She did.",
+  "wrong": []
+ },
+ {
+  "i": 5,
+  "id": "L04",
+  "line": "L04",
+  "lines": [
+   "L04"
+  ],
+  "speaker": "N",
+  "s": 8.135,
+  "e": 12.135,
+  "text": "Japan's railway lab set a trap like this. A hundred lights, then red.",
+  "markup": "Japan's railway lab set a trap like this. A hundred lights, then red.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 6,
+  "id": "L05",
+  "line": "L05",
+  "lines": [
+   "L05"
+  ],
+  "speaker": "N",
+  "s": 12.285,
+  "e": 14.439,
+  "text": "Twelve people just watch. Five press anyway.",
+  "markup": "Twelve people just watch. Five press anyway.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 7,
+  "id": "L07",
+  "line": "L07",
+  "lines": [
+   "L07"
+  ],
+  "speaker": "N",
+  "s": 14.589,
+  "e": 17.974,
+  "text": "Twelve others have to point at the light, and say it.",
+  "markup": "Twelve others have to point at the light, and say it.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 8,
+  "id": "L08",
+  "line": "L08",
+  "lines": [
+   "L08"
+  ],
+  "speaker": "N",
+  "s": 18.124,
+  "e": 19.047,
+  "text": "Not one presses.",
+  "markup": "Not one presses.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 9,
+  "id": "L09",
+  "line": "L09",
+  "lines": [
+   "L09"
+  ],
+  "speaker": "N",
+  "s": 19.197,
+  "e": 22.582,
+  "text": "After a hundred times, your hand stops waiting for your brain.",
+  "markup": "After a hundred times, your hand stops waiting for your brain.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 10,
+  "id": "L10",
+  "line": "L10",
+  "lines": [
+   "L10"
+  ],
+  "speaker": "N",
+  "s": 22.732,
+  "e": 25.501,
+  "text": "That's how the cereal ends up in the fridge.",
+  "markup": "That's how the cereal ends up in the fridge.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 11,
+  "id": "L11",
+  "line": "L11",
+  "lines": [
+   "L11"
+  ],
+  "speaker": "N",
+  "s": 25.651,
+  "e": 31.189,
+  "text": "Pointing and saying it makes your hand wait. So Japan's train drivers point at their signals, and shout.",
+  "markup": "Pointing and saying it makes your hand wait. So Japan's train drivers point at their signals, and shout.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 12,
+  "id": "L12",
+  "line": "L12",
+  "lines": [
+   "L12"
+  ],
+  "speaker": "D",
+  "s": 31.339,
+  "e": 31.955,
+  "text": "Signal clear!",
+  "markup": "Signal clear!",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 13,
+  "id": "L13",
+  "line": "L13",
+  "lines": [
+   "L13"
+  ],
+  "speaker": "N",
+  "s": 32.105,
+  "e": 37.643,
+  "text": "But the shouting rule didn't start as science. The story goes, a steam-train driver's eyes had gone bad.",
+  "markup": "But the shouting rule didn't start as science. The story goes, a steam-train driver's eyes had gone bad.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 14,
+  "id": "L14",
+  "line": "L14",
+  "lines": [
+   "L14"
+  ],
+  "speaker": "H",
+  "s": 37.793,
+  "e": 38.409,
+  "text": "Signal clear!",
+  "markup": "Signal clear!",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 15,
+  "id": "L15",
+  "line": "L15",
+  "lines": [
+   "L15"
+  ],
+  "speaker": "N",
+  "s": 38.559,
+  "e": 41.328,
+  "text": "So he shouted every signal to his coal man.",
+  "markup": "So he shouted every signal to his coal man.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 16,
+  "id": "L16",
+  "line": "L16",
+  "lines": [
+   "L16"
+  ],
+  "speaker": "C",
+  "s": 41.478,
+  "e": 42.078,
+  "text": "Clear!",
+  "markup": "Clear!",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 17,
+  "id": "L17",
+  "line": "L17",
+  "lines": [
+   "L17"
+  ],
+  "speaker": "N",
+  "s": 42.228,
+  "e": 45.612,
+  "text": "His boss rode along, loved it, and made it a rule.",
+  "markup": "His boss rode along, loved it, and made it a rule.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 18,
+  "id": "L18",
+  "line": "L18",
+  "lines": [
+   "L18"
+  ],
+  "speaker": "N",
+  "s": 45.762,
+  "e": 47.609,
+  "text": "He never knew about the eyes.",
+  "markup": "He never knew about the eyes.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 19,
+  "id": "L19",
+  "line": "L19",
+  "lines": [
+   "L19"
+  ],
+  "speaker": "N",
+  "s": 47.759,
+  "e": 51.759,
+  "text": "New York copied the pointing: subway conductors must point at a striped board.",
+  "markup": "New York copied the pointing: subway conductors must point at a striped board.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 20,
+  "id": "L20",
+  "line": "L20",
+  "lines": [
+   "L20"
+  ],
+  "speaker": "N",
+  "s": 51.909,
+  "e": 56.524,
+  "text": "So two New Yorkers held up a sign: \"Point here if you are dead sexy.\"",
+  "markup": "So two New Yorkers held up a sign: \"Point here if you are dead sexy.\"",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 21,
+  "id": "L21",
+  "line": "L21",
+  "lines": [
+   "L21"
+  ],
+  "speaker": "N",
+  "s": 56.674,
+  "e": 58.52,
+  "text": "And the conductors had to point.",
+  "markup": "And the conductors had to point.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ },
+ {
+  "i": 22,
+  "id": "L22",
+  "line": "L22",
+  "lines": [
+   "L22"
+  ],
+  "speaker": "N",
+  "s": 58.67,
+  "e": 61.439,
+  "text": "Now try again. This time, point, and say it.",
+  "markup": "Now try again. This time, point, and say it.",
+  "src": "plan (DIRECTOR plan_words.ts, shifted +0.618 s)"
+ }
+]

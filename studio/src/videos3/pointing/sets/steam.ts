@@ -33,7 +33,16 @@ export const STEAM_MARKS = { ...LOCO, signal: (t: number): V3 => [-3.1, 6.0, -(S
 export type CrewMark = { pos: V3; yaw: number; look?: V3 | null };
 export type CrewPlan = { hori: CrewMark; fireman: CrewMark; official: CrewMark | null; shovel: boolean;
   /** the cab's left side sheets hidden (a cut-away for a lens beside the cab) */ cutaway?: boolean;
-  /** the semaphore's distance ahead of the engine's front (m); default the steady approach from STEAM_PLAN */ signal?: number };
+  /** the cab's RIGHT side sheets hidden (a lens outside the right side looking in) */ cutawayR?: boolean;
+  /** the fire's strength (x the default 1): the warm centre of a cab shot */ fire?: number;
+  /** the telegraph poles hidden in this shot */ noPoles?: boolean;
+  /** the semaphore's distance ahead of the engine's front (m); default the steady approach from STEAM_PLAN */ signal?: number;
+  /** v4 extras: the drain cocks' strength 0..1 (default 0.55; low in the event picture so the rods read), the real
+   *  semaphore hidden (a shot that draws a soft-blur stand-in), the fireman's shovel prop forced visible */
+  cocks?: number; hideSignal?: boolean };
+/** the cast caller: who + CastOpts -> a card (v3: castMember, the v3 actor; v4: castCardOf + CAST's BEATS_V4) */
+export type SteamCaster = (ctx: KitCtx, who: "hori" | "fireman" | "official", o: import("../cast/member").CastOpts) => Promise<import("../../../kit/cards/card").CardBuilt>;
+export type SteamBuildOpts = { crew?: (t: number) => CrewPlan; cast?: SteamCaster };
 export const CREW_DEFAULT: CrewPlan = {
   hori: { pos: LOCO.driver, yaw: Math.PI - 0.25 }, fireman: { pos: LOCO.fireman, yaw: Math.PI - 0.3 }, official: null, shovel: true,
 };
@@ -42,19 +51,26 @@ export const STEAM_SHOW: { crew: (t: number) => CrewPlan } = { crew: () => CREW_
 const SHOVEL_T = 2.6;
 const shovelPhase = (t: number) => (t % SHOVEL_T) / SHOVEL_T;
 
-export const build_steam = async (ctx: KitCtx): Promise<Built> => {
+export const build_steam = (ctx: KitCtx): Promise<Built> => buildSteamWith({})(ctx);
+/** the set with a crew plan + a cast caller of the caller's choice (the v4 film entry: v4/sets/steam.ts) */
+export const buildSteamWith = (so: SteamBuildOpts) => async (ctx: KitCtx): Promise<Built> => {
   const g = new THREE.Group(); g.name = "set:steam";
+  const plan = (t: number) => (so.crew ?? STEAM_SHOW.crew)(t);
   const sun = sunDirOf(STEAM_PLAN.sunAz, STEAM_PLAN.sunEl);
-  const world = await steamWorld(ctx, { dist, signalAhead: (t) => STEAM_SHOW.crew(t).signal ?? STEAM_PLAN.signalAt - dist(t), signalArm: () => 1 });
+  const world = await steamWorld(ctx, { dist, signalAhead: (t) => plan(t).signal ?? STEAM_PLAN.signalAt - dist(t), signalArm: () => 1, signalVisible: (t) => !plan(t).hideSignal, polesVisible: (t) => !plan(t).noPoles });
   g.add(world.object);
   // the firehole doors open when the shovel arrives at the fire
-  const fireDoor = (t: number) => { const u = shovelPhase(t); return u > 0.38 && u < 0.72 ? 1 : 0.25; };
-  const loco = await steamLoco(ctx, { run: dist, fireDoor, cutaway: (t) => !!STEAM_SHOW.crew(t).cutaway });
+  // (R2: v23's light pop on his face: the door snapped 0.25 -> 1 in one frame: it opens and closes over ~5 frames)
+  const fireDoor = (t: number) => { const u = shovelPhase(t), ss = (x: number) => { const c = Math.max(0, Math.min(1, x)); return c * c * (3 - 2 * c); }; return 0.25 + 0.75 * ss((u - 0.36) / 0.06) * (1 - ss((u - 0.7) / 0.06)); };
+  // (audit r1, facts: the cab was bright orange-red inside: Japanese engines of the 1910s were black: a dark warm
+  // umber inside, the colour comes from the fire)
+  const loco = await steamLoco(ctx, { cabInner: "#3b2a20", cabInnerUpper: "#e2cfa4", run: dist,   // (lead 05:55: buff upper walls + roof inside, dark below)
+    fireDoor, cutaway: (t) => !!plan(t).cutaway, cutawayR: (t) => !!plan(t).cutawayR, fireK: (t) => plan(t).fire ?? 1 });
   g.add(loco.object);
   // smoke + steam (in the loco frame: the wind is the train's own speed, +Z)
   const smoke = locoSmoke(ctx, { pos: [0, STEAM.chimneyTop + 0.05, STEAM.chimneyZ], speed: STEAM_PLAN.speed * 0.92, sunDir: sun });
   const valve = valveSteam(ctx, { pos: LOCO.safetyValve, speed: STEAM_PLAN.speed * 0.9, sunDir: sun, on: (t) => 0.5 + 0.5 * Math.sin(t * 0.4) });
-  const cocks = [1, -1].map((s) => drainCocks(ctx, { pos: [s * STEAM.cylX, STEAM.cylY - 0.38, STEAM.cylZ[0] + 0.15], side: s as 1 | -1, speed: STEAM_PLAN.speed * 0.8, sunDir: sun, on: () => 0.55 }));
+  const cocks = [1, -1].map((s) => drainCocks(ctx, { pos: [s * STEAM.cylX, STEAM.cylY - 0.38, STEAM.cylZ[0] + 0.15], side: s as 1 | -1, speed: STEAM_PLAN.speed * 0.8, sunDir: sun, on: (t) => plan(t).cocks ?? 0.55 }));
   const leak = wisp(ctx, { pos: [0.32, 3.15, 6.05], speed: STEAM_PLAN.speed * 0.9, sunDir: sun });   // the whistle valve weeping (outside the cab: never in front of a cab lens)
   const fx = [smoke, valve, ...cocks, leak];
   for (const f of fx) g.add(f.object);
@@ -75,9 +91,8 @@ export const build_steam = async (ctx: KitCtx): Promise<Built> => {
     const load = shovel.getObjectByName("load"); if (load) load.visible = u < 0.52;
   };
   // ---- the crew (CAST placeholders at their marks)
-  const { castMember } = await import("../cast");
-  const sig = STEAM_MARKS.signal;
-  const plan = (t: number) => STEAM_SHOW.crew(t);
+  const castMember: SteamCaster = so.cast ?? (async (c, who, o) => (await import("../cast")).castMember(c, who, o));
+  const sig = (t: number): V3 => [-3.1, 6.0, -(plan(t).signal ?? STEAM_PLAN.signalAt - dist(t))];
   // CAST's v4 crew: Hori (blue work coat, round glasses), the coal man (orange apron, soot, the shovel), the boss (dark
   // suit, bowler, the notebook). Hands stay on the lever / the shovel: aim null (the steam driver never points)
   const CREW = {
@@ -94,6 +109,8 @@ export const build_steam = async (ctx: KitCtx): Promise<Built> => {
     update: (t, cam) => {
       world.update?.(t, cam); loco.update?.(t, cam); shovelAt(t);
       for (const f of fx) f.update?.(t, cam);
+      // (the plume's on() fades only the young puffs: a shot that wants NO drain-cock steam hides them outright)
+      for (const c of cocks) c.object.visible = (plan(t).cocks ?? 0.55) > 0;
       CREW.hori.update?.(t, cam); CREW.fireman.update?.(t, cam);
       const on = !!plan(t).official; CREW.official.object.visible = on; if (on) CREW.official.update?.(t, cam);
       shovel.visible = false;   // (CAST's coal man carries his own shovel now; the 3D prop stays for a shot without him)
